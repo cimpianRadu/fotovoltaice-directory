@@ -1,65 +1,149 @@
-import Image from "next/image";
+import Link from 'next/link';
+import SearchBar from '@/components/forms/SearchBar';
+import CompanyCard from '@/components/company/CompanyCard';
+import FAQ from '@/components/seo/FAQ';
+import JsonLd from '@/components/seo/JsonLd';
+import WaitlistForm from '@/components/forms/WaitlistForm';
+import { getFeaturedCompanies, getTotalStats, formatNumber } from '@/lib/utils';
+import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
 
-export default function Home() {
+const homeFaqs = [
+  {
+    question: 'Cât costă un sistem fotovoltaic pentru o hală industrială?',
+    answer:
+      'Costul variază între 600-900 EUR/kWp instalat, în funcție de dimensiunea sistemului. Un sistem de 100 kWp pentru o hală medie costă între 65.000 și 85.000 EUR, cu amortizare în 4-6 ani.',
+  },
+  {
+    question: 'Ce certificări trebuie să aibă un instalator?',
+    answer:
+      'Un instalator profesionist trebuie să dețină atestat ANRE tip C2A (obligatoriu pentru sisteme comerciale), și ideal certificări ISO 9001 (calitate) și ISO 14001 (mediu).',
+  },
+  {
+    question: 'Cât durează instalarea unui sistem fotovoltaic comercial?',
+    answer:
+      'De la evaluare până la punerea în funcțiune, procesul durează 4-12 săptămâni, în funcție de dimensiunea proiectului și de obținerea avizelor necesare.',
+  },
+  {
+    question: 'Ce garanții primesc?',
+    answer:
+      'Standard: 25-30 ani pe panouri (garanție de performanță), 10-12 ani pe invertoare, 5-10 ani pe manoperă. Unii instalatori din directorul nostru oferă garanții extinse.',
+  },
+  {
+    question: 'Cum funcționează statutul de prosumator pentru firme?',
+    answer:
+      'Ca prosumator comercial, produceți energie pentru consum propriu și vindeți surplusul la prețul pieței. Capacitatea maximă este de 400 kWp fără licență ANRE. Veniturile pot fi scutite de impozit.',
+  },
+];
+
+export default function HomePage() {
+  const featured = getFeaturedCompanies();
+  const stats = getTotalStats();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <>
+      <JsonLd data={generateOrganizationJsonLd()} />
+      <JsonLd data={generateFAQJsonLd(homeFaqs)} />
+
+      {/* Hero */}
+      <section className="bg-gradient-to-br from-secondary-dark via-secondary to-secondary-light text-white">
+        <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24 text-center">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+            Găsește instalatorul potrivit pentru
+            <br className="hidden sm:block" />
+            <span className="text-primary-light"> proiectul tău fotovoltaic comercial</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+            Directorul #1 pentru firme de instalare panouri fotovoltaice pe hale, fabrici, clădiri de birouri și spații comerciale din România.
           </p>
+
+          <div className="flex justify-center mb-8">
+            <SearchBar />
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-6 sm:gap-10 text-center">
+            <div>
+              <p className="text-2xl sm:text-3xl font-bold text-primary-light">{stats.companiesCount}+</p>
+              <p className="text-sm text-gray-300">Firme listate</p>
+            </div>
+            <div>
+              <p className="text-2xl sm:text-3xl font-bold text-primary-light">{formatNumber(stats.totalProjects)}+</p>
+              <p className="text-sm text-gray-300">Proiecte finalizate</p>
+            </div>
+            <div>
+              <p className="text-2xl sm:text-3xl font-bold text-primary-light">{stats.countiesCount}</p>
+              <p className="text-sm text-gray-300">Județe acoperite</p>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </section>
+
+      {/* Featured Companies */}
+      <section className="max-w-7xl mx-auto px-4 py-16">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Firme Recomandate</h2>
+            <p className="text-gray-500 mt-1">Instalatori verificați cu experiență dovedită</p>
+          </div>
+          <Link
+            href="/firme"
+            className="hidden sm:inline-flex text-sm font-medium text-primary-dark hover:text-primary transition-colors"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Vezi toate firmele &rarr;
+          </Link>
         </div>
-      </main>
-    </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {featured.slice(0, 6).map((company) => (
+            <CompanyCard key={company.id} company={company} />
+          ))}
+        </div>
+
+        <div className="mt-8 text-center sm:hidden">
+          <Link
+            href="/firme"
+            className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-primary transition-colors"
+          >
+            Vezi toate firmele &rarr;
+          </Link>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-primary/5 border-y border-primary/10">
+        <div className="max-w-7xl mx-auto px-4 py-16 text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">Ai nevoie de o ofertă personalizată?</h2>
+          <p className="text-gray-600 mb-6 max-w-lg mx-auto">
+            Completează formularul și primești oferte de la instalatori verificați din zona ta, gratuit și fără obligații.
+          </p>
+          <Link
+            href="/cere-oferta"
+            className="inline-flex items-center bg-primary hover:bg-primary-dark text-white font-semibold px-8 py-3 rounded-lg transition-colors"
+          >
+            Cere Ofertă Gratuită
+          </Link>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="max-w-3xl mx-auto px-4 py-16">
+        <FAQ items={homeFaqs} title="Întrebări Frecvente" />
+      </section>
+
+      {/* Waitlist Rezidential */}
+      <section className="bg-surface border-t border-border">
+        <div className="max-w-7xl mx-auto px-4 py-12 text-center">
+          <p className="text-sm font-medium text-primary-dark mb-2">În curând</p>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">
+            Cauți panouri fotovoltaice pentru casă?
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Lansăm în curând directorul pentru rezidențial. Înscrie-te pentru a fi notificat.
+          </p>
+          <div className="flex justify-center">
+            <WaitlistForm />
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

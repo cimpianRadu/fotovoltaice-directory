@@ -1,0 +1,12 @@
+{
+  "specializations": [
+    { "id": "hale-industriale", "label": "Hale Industriale", "icon": "🏭" },
+    { "id": "cladiri-birouri", "label": "Clădiri de Birouri", "icon": "🏢" },
+    { "id": "parcuri-logistice", "label": "Parcuri Logistice", "icon": "📦" },
+    { "id": "agricol", "label": "Agricol", "icon": "🌾" },
+    { "id": "retail", "label": "Retail", "icon": "🛒" },
+    { "id": "hoteluri", "label": "Hoteluri", "icon": "🏨" },
+    { "id": "spitale", "label": "Spitale", "icon": "🏥" },
+    { "id": "scoli", "label": "Școli", "icon": "🏫" }
+  ]
+}
