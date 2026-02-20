@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { saveWaitlistToSheet } from '@/lib/sheets';
 
 export async function POST(request: Request) {
   try {
@@ -14,31 +13,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const entry = {
-      email,
-      createdAt: new Date().toISOString(),
-    };
-
-    const waitlistPath = path.join(process.cwd(), 'data', 'waitlist.json');
-    let waitlist: unknown[] = [];
-
-    try {
-      const data = await fs.readFile(waitlistPath, 'utf-8');
-      waitlist = JSON.parse(data);
-    } catch {
-      // File doesn't exist yet
-    }
-
-    // Check for duplicates
-    if (waitlist.some((w: unknown) => (w as { email: string }).email === email)) {
-      return NextResponse.json({ success: true, message: 'Deja înscris.' });
-    }
-
-    waitlist.push(entry);
-    await fs.writeFile(waitlistPath, JSON.stringify(waitlist, null, 2));
+    await saveWaitlistToSheet(email);
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error('Waitlist API error:', err);
     return NextResponse.json(
       { error: 'Eroare internă.' },
       { status: 500 }

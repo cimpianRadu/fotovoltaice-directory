@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { saveListingToSheet } from '@/lib/sheets';
 
 export async function POST(request: Request) {
   try {
@@ -22,27 +21,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const listing = {
-      id: `listing-${Date.now()}`,
-      ...body,
-      createdAt: new Date().toISOString(),
-    };
+    await saveListingToSheet(body);
 
-    const listingsPath = path.join(process.cwd(), 'data', 'listings.json');
-    let listings: unknown[] = [];
-
-    try {
-      const data = await fs.readFile(listingsPath, 'utf-8');
-      listings = JSON.parse(data);
-    } catch {
-      // File doesn't exist yet
-    }
-
-    listings.push(listing);
-    await fs.writeFile(listingsPath, JSON.stringify(listings, null, 2));
-
-    return NextResponse.json({ success: true, id: listing.id });
-  } catch {
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error('Listing API error:', err);
     return NextResponse.json(
       { error: 'Eroare internă. Vă rugăm încercați din nou.' },
       { status: 500 }

@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { saveLeadToSheet } from '@/lib/sheets';
 
 export async function POST(request: Request) {
   try {
@@ -22,28 +21,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const lead = {
-      id: `lead-${Date.now()}`,
-      ...body,
-      createdAt: new Date().toISOString(),
-    };
+    await saveLeadToSheet(body);
 
-    // Save to JSON file
-    const leadsPath = path.join(process.cwd(), 'data', 'leads.json');
-    let leads: unknown[] = [];
-
-    try {
-      const data = await fs.readFile(leadsPath, 'utf-8');
-      leads = JSON.parse(data);
-    } catch {
-      // File doesn't exist yet
-    }
-
-    leads.push(lead);
-    await fs.writeFile(leadsPath, JSON.stringify(leads, null, 2));
-
-    return NextResponse.json({ success: true, id: lead.id });
-  } catch {
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error('Lead API error:', err);
     return NextResponse.json(
       { error: 'Eroare internă. Vă rugăm încercați din nou.' },
       { status: 500 }
