@@ -104,10 +104,18 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/despre" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Contactează-ne
+                  Despre Noi
                 </Link>
               </li>
             </ul>
+            <div className="mt-4 space-y-1.5">
+              <a href="mailto:contact@instalatori-fotovoltaice.ro" className="block text-sm text-gray-300 hover:text-white transition-colors">
+                contact@instalatori-fotovoltaice.ro
+              </a>
+              <a href="tel:+40751547174" className="block text-sm text-gray-300 hover:text-white transition-colors">
+                0751 547 174
+              </a>
+            </div>
           </div>
         </div>
 

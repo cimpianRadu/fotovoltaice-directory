@@ -82,7 +82,8 @@ export default function DesprePage() {
               <h2 className="text-lg font-bold text-gray-900 mb-3">Ești instalator?</h2>
               <p className="text-gray-600 leading-relaxed">
                 Dacă ești o firmă de instalare panouri fotovoltaice comerciale și dorești să fii listat
-                în directorul nostru, completează formularul de contact de mai jos sau trimite-ne un email.
+                în directorul nostru, completează formularul de contact de mai jos sau trimite-ne un email
+                la <a href="mailto:contact@instalatori-fotovoltaice.ro" className="text-primary hover:underline">contact@instalatori-fotovoltaice.ro</a>.
                 Listarea de bază este gratuită.
               </p>
             </section>

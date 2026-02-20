@@ -84,8 +84,8 @@ export default function TermeniConditii() {
         <h2>7. Firmele listate</h2>
         <p>
           Firmele sunt listate pe baza informațiilor din surse publice. Orice firmă listată poate
-          solicita actualizarea sau eliminarea profilului contactându-ne la adresa de email de pe
-          pagina <a href="/despre">Despre Noi</a>.
+          solicita actualizarea sau eliminarea profilului contactându-ne la{' '}
+          <a href="mailto:contact@instalatori-fotovoltaice.ro">contact@instalatori-fotovoltaice.ro</a>.
         </p>
 
         <h2>8. Modificări</h2>

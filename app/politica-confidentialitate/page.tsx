@@ -85,8 +85,8 @@ export default function PoliticaConfidentialitate() {
           <li><strong>Opoziție</strong> — să vă opuneți prelucrării</li>
         </ul>
         <p>
-          Pentru exercitarea acestor drepturi, ne puteți contacta la adresa de email de pe pagina{' '}
-          <a href="/despre">Despre Noi</a>.
+          Pentru exercitarea acestor drepturi, ne puteți contacta la{' '}
+          <a href="mailto:contact@instalatori-fotovoltaice.ro">contact@instalatori-fotovoltaice.ro</a>.
         </p>
 
         <h2>7. Securitatea datelor</h2>
