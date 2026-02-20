@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Geist } from 'next/font/google';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -50,6 +51,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ro">
+      <head>
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="49a078c7-23dc-4a96-9c37-73bb15e9b7ba"
+        />
+      </head>
       <body className={`${geistSans.variable} antialiased`}>
         <Header />
         <main className="min-h-screen">{children}</main>
