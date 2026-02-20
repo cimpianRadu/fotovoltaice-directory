@@ -121,7 +121,7 @@ export default async function GuidePage({ params }: Props) {
             Cauți un instalator pentru proiectul tău?
           </h3>
           <p className="text-sm text-gray-600 mb-4">
-            Vezi firmele specializate din directorul nostru sau cere o ofertă gratuită.
+            Vezi firmele specializate de pe platforma noastră sau cere o ofertă gratuită.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <Button

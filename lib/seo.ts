@@ -8,7 +8,7 @@ export function generateOrganizationJsonLd() {
     name: SITE_NAME,
     url: SITE_URL,
     description:
-      'Director pentru firme de instalare panouri fotovoltaice comerciale și industriale din România.',
+      'Platforma #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale din România.',
     sameAs: [],
   };
 }

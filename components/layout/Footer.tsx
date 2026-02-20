@@ -9,7 +9,7 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-3">Instalatori Fotovoltaice</h3>
             <p className="text-sm text-gray-300 leading-relaxed">
-              Directorul #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale din România.
+              Platforma #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale din România.
             </p>
           </div>
 

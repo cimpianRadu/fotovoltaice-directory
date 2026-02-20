@@ -24,7 +24,7 @@ export default function TermeniConditii() {
 
         <h2>1. Descrierea serviciului</h2>
         <p>
-          Instalatori Fotovoltaice România este un director online care listează firme de instalare
+          Instalatori Fotovoltaice România este o platformă online care listează firme de instalare
           panouri fotovoltaice comerciale și industriale din România. Site-ul oferă:
         </p>
         <ul>

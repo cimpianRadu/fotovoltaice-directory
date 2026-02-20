@@ -7,7 +7,7 @@ import { generateBreadcrumbJsonLd } from '@/lib/seo';
 export const metadata: Metadata = {
   title: 'Despre Noi - Instalatori Fotovoltaice România',
   description:
-    'Despre proiectul Instalatori Fotovoltaice România - directorul #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale.',
+    'Despre proiectul Instalatori Fotovoltaice România - platforma #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale.',
   alternates: { canonical: '/despre' },
 };
 
@@ -36,7 +36,7 @@ export default function DesprePage() {
             <section>
               <h2 className="text-lg font-bold text-gray-900 mb-3">Misiunea noastră</h2>
               <p className="text-gray-600 leading-relaxed">
-                Instalatori Fotovoltaice România este directorul #1 dedicat exclusiv segmentului comercial și industrial
+                Instalatori Fotovoltaice România este platforma #1 dedicată exclusiv segmentului comercial și industrial
                 al pieței de energie solară din România. Misiunea noastră este să conectăm companiile care doresc
                 să investească în energie solară cu cei mai buni instalatori verificați din țară.
               </p>
@@ -50,7 +50,7 @@ export default function DesprePage() {
                 de calitate între instalatori pot fi enorme.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                Am creat acest director pentru a oferi transparență și a facilita procesul de selecție.
+                Am creat această platformă pentru a oferi transparență și a facilita procesul de selecție.
                 Toate firmele listate sunt verificate, iar datele despre experiență, certificări și stabilitate
                 financiară sunt actualizate constant.
               </p>
@@ -82,7 +82,7 @@ export default function DesprePage() {
               <h2 className="text-lg font-bold text-gray-900 mb-3">Ești instalator?</h2>
               <p className="text-gray-600 leading-relaxed">
                 Dacă ești o firmă de instalare panouri fotovoltaice comerciale și dorești să fii listat
-                în directorul nostru, completează formularul de contact de mai jos sau trimite-ne un email
+                pe platforma noastră, completează formularul de contact de mai jos sau trimite-ne un email
                 la <a href="mailto:contact@instalatori-fotovoltaice.ro" className="text-primary hover:underline">contact@instalatori-fotovoltaice.ro</a>.
                 Listarea de bază este gratuită.
               </p>

@@ -49,7 +49,7 @@ export default function PoliticaConfidentialitate() {
         <h2>2. Scopul prelucrării datelor</h2>
         <ul>
           <li>Transmiterea cererilor de ofertă către firmele de instalare relevante</li>
-          <li>Procesarea cererilor de listare a firmelor în director</li>
+          <li>Procesarea cererilor de listare a firmelor pe platformă</li>
           <li>Trimiterea de comunicări solicitate (newsletter)</li>
           <li>Îmbunătățirea funcționalității site-ului</li>
         </ul>
@@ -63,7 +63,7 @@ export default function PoliticaConfidentialitate() {
         <h2>4. Partajarea datelor</h2>
         <p>
           Datele din formularul &quot;Cere Ofertă&quot; sunt transmise exclusiv firmelor de instalare din
-          directorul nostru care acoperă zona dumneavoastră. Nu vindem și nu partajăm datele
+          platforma noastră care acoperă zona dumneavoastră. Nu vindem și nu partajăm datele
           dumneavoastră cu terți în scopuri de marketing.
         </p>
 

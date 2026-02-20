@@ -7,7 +7,7 @@ import { generateBreadcrumbJsonLd } from '@/lib/seo';
 export const metadata: Metadata = {
   title: 'Listează-ți Firma - Instalatori Fotovoltaice România',
   description:
-    'Ești instalator de panouri fotovoltaice? Listează-ți firma gratuit în directorul nostru și fii vizibil pentru clienții care caută instalatori în zona ta.',
+    'Ești instalator de panouri fotovoltaice? Listează-ți firma gratuit pe platforma noastră și fii vizibil pentru clienții care caută instalatori în zona ta.',
   alternates: { canonical: '/listeaza-firma' },
 };
 
@@ -26,10 +26,10 @@ export default function ListeazaFirmaPage() {
 
         <div className="mt-6 mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            Listează-ți Firma în Director
+            Listează-ți Firma pe Platformă
           </h1>
           <p className="text-gray-500 mt-2">
-            Completează formularul de mai jos pentru a adăuga firma ta în directorul de instalatori fotovoltaice. Listarea este gratuită.
+            Completează formularul de mai jos pentru a adăuga firma ta pe platforma de instalatori fotovoltaice. Listarea este gratuită.
           </p>
         </div>
 

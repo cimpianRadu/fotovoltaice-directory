@@ -26,7 +26,7 @@ const homeFaqs = [
   {
     question: 'Ce garanții primesc?',
     answer:
-      'Standard: 25-30 ani pe panouri (garanție de performanță), 10-12 ani pe invertoare, 5-10 ani pe manoperă. Unii instalatori din directorul nostru oferă garanții extinse.',
+      'Standard: 25-30 ani pe panouri (garanție de performanță), 10-12 ani pe invertoare, 5-10 ani pe manoperă. Unii instalatori de pe platforma noastră oferă garanții extinse.',
   },
   {
     question: 'Cum funcționează statutul de prosumator pentru firme?',
@@ -52,7 +52,7 @@ export default function HomePage() {
             <span className="text-primary-light"> proiectul tău fotovoltaic comercial</span>
           </h1>
           <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Directorul #1 pentru firme de instalare panouri fotovoltaice pe hale, fabrici, clădiri de birouri și spații comerciale din România.
+            Platforma #1 pentru firme de instalare panouri fotovoltaice pe hale, fabrici, clădiri de birouri și spații comerciale din România.
           </p>
 
           <div className="flex justify-center mb-8">
@@ -98,7 +98,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 py-16 text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-3">Ești instalator fotovoltaic?</h2>
           <p className="text-gray-600 mb-6 max-w-lg mx-auto">
-            Listează-ți firma în directorul nostru și fii vizibil pentru clienții care caută instalatori în zona ta. Înscrierea este gratuită.
+            Listează-ți firma pe platforma noastră și fii vizibil pentru clienții care caută instalatori în zona ta. Înscrierea este gratuită.
           </p>
           <Link
             href="/listeaza-firma"
@@ -122,7 +122,7 @@ export default function HomePage() {
             Cauți panouri fotovoltaice pentru casă?
           </h2>
           <p className="text-gray-600 mb-6">
-            Lansăm în curând directorul pentru rezidențial. Înscrie-te pentru a fi notificat.
+            Lansăm în curând platforma pentru rezidențial. Înscrie-te pentru a fi notificat.
           </p>
           <div className="flex justify-center">
             <WaitlistForm />
