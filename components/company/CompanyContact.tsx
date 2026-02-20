@@ -54,14 +54,22 @@ export default function CompanyContact({ company }: CompanyContactProps) {
         )}
       </div>
 
-      <div className="flex flex-col gap-2">
-        <Button href={`/cere-oferta?firma=${company.slug}`} variant="primary" size="lg" className="w-full">
-          Cere Ofertă Gratuită
-        </Button>
-        <Button href={`tel:${company.contact.phone}`} variant="outline" size="md" className="w-full">
+      {company.contact.phone && (
+        <Button href={`tel:${company.contact.phone}`} variant="primary" size="lg" className="w-full">
           Sună Acum
         </Button>
-      </div>
+      )}
+      {company.contact.website && (
+        <a
+          href={company.contact.website}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackEvent('external_link_clicked', { company_id: company.id, link_type: 'website_cta' })}
+          className="block w-full text-center text-sm font-medium text-primary-dark hover:text-primary border border-primary/30 rounded-lg px-4 py-2.5 transition-colors"
+        >
+          Vizitează Site-ul
+        </a>
+      )}
     </div>
   );
 }

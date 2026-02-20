@@ -1,384 +1,384 @@
 {
   "companies": [
     {
-      "id": "solar-energy-solutions",
-      "slug": "solar-energy-solutions",
-      "name": "Solar Energy Solutions SRL",
-      "cui": "RO35821456",
-      "logo": "/logos/solar-energy-solutions.png",
-      "description": "Lider pe piața de instalații fotovoltaice comerciale din Transilvania, cu peste 120 de proiecte finalizate pentru hale industriale și parcuri logistice. Echipă de 30+ ingineri certificați ANRE.",
-      "founded": 2015,
-      "employees": 35,
+      "id": "simtel-team",
+      "slug": "simtel-team",
+      "name": "Simtel Team S.A.",
+      "cui": "RO26414626",
+      "logo": "/logos/simtel-team.png",
+      "description": "Companie românească de inginerie și tehnologie, listată la Bursa de Valori București (BVB: SMTL), lider național în instalarea de sisteme fotovoltaice comerciale și industriale. 1 din 3 panouri fotovoltaice ale prosumatorilor persoane juridice din România sunt instalate de Simtel. Activă în energie regenerabilă, telecomunicații și automatizări industriale, cu operațiuni în România, Moldova, Germania și Suedia.",
+      "founded": 2010,
+      "employees": 124,
       "location": {
-        "city": "Cluj-Napoca",
-        "county": "Cluj",
-        "address": "Str. Fabricii nr. 72"
+        "city": "București",
+        "county": "București",
+        "address": "Splaiul Independenței 319, Bruxelles Building, Sector 6"
       },
       "contact": {
-        "phone": "0740123456",
-        "email": "contact@solarenergy.ro",
-        "website": "https://solarenergy.ro"
+        "phone": "+40374490286",
+        "email": "office@simtel.ro",
+        "website": "https://simtel.ro"
       },
-      "coverage": ["Cluj", "Alba", "Sibiu", "Mureș", "Bihor", "Sălaj", "Bistrița-Năsăud"],
-      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri"],
-      "certifications": ["ANRE-C2A", "ISO-9001", "ISO-14001"],
+      "coverage": ["București", "Ilfov", "Prahova", "Argeș", "Dolj", "Timiș", "Sibiu", "Olt", "Cluj"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail"],
+      "certifications": ["ISO-9001", "ISO-14001", "ISO-45001"],
       "capacity": {
-        "minProjectKw": 50,
-        "maxProjectKw": 5000,
-        "projectsCompleted": 124
+        "minProjectKw": 100,
+        "maxProjectKw": 50000,
+        "projectsCompleted": 550
       },
       "financials": {
         "year": 2024,
-        "revenue": 8500000,
-        "profit": 720000
+        "revenue": 273878513,
+        "profit": 32277126
       },
       "tags": ["experienta-10-ani", "proiecte-mari", "mentenanta-inclusa", "monitorizare-inclusa"],
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2025-02-10"
+      "updatedAt": "2026-02-20"
     },
     {
-      "id": "green-power-install",
-      "slug": "green-power-install",
-      "name": "Green Power Install SRL",
-      "cui": "RO41236589",
-      "logo": "/logos/green-power-install.png",
-      "description": "Specializați în sisteme fotovoltaice pentru sectorul agricol și agro-industrial. Experiență vastă cu ferme, sere și depozite frigorifice. Oferim soluții complete de la proiectare la mentenanță.",
-      "founded": 2017,
-      "employees": 22,
+      "id": "energobit",
+      "slug": "energobit",
+      "name": "EnergoBit S.A.",
+      "cui": "RO211717",
+      "logo": "/logos/energobit.png",
+      "description": "Grup industrial cu sediul în Cluj-Napoca, fondat în 1992, specializat în echipamente, instalații, servicii și soluții pentru industria energetică. Cu peste 490 de angajați și sucursale în Bacău, Brașov, București, Craiova, Constanța și Timișoara, EnergoBit este unul dintre cei mai mari integratori de soluții fotovoltaice industriale din România, cu expertiză în automatizare, telemetrie și management energetic.",
+      "founded": 1992,
+      "employees": 494,
       "location": {
-        "city": "Timișoara",
-        "county": "Timiș",
-        "address": "Bd. Industriilor nr. 45"
+        "city": "Cluj-Napoca",
+        "county": "Cluj",
+        "address": "Parc Industrial Tetarom, Str. Nikola Tesla nr. 6"
       },
       "contact": {
-        "phone": "0756789012",
-        "email": "office@greenpower.ro",
-        "website": "https://greenpower.ro"
+        "phone": "0264207500",
+        "email": "ebit@energobit.com",
+        "website": "https://www.energobit.com"
       },
-      "coverage": ["Timiș", "Arad", "Hunedoara", "Caraș-Severin"],
-      "specializations": ["agricol", "hale-industriale", "parcuri-logistice"],
-      "certifications": ["ANRE-C2A", "ISO-9001"],
+      "coverage": ["Cluj", "Bacău", "Brașov", "București", "Dolj", "Constanța", "Timiș", "Sălaj", "Sibiu", "Alba"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri"],
+      "certifications": ["ISO-9001", "ISO-14001"],
       "capacity": {
-        "minProjectKw": 30,
-        "maxProjectKw": 3000,
-        "projectsCompleted": 87
+        "minProjectKw": 100,
+        "maxProjectKw": 20000,
+        "projectsCompleted": 200
       },
       "financials": {
         "year": 2024,
-        "revenue": 5200000,
-        "profit": 420000
+        "revenue": 406828898,
+        "profit": 43524497
       },
-      "tags": ["mentenanta-inclusa", "finantare-disponibila", "monitorizare-inclusa"],
+      "tags": ["experienta-10-ani", "proiecte-mari", "mentenanta-inclusa", "garantie-extinsa"],
       "featured": true,
       "verified": true,
-      "createdAt": "2025-01-20",
-      "updatedAt": "2025-02-08"
+      "createdAt": "2025-01-15",
+      "updatedAt": "2026-02-20"
     },
     {
-      "id": "fotovolt-pro",
-      "slug": "fotovolt-pro",
-      "name": "FotovoltPro SRL",
-      "cui": "RO38745612",
-      "logo": "/logos/fotovolt-pro.png",
-      "description": "Companie cu capital 100% românesc, specializată în proiecte fotovoltaice pentru clădiri de birouri și centre comerciale. Partener oficial al celor mai mari producători de panouri din Europa.",
-      "founded": 2016,
-      "employees": 45,
+      "id": "energomontaj",
+      "slug": "energomontaj",
+      "name": "Energomontaj S.A.",
+      "cui": "RO1555468",
+      "logo": "/logos/energomontaj.png",
+      "description": "Companie emblematică în sectorul energetic din România, cu o istorie care datează din 1962 în montajul centralelor electrice clasice. În ultimele două decenii, Energomontaj și-a extins expertiza în energia regenerabilă, devenind unul dintre cei mai mari și experimentați instalatori de panouri fotovoltaice de pe piața locală, cu peste 10.000 de sisteme instalate. Portofoliu divers de la panouri pentru clădiri rezidențiale și comerciale până la parcuri fotovoltaice de câțiva MW.",
+      "founded": 1991,
+      "employees": 762,
       "location": {
         "city": "București",
         "county": "București",
-        "address": "Str. Energiei nr. 15, Sector 1"
+        "address": "Calea Dorobanților nr. 103-105, Sector 1"
       },
       "contact": {
-        "phone": "0721456789",
-        "email": "info@fotovoltpro.ro",
-        "website": "https://fotovoltpro.ro"
+        "phone": "+40722654651",
+        "email": "office@energomontaj-grup.ro",
+        "website": "https://www.energomontaj-grup.ro"
       },
-      "coverage": ["București", "Ilfov", "Giurgiu", "Dâmbovița", "Prahova", "Călărași"],
-      "specializations": ["cladiri-birouri", "retail", "hale-industriale"],
-      "certifications": ["ANRE-C2A", "ISO-9001", "ISO-14001", "ISO-45001"],
+      "coverage": ["București", "Ilfov", "Timiș", "Argeș", "Prahova", "Constanța", "Brașov", "Cluj"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "spitale", "scoli"],
+      "certifications": ["ISO-9001", "ISO-14001"],
       "capacity": {
-        "minProjectKw": 100,
-        "maxProjectKw": 10000,
-        "projectsCompleted": 203
+        "minProjectKw": 50,
+        "maxProjectKw": 20000,
+        "projectsCompleted": 10000
       },
       "financials": {
         "year": 2024,
-        "revenue": 15200000,
-        "profit": 1350000
+        "revenue": 274666727,
+        "profit": 4372191
       },
-      "tags": ["experienta-10-ani", "proiecte-mari", "garantie-extinsa", "monitorizare-inclusa"],
+      "tags": ["experienta-10-ani", "proiecte-mari", "mentenanta-inclusa", "garantie-extinsa"],
       "featured": true,
       "verified": true,
-      "createdAt": "2025-01-10",
-      "updatedAt": "2025-02-12"
+      "createdAt": "2025-01-15",
+      "updatedAt": "2026-02-20"
     },
     {
-      "id": "eco-solar-vest",
-      "slug": "eco-solar-vest",
-      "name": "Eco Solar Vest SRL",
-      "cui": "RO42315678",
-      "logo": "/logos/eco-solar-vest.png",
-      "description": "Instalator autorizat ANRE cu focus pe proiecte fotovoltaice pentru hoteluri, pensiuni și unități de cazare din vestul țării. Soluții personalizate pentru eficiență energetică maximă.",
+      "id": "romsir-impex",
+      "slug": "romsir-impex",
+      "name": "Romsir-Impex S.R.L.",
+      "cui": "RO6218870",
+      "logo": "/logos/romsir-impex.png",
+      "description": "Afacere de familie fondată în 1994 în domeniul electronicii și electrotehnicii, Romsir este unul dintre pionierii energiei verzi din România, instalând primul sistem fotovoltaic în 2007. Cu peste 14.500 de sisteme fotovoltaice instalate totalizând peste 43.000 kW și peste 300 de sisteme comerciale și industriale, deservește sectoare de la retail la producție industrială, agricultură, industria auto și HoReCa. Peste 50 de echipe proprii de instalare.",
+      "founded": 1994,
+      "employees": 39,
+      "location": {
+        "city": "Balș",
+        "county": "Olt",
+        "address": "Str. Nucilor nr. 15"
+      },
+      "contact": {
+        "phone": "0371231242",
+        "email": "clienti@romsir.ro",
+        "website": "https://www.romsir.ro"
+      },
+      "coverage": ["Olt", "București", "Ilfov", "Dolj", "Gorj", "Vâlcea", "Argeș", "Teleorman", "Giurgiu", "Dâmbovița"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "retail", "agricol", "hoteluri"],
+      "certifications": ["ANRE-C2A"],
+      "capacity": {
+        "minProjectKw": 20,
+        "maxProjectKw": 20000,
+        "projectsCompleted": 14500
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 117790364,
+        "profit": 21703587
+      },
+      "tags": ["experienta-10-ani", "proiecte-mari", "mentenanta-inclusa", "monitorizare-inclusa", "finantare-disponibila"],
+      "featured": true,
+      "verified": true,
+      "createdAt": "2025-01-15",
+      "updatedAt": "2026-02-20"
+    },
+    {
+      "id": "renovatio-solar",
+      "slug": "renovatio-solar",
+      "name": "Renovatio Solar S.R.L.",
+      "cui": "RO24362482",
+      "logo": "/logos/renovatio-solar.png",
+      "description": "Pionier al energiei solare în România, Renovatio Solar a dezvoltat primul parc fotovoltaic de 1 MWp din țară în 2010, iar în același an a deschis prima fabrică de panouri fotovoltaice la scară industrială cu o capacitate anuală de 50 MWp. Cu peste 15 ani de experiență, a dezvoltat și construit peste 350 MWp în proiecte fotovoltaice la nivel internațional, oferind servicii complete EPC și soluții de energie regenerabilă.",
+      "founded": 2008,
+      "employees": 24,
+      "location": {
+        "city": "Popești-Leordeni",
+        "county": "Ilfov",
+        "address": "Str. Pavel Ceamur nr. 21, Clădirea C1, Parter"
+      },
+      "contact": {
+        "phone": "+40316400032",
+        "email": "office@renovatiosolar.ro",
+        "website": "https://renovatiosolar.ro"
+      },
+      "coverage": ["București", "Ilfov", "Olt", "Satu Mare", "Constanța", "Timiș", "Cluj"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri"],
+      "certifications": ["ISO-9001", "ISO-14001"],
+      "capacity": {
+        "minProjectKw": 500,
+        "maxProjectKw": 100000,
+        "projectsCompleted": 80
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 37387977,
+        "profit": 12204312
+      },
+      "tags": ["experienta-10-ani", "proiecte-mari", "mentenanta-inclusa"],
+      "featured": true,
+      "verified": true,
+      "createdAt": "2025-01-15",
+      "updatedAt": "2026-02-20"
+    },
+    {
+      "id": "mrb-electric",
+      "slug": "mrb-electric",
+      "name": "MRB Electric S.R.L.",
+      "cui": "RO27829133",
+      "logo": "/logos/mrb-electric.png",
+      "description": "Companie din Cluj-Napoca cu 15 ani de experiență în domeniul energiei solare, specializată în sisteme fotovoltaice, stații de încărcare pentru vehicule electrice, instalații electrice și structuri metalice. Cu peste 3.000 de proiecte finalizate în România și Germania, MRB Electric este partener tehnologic activ pentru companii din sectoarele industrial, logistic, retail și agribusiness, oferind soluții complete de la analiza energetică la execuție și mentenanță.",
+      "founded": 2010,
+      "employees": 40,
+      "location": {
+        "city": "Cluj-Napoca",
+        "county": "Cluj",
+        "address": "Piața Ștefan cel Mare nr. 4"
+      },
+      "contact": {
+        "phone": "+40752136183",
+        "email": "office@mrbelectric.ro",
+        "website": "https://mrbelectric.ro"
+      },
+      "coverage": ["Cluj", "Bihor", "Sălaj", "Mureș", "Sibiu", "Alba", "Bistrița-Năsăud"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "retail", "agricol", "cladiri-birouri"],
+      "certifications": ["ANRE-C2A"],
+      "capacity": {
+        "minProjectKw": 20,
+        "maxProjectKw": 5000,
+        "projectsCompleted": 3000
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 24510663,
+        "profit": 583875
+      },
+      "tags": ["experienta-10-ani", "mentenanta-inclusa", "finantare-disponibila"],
+      "featured": true,
+      "verified": true,
+      "createdAt": "2025-01-15",
+      "updatedAt": "2026-02-20"
+    },
+    {
+      "id": "alfa-energetic",
+      "slug": "alfa-energetic",
+      "name": "Alfa Energetic Esco S.R.L.",
+      "cui": "RO40773757",
+      "logo": "/logos/alfa-energetic.png",
+      "description": "Companie specializată în sisteme fotovoltaice industriale și comerciale (50kW - 24MW), parcuri fotovoltaice, investiții fotovoltaice și distribuție de panouri, invertoare și soluții de stocare a energiei. Oferă soluții complete la cheie: evaluare, proiectare, instalare, formalități prosumator, mentenanță, suport tehnic de afaceri și expansiune viitoare. Centru de formare a instalatorilor autorizat.",
       "founded": 2019,
       "employees": 15,
       "location": {
-        "city": "Oradea",
-        "county": "Bihor",
-        "address": "Str. Soarelui nr. 8"
+        "city": "Brănești",
+        "county": "Ilfov",
+        "address": "Bd. Basarabia 250, Sector 3, București (showroom)"
       },
       "contact": {
-        "phone": "0745321654",
-        "email": "contact@ecosolarvest.ro",
-        "website": "https://ecosolarvest.ro"
+        "phone": "0729700500",
+        "email": "office@alfaenergetic.ro",
+        "website": "https://alfaenergetic.ro"
       },
-      "coverage": ["Bihor", "Satu Mare", "Maramureș", "Arad"],
-      "specializations": ["hoteluri", "retail", "cladiri-birouri"],
-      "certifications": ["ANRE-C2A", "ISO-9001"],
-      "capacity": {
-        "minProjectKw": 20,
-        "maxProjectKw": 1500,
-        "projectsCompleted": 52
-      },
-      "financials": {
-        "year": 2024,
-        "revenue": 2800000,
-        "profit": 195000
-      },
-      "tags": ["mentenanta-inclusa", "finantare-disponibila"],
-      "featured": false,
-      "verified": true,
-      "createdAt": "2025-01-25",
-      "updatedAt": "2025-02-05"
-    },
-    {
-      "id": "sun-tech-energy",
-      "slug": "sun-tech-energy",
-      "name": "Sun Tech Energy SRL",
-      "cui": "RO36985214",
-      "logo": "/logos/sun-tech-energy.png",
-      "description": "Pionieri în instalații fotovoltaice pentru spitale și instituții publice. Echipă multidisciplinară de ingineri și tehnicieni cu experiență în proiecte complexe cu cerințe speciale de siguranță.",
-      "founded": 2014,
-      "employees": 40,
-      "location": {
-        "city": "Iași",
-        "county": "Iași",
-        "address": "Bd. Energiei Verzi nr. 22"
-      },
-      "contact": {
-        "phone": "0732654987",
-        "email": "office@suntech.ro",
-        "website": "https://suntech.ro"
-      },
-      "coverage": ["Iași", "Suceava", "Botoșani", "Neamț", "Bacău", "Vaslui"],
-      "specializations": ["spitale", "scoli", "cladiri-birouri", "hale-industriale"],
-      "certifications": ["ANRE-C2A", "ISO-9001", "ISO-14001", "ISO-45001"],
-      "capacity": {
-        "minProjectKw": 50,
-        "maxProjectKw": 5000,
-        "projectsCompleted": 156
-      },
-      "financials": {
-        "year": 2024,
-        "revenue": 12000000,
-        "profit": 980000
-      },
-      "tags": ["experienta-10-ani", "proiecte-mari", "garantie-extinsa", "mentenanta-inclusa"],
-      "featured": true,
-      "verified": true,
-      "createdAt": "2025-01-12",
-      "updatedAt": "2025-02-11"
-    },
-    {
-      "id": "panel-solar-sud",
-      "slug": "panel-solar-sud",
-      "name": "Panel Solar Sud SRL",
-      "cui": "RO44521378",
-      "logo": "/logos/panel-solar-sud.png",
-      "description": "Firmă specializată în instalarea de sisteme fotovoltaice pentru hale industriale și parcuri logistice din sudul României. Acoperim tot lanțul de valoare: consultanță, proiectare, instalare și mentenanță.",
-      "founded": 2018,
-      "employees": 28,
-      "location": {
-        "city": "Craiova",
-        "county": "Dolj",
-        "address": "Str. Industriei nr. 35"
-      },
-      "contact": {
-        "phone": "0758963214",
-        "email": "info@panelsolarsud.ro",
-        "website": "https://panelsolarsud.ro"
-      },
-      "coverage": ["Dolj", "Olt", "Gorj", "Vâlcea", "Mehedinți"],
-      "specializations": ["hale-industriale", "parcuri-logistice", "agricol"],
-      "certifications": ["ANRE-C2A", "ISO-9001"],
-      "capacity": {
-        "minProjectKw": 50,
-        "maxProjectKw": 4000,
-        "projectsCompleted": 78
-      },
-      "financials": {
-        "year": 2024,
-        "revenue": 6100000,
-        "profit": 510000
-      },
-      "tags": ["mentenanta-inclusa", "monitorizare-inclusa", "finantare-disponibila"],
-      "featured": false,
-      "verified": true,
-      "createdAt": "2025-02-01",
-      "updatedAt": "2025-02-10"
-    },
-    {
-      "id": "volt-energy-group",
-      "slug": "volt-energy-group",
-      "name": "Volt Energy Group SRL",
-      "cui": "RO39874563",
-      "logo": "/logos/volt-energy-group.png",
-      "description": "Grup de companii cu experiență extinsă în proiecte fotovoltaice de mare capacitate. Parteneriate strategice cu dezvoltatori imobiliari pentru integrarea energiei solare în proiecte noi.",
-      "founded": 2013,
-      "employees": 55,
-      "location": {
-        "city": "Brașov",
-        "county": "Brașov",
-        "address": "Str. Electrocentralei nr. 5"
-      },
-      "contact": {
-        "phone": "0769852147",
-        "email": "contact@voltenergygroup.ro",
-        "website": "https://voltenergygroup.ro"
-      },
-      "coverage": ["Brașov", "Sibiu", "Covasna", "Harghita", "Mureș", "Alba"],
-      "specializations": ["hale-industriale", "cladiri-birouri", "parcuri-logistice", "retail"],
-      "certifications": ["ANRE-C2A", "ISO-9001", "ISO-14001"],
-      "capacity": {
-        "minProjectKw": 100,
-        "maxProjectKw": 8000,
-        "projectsCompleted": 189
-      },
-      "financials": {
-        "year": 2024,
-        "revenue": 18500000,
-        "profit": 1620000
-      },
-      "tags": ["experienta-10-ani", "proiecte-mari", "garantie-extinsa", "mentenanta-inclusa", "monitorizare-inclusa"],
-      "featured": true,
-      "verified": true,
-      "createdAt": "2025-01-08",
-      "updatedAt": "2025-02-12"
-    },
-    {
-      "id": "solar-construct",
-      "slug": "solar-construct",
-      "name": "Solar Construct SRL",
-      "cui": "RO43216587",
-      "logo": "/logos/solar-construct.png",
-      "description": "Firmă de construcții cu divizie specializată în montaj panouri fotovoltaice pe structuri metalice existente. Experiență unică în retrofitting energetic pentru clădiri industriale vechi.",
-      "founded": 2020,
-      "employees": 18,
-      "location": {
-        "city": "Constanța",
-        "county": "Constanța",
-        "address": "Bd. Aurel Vlaicu nr. 88"
-      },
-      "contact": {
-        "phone": "0741852963",
-        "email": "office@solarconstruct.ro",
-        "website": "https://solarconstruct.ro"
-      },
-      "coverage": ["Constanța", "Tulcea", "Brăila", "Galați", "Buzău"],
-      "specializations": ["hale-industriale", "parcuri-logistice"],
+      "coverage": ["București", "Ilfov", "Teleorman", "Călărași", "Cluj", "Sibiu", "Dolj", "Dâmbovița", "Prahova"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "agricol", "retail"],
       "certifications": ["ANRE-C2A"],
       "capacity": {
-        "minProjectKw": 30,
-        "maxProjectKw": 2000,
-        "projectsCompleted": 34
-      },
-      "financials": {
-        "year": 2024,
-        "revenue": 3200000,
-        "profit": 245000
-      },
-      "tags": ["mentenanta-inclusa"],
-      "featured": false,
-      "verified": false,
-      "createdAt": "2025-02-05",
-      "updatedAt": "2025-02-10"
-    },
-    {
-      "id": "renewable-solutions-ro",
-      "slug": "renewable-solutions-ro",
-      "name": "Renewable Solutions RO SRL",
-      "cui": "RO40125874",
-      "logo": "/logos/renewable-solutions-ro.png",
-      "description": "Companie inovatoare ce oferă soluții complete de energie regenerabilă pentru sectorul comercial. Specializați în sisteme hibride fotovoltaic + stocare energie pentru parcuri retail și centre comerciale.",
-      "founded": 2016,
-      "employees": 32,
-      "location": {
-        "city": "Sibiu",
-        "county": "Sibiu",
-        "address": "Str. Energeticienilor nr. 14"
-      },
-      "contact": {
-        "phone": "0723654871",
-        "email": "info@renewablesolutions.ro",
-        "website": "https://renewablesolutions.ro"
-      },
-      "coverage": ["Sibiu", "Alba", "Vâlcea", "Brașov", "Mureș", "Hunedoara"],
-      "specializations": ["retail", "cladiri-birouri", "hale-industriale", "hoteluri"],
-      "certifications": ["ANRE-C2A", "ISO-9001", "ISO-14001"],
-      "capacity": {
         "minProjectKw": 50,
-        "maxProjectKw": 6000,
-        "projectsCompleted": 98
+        "maxProjectKw": 24000,
+        "projectsCompleted": 50
       },
       "financials": {
         "year": 2024,
-        "revenue": 9800000,
-        "profit": 870000
-      },
-      "tags": ["experienta-10-ani", "proiecte-mari", "finantare-disponibila", "monitorizare-inclusa", "garantie-extinsa"],
-      "featured": true,
-      "verified": true,
-      "createdAt": "2025-01-18",
-      "updatedAt": "2025-02-09"
-    },
-    {
-      "id": "electro-solar-moldova",
-      "slug": "electro-solar-moldova",
-      "name": "Electro Solar Moldova SRL",
-      "cui": "RO45632178",
-      "logo": "/logos/electro-solar-moldova.png",
-      "description": "Principalul instalator de sisteme fotovoltaice comerciale din regiunea Moldovei. Focus pe proiecte agricole și hale de producție. Echipă tânără și dinamică cu certificări europene.",
-      "founded": 2021,
-      "employees": 12,
-      "location": {
-        "city": "Bacău",
-        "county": "Bacău",
-        "address": "Str. Republicii nr. 56"
-      },
-      "contact": {
-        "phone": "0734951753",
-        "email": "contact@electrosolarmoldova.ro",
-        "website": "https://electrosolarmoldova.ro"
-      },
-      "coverage": ["Bacău", "Neamț", "Vrancea", "Galați"],
-      "specializations": ["agricol", "hale-industriale", "scoli"],
-      "certifications": ["ANRE-C2A"],
-      "capacity": {
-        "minProjectKw": 20,
-        "maxProjectKw": 1000,
-        "projectsCompleted": 28
-      },
-      "financials": {
-        "year": 2024,
-        "revenue": 1800000,
-        "profit": 135000
+        "revenue": 22971,
+        "profit": -31006
       },
       "tags": ["finantare-disponibila", "mentenanta-inclusa"],
       "featured": false,
       "verified": true,
-      "createdAt": "2025-02-03",
-      "updatedAt": "2025-02-10"
+      "createdAt": "2025-01-15",
+      "updatedAt": "2026-02-20"
+    },
+    {
+      "id": "stratospark",
+      "slug": "stratospark",
+      "name": "StratoSpark S.R.L.",
+      "cui": "RO21107558",
+      "logo": "/logos/stratospark.png",
+      "description": "Firmă autorizată de instalare panouri fotovoltaice din București, activă din 2007, specializată în soluții eficiente și sustenabile pentru sectoarele rezidențial, comercial și industrial. Cu peste 20 de echipe regionale de instalare și acoperire națională, implementează sisteme pentru hale industriale, clădiri de birouri, centre comerciale, sectoare agricole, telecomunicații și instituții publice. Partener autorizat AFM.",
+      "founded": 2007,
+      "employees": 23,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Bdul. Bucureștii Noi 25A, Sector 1"
+      },
+      "contact": {
+        "phone": "+40374456236",
+        "email": "contact@stratospark.ro",
+        "website": "https://stratospark.ro"
+      },
+      "coverage": ["București", "Ilfov", "Dolj", "Timiș", "Cluj", "Bacău", "Constanța", "Satu Mare", "Prahova"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail", "agricol", "hoteluri", "scoli", "spitale"],
+      "certifications": ["ANRE-C2A"],
+      "capacity": {
+        "minProjectKw": 20,
+        "maxProjectKw": 5000,
+        "projectsCompleted": 200
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 9102370,
+        "profit": 616547
+      },
+      "tags": ["experienta-10-ani", "mentenanta-inclusa", "finantare-disponibila", "monitorizare-inclusa"],
+      "featured": true,
+      "verified": true,
+      "createdAt": "2025-01-15",
+      "updatedAt": "2026-02-20"
+    },
+    {
+      "id": "eebc",
+      "slug": "eebc",
+      "name": "East European Business Center (E.E.B.C.) S.R.L.",
+      "cui": "RO26016710",
+      "logo": "/logos/eebc.png",
+      "description": "Companie cu sediul în Sibiu, fondată în 2009, specializată în servicii integrate de instalații civile și industriale, inclusiv proiectarea, construcția și mentenanța parcurilor fotovoltaice comerciale și industriale. Oferă soluții complete pentru centrale electrice fotovoltaice (CEF) cu puteri de la 30 kWp până la 1.000 MWp, cu acoperire națională și birouri în București și Sibiu.",
+      "founded": 2009,
+      "employees": 62,
+      "location": {
+        "city": "Sibiu",
+        "county": "Sibiu",
+        "address": "Aleea Rusciorului nr. 2, Bl. 67, Sc. C"
+      },
+      "contact": {
+        "phone": "+40731001992",
+        "email": "office@eebc.ro",
+        "website": "https://eebc.ro"
+      },
+      "coverage": ["Sibiu", "București", "Ilfov", "Brașov", "Prahova", "Cluj", "Constanța", "Timiș", "Alba", "Mureș"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail", "hoteluri", "spitale"],
+      "certifications": ["ISO-9001"],
+      "capacity": {
+        "minProjectKw": 30,
+        "maxProjectKw": 1000000,
+        "projectsCompleted": 100
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 15225817,
+        "profit": 499629
+      },
+      "tags": ["experienta-10-ani", "proiecte-mari", "mentenanta-inclusa", "monitorizare-inclusa"],
+      "featured": true,
+      "verified": true,
+      "createdAt": "2025-01-15",
+      "updatedAt": "2026-02-20"
+    },
+    {
+      "id": "genway",
+      "slug": "genway",
+      "name": "Electro Service Distribuție S.R.L. (Genway)",
+      "cui": "RO21241885",
+      "logo": "/logos/genway.png",
+      "description": "Companie cu peste 34 de ani de experiență în domeniul electric, operând sub brandul Genway, cu peste 11.500 de proiecte fotovoltaice instalate cu echipe proprii. Distribuitor și partener oficial Fronius, Huawei FusionSolar și BYD Battery Box în România. Firmă validată AFM în cadrul programelor Casa Verde Fotovoltaice și acreditată ANRE pentru proiectare și instalare în programul ElectricUp.",
+      "founded": 2007,
+      "employees": 32,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Intrarea Târcău nr. 3B, Sector 3"
+      },
+      "contact": {
+        "phone": "021.627.00.34",
+        "email": "office@genway.ro",
+        "website": "https://www.genway.ro"
+      },
+      "coverage": ["București", "Ilfov", "Vâlcea", "Brăila", "Prahova", "Dâmbovița", "Argeș"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail", "agricol"],
+      "certifications": ["ANRE-C2A"],
+      "capacity": {
+        "minProjectKw": 20,
+        "maxProjectKw": 10000,
+        "projectsCompleted": 11500
+      },
+      "financials": {
+        "year": 2022,
+        "revenue": 30788599,
+        "profit": 1874982
+      },
+      "tags": ["experienta-10-ani", "mentenanta-inclusa", "finantare-disponibila", "monitorizare-inclusa"],
+      "featured": true,
+      "verified": true,
+      "createdAt": "2025-01-15",
+      "updatedAt": "2026-02-20"
     }
   ]
 }

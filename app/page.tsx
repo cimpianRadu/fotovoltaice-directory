@@ -4,7 +4,7 @@ import CompanyCard from '@/components/company/CompanyCard';
 import FAQ from '@/components/seo/FAQ';
 import JsonLd from '@/components/seo/JsonLd';
 import WaitlistForm from '@/components/forms/WaitlistForm';
-import { getFeaturedCompanies, getTotalStats, formatNumber } from '@/lib/utils';
+import { getFeaturedCompanies } from '@/lib/utils';
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
 
 const homeFaqs = [
@@ -37,7 +37,6 @@ const homeFaqs = [
 
 export default function HomePage() {
   const featured = getFeaturedCompanies();
-  const stats = getTotalStats();
 
   return (
     <>
@@ -60,20 +59,6 @@ export default function HomePage() {
             <SearchBar />
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6 sm:gap-10 text-center">
-            <div>
-              <p className="text-2xl sm:text-3xl font-bold text-primary-light">{stats.companiesCount}+</p>
-              <p className="text-sm text-gray-300">Firme listate</p>
-            </div>
-            <div>
-              <p className="text-2xl sm:text-3xl font-bold text-primary-light">{formatNumber(stats.totalProjects)}+</p>
-              <p className="text-sm text-gray-300">Proiecte finalizate</p>
-            </div>
-            <div>
-              <p className="text-2xl sm:text-3xl font-bold text-primary-light">{stats.countiesCount}</p>
-              <p className="text-sm text-gray-300">Județe acoperite</p>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -108,18 +93,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* CTA for companies */}
       <section className="bg-primary/5 border-y border-primary/10">
         <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">Ai nevoie de o ofertă personalizată?</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">Ești instalator fotovoltaic?</h2>
           <p className="text-gray-600 mb-6 max-w-lg mx-auto">
-            Completează formularul și primești oferte de la instalatori verificați din zona ta, gratuit și fără obligații.
+            Listează-ți firma în directorul nostru și fii vizibil pentru clienții care caută instalatori în zona ta. Înscrierea este gratuită.
           </p>
           <Link
-            href="/cere-oferta"
+            href="/listeaza-firma"
             className="inline-flex items-center bg-primary hover:bg-primary-dark text-white font-semibold px-8 py-3 rounded-lg transition-colors"
           >
-            Cere Ofertă Gratuită
+            Listează-ți Firma Gratuit
           </Link>
         </div>
       </section>

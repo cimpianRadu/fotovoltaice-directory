@@ -25,6 +25,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/listeaza-firma" className="text-sm text-gray-300 hover:text-white transition-colors">
+                  Listează-ți Firma
+                </Link>
+              </li>
+              <li>
                 <Link href="/cere-oferta" className="text-sm text-gray-300 hover:text-white transition-colors">
                   Cere Ofertă
                 </Link>

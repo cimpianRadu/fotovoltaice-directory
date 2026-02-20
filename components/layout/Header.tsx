@@ -3,16 +3,24 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 const navLinks = [
   { href: '/firme', label: 'Firme' },
   { href: '/ghid/panouri-fotovoltaice-hale-industriale', label: 'Ghid' },
   { href: '/intrebari-frecvente', label: 'FAQ' },
   { href: '/despre', label: 'Despre' },
+  { href: '/cere-oferta', label: 'Cere Ofertă' },
 ];
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+
+  function isActive(href: string) {
+    if (href === '/') return pathname === '/';
+    return pathname.startsWith(href);
+  }
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-border">
@@ -29,26 +37,30 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-gray-600 hover:text-secondary-dark transition-colors"
+              className={`text-sm font-medium transition-colors ${
+                isActive(link.href)
+                  ? 'text-primary-dark border-b-2 border-primary pb-0.5'
+                  : 'text-gray-600 hover:text-secondary-dark'
+              }`}
             >
               {link.label}
             </Link>
           ))}
           <Link
-            href="/cere-oferta"
+            href="/listeaza-firma"
             className="bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
           >
-            Cere Ofertă
+            Listează-ți Firma
           </Link>
         </nav>
 
         {/* Mobile hamburger */}
         <div className="flex items-center gap-3 md:hidden">
           <Link
-            href="/cere-oferta"
+            href="/listeaza-firma"
             className="bg-primary hover:bg-primary-dark text-white font-semibold text-xs px-3 py-1.5 rounded-lg transition-colors"
           >
-            Ofertă
+            Listează Firma
           </Link>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -75,7 +87,11 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="text-base font-medium text-gray-700 hover:text-secondary-dark hover:bg-surface rounded-lg px-3 py-2.5 transition-colors"
+                className={`text-base font-medium rounded-lg px-3 py-2.5 transition-colors ${
+                  isActive(link.href)
+                    ? 'text-primary-dark bg-primary/5'
+                    : 'text-gray-700 hover:text-secondary-dark hover:bg-surface'
+                }`}
               >
                 {link.label}
               </Link>

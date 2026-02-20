@@ -33,7 +33,7 @@ export function getCounties(): string[] {
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('ro-RO', {
     style: 'currency',
-    currency: 'EUR',
+    currency: 'RON',
     maximumFractionDigits: 0,
   }).format(amount);
 }

@@ -6,6 +6,7 @@ type EventName =
   | 'search_performed'
   | 'lead_form_opened'
   | 'lead_form_submitted'
+  | 'listing_form_submitted'
   | 'waitlist_signup'
   | 'company_contact_clicked'
   | 'external_link_clicked';
