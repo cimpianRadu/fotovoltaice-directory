@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Panouri Fotovoltaice Rezidențiale - În Curând',
   description:
     'Directorul pentru panouri fotovoltaice rezidențiale va fi disponibil în curând. Înscrie-te pentru a fi notificat la lansare.',
+  alternates: { canonical: '/rezidential' },
 };
 
 export default function RezidentialPage() {

@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Cere Ofertă Gratuită - Instalatori Fotovoltaice',
   description:
     'Completează formularul și primești oferte personalizate de la instalatori verificați de panouri fotovoltaice comerciale din zona ta.',
+  alternates: { canonical: '/cere-oferta' },
 };
 
 export default function CereOfertaPage() {

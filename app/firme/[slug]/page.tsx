@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${company.name} - Instalator Panouri Fotovoltaice`,
     description: `${company.name} din ${company.location.city} - ${company.description.slice(0, 150)}`,
+    alternates: { canonical: `/firme/${slug}` },
     openGraph: {
       title: company.name,
       description: company.description,

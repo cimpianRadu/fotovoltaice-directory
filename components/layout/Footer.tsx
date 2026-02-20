@@ -73,23 +73,38 @@ export default function Footer() {
                   Legislație Prosumator
                 </Link>
               </li>
+              <li>
+                <Link href="/ghid" className="text-sm text-gray-300 hover:text-white transition-colors">
+                  Toate ghidurile →
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Legal & Contact */}
           <div>
             <h4 className="font-semibold text-sm uppercase tracking-wider mb-3 text-gray-400">
-              Contact
+              Legal
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/despre" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Contactează-ne
+                <Link href="/politica-confidentialitate" className="text-sm text-gray-300 hover:text-white transition-colors">
+                  Politica de Confidențialitate
                 </Link>
               </li>
               <li>
-                <Link href="/rezidential" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Rezidențial (în curând)
+                <Link href="/termeni-conditii" className="text-sm text-gray-300 hover:text-white transition-colors">
+                  Termeni și Condiții
+                </Link>
+              </li>
+              <li>
+                <Link href="/politica-cookies" className="text-sm text-gray-300 hover:text-white transition-colors">
+                  Politica de Cookies
+                </Link>
+              </li>
+              <li>
+                <Link href="/despre" className="text-sm text-gray-300 hover:text-white transition-colors">
+                  Contactează-ne
                 </Link>
               </li>
             </ul>

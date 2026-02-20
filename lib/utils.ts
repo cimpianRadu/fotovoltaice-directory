@@ -157,6 +157,36 @@ export function sortCompanies(
   }
 }
 
+export function slugifyCounty(county: string): string {
+  return county
+    .toLowerCase()
+    .replace(/ă/g, 'a')
+    .replace(/â/g, 'a')
+    .replace(/î/g, 'i')
+    .replace(/ș/g, 's')
+    .replace(/ț/g, 't')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+export function getCountyBySlug(slug: string): string | undefined {
+  return countiesData.counties.find((c) => slugifyCounty(c) === slug);
+}
+
+export function getCompaniesByCounty(county: string): Company[] {
+  return companiesData.companies.filter((c) => c.coverage.includes(county));
+}
+
+export function getCoveredCounties(): string[] {
+  const covered = new Set<string>();
+  for (const c of companiesData.companies) {
+    for (const county of c.coverage) {
+      covered.add(county);
+    }
+  }
+  return Array.from(covered).sort((a, b) => a.localeCompare(b, 'ro'));
+}
+
 export const SITE_NAME = 'Instalatori Fotovoltaice România';
 export const SITE_URL = 'https://instalatori-fotovoltaice.ro';
 export const SITE_DESCRIPTION =

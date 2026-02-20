@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: 'Întrebări Frecvente - Panouri Fotovoltaice Comerciale și Industriale',
   description:
     'Răspunsuri la cele mai frecvente întrebări despre panouri fotovoltaice comerciale: costuri pe kWp, subvenții 2026, legislație prosumator, Electric UP, alegerea instalatorului ANRE.',
+  alternates: { canonical: '/intrebari-frecvente' },
 };
 
 const faqSections = [

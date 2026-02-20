@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Listează-ți Firma - Instalatori Fotovoltaice România',
   description:
     'Ești instalator de panouri fotovoltaice? Listează-ți firma gratuit în directorul nostru și fii vizibil pentru clienții care caută instalatori în zona ta.',
+  alternates: { canonical: '/listeaza-firma' },
 };
 
 export default function ListeazaFirmaPage() {

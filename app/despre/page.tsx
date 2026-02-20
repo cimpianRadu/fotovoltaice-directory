@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Despre Noi - Instalatori Fotovoltaice România',
   description:
     'Despre proiectul Instalatori Fotovoltaice România - directorul #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale.',
+  alternates: { canonical: '/despre' },
 };
 
 export default function DesprePage() {

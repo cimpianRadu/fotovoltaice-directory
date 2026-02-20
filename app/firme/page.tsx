@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: 'Firme Instalare Panouri Fotovoltaice | Director Instalatori',
   description:
     'Director complet cu firme verificate de instalare panouri fotovoltaice pentru hale industriale, clădiri de birouri, parcuri logistice și spații comerciale.',
+  alternates: { canonical: '/firme' },
 };
 
 export default function FirmePage() {
