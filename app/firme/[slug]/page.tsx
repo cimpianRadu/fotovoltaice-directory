@@ -128,7 +128,7 @@ export default async function CompanyDetailPage({ params }: Props) {
             {/* Financial Stability */}
             <div className="bg-surface rounded-xl p-5 border border-border">
               <h2 className="text-lg font-bold text-gray-900 mb-3">Stabilitate Financiară</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-gray-500">Anul raportării</p>
                   <p className="font-semibold text-gray-900">{company.financials.year}</p>
@@ -138,10 +138,6 @@ export default async function CompanyDetailPage({ params }: Props) {
                   <p className={`font-semibold ${financialHealth === 'Solidă' ? 'text-green-600' : financialHealth === 'Bună' ? 'text-yellow-600' : 'text-gray-500'}`}>
                     {financialHealth}
                   </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Angajați</p>
-                  <p className="font-semibold text-gray-900">{company.employees}</p>
                 </div>
               </div>
             </div>

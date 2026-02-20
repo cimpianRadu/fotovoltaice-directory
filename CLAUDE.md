@@ -94,6 +94,13 @@ Când adăugăm firme noi în director:
 - Date financiare verificabile (nu self-reported)
 - Focus pe comercial/industrial (nu doar rezidențial)
 
+### ⚠️ REGULA DE AUR: NU ESTIMA, NU UMFLA DATE
+- **NICIODATĂ** nu inventa sau estima date (nr. proiecte, angajați, capacități, cifre financiare)
+- Dacă un câmp nu e verificabil din surse publice, lasă-l gol sau pune 0
+- Mai bine afișăm mai puțin decât afișăm date false
+- Surse acceptate: termene.ro, risco.ro, listafirme.eu, anre.ro, site-ul oficial al firmei
+- Dacă sursa nu e clară, adaugă un comentariu cu "neverificat" sau nu include câmpul
+
 ## Procesul de Creare Conținut (Ghiduri)
 
 ### Structura unui ghid (data/guides.json)
@@ -157,6 +164,50 @@ Când adăugăm firme noi în director:
 - Formularul "Cere Ofertă" → lead-urile se trimit firmelor Premium din zona clientului
 
 ## Roadmap
+
+### PRIORITATE SESIUNEA URMĂTOARE (Sprint 30 zile)
+
+**Zi 1-2: LANSARE**
+1. Verificare date firme din surse publice (mfinante.gov.ro, termene.ro). Fix ce e greșit, scoate ce e neverificabil.
+2. Deploy pe Vercel + DNS (instalatori-fotovoltaice.ro)
+3. Google Search Console + submit sitemap
+4. Umami analytics setup
+
+**Zi 3-7: PSEO + CONȚINUT**
+5. Pagini programatice per județ (`/firme/judet/[county]`) — 42 pagini indexabile automat
+6. Primul articol nou (Subvenții Panouri Fotovoltaice 2026)
+
+**Zi 8-14: HUSTLE (distribuție manuală)**
+7. Reddit (r/Romania, forumuri energie), Facebook groups (fotovoltaice, IMM-uri, antreprenori)
+8. Răspunde pe forumuri la întrebări despre instalatori/fotovoltaice cu link către director
+
+**Zi 15-21: OUTREACH FIRME**
+9. Email către cele 10 firme listate: "Profilul tău e live, vrei să-l revendici/actualizezi?"
+10. Articol #2 + 5 firme noi verificate
+
+**Zi 30: DECIZIE**
+11. Check Search Console: Impresii? Trafic? → Double down. Zero? → Pivotează.
+
+## Strategie (Inspirat din metoda John Rush, adaptat pentru nișă B2B)
+
+### Principii
+- **Viteză > Perfecțiune** — lansează rapid, iterează live, nu construi features înainte de validare
+- **30-day rule** — dacă nu ai impresii în Search Console după 30 zile, pivotează
+- **Claim listing > formular pasiv** — listează firmele din surse publice, apoi contactează-le să-și revendice profilul
+- **PSEO (Programmatic SEO)** — pagini auto-generate per județ/oraș/specializare = zeci/sute de pagini indexabile
+- **Distribuție manuală** — primele 30 zile, promovare activă pe Reddit, Facebook, forumuri
+- **Calitate > Volum** — nișa are ~50-100 firme în RO, nu mii. Fiecare listare trebuie să fie corectă.
+
+### Ce e diferit față de Rush clasic
+- Rush scrape-uiește mii de listări din Google Maps → noi avem nișă mică, calitatea bate volumul
+- Rush face directoare B2C cu trafic mare → noi suntem B2B, 10 vizitatori relevanți/zi pot fi suficienți
+- Rush face "disposable directories" → noi construim un asset pe termen lung cu date verificate
+
+### Monetizare (în ordinea implementării)
+1. **Claim listing** (gratuit) — firmele își revendică profilul, adaugă date mai bune
+2. **Sponsored/Premium listings** (149 EUR/lună) — poziție prioritară, badge Verificat
+3. **Lead generation** — "Cere Ofertă" devine valoros când avem trafic
+4. **Exit opțional** — director cu trafic în nișa energie se vinde cu 15-100k EUR
 
 ### FAZA 0 — Launch (Săptămâna 1-2, Feb-Mar 2026)
 **Obiectiv:** Site live, indexat de Google, bază de conținut solidă.
