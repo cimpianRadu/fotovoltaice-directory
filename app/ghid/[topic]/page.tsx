@@ -6,6 +6,7 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import FAQ from '@/components/seo/FAQ';
 import Button from '@/components/ui/Button';
+import Markdown from '@/components/ui/Markdown';
 import guidesData from '@/data/guides.json';
 import { generateFAQJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo';
 
@@ -104,13 +105,11 @@ export default async function GuidePage({ params }: Props) {
         </nav>
 
         {/* Content sections */}
-        <div className="prose prose-gray max-w-none">
+        <div className="max-w-none">
           {guide.sections.map((section) => (
             <section key={section.id} id={section.id} className="mb-12 scroll-mt-20">
               <h2 className="text-xl font-bold text-gray-900 mb-4">{section.title}</h2>
-              <div className="text-gray-600 leading-relaxed whitespace-pre-line text-sm">
-                {section.content}
-              </div>
+              <Markdown content={section.content} />
             </section>
           ))}
         </div>
