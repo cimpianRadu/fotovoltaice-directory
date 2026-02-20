@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import FAQ from '@/components/seo/FAQ';
@@ -60,6 +61,24 @@ export default async function GuidePage({ params }: Props) {
             {guide.title}
           </h1>
           <p className="text-gray-500 mt-3 text-lg">{guide.heroDescription}</p>
+
+          {/* Author & date */}
+          <div className="flex items-center gap-3 mt-4 text-sm text-gray-500">
+            <div className="flex items-center gap-2">
+              <Image src="/logo.svg" alt="" width={20} height={20} className="w-5 h-5" />
+              <span className="font-medium text-gray-700">{guide.author}</span>
+              <span className="text-gray-300">|</span>
+              <span>Specialist Instalatori Fotovoltaice</span>
+            </div>
+            <span className="text-gray-300">|</span>
+            <time dateTime={guide.publishedAt}>
+              {new Date(guide.publishedAt).toLocaleDateString('ro-RO', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}
+            </time>
+          </div>
         </div>
 
         {/* Table of Contents */}

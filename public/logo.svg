@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
+  <!-- Solar Panel - dark navy, tilted perspective -->
+  <g transform="translate(50, 62)">
+    <!-- Panel body -->
+    <polygon points="-30,-12 30,-12 24,20 -36,20" fill="#1e3a5f" rx="2"/>
+    <!-- Grid lines horizontal -->
+    <line x1="-32" y1="4" x2="27" y2="4" stroke="#2d5a8e" stroke-width="1.2"/>
+    <!-- Grid lines vertical -->
+    <line x1="-12" y1="-12" x2="-16" y2="20" stroke="#2d5a8e" stroke-width="1.2"/>
+    <line x1="8" y1="-12" x2="4" y2="20" stroke="#2d5a8e" stroke-width="1.2"/>
+    <!-- Panel frame highlight -->
+    <polygon points="-30,-12 30,-12 24,20 -36,20" fill="none" stroke="#0f2744" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Sun - amber, top center -->
+  <circle cx="50" cy="24" r="10" fill="#f59e0b"/>
+  <!-- Sun rays -->
+  <g stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round">
+    <line x1="50" y1="6" x2="50" y2="10"/>
+    <line x1="50" y1="38" x2="50" y2="42"/>
+    <line x1="32" y1="24" x2="36" y2="24"/>
+    <line x1="64" y1="24" x2="68" y2="24"/>
+    <line x1="37.3" y1="11.3" x2="40.1" y2="14.1"/>
+    <line x1="59.9" y1="33.9" x2="62.7" y2="36.7"/>
+    <line x1="37.3" y1="36.7" x2="40.1" y2="33.9"/>
+    <line x1="59.9" y1="14.1" x2="62.7" y2="11.3"/>
+  </g>
+
+  <!-- Lightning bolt - accent, between sun and panel -->
+  <polygon points="54,40 48,52 53,52 47,64 58,49 52,49 58,40" fill="#f59e0b" stroke="#d97706" stroke-width="0.5" stroke-linejoin="round"/>
+</svg>

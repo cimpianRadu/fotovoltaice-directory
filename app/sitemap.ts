@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import companiesData from '@/data/companies.json';
 import guidesData from '@/data/guides.json';
 
-const BASE_URL = 'https://fotovoltaice-comerciale.ro';
+const BASE_URL = 'https://instalatori-fotovoltaice.ro';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [

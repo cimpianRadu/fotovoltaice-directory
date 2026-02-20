@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://fotovoltaice-comerciale.ro/sitemap.xml',
+    sitemap: 'https://instalatori-fotovoltaice.ro/sitemap.xml',
   };
 }

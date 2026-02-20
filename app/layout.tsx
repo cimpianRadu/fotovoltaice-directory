@@ -11,16 +11,32 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Fotovoltaice Comerciale România | Director Instalatori',
-    template: '%s | Fotovoltaice Comerciale România',
+    default: 'Instalatori Fotovoltaice România | Director Firme Panouri Solare',
+    template: '%s | Instalatori Fotovoltaice România',
   },
   description:
     'Director pentru firme de instalare panouri fotovoltaice comerciale și industriale din România. Găsește instalatorul potrivit pentru proiectul tău.',
-  metadataBase: new URL('https://fotovoltaice-comerciale.ro'),
+  metadataBase: new URL('https://instalatori-fotovoltaice.ro'),
   openGraph: {
     type: 'website',
     locale: 'ro_RO',
-    siteName: 'Fotovoltaice Comerciale România',
+    siteName: 'Instalatori Fotovoltaice România',
+    images: [
+      {
+        url: '/og-image.svg',
+        width: 1200,
+        height: 630,
+        alt: 'Instalatori Fotovoltaice România - Director Firme Panouri Solare',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og-image.svg'],
+  },
+  icons: {
+    icon: '/logo.svg',
+    apple: '/logo.svg',
   },
 };
 

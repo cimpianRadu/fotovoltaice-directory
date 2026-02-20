@@ -5,7 +5,7 @@ import LeadForm from '@/components/forms/LeadForm';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Cere Ofertă Gratuită - Panouri Fotovoltaice Comerciale',
+  title: 'Cere Ofertă Gratuită - Instalatori Fotovoltaice',
   description:
     'Completează formularul și primești oferte personalizate de la instalatori verificați de panouri fotovoltaice comerciale din zona ta.',
 };

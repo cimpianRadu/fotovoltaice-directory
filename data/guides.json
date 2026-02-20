@@ -2,7 +2,9 @@
   "guides": [
     {
       "slug": "panouri-fotovoltaice-hale-industriale",
-      "title": "Panouri Fotovoltaice pentru Hale Industriale - Ghid Complet 2025",
+      "publishedAt": "2026-01-06",
+      "author": "Radu",
+      "title": "Panouri Fotovoltaice pentru Hale Industriale - Ghid Complet 2026",
       "metaDescription": "Ghid complet despre instalarea panourilor fotovoltaice pe hale industriale. Costuri, beneficii, ROI și cum alegi cel mai bun instalator.",
       "heroDescription": "Tot ce trebuie să știi despre instalarea unui sistem fotovoltaic pe hala ta industrială: de la dimensionare și costuri, până la alegerea instalatorului potrivit.",
       "sections": [
@@ -54,13 +56,15 @@
     },
     {
       "slug": "cost-sistem-fotovoltaic-comercial",
-      "title": "Cât Costă un Sistem Fotovoltaic Comercial în 2025 - Ghid de Prețuri",
+      "publishedAt": "2026-01-20",
+      "author": "Radu",
+      "title": "Cât Costă un Sistem Fotovoltaic Comercial în 2026 - Ghid Prețuri Actualizat",
       "metaDescription": "Ghid detaliat de prețuri pentru sisteme fotovoltaice comerciale în România. Costuri pe kWp, factori de preț și cum obții cel mai bun raport calitate-preț.",
       "heroDescription": "Analiză detaliată a costurilor pentru sisteme fotovoltaice comerciale: de la prețuri pe kWp și factori care influențează costul, până la opțiuni de finanțare.",
       "sections": [
         {
-          "id": "preturi-2025",
-          "title": "Prețuri sisteme fotovoltaice comerciale în 2025",
+          "id": "preturi-2026",
+          "title": "Prețuri sisteme fotovoltaice comerciale în 2026",
           "content": "Piața fotovoltaică comercială din România a evoluat semnificativ în ultimii ani. Prețurile au scăzut cu aproximativ 30% față de 2020, făcând investiția mult mai accesibilă.\n\n### Preț mediu pe kWp instalat\n\n| Dimensiune | Preț/kWp (EUR) | Investiție totală |\n|---|---|---|\n| 30-50 kWp | 750 - 950 | 22.500 - 47.500 |\n| 50-100 kWp | 680 - 850 | 34.000 - 85.000 |\n| 100-250 kWp | 620 - 780 | 62.000 - 195.000 |\n| 250-500 kWp | 580 - 720 | 145.000 - 360.000 |\n| 500 kWp - 1 MWp | 540 - 680 | 270.000 - 680.000 |\n| > 1 MWp | 500 - 650 | Negociabil |\n\n**Observație:** Prețul pe kWp scade odată cu creșterea dimensiunii proiectului datorită economiilor de scară."
         },
         {
@@ -97,6 +101,8 @@
     },
     {
       "slug": "cum-alegi-instalator-fotovoltaic",
+      "publishedAt": "2026-02-03",
+      "author": "Radu",
       "title": "Cum Alegi Instalatorul Fotovoltaic Potrivit - 10 Criterii Esențiale",
       "metaDescription": "Ghid practic pentru alegerea instalatorului de panouri fotovoltaice comerciale. 10 criterii esențiale, red flags și sfaturi de la experți.",
       "heroDescription": "Alegerea instalatorului potrivit este cea mai importantă decizie pentru succesul proiectului tău fotovoltaic. Iată cele 10 criterii pe care trebuie să le verifici.",
@@ -135,8 +141,10 @@
     },
     {
       "slug": "legislatie-prosumator-comercial",
-      "title": "Legislație Prosumator Comercial 2025 - Tot Ce Trebuie Să Știi",
-      "metaDescription": "Ghid complet despre legislația pentru prosumatorii comerciali din România. Drepturi, obligații, proceduri și beneficii fiscale actualizate 2025.",
+      "publishedAt": "2026-02-17",
+      "author": "Radu",
+      "title": "Legislație Prosumator Comercial 2026 - Tot Ce Trebuie Să Știi",
+      "metaDescription": "Ghid complet despre legislația pentru prosumatorii comerciali din România. Drepturi, obligații, proceduri și beneficii fiscale actualizate 2026.",
       "heroDescription": "Legislația pentru prosumatorii comerciali în România: de la procedura de înregistrare și contractare, până la beneficii fiscale și obligații legale.",
       "sections": [
         {
@@ -152,7 +160,7 @@
         {
           "id": "beneficii-fiscale",
           "title": "Beneficii fiscale pentru prosumatori comerciali",
-          "content": "### Scutiri și reduceri\n\n1. **Scutire de impozit pe venitul din energie**\n   - Veniturile din vânzarea de energie sub 400 kWp sunt scutite de impozit\n   - Valabil până la 31 decembrie 2025 (posibil să fie extins)\n\n2. **Deducere fiscală pentru investiție**\n   - Investiția în sisteme fotovoltaice este deductibilă fiscal\n   - Amortizare accelerată pe 4 ani\n   - TVA deductibil integral\n\n3. **Certificate verzi**\n   - Prosumatorii comerciali pot beneficia de certificate verzi\n   - Valoare estimată: 25-35 EUR/MWh\n\n4. **Reducere impozit pe clădiri**\n   - Unele primării oferă reduceri de 50% la impozitul pe clădiri cu panouri fotovoltaice\n   - Verifică la primăria locală\n\n### Obligații fiscale\n- Facturare lunară a energiei vândute\n- Declarație de venituri (dacă nu sunt scutite)\n- Evidență contabilă separată pentru activitatea de producere energie"
+          "content": "### Scutiri și reduceri\n\n1. **Scutire de impozit pe venitul din energie**\n   - Veniturile din vânzarea de energie sub 400 kWp sunt scutite de impozit\n   - Valabil până la 31 decembrie 2026 (posibil să fie extins)\n\n2. **Deducere fiscală pentru investiție**\n   - Investiția în sisteme fotovoltaice este deductibilă fiscal\n   - Amortizare accelerată pe 4 ani\n   - TVA deductibil integral\n\n3. **Certificate verzi**\n   - Prosumatorii comerciali pot beneficia de certificate verzi\n   - Valoare estimată: 25-35 EUR/MWh\n\n4. **Reducere impozit pe clădiri**\n   - Unele primării oferă reduceri de 50% la impozitul pe clădiri cu panouri fotovoltaice\n   - Verifică la primăria locală\n\n### Obligații fiscale\n- Facturare lunară a energiei vândute\n- Declarație de venituri (dacă nu sunt scutite)\n- Evidență contabilă separată pentru activitatea de producere energie"
         },
         {
           "id": "drepturi-obligatii",
@@ -167,7 +175,7 @@
         },
         {
           "question": "La ce preț vând surplusul de energie?",
-          "answer": "Surplusul se vinde la prețul pieței zilnice (day-ahead). În 2024, prețul mediu a fost de aproximativ 80-120 EUR/MWh, dar variază semnificativ."
+          "answer": "Surplusul se vinde la prețul pieței zilnice (day-ahead). În 2025, prețul mediu a fost de aproximativ 80-120 EUR/MWh, dar variază semnificativ."
         },
         {
           "question": "Cât durează procedura de a deveni prosumator?",

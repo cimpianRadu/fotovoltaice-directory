@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <h3 className="font-bold text-lg mb-3">Fotovoltaice Comerciale</h3>
+            <h3 className="font-bold text-lg mb-3">Instalatori Fotovoltaice</h3>
             <p className="text-sm text-gray-300 leading-relaxed">
               Directorul #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale din România.
             </p>
@@ -93,7 +93,7 @@ export default function Footer() {
 
         <div className="mt-10 pt-8 border-t border-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-gray-400">
-            &copy; {new Date().getFullYear()} Fotovoltaice Comerciale România. Toate drepturile rezervate.
+            &copy; {new Date().getFullYear()} Instalatori Fotovoltaice România. Toate drepturile rezervate.
           </p>
           <p className="text-xs text-gray-400">
             Informațiile de pe acest site sunt cu caracter informativ.

@@ -6,7 +6,7 @@ import Button from '@/components/ui/Button';
 import { generateFAQJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Întrebări Frecvente - Panouri Fotovoltaice Comerciale',
+  title: 'Întrebări Frecvente - Instalatori Fotovoltaice',
   description:
     'Răspunsuri la cele mai frecvente întrebări despre instalarea panourilor fotovoltaice comerciale: costuri, certificări, garanții, legislație prosumator.',
 };

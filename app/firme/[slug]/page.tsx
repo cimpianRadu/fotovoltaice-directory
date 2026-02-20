@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!company) return {};
 
   return {
-    title: `${company.name} - Instalator Fotovoltaice Comerciale`,
+    title: `${company.name} - Instalator Panouri Fotovoltaice`,
     description: `${company.name} din ${company.location.city} - ${company.description.slice(0, 150)}`,
     openGraph: {
       title: company.name,

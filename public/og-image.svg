@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#1e3a5f"/>
+
+  <!-- Subtle gradient overlay -->
+  <defs>
+    <linearGradient id="bg-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2d5a8e" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0f2744" stop-opacity="0.5"/>
+    </linearGradient>
+    <linearGradient id="accent-line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#f59e0b" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg-grad)"/>
+
+  <!-- Decorative accent line -->
+  <rect x="100" y="400" width="1000" height="2" fill="url(#accent-line)" rx="1"/>
+
+  <!-- Logo group - left side -->
+  <g transform="translate(280, 200) scale(2.2)">
+    <!-- Solar Panel -->
+    <g transform="translate(50, 62)">
+      <polygon points="-30,-12 30,-12 24,20 -36,20" fill="#2d5a8e"/>
+      <line x1="-32" y1="4" x2="27" y2="4" stroke="#3d7abe" stroke-width="1.2"/>
+      <line x1="-12" y1="-12" x2="-16" y2="20" stroke="#3d7abe" stroke-width="1.2"/>
+      <line x1="8" y1="-12" x2="4" y2="20" stroke="#3d7abe" stroke-width="1.2"/>
+      <polygon points="-30,-12 30,-12 24,20 -36,20" fill="none" stroke="#1a3050" stroke-width="2" stroke-linejoin="round"/>
+    </g>
+    <!-- Sun -->
+    <circle cx="50" cy="24" r="10" fill="#f59e0b"/>
+    <g stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round">
+      <line x1="50" y1="6" x2="50" y2="10"/>
+      <line x1="50" y1="38" x2="50" y2="42"/>
+      <line x1="32" y1="24" x2="36" y2="24"/>
+      <line x1="64" y1="24" x2="68" y2="24"/>
+      <line x1="37.3" y1="11.3" x2="40.1" y2="14.1"/>
+      <line x1="59.9" y1="33.9" x2="62.7" y2="36.7"/>
+      <line x1="37.3" y1="36.7" x2="40.1" y2="33.9"/>
+      <line x1="59.9" y1="14.1" x2="62.7" y2="11.3"/>
+    </g>
+    <!-- Lightning bolt -->
+    <polygon points="54,40 48,52 53,52 47,64 58,49 52,49 58,40" fill="#f59e0b" stroke="#d97706" stroke-width="0.5" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Text - right side -->
+  <!-- Main title -->
+  <text x="520" y="245" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="56" fill="#ffffff" letter-spacing="1">Instalatori</text>
+  <text x="520" y="310" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="56" fill="#f59e0b" letter-spacing="1">Fotovoltaice</text>
+
+  <!-- Subtitle -->
+  <text x="520" y="360" font-family="Arial, Helvetica, sans-serif" font-weight="400" font-size="26" fill="#94a3b8" letter-spacing="2">DIRECTOR FIRME PANOURI SOLARE</text>
+
+  <!-- Bottom tagline -->
+  <text x="600" y="460" font-family="Arial, Helvetica, sans-serif" font-weight="400" font-size="20" fill="#64748b" text-anchor="middle" letter-spacing="1">Găsește instalatorul potrivit pentru proiectul tău</text>
+
+  <!-- Domain -->
+  <text x="600" y="570" font-family="Arial, Helvetica, sans-serif" font-weight="300" font-size="18" fill="#475569" text-anchor="middle" letter-spacing="3">instalatori-fotovoltaice.ro</text>
+</svg>

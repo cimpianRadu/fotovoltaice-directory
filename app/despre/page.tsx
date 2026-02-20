@@ -5,9 +5,9 @@ import LeadForm from '@/components/forms/LeadForm';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Despre Noi - Fotovoltaice Comerciale România',
+  title: 'Despre Noi - Instalatori Fotovoltaice România',
   description:
-    'Despre proiectul Fotovoltaice Comerciale România - directorul #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale.',
+    'Despre proiectul Instalatori Fotovoltaice România - directorul #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale.',
 };
 
 export default function DesprePage() {
@@ -25,7 +25,7 @@ export default function DesprePage() {
 
         <div className="mt-6 mb-10">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            Despre Fotovoltaice Comerciale
+            Despre Instalatori Fotovoltaice
           </h1>
         </div>
 
@@ -35,7 +35,7 @@ export default function DesprePage() {
             <section>
               <h2 className="text-lg font-bold text-gray-900 mb-3">Misiunea noastră</h2>
               <p className="text-gray-600 leading-relaxed">
-                Fotovoltaice Comerciale România este directorul #1 dedicat exclusiv segmentului comercial și industrial
+                Instalatori Fotovoltaice România este directorul #1 dedicat exclusiv segmentului comercial și industrial
                 al pieței de energie solară din România. Misiunea noastră este să conectăm companiile care doresc
                 să investească în energie solară cu cei mai buni instalatori verificați din țară.
               </p>
