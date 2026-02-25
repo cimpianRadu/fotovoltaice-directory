@@ -379,6 +379,386 @@
       "verified": true,
       "createdAt": "2025-01-15",
       "updatedAt": "2026-02-20"
+    },
+    {
+      "id": "photon-energy",
+      "slug": "photon-energy",
+      "name": "Photon Energy Engineering Romania S.R.L.",
+      "cui": "RO45818116",
+      "logo": "",
+      "description": "Filiala românească a grupului Photon Energy N.V. (listat la bursele din Praga, Varșovia și Frankfurt), specializată în servicii EPC pentru centrale fotovoltaice comerciale, industriale și la scară utilitară. Oferă și servicii de operare și mentenanță (O&M) și distribuție de componente fotovoltaice prin platforma B2B proprie.",
+      "founded": 2020,
+      "employees": 25,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Str. Jiului nr. 8, Clădirea A, Etaj 2, Sector 1"
+      },
+      "contact": {
+        "phone": "+40729623577",
+        "email": "info@photonenergy.com",
+        "website": "https://www.photonenergy.ro"
+      },
+      "coverage": ["București", "Timiș", "Buzău", "Alba", "Cluj", "Dolj", "Arad"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "agricol"],
+      "certifications": ["ISO-9001", "ISO-14001"],
+      "capacity": {
+        "minProjectKw": 50,
+        "maxProjectKw": 50000,
+        "projectsCompleted": 100
+      },
+      "financials": {
+        "year": 2023,
+        "revenue": 54680883,
+        "profit": 33835395
+      },
+      "tags": ["proiecte-mari", "mentenanta-inclusa", "monitorizare-inclusa", "companie-internationala"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-25",
+      "updatedAt": "2026-02-25"
+    },
+    {
+      "id": "electrica-serv",
+      "slug": "electrica-serv",
+      "name": "S. FISE Electrica Serv S.A.",
+      "cui": "RO17329505",
+      "logo": "",
+      "description": "Filiala de instalații și servicii energetice a grupului Electrica, cu echipă de peste 400 de specialiști și acoperire națională. Oferă soluții complete de sisteme fotovoltaice ON-GRID și OFF-GRID pentru clienți comerciali, industriali și instituții publice: de la proiectare și instalare pe acoperișuri sau la sol, până la carport-uri solare.",
+      "founded": 2005,
+      "employees": 458,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Șos. Ștefan cel Mare 1A, Sector 1"
+      },
+      "contact": {
+        "phone": "+40372050002",
+        "email": "fotovoltaic.business@electricaserv.ro",
+        "website": "https://www.electricaserv.ro"
+      },
+      "coverage": ["București", "Ilfov", "Cluj", "Timiș", "Brașov", "Sibiu", "Constanța", "Iași", "Dolj", "Prahova", "Argeș", "Bacău", "Mureș", "Alba"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail", "agricol", "spitale", "scoli"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 30,
+        "maxProjectKw": 50000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 29207613,
+        "profit": -2788805
+      },
+      "tags": ["experienta-10-ani", "mentenanta-inclusa", "acoperire-nationala"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-25",
+      "updatedAt": "2026-02-25"
+    },
+    {
+      "id": "expert-energy",
+      "slug": "expert-energy",
+      "name": "Expert Energy S.R.L.",
+      "cui": "RO24466700",
+      "logo": "",
+      "description": "Companie din Sibiu cu peste 15 ani de experiență în instalații electrice și sisteme fotovoltaice, acoperind regiunea centrală a României. Oferă servicii de proiectare și execuție pentru instalații fotovoltaice comerciale și industriale, alături de consultanță tehnică în domeniul energiei.",
+      "founded": 2008,
+      "employees": 33,
+      "location": {
+        "city": "Sibiu",
+        "county": "Sibiu",
+        "address": "Str. Viile Sibiului nr. 58"
+      },
+      "contact": {
+        "phone": "0369442211",
+        "email": "office@expertenergy.ro",
+        "website": "https://www.expertenergy.ro"
+      },
+      "coverage": ["Sibiu", "Alba", "Brașov", "Hunedoara", "Mureș"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 10,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 12115616,
+        "profit": 191549
+      },
+      "tags": ["experienta-10-ani"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-25",
+      "updatedAt": "2026-02-25"
+    },
+    {
+      "id": "sinpur-energy",
+      "slug": "sinpur-energy",
+      "name": "Sinpur Energy S.R.L.",
+      "cui": "RO34666241",
+      "logo": "",
+      "description": "Companie din Iași specializată în sisteme fotovoltaice on-grid, off-grid și hibride cu stocare. Partener autorizat Fronius și distribuitor Victron Energy, cu certificare ANRE de tip B. Acoperă regiunea de est a României, cu proiecte în județele Iași și Constanța.",
+      "founded": 2015,
+      "employees": 10,
+      "location": {
+        "city": "Valea Lupului",
+        "county": "Iași",
+        "address": "Str. Cireși nr. 16, Sat Valea Lupului, Com. Valea Lupului"
+      },
+      "contact": {
+        "phone": "+40752387688",
+        "email": "office@sinpurenergy.ro",
+        "website": "https://sinpurenergy.ro"
+      },
+      "coverage": ["Iași", "Constanța"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "agricol"],
+      "certifications": ["ANRE-B"],
+      "capacity": {
+        "minProjectKw": 5,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2023,
+        "revenue": 9909820,
+        "profit": 1181436
+      },
+      "tags": ["partener-fronius", "sisteme-stocare"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-25",
+      "updatedAt": "2026-02-25"
+    },
+    {
+      "id": "eurotehnica-itc",
+      "slug": "eurotehnica-itc",
+      "name": "Eurotehnica IT&C S.R.L.",
+      "cui": "RO26991098",
+      "logo": "",
+      "description": "Companie din Craiova cu peste 14 ani de experiență, specializată în sisteme fotovoltaice turnkey și infrastructură de încărcare vehicule electrice. Partener SKE Huawei, cu parteneriate Sungrow, Fronius și Canadian Solar. Peste 6.200 de instalații realizate la nivel național.",
+      "founded": 2010,
+      "employees": 32,
+      "location": {
+        "city": "Craiova",
+        "county": "Dolj",
+        "address": "Str. Popoveni Nr. 5B"
+      },
+      "contact": {
+        "phone": "0721322260",
+        "email": "office@eurotehnicaitc.ro",
+        "website": "https://eurotehnicaitc.ro"
+      },
+      "coverage": ["Dolj", "Olt", "Gorj", "Mehedinți"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail", "agricol"],
+      "certifications": ["ANRE-C2A"],
+      "capacity": {
+        "minProjectKw": 5,
+        "maxProjectKw": 0,
+        "projectsCompleted": 6200
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 15506737,
+        "profit": 2927704
+      },
+      "tags": ["experienta-10-ani", "partener-huawei", "mentenanta-inclusa"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-25",
+      "updatedAt": "2026-02-25"
+    },
+    {
+      "id": "fomco-solar",
+      "slug": "fomco-solar",
+      "name": "FomCo Solar Systems S.R.L.",
+      "cui": "RO16981119",
+      "logo": "",
+      "description": "Companie din Mureș cu peste 20 de ani de experiență, specializată în proiectarea și construcția de parcuri fotovoltaice și sisteme industriale. Autorizare ANRE din 2012, certificări ISO 9001 și ISO 14001. Stoc permanent de peste 30.000 de panouri solare. Parte din grupul FomCo.",
+      "founded": 2004,
+      "employees": 27,
+      "location": {
+        "city": "Cristești",
+        "county": "Mureș",
+        "address": "Str. Principală nr. 801E, Sat Cristești, Com. Cristești"
+      },
+      "contact": {
+        "phone": "+40724364432",
+        "email": "info@fomcosolar.ro",
+        "website": "https://fomcosolarsolutions.ro"
+      },
+      "coverage": ["Mureș", "Cluj", "Brașov", "Sibiu", "Alba", "Harghita", "Bistrița-Năsăud"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "agricol"],
+      "certifications": ["ANRE-C2A", "ISO-9001", "ISO-14001"],
+      "capacity": {
+        "minProjectKw": 50,
+        "maxProjectKw": 5000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 74357072,
+        "profit": 12402708
+      },
+      "tags": ["experienta-10-ani", "proiecte-mari", "parcuri-solare"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-25",
+      "updatedAt": "2026-02-25"
+    },
+    {
+      "id": "electro-alfa",
+      "slug": "electro-alfa",
+      "name": "Electro-Alfa International S.A.",
+      "cui": "RO7348194",
+      "logo": "",
+      "description": "Companie din Botoșani fondată în 1991, listată la Bursa de Valori București (simbol EAI) din februarie 2026. Producător de echipamente electrice de medie și joasă tensiune și contractor EPC pentru parcuri fotovoltaice. Peste 280 de angajați și 5 fabrici. Contract de 24,41 milioane RON cu Hidroelectrica pentru un parc fotovoltaic de 8,9 MWp.",
+      "founded": 1994,
+      "employees": 282,
+      "location": {
+        "city": "Botoșani",
+        "county": "Botoșani",
+        "address": "Calea Națională 15"
+      },
+      "contact": {
+        "phone": "+40231532186",
+        "email": "renewables@electroalfa.ro",
+        "website": "https://electroalfa.ro"
+      },
+      "coverage": ["Botoșani", "Suceava", "Iași", "Neamț", "București", "Hunedoara"],
+      "specializations": ["hale-industriale", "parcuri-logistice"],
+      "certifications": ["ANRE-C2A", "ISO-9001", "ISO-14001", "ISO-45001"],
+      "capacity": {
+        "minProjectKw": 100,
+        "maxProjectKw": 10000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 130577776,
+        "profit": 0
+      },
+      "tags": ["experienta-10-ani", "proiecte-mari", "listat-BVB", "producator-echipamente"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-25",
+      "updatedAt": "2026-02-25"
+    },
+    {
+      "id": "ensys",
+      "slug": "ensys",
+      "name": "Ensys Renewable Solutions S.A.",
+      "cui": "RO18306569",
+      "logo": "",
+      "description": "Companie din Oradea fondată în 2006, cu 198 de angajați și 5 centre regionale (Oradea, București, Iași). Furnizor de soluții fotovoltaice pentru rezidențial, comercial și industrial. Fabrică proprie de baterii litiu în Oradea, cu capacitate de 4-5 MWh/lună.",
+      "founded": 2006,
+      "employees": 198,
+      "location": {
+        "city": "Oradea",
+        "county": "Bihor",
+        "address": "Str. Bicazului 6-8"
+      },
+      "contact": {
+        "phone": "+40359732800",
+        "email": "",
+        "website": "https://ensys.eu"
+      },
+      "coverage": ["Bihor", "Cluj", "Satu Mare", "Maramureș", "Timiș", "Arad", "București", "Iași"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail", "agricol"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 10,
+        "maxProjectKw": 5000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 64188599,
+        "profit": 243389
+      },
+      "tags": ["experienta-10-ani", "retea-nationala", "fabricare-baterii"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-25",
+      "updatedAt": "2026-02-25"
+    },
+    {
+      "id": "veltol-energy",
+      "slug": "veltol-energy",
+      "name": "Veltol Holding S.R.L.",
+      "cui": "RO34709610",
+      "logo": "",
+      "description": "Companie din Târgu Mureș specializată în sisteme fotovoltaice comerciale și industriale, parcuri fotovoltaice și sisteme de stocare energie (BESS). Autorizare ANRE C1A și C2A, certificare ISO 14001. A dezvoltat un controller EMS (Energy Management System) propriu, primul de acest tip din România.",
+      "founded": 2015,
+      "employees": 40,
+      "location": {
+        "city": "Târgu Mureș",
+        "county": "Mureș",
+        "address": "Str. Livezeni 18"
+      },
+      "contact": {
+        "phone": "+40745931231",
+        "email": "office@veltol.com",
+        "website": "https://veltol-energy.ro"
+      },
+      "coverage": ["Mureș", "Cluj", "Brașov", "Sibiu", "Timiș", "Alba", "Harghita"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri"],
+      "certifications": ["ANRE-C2A", "ISO-14001"],
+      "capacity": {
+        "minProjectKw": 20,
+        "maxProjectKw": 5000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 24968062,
+        "profit": 1424138
+      },
+      "tags": ["mentenanta-inclusa", "sisteme-stocare", "EMS-propriu"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-25",
+      "updatedAt": "2026-02-25"
+    },
+    {
+      "id": "wiren-romania",
+      "slug": "wiren-romania",
+      "name": "Wiren Romania S.R.L.",
+      "cui": "RO37663533",
+      "logo": "",
+      "description": "Companie din Arad specializată în servicii EPC pentru parcuri fotovoltaice, sisteme comerciale și industriale, și sisteme de stocare energie (BESS). Birouri în Arad și București. Oferă și servicii de operare și mentenanță (O&M) și distribuție de componente fotovoltaice.",
+      "founded": 2017,
+      "employees": 57,
+      "location": {
+        "city": "Arad",
+        "county": "Arad",
+        "address": "Str. Corneliu Coposu 24C"
+      },
+      "contact": {
+        "phone": "+40374030030",
+        "email": "corporate@wiren.com",
+        "website": "https://www.wiren.com"
+      },
+      "coverage": ["Arad", "Timiș", "Bihor", "București", "Brașov", "Vâlcea"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "agricol"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 50,
+        "maxProjectKw": 5000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 13657292,
+        "profit": 363621
+      },
+      "tags": ["EPC", "sisteme-stocare", "mentenanta-inclusa", "distributie"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-25",
+      "updatedAt": "2026-02-25"
     }
   ]
 }

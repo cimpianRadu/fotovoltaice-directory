@@ -1,8 +1,10 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
+import { getCoveredCounties, slugifyCounty, getCompaniesByCounty } from '@/lib/utils';
 import CompanyListClient from './CompanyListClient';
 
 export const metadata: Metadata = {
@@ -36,6 +38,33 @@ export default function FirmePage() {
         <Suspense fallback={<div className="text-center py-12 text-gray-400">Se încarcă...</div>}>
           <CompanyListClient />
         </Suspense>
+
+        {/* County links for PSEO / internal linking */}
+        <div className="mt-12 border-t border-border pt-8">
+          <h2 className="text-lg font-bold text-gray-900 mb-2">
+            Instalatori Fotovoltaici per Județ
+          </h2>
+          <p className="text-sm text-gray-500 mb-4">
+            Găsește firme de instalare panouri fotovoltaice în județul tău
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {getCoveredCounties()
+              .sort()
+              .map((county) => {
+                const count = getCompaniesByCounty(county).length;
+                return (
+                  <Link
+                    key={county}
+                    href={`/firme/judet/${slugifyCounty(county)}`}
+                    className="text-sm px-3 py-1.5 rounded-full border border-border text-gray-600 hover:border-primary/30 hover:text-primary-dark transition-colors"
+                  >
+                    {county}{' '}
+                    <span className="text-gray-400">({count})</span>
+                  </Link>
+                );
+              })}
+          </div>
+        </div>
       </div>
     </>
   );

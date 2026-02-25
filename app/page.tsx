@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import SearchBar from '@/components/forms/SearchBar';
 import CompanyCard from '@/components/company/CompanyCard';
@@ -6,6 +7,12 @@ import JsonLd from '@/components/seo/JsonLd';
 import WaitlistForm from '@/components/forms/WaitlistForm';
 import { getFeaturedCompanies } from '@/lib/utils';
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 const homeFaqs = [
   {

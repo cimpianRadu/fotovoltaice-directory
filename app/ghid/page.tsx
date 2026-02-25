@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
@@ -49,8 +50,13 @@ export default function GhidIndexPage() {
                 {guide.heroDescription}
               </p>
               <div className="mt-auto flex items-center justify-between text-xs text-gray-400">
-                <span>De {guide.author}</span>
-                <time dateTime={guide.publishedAt}>
+                <div className="flex items-center gap-1.5">
+                  <Image src="/logo.svg" alt="" width={16} height={16} className="w-4 h-4" />
+                  <span className="font-medium text-gray-600">{guide.author}</span>
+                  <span className="text-gray-300">|</span>
+                  <span>Specialist Instalatori Fotovoltaice</span>
+                </div>
+                <time dateTime={guide.publishedAt} className="hidden sm:block">
                   {new Date(guide.publishedAt).toLocaleDateString('ro-RO', {
                     day: 'numeric',
                     month: 'long',

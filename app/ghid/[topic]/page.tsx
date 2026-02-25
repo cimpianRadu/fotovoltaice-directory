@@ -45,7 +45,7 @@ export default async function GuidePage({ params }: Props) {
       <JsonLd
         data={generateBreadcrumbJsonLd([
           { name: 'Acasă', url: '/' },
-          { name: 'Ghiduri', url: '/ghid/panouri-fotovoltaice-hale-industriale' },
+          { name: 'Ghiduri', url: '/ghid' },
           { name: guide.title, url: `/ghid/${guide.slug}` },
         ])}
       />
@@ -53,7 +53,7 @@ export default async function GuidePage({ params }: Props) {
       <article className="max-w-4xl mx-auto px-4 py-6">
         <Breadcrumbs
           items={[
-            { label: 'Ghiduri', href: '/ghid/panouri-fotovoltaice-hale-industriale' },
+            { label: 'Ghiduri', href: '/ghid' },
             { label: guide.title.split(' - ')[0] },
           ]}
         />

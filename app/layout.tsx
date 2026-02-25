@@ -35,9 +35,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: ['/og-image.png'],
   },
-  alternates: {
-    canonical: '/',
-  },
   icons: {
     icon: '/logo.svg',
     apple: '/logo.svg',
