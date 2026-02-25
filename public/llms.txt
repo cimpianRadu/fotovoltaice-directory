@@ -1,0 +1,37 @@
+# Instalatori Fotovoltaice România
+
+> Director online de firme de instalare panouri fotovoltaice comerciale și industriale din România. Date verificate din surse publice oficiale.
+
+Site-ul este disponibil la: https://instalatori-fotovoltaice.ro
+
+## Despre platformă
+
+Instalatori Fotovoltaice România este platforma #1 pentru găsirea firmelor de instalare panouri fotovoltaice comerciale și industriale din România. Directorul conține firme verificate cu date din surse publice (ANRE, Ministerul Finanțelor, termene.ro).
+
+## Conținut principal
+
+### Director firme instalatoare
+- [Lista completă firme](/firme): 20+ firme verificate cu atestat ANRE, date financiare și contact
+- [Firme pe județe](/firme/judet/): Filtrare firme pe toate cele 42 județe din România
+- Fiecare firmă are: CUI verificat, certificări ANRE, date financiare oficiale, specializări, acoperire geografică
+
+### Ghiduri și articole
+- [Panouri Fotovoltaice pentru Hale Industriale](/ghid/panouri-fotovoltaice-hale-industriale): Ghid complet cu costuri, dimensionare și ROI pentru hale industriale
+- [Cât Costă un Sistem Fotovoltaic Comercial](/ghid/cost-sistem-fotovoltaic-comercial): Prețuri actualizate 2026, factori de cost, comparații
+- [Cum Alegi Instalatorul Fotovoltaic Potrivit](/ghid/cum-alegi-instalator-fotovoltaic): Criterii de selecție, certificări necesare, red flags
+- [Legislație Prosumator Comercial 2026](/ghid/legislatie-prosumator-comercial): Cadru legal, drepturi și obligații prosumatori comerciali
+- [Subvenții Panouri Fotovoltaice 2026](/ghid/subventii-panouri-fotovoltaice): Fonduri nerambursabile, Electric UP, Fondul de Modernizare
+
+### Întrebări frecvente
+- [FAQ Complet](/intrebari-frecvente): Răspunsuri la cele mai comune întrebări despre costuri, subvenții, legislație, tehnic și mentenanță
+
+## Date cheie despre piața din România (2026)
+- Cost sistem fotovoltaic comercial: 600-900 EUR/kWp instalat
+- Amortizare medie: 4-6 ani
+- Capacitate prosumator fără licență ANRE: max 400 kWp
+- Certificare obligatorie instalator: ANRE C2A
+- Garanție panouri standard: 25-30 ani (performanță)
+
+## Contact
+- Email: contact@instalatori-fotovoltaice.ro
+- Telefon: +40 733 936 796
