@@ -53,11 +53,31 @@ public/
 ## Procesul de Research Firme
 Când adăugăm firme noi în director:
 
-### 1. Identificare firme
-- Caută pe Google: "firme instalare panouri fotovoltaice comerciale Romania"
-- Verifică ANRE (anre.ro) → "Registrul atestatelor" pentru autorizare C2A
-- Verifică pe altreal.ro/comparator pentru firme listate
-- Caută pe financiarul.ro, zf.ro pentru clasamente din industrie
+### Tooling disponibil (MCP Servers)
+- **Perplexity** (`perplexity_ask`, `perplexity_search`, `perplexity_research`, `perplexity_reason`) — web search cu AI, ideal pentru discovery și verificare rapidă
+- **Firecrawl** (`firecrawl_scrape`, `firecrawl_search`, `firecrawl_extract`, `firecrawl_map`) — scraping structurat de pe site-uri specifice
+- **company-tools.js** (`check-bulk`, `validate`, `stats`) — scripturi locale pentru verificare duplicate și validare
+
+### 1. Identificare firme (Discovery)
+
+**Cu Perplexity (preferat pentru discovery):**
+```
+perplexity_search → "firme instalare panouri fotovoltaice comerciale Romania 2026"
+perplexity_search → "top companii EPC solar Romania"
+perplexity_ask → "Care sunt cele mai mari firme de instalare panouri fotovoltaice comerciale din Romania?"
+```
+
+**Cu Firecrawl (pentru liste de pe site-uri specifice):**
+```
+firecrawl_search → "firme fotovoltaice Romania" (web search cu scrape opțional)
+firecrawl_scrape → anre.ro registrul atestatelor (extract JSON: nume firmă, nr atestat)
+firecrawl_scrape → altreal.ro/comparator (extract JSON: firme listate cu detalii)
+```
+
+**Surse clasice (rămân valide):**
+- ANRE (anre.ro) → "Registrul atestatelor" pentru autorizare C2A
+- altreal.ro/comparator pentru firme listate
+- financiarul.ro, zf.ro pentru clasamente din industrie
 
 ### 2. Colectare date (câmpuri necesare)
 ```json
@@ -82,13 +102,51 @@ Când adăugăm firme noi în director:
 ```
 
 ### 3. Verificare date
-- **CUI:** Verifică pe termene.ro sau risco.ro
-- **Financiare:** Revenue/profit din listafirme.eu sau termene.ro (valori în RON)
-- **Certificări:** Verifică ANRE (anre.ro), ISO pe site-ul firmei
-- **Contact:** Verifică pe site-ul oficial al firmei
-- **Proiecte:** Caută pe site, comunicate de presă, articole ZF/Financiarul
 
-### 4. Validare
+**Cu Firecrawl (scraping structurat de pe registre):**
+```
+# CUI + date financiare
+firecrawl_scrape → termene.ro/firma/CUI (extract JSON: revenue, profit, angajați, an înființare)
+firecrawl_scrape → risco.ro/firma/CUI (extract JSON: date financiare, stare firmă)
+firecrawl_scrape → listafirme.eu/firma/CUI (extract JSON: cifră afaceri, profit net)
+
+# Contact + detalii de pe site-ul firmei
+firecrawl_scrape → site-firma.ro (extract JSON: telefon, email, adresă, certificări, portofoliu)
+firecrawl_map → site-firma.ro (descoperă pagini: /contact, /proiecte, /despre-noi, /certificari)
+
+# Certificări ANRE
+firecrawl_scrape → anre.ro/registru (extract JSON: nr atestat, tip, valabilitate)
+```
+
+**Cu Perplexity (verificare rapidă cross-referencing):**
+```
+perplexity_ask → "Care sunt datele financiare ale firmei X SRL CUI Y din Romania?"
+perplexity_ask → "Firma X SRL are certificare ANRE C2A?"
+perplexity_search → "X SRL proiecte fotovoltaice" (comunicate presă, articole)
+```
+
+**Surse clasice (rămân valide):**
+- **CUI:** termene.ro, risco.ro
+- **Financiare:** listafirme.eu, termene.ro (valori în RON)
+- **Certificări:** ANRE (anre.ro), ISO pe site-ul firmei
+- **Contact:** Site-ul oficial al firmei
+- **Proiecte:** Comunicate de presă, articole ZF/Financiarul
+
+### 4. Workflow complet (exemplu batch 5 firme)
+```
+1. perplexity_research → "firme EPC solar comercial Romania" → listă candidați
+2. node scripts/company-tools.js check-bulk <CUI-uri> → filtrare duplicate
+3. Pentru fiecare firmă unică:
+   a. firecrawl_scrape → termene.ro/firma/CUI → date financiare (JSON)
+   b. firecrawl_scrape → site-firma.ro → contact, descriere, certificări (JSON)
+   c. firecrawl_map → site-firma.ro → descoperă pagini relevante
+   d. perplexity_ask → "X SRL proiecte fotovoltaice comerciale" → context
+4. Adaugă în companies.json
+5. node scripts/company-tools.js validate → verificare completă
+6. node scripts/company-tools.js stats → summary
+```
+
+### 5. Validare
 - Firma trebuie să aibă minim 2-3 ani activitate
 - Preferabil cu autorizare ANRE C2A
 - Date financiare verificabile (nu self-reported)
@@ -129,10 +187,57 @@ Când adăugăm firme noi în director:
 - FAQ la sfârșitul fiecărui ghid (generat și ca JSON-LD)
 - Autor: "Radu, Specialist Instalatori Fotovoltaice" cu logo
 
+### Research conținut (cu Perplexity + Firecrawl)
+
+**Perplexity — research de fond și date actualizate:**
+```
+# Research profund pentru un ghid nou (folosește perplexity_research pentru subiecte complexe)
+perplexity_research → "subvenții panouri fotovoltaice Romania 2026 fonduri nerambursabile"
+perplexity_research → "legislație prosumator comercial Romania 2026 modificări"
+
+# Întrebări specifice și date punctuale (perplexity_ask pentru răspunsuri rapide)
+perplexity_ask → "Care este prețul mediu per kW instalat pentru sisteme fotovoltaice comerciale in Romania 2026?"
+perplexity_ask → "Ce condiții trebuie îndeplinite pentru Electric UP 2026?"
+
+# Trending topics și keyword discovery (perplexity_search)
+perplexity_search → "panouri fotovoltaice comerciale Romania 2026" (search_recency_filter: "month")
+perplexity_search → "subvenții energie verde firme Romania" (descoperă ce se caută recent)
+
+# Analiză comparativă (perplexity_reason pentru logică step-by-step)
+perplexity_reason → "Compară costul per kWh: panouri monocristaline vs TOPCon vs HJT pentru instalații comerciale 100kW+"
+```
+
+**Firecrawl — extragere date din surse oficiale:**
+```
+# Programe guvernamentale și legislație
+firecrawl_scrape → energie.gov.ro (extract JSON: programe active, bugete, termene)
+firecrawl_scrape → anre.ro/legislatie (extract JSON: reglementări prosumator)
+firecrawl_scrape → afm.ro (extract JSON: programe fotovoltaice, condiții)
+
+# Prețuri și specificații tehnice (de pe site-uri producători/distribuitori)
+firecrawl_scrape → site-distribuitor.ro/produse (extract JSON: prețuri panouri, specificații)
+firecrawl_extract → [url1, url2, url3] (extrage prețuri din multiple pagini simultan)
+
+# Știri și comunicate (pentru secțiuni "context piață")
+firecrawl_search → "piata fotovoltaice Romania 2026" (surse: zf.ro, profit.ro, economica.net)
+firecrawl_scrape → articol-relevant.ro (markdown: conținut complet articol)
+```
+
+**Workflow research articol nou:**
+```
+1. perplexity_research → research profund pe topic (date, statistici, context)
+2. perplexity_search → keyword discovery + "People Also Ask" echivalent
+3. firecrawl_scrape → surse oficiale (.gov.ro) pentru date exacte (bugete, termene, condiții)
+4. firecrawl_search → articole recente din presă pentru context piață
+5. perplexity_reason → structurare comparații complexe (prețuri, tehnologii)
+6. Compilare în format ghid (sections + FAQ) cu surse verificate
+```
+
 ### Research keywords
 - Google Keyword Planner: volumuri de căutare România, în română
 - Google Trends: trending și rising queries
-- "People Also Ask" din SERP-uri
+- Perplexity search (cu `search_recency_filter: "month"`) pentru trending queries recente
+- "People Also Ask" din SERP-uri (sau echivalent via `perplexity_ask`)
 - Categorii FAQ: Costuri, Subvenții, Legislație, Tehnic, Mentenanță, Alegere instalator
 
 ## SEO Checklist
