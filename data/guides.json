@@ -190,7 +190,7 @@
     },
     {
       "slug": "subventii-panouri-fotovoltaice",
-      "publishedAt": "2026-03-03",
+      "publishedAt": "2026-02-26",
       "author": "Radu",
       "title": "Subvenții Panouri Fotovoltaice 2026 - Ghid Complet Fonduri Nerambursabile",
       "metaDescription": "Ghid complet cu toate subvențiile și fondurile nerambursabile pentru panouri fotovoltaice comerciale în 2026. Electric UP, Fondul de Modernizare, facilități fiscale.",
@@ -251,6 +251,93 @@
         }
       ],
       "relatedSpecializations": ["hale-industriale", "cladiri-birouri", "parcuri-logistice", "retail", "agricol"]
+    },
+    {
+      "slug": "electric-up-2026-ghid-aplicare",
+      "publishedAt": "2026-02-26",
+      "author": "Radu",
+      "title": "Electric UP 2026 - Ghid Complet de Aplicare pentru Firme",
+      "metaDescription": "Ghid complet Electric UP 2026: condiții, documente, sume, proces de aplicare. Până la 150.000 EUR fonduri nerambursabile pentru panouri fotovoltaice și stații EV.",
+      "heroDescription": "Tot ce trebuie să știi despre programul Electric UP: de la eligibilitate și documente necesare, până la strategia de punctaj maxim și pașii concreți de aplicare.",
+      "sections": [
+        {
+          "id": "ce-este-electric-up",
+          "title": "Ce este programul Electric UP?",
+          "content": "**Electric UP** este un program de finanțare nerambursabilă administrat de **Ministerul Energiei**, destinat IMM-urilor și operatorilor HoReCa din România. Programul finanțează un pachet integrat de:\n\n- **Panouri fotovoltaice** (27–150 kWp)\n- **Sistem de stocare energie** (baterii)\n- **Stații de încărcare vehicule electrice** (min. 22 kW)\n- **Sistem alternativ de încălzire/răcire** (opțional, ex. pompă de căldură)\n\n### Baza legală\n\n- **OUG 159/2020** — ordonanța-cadru a programului\n- **OUG 39/2024** — modificările pentru Ediția 2\n- **Ordinul nr. 1441/04.10.2024** — Ghidul de finanțare Electric UP Ciclul 2\n\nProgramul a fost lansat în 2020 și va funcționa prin **cicluri multiple de finanțare până în 2032**.\n\n### Ediția 1 vs. Ediția 2 — Ce s-a schimbat?\n\n| Parametru | Ediția 1 (2020–2023) | Ediția 2 (2024+) |\n|---|---|---|\n| Grant maxim | 100.000 EUR | **150.000 EUR** |\n| Cofinanțare | 0% (integral grant) | **25% din surse proprii** |\n| Capacitate PV | 27–100 kWp | **27–150 kWp** |\n| Stocare energie | Nu era obligatorie | **Obligatorie** (min. 30% din PV) |\n| Încălzire/răcire | Nu era inclusă | **Opțională** (max. 30% din total) |\n| Contracte semnate | 1.839 | 2.859 cereri depuse (Ciclul 2) |\n| Buget | ~600 mil. RON | 450–596 mil. RON |"
+        },
+        {
+          "id": "status-2026",
+          "title": "Status Electric UP în februarie 2026",
+          "content": "### Ciclul 2 — În evaluare\n\n| Detaliu | Informație |\n|---|---|\n| **Perioada de înscriere** | 14 octombrie – 16 decembrie 2024 |\n| **Cereri depuse** | 2.859 proiecte |\n| **Buget alocat** | 450–596 milioane RON |\n| **Status** | **În evaluare** — nu se acceptă cereri noi |\n| **Platformă** | granturi.imm.gov.ro |\n\n### Ciclul 3 — Neconfirmat, dar probabil\n\nNu există un anunț oficial pentru un Ciclu 3 în 2026. Totuși:\n\n- Cadrul legal (OUG 159/2020) prevede **cicluri multiple până în 2032**\n- Ediția 1 a avut mai multe sesiuni de depunere\n- Bugetul programului provine din alocări anuale de la bugetul de stat\n- Este rezonabil să așteptăm un nou apel după finalizarea evaluării Ciclului 2\n\n**Recomandare:** Monitorizează [energie.gov.ro/category/electricup/](https://energie.gov.ro/category/electricup/) pentru anunțuri. Între timp, **pregătește-ți documentația** — când se deschide un nou apel, fereastră de depunere este scurtă (în Ciclul 2 a fost doar 2 luni)."
+        },
+        {
+          "id": "cine-poate-aplica",
+          "title": "Cine poate aplica la Electric UP?",
+          "content": "### Categoria 1: IMM-uri (Întreprinderi Mici și Mijlocii)\n\n- Microîntreprinderi, întreprinderi mici și medii\n- Orice domeniu CAEN eligibil pentru ajutor de minimis\n- Maximum **249 angajați** ȘI maximum **50 milioane EUR cifră de afaceri**\n- Capital **100% privat**\n\n### Categoria 2: Operatori HoReCa\n\n- **Toate tipurile** de întreprinderi (nu doar IMM-uri!) din sectorul HoReCa\n- Coduri CAEN eligibile: **5510, 5520, 5530, 5590, 5610, 5621, 5629, 5630, 9329**\n\n### Condiții de eligibilitate (TOATE trebuie îndeplinite)\n\n1. Persoană juridică înregistrată în România\n2. **Fără datorii fiscale** la bugetul de stat sau local (certificate de atestare fiscală)\n3. Nu este în insolvență, faliment, lichidare sau dizolvare\n4. Capital social **100% privat**\n5. Deține în proprietate, administrare, concesiune sau închiriere imobilul unde se implementează proiectul\n6. Documentele de proprietate acoperă **întreaga perioadă de implementare + monitorizare** (6+ ani)\n7. Ajutorul de minimis primit în anul curent + 2 ani anteriori nu depășește plafonul\n8. Consumul de energie verificat prin **audit energetic** (12 luni consecutive)\n9. Trebuie să aibă sau să deschidă un cont la **Trezoreria Statului**\n\n### Cine NU poate aplica\n\n- Firme din sectorul agricol/piscicol (au scheme separate de ajutor de stat)\n- CAEN 649 (Alte intermedieri financiare)\n- CAEN 653 (Activități ale fondurilor de pensii)\n- CAEN 920 (Jocuri de noroc)\n- Firme care **extind sau înlocuiesc** capacitate solară existentă (trebuie să fie instalație nouă)"
+        },
+        {
+          "id": "ce-se-finanteaza",
+          "title": "Ce cheltuieli sunt eligibile?",
+          "content": "Electric UP finanțează un **pachet integrat** — nu poți aplica doar pentru panouri fără stație de încărcare EV.\n\n### Componente obligatorii\n\n| Componentă | Cerințe |\n|---|---|\n| **Panouri fotovoltaice** | 27–150 kWp capacitate instalată, panouri, invertoare, structuri montaj, contoare digitale bidirecționale |\n| **Sistem stocare energie** | Minimum **30%** din puterea instalată PV (ex: PV 100 kWp → baterie min. 30 kWh) |\n| **Stație încărcare EV** | Minimum **22 kW** putere totală, minimum **2 puncte de încărcare** (ex: 2×11 kW) |\n\n### Componentă opțională\n\n| Componentă | Cerințe |\n|---|---|\n| **Sistem încălzire/răcire alternativ** | Pompă de căldură sau alt sistem electric, maximum **30% din valoarea totală** a proiectului |\n\n### Cheltuieli eligibile detaliate\n\n| Categorie | Plafonare |\n|---|---|\n| Panouri, invertoare, cabluri, structuri montaj | Fără plafon specific |\n| Sistem stocare (baterii) | Min. 30% din PV |\n| Stații încărcare EV | Min. 1 stație, min. 22 kW |\n| Sistem încălzire/răcire | Max. 30% din total proiect |\n| Proiectare și avize | Max. **5%** din total eligibil |\n| Consultanță și management proiect | Max. **5%** din total eligibil |\n| Montaj și punere în funcțiune | Max. **10%** din total eligibil |\n| TVA (doar dacă nedeductibilă) | Integralitate |\n\n### Ce NU se finanțează\n\n- **Costurile de racordare la rețea** (taxa de racordare la operatorul de distribuție)\n- Taxe pentru utilități\n- Cheltuieli pentru extinderea/înlocuirea capacității solare existente"
+        },
+        {
+          "id": "sume-si-cofinantare",
+          "title": "Cât primești și cât plătești din buzunar?",
+          "content": "### Sumele de finanțare\n\n| Parametru | Valoare |\n|---|---|\n| **Grant maxim** | **150.000 EUR** |\n| **Acoperire din grant** | **75%** din cheltuielile eligibile |\n| **Cofinanțare proprie** | **25%** din surse proprii |\n| **Avans** | Până la **30%** din grant (necesită scrisoare de garanție bancară) |\n\n### Exemplu concret — Sistem de 100 kWp\n\n| Element | Valoare estimată |\n|---|---|\n| Panouri + invertoare + structuri | 55.000 EUR |\n| Sistem stocare 30 kWh | 15.000 EUR |\n| Stație încărcare EV 2×11 kW | 8.000 EUR |\n| Proiectare, avize, montaj | 7.000 EUR |\n| **Cost total proiect** | **85.000 EUR** |\n| **Grant Electric UP (75%)** | **63.750 EUR** |\n| **Cofinanțare proprie (25%)** | **21.250 EUR** |\n\n### Și mai poți reduce costul propriu\n\nCofinanțarea de 25% poate fi redusă și mai mult cu facilitățile fiscale:\n\n- **Scutire impozit profit reinvestit:** economisești 16% din investiția proprie → 3.400 EUR\n- **Amortizare super-accelerată 2026:** economie suplimentară la impozit\n- **Cost real din buzunar:** sub **18.000 EUR** pentru un sistem de 100 kWp\n\nPentru detalii despre facilități fiscale, vezi ghidul nostru [Subvenții Panouri Fotovoltaice 2026](/ghid/subventii-panouri-fotovoltaice)."
+        },
+        {
+          "id": "proces-aplicare",
+          "title": "Procesul de aplicare pas cu pas",
+          "content": "### Etapa 1: Pregătire (2–4 săptămâni înainte de depunere)\n\n**1.1 Audit energetic**\n- Angajează un auditor energetic autorizat\n- Trebuie să acopere **12 luni consecutive** de consum\n- Include facturile de energie din perioada analizată\n\n**1.2 Alege instalatorul**\n- Trebuie să aibă minim **2 angajați cu calificarea COR 741103** (electrician instalații) — verificat prin extras REVISAL\n- Cere ofertă tehnică detaliată cu toate componentele\n- Verifică certificări ANRE\n\n**1.3 Pregătește documentele de proprietate**\n- **Extras carte funciară** — nu mai vechi de 30 zile la depunere\n- Contract de proprietate / închiriere / concesiune care acoperă implementare + 5 ani monitorizare\n- Acordul proprietarului (dacă nu ești proprietar)\n\n**1.4 Obține certificate fiscale**\n- Certificat de atestare fiscală de la **ANAF** (buget de stat)\n- Certificat de atestare fiscală de la **primărie** (buget local)\n- Nu mai vechi de 30–60 zile la depunere\n\n### Etapa 2: Înregistrare pe platformă\n\n- Creezi cont pe **granturi.imm.gov.ro**\n- Completezi datele firmei\n- Perioadă de înregistrare: anunțată cu minim **10 zile** înainte pe energie.gov.ro\n\n### Etapa 3: Depunere proiect\n\n- Încărcarea tuturor documentelor pe platformă\n- Completarea cererii de finanțare (Anexa 3 din ghid)\n- Fereastra de depunere e scurtă — în Ciclul 2 a fost doar **32 de zile**\n\n### Etapa 4: Evaluare (minim 60 zile)\n\n- Verificare eligibilitate\n- Evaluare tehnică\n- Posibilitate de clarificări (ministerul te contactează)\n\n### Etapa 5: Rezultate și contractare\n\n- Publicare liste pe energie.gov.ro\n- Perioadă de contestații\n- Semnare contract de finanțare\n\n### Etapa 6: Implementare (12 luni)\n\n- **12 luni de la semnarea contractului** pentru finalizarea lucrărilor\n- Instalare sistem complet (PV + baterii + EV)\n- Obținere certificat de racordare\n- Dosar de plată pentru rambursare\n\n### Etapa 7: Monitorizare (5 ani)\n\n- Rapoarte anuale pe platformă\n- Sistemul trebuie menținut funcțional\n- Activele nu pot fi vândute sau înstrăinate"
+        },
+        {
+          "id": "documente-necesare",
+          "title": "Checklist documente necesare",
+          "content": "### Documente obligatorii la depunere\n\n- [ ] **Cerere de finanțare** (Anexa 3 din ghidul de finanțare)\n- [ ] **Raport de audit energetic** — bazat pe 12 luni consecutive de consum\n- [ ] **Extras carte funciară** — nu mai vechi de 30 zile\n- [ ] **Certificat atestare fiscală ANAF** — buget de stat\n- [ ] **Certificat atestare fiscală primărie** — buget local\n- [ ] **Act de proprietate** / contract de închiriere / concesiune (acoperire: implementare + 5 ani)\n- [ ] **Acord proprietar** — dacă nu ești proprietarul imobilului\n- [ ] **Extras REVISAL al instalatorului** — minim 2 angajați cu COR 741103\n- [ ] **Ofertă tehnică** de la instalator (specificații panouri, invertoare, baterii, stație EV)\n- [ ] **Declarație ajutor de minimis** — sume primite în anul curent + 2 ani anteriori\n- [ ] **Declarație TVA nedeductibil** — dacă soliciți TVA ca cheltuială eligibilă\n\n### Sfaturi practice\n\n- **Începe cu auditul energetic** — durează cel mai mult (2–3 săptămâni)\n- **Extrasul CF și certificatele fiscale** le obții în ultimele zile înainte de depunere (au termen de valabilitate scurt)\n- **Alege instalatorul din timp** — verifică să aibă angajații necesari în REVISAL\n- **Deschide cont la Trezorerie** dacă nu ai deja — procesul durează câteva zile"
+        },
+        {
+          "id": "punctaj-maxim",
+          "title": "Cum obții punctaj maxim — Strategia de scoring",
+          "content": "Proiectele sunt evaluate și clasate după un **Coeficient de Performanță (CCP)**. Iată cum maximizezi scorul:\n\n### Grila de punctaj\n\n| Criteriu | Puncte max. | Cum obții maximum |\n|---|---|---|\n| **Stații încărcare EV** | 10 puncte | Putere totală > 22 kW + acces public |\n| **Baterii stocare** | 10 puncte | Capacitate ≥ **50%** din puterea PV (nu doar minimul de 30%) |\n| **Sistem încălzire/răcire** | 10 puncte | Include pompă de căldură (5 pct. pentru alte sisteme) |\n| **Nivel cofinanțare** | 5 puncte | Cofinanțare mai mare decât minimul de 25% |\n\n### Criteriu departajare (la punctaj egal)\n\n1. Puterea combinată a punctelor de încărcare AC+DC\n2. Valoarea totală a proiectului (PV + stații EV)\n3. Ordinea cronologică a depunerii documentelor\n\n### Strategia optimă pentru punctaj maxim (35 puncte)\n\n**1. Baterie de stocare la 50% din PV** (10 pct.)\n- Exemplu: PV 100 kWp → baterie 50 kWh (nu doar minimul de 30 kWh)\n- Cost suplimentar: ~10.000 EUR (dar 75% e acoperit din grant)\n\n**2. Stație EV cu acces public** (10 pct.)\n- Putere peste 22 kW — ideal 2×22 kW sau 1×50 kW DC\n- Amplasare cu acces public (parcare deschisă, nu doar angajați)\n\n**3. Pompă de căldură** (10 pct.)\n- Include o pompă de căldură aer-apă sau aer-aer\n- Max. 30% din valoarea totală a proiectului\n- Bonus: reduce și factura de gaz/încălzire\n\n**4. Cofinanțare majorată** (5 pct.)\n- Oferă mai mult decât 25% cofinanțare\n- Demonstrează angajament și capacitate financiară"
+        },
+        {
+          "id": "greseli-frecvente",
+          "title": "Greșeli frecvente și cum le eviți",
+          "content": "### 1. Documente expirate la depunere\n**Greșeala:** Extrasul de carte funciară sau certificatele fiscale sunt mai vechi decât termenul permis.\n**Soluția:** Obține-le în ultimele 5 zile înainte de depunere. Programează-te din timp la OCPI și ANAF.\n\n### 2. Instalator fără angajați calificați\n**Greșeala:** Instalatorul ales nu are minim 2 angajați cu COR 741103 în REVISAL.\n**Soluția:** Cere extrasul REVISAL înainte de a alege instalatorul. Verifică-l personal.\n\n### 3. Capacitate PV sub 27 kWp sau peste 150 kWp\n**Greșeala:** Sistemul dimensionat nu se încadrează în limitele programului.\n**Soluția:** Lucrează cu instalatorul să dimensioneze între 27–150 kWp. Dacă ai nevoie de mai mult, instalezi restul separat.\n\n### 4. Baterie prea mică\n**Greșeala:** Stocare sub 30% din PV — proiectul e respins. Sau stocare la exact 30% — pierzi puncte.\n**Soluția:** Dimensionează bateria la **50% din PV** — îndeplinești cerința ȘI obții punctaj maxim.\n\n### 5. Lipsa contractului cu Trezoreria\n**Greșeala:** Nu ai cont deschis la Trezoreria Statului.\n**Soluția:** Deschide contul cu cel puțin 2 săptămâni înainte. Procesul e simplu dar birocratic.\n\n### 6. Depunere în ultimele ore\n**Greșeala:** Platforma se blochează în ultimele zile. Pierzi oportunitatea.\n**Soluția:** Depune cu minim 3–5 zile înainte de termenul limită."
+        },
+        {
+          "id": "pregatire-ciclu-nou",
+          "title": "Ce poți face acum pentru următorul ciclu",
+          "content": "Chiar dacă nu există un apel deschis, poți câștiga timp prețios pregătindu-te:\n\n### Checklist de pregătire\n\n**Imediat (săptămâna 1):**\n- [ ] Verifică dacă firma ta îndeplinește criteriile de eligibilitate\n- [ ] Deschide cont la Trezoreria Statului (dacă nu ai)\n- [ ] Verifică să nu ai datorii fiscale\n\n**Luna 1:**\n- [ ] Contractează un auditor energetic autorizat\n- [ ] Începe auditul energetic (12 luni de consum)\n- [ ] Cere oferte de la 2-3 instalatori autorizați ANRE\n\n**Luna 2:**\n- [ ] Alege instalatorul și semnează pre-contract\n- [ ] Verifică REVISAL-ul instalatorului (min. 2 angajați COR 741103)\n- [ ] Obține documentele de proprietate actualizate\n\n**Gata de depunere:**\n- [ ] Raport audit energetic finalizat\n- [ ] Ofertă tehnică completă de la instalator\n- [ ] Dosarul pregătit — la anunțul noului apel, obții doar certificatele fiscale și extrasul CF (proaspete) și depui\n\n### Surse de monitorizare\n\n- [energie.gov.ro/category/electricup/](https://energie.gov.ro/category/electricup/) — pagina oficială\n- [granturi.imm.gov.ro](https://granturi.imm.gov.ro) — platforma de aplicare\n- [startupcafe.ro](https://www.startupcafe.ro) — știri despre programe de finanțare\n- [finantare.ro](https://www.finantare.ro) — alerte fonduri nerambursabile\n\n### Alternativă: Nu aștepta granturi\n\nDacă nu vrei să aștepți un apel incert, investiția din surse proprii în 2026 poate fi chiar mai avantajoasă:\n- **Amortizare super-accelerată 65%** (doar în 2026)\n- **Scutire impozit profit reinvestit** (permanent)\n- **Economie energie din ziua 1**\n\nPentru detalii, vezi [Subvenții Panouri Fotovoltaice 2026](/ghid/subventii-panouri-fotovoltaice)."
+        }
+      ],
+      "faq": [
+        {
+          "question": "Ce este programul Electric UP și cât finanțare pot primi?",
+          "answer": "Electric UP este un program al Ministerului Energiei care oferă până la 150.000 EUR fonduri nerambursabile (75% din costurile eligibile) pentru IMM-uri și firme HoReCa. Finanțează un pachet integrat: panouri fotovoltaice (27–150 kWp), stocare energie, stații încărcare EV și opțional pompă de căldură."
+        },
+        {
+          "question": "Se mai pot depune cereri la Electric UP în 2026?",
+          "answer": "La Ciclul 2 nu se mai acceptă cereri — cele 2.859 proiecte depuse sunt în evaluare. Nu a fost anunțat oficial un Ciclu 3, dar cadrul legal permite cicluri multiple până în 2032. Monitorizează energie.gov.ro pentru anunțuri."
+        },
+        {
+          "question": "Cine este eligibil pentru Electric UP?",
+          "answer": "IMM-urile din orice domeniu CAEN eligibil pentru ajutor de minimis și operatorii HoReCa (inclusiv întreprinderi mari). Firma trebuie să aibă capital 100% privat, fără datorii fiscale, și să dețină sau închirieze imobilul unde se instalează sistemul."
+        },
+        {
+          "question": "Ce trebuie să conțină obligatoriu proiectul Electric UP?",
+          "answer": "Trei componente obligatorii: (1) panouri fotovoltaice 27–150 kWp, (2) sistem de stocare energie minim 30% din puterea PV, (3) stație de încărcare EV minim 22 kW cu minim 2 puncte de încărcare. Opțional: pompă de căldură (max. 30% din total)."
+        },
+        {
+          "question": "Cum îmi maximizez șansele de aprobare?",
+          "answer": "Dimensionează bateria la 50% din PV (nu doar minimul de 30%), include o pompă de căldură, alege stații EV cu putere peste 22 kW și acces public, și oferă cofinanțare peste 25%. Pregătește documentele din timp și depune cu câteva zile înainte de termenul limită."
+        },
+        {
+          "question": "Cât durează procesul de la aplicare la bani?",
+          "answer": "Evaluarea durează minim 60 de zile. După aprobarea și semnarea contractului, ai 12 luni pentru implementare. Poți solicita un avans de 30% din grant la semnare (cu scrisoare de garanție bancară). Monitorizarea durează 5 ani după finalizare."
+        }
+      ],
+      "relatedSpecializations": ["hale-industriale", "cladiri-birouri", "retail", "agricol"]
     }
   ]
 }

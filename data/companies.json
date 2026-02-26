@@ -759,6 +759,196 @@
       "verified": true,
       "createdAt": "2026-02-25",
       "updatedAt": "2026-02-25"
+    },
+    {
+      "id": "volta-x-solar",
+      "slug": "volta-x-solar",
+      "name": "Volta X Solar Systems S.R.L.",
+      "cui": "RO15329177",
+      "logo": "",
+      "description": "Companie 100% românească din Piatra-Neamț, fondată în 2003, cu peste 80 de angajați, oferind soluții integrate pentru sisteme fotovoltaice, stocare energie și stații de încărcare vehicule electrice. Certificări ANRE C1A și C2A, ISO 9001 și ISO 14001. Acoperă întregul ciclu: dezvoltare, implementare, operare și mentenanță. Parte din grupul VOLTA.",
+      "founded": 2003,
+      "employees": 83,
+      "location": {
+        "city": "Piatra-Neamț",
+        "county": "Neamț",
+        "address": ""
+      },
+      "contact": {
+        "phone": "+40376448589",
+        "email": "office@voltax.ro",
+        "website": "https://www.voltax.ro"
+      },
+      "coverage": ["Neamț", "Bacău", "Suceava"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail"],
+      "certifications": ["ANRE-C1A", "ANRE-C2A", "ISO-9001", "ISO-14001"],
+      "capacity": {
+        "minProjectKw": 20,
+        "maxProjectKw": 5000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 48476688,
+        "profit": 2719411
+      },
+      "tags": ["experienta-10-ani", "mentenanta-inclusa", "sisteme-stocare"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-26",
+      "updatedAt": "2026-02-26"
+    },
+    {
+      "id": "elsaco-solutions",
+      "slug": "elsaco-solutions",
+      "name": "Elsaco Solutions S.R.L.",
+      "cui": "RO14364265",
+      "logo": "",
+      "description": "Parte din grupul Elsaco, companie din Botoșani cu peste 20 de ani de experiență în dezvoltarea și implementarea centralelor fotovoltaice comerciale și industriale. Peste 50.000 kW de sisteme fotovoltaice proiectate și instalate. Autorizare ANRE, cu expertiză suplimentară în soluții software și IoT pentru monitorizare energetică.",
+      "founded": 2001,
+      "employees": 54,
+      "location": {
+        "city": "Cătămărești-Deal",
+        "county": "Botoșani",
+        "address": ""
+      },
+      "contact": {
+        "phone": "+40231507060",
+        "email": "solutions@elsaco.com",
+        "website": "https://solutions.elsaco.com"
+      },
+      "coverage": ["Botoșani", "Suceava", "Iași", "Neamț"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 30,
+        "maxProjectKw": 5000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 110653163,
+        "profit": 9827896
+      },
+      "tags": ["experienta-10-ani", "mentenanta-inclusa", "monitorizare-inclusa"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-26",
+      "updatedAt": "2026-02-26"
+    },
+    {
+      "id": "enevo-group",
+      "slug": "enevo-group",
+      "name": "ENEVO Group S.R.L.",
+      "cui": "RO33110123",
+      "logo": "",
+      "description": "Cel mai mare contractor EPC românesc pentru energie regenerabilă, cu sediul în București. Peste 1,5 GW în construcție, incluzând proiectul de 761 MWp de la Ogrezeni — una dintre cele mai mari centrale fotovoltaice din Europa. Oferă servicii complete EPC: inginerie, procurement, construcție și integrare în rețea.",
+      "founded": 2014,
+      "employees": 44,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Str. Barbu Văcărescu 301-311, Sector 2"
+      },
+      "contact": {
+        "phone": "+40371017242",
+        "email": "office@enevogroup.com",
+        "website": "https://enevogroup.com"
+      },
+      "coverage": ["București", "Ilfov", "Giurgiu"],
+      "specializations": ["hale-industriale", "parcuri-logistice"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 500,
+        "maxProjectKw": 100000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 416261591,
+        "profit": 39090544
+      },
+      "tags": ["proiecte-mari", "EPC", "parcuri-solare"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-26",
+      "updatedAt": "2026-02-26"
+    },
+    {
+      "id": "sun-power-center",
+      "slug": "sun-power-center",
+      "name": "Sun Power Center S.R.L.",
+      "cui": "RO30957540",
+      "logo": "",
+      "description": "Companie din Iași specializată în dezvoltarea, implementarea și mentenanța sistemelor de energie solară pentru sectoarele comercial și industrial din regiunea Moldova. Fondată în 2012, cu o creștere a cifrei de afaceri de 77% în 2024 și marjă de profit solidă de ~13%. Acoperă zona de est a României.",
+      "founded": 2012,
+      "employees": 36,
+      "location": {
+        "city": "Valea Lupului",
+        "county": "Iași",
+        "address": ""
+      },
+      "contact": {
+        "phone": "0372552307",
+        "email": "contact@sunpowercenter.ro",
+        "website": "https://sunpowercenter.ro"
+      },
+      "coverage": ["Iași", "Bacău", "Neamț", "Vaslui", "Galați"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail", "agricol"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 10,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 24662460,
+        "profit": 3203661
+      },
+      "tags": ["mentenanta-inclusa"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-26",
+      "updatedAt": "2026-02-26"
+    },
+    {
+      "id": "waldevar-energy",
+      "slug": "waldevar-energy",
+      "name": "Waldevar Energy S.R.L.",
+      "cui": "RO28513111",
+      "logo": "",
+      "description": "Contractor EPC european pentru parcuri fotovoltaice la scară mare, cu sediul operațional în Voluntari și birouri în Austria, SUA și Tunisia. Peste 1.300 de profesioniști și un portofoliu de 2,5 GW în proiecte contractate. Partener EPC pentru Doral Energy. Cifra de afaceri a crescut cu 136% în 2024.",
+      "founded": 2011,
+      "employees": 504,
+      "location": {
+        "city": "Voluntari",
+        "county": "Ilfov",
+        "address": "Str. Emil Gârleanu Nr. 11"
+      },
+      "contact": {
+        "phone": "+40313333333",
+        "email": "office@waldevar.com",
+        "website": "https://www.waldevar.com"
+      },
+      "coverage": ["București", "Ilfov", "Tulcea", "Constanța", "Timiș"],
+      "specializations": ["hale-industriale", "parcuri-logistice"],
+      "certifications": ["ISO-9001", "ISO-14001", "ISO-45001"],
+      "capacity": {
+        "minProjectKw": 500,
+        "maxProjectKw": 100000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 190067130,
+        "profit": 20064953
+      },
+      "tags": ["proiecte-mari", "EPC", "companie-internationala", "parcuri-solare"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-26",
+      "updatedAt": "2026-02-26"
     }
   ]
 }

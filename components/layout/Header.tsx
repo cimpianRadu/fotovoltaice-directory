@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 
 const navLinks = [
   { href: '/firme', label: 'Firme' },
-  { href: '/ghid/panouri-fotovoltaice-hale-industriale', label: 'Ghid' },
+  { href: '/ghid', label: 'Ghid' },
   { href: '/intrebari-frecvente', label: 'FAQ' },
   { href: '/despre', label: 'Despre' },
   { href: '/cere-oferta', label: 'Cere Ofertă' },
