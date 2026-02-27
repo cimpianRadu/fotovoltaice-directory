@@ -333,17 +333,17 @@ firecrawl_scrape → articol-relevant.ro (markdown: conținut complet articol)
 **Obiectiv:** 15+ ghiduri, 25+ firme, trafic organic în creștere.
 
 #### Calendar editorial (1 articol/săptămână)
-Articolele existente (4):
+Articolele existente (6):
 - ✅ Panouri Fotovoltaice pentru Hale Industriale (6 Jan)
 - ✅ Cât Costă un Sistem Fotovoltaic Comercial (20 Jan)
 - ✅ Cum Alegi Instalatorul Fotovoltaic Potrivit (3 Feb)
 - ✅ Legislație Prosumator Comercial 2026 (17 Feb)
+- ✅ Subvenții Panouri Fotovoltaice 2026 - Ghid Fonduri Nerambursabile (26 Feb)
+- ✅ Electric UP 2026 - Ghid Complet de Aplicare pentru Firme (26 Feb)
 
 Articole noi planificate:
 | Săpt. | Data publicare | Titlu (keyword principal) | Keyword target |
 |-------|---------------|---------------------------|----------------|
-| 5 | 3 Mar | Subvenții Panouri Fotovoltaice 2026 - Ghid Fonduri Nerambursabile | subvenții panouri fotovoltaice |
-| 6 | 10 Mar | Electric UP 2026 - Ghid Complet de Aplicare pentru Firme | electric up 2026 |
 | 7 | 17 Mar | Stocare Energie cu Baterii pentru Firme - Merită Investiția? | baterii stocare energie |
 | 8 | 24 Mar | Tipuri Panouri Fotovoltaice 2026 - Monocristaline vs TOPCon vs HJT | tipuri panouri fotovoltaice |
 | 9 | 31 Mar | Invertoare Fotovoltaice Comerciale - Huawei vs Fronius vs SMA | invertoare fotovoltaice |

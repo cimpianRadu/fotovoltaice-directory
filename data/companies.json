@@ -949,6 +949,196 @@
       "verified": true,
       "createdAt": "2026-02-26",
       "updatedAt": "2026-02-26"
+    },
+    {
+      "id": "allview-solar-energy",
+      "slug": "allview-solar-energy",
+      "name": "Visual Fan S.A. (Allview Solar Energy)",
+      "cui": "RO14724950",
+      "logo": "",
+      "description": "Companie românească listată la BVB (ALW), cunoscută pentru brandul Allview, cu divizie dedicată de energie solară din 2022. Specializată în proiecte fotovoltaice industriale de 1-5 MW, inclusiv parcul de 46 MWp de la Țăndărei. Proiecte EPC pentru Autoliv (5,7 MW) și Prodlacta (980 kW). Partener Trina Storage.",
+      "founded": 0,
+      "employees": 60,
+      "location": {
+        "city": "Brașov",
+        "county": "Brașov",
+        "address": "Str. Brazilor nr. 61"
+      },
+      "contact": {
+        "phone": "+40368403130",
+        "email": "solarenergy@allview.ro",
+        "website": "https://allview.ro/solarenergy"
+      },
+      "coverage": ["Brașov", "București", "Ilfov", "Ialomița"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "agricol"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 100,
+        "maxProjectKw": 50000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 95671921,
+        "profit": 0
+      },
+      "tags": ["proiecte-mari", "EPC", "listata-BVB", "parcuri-solare"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-27",
+      "updatedAt": "2026-02-27"
+    },
+    {
+      "id": "inosolar",
+      "slug": "inosolar",
+      "name": "Inocom Biz S.R.L. (inoSOLAR)",
+      "cui": "RO34445895",
+      "logo": "",
+      "description": "Companie cu 6 sedii naționale și peste 3.500 de instalări realizate, cu o creștere de 443% year-over-year. Oferă servicii complete de instalare panouri fotovoltaice pentru segmentul comercial, industrial și rezidențial. Validată AFM, partener Longi, Canadian Solar, Jinko, Huawei și Sungrow.",
+      "founded": 0,
+      "employees": 0,
+      "location": {
+        "city": "Voluntari",
+        "county": "Ilfov",
+        "address": ""
+      },
+      "contact": {
+        "phone": "0735320363",
+        "email": "contact@inosolar.ro",
+        "website": "https://inosolar.ro"
+      },
+      "coverage": ["Ilfov", "București", "Galați", "Constanța", "Brașov", "Cluj"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail"],
+      "certifications": ["ANRE-C2A"],
+      "capacity": {
+        "minProjectKw": 10,
+        "maxProjectKw": 1000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 54016263,
+        "profit": 0
+      },
+      "tags": ["retea-nationala", "partener-huawei", "partener-longi"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-27",
+      "updatedAt": "2026-02-27"
+    },
+    {
+      "id": "restart-energy",
+      "slug": "restart-energy",
+      "name": "Restart Energy One S.A.",
+      "cui": "RO34583200",
+      "logo": "",
+      "description": "Furnizor de energie regenerabilă și contractor EPC listat pe piața AeRO a BVB (REO). Dual business: furnizare energie electrică și instalare sisteme fotovoltaice. Peste 120 de proiecte EPC realizate, inclusiv pentru Cotnari (400 kWp). Parteneriat cu Transelectrica pentru proiecte agrovoltaice.",
+      "founded": 0,
+      "employees": 65,
+      "location": {
+        "city": "Timișoara",
+        "county": "Timiș",
+        "address": "Str. Virgil Madgearu nr. 15/B"
+      },
+      "contact": {
+        "phone": "0800410040",
+        "email": "clienti@restartenergy.ro",
+        "website": "https://restartenergy.ro"
+      },
+      "coverage": ["Timiș", "București", "Ilfov", "Arad", "Bihor"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "agricol"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 30,
+        "maxProjectKw": 5000,
+        "projectsCompleted": 120
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 92717390,
+        "profit": -20400000
+      },
+      "tags": ["furnizor-energie", "EPC", "listata-BVB", "agrovoltaic"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-27",
+      "updatedAt": "2026-02-27"
+    },
+    {
+      "id": "greentech-professionals",
+      "slug": "greentech-professionals",
+      "name": "Greentech Professionals S.R.L.",
+      "cui": "RO46635117",
+      "logo": "",
+      "description": "Companie de construcții electrice și mecanice specializată în domeniul fotovoltaic, cu experiență în parcuri solare și eoliene, centre de date și construcții civile și industriale. Creștere de 157% year-over-year în 2024. Oferă și servicii de mentenanță și laborator mobil PRAM.",
+      "founded": 2022,
+      "employees": 71,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Calea Floreasca 194, Sector 1"
+      },
+      "contact": {
+        "phone": "",
+        "email": "office@greentechpro.ro",
+        "website": "https://greentechpro.ro"
+      },
+      "coverage": ["București", "Ilfov"],
+      "specializations": ["hale-industriale", "parcuri-logistice"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 100,
+        "maxProjectKw": 50000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 43229753,
+        "profit": 0
+      },
+      "tags": ["parcuri-solare", "EPC", "mentenanta-inclusa", "crestere-rapida"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-27",
+      "updatedAt": "2026-02-27"
+    },
+    {
+      "id": "flexik-automation",
+      "slug": "flexik-automation",
+      "name": "Flexik Automation S.R.L.",
+      "cui": "RO6351850",
+      "logo": "",
+      "description": "Companie de instalații industriale cu 234 de angajați și una dintre cele mai mari cifre de afaceri din sector (186M RON în 2024). Servicii integrate: sisteme fotovoltaice, protecție la incendiu, BMS, automatizări industriale și integrare linii robotizate. Partener Daikin România pentru instalații fotovoltaice. Validată AFM.",
+      "founded": 0,
+      "employees": 234,
+      "location": {
+        "city": "Timișoara",
+        "county": "Timiș",
+        "address": "Str. George Coșbuc nr. 5"
+      },
+      "contact": {
+        "phone": "0256292965",
+        "email": "office@flexik.ro",
+        "website": "https://flexik.ro"
+      },
+      "coverage": ["Timiș", "Arad", "Hunedoara", "Caraș-Severin"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 50,
+        "maxProjectKw": 5000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 185982727,
+        "profit": 0
+      },
+      "tags": ["proiecte-mari", "instalatii-industriale", "automatizari", "partener-daikin"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-02-27",
+      "updatedAt": "2026-02-27"
     }
   ]
 }

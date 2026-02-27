@@ -1,9 +1,9 @@
 # Pipeline Firme Noi - De Adăugat
 
-Ultima actualizare: 2026-02-26
-Total firme în director: 25 (după adăugarea celor 5 din 26 Feb)
+Ultima actualizare: 2026-02-27
+Total firme în director: 30 (după adăugarea celor 5 din 27 Feb)
 
-## Tier 1 - Date complete, gata de adăugat
+## Tier 1 - ADĂUGATE pe 27 Feb 2026 ✅
 
 ### 1. Visual Fan / Allview Solar Energy S.A.
 - **CUI:** RO14724950
