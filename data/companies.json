@@ -1139,6 +1139,196 @@
       "verified": true,
       "createdAt": "2026-02-27",
       "updatedAt": "2026-02-27"
+    },
+    {
+      "id": "carpat-energy",
+      "slug": "carpat-energy",
+      "name": "Carpat Energy S.R.L.",
+      "cui": "RO22971640",
+      "logo": "",
+      "description": "Distribuitor și instalator de sisteme fotovoltaice din Cluj-Napoca, activ din 2007. Importator oficial Victron Energy, Fronius și Swiss Solar, oferă soluții on-grid, off-grid și hibride pentru segmentul rezidențial și comercial, cu proiecte documentate în peste 15 județe din România.",
+      "founded": 2007,
+      "employees": 16,
+      "location": {
+        "city": "Cluj-Napoca",
+        "county": "Cluj",
+        "address": "Aleea Peana Nr. 18, Sc. C, Et. 2, Ap. 61"
+      },
+      "contact": {
+        "phone": "0757291372",
+        "email": "office@carpatenergy.ro",
+        "website": "https://carpatenergy.ro"
+      },
+      "coverage": ["Cluj", "Mureș", "Hunedoara", "Sibiu", "Sălaj", "Maramureș", "Brașov", "Constanța", "Bistrița-Năsăud", "Iași", "Suceava", "Galați", "Prahova", "Harghita", "Covasna"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "agricol"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 10,
+        "maxProjectKw": 94,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 15357083,
+        "profit": 0
+      },
+      "tags": ["experienta-15-ani", "distribuitor-echipamente", "victron-energy", "fronius"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-02",
+      "updatedAt": "2026-03-02"
+    },
+    {
+      "id": "kilowat",
+      "slug": "kilowat",
+      "name": "Altige Impex S.R.L.",
+      "cui": "RO16388554",
+      "logo": "",
+      "description": "Brand de instalare sisteme fotovoltaice activ din 2004, cu certificare ANRE C2A și autorizare Huawei. Oferă soluții turnkey pentru segmentul rezidențial și comercial (27-150 kWp), cu prezență națională și internațională (Germania, Spania). Partener JinkoSolar, Trina Solar și Growatt.",
+      "founded": 2004,
+      "employees": 40,
+      "location": {
+        "city": "Păușești-Măglași",
+        "county": "Vâlcea",
+        "address": "Sat Valea Cheii, Str. Principală Nr. 325"
+      },
+      "contact": {
+        "phone": "+40371236171",
+        "email": "service@kilowat.ro",
+        "website": "https://kilowat.ro"
+      },
+      "coverage": ["Vâlcea", "București", "Ilfov", "Cluj", "Sibiu", "Timiș", "Constanța", "Olt"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail", "hoteluri"],
+      "certifications": ["ANRE-C2A"],
+      "capacity": {
+        "minProjectKw": 27,
+        "maxProjectKw": 150,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 46992721,
+        "profit": 9215299
+      },
+      "tags": ["experienta-20-ani", "certificare-anre", "huawei-authorized", "expansiune-internationala"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-02",
+      "updatedAt": "2026-03-02"
+    },
+    {
+      "id": "e-acumulatori",
+      "slug": "e-acumulatori",
+      "name": "P Plus 2002 S.R.L.",
+      "cui": "RO14560121",
+      "logo": "",
+      "description": "Companie din București fondată în 2002, cu focus semnificativ pe segmentul industrial fotovoltaic. Distribuitor și instalator de echipamente fotovoltaice sub brandul E-Acumulatori, cu servicii EPCM prin brandul 4Envigo. Importator Victron Energy cu suport tehnic dedicat.",
+      "founded": 2002,
+      "employees": 15,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Str. Valea Oltului Nr. 73-75, Sector 6"
+      },
+      "contact": {
+        "phone": "0745775777",
+        "email": "comenzi@e-acumulatori.ro",
+        "website": "https://e-acumulatori.ro"
+      },
+      "coverage": ["București", "Ilfov"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "agricol"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 29932413,
+        "profit": 0
+      },
+      "tags": ["experienta-20-ani", "distribuitor-echipamente", "focus-industrial", "victron-energy"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-02",
+      "updatedAt": "2026-03-02"
+    },
+    {
+      "id": "ecosolaris",
+      "slug": "ecosolaris",
+      "name": "Ecosolaris Services S.R.L.",
+      "cui": "RO18445354",
+      "logo": "",
+      "description": "Companie pionier în energia solară din România, fondată în 2006, cu experiență de peste 19 ani. Oferă soluții fotovoltaice complete de la consultanță și proiectare la instalare și mentenanță, pentru segmentul rezidențial și comercial/industrial, cu proiecte documentate pe hale industriale până la 400 kWp. Producător propriu de baterii LiFePO4.",
+      "founded": 2006,
+      "employees": 9,
+      "location": {
+        "city": "Bragadiru",
+        "county": "Ilfov",
+        "address": "Str. Celofibrei 25-27 B"
+      },
+      "contact": {
+        "phone": "+40314337009",
+        "email": "contact@ecosolaris.ro",
+        "website": "https://ecosolaris.ro"
+      },
+      "coverage": ["București", "Ilfov", "Harghita"],
+      "specializations": ["hale-industriale", "cladiri-birouri"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 10,
+        "maxProjectKw": 400,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 4757329,
+        "profit": 525023
+      },
+      "tags": ["experienta-15-ani", "pionier-solar", "producator-baterii", "magazin-online"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-02",
+      "updatedAt": "2026-03-02"
+    },
+    {
+      "id": "rominstal-solar",
+      "slug": "rominstal-solar",
+      "name": "Rominstal Solar S.R.L.",
+      "cui": "RO25008360",
+      "logo": "",
+      "description": "Companie din București fondată în 2009, specializată în sisteme fotovoltaice comerciale și stații de încărcare vehicule electrice. Proiecte documentate pentru Avia Motors (570 kWp total), Coresi Brașov (153 kW) și Universitatea Româno-Americană (200 kW). Instalator validat AFM din 2019.",
+      "founded": 2009,
+      "employees": 13,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Str. Doina Nr. 9, Complex Dual, Corp B, Et. 1, Sector 5"
+      },
+      "contact": {
+        "phone": "+40749179675",
+        "email": "office@rominstalsolar.ro",
+        "website": "https://www.rominstalsolar.ro"
+      },
+      "coverage": ["București", "Ilfov", "Brașov", "Constanța", "Dolj"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 20,
+        "maxProjectKw": 314,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 11492372,
+        "profit": 1675107
+      },
+      "tags": ["experienta-15-ani", "statii-incarcare-ev", "validat-afm"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-02",
+      "updatedAt": "2026-03-02"
     }
   ]
 }

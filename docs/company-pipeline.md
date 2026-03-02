@@ -1,7 +1,19 @@
 # Pipeline Firme Noi - De Adăugat
 
-Ultima actualizare: 2026-02-27
-Total firme în director: 30 (după adăugarea celor 5 din 27 Feb)
+Ultima actualizare: 2026-03-02
+Total firme în director: 35 (după adăugarea celor 5 din 2 Mar)
+
+## Batch 2 Mar 2026 - ADĂUGATE ✅
+
+### Carpat Energy S.R.L. (CUI: RO22971640, Cluj-Napoca) ✅
+### Kilowat / Altige Impex S.R.L. (CUI: RO16388554, Vâlcea) ✅
+### E-Acumulatori / P Plus 2002 S.R.L. (CUI: RO14560121, București) ✅
+### Ecosolaris Services S.R.L. (CUI: RO18445354, Ilfov) ✅
+### Rominstal Solar S.R.L. (CUI: RO25008360, București) ✅
+
+### Excluse din batch:
+- **Conecon RO** (CUI: RO21754287) — exclusiv utility-scale (3-230 MWp), nu C&I
+- **Enexus Renewable** (CUI: RO44409660) — exclusiv utility-scale (20 MW+), nu C&I
 
 ## Tier 1 - ADĂUGATE pe 27 Feb 2026 ✅
 

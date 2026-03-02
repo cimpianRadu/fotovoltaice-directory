@@ -137,18 +137,17 @@ https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industria
 **Imagine:** Screenshot profil firmă din Cluj
 **Link:** https://www.instalatori-fotovoltaice.ro/firme
 
-🔍 Cauți un instalator fotovoltaic în județul Cluj?
+Am căutat toate firmele de instalare fotovoltaice din Cluj care lucrează pe proiecte comerciale și industriale.
 
-Am verificat 13 firme care operează în zonă — cu date financiare reale, certificări și portofoliu de proiecte.
+Am găsit 13. Le-am verificat pe fiecare — CUI, date financiare din registre publice, certificări ANRE.
 
-Printre ele: EnergoBit (din 1992, sute de angajați) și MRB Electric (specializat pe clădiri de birouri).
+Cea mai veche: EnergoBit, funcționează din 1992. Cea mai specializată pe birouri: MRB Electric.
 
-👉 Vezi toate firmele și compară-le:
-https://www.instalatori-fotovoltaice.ro/firme
+Dacă ai o hală sau un spațiu comercial în Cluj, ai de unde alege.
 
-Ești instalator în Cluj? Listarea e gratuită 🆓
+Voi cum v-ați ales instalatorul? Ați cerut mai multe oferte sau ați mers pe recomandare?
 
-#fotovoltaice #Cluj #instalatori #energiesolara #Transilvania
+**Primul comentariu:** Link director firme Cluj — https://www.instalatori-fotovoltaice.ro/firme
 
 ---
 
@@ -156,16 +155,17 @@ Ești instalator în Cluj? Listarea e gratuită 🆓
 **Imagine:** Screenshot secțiunea certificări din ghidul de alegere instalator
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/cum-alegi-instalator-fotovoltaic
 
-❓ Întrebare frecventă: „Cum verific dacă un instalator are autorizare ANRE?"
+Certificarea C2A emisă de ANRE e obligatorie pentru oricine instalează sisteme fotovoltaice. Fără ea, lucrarea e ilegală.
 
-Certificarea C2A emisă de ANRE e obligatorie pentru instalarea de sisteme fotovoltaice. Poți verifica orice firmă în Registrul Atestatelor de pe anre.ro.
+Cum verifici? Intri pe site-ul ANRE, secțiunea „Registrul Atestatelor", și cauți după numele firmei sau CUI.
 
-✅ Pe instalatori-fotovoltaice.ro am verificat deja certificările pentru fiecare firmă listată.
+Problema e că mulți instalatori pretind că au ANRE, dar de fapt lucrează pe atestatul altcuiva. Asta înseamnă garanții nevalide și probleme la recepție.
 
-👉 Ghid complet — 10 criterii de selecție + red flags:
-https://www.instalatori-fotovoltaice.ro/ghid/cum-alegi-instalator-fotovoltaic
+Am scris un ghid cu 10 criterii concrete de selecție și semnalele de alarmă la care să fii atent.
 
-#fotovoltaice #ANRE #instalatori #certificari #romania
+Ați verificat vreodată certificarea ANRE a unui instalator înainte să semnați contractul?
+
+**Primul comentariu:** Ghid complet — https://www.instalatori-fotovoltaice.ro/ghid/cum-alegi-instalator-fotovoltaic
 
 ---
 
@@ -173,16 +173,15 @@ https://www.instalatori-fotovoltaice.ro/ghid/cum-alegi-instalator-fotovoltaic
 **Imagine:** Screenshot profilul Energomontaj de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/energomontaj
 
-🏢 Energomontaj S.A. — peste 60 de ani de experiență în sectorul energetic din România.
+Energomontaj S.A. există din 1962. Au 762 de angajați și sunt unul dintre cele mai mari nume din sectorul energetic românesc.
 
-Fondată în 1962, cu 762 de angajați. Unul dintre cei mai mari jucători din piața de instalații energetice din România.
+Nu sunt o firmă mică de fotovoltaice care a apărut peste noapte — au decenii de experiență pe proiecte industriale mari: hale, parcuri logistice, clădiri de birouri.
 
-Specializări: hale industriale, parcuri logistice, clădiri de birouri.
+Când vine vorba de proiecte comerciale de dimensiuni mari, experiența contează enorm. Un instalator care a făcut zeci de proiecte pe hale știe exact ce probleme pot apărea la structură, la avize, la racordare.
 
-👉 Profil complet:
-https://www.instalatori-fotovoltaice.ro/firme/energomontaj
+Cunoașteți firme din România cu experiență similară pe proiecte mari?
 
-#fotovoltaice #Bucuresti #instalatori #Energomontaj #energiesolara
+**Primul comentariu:** Profil complet Energomontaj — https://www.instalatori-fotovoltaice.ro/firme/energomontaj
 
 ---
 
@@ -190,16 +189,15 @@ https://www.instalatori-fotovoltaice.ro/firme/energomontaj
 **Imagine:** Grafic/infographic „40–70% reducere costuri energie"
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industriale
 
-📉 Un sistem fotovoltaic dimensionat corect poate reduce costurile cu energia ale unei hale industriale cu 40–70%.
+O hală industrială cu un sistem fotovoltaic dimensionat corect își reduce factura de energie cu 40–70%.
 
-La un consum mediu de 15.000 EUR/an pe energie, vorbim de o economie de 6.000–10.000 EUR anual.
+Să punem cifre concrete: dacă plătești 15.000 EUR pe an pe energie, un sistem bine dimensionat îți aduce o economie de 6.000–10.000 EUR anual.
 
-Pe durata de viață a sistemului (25+ ani), economia totală depășește de 3–5 ori investiția inițială.
+Iar sistemul produce energie 25+ ani. După ce se amortizează (4–6 ani), tot ce urmează e economie pură.
 
-👉 Detalii:
-https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industriale
+Cât plătiți pe energie pe an la hală/fabrică/depozit? V-ați calculat vreodată cât ați economisi cu fotovoltaice?
 
-#fotovoltaice #economii #energie #business #romania
+**Primul comentariu:** Ghid complet fotovoltaice pe hale — https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industriale
 
 ---
 
@@ -207,16 +205,20 @@ https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industria
 **Imagine:** Screenshot secțiunea „Red flags" sau cele 10 criterii
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/cum-alegi-instalator-fotovoltaic
 
-⚠️ Cum alegi instalatorul fotovoltaic potrivit? 10 criterii pe care majoritatea firmelor le ignoră.
+Alegerea greșită a instalatorului e cel mai scump risc într-un proiect fotovoltaic.
 
-Alegerea greșită a instalatorului e cel mai costisitor risc într-un proiect fotovoltaic. Un sistem prost instalat înseamnă producție scăzută, garanții nevalide și probleme ani de zile.
+Un sistem prost instalat nu doar produce mai puțin — te costă și la garanții (nevalide), la asigurări (probleme) și la avize (refuzate).
 
-Am compilat 10 criterii concrete de selecție + semnale de alarmă la care să fii atent.
+Am compilat 10 criterii concrete pe care să le verifici înainte să semnezi un contract. Plus semnalele de alarmă care arată că ceva nu e în regulă.
 
-👉 Ghidul complet:
-https://www.instalatori-fotovoltaice.ro/ghid/cum-alegi-instalator-fotovoltaic
+Câteva exemple de red flags:
+— Ofertă fără vizită tehnică pe amplasament
+— Prețuri mult sub piață (de obicei ascund echipamente de calitate inferioară)
+— Nu pot arăta proiecte finalizate similare cu al tău
 
-#fotovoltaice #instalatori #energiesolara #business #romania
+Ce experiențe ați avut cu instalatorii? Bune sau rele — orice feedback ajută pe cei care sunt acum în proces de selecție.
+
+**Primul comentariu:** Ghid complet — https://www.instalatori-fotovoltaice.ro/ghid/cum-alegi-instalator-fotovoltaic
 
 ---
 
@@ -224,16 +226,15 @@ https://www.instalatori-fotovoltaice.ro/ghid/cum-alegi-instalator-fotovoltaic
 **Imagine:** Screenshot profilul Volta X de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/volta-x-solar-systems
 
-🔆 Volta X Solar Systems S.R.L. — peste 20 de ani de experiență, cu sediul în Piatra-Neamț.
+În zona Moldovei nu sunt mulți instalatori fotovoltaici mari. Dar există Volta X Solar Systems, din Piatra-Neamț.
 
-Fondată în 2003, cu 83 de angajați. Specializată pe hale industriale, clădiri de birouri și retail.
+Funcționează din 2003, au 83 de angajați și lucrează pe hale industriale, clădiri de birouri și retail.
 
-Unul dintre puținii instalatori mari din zona Moldovei.
+Peste 20 de ani de experiență într-o zonă unde opțiunile pentru proiecte comerciale mari sunt limitate.
 
-👉 Profil complet:
-https://www.instalatori-fotovoltaice.ro/firme/volta-x-solar-systems
+Dacă aveți hală sau spațiu comercial în Moldova, ce opțiuni ați găsit pentru instalare?
 
-#fotovoltaice #PiatraNeamt #Neamt #instalatori #energiesolara
+**Primul comentariu:** Profil complet Volta X — https://www.instalatori-fotovoltaice.ro/firme/volta-x-solar-systems
 
 ---
 
@@ -241,20 +242,19 @@ https://www.instalatori-fotovoltaice.ro/firme/volta-x-solar-systems
 **Imagine:** Screenshot secțiunea „Procesul de instalare pas cu pas" din ghidul hale
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industriale
 
-⏱️ Cât durează instalarea unui sistem fotovoltaic pe o hală industrială?
+Mulți cred că instalarea unui sistem fotovoltaic pe o hală durează câteva zile. Realitatea: 4–12 săptămâni de la prima vizită tehnică până la punerea în funcțiune.
 
-De la prima vizită tehnică până la punerea în funcțiune: 4–12 săptămâni.
+De ce atât? Pentru că nu e doar montajul fizic:
+— Evaluare și proiectare: 1–2 săptămâni
+— Avize și autorizații: 1–2 săptămâni
+— Instalare propriu-zisă: 3–4 săptămâni
+— Testare și punere în funcțiune: 1–2 săptămâni
 
-Etapele:
-✅ Evaluare și proiectare (1–2 săpt.)
-✅ Avize și autorizații (1–2 săpt.)
-✅ Instalare propriu-zisă (3–4 săpt.)
-✅ Testare și finalizare (1–2 săpt.)
+Cele mai mari întârzieri vin de la avize și autorizații, nu de la instalare.
 
-👉 Detalii pas cu pas:
-https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industriale
+Cât a durat la voi de la semnarea contractului până la prima producție de energie?
 
-#fotovoltaice #instalare #haleindustriale #energiesolara #romania
+**Primul comentariu:** Ghid complet instalare pe hale — https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industriale
 
 ---
 
@@ -266,18 +266,15 @@ https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industria
 **Imagine:** Screenshot listă firme care acoperă Timiș
 **Link:** https://www.instalatori-fotovoltaice.ro/firme
 
-🔍 Cauți un instalator fotovoltaic în județul Timiș?
+Timișoara și împrejurimile sunt pline de hale industriale și depozite. Dar câți instalatori fotovoltaici serioși operează în zonă?
 
-12 firme verificate operează în zonă — fiecare cu date financiare din registre publice și specializări detaliate.
+Am verificat: 12 firme acoperă județul Timiș, fiecare cu date financiare din registre publice și certificări verificate.
 
-De la hale industriale la clădiri de birouri și parcuri logistice — găsești instalatorul potrivit pe tipul tău de proiect.
+Diferența între ele? Unele sunt specializate pe hale mari (500+ kWp), altele pe proiecte mai mici (birouri, retail). Contează să alegi pe cineva cu experiență pe tipul tău de clădire.
 
-👉 Compară firmele:
-https://www.instalatori-fotovoltaice.ro/firme
+Cine a montat fotovoltaice pe o hală în zona Timișoara? Cum a fost experiența?
 
-Ești instalator în Timiș? Listarea pe platformă e gratuită 🆓
-
-#fotovoltaice #Timisoara #Timis #instalatori #energiesolara
+**Primul comentariu:** Director firme Timiș — https://www.instalatori-fotovoltaice.ro/firme
 
 ---
 
@@ -285,14 +282,18 @@ Ești instalator în Timiș? Listarea pe platformă e gratuită 🆓
 **Imagine:** Screenshot tabelul programe de finanțare
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/subventii-panouri-fotovoltaice
 
-❓ Întrebare frecventă: „Ce subvenții sunt disponibile pentru panouri fotovoltaice comerciale în 2026?"
+În 2026 există mai multe programe active pentru firme care vor să instaleze panouri fotovoltaice:
 
-Răspuns scurt: Electric UP II (până la 150.000 EUR), Fondul de Modernizare (până la 20 mil. EUR/proiect) și mai multe facilități fiscale — inclusiv amortizare super-accelerată de 65% în anul 1.
+— Electric UP II: până la 150.000 EUR nerambursabil pentru IMM-uri
+— Fondul de Modernizare: până la 20 mil. EUR/proiect (pentru proiecte mari)
+— Amortizare super-accelerată: 65% din valoarea investiției în anul 1 (disponibilă ACUM, fără aplicare)
+— Scutire impozit pe profitul reinvestit: 16% economie directă
 
-👉 Am centralizat totul într-un ghid cu statusul fiecărui program:
-https://www.instalatori-fotovoltaice.ro/ghid/subventii-panouri-fotovoltaice
+Cel mai accesibil? Amortizarea super-accelerată — nu trebuie să aplici nicăieri, e un beneficiu fiscal automat.
 
-#subventii #fotovoltaice #fonduri #finantare #romania
+Ați aplicat la vreunul din aceste programe? Cum a fost procesul?
+
+**Primul comentariu:** Ghid complet subvenții — https://www.instalatori-fotovoltaice.ro/ghid/subventii-panouri-fotovoltaice
 
 ---
 
@@ -300,14 +301,15 @@ https://www.instalatori-fotovoltaice.ro/ghid/subventii-panouri-fotovoltaice
 **Imagine:** Screenshot profilul Ensys de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/ensys-renewable-solutions
 
-🔆 Ensys Renewable Solutions S.A. — unul dintre pionierii energiei regenerabile din vestul României.
+Ensys Renewable Solutions funcționează din 2006 în Oradea. Au 198 de angajați și sunt unul dintre pionierii energiei regenerabile din vestul României.
 
-Fondată în 2006 în Oradea, cu 198 de angajați. Specializată pe hale industriale, clădiri de birouri și retail.
+Lucrează pe hale industriale, clădiri de birouri și retail — deci proiecte comerciale de la câteva zeci de kWp până la sute.
 
-👉 Profil complet cu date financiare și certificări:
-https://www.instalatori-fotovoltaice.ro/firme/ensys-renewable-solutions
+Când o firmă are aproape 20 de ani în domeniu și aproape 200 de angajați, e un semn bun. Înseamnă că au trecut prin cicluri economice, au experiență reală și nu vor dispărea peste noapte.
 
-#fotovoltaice #Oradea #Bihor #instalatori #energiesolara
+Ați lucrat vreodată cu Ensys? Ce părere aveți despre instalatorii din zona Bihor/vest?
+
+**Primul comentariu:** Profil complet Ensys — https://www.instalatori-fotovoltaice.ro/firme/ensys-renewable-solutions
 
 ---
 
@@ -315,16 +317,21 @@ https://www.instalatori-fotovoltaice.ro/firme/ensys-renewable-solutions
 **Imagine:** Grafic simplu „Minim 3 oferte"
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/cum-alegi-instalator-fotovoltaic
 
-💡 Câte oferte ar trebui să ceri pentru un proiect fotovoltaic comercial?
+Greșeala clasică: ceri o singură ofertă pentru un sistem fotovoltaic comercial și semnezi pe loc.
 
-Recomandarea: minim 3, ideal 5.
+Recomandarea: minim 3 oferte, ideal 5.
 
-Nu compara doar prețul. Compară: echipamentele oferite, garanțiile, experiența pe proiecte similare și ce include (sau nu include) oferta.
+Și nu compara doar prețul final. Compară:
+— Ce echipamente sunt incluse (marca panourilor, tip invertor)
+— Ce garanții oferă (și cine le oferă — instalatorul sau producătorul)
+— Experiența pe proiecte similare cu al tău
+— Ce NU e inclus în ofertă (racordare, avize, monitorizare)
 
-👉 Pe instalatori-fotovoltaice.ro poți compara 25 de firme verificate:
-https://www.instalatori-fotovoltaice.ro/firme
+Diferența între cea mai ieftină și cea mai scumpă ofertă poate fi 30%. Dar și calitatea variază la fel de mult.
 
-#fotovoltaice #instalatori #oferte #business #romania
+Câte oferte ați cerut voi?
+
+**Primul comentariu:** Director firme verificate — https://www.instalatori-fotovoltaice.ro/firme
 
 ---
 
@@ -332,20 +339,17 @@ https://www.instalatori-fotovoltaice.ro/firme
 **Imagine:** Screenshot tabelul cu programele active (Electric UP, Fond Modernizare, PNRR etc.)
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/subventii-panouri-fotovoltaice
 
-💰 Ce fonduri nerambursabile sunt disponibile în 2026 pentru panouri fotovoltaice?
+Am centralizat toate programele de finanțare și facilitățile fiscale disponibile în 2026 pentru firme care vor panouri fotovoltaice.
 
-Am centralizat toate programele active și facilitățile fiscale într-un singur ghid:
+Sunt 5 opțiuni principale, de la fonduri nerambursabile (Electric UP — 150.000 EUR) până la facilități fiscale care nu necesită nicio aplicare (amortizare super-accelerată — 65% în anul 1).
 
-✅ Electric UP II: până la 150.000 EUR pentru IMM-uri
-✅ Fond Modernizare: până la 20 mil. EUR/proiect
-✅ Amortizare super-accelerată: 65% din valoare în anul 1
-✅ Scutire impozit profit reinvestit: 16% economie
-✅ Compensare prosumator: valabilă până în 2030
+Multe firme nu știu de facilitățile fiscale. Amortizarea super-accelerată și scutirea de impozit pe profitul reinvestit sunt disponibile imediat, fără dosare și fără așteptare. Doar le aplici la contabilitate.
 
-👉 Ghid complet:
-https://www.instalatori-fotovoltaice.ro/ghid/subventii-panouri-fotovoltaice
+Am pus totul într-un ghid cu statusul fiecărui program, condițiile de eligibilitate și pașii concreți.
 
-#subventii #fotovoltaice #fonduri #ElectricUP #romania
+Ați beneficiat de vreunul din aceste programe? Care a fost cel mai ușor de accesat?
+
+**Primul comentariu:** Ghid complet subvenții 2026 — https://www.instalatori-fotovoltaice.ro/ghid/subventii-panouri-fotovoltaice
 
 ---
 
@@ -353,18 +357,15 @@ https://www.instalatori-fotovoltaice.ro/ghid/subventii-panouri-fotovoltaice
 **Imagine:** Screenshot listă firme care acoperă Ilfov
 **Link:** https://www.instalatori-fotovoltaice.ro/firme
 
-🔍 Cauți un instalator fotovoltaic în județul Ilfov?
+Zona metropolitană București–Ilfov e plină de depozite, hale logistice și spații comerciale. Potențial enorm pentru fotovoltaice.
 
-11 firme verificate acoperă zona — multe cu sediul chiar în Ilfov: Renovatio Solar, Alfa Energetic Esco și Waldevar Energy.
+Am verificat 11 firme care acoperă zona — unele chiar cu sediul în Ilfov: Renovatio Solar, Alfa Energetic Esco și Waldevar Energy (504 angajați).
 
-Ideal dacă ai o hală sau spațiu comercial în zona metropolitană București.
+Avantajul unui instalator local: timpii de răspuns mai mici, cunoașterea procedurilor cu distribuitorii locali de energie, mentenanță mai rapidă.
 
-👉 Compară firmele:
-https://www.instalatori-fotovoltaice.ro/firme
+Aveți hală sau depozit în zona Ilfov? Ați montat deja sau sunteți în faza de oferte?
 
-Ești instalator și nu ești pe listă? Listarea e gratuită 🆓
-
-#fotovoltaice #Ilfov #instalatori #energiesolara #bucuresti
+**Primul comentariu:** Director firme Ilfov — https://www.instalatori-fotovoltaice.ro/firme
 
 ---
 
@@ -372,16 +373,20 @@ Ești instalator și nu ești pe listă? Listarea e gratuită 🆓
 **Imagine:** Screenshot tabelul prețuri din ghidul de costuri
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 
-❓ Întrebare frecventă: „Care este prețul minim pentru un sistem fotovoltaic comercial?"
+Întrebarea pe care o primesc cel mai des: „Cât costă, la minim, un sistem fotovoltaic comercial?"
 
-Pentru un sistem de 30–50 kWp (potrivit pentru un atelier sau magazin), investiția pornește de la ~22.500 EUR.
+Depinde de dimensiune, dar ca referință:
+— 30–50 kWp (atelier, magazin mic): de la ~22.500 EUR
+— 100–250 kWp (hală medie): de la ~65.000 EUR
+— 500 kWp+ (fabrică, depozit mare): de la ~275.000 EUR
 
-Prețul per kWp scade cu cât sistemul e mai mare — de la 750–950 EUR/kWp la sisteme mici, până la 500–650 EUR/kWp la peste 1 MWp.
+Prețul per kWp scade semnificativ la sisteme mai mari: de la 750–950 EUR/kWp la sisteme mici, până la 500–650 EUR/kWp peste 1 MWp.
 
-👉 Tabel complet cu prețuri:
-https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
+Atenție: prețul „minim" nu înseamnă neapărat și cea mai bună alegere. Echipamentele contează enorm.
 
-#fotovoltaice #preturi #costuri #energiesolara #romania
+Ce dimensiune de sistem ar fi potrivită pentru spațiul vostru?
+
+**Primul comentariu:** Tabel complet prețuri — https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 
 ---
 
@@ -393,16 +398,15 @@ https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 **Imagine:** Screenshot profil firmă care acoperă Constanța
 **Link:** https://www.instalatori-fotovoltaice.ro/firme
 
-🔍 Cauți un instalator fotovoltaic în județul Constanța?
+Constanța are unul dintre cele mai bune niveluri de iradiație solară din România. Practic, un sistem fotovoltaic aici produce mai multă energie decât același sistem montat în Cluj sau București.
 
-8 firme verificate acoperă zona — cu certificări ANRE, experiență pe proiecte comerciale și date financiare verificabile.
+Asta înseamnă amortizare mai rapidă și economii mai mari pe termen lung.
 
-☀️ Constanța are unul dintre cele mai bune niveluri de iradiație solară din România. Investiția se amortizează mai repede aici.
+Am verificat 8 firme care acoperă zona — cu certificări ANRE, experiență pe proiecte comerciale și date financiare din registre publice.
 
-👉 Vezi firmele disponibile:
-https://www.instalatori-fotovoltaice.ro/firme
+Dacă aveți o hală sau un spațiu comercial în Dobrogea, condițiile sunt ideale. Cine a montat deja în zona Constanța? Ce producție reală obțineți?
 
-#fotovoltaice #Constanta #instalatori #energiesolara #Dobrogea
+**Primul comentariu:** Director firme Constanța — https://www.instalatori-fotovoltaice.ro/firme
 
 ---
 
@@ -410,17 +414,19 @@ https://www.instalatori-fotovoltaice.ro/firme
 **Imagine:** Screenshot secțiunea despre echipamente din ghidul de costuri
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 
-❓ Întrebare frecventă: „Merită să investesc în panouri bifaciale?"
+Panourile bifaciale captează lumina și pe partea din spate, producând 5–25% mai multă energie decât cele clasice. Costă cu 10–15% mai mult.
 
-Panourile bifaciale captează lumina și pe partea din spate, producând 5–25% mai multă energie. Dar costă cu 10–15% mai mult.
+Dar nu merită în orice situație.
 
-✅ Merită pe acoperișuri deschise, luminoase (hale cu membrană albă)
-❌ Pe acoperișuri întunecate, diferența e neglijabilă
+Merită dacă: acoperișul halei e deschis, luminos, cu membrană albă sau suprafață reflectorizantă. Lumina reflectată de jos alimentează partea inferioară a panoului.
 
-👉 Detalii în ghidul de costuri:
-https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
+Nu merită dacă: acoperișul e întunecat, cu tablă neagră sau cu multe umbriri. Câștigul extra e neglijabil și nu justifică diferența de preț.
 
-#fotovoltaice #panouribifaciale #tehnologie #energiesolara #romania
+Regula simplă: dacă instalatorul nu poate justifica cu calcule concrete câștigul bifacial pe amplasamentul tău, nu accepta.
+
+Ați primit oferte cu panouri bifaciale? Ce diferență de preț vi s-a cerut?
+
+**Primul comentariu:** Ghid costuri echipamente — https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 
 ---
 
@@ -428,14 +434,17 @@ https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 **Imagine:** Screenshot profilul Simtel de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/simtel-team
 
-📈 Simtel Team S.A. — singura companie de instalații fotovoltaice listată la Bursa de Valori București (BVB: SMTL).
+Un lucru interesant despre Simtel Team: e singura companie de instalații fotovoltaice listată la Bursa de Valori București (BVB: SMTL).
 
-Fondată în 2010, cu 124 de angajați. Acoperire națională — proiecte pe hale industriale, parcuri logistice, clădiri de birouri, retail și agricol.
+Ce înseamnă asta practic? Transparență financiară totală — rapoarte trimestriale publice, audit extern, guvernanță corporativă. Nu trebuie să ghicești dacă firma e solidă financiar.
 
-👉 Profil complet:
-https://www.instalatori-fotovoltaice.ro/firme/simtel-team
+Fondată în 2010, au 124 de angajați și acoperire națională. Lucrează pe tot spectrul: hale industriale, parcuri logistice, birouri, retail, agricol.
 
-#fotovoltaice #SimtelTeam #BVB #instalatori #energiesolara
+Listarea la bursă nu garantează automat cea mai bună ofertă. Dar garantează că firma nu va dispărea peste noapte cu avansul tău.
+
+Ați verificat vreodată situația financiară a instalatorului înainte să semnați?
+
+**Primul comentariu:** Profil complet Simtel Team — https://www.instalatori-fotovoltaice.ro/firme/simtel-team
 
 ---
 
@@ -443,16 +452,17 @@ https://www.instalatori-fotovoltaice.ro/firme/simtel-team
 **Imagine:** Grafic „Până la 150.000 EUR nerambursabil"
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/electric-up-2026-ghid-aplicare
 
-💰 Programul Electric UP oferă până la 150.000 EUR nerambursabil pentru sisteme fotovoltaice.
+Programul Electric UP oferă până la 150.000 EUR nerambursabil pentru sisteme fotovoltaice. Sună bine, dar e o capcană pe care mulți o ignoră.
 
-Cine poate aplica? IMM-uri cu consum de energie electrică și cel puțin 1 an de activitate.
+Banii nu se dau pe principiul „primul venit, primul servit". Se dau pe bază de punctaj. Și punctajul depinde de mai mulți factori: dimensiunea sistemului relativ la consum, eficiența energetică a clădirii, locația etc.
 
-⚠️ Dar atenție: punctajul de selecție contează enorm.
+Multe firme aplică, primesc punctaj mic și sunt respinse. Nu pentru că nu erau eligibile, ci pentru că nu și-au optimizat dosarul.
 
-👉 Strategia de punctaj maxim:
-https://www.instalatori-fotovoltaice.ro/ghid/electric-up-2026-ghid-aplicare
+Am scris un ghid cu strategia de punctaj maxim — ce trebuie să faci ca să-ți maximizezi șansele.
 
-#ElectricUP #fotovoltaice #subventii #IMM #romania
+Ați aplicat vreodată la Electric UP? Cum a fost experiența?
+
+**Primul comentariu:** Ghid Electric UP 2026 — https://www.instalatori-fotovoltaice.ro/ghid/electric-up-2026-ghid-aplicare
 
 ---
 
@@ -460,21 +470,20 @@ https://www.instalatori-fotovoltaice.ro/ghid/electric-up-2026-ghid-aplicare
 **Imagine:** Screenshot secțiunea eligibilitate sau checklist documente
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/electric-up-2026-ghid-aplicare
 
-📋 Electric UP 2026 — Ghid complet de aplicare pentru firme.
+Electric UP 2026 — 150.000 EUR nerambursabil pentru panouri fotovoltaice. Dar între eligibilitate și acceptare e o distanță mare.
 
-Programul oferă până la 150.000 EUR nerambursabil. Dar punctajul de selecție face diferența între acceptare și respingere.
+Am detaliat tot procesul într-un ghid:
+— Cine poate aplica (și cine nu — sunt câteva excepții pe care mulți nu le știu)
+— Ce cheltuieli sunt eligibile (nu totul e acoperit)
+— Documentele necesare (am făcut un checklist complet)
+— Strategia de punctaj maxim (aici se câștigă sau se pierde)
+— Greșelile frecvente care duc la respingere
 
-Am detaliat tot procesul:
-✅ Cine poate aplica (și cine nu)
-✅ Cheltuieli eligibile
-✅ Documente necesare (checklist complet)
-✅ Strategia de punctaj maxim
-✅ Greșeli frecvente care duc la respingere
+Cel mai important lucru: pregătește dosarul ÎNAINTE de deschiderea apelului. Când se deschide, ai zile, nu săptămâni.
 
-👉 Pregătește-te pentru următorul apel:
-https://www.instalatori-fotovoltaice.ro/ghid/electric-up-2026-ghid-aplicare
+Planificați să aplicați la următorul apel Electric UP?
 
-#ElectricUP #fotovoltaice #finantare #IMM #romania
+**Primul comentariu:** Ghid complet Electric UP — https://www.instalatori-fotovoltaice.ro/ghid/electric-up-2026-ghid-aplicare
 
 ---
 
@@ -482,16 +491,15 @@ https://www.instalatori-fotovoltaice.ro/ghid/electric-up-2026-ghid-aplicare
 **Imagine:** Screenshot profilul FomCo de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/fomco-solar-systems
 
-🔆 FomCo Solar Systems S.R.L. — peste 20 de ani în energie solară, cu sediul în Cristești, Mureș.
+FomCo Solar Systems funcționează din 2004 în Cristești, Mureș. Peste 20 de ani în energie solară — pe vremea când nimeni nu vorbea despre fotovoltaice în România.
 
-Fondată în 2004, cu 27 de angajați. Specializată pe hale industriale, parcuri logistice și agricol.
+Sunt o echipă de 27 de angajați, specializați pe hale industriale, parcuri logistice și proiecte agricole.
 
-Unul dintre instalatorii cu cea mai lungă experiență din centrul României.
+Într-o piață unde multe firme au apărut în ultimii 2-3 ani (când a explodat cererea), experiența de 20+ ani e un diferențiator serios. Au trecut prin toate fazele pieței.
 
-👉 Profil complet:
-https://www.instalatori-fotovoltaice.ro/firme/fomco-solar-systems
+Cunoașteți instalatori din zona centrului României (Mureș, Sibiu, Brașov)?
 
-#fotovoltaice #Mures #instalatori #FomCo #energiesolara
+**Primul comentariu:** Profil complet FomCo — https://www.instalatori-fotovoltaice.ro/firme/fomco-solar-systems
 
 ---
 
@@ -499,16 +507,19 @@ https://www.instalatori-fotovoltaice.ro/firme/fomco-solar-systems
 **Imagine:** Grafic „65% amortizare în anul 1"
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/subventii-panouri-fotovoltaice
 
-💡 Știai că poți amortiza 65% din valoarea unui sistem fotovoltaic chiar în primul an fiscal?
+Cel mai subutilizat beneficiu fiscal pentru firme care instalează fotovoltaice: amortizarea super-accelerată.
 
-Amortizarea super-accelerată e disponibilă ACUM, pentru toate firmele, fără nicio aplicare. E un beneficiu fiscal direct.
+Ce înseamnă concret? Poți trece 65% din valoarea sistemului pe cheltuieli chiar în primul an fiscal. Restul în anii următori.
 
-Combinată cu scutirea de impozit pe profitul reinvestit (16% economie), investiția devine semnificativ mai accesibilă.
+Nu trebuie să aplici nicăieri. Nu trebuie dosare, nici așteptare. E un drept fiscal disponibil oricărei firme, acum.
 
-👉 Detalii:
-https://www.instalatori-fotovoltaice.ro/ghid/subventii-panouri-fotovoltaice
+Combinat cu scutirea de impozit pe profitul reinvestit (16% economie directă), impactul financiar în anul 1 e semnificativ.
 
-#fotovoltaice #amortizare #fiscal #business #romania
+Mulți contabili nu știu de asta sau nu o aplică automat. Merită verificat cu contabilul vostru.
+
+Contabilul vostru v-a menționat vreodată această facilitate?
+
+**Primul comentariu:** Ghid complet facilități fiscale — https://www.instalatori-fotovoltaice.ro/ghid/subventii-panouri-fotovoltaice
 
 ---
 
@@ -520,18 +531,17 @@ https://www.instalatori-fotovoltaice.ro/ghid/subventii-panouri-fotovoltaice
 **Imagine:** Screenshot profil firmă care acoperă Brașov
 **Link:** https://www.instalatori-fotovoltaice.ro/firme
 
-🔍 Cauți un instalator fotovoltaic în județul Brașov?
+Brașovul are o concentrație mare de hale industriale și spații comerciale, mai ales în zona Cristian–Ghimbav–Prejmer.
 
-8 firme verificate acoperă zona — de la companii cu experiență de 10+ ani până la firme specializate pe proiecte industriale mari.
+Am verificat 8 firme de instalare fotovoltaice care acoperă județul — de la companii cu experiență de 10+ ani la firme specializate pe proiecte industriale mari.
 
-Fiecare profil include date financiare reale, certificări și zonele de acoperire.
+Fiecare profil include date financiare din registre publice (nu declarate de firmă), certificări ANRE și zonele exacte de acoperire.
 
-👉 Compară și alege:
-https://www.instalatori-fotovoltaice.ro/firme
+Lucru important: nu toate firmele care „acoperă" un județ au și experiență reală acolo. Verifică proiectele finalizate, nu doar declarațiile.
 
-Ești instalator în Brașov? Listarea e gratuită 🆓
+Cine are experiență cu instalatori din zona Brașov?
 
-#fotovoltaice #Brasov #instalatori #energiesolara #Transilvania
+**Primul comentariu:** Director firme Brașov — https://www.instalatori-fotovoltaice.ro/firme
 
 ---
 
@@ -539,16 +549,17 @@ Ești instalator în Brașov? Listarea e gratuită 🆓
 **Imagine:** Screenshot secțiunea procedură din ghidul legislație
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
 
-❓ Întrebare frecventă: „Cât durează procedura de a deveni prosumator comercial?"
+Mulți cred că odată ce ai panourile montate, ești automat prosumator. Nu e așa.
 
-Procesul complet — de la cererea de racordare până la contractul de prosumator — durează în medie 2–4 luni.
+Procesul complet — de la cererea de racordare la distribuitorul local până la contractul de prosumator — durează în medie 2–4 luni.
 
-Instalatorul se ocupă de cea mai mare parte a documentației.
+Vestea bună: instalatorul serios se ocupă de cea mai mare parte a documentației. Vestea proastă: dacă ai ales un instalator care „nu face și hârtiile", te descurci singur cu birocrația.
 
-👉 Ghid complet legislație prosumator:
-https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
+De aceea e important să întrebi de la ofertare: „Cine se ocupă de avize, racordare și contractul de prosumator?"
 
-#prosumator #fotovoltaice #legislatie #energiesolara #romania
+Ați trecut prin procesul de a deveni prosumator comercial? Cât a durat la voi?
+
+**Primul comentariu:** Ghid legislație prosumator — https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
 
 ---
 
@@ -556,16 +567,15 @@ https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
 **Imagine:** Screenshot profilul Electro-Alfa de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/electro-alfa-international
 
-🏭 Electro-Alfa International S.A. — 30 de ani de experiență în sectorul energetic, cu sediul în Botoșani.
+Nord-estul României e una dintre zonele cel mai slab acoperite de instalatori fotovoltaici mari. Dar există Electro-Alfa International din Botoșani.
 
-Fondată în 1994, cu 282 de angajați. Unul dintre puținii jucători mari din nord-estul României.
+Funcționează din 1994, au 282 de angajați și 30 de ani de experiență în sectorul energetic. Specializați pe hale industriale și parcuri logistice.
 
-Specializări: hale industriale și parcuri logistice.
+Când ai o hală în Moldova și cauți un instalator serios, opțiunile sunt limitate. O firmă cu 30 de ani și sute de angajați e o raritate în zonă.
 
-👉 Profil complet:
-https://www.instalatori-fotovoltaice.ro/firme/electro-alfa-international
+Cum e situația cu instalatorii în nordul și estul României? Ați găsit opțiuni locale sau ați apelat la firme din alte regiuni?
 
-#fotovoltaice #Botosani #instalatori #ElectroAlfa #energiesolara
+**Primul comentariu:** Profil complet Electro-Alfa — https://www.instalatori-fotovoltaice.ro/firme/electro-alfa-international
 
 ---
 
@@ -573,16 +583,19 @@ https://www.instalatori-fotovoltaice.ro/firme/electro-alfa-international
 **Imagine:** Grafic „25–30 ani durată de viață"
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 
-⏳ Panourile fotovoltaice moderne au o durată de viață de 25–30 de ani, cu degradare de sub 0,5% pe an.
+O întrebare pe care mulți nu și-o pun: ce se întâmplă cu panourile fotovoltaice după 10-15 ani?
 
-După 25 de ani, panourile încă produc peste 85% din capacitatea inițială.
+Răspunsul: funcționează în continuare. Panourile moderne au o durată de viață de 25–30 de ani, cu degradare de sub 0,5% pe an.
 
-La o amortizare de 4–6 ani, restul de 20+ ani e profit net 📈
+Concret: după 25 de ani, panourile tale încă produc peste 85% din capacitatea inițială.
 
-👉 Detalii în ghidul de costuri:
-https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
+Acum gândește-te la asta: investiția se amortizează în 4–6 ani. Restul de 20+ ani produci energie practic pe gratis.
 
-#fotovoltaice #panourisolare #investitie #energiesolara #romania
+Puține investiții de business au un ROI atât de clar și predictibil.
+
+Ce altă investiție din firma voastră se amortizează în 4-6 ani și apoi produce valoare 20+ ani?
+
+**Primul comentariu:** Ghid costuri și ROI — https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 
 ---
 
@@ -590,17 +603,20 @@ https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 **Imagine:** Screenshot secțiunea beneficii fiscale sau procedura de înregistrare
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
 
-⚖️ Vinzi energia produsă de panourile tale? Iată ce trebuie să știi ca prosumator comercial în 2026.
+Dacă ai panouri fotovoltaice pe firmă, ar trebui să fii prosumator. Dar legislația s-a tot schimbat în ultimii ani și mulți nu știu exact care sunt regulile acum.
 
-Legislația s-a schimbat, iar beneficiile sunt concrete:
-✅ Compensare cantitativă a energiei livrate în rețea
-✅ Scutiri fiscale pentru energia autoconsumată
-✅ Procedura simplificată de înregistrare
+În 2026, situația e favorabilă:
+— Compensare cantitativă: energia livrată în rețea compensează energia consumată, kWh cu kWh
+— Scutiri fiscale: energia autoconsumată e scutită de anumite taxe
+— Procedura e simplificată față de anii trecuți
 
-👉 Citește ghidul:
-https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
+Practic, rețeaua funcționează ca o „baterie virtuală" gratuită. Ce produci ziua și nu consumi, recuperezi seara sau în zilele cu nori.
 
-#prosumator #legislatie #fotovoltaice #energiesolara #romania
+Am detaliat totul: procedura pas cu pas, documentele necesare, drepturile și obligațiile.
+
+Sunteți deja prosumatori sau vă gândiți să aplicați?
+
+**Primul comentariu:** Ghid legislație prosumator 2026 — https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
 
 ---
 
@@ -608,16 +624,17 @@ https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
 **Imagine:** Screenshot profilul Wiren de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/wiren-romania
 
-🔆 Wiren Romania S.R.L. — instalator fotovoltaic cu sediul în Arad, 57 de angajați.
+Wiren Romania din Arad e o firmă mai tânără (fondată în 2017), dar a crescut rapid la 57 de angajați.
 
-Fondată în 2017, specializată pe hale industriale, parcuri logistice și proiecte agricole.
+Specializată pe hale industriale, parcuri logistice și proiecte agricole — cu acoperire în vestul și centrul României.
 
-Acoperire în vestul și centrul României.
+Într-o piață dominată de firme din București și Cluj, e bine să ai opțiuni locale și în vest. Un instalator din Arad ajunge mai repede pe un amplasament din Timiș sau Bihor decât unul din capitală.
 
-👉 Profil complet:
-https://www.instalatori-fotovoltaice.ro/firme/wiren-romania
+Plus: cunoaște distribuitorii locali de energie, procedurile zonale, și poate oferi mentenanță mai rapidă.
 
-#fotovoltaice #Arad #instalatori #Wiren #energiesolara
+Preferați instalatori locali sau vă uitați la firme din toată țara când cereți oferte?
+
+**Primul comentariu:** Profil complet Wiren — https://www.instalatori-fotovoltaice.ro/firme/wiren-romania
 
 ---
 
@@ -625,14 +642,19 @@ https://www.instalatori-fotovoltaice.ro/firme/wiren-romania
 **Imagine:** Screenshot secțiunea relevantă din ghidul legislație
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
 
-❓ Întrebare frecventă: „Pot fi prosumator dacă am sediul în chirie?"
+O situație frecventă: ai firma într-un spațiu închiriat, vrei panouri fotovoltaice, dar nu ești proprietarul clădirii.
 
-Da, e posibil — dar ai nevoie de acordul proprietarului și de un contract de închiriere pe termen suficient de lung pentru a justifica investiția.
+Se poate? Da, dar cu condiții.
 
-👉 Detalii complete:
-https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
+Ai nevoie de acordul scris al proprietarului și de un contract de închiriere pe termen suficient de lung ca investiția să aibă sens (minim 10-15 ani, ideal pe durata de viață a sistemului).
 
-#prosumator #fotovoltaice #legislatie #chirie #romania
+Altă variantă: negociezi cu proprietarul să împărțiți costul și beneficiile. El primește o clădire mai valoroasă, tu plătești mai puțin pe energie.
+
+Atenție: verifică cine va fi titularul contractului de prosumator — tu sau proprietarul.
+
+Sunteți în această situație? Cum ați rezolvat-o sau cum planificați?
+
+**Primul comentariu:** Ghid legislație prosumator — https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
 
 ---
 
@@ -644,18 +666,15 @@ https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
 **Imagine:** Screenshot profil firmă din Sibiu
 **Link:** https://www.instalatori-fotovoltaice.ro/firme
 
-🔍 Cauți un instalator fotovoltaic în județul Sibiu?
+Sibiul are o economie industrială solidă — parcuri industriale, fabrici, depozite. Toate cu acoperișuri mari, ideale pentru fotovoltaice.
 
-9 firme verificate operează în zonă, printre care Expert Energy și East European Business Center — ambele cu sediul chiar în Sibiu.
+Am verificat 9 firme care operează în zonă, printre care Expert Energy și East European Business Center — ambele cu sediul chiar în Sibiu.
 
-Fiecare profil include date financiare din registre publice, specializări și certificări.
+Avantajul unui instalator local: cunoaște specificul zonei, relațiile cu distribuitorul de energie, și poate interveni rapid la mentenanță sau probleme.
 
-👉 Vezi toate firmele:
-https://www.instalatori-fotovoltaice.ro/firme
+Cum alegeți între un instalator local mic dar aproape, și unul mare dar din alt oraș?
 
-Ești instalator în Sibiu? Listarea e gratuită 🆓
-
-#fotovoltaice #Sibiu #instalatori #energiesolara #Transilvania
+**Primul comentariu:** Director firme Sibiu — https://www.instalatori-fotovoltaice.ro/firme
 
 ---
 
@@ -663,19 +682,22 @@ Ești instalator în Sibiu? Listarea e gratuită 🆓
 **Imagine:** Screenshot secțiunea garanții din ghidul hale industriale
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industriale
 
-❓ Întrebare frecventă: „Ce garanții primesc la un sistem fotovoltaic?"
+Un lucru pe care mulți îl trec cu vederea la semnarea contractului: garanțiile.
 
 Standard în industrie:
-✅ Panouri: 25–30 ani garanție de producție, 12–15 ani garanție de produs
-✅ Invertoare: 5–10 ani (extensibil la 15–20 ani)
-✅ Manoperă/instalare: 2–5 ani (depinde de instalator)
+— Panouri: 25–30 ani garanție de producție, 12–15 ani garanție de produs
+— Invertoare: 5–10 ani (extensibil la 15–20 ani contra cost)
+— Manoperă/instalare: 2–5 ani (depinde de instalator)
 
-⚠️ Verifică întotdeauna cine oferă garanția — producătorul sau instalatorul.
+Dar atenție la detaliu: cine oferă garanția? Producătorul panoului sau instalatorul local?
 
-👉 Detalii:
-https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industriale
+Dacă instalatorul dispare (și mulți dispar), garanția lui nu mai valorează nimic. Garanția producătorului rămâne validă, dar trebuie să te descurci singur cu reclamația.
 
-#fotovoltaice #garantii #panourisolare #energiesolara #romania
+De aceea e important să lucrezi cu un instalator stabil financiar, nu doar cu cel mai ieftin.
+
+Ce garanții ați primit voi? V-ați confruntat cu probleme post-instalare?
+
+**Primul comentariu:** Ghid complet fotovoltaice hale — https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industriale
 
 ---
 
@@ -683,33 +705,36 @@ https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industria
 **Imagine:** Screenshot profilul Waldevar de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/waldevar-energy
 
-🏭 Waldevar Energy S.R.L. — unul dintre cei mai mari instalatori fotovoltaici din România, cu 504 angajați.
+Waldevar Energy e unul dintre cei mai mari instalatori fotovoltaici din România ca număr de angajați: 504.
 
-Cu sediul în Voluntari (Ilfov), fondată în 2011. Specializată pe proiecte de mari dimensiuni: hale industriale și parcuri logistice.
+Cu sediul în Voluntari (Ilfov), funcționează din 2011 și sunt specializați pe proiecte de mari dimensiuni — hale industriale și parcuri logistice.
 
-👉 Profil complet:
-https://www.instalatori-fotovoltaice.ro/firme/waldevar-energy
+504 angajați la o firmă de fotovoltaice e un număr mare. Înseamnă că pot gestiona proiecte multiple simultan, au echipe proprii (nu subcontractează tot) și au capacitatea logistică pentru proiecte de sute de kWp.
 
-#fotovoltaice #WaldevarEnergy #instalatori #Ilfov #energiesolara
+Pentru proiecte mari (500 kWp+), dimensiunea instalatorului contează. Un instalator cu 10 angajați poate fi excelent pe proiecte mici, dar se sufocă la un proiect de 1 MWp.
+
+Care e cel mai mare proiect fotovoltaic pe care l-ați făcut sau de care știți în România?
+
+**Primul comentariu:** Profil complet Waldevar — https://www.instalatori-fotovoltaice.ro/firme/waldevar-energy
 
 ---
 
-### 📝 Joi 9 Apr · [M] Micro-fact: 25 firme verificate pe platformă
+### 📝 Joi 9 Apr · [M] Micro-fact: 30 firme verificate pe platformă
 **Imagine:** Screenshot homepage-ul cu lista firme recomandate
 **Link:** https://www.instalatori-fotovoltaice.ro/firme
 
-📊 Pe instalatori-fotovoltaice.ro găsești 25 de firme de instalare panouri fotovoltaice verificate din toată România.
+Am ajuns la 30 de firme verificate pe instalatori-fotovoltaice.ro.
 
-Fiecare profil include:
-✅ Date financiare din registre publice (nu self-reported)
-✅ Certificări ANRE verificate
-✅ Specializări și acoperire geografică
-✅ Contact direct
+Ce înseamnă „verificate"? Nu ne-am bazat pe ce spun firmele despre ele:
+— Date financiare preluate din registre publice (termene.ro, risco.ro)
+— Certificări ANRE verificate în registrul oficial
+— Specializări confirmate din portofoliu real, nu din autodeclarații
 
-👉 Compară și alege instalatorul potrivit:
-https://www.instalatori-fotovoltaice.ro/firme
+De ce contează? Pentru că în piața fotovoltaicelor comerciale, diferența între un instalator serios și unul improvizat poate însemna zeci de mii de euro pierduți și probleme ani de zile.
 
-#fotovoltaice #instalatori #director #energiesolara #romania
+Ce criterii folosiți voi când comparați instalatorii? Prețul e cel mai important sau sunt și altele?
+
+**Primul comentariu:** Director complet firme — https://www.instalatori-fotovoltaice.ro/firme
 
 ---
 
@@ -717,18 +742,15 @@ https://www.instalatori-fotovoltaice.ro/firme
 **Imagine:** Screenshot listă firme care acoperă Dolj
 **Link:** https://www.instalatori-fotovoltaice.ro/firme
 
-🔍 Cauți un instalator fotovoltaic în județul Dolj?
+Oltenia are condiții excelente de iradiație solară — una dintre cele mai bune zone din România. Un sistem fotovoltaic aici produce mai multă energie decât același sistem montat în nord.
 
-8 firme verificate acoperă zona, inclusiv Eurotehnica IT&C cu sediul chiar în Craiova.
+Am verificat 8 firme care acoperă zona Dolj, inclusiv Eurotehnica IT&C cu sediul chiar în Craiova.
 
-☀️ Oltenia are condiții excelente de iradiație solară — una dintre cele mai bune zone din România pentru fotovoltaice.
+E o zonă cu potențial enorm pentru fotovoltaice comerciale, mai ales pe hale industriale și spații logistice de pe centura Craiovei.
 
-👉 Compară firmele:
-https://www.instalatori-fotovoltaice.ro/firme
+Ironia: deși condițiile de iradiație sunt printre cele mai bune, adopția fotovoltaicelor comerciale în Oltenia e sub media națională. De ce credeți că e așa?
 
-Ești instalator în Dolj? Listarea e gratuită 🆓
-
-#fotovoltaice #Craiova #Dolj #instalatori #energiesolara
+**Primul comentariu:** Director firme Dolj — https://www.instalatori-fotovoltaice.ro/firme
 
 ---
 
@@ -736,16 +758,17 @@ Ești instalator în Dolj? Listarea e gratuită 🆓
 **Imagine:** Screenshot profilul FISE de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/fise-electrica-serv
 
-🔆 S. FISE Electrica Serv S.A. — parte din grupul Electrica, cu 458 de angajați.
+FISE Electrica Serv face parte din grupul Electrica — unul dintre cei mai mari jucători din sectorul energetic românesc.
 
-Fondată în 2005, cu experiență solidă în sectorul energetic. Specializată pe hale industriale, parcuri logistice și clădiri de birouri.
+Au 458 de angajați, funcționează din 2005, și au acoperire la nivel național. Specializați pe hale industriale, parcuri logistice și clădiri de birouri.
 
-Acoperire la nivel național.
+Ce e diferit la o firmă din grupul Electrica? Stabilitatea financiară e aproape garantată. Nu e o firmă care a apărut acum 2 ani și poate dispărea peste alți 2.
 
-👉 Profil complet:
-https://www.instalatori-fotovoltaice.ro/firme/fise-electrica-serv
+Pentru proiecte comerciale mari, unde garanțiile pe 25 de ani contează, stabilitatea instalatorului e la fel de importantă ca prețul ofertei.
 
-#fotovoltaice #Electrica #instalatori #energiesolara #romania
+Ați lucrat vreodată cu firme din grupuri energetice mari (Electrica, E.ON, Enel)? Cum a fost experiența versus un instalator independent?
+
+**Primul comentariu:** Profil complet FISE Electrica Serv — https://www.instalatori-fotovoltaice.ro/firme/fise-electrica-serv
 
 ---
 
@@ -753,16 +776,19 @@ https://www.instalatori-fotovoltaice.ro/firme/fise-electrica-serv
 **Imagine:** Screenshot secțiunea prosumator din ghidul legislație
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
 
-💡 La ce preț vinzi surplusul de energie ca prosumator comercial?
+O întrebare frecventă: dacă sunt prosumator comercial, la ce preț vând surplusul de energie?
 
-Sistemul actual funcționează pe principiul compensării cantitative — energia livrată în rețea compensează energia consumată din rețea, kWh cu kWh.
+Răspunsul e mai simplu decât pare: nu îl „vinzi" în sensul clasic. Sistemul funcționează pe compensare cantitativă — kWh cu kWh.
 
-Practic, rețeaua funcționează ca o „baterie virtuală" gratuită.
+Ce produci ziua și nu consumi e livrat în rețea. Ce consumi seara sau în zilele cu nori e preluat din rețea. La final de lună, se face balanța.
 
-👉 Detalii complete:
-https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
+Practic, rețeaua funcționează ca o baterie virtuală gratuită. Nu ai nevoie de baterii fizice scumpe pentru a beneficia de energia produsă ziua.
 
-#prosumator #fotovoltaice #energie #compensare #romania
+Limita: compensarea e valabilă până în 2030 în forma actuală. După, regulile se pot schimba.
+
+Sunteți prosumatori? Cum funcționează compensarea în practică la voi?
+
+**Primul comentariu:** Ghid legislație prosumator — https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
 
 ---
 
@@ -775,7 +801,7 @@ https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
 | **S3** 16–22 Mar | 📝 [J] Timiș | 📝 [F] Subvenții | 📝 [S] Ensys | 📝 [M] Oferte | 📝 [G] Subvenții | 📝 [J] Ilfov | 📝 [F] Preț minim |
 | **S4** 23–29 Mar | 📝 [J] Const. | 📝 [F] Bifac. | 📝 [S] Simtel | 📝 [M] Elec. UP | 📝 [G] Elec. UP | 📝 [S] FomCo | 📝 [M] Amort. 65% |
 | **S5** 30 Mar–5 Apr | 📝 [J] Brașov | 📝 [F] Prosum. | 📝 [S] Electro-Alfa | 📝 [M] Viață pan. | 📝 [G] Legisl. | 📝 [S] Wiren | 📝 [F] Chirie |
-| **S6** 6–12 Apr | 📝 [J] Sibiu | 📝 [F] Garanții | 📝 [S] Waldevar | 📝 [M] 25 firme | 📝 [J] Dolj | 📝 [S] FISE | 📝 [M] Preț surplus |
+| **S6** 6–12 Apr | 📝 [J] Sibiu | 📝 [F] Garanții | 📝 [S] Waldevar | 📝 [M] 30 firme | 📝 [J] Dolj | 📝 [S] FISE | 📝 [M] Preț surplus |
 
 **Legendă:** [G] Ghid · [J] Județ · [F] FAQ · [S] Spotlight firmă · [M] Micro-fact
 **Status:** ✅ Published | 📅 Scheduled | 📝 Draft
