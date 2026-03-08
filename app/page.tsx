@@ -5,6 +5,7 @@ import CompanyCard from '@/components/company/CompanyCard';
 import FAQ from '@/components/seo/FAQ';
 import JsonLd from '@/components/seo/JsonLd';
 import WaitlistForm from '@/components/forms/WaitlistForm';
+import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { getFeaturedCompanies } from '@/lib/utils';
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import guidesData from '@/data/guides.json';
@@ -143,6 +144,13 @@ export default function HomePage() {
               Toate ghidurile &rarr;
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Sponsor */}
+      <section className="max-w-7xl mx-auto px-4 py-10">
+        <div className="max-w-sm mx-auto">
+          <SponsorBanner />
         </div>
       </section>
 

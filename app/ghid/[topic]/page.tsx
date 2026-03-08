@@ -7,6 +7,7 @@ import JsonLd from '@/components/seo/JsonLd';
 import FAQ from '@/components/seo/FAQ';
 import Button from '@/components/ui/Button';
 import Markdown from '@/components/ui/Markdown';
+import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import guidesData from '@/data/guides.json';
 import { generateFAQJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo';
 
@@ -84,7 +85,7 @@ export default async function GuidePage({ params }: Props) {
         </div>
 
         {/* Table of Contents */}
-        <nav className="bg-surface rounded-xl border border-border p-5 mb-10">
+        <nav className="bg-surface rounded-xl border border-border p-5 mb-6">
           <h2 className="font-semibold text-gray-900 mb-3 text-sm">Cuprins</h2>
           <ol className="space-y-1.5 list-decimal list-inside">
             {guide.sections.map((section) => (
@@ -104,6 +105,11 @@ export default async function GuidePage({ params }: Props) {
             </li>
           </ol>
         </nav>
+
+        {/* Sponsor */}
+        <div className="mb-10">
+          <SponsorBanner />
+        </div>
 
         {/* Content sections */}
         <div className="max-w-none">
