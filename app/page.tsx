@@ -7,6 +7,7 @@ import JsonLd from '@/components/seo/JsonLd';
 import WaitlistForm from '@/components/forms/WaitlistForm';
 import { getFeaturedCompanies } from '@/lib/utils';
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
+import guidesData from '@/data/guides.json';
 
 export const metadata: Metadata = {
   alternates: {
@@ -54,9 +55,9 @@ export default function HomePage() {
       <section className="bg-gradient-to-br from-secondary-dark via-secondary to-secondary-light text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24 text-center">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-            Găsește instalatorul potrivit pentru
+            Instalatori Panouri Fotovoltaice
             <br className="hidden sm:block" />
-            <span className="text-primary-light"> proiectul tău fotovoltaic comercial</span>
+            <span className="text-primary-light"> Comerciale și Industriale</span>
           </h1>
           <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
             Platforma #1 pentru firme de instalare panouri fotovoltaice pe hale, fabrici, clădiri de birouri și spații comerciale din România.
@@ -97,6 +98,51 @@ export default function HomePage() {
           >
             Vezi toate firmele &rarr;
           </Link>
+        </div>
+      </section>
+
+      {/* Guides */}
+      <section className="bg-surface border-y border-border">
+        <div className="max-w-7xl mx-auto px-4 py-16">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">Ghiduri Utile</h2>
+              <p className="text-gray-500 mt-1">Informații verificate pentru decizii informate</p>
+            </div>
+            <Link
+              href="/ghid"
+              className="hidden sm:inline-flex text-sm font-medium text-primary-dark hover:text-primary transition-colors"
+            >
+              Toate ghidurile &rarr;
+            </Link>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[...guidesData.guides]
+              .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+              .slice(0, 3)
+              .map((guide) => (
+                <Link
+                  key={guide.slug}
+                  href={`/ghid/${guide.slug}`}
+                  className="flex flex-col p-5 rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all bg-white"
+                >
+                  <h3 className="font-semibold text-gray-900 mb-2 text-sm leading-snug">
+                    {guide.title}
+                  </h3>
+                  <p className="text-xs text-gray-500 line-clamp-2">{guide.heroDescription}</p>
+                </Link>
+              ))}
+          </div>
+
+          <div className="mt-6 text-center sm:hidden">
+            <Link
+              href="/ghid"
+              className="text-sm font-medium text-primary-dark hover:text-primary transition-colors"
+            >
+              Toate ghidurile &rarr;
+            </Link>
+          </div>
         </div>
       </section>
 

@@ -51,6 +51,7 @@ const capacityOptions = [
 export default function CompanyListClient() {
   const searchParams = useSearchParams();
 
+  const [searchQuery, setSearchQuery] = useState('');
   const [county, setCounty] = useState(searchParams.get('judet') ?? '');
   const [specialization, setSpecialization] = useState(searchParams.get('specializare') ?? '');
   const [minCapacity, setMinCapacity] = useState('');
@@ -73,8 +74,12 @@ export default function CompanyListClient() {
       certification: certification || undefined,
       tag: selectedTags[0] || undefined,
     });
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      result = result.filter((c) => c.name.toLowerCase().includes(q));
+    }
     return sortCompanies(result, sortBy);
-  }, [allCompanies, county, specialization, minCapacity, certification, selectedTags, sortBy]);
+  }, [allCompanies, county, specialization, minCapacity, certification, selectedTags, sortBy, searchQuery]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const paginated = filtered.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
@@ -88,6 +93,7 @@ export default function CompanyListClient() {
   }
 
   function clearFilters() {
+    setSearchQuery('');
     setCounty('');
     setSpecialization('');
     setMinCapacity('');
@@ -96,7 +102,7 @@ export default function CompanyListClient() {
     setPage(1);
   }
 
-  const hasFilters = county || specialization || minCapacity || certification || selectedTags.length > 0;
+  const hasFilters = searchQuery || county || specialization || minCapacity || certification || selectedTags.length > 0;
 
   return (
     <div className="flex flex-col lg:flex-row gap-6">
@@ -114,6 +120,19 @@ export default function CompanyListClient() {
       {/* Filters sidebar */}
       <aside className={`lg:w-64 shrink-0 space-y-4 ${filtersOpen ? 'block' : 'hidden lg:block'}`}>
         <div className="bg-white rounded-xl border border-border p-4 space-y-4">
+          <div className="relative">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); setPage(1); }}
+              placeholder="Caută firmă..."
+              className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+            />
+          </div>
+
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-gray-900 text-sm">Filtre</h3>
             {hasFilters && (

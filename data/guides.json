@@ -338,6 +338,79 @@
         }
       ],
       "relatedSpecializations": ["hale-industriale", "cladiri-birouri", "retail", "agricol"]
+    },
+    {
+      "slug": "stocare-energie-baterii-firme",
+      "publishedAt": "2026-03-08",
+      "author": "Radu",
+      "title": "Stocare Energie cu Baterii pentru Firme - Merită Investiția în 2026?",
+      "metaDescription": "Ghid complet despre stocarea energiei cu baterii pentru firme: costuri, tipuri, ROI, branduri disponibile în România și când merită (sau nu) investiția.",
+      "heroDescription": "Bateriile pentru stocare energie sunt tot mai accesibile, dar merită pentru firma ta? Analizăm costurile, tehnologiile disponibile și calculul financiar real.",
+      "sections": [
+        {
+          "id": "de-ce-stocare-energie",
+          "title": "De ce vorbim despre stocare energie în 2026?",
+          "content": "Prețul bateriilor a scăzut cu peste 90% în ultimul deceniu. În 2026, un sistem de stocare comercial costă 150–280 EUR/kWh instalat — de 5 ori mai puțin decât în 2015.\n\nPentru firmele din România, contextul e favorabil:\n\n- **Prețurile energiei comerciale** sunt în medie 1,53 RON/kWh (0,31 EUR/kWh), cu variații mari între furnizori\n- **Spreadul de preț zi/noapte** pe piața day-ahead poate ajunge la 168 EUR/MWh — printre cele mai mari din Europa\n- **Legislația** s-a actualizat în 2025 pentru a permite stocarea energie fără dublă impozitare\n- **Fondul de Modernizare** alocă 150 mil. EUR specific pentru proiecte BESS în 2026\n\nÎntrebarea nu mai e «dacă», ci **«când și pentru cine»** are sens financiar investiția în baterii."
+        },
+        {
+          "id": "tipuri-baterii-comerciale",
+          "title": "Tipuri de baterii pentru stocare comercială",
+          "content": "Nu toate bateriile sunt la fel. Pentru firme, două tehnologii domină piața:\n\n### LFP (LiFePO4) — Recomandat pentru majoritatea firmelor\n\n| Parametru | Valoare |\n|---|---|\n| Durată de viață | 3.000–6.000+ cicluri |\n| Adâncime descărcare (DoD) | 90–100% |\n| Cost per kWh (sistem complet) | 150–280 EUR |\n| Siguranță | Excelentă (risc minim de incendiu) |\n| Garanție tipică | 10 ani |\n\nLFP domină 85% din instalațiile noi de stocare la nivel mondial. E alegerea standard pentru hale, depozite și clădiri comerciale.\n\n### NMC (Nickel-Manganese-Cobalt)\n\n| Parametru | Valoare |\n|---|---|\n| Durată de viață | 1.000–1.500 cicluri |\n| Adâncime descărcare (DoD) | 80–90% |\n| Cost per kWh | 200–330 EUR |\n| Densitate energetică | Mai mare decât LFP |\n| Garanție tipică | 10 ani |\n\nNMC are densitate energetică mai mare (bateria ocupă mai puțin spațiu), dar ciclul de viață e semnificativ mai scurt. Potrivit când spațiul e limitat.\n\n### Flow batteries (Vanadium Redox) — Nișă\nDurată de viață excepțională (20.000+ cicluri, 20+ ani), dar cost ridicat (350–500 EUR/kWh) și dimensiuni mari. Potrivite doar pentru proiecte utility-scale de stocare pe durată lungă (4–8h+). Nu sunt relevante pentru majoritatea firmelor.\n\n**Concluzie:** Pentru 95% din firmele care vor stocare, **LFP** e alegerea corectă — cel mai bun raport preț/durabilitate."
+        },
+        {
+          "id": "costuri-baterii-2026",
+          "title": "Cât costă un sistem de stocare în 2026?",
+          "content": "Prețurile variază în funcție de capacitate, brand și configurație. Iată referințele actuale din piața românească:\n\n### Prețuri orientative sisteme complete\n\n| Capacitate | Segment | Cost estimat | Cost per kWh |\n|---|---|---|---|\n| 10–30 kWh | Comercial mic | 3.000–8.000 EUR | 250–280 EUR/kWh |\n| 30–60 kWh | Comercial mediu | 7.000–14.000 EUR | 220–240 EUR/kWh |\n| 60–120 kWh | Comercial mare | 13.000–27.000 EUR | 200–225 EUR/kWh |\n| 120–215 kWh | Industrial | 25.000–55.000 EUR | 190–260 EUR/kWh |\n| 500+ kWh | Industrial mare | La cerere | 150–200 EUR/kWh |\n\n### Ce include prețul unui sistem complet\n- Baterii (cabinete) — ~36% din cost\n- Invertor bidirecțional — ~22%\n- Structură și componente mecanice — ~16%\n- Cablaje și protecții electrice — ~11%\n- Instalare și punere în funcțiune — ~5%\n- Proiectare, avize, racordare — ~4%\n- Overhead EPC și profit — ~6%\n\n### Tendința prețurilor\nBloombergNEF estimează o reducere suplimentară de 25% până în 2035. Prețul per kWh al bateriilor LFP la nivel de pack a ajuns sub 100 EUR în 2025 — iar sistemele complete urmează trendul cu un decalaj de 12–18 luni.\n\n**Referință concretă:** Huawei LUNA2000 comercial 215 kWh — aproximativ 59.800 EUR net (fără instalare), adică ~278 EUR/kWh."
+        },
+        {
+          "id": "roi-calcul-financiar",
+          "title": "ROI: Când se amortizează investiția?",
+          "content": "Amortizarea depinde de **cum** folosești bateria. Există mai multe surse de economii, iar cele mai profitabile se cumulează:\n\n### 1. Peak shaving (reducere vârf consum)\nReduci puterea maximă contractată cu distribuitorul. Economie: **15–30% din taxa de putere contractată.**\n\nFuncționează așa: bateria se încarcă în orele de consum redus și se descarcă în vârfurile de consum, «tăind» vârful cererii din rețea.\n\n### 2. Arbitraj energetic\nÎncarci bateria când energia e ieftină (noapte, weekend) și o folosești când e scumpă (vârf zi). România are unul dintre cele mai mari spreaduri de preț din Europa — până la **168 EUR/MWh diferență** în anumite zile.\n\n### 3. Optimizare autoconsum (cu PV)\nFără baterie, un sistem fotovoltaic acoperă 40–60% din consum (restul se livrează în rețea). Cu baterie, autoconsumul crește la **70–90%.**\n\n### 4. Backup power\nBateria oferă alimentare instantanee (sub 100 ms) în caz de pană. Comparativ, un generator diesel pornește în 10–30 secunde.\n\n### Scenarii de amortizare\n\n| Scenariu | Capacitate | Cost total | Economie/an | Amortizare |\n|---|---|---|---|---|\n| Comercial mic (peak shaving + arbitraj) | 30 kWh | ~8.000 EUR | ~2.200 EUR | ~3,5 ani |\n| Industrial mediu (PV + baterie) | 100 kWh | ~35.000 EUR | ~7.000 EUR | ~5 ani |\n| Industrial mare (arbitraj + servicii) | 500 kWh | ~100.000 EUR | ~25.000 EUR | ~4 ani |\n\n**Notă importantă:** Aceste calcule sunt orientative. ROI-ul real depinde de profilul de consum al firmei, tariful de energie, configurația sistemului și modul de utilizare. Cere un studiu de fezabilitate specific de la instalator."
+        },
+        {
+          "id": "branduri-romania",
+          "title": "Branduri disponibile în România",
+          "content": "Piața românească are câteva branduri dominante, cu disponibilitate bună la distribuitori locali:\n\n### Huawei LUNA2000\n- **Capacitate:** 5–30 kWh (rezidențial), până la 215 kWh (comercial)\n- **Chimie:** LFP\n- **DoD:** 100%\n- **Eficiență:** 91,3%\n- **Protecție incendiu** integrată\n- Se integrează nativ cu invertoarele Huawei SUN2000\n\n### BYD Battery-Box Premium\n- **Capacitate:** 8,3–66,2 kWh (modular)\n- **Chimie:** LFP\n- **Cicluri:** 6.000+\n- Top 3 branduri de baterii în Europa\n- Compatibil cu majoritatea invertoarelor hibride\n\n### Pylontech US5000\n- **Capacitate:** 4,8 kWh per modul (scalabil până la 192 kWh)\n- **Chimie:** LFP\n- **Cicluri:** 8.000 la 95% DoD\n- **Garanție:** 10 ani\n- Tensiune 48V — potrivit pentru sisteme low-voltage\n- Cel mai accesibil ca preț din piață\n\n### GoodWe Lynx Home F Plus+\n- **Capacitate:** 6,6–16,4 kWh per turn (scalabil până la 131 kWh)\n- **Chimie:** LFP\n- **Cicluri:** 6.000\n- **Garanție:** 10 ani\n- IP55 — potrivit și pentru montaj exterior\n\n### Sungrow\n- Soluții integrate (invertor + baterie) rezidențial și comercial\n- Chimie LFP, modular\n\n**Cele mai populare în România:** Pylontech și GoodWe (cele mai prezente la distribuitori), urmate de Huawei și BYD."
+        },
+        {
+          "id": "integrare-fotovoltaice",
+          "title": "Integrare cu sistemul fotovoltaic existent",
+          "content": "Dacă ai deja panouri fotovoltaice (sau planuiești să instalezi), bateria se poate integra în două moduri:\n\n### DC Coupling (cuplare pe curent continuu)\n- Panourile → baterie (DC) → invertor hibrid → rețea (AC)\n- **Eficiență:** 96–98%\n- **Recomandat pentru:** instalații noi, de la zero\n- O singură conversie DC→AC = pierderi minime\n- Necesită invertor hibrid compatibil\n\n### AC Coupling (cuplare pe curent alternativ)\n- Panourile → invertor solar → AC → invertor baterie → baterie\n- **Eficiență:** 92–94%\n- **Recomandat pentru:** retrofit la sisteme PV existente\n- Flexibilitate maximă — poți combina branduri diferite\n- Nu trebuie să schimbi invertorul solar existent\n\n### Invertoare hibride populare în România\n\n| Model | Putere | Preț orientativ (fără TVA) |\n|---|---|---|\n| Huawei SUN2000-8K-MAP0 | 8 kW | ~6.150 RON |\n| GoodWe GW15K-ET | 15 kW | ~5.970 RON |\n| SMA Sunny Tripower 8.0 | 8 kW | ~5.820 RON |\n| Fronius Symo GEN24 10.0 Plus | 10 kW | ~13.290 RON |\n\n**Regulă de dimensionare:** Capacitatea bateriei (kWh) = consumul zilnic × zilele de autonomie dorite ÷ adâncimea de descărcare (DoD).\n\nExemplu: consum 80 kWh/zi, 1 zi autonomie, DoD 90% → baterie de minim 89 kWh."
+        },
+        {
+          "id": "legislatie-subventii",
+          "title": "Legislație și subvenții pentru stocare în 2026",
+          "content": "### Cadrul legal\n\n- **Legea Energiei 2025** permite explicit stocarea energie pentru prosumatori și comunități energetice\n- **Ordinul ANRE 20/2025** (de la 1 iunie 2025) actualizează regulile de racordare, inclusiv pentru sisteme cu stocare\n- **ANRE a eliminat dubla impozitare** — energia stocată nu mai e taxată la încărcare și la descărcare (eliminat de facto barieră majoră)\n\n### Subvenții active\n\n**Fondul de Modernizare — BESS dedicat**\n- Buget: 150 mil. EUR (aprobat CE februarie 2026)\n- Target: 2.174 MWh capacitate nouă de stocare\n- Grant maxim: 69.000 EUR/MWh\n- Apel estimat: Q2 2026\n- Eligibil: persoane juridice, proiecte noi de stocare\n\n**Electric UP**\n- Baterie **obligatorie** (minim 30% din puterea PV)\n- Grant acoperă integral costul bateriei (în limita de 150.000 EUR total proiect)\n- Strategia optimă: dimensionează bateria la 50% din PV, nu doar minimul de 30%\n\n**Facilități fiscale (disponibile acum, fără aplicare)**\n- **Amortizare super-accelerată:** 65% din valoarea sistemului (inclusiv baterie) în anul 1\n- **Scutire impozit profit reinvestit:** 16% economie directă\n\n### Schema de compensare prosumator\nPentru firme cu sisteme sub 200 kW, schema de **compensare cantitativă** (net metering 1:1) e activă până în 2030. Practic, rețeaua funcționează ca o baterie virtuală gratuită — ceea ce reduce semnificativ nevoia de baterii fizice."
+        },
+        {
+          "id": "cand-nu-merita",
+          "title": "Când NU merită să investești în baterii",
+          "content": "Bateriile nu sunt pentru toată lumea. Iată situațiile în care investiția **nu** are sens financiar:\n\n### 1. Ești prosumator cu compensare cantitativă\nDacă ai PV sub 200 kW și beneficiezi de compensare 1:1 (net metering), rețeaua e deja o «baterie virtuală» gratuită. Bateriile fizice adaugă cost fără beneficiu semnificativ — cel puțin până în 2030 când schema se poate modifica.\n\n### 2. Tarife plate de energie\nFără diferență de preț zi/noapte, arbitrajul energetic nu funcționează. Verifică contractul cu furnizorul.\n\n### 3. Consum constant 24/7\nFabrici cu flux continuu (3 schimburi, producție non-stop) nu beneficiază de peak shaving — consumul e deja relativ uniform.\n\n### 4. Consum mic (sub 20.000 kWh/an)\nLa consumuri mici, economiile generate de baterie sunt prea mici pentru a justifica investiția. Amortizarea depășește 10 ani.\n\n### 5. Autoconsum PV deja peste 80%\nDacă firma consumă deja cea mai mare parte din energia produsă de panouri (profil de consum aliniat cu producția solară), bateria adaugă marginal.\n\n### 6. Pene de curent rare (sub 2h/an)\nDacă singura motivație e backup-ul, un generator diesel e semnificativ mai ieftin.\n\n**Regula simplă:** Dacă nu poți identifica cel puțin două surse de economie (peak shaving + arbitraj, sau autoconsum + backup), bateria probabil nu se justifică financiar încă."
+        }
+      ],
+      "faq": [
+        {
+          "question": "Cât costă un sistem de stocare cu baterii pentru o firmă?",
+          "answer": "Depinde de capacitate: 3.000–8.000 EUR pentru 10–30 kWh (comercial mic), 13.000–27.000 EUR pentru 60–120 kWh (comercial mare), peste 100.000 EUR pentru sisteme industriale de 500+ kWh. Costul per kWh scade cu dimensiunea: de la ~280 EUR/kWh la sisteme mici, la ~150 EUR/kWh la sisteme mari."
+        },
+        {
+          "question": "Cât durează bateriile comerciale?",
+          "answer": "Bateriile LFP (cele mai utilizate) au o durată de viață de 3.000–6.000+ cicluri, ceea ce echivalează cu 10–15 ani de utilizare zilnică. Garanția standard e de 10 ani. După terminarea garanției, bateriile nu se opresc — continuă să funcționeze cu capacitate redusă (similar cu telefonul mobil)."
+        },
+        {
+          "question": "Merită baterii dacă am deja panouri fotovoltaice?",
+          "answer": "Depinde de schema de compensare. Dacă ești prosumator cu compensare cantitativă (net metering 1:1, disponibil până în 2030 pentru sisteme sub 200 kW), rețeaua funcționează ca baterie virtuală gratuită și bateriile fizice nu se justifică financiar. Dacă vrei independență energetică, backup sau faci peak shaving, atunci da — merită."
+        },
+        {
+          "question": "Ce subvenții există pentru baterii în 2026?",
+          "answer": "Fondul de Modernizare alocă 150 mil. EUR specific pentru stocare (apel Q2 2026, grant max 69.000 EUR/MWh). Electric UP include obligatoriu baterie (minim 30% din PV). În plus, amortizarea super-accelerată (65% în anul 1) și scutirea de impozit pe profit reinvestit sunt disponibile imediat, fără aplicare."
+        },
+        {
+          "question": "LFP sau NMC — ce baterie aleg?",
+          "answer": "LFP pentru 95% din cazuri: durată de viață de 2–4x mai mare, siguranță superioară, preț mai mic per ciclu. NMC doar dacă spațiul e foarte limitat (densitate energetică mai mare, bateria e mai compactă). Flow batteries (vanadium) doar pentru proiecte utility-scale de stocare pe durată lungă."
+        }
+      ],
+      "relatedSpecializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail"]
     }
   ]
 }

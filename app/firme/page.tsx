@@ -28,7 +28,7 @@ export default function FirmePage() {
 
         <div className="mt-6 mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            Firme Instalare Fotovoltaice Comerciale
+            Firme Instalare Panouri Fotovoltaice Comerciale
           </h1>
           <p className="text-gray-500 mt-2">
             Găsește instalatorul potrivit pentru proiectul tău industrial sau comercial

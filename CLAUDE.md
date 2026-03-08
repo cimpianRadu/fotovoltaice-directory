@@ -58,6 +58,15 @@ Când adăugăm firme noi în director:
 - **Firecrawl** (`firecrawl_scrape`, `firecrawl_search`, `firecrawl_extract`, `firecrawl_map`) — scraping structurat de pe site-uri specifice
 - **company-tools.js** (`check-bulk`, `validate`, `stats`) — scripturi locale pentru verificare duplicate și validare
 
+### 0. Pre-check: Verifică firmele existente
+**IMPORTANT: Înainte de orice research, verifică ce firme sunt deja în director pentru a evita duplicatele și pierderea de timp.**
+```
+# Citește companies.json și extrage toate CUI-urile și numele existente
+# Sau rulează: node scripts/company-tools.js stats (arată totalul și distribuția)
+# La fiecare candidat nou, verifică cu: node scripts/company-tools.js check-bulk <CUI-uri>
+# NU adăuga în lista de candidați firme care sunt deja în baza de date
+```
+
 ### 1. Identificare firme (Discovery)
 
 **Cu Perplexity (preferat pentru discovery):**

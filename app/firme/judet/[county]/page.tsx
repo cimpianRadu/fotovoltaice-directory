@@ -90,6 +90,33 @@ export default async function CountyPage({ params }: Props) {
           </Button>
         </div>
 
+        {/* Related guides */}
+        <div className="mt-10">
+          <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">
+            Ghiduri utile
+          </h3>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <Link
+              href="/ghid/cum-alegi-instalator-fotovoltaic"
+              className="text-sm px-4 py-3 rounded-lg border border-border text-gray-700 hover:border-primary/30 hover:text-primary-dark transition-colors bg-white"
+            >
+              Cum Alegi Instalatorul Potrivit
+            </Link>
+            <Link
+              href="/ghid/cost-sistem-fotovoltaic-comercial"
+              className="text-sm px-4 py-3 rounded-lg border border-border text-gray-700 hover:border-primary/30 hover:text-primary-dark transition-colors bg-white"
+            >
+              Cât Costă un Sistem Fotovoltaic
+            </Link>
+            <Link
+              href="/ghid/subventii-panouri-fotovoltaice"
+              className="text-sm px-4 py-3 rounded-lg border border-border text-gray-700 hover:border-primary/30 hover:text-primary-dark transition-colors bg-white"
+            >
+              Subvenții Panouri Fotovoltaice 2026
+            </Link>
+          </div>
+        </div>
+
         {/* Internal linking to other counties */}
         <div className="mt-10">
           <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">

@@ -1329,6 +1329,272 @@
       "verified": true,
       "createdAt": "2026-03-02",
       "updatedAt": "2026-03-02"
+    },
+    {
+      "id": "exe-green-holding",
+      "slug": "exe-green-holding",
+      "name": "EXE Green Holding S.R.L.",
+      "cui": "RO29996570",
+      "logo": "",
+      "description": "Lider in domeniul eficientei energetice si al iluminatului din Romania, cu o gama completa de solutii incluzand instalatii electrice, sisteme fotovoltaice comerciale si industriale, solutii SMART si management energetic. Companie cu peste 120 de angajati si prezenta nationala.",
+      "founded": 2012,
+      "employees": 126,
+      "location": {
+        "city": "Voluntari",
+        "county": "Ilfov",
+        "address": ""
+      },
+      "contact": {
+        "phone": "0722241231",
+        "email": "office@exeholding.com",
+        "website": "https://exeholding.com"
+      },
+      "coverage": ["Ilfov", "București", "Prahova", "Constanța", "Timiș", "Cluj"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail"],
+      "certifications": ["ISO-9001", "ISO-14001", "ISO-45001"],
+      "capacity": {
+        "minProjectKw": 50,
+        "maxProjectKw": 5000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 51600000,
+        "profit": 0
+      },
+      "tags": ["experienta-10-ani", "proiecte-mari", "eficienta-energetica", "iluminat-led"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-08",
+      "updatedAt": "2026-03-08"
+    },
+    {
+      "id": "lumio-energy",
+      "slug": "lumio-energy",
+      "name": "Mapa Rom Invest S.R.L.",
+      "cui": "RO4240081",
+      "logo": "",
+      "description": "Companie din Iasi cu peste 30 de ani de experienta, operand sub brandul Lumio Energy in segmentul fotovoltaic. Ofera solutii complete de proiectare, instalare si mentenanta sisteme fotovoltaice pentru segmentul rezidential si comercial. Instalator certificat ANRE si acreditat AFM.",
+      "founded": 1993,
+      "employees": 29,
+      "location": {
+        "city": "Iași",
+        "county": "Iași",
+        "address": "Bulevardul Chimiei Nr. 14"
+      },
+      "contact": {
+        "phone": "0741122021",
+        "email": "contact@lumio-energy.ro",
+        "website": "https://lumio-energy.ro"
+      },
+      "coverage": ["Iași", "Suceava", "Botoșani", "Neamț", "Bacău", "Vaslui"],
+      "specializations": ["hale-industriale", "cladiri-birouri"],
+      "certifications": ["ANRE-C2A", "ISO-9001", "ISO-14001"],
+      "capacity": {
+        "minProjectKw": 10,
+        "maxProjectKw": 500,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 18900000,
+        "profit": 0
+      },
+      "tags": ["experienta-30-ani", "certificare-anre", "validat-afm", "pompe-caldura"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-08",
+      "updatedAt": "2026-03-08"
+    },
+    {
+      "id": "energis",
+      "slug": "energis",
+      "name": "Prima Electro Construct S.R.L.",
+      "cui": "RO16029143",
+      "logo": "",
+      "description": "Companie cu peste 10 ani de experienta in instalarea sistemelor fotovoltaice sub brandul Energis.ro. A implementat sisteme fotovoltaice in toate judetele tarii, de la solutii rezidentiale la alimentarea integrala a consumului de energie electrica pentru agenti economici. Servicii complete: consultanta, proiectare, autorizare, instalare si mentenanta.",
+      "founded": 2003,
+      "employees": 15,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": ""
+      },
+      "contact": {
+        "phone": "0215557873",
+        "email": "",
+        "website": "https://www.energis.ro"
+      },
+      "coverage": ["București", "Ilfov", "Prahova", "Constanța", "Brașov", "Cluj", "Timiș"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail", "agricol"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 10,
+        "maxProjectKw": 1000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 9700000,
+        "profit": 0
+      },
+      "tags": ["experienta-20-ani", "acoperire-nationala", "parcuri-fotovoltaice"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-08",
+      "updatedAt": "2026-03-08"
+    },
+    {
+      "id": "east-solar-electric",
+      "slug": "east-solar-electric",
+      "name": "East Solar Electric S.R.L.",
+      "cui": "RO40280805",
+      "logo": "",
+      "description": "Companie din Bucuresti specializata in instalarea de sisteme fotovoltaice si statii de incarcare vehicule electrice. Experienta de peste 1500 de sisteme fotovoltaice instalate, cu solutii complete pentru segmentul rezidential, comercial si industrial. Ofera suport pentru accesarea fondurilor europene.",
+      "founded": 2018,
+      "employees": 15,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Șos. Alexandriei 25"
+      },
+      "contact": {
+        "phone": "0752277421",
+        "email": "contact@eastsolar.ro",
+        "website": "https://www.eastsolar.ro"
+      },
+      "coverage": ["București", "Ilfov", "Prahova", "Brașov", "Cluj", "Timiș"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 10,
+        "maxProjectKw": 500,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 8500000,
+        "profit": 0
+      },
+      "tags": ["statii-incarcare-ev", "fonduri-europene", "acoperire-nationala"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-08",
+      "updatedAt": "2026-03-08"
+    },
+    {
+      "id": "solargroup-energy",
+      "slug": "solargroup-energy",
+      "name": "Solargroup Energy RO S.R.L.",
+      "cui": "RO32281117",
+      "logo": "",
+      "description": "Importator si distribuitor de echipamente fotovoltaice din Salonta (Bihor), cu servicii de instalare, proiectare si dimensionare sisteme fotovoltaice. Ofera traininguri de specialitate si solutii de stocare si management al energiei. Cifra de afaceri semnificativa in domeniul energiei solare.",
+      "founded": 2013,
+      "employees": 12,
+      "location": {
+        "city": "Salonta",
+        "county": "Bihor",
+        "address": "Str. Ghestului 5C"
+      },
+      "contact": {
+        "phone": "+40725040105",
+        "email": "comenzi@solargroup.ro",
+        "website": "https://solargroup.ro"
+      },
+      "coverage": ["Bihor", "Arad", "Satu Mare", "Timiș", "Cluj"],
+      "specializations": ["hale-industriale", "agricol"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 10,
+        "maxProjectKw": 1000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 63900000,
+        "profit": 0
+      },
+      "tags": ["experienta-10-ani", "distribuitor-echipamente", "traininguri", "magazin-online"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-08",
+      "updatedAt": "2026-03-08"
+    },
+    {
+      "id": "astra-electric",
+      "slug": "astra-electric",
+      "name": "Astra Electric S.R.L.",
+      "cui": "RO40035881",
+      "logo": "",
+      "description": "Companie din Arad specializata in tehnologii solare de varf, oferind solutii complete all-in-one: consultanta, proiectare, autorizatii, montaj, mentenanta si suport 24/7. Proiecte documentate in vestul si sudul Romaniei pe hale industriale si cladiri comerciale.",
+      "founded": 2018,
+      "employees": 31,
+      "location": {
+        "city": "Arad",
+        "county": "Arad",
+        "address": ""
+      },
+      "contact": {
+        "phone": "",
+        "email": "",
+        "website": "https://www.astraelectric.ro"
+      },
+      "coverage": ["Arad", "Timiș", "Mureș", "București", "Mehedinți", "Neamț"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "agricol"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 20,
+        "maxProjectKw": 2000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 38200000,
+        "profit": 0
+      },
+      "tags": ["mentenanta-inclusa", "suport-24-7", "proiecte-mari"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-08",
+      "updatedAt": "2026-03-08"
+    },
+    {
+      "id": "darcom-energy",
+      "slug": "darcom-energy",
+      "name": "Darcom Energy Solutions S.R.L.",
+      "cui": "RO33296434",
+      "logo": "",
+      "description": "Companie din Bucuresti specializata in proiectarea, instalarea si mentenanta sistemelor fotovoltaice comerciale si industriale. Ofera servicii complete incluzand monitorizare, spalare panouri, suport tehnic si instruire. Cifra de afaceri semnificativa si echipa de peste 40 de angajati.",
+      "founded": 2014,
+      "employees": 41,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": ""
+      },
+      "contact": {
+        "phone": "+40755327266",
+        "email": "contact@darcomenergy.ro",
+        "website": "https://www.darcomenergy.ro"
+      },
+      "coverage": ["București", "Ilfov", "Prahova", "Constanța", "Brașov", "Timiș"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 50,
+        "maxProjectKw": 5000,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 67300000,
+        "profit": 0
+      },
+      "tags": ["experienta-10-ani", "proiecte-mari", "mentenanta-inclusa", "monitorizare-inclusa"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-08",
+      "updatedAt": "2026-03-08"
     }
   ]
 }

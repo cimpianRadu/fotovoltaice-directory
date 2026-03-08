@@ -6,6 +6,8 @@ import CompanyHeader from '@/components/company/CompanyHeader';
 import CompanyStats from '@/components/company/CompanyStats';
 import CompanyContact from '@/components/company/CompanyContact';
 import Badge from '@/components/ui/Badge';
+import Link from 'next/link';
+import Button from '@/components/ui/Button';
 import {
   getCompanyBySlug,
   getCompanies,
@@ -14,6 +16,7 @@ import {
   getTagLabel,
 } from '@/lib/utils';
 import { generateLocalBusinessJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo';
+import guidesData from '@/data/guides.json';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -146,8 +149,41 @@ export default async function CompanyDetailPage({ params }: Props) {
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-20">
+            <div className="sticky top-20 space-y-4">
               <CompanyContact company={company} />
+
+              {/* CTA */}
+              <div className="bg-primary/5 border border-primary/10 rounded-xl p-5 text-center">
+                <p className="text-sm font-medium text-gray-900 mb-2">Vrei ofertă pentru proiectul tău?</p>
+                <Button href="/cere-oferta" size="md" className="w-full">
+                  Cere Ofertă Gratuită
+                </Button>
+              </div>
+
+              {/* Related guides */}
+              {(() => {
+                const relatedGuides = guidesData.guides.filter((g) =>
+                  g.relatedSpecializations?.some((s: string) => company.specializations.includes(s))
+                );
+                if (relatedGuides.length === 0) return null;
+                return (
+                  <div className="bg-white border border-border rounded-xl p-5">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-3">Ghiduri relevante</h3>
+                    <ul className="space-y-2">
+                      {relatedGuides.slice(0, 3).map((guide) => (
+                        <li key={guide.slug}>
+                          <Link
+                            href={`/ghid/${guide.slug}`}
+                            className="text-sm text-primary-dark hover:underline"
+                          >
+                            {guide.title.split(' - ')[0]}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </div>

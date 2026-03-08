@@ -8,7 +8,7 @@ import { generateFAQJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo';
 export const metadata: Metadata = {
   title: 'Întrebări Frecvente - Panouri Fotovoltaice Comerciale și Industriale',
   description:
-    'Răspunsuri la cele mai frecvente întrebări despre panouri fotovoltaice comerciale: costuri pe kWp, subvenții 2026, legislație prosumator, Electric UP, alegerea instalatorului ANRE.',
+    'Răspunsuri la întrebări despre panouri fotovoltaice comerciale: costuri, subvenții 2026, legislație prosumator, Electric UP, alegerea instalatorului.',
   alternates: { canonical: '/intrebari-frecvente' },
 };
 

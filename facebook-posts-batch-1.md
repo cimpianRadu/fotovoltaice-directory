@@ -133,7 +133,7 @@ https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industria
 
 ---
 
-### 📝 Luni 9 Mar · [J] Cluj — 13 firme
+### ✅ Luni 9 Mar · [J] Cluj — 13 firme
 **Imagine:** Screenshot profil firmă din Cluj
 **Link:** https://www.instalatori-fotovoltaice.ro/firme
 
@@ -151,7 +151,7 @@ Voi cum v-ați ales instalatorul? Ați cerut mai multe oferte sau ați mers pe r
 
 ---
 
-### 📝 Marți 10 Mar · [F] Cum verifici dacă un instalator are ANRE?
+### ✅ Marți 10 Mar · [F] Cum verifici dacă un instalator are ANRE?
 **Imagine:** Screenshot secțiunea certificări din ghidul de alegere instalator
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/cum-alegi-instalator-fotovoltaic
 
@@ -169,7 +169,7 @@ Ați verificat vreodată certificarea ANRE a unui instalator înainte să semna�
 
 ---
 
-### 📝 Miercuri 11 Mar · [S] Spotlight: Energomontaj S.A. — București
+### ✅ Miercuri 11 Mar · [S] Spotlight: Energomontaj S.A. — București
 **Imagine:** Screenshot profilul Energomontaj de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/energomontaj
 
@@ -185,7 +185,7 @@ Cunoașteți firme din România cu experiență similară pe proiecte mari?
 
 ---
 
-### 📝 Joi 12 Mar · [M] Micro-fact: Reducere costuri energie
+### ✅ Joi 12 Mar · [M] Micro-fact: Reducere costuri energie
 **Imagine:** Grafic/infographic „40–70% reducere costuri energie"
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industriale
 
@@ -201,7 +201,7 @@ Cât plătiți pe energie pe an la hală/fabrică/depozit? V-ați calculat vreod
 
 ---
 
-### 📝 Vineri 13 Mar · [G] Cum alegi instalatorul — 10 criterii
+### ✅ Vineri 13 Mar · [G] Cum alegi instalatorul — 10 criterii
 **Imagine:** Screenshot secțiunea „Red flags" sau cele 10 criterii
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/cum-alegi-instalator-fotovoltaic
 
@@ -222,7 +222,7 @@ Ce experiențe ați avut cu instalatorii? Bune sau rele — orice feedback ajut�
 
 ---
 
-### 📝 Sâmbătă 14 Mar · [S] Spotlight: Volta X Solar Systems — Piatra-Neamț
+### ✅ Sâmbătă 14 Mar · [S] Spotlight: Volta X Solar Systems — Piatra-Neamț
 **Imagine:** Screenshot profilul Volta X de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/volta-x-solar-systems
 
@@ -238,7 +238,7 @@ Dacă aveți hală sau spațiu comercial în Moldova, ce opțiuni ați găsit pe
 
 ---
 
-### 📝 Duminică 15 Mar · [M] Micro-fact: Procesul de instalare
+### ✅ Duminică 15 Mar · [M] Micro-fact: Procesul de instalare
 **Imagine:** Screenshot secțiunea „Procesul de instalare pas cu pas" din ghidul hale
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industriale
 
@@ -797,7 +797,7 @@ Sunteți prosumatori? Cum funcționează compensarea în practică la voi?
 | | Lun | Mar | Mie | Joi | Vin | Sâm | Dum |
 |---|---|---|---|---|---|---|---|
 | **S1** 27 Feb–6 Mar | 📅 [J] Buc. | 📅 [F] Amort. | 📅 [S] EnergoBit | 📅 [M] mp/kWp | ✅ [G] Costuri + 📅 [G] Hale | — | — |
-| **S2** 9–15 Mar | 📝 [J] Cluj | 📝 [F] ANRE | 📝 [S] Energomontaj | 📝 [M] Red. costuri | 📝 [G] Aleg. inst. | 📝 [S] Volta X | 📝 [M] Instalare |
+| **S2** 9–15 Mar | ✅ [J] Cluj | ✅ [F] ANRE | ✅ [S] Energomontaj | ✅ [M] Red. costuri | ✅ [G] Aleg. inst. | ✅ [S] Volta X | ✅ [M] Instalare |
 | **S3** 16–22 Mar | 📝 [J] Timiș | 📝 [F] Subvenții | 📝 [S] Ensys | 📝 [M] Oferte | 📝 [G] Subvenții | 📝 [J] Ilfov | 📝 [F] Preț minim |
 | **S4** 23–29 Mar | 📝 [J] Const. | 📝 [F] Bifac. | 📝 [S] Simtel | 📝 [M] Elec. UP | 📝 [G] Elec. UP | 📝 [S] FomCo | 📝 [M] Amort. 65% |
 | **S5** 30 Mar–5 Apr | 📝 [J] Brașov | 📝 [F] Prosum. | 📝 [S] Electro-Alfa | 📝 [M] Viață pan. | 📝 [G] Legisl. | 📝 [S] Wiren | 📝 [F] Chirie |
