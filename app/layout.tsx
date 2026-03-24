@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: '%s | Instalatori Fotovoltaice România',
   },
   description:
-    'Platforma #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale din România. Găsește instalatorul potrivit pentru proiectul tău.',
+    '42 firme verificate de instalare panouri fotovoltaice comerciale și industriale din România. Date reale, certificări ANRE și oferte gratuite. Compară acum.',
   metadataBase: new URL('https://instalatori-fotovoltaice.ro'),
   robots: {
     index: true,

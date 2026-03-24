@@ -102,6 +102,50 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* SEO Content */}
+      <section className="max-w-7xl mx-auto px-4 py-16">
+        <div className="max-w-4xl">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            Cum găsești instalatori autorizați de panouri fotovoltaice
+          </h2>
+          <div className="prose prose-gray max-w-none text-gray-600 space-y-4">
+            <p>
+              Alegerea unui instalator de sisteme fotovoltaice este una dintre cele mai importante
+              decizii în procesul de trecere la energia solară. Un instalator autorizat ANRE cu
+              experiență în proiecte comerciale și industriale poate face diferența între un sistem
+              care funcționează optim 25+ ani și unul care generează probleme din primul an.
+            </p>
+            <p>
+              Directorul nostru include <strong>{42} de firme de instalare panouri fotovoltaice</strong> din
+              România, verificate cu date reale din registrele oficiale. Fiecare firmă are CUI verificat,
+              date financiare publice și informații despre certificări, specializări și acoperire geografică
+              în {41} de județe.
+            </p>
+            <div className="grid sm:grid-cols-3 gap-6 my-8 not-prose">
+              <div className="text-center p-4 rounded-lg bg-surface border border-border">
+                <div className="text-3xl font-bold text-primary-dark">42</div>
+                <div className="text-sm text-gray-500 mt-1">Firme verificate</div>
+              </div>
+              <div className="text-center p-4 rounded-lg bg-surface border border-border">
+                <div className="text-3xl font-bold text-primary-dark">41</div>
+                <div className="text-sm text-gray-500 mt-1">Județe acoperite</div>
+              </div>
+              <div className="text-center p-4 rounded-lg bg-surface border border-border">
+                <div className="text-3xl font-bold text-primary-dark">13</div>
+                <div className="text-sm text-gray-500 mt-1">Cu atestat ANRE C2A</div>
+              </div>
+            </div>
+            <p>
+              Spre deosebire de alte directoare, nu listăm firme pe baza plăților sau a
+              auto-declarațiilor. Toate datele sunt colectate din surse publice — <em>termene.ro</em>,{' '}
+              <em>listafirme.eu</em>, <em>anre.ro</em> și site-urile oficiale ale firmelor. Poți
+              compara instalatori după experiență, certificări, număr de angajați și cifra de
+              afaceri, apoi solicita ofertă gratuită direct pe platformă.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Guides */}
       <section className="bg-surface border-y border-border">
         <div className="max-w-7xl mx-auto px-4 py-16">
@@ -120,6 +164,7 @@ export default function HomePage() {
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[...guidesData.guides]
+              .filter((g) => g.published !== false)
               .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
               .slice(0, 3)
               .map((guide) => (

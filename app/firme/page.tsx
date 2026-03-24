@@ -8,9 +8,9 @@ import { getCoveredCounties, slugifyCounty, getCompaniesByCounty } from '@/lib/u
 import CompanyListClient from './CompanyListClient';
 
 export const metadata: Metadata = {
-  title: 'Firme Instalare Panouri Fotovoltaice | Director Instalatori',
+  title: 'Instalatori Panouri Fotovoltaice România | 42 Firme Verificate 2026',
   description:
-    'Platformă completă cu firme verificate de instalare panouri fotovoltaice pentru hale industriale, clădiri de birouri, parcuri logistice și spații comerciale.',
+    '42 firme verificate de instalare panouri fotovoltaice comerciale și industriale. Compară instalatori autorizați ANRE, vezi date financiare reale și cere ofertă gratuită.',
   alternates: { canonical: '/firme' },
 };
 
@@ -32,6 +32,12 @@ export default function FirmePage() {
           </h1>
           <p className="text-gray-500 mt-2">
             Găsește instalatorul potrivit pentru proiectul tău industrial sau comercial
+          </p>
+          <p className="text-sm text-gray-500 mt-3 max-w-3xl">
+            Directorul include 42 de firme verificate de instalare sisteme fotovoltaice din România,
+            cu date reale din registrele publice. Compară instalatori autorizați ANRE după
+            experiență, certificări, specializări și acoperire geografică. Filtrează după județ,
+            specializare sau dimensiunea proiectului și solicită ofertă gratuită.
           </p>
         </div>
 
