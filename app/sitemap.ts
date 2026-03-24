@@ -27,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const guidePages = guidesData.guides.map((guide) => ({
+  const guidePages = guidesData.guides.filter((g) => g.published !== false).map((guide) => ({
     url: `${BASE_URL}/ghid/${guide.slug}`,
     lastModified: new Date(guide.publishedAt),
     changeFrequency: 'monthly' as const,

@@ -16,7 +16,7 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return guidesData.guides.map((g) => ({ topic: g.slug }));
+  return guidesData.guides.filter((g) => g.published !== false).map((g) => ({ topic: g.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -152,7 +152,7 @@ export default async function GuidePage({ params }: Props) {
           <h3 className="font-bold text-gray-900 mb-4">Alte ghiduri utile</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {guidesData.guides
-              .filter((g) => g.slug !== guide.slug)
+              .filter((g) => g.published !== false && g.slug !== guide.slug)
               .map((g) => (
                 <Link
                   key={g.slug}

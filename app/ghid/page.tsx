@@ -15,9 +15,9 @@ export const metadata: Metadata = {
 };
 
 export default function GhidIndexPage() {
-  const guides = [...guidesData.guides].sort(
-    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  );
+  const guides = [...guidesData.guides]
+    .filter((g) => g.published !== false)
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
   return (
     <>

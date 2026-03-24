@@ -2,6 +2,7 @@
   "guides": [
     {
       "slug": "panouri-fotovoltaice-hale-industriale",
+      "published": true,
       "publishedAt": "2026-01-06",
       "author": "Radu",
       "title": "Panouri Fotovoltaice pentru Hale Industriale - Ghid Complet 2026",
@@ -56,6 +57,7 @@
     },
     {
       "slug": "cost-sistem-fotovoltaic-comercial",
+      "published": true,
       "publishedAt": "2026-01-20",
       "author": "Radu",
       "title": "Cât Costă un Sistem Fotovoltaic Comercial în 2026 - Ghid Prețuri Actualizat",
@@ -101,6 +103,7 @@
     },
     {
       "slug": "cum-alegi-instalator-fotovoltaic",
+      "published": true,
       "publishedAt": "2026-02-03",
       "author": "Radu",
       "title": "Cum Alegi Instalatorul Fotovoltaic Potrivit - 10 Criterii Esențiale",
@@ -141,6 +144,7 @@
     },
     {
       "slug": "legislatie-prosumator-comercial",
+      "published": true,
       "publishedAt": "2026-02-17",
       "author": "Radu",
       "title": "Legislație Prosumator Comercial 2026 - Tot Ce Trebuie Să Știi",
@@ -190,6 +194,7 @@
     },
     {
       "slug": "subventii-panouri-fotovoltaice",
+      "published": true,
       "publishedAt": "2026-02-26",
       "author": "Radu",
       "title": "Subvenții Panouri Fotovoltaice 2026 - Ghid Complet Fonduri Nerambursabile",
@@ -254,6 +259,7 @@
     },
     {
       "slug": "electric-up-2026-ghid-aplicare",
+      "published": true,
       "publishedAt": "2026-02-26",
       "author": "Radu",
       "title": "Electric UP 2026 - Ghid Complet de Aplicare pentru Firme",
@@ -341,6 +347,7 @@
     },
     {
       "slug": "stocare-energie-baterii-firme",
+      "published": true,
       "publishedAt": "2026-03-08",
       "author": "Radu",
       "title": "Stocare Energie cu Baterii pentru Firme - Merită Investiția în 2026?",
@@ -414,7 +421,8 @@
     },
     {
       "slug": "tipuri-panouri-fotovoltaice",
-      "publishedAt": "2026-03-24",
+      "published": true,
+      "publishedAt": "2026-03-22",
       "author": "Radu",
       "title": "Tipuri Panouri Fotovoltaice 2026 - Monocristaline vs TOPCon vs HJT",
       "metaDescription": "Comparație detaliată între tipurile de panouri fotovoltaice: PERC, TOPCon, HJT și bifaciale. Eficiență, prețuri, degradare și recomandări pentru instalații comerciale.",
@@ -485,6 +493,129 @@
         {
           "question": "TOPCon sau HJT — ce aleg pentru firma mea?",
           "answer": "TOPCon pentru 90% din proiectele comerciale — cel mai bun ROI, disponibilitate largă, preț competitiv. HJT doar dacă ai spațiu limitat pe acoperiș (eficiență maximă per mp), temperaturi extreme vara, sau vrei performanță maximă pe 30+ ani și bugetul permite premium-ul de 15-25%."
+        }
+      ],
+      "relatedSpecializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail", "agricol"]
+    },
+    {
+      "slug": "de-ce-creste-pretul-energiei-2026",
+      "published": true,
+      "publishedAt": "2026-03-24",
+      "author": "Radu",
+      "title": "De Ce Crește Prețul Energiei în 2026 și Cum Afectează Firmele din România",
+      "metaDescription": "Prețul energiei crește accelerat în 2026: conflict Iran, petrol la $126/baril, accize mai mari. Cum afectează firmele din România și ce soluții ai.",
+      "heroDescription": "Petrolul a depășit $120/baril, gazele s-au scumpit cu 60% în Europa, iar accizele au crescut de la 1 ianuarie. Explicăm de ce crește energia și ce pot face firmele din România.",
+      "sections": [
+        {
+          "id": "ce-se-intampla-2026",
+          "title": "Ce se întâmplă cu prețul energiei în 2026?",
+          "content": "Anul 2026 a adus o nouă criză energetică, declanșată de conflictul din Iran și închiderea Strâmtorii Hormuz. Dar scumpirea nu vine doar din Orientul Mijlociu — mai mulți factori se suprapun simultan.\n\n### Cronologia crizei (martie 2026)\n\n| Dată | Eveniment | Preț Brent |\n|---|---|---|\n| Înainte de conflict | Piață stabilă | ~$60/baril |\n| 1 martie | Iran închide Strâmtoarea Hormuz | Salt brusc |\n| 8 martie | Brent depășește $100/baril | $100+ |\n| 9 martie | Vârf intermediar | ~$120/baril |\n| 18-19 martie | Iran anunță escaladare, atacuri asupra facilităților QatarEnergy | $108-119/baril |\n| Vârf (martie) | Cel mai mare preț din 2022 | **$126/baril** |\n\nStrâmtoarea Hormuz controlează **~20% din fluxurile globale de petrol și gaz**. Închiderea ei este descrisă ca cea mai mare perturbare energetică de la criza petrolului din anii 1970.\n\n### Nu doar petrolul — și gazele naturale\n\nAtacurile cu drone iraniene asupra facilităților QatarEnergy au dus la oprirea producției de gaz din Qatar. Consecințele în Europa:\n- Prețul gazelor naturale a crescut cu **60%** de la începutul conflictului\n- Stocurile de gaz ale UE: **46 miliarde mc** (februarie 2026) vs **77 miliarde mc** în 2024\n- Practic, Europa are cu **40% mai puțin gaz în depozite** decât acum 2 ani"
+        },
+        {
+          "id": "lant-petrol-factura",
+          "title": "Cum ajunge prețul petrolului în factura ta de curent",
+          "content": "Mulți antreprenori se întreabă: \"Eu nu folosesc petrol, de ce crește factura mea de curent?\" Lanțul e mai scurt decât crezi:\n\n### Petrol → Gaz → Electricitate → Factura ta\n\n1. **Prețul petrolului crește** → prețul gazelor naturale crește corelat (parțial indexat)\n2. **Gazul natural stabilește prețul electricității** — în Europa, piața electricității funcționează pe principiul prețului marginal: cel mai scump generator necesar (de obicei pe gaz) stabilește prețul pentru toată lumea\n3. **Tarifele de distribuție cresc** → ajustări ANRE la 1 ianuarie 2026\n4. **Accizele cresc** → din 1 ianuarie 2026, accize mai mari pe carburanți\n5. **Plafonările expiră** → de la 1 iulie 2025, plafonul pentru firme a fost eliminat\n\n### Dependența României de import\n\nRomânia are una dintre cele mai mici dependențe energetice din UE (**~29% import** vs media UE de 57%), dar:\n- **80.6% din petrol** este importat\n- Producția internă de petrol scade cu **~4%/an** din 2002\n- Gazul natural: **78% producție internă**, dar proiectul Neptun Deep (Marea Neagră) va livra abia din **2027**\n\nChiar dacă România produce mult din energia sa, **prețul se formează pe piața europeană**. Când gazul se scumpește în Europa, se scumpește și la noi."
+        },
+        {
+          "id": "cat-platesc-firmele",
+          "title": "Cât plătesc firmele pe energie în 2026",
+          "content": "### Prețuri energie electrică pentru firme (2026)\n\n| Indicator | Preț |\n|---|---|\n| Preț energie activă (Electrica, fără TVA) | 0.745 lei/kWh |\n| Preț estimat complet (cu TVA, transport, distribuție) | **1.03-1.15 lei/kWh** |\n| Preț industrial mediu (Eurostat) | ~0.14-0.20 EUR/kWh |\n| Tarif distribuție joasă tensiune (Rețele Electrice) | 317 lei/MWh (**+8%** vs 2025) |\n| Tarif distribuție joasă tensiune (Delgaz/E.ON) | 388 lei/MWh (**+9.8%** vs 2025) |\n\n### Ce s-a schimbat recent\n\n- **1 iulie 2025:** plafonul de preț pentru firme a fost eliminat — piață liberă\n- **1 ianuarie 2026:** tarife de distribuție mai mari (+1.25% la +9.8%)\n- **1 ianuarie 2026:** accize pe carburanți crescute (+0.28 RON/L benzină, +0.26 RON/L motorină)\n- **1 aprilie 2026:** expiră și plafonul pe gaz — **toate prețurile devin 100% piață liberă**\n\n### Impactul concret\n\nO firmă medie cu consum de **50.000 kWh/lună** plătește acum:\n- La **1.10 lei/kWh**: **55.000 lei/lună** (~11.000 EUR)\n- Cu 2 ani în urmă (preț plafonat ~0.68 lei/kWh): **34.000 lei/lună** (~6.800 EUR)\n- **Diferență: +21.000 lei/lună** (~4.200 EUR) — sau **+50.000 EUR/an**\n\nȘi prețurile pot crește în continuare pe măsură ce criza din Iran evoluează."
+        },
+        {
+          "id": "carburanti-scumpire",
+          "title": "Carburanții s-au scumpit cu aproape 1 leu/litru în 2026",
+          "content": "Prețul carburanților afectează direct costurile de operare ale firmelor — transport, logistică, deplasări.\n\n### Prețuri carburanți România (martie 2026)\n\n| Carburant | Preț curent | Creștere cumulată 2026 |\n|---|---|---|\n| Benzină Euro 95 | ~8.35 lei/L (~1.67 EUR/L) | **+0.72 lei/L** de la 1 ianuarie |\n| Motorină | ~9.22 lei/L (~1.76 EUR/L) | **+0.81 lei/L** de la 1 ianuarie |\n\n### De unde vine scumpirea?\n\n1. **Accize mai mari** (de la 1 ianuarie 2026): +0.28 RON/L benzină, +0.26 RON/L motorină\n2. **Prețul petrolului** (Brent la $108-126/baril vs $60 înainte de conflict)\n3. **Peste 50% din prețul la pompă** sunt taxe (accize + TVA)\n4. Petrom a implementat **14 scumpiri** doar în 2026\n\n### Impact asupra firmelor\n\nPentru o firmă cu flotă de 10 vehicule, fiecare consumând 2.000 L motorină/an:\n- Cost suplimentar doar din creșterea din 2026: **~16.200 lei/an** (~3.200 EUR)\n- Dacă adăugăm și creșterea curentului și a gazului: costurile energetice totale au explodat\n\nFirmele care au deja panouri fotovoltaice **nu simt aceste creșteri pe componenta de electricitate** — costul energiei solare nu depinde de prețul petrolului."
+        },
+        {
+          "id": "ce-urmeaza",
+          "title": "Ce urmează: prognoze 2026-2030",
+          "content": "### Scenariu pe termen scurt (2026)\n\n- Analiștii discută posibilitatea petrolului la **$200/baril** dacă escaladarea continuă\n- Prețurile energiei în Europa pot crește cu încă **10-20%** în T2-T3 2026\n- De la **1 aprilie 2026**: plafonul pe gaz expiră → facturi și mai mari pentru firme\n- Creșterea economică a zonei euro se reduce la **0.5%** (de la 1.2% prognozat)\n\n### Scenariu pe termen mediu (2027-2030)\n\n- Proiectul **Neptun Deep** (Marea Neagră) — prima livrare de gaz din **2027**, potential să reducă dependența României\n- Prețul wholesale al electricității în UE: **~85 EUR/MWh** în 2027, scădere graduală spre **~69 EUR/MWh** până în 2030\n- Prețul CO₂ (EU ETS): **~75 EUR/tonă** în 2025 și în creștere → electricitatea din fosile devine tot mai scumpă\n- Solar LCOE (costul energiei solare) continuă să scadă: **-30% până în 2035** (BloombergNEF)\n\n### Concluzia este clară\n\nEnergia din rețea va fi **tot mai scumpă și mai volatilă**. Energia solară devine **tot mai ieftină și predictibilă**. Fiecare an de așteptare înseamnă bani pierduți pe facturi care puteau fi evitate.\n\nÎn articolul următor, facem **calculul concret**: cât economisește o firmă cu panouri solare vs energia din rețea pe 25 de ani → [Energie Solară vs Energie din Rețea — Comparație de Costuri pe 25 de Ani](/ghid/energie-solara-vs-retea-comparatie-costuri)"
+        }
+      ],
+      "faq": [
+        {
+          "question": "De ce crește prețul energiei electrice în 2026?",
+          "answer": "Mai mulți factori simultani: conflictul din Iran a dus petrolul la $126/baril și gazele au crescut cu 60% în Europa, tarifele de distribuție au crescut cu 8-10% de la 1 ianuarie 2026, plafonul de preț pentru firme a fost eliminat din iulie 2025, iar accizele pe carburanți au crescut semnificativ."
+        },
+        {
+          "question": "Cât plătește o firmă pe energia electrică în 2026?",
+          "answer": "Prețul complet pentru firme este de aproximativ 1.03-1.15 lei/kWh (cu TVA, transport și distribuție). O firmă medie cu consum de 50.000 kWh/lună plătește ~55.000 lei/lună — cu circa 50.000 EUR/an mai mult decât acum 2 ani."
+        },
+        {
+          "question": "Cum afectează prețul petrolului factura mea de curent?",
+          "answer": "Prin lanțul: petrol scump → gaz scump → electricitate scumpă. În Europa, cel mai scump generator (de obicei pe gaz) stabilește prețul pentru toată piața. Când gazul se scumpește, crește și curentul — chiar dacă firma ta nu folosește direct petrol sau gaz."
+        },
+        {
+          "question": "România produce propria energie — de ce ne afectează criza?",
+          "answer": "România are import redus (~29% vs 57% media UE), dar importă 80.6% din petrol, iar prețul energiei se formează pe piața europeană. Când gazul crește în Europa, crește și la noi. Proiectul Neptun Deep va ajuta din 2027, dar nu imediat."
+        },
+        {
+          "question": "Cum mă protejez de creșterea prețului energiei?",
+          "answer": "Cea mai eficientă protecție pe termen lung este instalarea de panouri fotovoltaice: costul energiei solare este fix (~0.04-0.06 EUR/kWh amortizat pe 25 ani), nu depinde de prețul petrolului și se amortizează în 4-6 ani. Fiecare an de așteptare înseamnă bani pierduți pe facturi evitabile."
+        }
+      ],
+      "relatedSpecializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail"]
+    },
+    {
+      "slug": "energie-solara-vs-retea-comparatie-costuri",
+      "published": false,
+      "publishedAt": "2026-03-27",
+      "author": "Radu",
+      "title": "Energie Solară vs Energie din Rețea — Comparație de Costuri pe 25 de Ani",
+      "metaDescription": "Comparație detaliată: cât costă energia solară vs energia din rețea pe 25 de ani. Calcule concrete pentru firme mici, medii și mari din România.",
+      "heroDescription": "Energia solară costă 0.04 EUR/kWh, energia din rețea 0.21 EUR/kWh și crește. Calculăm exact cât economisești pe 5, 10 și 25 de ani cu panouri fotovoltaice.",
+      "sections": [
+        {
+          "id": "doua-modele-cost",
+          "title": "Două modele de cost fundamental diferite",
+          "content": "Când compari energia solară cu energia din rețea, compari de fapt **două modele financiare complet diferite**:\n\n### Energia din rețea = cost variabil, în creștere\n- Plătești lunar, la prețul pieței\n- Prețul crește cu **5-10% pe an** (istoric România)\n- Nu ai control asupra costului\n- Dependență totală de factori externi (petrol, gaz, geopolitică, taxe)\n\n### Energia solară = investiție fixă, cost marginal zero\n- Plătești o dată (investiția inițială)\n- Cost mentenanță: **~1% din investiție/an**\n- Producția scade ușor: **~0.4-0.5%/an** (degradare panouri)\n- Costul per kWh amortizat pe 25 ani: **0.03-0.06 EUR/kWh**\n- **Nu depinde** de prețul petrolului, gazului sau politicile guvernamentale\n\n### Costul real al energiei solare (LCOE)\n\nLCOE (Levelized Cost of Energy) reprezintă costul total al energiei produse de un sistem solar, amortizat pe durata de viață:\n\n| Tip sistem | LCOE estimat (EUR/kWh) |\n|---|---|\n| Comercial pe acoperiș (50-200 kWp) | 0.05-0.08 |\n| Comercial mare (200-500 kWp) | 0.04-0.06 |\n| Utilitar pe sol (1+ MWp) | 0.03-0.05 |\n| Media globală solar utilitar (IRENA 2024) | 0.04 |\n\nCompară cu **0.14-0.23 EUR/kWh** pentru energia din rețea pentru firme în România (2026). Energia solară este **de 3-5 ori mai ieftină** per kWh produs."
+        },
+        {
+          "id": "comparatie-25-ani",
+          "title": "Comparație pe 25 de ani: solar vs rețea",
+          "content": "### Scenariul: firmă medie, 100 kWp\n\n**Ipoteze:**\n- Consum anual: **120.000 kWh**\n- Autoconsum din solar: **80%** (96.000 kWh)\n- Preț energie rețea 2026: **0.21 EUR/kWh** (~1.05 lei/kWh)\n- Creștere anuală preț rețea: **5%/an** (conservator, media istorică)\n- Cost sistem solar 100 kWp: **75.000 EUR**\n- Mentenanță anuală: **750 EUR** (1% din investiție)\n- Degradare panouri: **0.5%/an**\n- Venit din surplus (20%): la preț prosumator\n\n### Costul energiei din rețea pe 25 de ani\n\n| Perioada | Preț estimat/kWh | Cost anual | Cost cumulat |\n|---|---|---|---|\n| Anul 1 (2026) | 0.21 EUR | 25.200 EUR | 25.200 EUR |\n| Anul 5 (2030) | 0.26 EUR | 30.600 EUR | 139.000 EUR |\n| Anul 10 (2035) | 0.33 EUR | 39.100 EUR | 314.000 EUR |\n| Anul 15 (2040) | 0.42 EUR | 49.900 EUR | 537.000 EUR |\n| Anul 20 (2045) | 0.54 EUR | 63.700 EUR | 821.000 EUR |\n| **Anul 25 (2050)** | **0.68 EUR** | **81.300 EUR** | **1.182.000 EUR** |\n\n### Costul cu solar pe 25 de ani\n\n| Perioada | Cost solar cumulat | Economie față de rețea |\n|---|---|---|\n| Anul 1 | 75.750 EUR (investiție + mentenanță) | -50.550 EUR (încă pe minus) |\n| Anul 4 | 78.000 EUR | **Break-even** |\n| Anul 5 | 78.750 EUR | +60.250 EUR |\n| Anul 10 | 82.500 EUR | +231.500 EUR |\n| Anul 15 | 86.250 EUR | +450.750 EUR |\n| Anul 25 | **93.750 EUR** | **+1.088.250 EUR** |\n\n**Rezultat: pe 25 de ani, firma economisește peste 1 milion EUR** comparativ cu scenariul fără solar. Chiar și cu o creștere mai mică a prețului (3%/an), economia depășește 600.000 EUR."
+        },
+        {
+          "id": "trei-tipuri-firme",
+          "title": "Calcule pe trei dimensiuni de firmă",
+          "content": "### Firmă mică — magazin sau birou (30 kWp)\n\n| Parametru | Fără solar | Cu solar |\n|---|---|---|\n| Investiție inițială | 0 | 24.000 EUR |\n| Consum anual | 36.000 kWh | 36.000 kWh |\n| Autoconsum solar | - | 80% (28.800 kWh) |\n| Factură anul 1 | 7.560 EUR | 1.510 EUR |\n| Economie anul 1 | - | 6.050 EUR |\n| Amortizare | - | **~4 ani** |\n| Cost total 25 ani | ~355.000 EUR | ~49.000 EUR |\n| **Economie totală** | - | **~306.000 EUR** |\n\n### Firmă medie — hală sau depozit (200 kWp)\n\n| Parametru | Fără solar | Cu solar |\n|---|---|---|\n| Investiție inițială | 0 | 140.000 EUR |\n| Consum anual | 240.000 kWh | 240.000 kWh |\n| Autoconsum solar | - | 80% (192.000 kWh) |\n| Factură anul 1 | 50.400 EUR | 10.080 EUR |\n| Economie anul 1 | - | 40.320 EUR |\n| Amortizare | - | **~3.5 ani** |\n| Cost total 25 ani | ~2.365.000 EUR | ~175.000 EUR |\n| **Economie totală** | - | **~2.190.000 EUR** |\n\n### Firmă mare — parc logistic (500 kWp)\n\n| Parametru | Fără solar | Cu solar |\n|---|---|---|\n| Investiție inițială | 0 | 325.000 EUR |\n| Consum anual | 600.000 kWh | 600.000 kWh |\n| Autoconsum solar | - | 80% (480.000 kWh) |\n| Factură anul 1 | 126.000 EUR | 25.200 EUR |\n| Economie anul 1 | - | 100.800 EUR |\n| Amortizare | - | **~3.2 ani** |\n| Cost total 25 ani | ~5.910.000 EUR | ~400.000 EUR |\n| **Economie totală** | - | **~5.510.000 EUR** |\n\n*Toate calculele presupun creștere de 5%/an a prețului energiei din rețea, 80% autoconsum și 0.5%/an degradare.*"
+        },
+        {
+          "id": "scenarii-crestere-pret",
+          "title": "Ce se întâmplă la diferite scenarii de preț",
+          "content": "Nu știm exact cum vor evolua prețurile. Dar putem calcula scenarii pentru un sistem de **100 kWp** (investiție: 75.000 EUR):\n\n### Economie totală pe 25 de ani (EUR)\n\n| Creștere anuală preț rețea | Cost total rețea | Cost total solar | Economie |\n|---|---|---|---|\n| **2%/an** (optimist) | 530.000 | 93.750 | **436.250** |\n| **3%/an** (moderat) | 645.000 | 93.750 | **551.250** |\n| **5%/an** (media istorică) | 1.010.000 | 93.750 | **916.250** |\n| **7%/an** (criză prelungită) | 1.600.000 | 93.750 | **1.506.250** |\n| **10%/an** (scenariu extrem) | 3.150.000 | 93.750 | **3.056.250** |\n\n### Concluzia\n\n**În orice scenariu, solarul câștigă categoric.** Chiar și în cel mai optimist scenariu (energie din rețea crește doar 2%/an), economia pe 25 de ani depășește 400.000 EUR pentru un sistem de 100 kWp.\n\nDiferența: costul solar este **blocat la momentul investiției**. Costul din rețea crește **în fiecare an**, compus. Cu cât aștepți mai mult, cu atât pierzi mai mult.\n\n### Amortizare pe scenarii\n\n| Scenariu creștere | Amortizare sistem 100 kWp |\n|---|---|\n| 2%/an | ~4.5 ani |\n| 3%/an | ~4.2 ani |\n| 5%/an | ~3.8 ani |\n| 7%/an | ~3.5 ani |\n\nChiar și în cel mai conservator scenariu, investiția se recuperează **sub 5 ani**."
+        },
+        {
+          "id": "cost-asteptare",
+          "title": "Cât te costă fiecare an de așteptare",
+          "content": "Mulți antreprenori amână decizia: \"Poate anul viitor\", \"Să vedem cum evoluează piața\". Dar așteptarea are un cost concret.\n\n### Costul așteptării pentru un sistem de 100 kWp\n\nDacă ai fi instalat panouri anul trecut vs anul acesta, ai fi economisit deja **~20.000 EUR** pe factura de energie.\n\n| Când instalezi | Ce pierzi |\n|---|---|\n| Amâni 1 an | ~20.000 EUR (facturi plătite degeaba) |\n| Amâni 2 ani | ~42.000 EUR |\n| Amâni 3 ani | ~66.000 EUR |\n| Amâni 5 ani | ~120.000 EUR |\n\nFiecare lună de așteptare = **~1.700 EUR** plătiți pe energie care putea fi gratuită.\n\n### De ce \"anul viitor\" e mai scump\n\n1. **Factura de azi nu se recuperează** — banii plătiți pe energie sunt pierduți permanent\n2. **Prețul energiei crește** — economia anuală din solar devine tot mai mare\n3. **Prețul panourilor e la minim istoric** — costul instalat a scăzut cu 30% din 2020\n4. **Subvențiile pot dispărea** — Electric UP, Fondul de Modernizare au bugete limitate\n5. **Capacitate de instalare limitată** — în perioade de criză, cererea explodează și apar cozi\n\n### Cel mai bun moment? Acum.\n\nCombinația unică din 2026:\n- Prețul energiei din rețea: **la maxim istoric**\n- Prețul panourilor solare: **la minim istoric**\n- Subvenții disponibile: **Electric UP, Fondul de Modernizare**\n- Amortizare: **sub 4 ani** — cea mai rapidă din istorie\n\nAceastă fereastră nu rămâne deschisă la nesfârșit. Subvențiile se epuizează, iar capacitatea instalatorilor este limitată."
+        },
+        {
+          "id": "cum-incepi",
+          "title": "Cum începi: pași concreți",
+          "content": "### Pasul 1: Calculează-ți consumul\nAdună facturile de energie din ultimele 12 luni. Notează consumul total anual în kWh și costul total în EUR.\n\n### Pasul 2: Dimensionează sistemul\nRegulă simplă: **1 kWp acoperă ~1.200 kWh/an** în România. Dacă consumi 120.000 kWh/an și vrei să acoperi 80%, ai nevoie de ~80 kWp.\n\n### Pasul 3: Cere oferte de la instalatori verificați\nCere minim 3 oferte de la instalatori cu:\n- Atestat ANRE C2A\n- Experiență pe proiecte comerciale\n- Referințe verificabile\n\n**Poți folosi [directorul nostru de instalatori](/firme) pentru a găsi firme verificate din zona ta.**\n\n### Pasul 4: Verifică eligibilitatea pentru subvenții\n- **Electric UP 2026**: până la 150.000 EUR grant\n- **Fondul de Modernizare**: granturi pentru stocare + PV\n- **Amortizare super-accelerată**: 65% din investiție în anul 1\n- **Scutire impozit profit reinvestit**\n\nDetalii în ghidul nostru [Subvenții Panouri Fotovoltaice 2026](/ghid/subventii-panouri-fotovoltaice-2026).\n\n### Pasul 5: Ia decizia\nCu ofertele în mână, fă calculul: investiție vs economie anuală. La prețurile din 2026, răspunsul va fi aproape întotdeauna: **merită**."
+        }
+      ],
+      "faq": [
+        {
+          "question": "Cât costă energia solară per kWh comparativ cu rețeaua?",
+          "answer": "Energia solară costă 0.04-0.08 EUR/kWh (amortizat pe 25 ani), energia din rețea pentru firme costă 0.14-0.23 EUR/kWh în 2026 și crește anual. Solar este de 3-5 ori mai ieftin și prețul e fix pe toată durata de viață a sistemului."
+        },
+        {
+          "question": "În cât timp se amortizează panourile fotovoltaice la prețurile din 2026?",
+          "answer": "La prețurile actuale ale energiei (1.03-1.15 lei/kWh), amortizarea este de 3-5 ani pentru sisteme comerciale — cea mai rapidă din istorie. Cu subvenții (Electric UP, Fondul de Modernizare), amortizarea poate scădea sub 2 ani."
+        },
+        {
+          "question": "Cât economisesc pe 25 de ani cu un sistem solar de 100 kWp?",
+          "answer": "Între 436.000 EUR (scenariu optimist, energie crește 2%/an) și peste 1 milion EUR (creștere 5%/an, media istorică). Investiția de ~75.000 EUR se recuperează în 3.5-4.5 ani, iar restul de 20+ ani energia este practic gratuită."
+        },
+        {
+          "question": "Ce se întâmplă dacă prețul energiei scade?",
+          "answer": "Chiar și în cel mai optimist scenariu (creștere de doar 2%/an), economia pe 25 de ani pentru un sistem de 100 kWp depășește 400.000 EUR. Istoric, prețul energiei nu a scăzut pe termen lung — tendința este constant ascendentă datorită costurilor CO₂, inflației și dependenței de combustibili fosili."
+        },
+        {
+          "question": "Merită să aștept prețuri mai mici la panouri?",
+          "answer": "Nu. Fiecare lună de așteptare costă ~1.700 EUR/lună în facturi plătite degeaba (pentru un sistem de 100 kWp). Prețul panourilor scade cu ~5-10%/an, dar economiile pierdute prin așteptare sunt mult mai mari decât reducerea de preț."
         }
       ],
       "relatedSpecializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail", "agricol"]
