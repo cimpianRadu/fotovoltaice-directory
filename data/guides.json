@@ -619,6 +619,163 @@
         }
       ],
       "relatedSpecializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail", "agricol"]
+    },
+    {
+      "slug": "panouri-fotovoltaice-casa-vs-firma",
+      "published": false,
+      "publishedAt": "2026-03-31",
+      "author": "Radu",
+      "title": "Panouri Fotovoltaice pentru Casă vs Firmă - Diferențe și Costuri 2026",
+      "metaDescription": "Comparație detaliată între sistemele fotovoltaice rezidențiale și comerciale: costuri pe kW, subvenții, legislație prosumator, ROI și amortizare. Ghid actualizat 2026.",
+      "heroDescription": "Ce diferențe sunt între un sistem fotovoltaic pentru casă și unul pentru firmă? Costuri, subvenții, legislație și perioadă de amortizare — totul într-un singur ghid.",
+      "sections": [
+        {
+          "id": "introducere",
+          "title": "Rezidențial vs Comercial — De ce contează diferența?",
+          "content": "Decizia de a investi în panouri fotovoltaice este tot mai populară atât în rândul proprietarilor de locuințe, cât și al firmelor. Dar un sistem fotovoltaic pentru casă și unul pentru o firmă diferă semnificativ la mai multe capitole: dimensiune, costuri pe kW instalat, legislație, subvenții disponibile și perioadă de amortizare.\n\nÎn acest ghid comparăm cele două variante punct cu punct, ca să înțelegi exact ce presupune fiecare și care sunt avantajele specifice."
+        },
+        {
+          "id": "dimensionare",
+          "title": "Dimensionare: Ce putere se recomandă?",
+          "content": "### Rezidențial\nPentru o casă medie (familie de 3-4 persoane), un sistem de **5 kW** acoperă consumul tipic. Sistemele rezidențiale variază de la 3 kW (minim pentru Casa Verde) la 10 kW pentru case mari sau cu pompă de căldură.\n\nRegula practică: **1 kW produce aproximativ 1.200-1.400 kWh pe an** în România.\n\n| Putere sistem | Producție anuală estimată | Potrivit pentru |\n|---|---|---|\n| 3 kW | ~3.600 – 4.200 kWh | Apartament sau casă mică, 1-2 persoane |\n| 5 kW | ~6.000 – 7.000 kWh | Casă medie, 3-4 persoane |\n| 10 kW | ~12.000 – 14.000 kWh | Casă mare, pompă de căldură, mașină electrică |\n\n### Comercial\nSistemele comerciale pornesc de obicei de la **30-50 kW** și ajung la **câteva sute de kW** sau chiar 1 MW+. Dimensionarea se face pe baza consumului real din facturile de energie ale firmei.\n\n| Putere sistem | Potrivit pentru |\n|---|---|\n| 30-50 kW | Birouri mici, magazine |\n| 100-250 kW | Hale medii, hoteluri |\n| 250 kW – 1 MW | Hale industriale mari, fabrici, centre logistice |"
+        },
+        {
+          "id": "costuri",
+          "title": "Costuri: Cât costă pe kW instalat?",
+          "content": "Diferența majoră de cost vine din **economiile de scară** — cu cât sistemul e mai mare, cu atât costul per kW scade.\n\n### Prețuri orientative 2026\n\n| Categorie | Putere | Cost total | Cost per kW |\n|---|---|---|---|\n| **Rezidențial** | 3 kW | 18.000 – 22.000 RON | ~6.000 – 7.300 RON/kW |\n| **Rezidențial** | 5 kW | 25.000 – 35.000 RON | ~5.000 – 7.000 RON/kW |\n| **Rezidențial** | 10 kW | 45.000 – 55.000 RON | ~4.500 – 5.500 RON/kW |\n| **Comercial** | 35 kW | 112.500 – 162.500 RON | ~3.200 – 4.600 RON/kW |\n| **Comercial** | 100 kW | 300.000 – 420.000 RON | ~3.000 – 4.200 RON/kW |\n\n**Concluzie:** Un sistem comercial de 35 kW costă aproximativ **1,5–2x mai puțin per kW** decât un sistem rezidențial de 3 kW.\n\n### Ce include prețul (la cheie)\n- Panouri fotovoltaice\n- Invertor (on-grid sau hibrid)\n- Structuri de montaj\n- Cabluri, protecții AC/DC, conectori\n- Manoperă (instalare)\n\n**De obicei nu include:** avize de racordare, baterii de stocare, consolidare acoperiș (dacă e cazul), mentenanță post-garanție.\n\nSursă prețuri: greenlead.ro, necesit.ro (februarie 2026)"
+        },
+        {
+          "id": "subventii",
+          "title": "Subvenții disponibile: Rezidențial vs Comercial",
+          "content": "### Rezidențial: Casa Verde Fotovoltaice\n- **Finanțare:** Până la 30.000 lei nerambursabil (acoperă ~90% din cost)\n- **Contribuție proprie minimă:** 3.000 lei\n- **Administrat de:** AFM (Administrația Fondului pentru Mediu)\n- **Condiție specială:** Baterie de stocare de minim 5 kWh obligatorie (din 2024)\n- **Eligibilitate:** Persoane fizice, proprietari de locuințe\n\n### Comercial: Electric UP\n- **Finanțare:** Până la 150.000 EUR (75% din valoarea proiectului)\n- **Contribuție proprie:** 25%\n- **Administrat de:** Ministerul Energiei\n- **Eligibilitate:** IMM-uri (microîntreprinderi, firme mici și mijlocii)\n\n### Comercial: Fondul de Modernizare\n- **Finanțare:** Variabilă, sume mai mari\n- **Eligibilitate:** Firme de orice dimensiune\n- **Focus:** Proiecte de eficiență energetică și energie regenerabilă\n\n| Criteriu | Casa Verde (rezidențial) | Electric UP (comercial) |\n|---|---|---|\n| Sumă maximă | 30.000 RON (~6.000 EUR) | 150.000 EUR |\n| Procent acoperit | ~90% | 75% |\n| Tip beneficiar | Persoană fizică | IMM |\n| Baterie obligatorie | Da (min. 5 kWh) | Nu |"
+        },
+        {
+          "id": "legislatie-prosumator",
+          "title": "Legislație prosumator: Rezidențial vs Comercial",
+          "content": "Ambele categorii beneficiază de statutul de **prosumator** reglementat prin Legea 184/2018 și Legea 318/2023.\n\n### Capacitate maximă fără licență ANRE\n**400 kWp** — aceeași limită pentru rezidențial și comercial (crescută de la 100 kWp prin Legea 318/2023).\n\n### Compensarea energiei\n\n| Mecanism | Descriere | Se aplică la |\n|---|---|---|\n| **Net metering** (compensare cantitativă) | Energia injectată compensează 1:1 energia consumată din rețea. Rețeaua funcționează ca o \"baterie virtuală\" gratuită. | Sisteme sub 200 kW, valabil până în 2030 |\n| **Net billing** (compensare valorică) | Energia injectată se plătește la prețul pieței (OPCOM). Cumperi din rețea la tarif furnizor — poți vinde ieftin și cumpăra scump. | Sisteme peste 200 kW |\n\n**Important:** Pentru sisteme sub 200 kW (majoritatea rezidențialelor și multe comerciale mici), net metering e foarte avantajos — compensare 1:1, fără pierderi de preț.\n\n### Taxe pe venituri din energie\n\n| Aspect | Rezidențial | Comercial |\n|---|---|---|\n| Impozit pe venituri | Scutit pentru sisteme sub 400 kWp (până la 31 dec 2026) | Scutit similar (până la 31 dec 2026) |\n| TVA | Nu se aplică (persoana fizică nu e plătitoare) | TVA deductibil pe investiție |\n| Amortizare | Nu se aplică | Super-accelerată: 65% din valoare în primul an |"
+        },
+        {
+          "id": "amortizare-roi",
+          "title": "Amortizare și ROI",
+          "content": "### Rezidențial\n\nLa prețurile actuale ale energiei (1,1–1,5 RON/kWh după liberalizarea din iulie 2025):\n\n| Sistem | Economie anuală | Amortizare fără subvenție | Amortizare cu Casa Verde |\n|---|---|---|---|\n| 3 kW | ~4.700 – 6.300 RON | 4–5 ani | 2–3 ani |\n| 5 kW | ~7.800 – 10.500 RON | 3–5 ani | 2–3 ani |\n| 10 kW | ~15.600 – 21.000 RON | 3–4 ani | 2–3 ani |\n\n### Comercial\n\nPentru un sistem de 100 kW (producție ~120 MWh/an):\n- **Economie anuală:** ~18.000 EUR\n- **Amortizare fără subvenție:** 4–6 ani\n- **Amortizare cu Electric UP (75%):** 1–2 ani\n- **Beneficii fiscale suplimentare:** Amortizare super-accelerată + scutire impozit profit reinvestit pot reduce costul net cu ~25%\n\n### Durată de viață echipamente\n- **Panouri:** 25–30 ani (garanție performanță 25 ani, minim 80% capacitate)\n- **Invertoare:** 10–12 ani garanție\n- **Baterii de stocare:** 10–15 ani garanție"
+        },
+        {
+          "id": "avize-autorizatii",
+          "title": "Avize și autorizații necesare",
+          "content": "Procesul de avizare urmează aceiași 5 pași pentru ambele categorii, dar diferă în complexitate:\n\n1. **Cerere de racordare** → la operatorul de distribuție (Enel, E-ON, Delgaz Grid)\n2. **ATR** (Aviz Tehnic de Racordare) → emis în 30 zile, valabil 12 luni\n3. **Instalare** → obligatoriu prin instalator autorizat ANRE (atestat C2A)\n4. **Recepție** → Proces Verbal + Certificat de conformitate\n5. **Contract prosumator** → cu furnizorul de energie\n\n| Aspect | Rezidențial | Comercial |\n|---|---|---|\n| Autorizație construire | De regulă nu e necesară (notificare la primărie) | Poate fi necesară, în funcție de putere și clădire |\n| Proiect tehnic | Simplificat | Detaliat (calcule structurale, scheme electrice) |\n| Durată totală | 2–4 luni | 3–6 luni |"
+        },
+        {
+          "id": "ce-sa-alegi",
+          "title": "Ce să alegi: Rezumat comparativ",
+          "content": "| Criteriu | Rezidențial | Comercial |\n|---|---|---|\n| Putere tipică | 3–10 kW | 30 kW – 1 MW |\n| Cost per kW | 4.500 – 7.300 RON | 3.000 – 4.600 RON |\n| Subvenție principală | Casa Verde (max 30.000 RON) | Electric UP (max 150.000 EUR) |\n| Compensare energie | Net metering (1:1) | Net metering sub 200 kW |\n| Amortizare | 3–5 ani (2–3 cu subvenție) | 4–6 ani (1–2 cu subvenție) |\n| Beneficii fiscale | Limitate | Amortizare accelerată, TVA deductibil |\n| Durată avizare | 2–4 luni | 3–6 luni |\n\n**Concluzie:** Ambele variante sunt investiții excelente în 2026, dar dintr-un motiv diferit. Rezidențialul e simplu, rapid și cu subvenție generoasă raportată la cost. Comercialul are economii de scară, beneficii fiscale semnificative și ROI mai bun la proiecte mari."
+        }
+      ],
+      "faq": [
+        {
+          "question": "Cât costă un sistem fotovoltaic pentru casă în 2026?",
+          "answer": "Un sistem de 5 kW (suficient pentru o familie de 3-4 persoane) costă între 25.000 și 35.000 RON la cheie, fără baterie. Cu baterie de stocare, prețul crește la 35.000–45.000 RON. Cu subvenția Casa Verde (până la 30.000 RON), contribuția proprie poate fi de doar 3.000–5.000 RON."
+        },
+        {
+          "question": "Ce diferență de preț e între un sistem rezidențial și unul comercial?",
+          "answer": "Costul per kW instalat scade semnificativ la sisteme mari. Un sistem rezidențial de 3 kW costă ~6.000-7.300 RON/kW, pe când un sistem comercial de 35 kW costă ~3.200-4.600 RON/kW — aproape jumătate."
+        },
+        {
+          "question": "Ce subvenții sunt disponibile pentru panouri fotovoltaice pe casă?",
+          "answer": "Programul Casa Verde Fotovoltaice oferă până la 30.000 lei finanțare nerambursabilă, cu contribuție proprie minimă de 3.000 lei. Din 2024, bateria de stocare (minim 5 kWh) este obligatorie. Programul este administrat de AFM."
+        },
+        {
+          "question": "În cât timp se amortizează panourile fotovoltaice pe casă?",
+          "answer": "La prețurile energiei din 2026 (1,1-1,5 RON/kWh), un sistem rezidențial se amortizează în 3-5 ani fără subvenție și în 2-3 ani cu Casa Verde. Panourile produc energie 25-30 de ani."
+        },
+        {
+          "question": "Ce înseamnă prosumator și cum funcționează net metering?",
+          "answer": "Prosumator = produci energie pentru consum propriu și injectezi surplusul în rețea. Cu net metering (sisteme sub 200 kW), energia injectată compensează 1:1 energia consumată — rețeaua funcționează ca o baterie virtuală gratuită. Valabil până în 2030."
+        }
+      ],
+      "relatedSpecializations": ["cladiri-birouri", "retail"]
+    },
+    {
+      "slug": "casa-verde-fotovoltaice-2026",
+      "published": false,
+      "publishedAt": "2026-04-07",
+      "author": "Radu",
+      "title": "Casa Verde Fotovoltaice 2026 - Ghid Complet de Aplicare",
+      "metaDescription": "Ghid complet Casa Verde Fotovoltaice 2026: condiții, documente, pași de aplicare, sumă finanțare și calendar. Tot ce trebuie să știi pentru a obține subvenția AFM.",
+      "heroDescription": "Tot ce trebuie să știi despre programul Casa Verde Fotovoltaice 2026: cine e eligibil, ce documente pregătești, câți bani primești și cum aplici pe platforma AFM.",
+      "sections": [
+        {
+          "id": "ce-este-casa-verde",
+          "title": "Ce este programul Casa Verde Fotovoltaice?",
+          "content": "**Casa Verde Fotovoltaice** este programul guvernamental prin care persoanele fizice pot primi finanțare nerambursabilă pentru instalarea de sisteme fotovoltaice pe locuințe. Programul este administrat de **Administrația Fondului pentru Mediu (AFM)** și are un buget de **1,5 miliarde lei** alocat pentru 2025-2026.\n\nProgramul acoperă o parte semnificativă din costul unui sistem fotovoltaic rezidențial — până la **90% din valoare** — făcându-l una dintre cele mai accesibile modalități de a trece la energia solară.\n\n### Cifre cheie\n\n| Detaliu | Valoare |\n|---|---|\n| Finanțare maximă | Până la 30.000 lei per beneficiar |\n| Contribuție proprie minimă | 3.000 lei |\n| Buget total | 1,5 miliarde lei (2025-2026) |\n| Administrat de | AFM (afm.ro) |\n| Tip finanțare | Nerambursabilă (nu se returnează) |"
+        },
+        {
+          "id": "cine-e-eligibil",
+          "title": "Cine poate aplica? Condiții de eligibilitate",
+          "content": "### Condiții pentru beneficiar\n- **Persoană fizică** cu domiciliul stabil în România\n- Domiciliul din cartea de identitate trebuie să fie **la adresa de implementare** (unde se montează panourile)\n- **Proprietar deplin sau coproprietar** al imobilului\n- **Fără datorii restante** la bugetul de stat (ANAF)\n- **Fără datorii restante** la taxele locale (primărie)\n\n### Condiții pentru imobil\n- Destinație **exclusiv rezidențială/locativă** — locuințele cu destinație mixtă (comercial + rezidențial) nu sunt eligibile\n- Imobilul trebuie să permită montajul fizic: acoperiș sau teren, structură sigură, spațiu tehnic disponibil\n- **Fără blocaje legale:** succesiuni nefinalizate sau litigii de proprietate = dosar respins\n\n### Cine NU e eligibil\n- Firme, PFA-uri, instituții publice (pentru acestea există Electric UP și Fondul de Modernizare)\n- Proprietari cu datorii la ANAF sau primărie\n- Imobile cu destinație mixtă sau comercială\n- Imobile cu litigii de proprietate sau succesiuni nerezolvate"
+        },
+        {
+          "id": "cat-primesti",
+          "title": "Câți bani primești și ce acoperă finanțarea?",
+          "content": "### Suma finanțării\n- **Maximum 30.000 lei** per cerere (finanțare nerambursabilă)\n- **Contribuția proprie minimă:** 3.000 lei\n- Acoperă aproximativ **90% din costul** unui sistem fotovoltaic rezidențial tipic\n\n### Exemple practice\n\n| Sistem | Cost estimat | Finanțare Casa Verde | Contribuție proprie |\n|---|---|---|---|\n| 3 kW + baterie 5 kWh | 25.000 – 30.000 RON | ~22.000 – 27.000 RON | ~3.000 RON |\n| 5 kW + baterie 5 kWh | 35.000 – 45.000 RON | ~30.000 RON (max) | ~5.000 – 15.000 RON |\n| 10 kW + baterie 10 kWh | 55.000 – 75.000 RON | ~30.000 RON (max) | ~25.000 – 45.000 RON |\n\n### Ce acoperă finanțarea\n- Panouri fotovoltaice\n- Invertor (on-grid sau hibrid)\n- **Baterie de stocare** (obligatorie din 2024, minim 5 kWh)\n- Structuri de montaj\n- Protecții AC/DC, cabluri și conectori\n- Proiectare, montaj și punere în funcțiune\n\n### Ce NU acoperă\n- Reparații de acoperiș sau refaceri tablou electric\n- Trasee speciale neuzuale\n- Modificări care nu țin direct de sistemul fotovoltaic"
+        },
+        {
+          "id": "documente-necesare",
+          "title": "Documente necesare pentru dosarul Casa Verde",
+          "content": "Pregătirea documentelor **din timp** este critică — inscrierea e \"primul venit, primul servit\", iar erorile de scanare sau actele incomplete sunt principalele cauze de respingere.\n\n### Lista documentelor\n\n1. **Carte de identitate** — domiciliul trebuie să fie la adresa de implementare\n2. **Extras de carte funciară** actualizat (nu mai vechi de 30-60 zile)\n3. **Certificat de atestare fiscală ANAF** — dovedește că nu ai datorii la stat\n4. **Certificat de atestare fiscală taxe locale** — de la primărie, fără datorii\n5. **Ofertă tehnică și comercială** de la un instalator autorizat ANRE\n6. **Acorduri/declarații coproprietari** (dacă imobilul e în coproprietate)\n7. **Avize și acorduri specifice** (după caz)\n\n### Sfaturi practice\n- Scanează actele **clar, în format PDF**\n- Denumește fișierele logic (ex: `CI_NumePrenume.pdf`, `ExtrasCF_2026.pdf`)\n- Pregătește totul într-un **folder dedicat** înainte de deschiderea sesiunii\n- Certificatele fiscale se obțin în câteva zile — nu le solicita prea devreme (expiră)\n- Extrasul CF se poate obține online de pe [ePay.ancpi.ro](https://epay.ancpi.ro)"
+        },
+        {
+          "id": "cum-aplici",
+          "title": "Cum aplici: Pași concreți",
+          "content": "### Pasul 1: Analizează-ți consumul\nUită-te pe facturile de energie din ultimele 12 luni. Consumul mediu lunar îți spune ce putere ai nevoie:\n- Consum < 300 kWh/lună → sistem de 3 kW\n- Consum 300-500 kWh/lună → sistem de 5 kW\n- Consum > 500 kWh/lună → sistem de 8-10 kW\n\n### Pasul 2: Alege configurația\nDecide între on-grid (mai ieftin, fără baterie suplimentară peste cea obligatorie) și hibrid (baterie mai mare, funcționare și fără curent din rețea).\n\n### Pasul 3: Obține ofertă de la un instalator autorizat\nContactează 2-3 instalatori autorizați ANRE și cere ofertă tehnică și comercială. Oferta trebuie să includă: specificații echipamente, preț defalcat, termen execuție.\n\n### Pasul 4: Pregătește documentele\nVezi secțiunea de mai sus. Toate actele trebuie să fie gata **înainte** de deschiderea sesiunii.\n\n### Pasul 5: Înscriere pe platforma AFM\nÎn ziua deschiderii sesiunii, accesezi **afm.ro**, te autentifici și încarci dosarul complet. Viteza contează — e \"primul venit, primul servit\".\n\n### Pasul 6: Așteptare aprobare + semnare acord\nAFM analizează dosarul și, dacă e complet și corect, aprobă finanțarea. Semnezi acordul de finanțare.\n\n### Pasul 7: Montaj\nInstalatorul ales montează sistemul conform ofertei aprobate.\n\n### Pasul 8: Verificare AFM + decontare\nDupă montaj, AFM verifică instalarea. Banii se decontează **după finalizarea lucrărilor**, nu în avans.\n\n### Pasul 9: Devii prosumator\nDupă montaj, depui documentele la operatorul de distribuție (Enel/E-ON/Delgaz) pentru contractul de prosumator. Energia injectată în rețea se compensează 1:1 (net metering)."
+        },
+        {
+          "id": "calendar",
+          "title": "Calendar estimat 2026",
+          "content": "Conform informațiilor disponibile de la AFM, următoarea sesiune de înscrieri este estimată pentru **vara 2026** (în jurul lunii iulie). Calendarul exact se publică pe [afm.ro](https://afm.ro).\n\n### Timeline orientativ\n\n| Perioadă | Ce faci |\n|---|---|\n| **Acum (martie-mai)** | Analizezi consumul, contactezi instalatori, obții oferte |\n| **Mai-iunie** | Pregătești toate documentele, le scanezi și le organizezi |\n| **Iulie (estimat)** | Se deschide sesiunea pe afm.ro — înscrierea e rapidă, primul venit/primul servit |\n| **După aprobare** | Semnezi acord, instalatorul montează sistemul |\n| **După montaj** | AFM verifică, decontează, devii prosumator |\n\n**Sfat:** Nu aștepta deschiderea sesiunii ca să începi pregătirile. Obținerea ofertei de la instalator, a extrasului CF și a certificatelor fiscale durează zile-săptămâni. Fii pregătit din timp."
+        },
+        {
+          "id": "greseli-frecvente",
+          "title": "Greșeli frecvente care duc la respingerea dosarului",
+          "content": "### 1. Documente incomplete sau expirate\nCertificatele fiscale au termen de valabilitate. Dacă le obții prea devreme, pot expira până la depunere. Extrasul CF trebuie să fie actualizat (max 30-60 zile).\n\n### 2. Succesiuni nerezolvate\nDacă locuința a fost moștenită și succesiunea nu e finalizată, dosarul e respins automat. Rezolvă succesiunea **înainte** de a aplica.\n\n### 3. Coproprietari fără acord\nDacă imobilul are mai mulți proprietari, toți trebuie să semneze acordul. Lipsește o semnătură = respingere.\n\n### 4. Scanări de proastă calitate\nDocumentele neclare, trunchiate sau ilizibile sunt motiv de respingere. Scanează la minimum 300 DPI, în PDF.\n\n### 5. Adresă din CI diferită de adresa de implementare\nDomiciliul din cartea de identitate trebuie să coincidă cu adresa unde se montează panourile. Dacă te-ai mutat recent, actualizează CI-ul.\n\n### 6. Datorii la ANAF sau primărie\nOrice restanță, oricât de mică, blochează dosarul. Verifică și plătește tot **înainte** de a aplica."
+        },
+        {
+          "id": "baterie-obligatorie",
+          "title": "Bateria de stocare: De ce e obligatorie?",
+          "content": "Din 2024, programul Casa Verde impune **obligatoriu** o baterie de stocare de minimum 5 kWh. Motivul: reducerea presiunii pe rețeaua electrică în orele de vârf de producție solară (prânz).\n\n### Ce trebuie să știi despre baterii\n\n| Detaliu | Valoare |\n|---|---|\n| Capacitate minimă | 5 kWh |\n| Garanție tipică | 10-15 ani |\n| Cost suplimentar | 7.000 – 15.000 RON (în funcție de capacitate) |\n| Tehnologie recomandată | LiFePO4 (lithium iron phosphate) — durabilitate superioară |\n\n### Merită bateria?\nPentru cine are net metering (compensare 1:1 cu rețeaua), bateria nu aduce economie suplimentară semnificativă — rețeaua funcționează deja ca o baterie virtuală gratuită. Dar este **obligatorie** pentru a accesa finanțarea Casa Verde, iar în caz de pană de curent oferă independență energetică."
+        },
+        {
+          "id": "cat-economisesti",
+          "title": "Cât economisești cu panouri fotovoltaice pe casă?",
+          "content": "La prețurile energiei din 2026 (1,1-1,5 RON/kWh, după liberalizarea pieței din iulie 2025):\n\n### Economii anuale estimate\n\n| Sistem | Producție anuală | Economie anuală | Amortizare fără subvenție | Amortizare cu Casa Verde |\n|---|---|---|---|---|\n| 3 kW | ~3.600-4.200 kWh | 4.000-6.300 RON | 4-5 ani | 2-3 ani |\n| 5 kW | ~6.000-7.000 kWh | 6.600-10.500 RON | 3-5 ani | 2-3 ani |\n| 10 kW | ~12.000-14.000 kWh | 13.200-21.000 RON | 3-4 ani | 2-3 ani |\n\n### Pe 25 de ani\nUn sistem de 5 kW cu Casa Verde (contribuție proprie ~5.000 RON) poate genera economii totale de **165.000-262.000 RON** pe durata de viață — o rentabilitate excepțională.\n\nPanourile au garanție de performanță 25 de ani (minim 80% din capacitate). Invertoarele au garanție 10-12 ani, iar bateriile 10-15 ani.\n\nSursă prețuri energie: date piață liberalizată iulie 2025"
+        }
+      ],
+      "faq": [
+        {
+          "question": "Câți bani primesc prin Casa Verde Fotovoltaice 2026?",
+          "answer": "Până la 30.000 lei finanțare nerambursabilă per beneficiar, cu contribuție proprie minimă de 3.000 lei. Suma acoperă aproximativ 90% din costul unui sistem fotovoltaic rezidențial tipic."
+        },
+        {
+          "question": "Când se deschid înscrierile Casa Verde 2026?",
+          "answer": "Conform estimărilor, următoarea sesiune de înscrieri este așteptată în jurul lunii iulie 2026. Calendarul exact se publică pe afm.ro. Pregătirea documentelor trebuie făcută din timp."
+        },
+        {
+          "question": "Ce documente am nevoie pentru Casa Verde?",
+          "answer": "Carte de identitate, extras de carte funciară actualizat, certificat fiscal ANAF (fără datorii), certificat fiscal de la primărie, ofertă de la un instalator autorizat ANRE. Dacă imobilul e în coproprietate, și acordul coproprietarilor."
+        },
+        {
+          "question": "Este obligatorie bateria de stocare pentru Casa Verde?",
+          "answer": "Da, din 2024 bateria de stocare de minimum 5 kWh este obligatorie pentru a accesa finanțarea Casa Verde. Costul suplimentar este de 7.000-15.000 RON în funcție de capacitate."
+        },
+        {
+          "question": "Pot aplica dacă locuiesc în chirie?",
+          "answer": "Nu. Casa Verde este destinată proprietarilor de locuințe. Domiciliul din cartea de identitate trebuie să fie la adresa unde se montează panourile."
+        },
+        {
+          "question": "Cât economisesc pe an cu panouri fotovoltaice pe casă?",
+          "answer": "Un sistem de 5 kW (suficient pentru o familie de 3-4 persoane) produce ~6.000-7.000 kWh/an, echivalent cu o economie de 6.600-10.500 RON/an la prețurile actuale ale energiei. Cu Casa Verde, investiția se recuperează în 2-3 ani."
+        }
+      ],
+      "relatedSpecializations": []
     }
   ]
 }
