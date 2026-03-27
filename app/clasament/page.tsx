@@ -277,7 +277,7 @@ export default function ClasamentPage() {
               directorul complet
             </Link>{' '}
             pentru a filtra după județ, specializare sau capacitate. Sau citește{' '}
-            <Link href="/ghid/cum-alegi-instalatorul-fotovoltaic" className="text-primary hover:underline">
+            <Link href="/ghid/cum-alegi-instalator-fotovoltaic" className="text-primary hover:underline">
               ghidul nostru
             </Link>{' '}
             despre cum să alegi instalatorul potrivit.
