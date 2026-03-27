@@ -15,6 +15,17 @@ Total firme în director: 35 (după adăugarea celor 5 din 2 Mar)
 - **Conecon RO** (CUI: RO21754287) — exclusiv utility-scale (3-230 MWp), nu C&I
 - **Enexus Renewable** (CUI: RO44409660) — exclusiv utility-scale (20 MW+), nu C&I
 
+## Batch 27 Mar 2026 - ADĂUGATE ✅
+
+### Greenvolt Next Romania S.A. (CUI: RO48838800, București) ✅
+### VOLT EVSE Distribution S.R.L. (CUI: RO36597270, Voluntari) ✅
+### 2K Solution S.R.L. (CUI: RO43051342, Brașov) ✅
+
+### Excluse (27 Mar 2026):
+- **Electromontaj S.A.** (CUI: RO566) — NU instalează panouri. Construiesc substații 110-400 kV și linii de înaltă tensiune pentru racordarea parcurilor la SEN. Nu au ANRE C2A.
+- **Helios Energy S.R.L.** (CUI: RO45684740) — Exclusiv utility-scale (10-155 MWp parcuri solare). Cel mai mic proiect: 10 MWp. Nu fac C&I.
+- **Siana Energie / Pavilion Intermed S.R.L.** (CUI: RO27242880) — 1 angajat, 2.78M revenue, majoritar rezidențial, pivot recent din alt business.
+
 ## Tier 1 - ADĂUGATE pe 27 Feb 2026 ✅
 
 ### 1. Visual Fan / Allview Solar Energy S.A.
@@ -79,30 +90,33 @@ Total firme în director: 35 (după adăugarea celor 5 din 2 Mar)
 
 ## Tier 3 - Research minimal, necesită investigare
 
-### 9. Enexus Renewable S.R.L.
+### 9. Enexus Renewable S.R.L. ❌ EXCLUS
 - **CUI:** RO44409660 | Voluntari, Ilfov
 - **Focus:** 600+ MW built, partener LONGi 300 MW
+- **Motiv excludere:** Exclusiv utility-scale (20 MW+), nu C&I
 
-### 10. Helios Energy S.R.L.
+### 10. Helios Energy S.R.L. ❌ EXCLUS
 - **CUI:** RO45684740 | Voluntari, Ilfov
 - **Focus:** EPC parcuri mari, 155 MWp
+- **Motiv excludere:** Exclusiv utility-scale (10-155 MWp). Cel mai mic proiect: 10 MWp
 
 ### 11. E-Acumulatori / 4Envigo (P Plus 2002 S.R.L.)
 - **CUI:** RO14560121 | București
 - **Focus:** 30 MW/an, 60%+ industrial
 
-### 12. Greenvolt Next Romania S.A.
+### 12. Greenvolt Next Romania S.A. ✅ ADĂUGAT (27 Mar 2026)
 - **CUI:** RO48838800 | București
 - **Focus:** PPA/EaaS, 100+ contracte 2025, grup portughez
 
-### 13. ECI Solar S.R.L.
+### 13. ECI Solar S.R.L. ❌ EXCLUS
 - **CUI:** RO47994763 | București
 - **Focus:** 120+ MW parcuri PV
+- **Motiv excludere:** Exclusiv utility-scale (parcuri PV), nu C&I
 
-### 14. Electromontaj S.A.
+### 14. Electromontaj S.A. ❌ EXCLUS
 - **CUI:** RO566 | București
 - **Focus:** Lider construcții energetice, 1013 angajați, 755M RON revenue
-- **Note:** Foarte mare, PV e doar o parte din business
+- **Motiv excludere:** Nu instalează panouri. Construiesc substații și linii HV pentru racordare parcuri la SEN
 
 ### 15. Rominstal Solar S.R.L.
 - **CUI:** RO25008360 | București

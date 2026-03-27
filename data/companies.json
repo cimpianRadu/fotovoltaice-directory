@@ -1595,6 +1595,120 @@
       "verified": true,
       "createdAt": "2026-03-08",
       "updatedAt": "2026-03-08"
+    },
+    {
+      "id": "greenvolt-next",
+      "slug": "greenvolt-next",
+      "name": "Greenvolt Next Romania S.A.",
+      "cui": "RO48838800",
+      "logo": "",
+      "description": "Parte a grupului portughez Greenvolt (deținut de KKR), oferă soluții fotovoltaice la cheie pentru companii din segmentul comercial și industrial. Peste 100 de contracte semnate și 23 MW capacitate instalată în România, cu prezență în peste 27 de județe. Oferă atât proiecte EPC clasice, cât și model PPA (fără investiție inițială). Sectoare deservite: construcții, industrie, HoReCa, logistică și agricultură.",
+      "founded": 2023,
+      "employees": 8,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Bld. Ion Ionescu de la Brad Nr. 2B, Sector 1"
+      },
+      "contact": {
+        "phone": "+40799182352",
+        "email": "",
+        "website": "https://next.greenvolt.com/ro/"
+      },
+      "coverage": ["București", "Ilfov", "Cluj", "Alba", "Constanța", "Vaslui", "Sibiu", "Mureș", "Prahova", "Neamț", "Iași"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail", "agricol", "hoteluri"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 100,
+        "maxProjectKw": 500,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 5869664,
+        "profit": 322258
+      },
+      "tags": ["grup-international", "model-ppa", "finantare-disponibila"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-27",
+      "updatedAt": "2026-03-27"
+    },
+    {
+      "id": "volt-energy",
+      "slug": "volt-energy",
+      "name": "VOLT EVSE Distribution S.R.L.",
+      "cui": "RO36597270",
+      "logo": "",
+      "description": "Companie EPC din Voluntari fondată în 2016, specializată în sisteme fotovoltaice comerciale și industriale cu proiecte documentate până la 5,5 MWp (cel mai mare sistem rooftop din România). Activă în programul Electric UP, oferă servicii complete de instalare, monitorizare și mentenanță. Prezență națională cu proiecte în multiple județe.",
+      "founded": 2016,
+      "employees": 26,
+      "location": {
+        "city": "Voluntari",
+        "county": "Ilfov",
+        "address": "Str. Pipera Nr. 77190, Et. 9"
+      },
+      "contact": {
+        "phone": "0752145490",
+        "email": "contact@volt.com.ro",
+        "website": "https://volt.com.ro"
+      },
+      "coverage": ["București", "Ilfov", "Brăila", "Bihor", "Vrancea", "Sălaj", "Maramureș", "Sibiu"],
+      "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 30,
+        "maxProjectKw": 5500,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 31165291,
+        "profit": 772308
+      },
+      "tags": ["proiecte-mari", "electric-up", "statii-incarcare-ev"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-27",
+      "updatedAt": "2026-03-27"
+    },
+    {
+      "id": "2k-solution",
+      "slug": "2k-solution",
+      "name": "2K Solution S.R.L.",
+      "cui": "RO43051342",
+      "logo": "",
+      "description": "Companie din Brașov fondată în 2020, specializată în instalări EPC rooftop pentru segmentul comercial și industrial. Portofoliu documentat cu peste 150 de proiecte, inclusiv Best Foods București (432 kWp), Exclusiv Auto Constanța (358 kWp) și Cheile Grădiștei Resort (264 kWp). Experiență și ca subcontractor pe proiecte mari (Kronospan 5.9 MWp). Echipă de 30 de angajați cu creștere accelerată.",
+      "founded": 2020,
+      "employees": 30,
+      "location": {
+        "city": "Brașov",
+        "county": "Brașov",
+        "address": "Str. Cosmos Nr. 10, Bl. 18, Sc. B, Ap. 4"
+      },
+      "contact": {
+        "phone": "+40723968959",
+        "email": "office@2ksolution.ro",
+        "website": "https://www.2ksolution.ro"
+      },
+      "coverage": ["Brașov", "București", "Constanța", "Mureș", "Harghita", "Alba", "Iași", "Neamț"],
+      "specializations": ["hale-industriale", "cladiri-birouri", "retail", "hoteluri", "agricol"],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 50,
+        "maxProjectKw": 5900,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 4567504,
+        "profit": 417557
+      },
+      "tags": ["crestere-rapida", "portofoliu-documentat"],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-03-27",
+      "updatedAt": "2026-03-27"
     }
   ]
 }
