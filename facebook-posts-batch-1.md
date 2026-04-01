@@ -39,7 +39,7 @@ https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 
 ---
 
-### 📅 Luni 2 Mar · [J] București — 16 firme
+### ✅ Luni 2 Mar · [J] București — 16 firme
 **Imagine:** Screenshot lista de firme din București de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme
 
@@ -58,7 +58,7 @@ Ești instalator și nu ești pe listă? Listarea e gratuită.
 
 ---
 
-### 📅 Marți 3 Mar · [F] Cât durează amortizarea?
+### ✅ Marți 3 Mar · [F] Cât durează amortizarea?
 **Imagine:** Screenshot secțiunea ROI din ghidul de costuri
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 
@@ -75,7 +75,7 @@ https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 
 ---
 
-### 📅 Miercuri 4 Mar · [S] Spotlight: EnergoBit S.A. — Cluj-Napoca
+### ✅ Miercuri 4 Mar · [S] Spotlight: EnergoBit S.A. — Cluj-Napoca
 **Imagine:** Screenshot profilul EnergoBit de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/energobit
 
@@ -94,7 +94,7 @@ Toate firmele verificate le găsești pe instalatori-fotovoltaice.ro
 
 ---
 
-### 📅 Joi 5 Mar · [M] Micro-fact: Suprafață necesară per kWp
+### ✅ Joi 5 Mar · [M] Micro-fact: Suprafață necesară per kWp
 **Imagine:** Grafic simplu sau infographic cu cifra „5–6 mp = 1 kWp"
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industriale
 
@@ -111,7 +111,7 @@ https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industria
 
 ---
 
-### 📅 Vineri 6 Mar · [G] Hale industriale
+### ✅ Vineri 6 Mar · [G] Hale industriale
 **Imagine:** Screenshot secțiunea de dimensionare sau tabelul costuri hale
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/panouri-fotovoltaice-hale-industriale
 
@@ -369,7 +369,7 @@ Aveți hală sau depozit în zona Ilfov? Ați montat deja sau sunteți în faza 
 
 ---
 
-### 📝 Miercuri 2 Apr · [F] Care e prețul minim pentru un sistem comercial?
+### ✅ Miercuri 2 Apr · [F] Care e prețul minim pentru un sistem comercial?
 **Imagine:** Screenshot tabelul prețuri din ghidul de costuri
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 
@@ -394,7 +394,7 @@ Ce dimensiune de sistem ar fi potrivită pentru spațiul vostru?
 
 ---
 
-### 📝 Joi 3 Apr · [J] Constanța — 8 firme
+### ✅ Joi 3 Apr · [J] Constanța — 8 firme
 **Imagine:** Screenshot profil firmă care acoperă Constanța
 **Link:** https://www.instalatori-fotovoltaice.ro/firme
 
@@ -410,7 +410,7 @@ Dacă aveți o hală sau un spațiu comercial în Dobrogea, condițiile sunt ide
 
 ---
 
-### 📝 Vineri 4 Apr · [F] Merită panouri bifaciale?
+### ✅ Vineri 4 Apr · [F] Merită panouri bifaciale?
 **Imagine:** Screenshot secțiunea despre echipamente din ghidul de costuri
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/cost-sistem-fotovoltaic-comercial
 
@@ -430,7 +430,7 @@ Ați primit oferte cu panouri bifaciale? Ce diferență de preț vi s-a cerut?
 
 ---
 
-### 📝 Sâmbătă 5 Apr · [S] Spotlight: Simtel Team S.A. — București (listată BVB)
+### ✅ Sâmbătă 5 Apr · [S] Spotlight: Simtel Team S.A. — București (listată BVB)
 **Imagine:** Screenshot profilul Simtel de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/simtel-team
 

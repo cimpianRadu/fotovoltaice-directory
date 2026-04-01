@@ -1,11 +1,25 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { existsSync } from 'fs';
+import { join } from 'path';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import guidesData from '@/data/guides.json';
+
+const HERO_IMAGE_EXTENSIONS = ['webp', 'png', 'jpg'];
+
+function getHeroImage(slug: string): string | null {
+  for (const ext of HERO_IMAGE_EXTENSIONS) {
+    const filename = `${slug}.${ext}`;
+    if (existsSync(join(process.cwd(), 'public', 'images', 'guides', filename))) {
+      return `/images/guides/${filename}`;
+    }
+  }
+  return null;
+}
 
 export const metadata: Metadata = {
   title: 'Ghiduri Panouri Fotovoltaice Comerciale | Articole și Resurse 2026',
@@ -41,35 +55,51 @@ export default function GhidIndexPage() {
 
         <div className="grid gap-6 sm:grid-cols-[1fr_240px] items-start">
           <div className="grid gap-6">
-            {guides.map((guide) => (
-              <Link
-                key={guide.slug}
-                href={`/ghid/${guide.slug}`}
-                className="flex flex-col p-6 rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all bg-white"
-              >
-                <h2 className="font-semibold text-gray-900 mb-2 text-lg">
-                  {guide.title}
-                </h2>
-                <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                  {guide.heroDescription}
-                </p>
-                <div className="mt-auto flex items-center justify-between text-xs text-gray-400">
-                  <div className="flex items-center gap-1.5">
-                    <Image src="/logo.svg" alt="" width={16} height={16} className="w-4 h-4" />
-                    <span className="font-medium text-gray-600">{guide.author}</span>
-                    <span className="text-gray-300">|</span>
-                    <span>Specialist Instalatori Fotovoltaice</span>
+            {guides.map((guide) => {
+              const heroImage = getHeroImage(guide.slug);
+              return (
+                <Link
+                  key={guide.slug}
+                  href={`/ghid/${guide.slug}`}
+                  className="flex flex-col sm:flex-row gap-4 p-6 rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all bg-white"
+                >
+                  {heroImage && (
+                    <div className="sm:w-48 sm:min-w-48 flex-shrink-0">
+                      <Image
+                        src={heroImage}
+                        alt={guide.title}
+                        width={384}
+                        height={202}
+                        className="w-full h-auto rounded-lg object-cover sm:h-full"
+                      />
+                    </div>
+                  )}
+                  <div className="flex flex-col flex-1">
+                    <h2 className="font-semibold text-gray-900 mb-2 text-lg">
+                      {guide.title}
+                    </h2>
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                      {guide.heroDescription}
+                    </p>
+                    <div className="mt-auto flex items-center justify-between text-xs text-gray-400">
+                      <div className="flex items-center gap-1.5">
+                        <Image src="/logo.svg" alt="" width={16} height={16} className="w-4 h-4" />
+                        <span className="font-medium text-gray-600">{guide.author}</span>
+                        <span className="text-gray-300">|</span>
+                        <span>Specialist Instalatori Fotovoltaice</span>
+                      </div>
+                      <time dateTime={guide.publishedAt} className="hidden sm:block">
+                        {new Date(guide.publishedAt).toLocaleDateString('ro-RO', {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric',
+                        })}
+                      </time>
+                    </div>
                   </div>
-                  <time dateTime={guide.publishedAt} className="hidden sm:block">
-                    {new Date(guide.publishedAt).toLocaleDateString('ro-RO', {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric',
-                    })}
-                  </time>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
           <div className="hidden sm:block sticky top-20">
             <SponsorBanner />
