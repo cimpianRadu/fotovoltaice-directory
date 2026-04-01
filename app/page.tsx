@@ -33,14 +33,19 @@ export const metadata: Metadata = {
 
 const homeFaqs = [
   {
-    question: 'Cât costă un sistem fotovoltaic pentru o hală industrială?',
+    question: 'Cum găsesc un instalator autorizat de panouri fotovoltaice în România?',
     answer:
-      'Costul variază între 600-900 EUR/kWp instalat, în funcție de dimensiunea sistemului. Un sistem de 100 kWp pentru o hală medie costă între 65.000 și 85.000 EUR, cu amortizare în 4-6 ani.',
+      'Pe instalatori-fotovoltaice.ro poți compara 42 de firme de instalare panouri fotovoltaice verificate, cu date din registre publice. Filtrează după județ, specializare și certificări ANRE pentru a găsi instalatorul potrivit.',
   },
   {
-    question: 'Ce certificări trebuie să aibă un instalator?',
+    question: 'Ce certificări trebuie să aibă un instalator de panouri fotovoltaice?',
     answer:
-      'Un instalator profesionist trebuie să dețină atestat ANRE tip C2A (obligatoriu pentru sisteme comerciale), și ideal certificări ISO 9001 (calitate) și ISO 14001 (mediu).',
+      'Un instalator autorizat trebuie să dețină atestat ANRE tip C2A (obligatoriu pentru sisteme fotovoltaice comerciale), și ideal certificări ISO 9001 (calitate) și ISO 14001 (mediu). Pe platforma noastră poți verifica certificările fiecărei firme.',
+  },
+  {
+    question: 'Cât costă instalarea unui sistem fotovoltaic comercial?',
+    answer:
+      'Costul variază între 600-900 EUR/kWp instalat, în funcție de dimensiunea sistemului. Un sistem de 100 kWp pentru o hală medie costă între 65.000 și 85.000 EUR, cu amortizare în 4-6 ani. Cere ofertă de la mai mulți instalatori pentru cel mai bun preț.',
   },
   {
     question: 'Cât durează instalarea unui sistem fotovoltaic comercial?',
@@ -48,14 +53,14 @@ const homeFaqs = [
       'De la evaluare până la punerea în funcțiune, procesul durează 4-12 săptămâni, în funcție de dimensiunea proiectului și de obținerea avizelor necesare.',
   },
   {
-    question: 'Ce garanții primesc?',
+    question: 'Ce garanții primesc de la instalatorul de panouri fotovoltaice?',
     answer:
-      'Standard: 25-30 ani pe panouri (garanție de performanță), 10-12 ani pe invertoare, 5-10 ani pe manoperă. Unii instalatori de pe platforma noastră oferă garanții extinse.',
+      'Standard: 25-30 ani pe panouri (garanție de performanță), 10-12 ani pe invertoare, 5-10 ani pe manoperă. Instalatorii autorizați de pe platforma noastră oferă garanții extinse și contract de mentenanță.',
   },
   {
     question: 'Cum funcționează statutul de prosumator pentru firme?',
     answer:
-      'Ca prosumator comercial, produceți energie pentru consum propriu și vindeți surplusul la prețul pieței. Capacitatea maximă este de 400 kWp fără licență ANRE. Veniturile pot fi scutite de impozit.',
+      'Ca prosumator comercial, produceți energie pentru consum propriu și vindeți surplusul la prețul pieței. Capacitatea maximă este de 400 kWp fără licență ANRE. Un instalator autorizat vă ajută cu dosarul de prosumator.',
   },
 ];
 
@@ -71,12 +76,12 @@ export default function HomePage() {
       <section className="bg-gradient-to-br from-secondary-dark via-secondary to-secondary-light text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24 text-center">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-            Instalatori Panouri Fotovoltaice
+            Instalatori Autorizați
             <br className="hidden sm:block" />
-            <span className="text-primary-light"> Comerciale și Industriale</span>
+            <span className="text-primary-light"> Panouri Fotovoltaice România</span>
           </h1>
           <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Platforma #1 pentru firme de instalare panouri fotovoltaice pe hale, fabrici, clădiri de birouri și spații comerciale din România.
+            Găsește instalatori de panouri fotovoltaice verificați pentru hale industriale, fabrici, clădiri de birouri și spații comerciale. 42 firme cu atestat ANRE din 41 de județe.
           </p>
 
           <div className="flex justify-center mb-8">
@@ -90,8 +95,8 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 py-16">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Firme Recomandate</h2>
-            <p className="text-gray-500 mt-1">Instalatori verificați cu experiență dovedită</p>
+            <h2 className="text-2xl font-bold text-gray-900">Instalatori de Panouri Fotovoltaice Recomandați</h2>
+            <p className="text-gray-500 mt-1">Firme verificate cu atestat ANRE și experiență dovedită</p>
           </div>
           <Link
             href="/firme"
@@ -121,20 +126,20 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 py-16">
         <div className="max-w-4xl">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Cum găsești instalatori autorizați de panouri fotovoltaice
+            Cum găsești instalatori autorizați de panouri fotovoltaice în România
           </h2>
           <div className="prose prose-gray max-w-none text-gray-600 space-y-4">
             <p>
-              Alegerea unui instalator de sisteme fotovoltaice este una dintre cele mai importante
-              decizii în procesul de trecere la energia solară. Un instalator autorizat ANRE cu
-              experiență în proiecte comerciale și industriale poate face diferența între un sistem
-              care funcționează optim 25+ ani și unul care generează probleme din primul an.
+              Cauți un <strong>instalator de panouri fotovoltaice</strong> pentru firma ta? Alegerea unui
+              instalator autorizat ANRE cu experiență în sisteme fotovoltaice comerciale și industriale
+              poate face diferența între un sistem care funcționează optim 25+ ani și unul care generează
+              probleme din primul an.
             </p>
             <p>
-              Directorul nostru include <strong>{42} de firme de instalare panouri fotovoltaice</strong> din
-              România, verificate cu date reale din registrele oficiale. Fiecare firmă are CUI verificat,
-              date financiare publice și informații despre certificări, specializări și acoperire geografică
-              în {41} de județe.
+              Pe <strong>instalatori-fotovoltaice.ro</strong> găsești <strong>42 de instalatori autorizați
+              de panouri fotovoltaice</strong> din România, verificați cu date reale din registrele oficiale.
+              Fiecare firmă de instalare panouri fotovoltaice are CUI verificat, date financiare publice
+              și informații despre certificări ANRE, specializări și acoperire geografică în 41 de județe.
             </p>
             <div className="grid sm:grid-cols-3 gap-6 my-8 not-prose">
               <div className="text-center p-4 rounded-lg bg-surface border border-border">
@@ -151,12 +156,21 @@ export default function HomePage() {
               </div>
             </div>
             <p>
-              Spre deosebire de alte directoare, nu listăm firme pe baza plăților sau a
+              Spre deosebire de alte surse, nu listăm firme pe baza plăților sau a
               auto-declarațiilor. Toate datele sunt colectate din surse publice — <em>termene.ro</em>,{' '}
               <em>listafirme.eu</em>, <em>anre.ro</em> și site-urile oficiale ale firmelor. Poți
-              compara instalatori după experiență, certificări, număr de angajați și cifra de
-              afaceri, apoi solicita ofertă gratuită direct pe platformă.
+              compara instalatori de panouri fotovoltaice după experiență, certificări, număr de angajați
+              și cifra de afaceri, apoi solicita ofertă gratuită direct pe platformă.
             </p>
+
+            <h3 className="text-lg font-semibold text-gray-900 mt-8">Ce verificăm la fiecare instalator de sisteme fotovoltaice</h3>
+            <ul className="list-disc list-inside space-y-1">
+              <li><strong>Atestat ANRE C2A</strong> — obligatoriu pentru instalarea panourilor fotovoltaice comerciale</li>
+              <li><strong>Date financiare reale</strong> — cifra de afaceri și profit din registre publice oficiale</li>
+              <li><strong>Experiență dovedită</strong> — an de înființare, număr de angajați, proiecte finalizate</li>
+              <li><strong>Acoperire geografică</strong> — în ce județe operează fiecare firmă de instalare</li>
+              <li><strong>Specializări</strong> — hale industriale, birouri, retail, agricol, parcuri logistice</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -231,9 +245,9 @@ export default function HomePage() {
       {/* CTA for companies */}
       <section className="bg-primary/5 border-y border-primary/10">
         <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">Ești instalator fotovoltaic?</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">Ești firmă de instalare panouri fotovoltaice?</h2>
           <p className="text-gray-600 mb-6 max-w-lg mx-auto">
-            Listează-ți firma pe platforma noastră și fii vizibil pentru clienții care caută instalatori în zona ta. Înscrierea este gratuită.
+            Listează-ți firma pe platforma noastră și fii vizibil pentru clienții care caută instalatori autorizați de panouri fotovoltaice în zona ta. Înscrierea este gratuită.
           </p>
           <Link
             href="/listeaza-firma"
