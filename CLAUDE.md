@@ -54,8 +54,8 @@ public/
 Când adăugăm firme noi în director:
 
 ### Tooling disponibil (MCP Servers)
-- **Perplexity** (`perplexity_ask`, `perplexity_search`, `perplexity_research`, `perplexity_reason`) — web search cu AI, ideal pentru discovery și verificare rapidă
 - **Firecrawl** (`firecrawl_scrape`, `firecrawl_search`, `firecrawl_extract`, `firecrawl_map`) — scraping structurat de pe site-uri specifice
+- **WebSearch** — web search general, înlocuiește Perplexity pentru discovery și research
 - **company-tools.js** (`check-bulk`, `validate`, `stats`) — scripturi locale pentru verificare duplicate și validare
 
 ### 0. Pre-check: Verifică firmele existente
@@ -69,11 +69,11 @@ Când adăugăm firme noi în director:
 
 ### 1. Identificare firme (Discovery)
 
-**Cu Perplexity (preferat pentru discovery):**
+**Cu WebSearch (preferat pentru discovery):**
 ```
-perplexity_search → "firme instalare panouri fotovoltaice comerciale Romania 2026"
-perplexity_search → "top companii EPC solar Romania"
-perplexity_ask → "Care sunt cele mai mari firme de instalare panouri fotovoltaice comerciale din Romania?"
+WebSearch → "firme instalare panouri fotovoltaice comerciale Romania 2026"
+WebSearch → "top companii EPC solar Romania"
+WebSearch → "cele mai mari firme instalare panouri fotovoltaice comerciale Romania"
 ```
 
 **Cu Firecrawl (pentru liste de pe site-uri specifice):**
@@ -127,11 +127,11 @@ firecrawl_map → site-firma.ro (descoperă pagini: /contact, /proiecte, /despre
 firecrawl_scrape → anre.ro/registru (extract JSON: nr atestat, tip, valabilitate)
 ```
 
-**Cu Perplexity (verificare rapidă cross-referencing):**
+**Cu WebSearch (verificare rapidă cross-referencing):**
 ```
-perplexity_ask → "Care sunt datele financiare ale firmei X SRL CUI Y din Romania?"
-perplexity_ask → "Firma X SRL are certificare ANRE C2A?"
-perplexity_search → "X SRL proiecte fotovoltaice" (comunicate presă, articole)
+WebSearch → "firma X SRL CUI Y date financiare Romania"
+WebSearch → "X SRL certificare ANRE C2A"
+WebSearch → "X SRL proiecte fotovoltaice" (comunicate presă, articole)
 ```
 
 **Surse clasice (rămân valide):**
@@ -143,13 +143,13 @@ perplexity_search → "X SRL proiecte fotovoltaice" (comunicate presă, articole
 
 ### 4. Workflow complet (exemplu batch 5 firme)
 ```
-1. perplexity_research → "firme EPC solar comercial Romania" → listă candidați
+1. WebSearch → "firme EPC solar comercial Romania" → listă candidați
 2. node scripts/company-tools.js check-bulk <CUI-uri> → filtrare duplicate
 3. Pentru fiecare firmă unică:
    a. firecrawl_scrape → termene.ro/firma/CUI → date financiare (JSON)
    b. firecrawl_scrape → site-firma.ro → contact, descriere, certificări (JSON)
    c. firecrawl_map → site-firma.ro → descoperă pagini relevante
-   d. perplexity_ask → "X SRL proiecte fotovoltaice comerciale" → context
+   d. WebSearch → "X SRL proiecte fotovoltaice comerciale" → context
 4. Adaugă în companies.json
 5. node scripts/company-tools.js validate → verificare completă
 6. node scripts/company-tools.js stats → summary
@@ -196,24 +196,15 @@ perplexity_search → "X SRL proiecte fotovoltaice" (comunicate presă, articole
 - FAQ la sfârșitul fiecărui ghid (generat și ca JSON-LD)
 - Autor: "Radu, Specialist Instalatori Fotovoltaice" cu logo
 
-### Research conținut (cu Perplexity + Firecrawl)
+### Research conținut (cu WebSearch + Firecrawl)
 
-**Perplexity — research de fond și date actualizate:**
+**WebSearch — research de fond și date actualizate:**
 ```
-# Research profund pentru un ghid nou (folosește perplexity_research pentru subiecte complexe)
-perplexity_research → "subvenții panouri fotovoltaice Romania 2026 fonduri nerambursabile"
-perplexity_research → "legislație prosumator comercial Romania 2026 modificări"
-
-# Întrebări specifice și date punctuale (perplexity_ask pentru răspunsuri rapide)
-perplexity_ask → "Care este prețul mediu per kW instalat pentru sisteme fotovoltaice comerciale in Romania 2026?"
-perplexity_ask → "Ce condiții trebuie îndeplinite pentru Electric UP 2026?"
-
-# Trending topics și keyword discovery (perplexity_search)
-perplexity_search → "panouri fotovoltaice comerciale Romania 2026" (search_recency_filter: "month")
-perplexity_search → "subvenții energie verde firme Romania" (descoperă ce se caută recent)
-
-# Analiză comparativă (perplexity_reason pentru logică step-by-step)
-perplexity_reason → "Compară costul per kWh: panouri monocristaline vs TOPCon vs HJT pentru instalații comerciale 100kW+"
+# Research pentru un ghid nou (multiple căutări pentru acoperire completă)
+WebSearch → "subvenții panouri fotovoltaice Romania 2026 fonduri nerambursabile"
+WebSearch → "legislație prosumator comercial Romania 2026 modificări"
+WebSearch → "prețul mediu per kW instalat sisteme fotovoltaice comerciale Romania 2026"
+WebSearch → "panouri fotovoltaice comerciale Romania 2026" (trending topics)
 ```
 
 **Firecrawl — extragere date din surse oficiale:**
@@ -234,19 +225,18 @@ firecrawl_scrape → articol-relevant.ro (markdown: conținut complet articol)
 
 **Workflow research articol nou:**
 ```
-1. perplexity_research → research profund pe topic (date, statistici, context)
-2. perplexity_search → keyword discovery + "People Also Ask" echivalent
-3. firecrawl_scrape → surse oficiale (.gov.ro) pentru date exacte (bugete, termene, condiții)
-4. firecrawl_search → articole recente din presă pentru context piață
-5. perplexity_reason → structurare comparații complexe (prețuri, tehnologii)
-6. Compilare în format ghid (sections + FAQ) cu surse verificate
+1. WebSearch → multiple căutări pe topic (date, statistici, context, comparații)
+2. firecrawl_scrape → surse oficiale (.gov.ro) pentru date exacte (bugete, termene, condiții)
+3. firecrawl_search → articole recente din presă pentru context piață
+4. firecrawl_scrape → site-uri producători/distribuitori pentru specificații și prețuri
+5. Compilare în format ghid (sections + FAQ) cu surse verificate
 ```
 
 ### Research keywords
 - Google Keyword Planner: volumuri de căutare România, în română
 - Google Trends: trending și rising queries
-- Perplexity search (cu `search_recency_filter: "month"`) pentru trending queries recente
-- "People Also Ask" din SERP-uri (sau echivalent via `perplexity_ask`)
+- WebSearch pentru trending queries recente
+- "People Also Ask" din SERP-uri
 - Categorii FAQ: Costuri, Subvenții, Legislație, Tehnic, Mentenanță, Alegere instalator
 
 ## SEO Checklist

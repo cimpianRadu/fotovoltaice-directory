@@ -8,8 +8,22 @@ import FAQ from '@/components/seo/FAQ';
 import Button from '@/components/ui/Button';
 import Markdown from '@/components/ui/Markdown';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
+import { existsSync } from 'fs';
+import { join } from 'path';
 import guidesData from '@/data/guides.json';
 import { generateFAQJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo';
+
+const HERO_IMAGE_EXTENSIONS = ['webp', 'png', 'jpg'];
+
+function getHeroImage(slug: string): string | null {
+  for (const ext of HERO_IMAGE_EXTENSIONS) {
+    const filename = `${slug}.${ext}`;
+    if (existsSync(join(process.cwd(), 'public', 'images', 'guides', filename))) {
+      return `/images/guides/${filename}`;
+    }
+  }
+  return null;
+}
 
 interface Props {
   params: Promise<{ topic: string }>;
@@ -24,6 +38,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const guide = guidesData.guides.find((g) => g.slug === topic);
   if (!guide) return {};
 
+  const heroImage = getHeroImage(guide.slug);
+
   return {
     title: guide.title,
     description: guide.metaDescription,
@@ -31,6 +47,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: guide.title,
       description: guide.metaDescription,
+      ...(heroImage && {
+        images: [{ url: heroImage, width: 1200, height: 630, alt: guide.title }],
+      }),
     },
   };
 }
@@ -39,6 +58,8 @@ export default async function GuidePage({ params }: Props) {
   const { topic } = await params;
   const guide = guidesData.guides.find((g) => g.slug === topic);
   if (!guide) notFound();
+
+  const heroImage = getHeroImage(guide.slug);
 
   return (
     <>
@@ -83,6 +104,20 @@ export default async function GuidePage({ params }: Props) {
             </time>
           </div>
         </div>
+
+        {/* Hero Image */}
+        {heroImage && (
+          <div className="rounded-xl overflow-hidden mb-8">
+            <Image
+              src={heroImage}
+              alt={guide.title}
+              width={1200}
+              height={630}
+              className="w-full h-auto"
+              priority
+            />
+          </div>
+        )}
 
         {/* Table of Contents */}
         <nav className="bg-surface rounded-xl border border-border p-5 mb-6">
