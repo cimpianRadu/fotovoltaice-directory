@@ -1,6 +1,21 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
+import { existsSync } from 'fs';
+import { join } from 'path';
 import SearchBar from '@/components/forms/SearchBar';
+
+const HERO_IMAGE_EXTENSIONS = ['webp', 'png', 'jpg'];
+
+function getHeroImage(slug: string): string | null {
+  for (const ext of HERO_IMAGE_EXTENSIONS) {
+    const filename = `${slug}.${ext}`;
+    if (existsSync(join(process.cwd(), 'public', 'images', 'guides', filename))) {
+      return `/images/guides/${filename}`;
+    }
+  }
+  return null;
+}
 import CompanyCard from '@/components/company/CompanyCard';
 import FAQ from '@/components/seo/FAQ';
 import JsonLd from '@/components/seo/JsonLd';
@@ -167,18 +182,32 @@ export default function HomePage() {
               .filter((g) => g.published !== false)
               .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
               .slice(0, 3)
-              .map((guide) => (
-                <Link
-                  key={guide.slug}
-                  href={`/ghid/${guide.slug}`}
-                  className="flex flex-col p-5 rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all bg-white"
-                >
-                  <h3 className="font-semibold text-gray-900 mb-2 text-sm leading-snug">
-                    {guide.title}
-                  </h3>
-                  <p className="text-xs text-gray-500 line-clamp-2">{guide.heroDescription}</p>
-                </Link>
-              ))}
+              .map((guide) => {
+                const heroImage = getHeroImage(guide.slug);
+                return (
+                  <Link
+                    key={guide.slug}
+                    href={`/ghid/${guide.slug}`}
+                    className="flex flex-col rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all bg-white overflow-hidden"
+                  >
+                    {heroImage && (
+                      <Image
+                        src={heroImage}
+                        alt={guide.title}
+                        width={600}
+                        height={315}
+                        className="w-full h-40 object-cover"
+                      />
+                    )}
+                    <div className="p-5">
+                      <h3 className="font-semibold text-gray-900 mb-2 text-sm leading-snug">
+                        {guide.title}
+                      </h3>
+                      <p className="text-xs text-gray-500 line-clamp-2">{guide.heroDescription}</p>
+                    </div>
+                  </Link>
+                );
+              })}
           </div>
 
           <div className="mt-6 text-center sm:hidden">
