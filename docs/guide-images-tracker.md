@@ -12,14 +12,14 @@ Componenta detectează automat dacă există o imagine pentru slug-ul ghidului.
 | 3 | cum-alegi-instalator-fotovoltaic | Cum Alegi Instalatorul Fotovoltaic | DONE |
 | 4 | legislatie-prosumator-comercial | Legislație Prosumator Comercial | DONE |
 | 5 | subventii-panouri-fotovoltaice | Subvenții Panouri Fotovoltaice 2026 | DONE |
-| 6 | electric-up-2026-ghid-aplicare | Electric UP 2026 | - |
-| 7 | stocare-energie-baterii-firme | Stocare Energie cu Baterii | - |
-| 8 | tipuri-panouri-fotovoltaice | Tipuri Panouri Fotovoltaice | - |
-| 9 | de-ce-creste-pretul-energiei-2026 | De Ce Crește Prețul Energiei | - |
-| 10 | energie-solara-vs-retea-comparatie-costuri | Energie Solară vs Energie din Rețea | - |
-| 11 | panouri-fotovoltaice-casa-vs-firma | Casa vs Firma | - |
-| 12 | casa-verde-fotovoltaice-2026 | Casa Verde Fotovoltaice 2026 | - |
-| 13 | invertoare-fotovoltaice-comerciale | Invertoare Fotovoltaice Comerciale | - |
+| 6 | electric-up-2026-ghid-aplicare | Electric UP 2026 | DONE |
+| 7 | stocare-energie-baterii-firme | Stocare Energie cu Baterii | DONE |
+| 8 | tipuri-panouri-fotovoltaice | Tipuri Panouri Fotovoltaice | DONE |
+| 9 | de-ce-creste-pretul-energiei-2026 | De Ce Crește Prețul Energiei | DONE |
+| 10 | energie-solara-vs-retea-comparatie-costuri | Energie Solară vs Energie din Rețea | DONE |
+| 11 | panouri-fotovoltaice-casa-vs-firma | Casa vs Firma | DONE |
+| 12 | casa-verde-fotovoltaice-2026 | Casa Verde Fotovoltaice 2026 | DONE |
+| 13 | invertoare-fotovoltaice-comerciale | Invertoare Fotovoltaice Comerciale | DONE |
 
 ## Prompt-uri Generare (nanobanana/Gemini)
 
