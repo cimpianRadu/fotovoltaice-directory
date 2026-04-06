@@ -53,7 +53,10 @@
           "answer": "Standard: 25-30 ani pe panouri (garanție de performanță), 10-12 ani pe invertoare, 5-10 ani pe manoperă. Unii instalatori oferă garanții extinse."
         }
       ],
-      "relatedSpecializations": ["hale-industriale", "parcuri-logistice"]
+      "relatedSpecializations": [
+        "hale-industriale",
+        "parcuri-logistice"
+      ]
     },
     {
       "slug": "cost-sistem-fotovoltaic-comercial",
@@ -99,7 +102,11 @@
           "answer": "Panourile bifaciale produc cu 10-15% mai multă energie, costând doar cu 5-10% mai mult. Sunt recomandate special pentru montaj pe sol sau acoperiș alb reflectorizant."
         }
       ],
-      "relatedSpecializations": ["hale-industriale", "cladiri-birouri", "retail"]
+      "relatedSpecializations": [
+        "hale-industriale",
+        "cladiri-birouri",
+        "retail"
+      ]
     },
     {
       "slug": "cum-alegi-instalator-fotovoltaic",
@@ -140,7 +147,12 @@
           "answer": "Da, proximitatea geografică este importantă pentru intervenții rapide de mentenanță și pentru cunoașterea procedurilor locale de autorizare."
         }
       ],
-      "relatedSpecializations": ["hale-industriale", "cladiri-birouri", "parcuri-logistice", "agricol"]
+      "relatedSpecializations": [
+        "hale-industriale",
+        "cladiri-birouri",
+        "parcuri-logistice",
+        "agricol"
+      ]
     },
     {
       "slug": "legislatie-prosumator-comercial",
@@ -190,7 +202,11 @@
           "answer": "Da, cu acordul proprietarului imobilului. Este necesară o procură notarială sau o clauză în contractul de închiriere care permite instalarea de panouri fotovoltaice."
         }
       ],
-      "relatedSpecializations": ["hale-industriale", "cladiri-birouri", "agricol"]
+      "relatedSpecializations": [
+        "hale-industriale",
+        "cladiri-birouri",
+        "agricol"
+      ]
     },
     {
       "slug": "subventii-panouri-fotovoltaice",
@@ -255,7 +271,13 @@
           "answer": "Depinde de situația financiară. Dacă ai profit disponibil, investiția în 2026 cu facilități fiscale poate fi mai avantajoasă decât așteptarea unui grant incert. Amortizarea super-accelerată (65%) este disponibilă doar în 2026, iar economia de energie începe imediat."
         }
       ],
-      "relatedSpecializations": ["hale-industriale", "cladiri-birouri", "parcuri-logistice", "retail", "agricol"]
+      "relatedSpecializations": [
+        "hale-industriale",
+        "cladiri-birouri",
+        "parcuri-logistice",
+        "retail",
+        "agricol"
+      ]
     },
     {
       "slug": "electric-up-2026-ghid-aplicare",
@@ -343,7 +365,12 @@
           "answer": "Evaluarea durează minim 60 de zile. După aprobarea și semnarea contractului, ai 12 luni pentru implementare. Poți solicita un avans de 30% din grant la semnare (cu scrisoare de garanție bancară). Monitorizarea durează 5 ani după finalizare."
         }
       ],
-      "relatedSpecializations": ["hale-industriale", "cladiri-birouri", "retail", "agricol"]
+      "relatedSpecializations": [
+        "hale-industriale",
+        "cladiri-birouri",
+        "retail",
+        "agricol"
+      ]
     },
     {
       "slug": "stocare-energie-baterii-firme",
@@ -417,7 +444,12 @@
           "answer": "LFP pentru 95% din cazuri: durată de viață de 2–4x mai mare, siguranță superioară, preț mai mic per ciclu. NMC doar dacă spațiul e foarte limitat (densitate energetică mai mare, bateria e mai compactă). Flow batteries (vanadium) doar pentru proiecte utility-scale de stocare pe durată lungă."
         }
       ],
-      "relatedSpecializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail"]
+      "relatedSpecializations": [
+        "hale-industriale",
+        "parcuri-logistice",
+        "cladiri-birouri",
+        "retail"
+      ]
     },
     {
       "slug": "tipuri-panouri-fotovoltaice",
@@ -495,7 +527,13 @@
           "answer": "TOPCon pentru 90% din proiectele comerciale — cel mai bun ROI, disponibilitate largă, preț competitiv. HJT doar dacă ai spațiu limitat pe acoperiș (eficiență maximă per mp), temperaturi extreme vara, sau vrei performanță maximă pe 30+ ani și bugetul permite premium-ul de 15-25%."
         }
       ],
-      "relatedSpecializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail", "agricol"]
+      "relatedSpecializations": [
+        "hale-industriale",
+        "parcuri-logistice",
+        "cladiri-birouri",
+        "retail",
+        "agricol"
+      ]
     },
     {
       "slug": "de-ce-creste-pretul-energiei-2026",
@@ -554,7 +592,12 @@
           "answer": "Cea mai eficientă protecție pe termen lung este instalarea de panouri fotovoltaice: costul energiei solare este fix (~0.04-0.06 EUR/kWh amortizat pe 25 ani), nu depinde de prețul petrolului și se amortizează în 4-6 ani. Fiecare an de așteptare înseamnă bani pierduți pe facturi evitabile."
         }
       ],
-      "relatedSpecializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail"]
+      "relatedSpecializations": [
+        "hale-industriale",
+        "parcuri-logistice",
+        "cladiri-birouri",
+        "retail"
+      ]
     },
     {
       "slug": "energie-solara-vs-retea-comparatie-costuri",
@@ -618,7 +661,13 @@
           "answer": "Nu. Fiecare lună de așteptare costă ~1.700 EUR/lună în facturi plătite degeaba (pentru un sistem de 100 kWp). Prețul panourilor scade cu ~5-10%/an, dar economiile pierdute prin așteptare sunt mult mai mari decât reducerea de preț."
         }
       ],
-      "relatedSpecializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail", "agricol"]
+      "relatedSpecializations": [
+        "hale-industriale",
+        "parcuri-logistice",
+        "cladiri-birouri",
+        "retail",
+        "agricol"
+      ]
     },
     {
       "slug": "panouri-fotovoltaice-casa-vs-firma",
@@ -692,7 +741,10 @@
           "answer": "Prosumator = produci energie pentru consum propriu și injectezi surplusul în rețea. Cu net metering (sisteme sub 200 kW), energia injectată compensează 1:1 energia consumată — rețeaua funcționează ca o baterie virtuală gratuită. Valabil până în 2030."
         }
       ],
-      "relatedSpecializations": ["cladiri-birouri", "retail"]
+      "relatedSpecializations": [
+        "cladiri-birouri",
+        "retail"
+      ]
     },
     {
       "slug": "casa-verde-fotovoltaice-2026",
@@ -853,7 +905,96 @@
           "answer": "Un invertor de calitate durează 15-20 de ani. Panourile durează 25-30 de ani, deci probabil vei înlocui invertorul o dată pe parcursul vieții sistemului. Cu garanție extinsă de 20+ ani, costul e acoperit."
         }
       ],
-      "relatedSpecializations": ["hale-industriale", "cladiri-birouri", "retail", "parcuri-logistice"]
+      "relatedSpecializations": [
+        "hale-industriale",
+        "cladiri-birouri",
+        "retail",
+        "parcuri-logistice"
+      ]
+    },
+    {
+      "slug": "directiva-europeana-panouri-solare-cladiri-2026",
+      "published": true,
+      "publishedAt": "2026-04-06",
+      "author": "Radu",
+      "title": "Directiva Europeană 2026 — Panouri Solare Obligatorii pe Clădiri Noi",
+      "metaDescription": "Din mai 2026, directiva UE impune panouri solare pe clădirile comerciale noi din România. Calendar complet, ce firme sunt afectate și cum te pregătești.",
+      "heroDescription": "Directiva UE 2024/1275 schimbă regulile: din 2026, clădirile comerciale noi trebuie proiectate cu panouri solare. Ce trebuie să știi și ce pași concreți să faci.",
+      "sections": [
+        {
+          "id": "ce-spune-directiva",
+          "title": "Ce spune Directiva UE 2024/1275 (EPBD)?",
+          "content": "Pe 24 aprilie 2024, Uniunea Europeană a adoptat **Directiva (UE) 2024/1275** privind performanța energetică a clădirilor — cunoscută ca **EPBD recast** (Energy Performance of Buildings Directive).\n\nAceasta este cea mai importantă schimbare legislativă pentru sectorul construcțiilor din ultimul deceniu. Directiva impune ca:\n\n- Toate **clădirile noi** să fie proiectate **«solar-ready»** — pregătite din faza de proiectare pentru panouri fotovoltaice\n- **Clădirile publice și comerciale mari** (>250 m²) să aibă panouri solare instalate efectiv, începând cu 2026\n- Toate **clădirile noi** să devină **clădiri cu emisii zero** până în 2030\n- Eliminarea treptată a **combustibililor fosili** pentru încălzire\n\nDirectiva a intrat în vigoare pe 28 mai 2024, iar **România trebuie să o transpună în legislația națională până pe 29 mai 2026** — adică luna viitoare.\n\n> **Ce înseamnă «solar-ready»:** Clădirea trebuie proiectată astfel încât instalarea ulterioară a panourilor fotovoltaice să fie posibilă fără modificări structurale majore. Concret: acoperiș cu capacitate portantă adecvată, trasee de cabluri pregătite, spațiu pentru invertoare."
+        },
+        {
+          "id": "calendar-implementare",
+          "title": "Calendarul complet de implementare",
+          "content": "Directiva stabilește un calendar progresiv, în funcție de tipul clădirii:\n\n| Termen limită | Cerință | Tip clădire |\n|---|---|---|\n| **29 mai 2026** | Transpunere în legislația națională | România (și toate statele UE) |\n| **31 decembrie 2026** | Panouri solare instalate | Clădiri publice și comerciale noi >250 m² |\n| **31 decembrie 2027** | Panouri solare instalate | Clădiri publice existente >2.000 m² (la renovare majoră) |\n| **31 decembrie 2028** | Standard clădire emisii zero | Clădiri publice noi |\n| **31 decembrie 2028** | Panouri solare instalate | Clădiri publice existente >750 m² (la renovare majoră) |\n| **31 decembrie 2029** | Panouri solare instalate | Clădiri rezidențiale noi |\n| **1 ianuarie 2030** | Standard clădire emisii zero | **Toate clădirile noi** |\n| **31 decembrie 2030** | Panouri solare instalate | Clădiri publice existente >250 m² (la renovare majoră) |\n\n### Ce înseamnă concret pentru firme?\n\nDacă ai o firmă și construiești sau renovezi o clădire comercială de peste 250 m² (un depozit, o hală, un birou, un magazin), **din 2026 trebuie să ai panouri solare pe acoperiș**.\n\nNu e opțional. Nu e recomandare. Este directivă europeană cu termen de transpunere."
+        },
+        {
+          "id": "cine-e-afectat",
+          "title": "Cine este afectat în România?",
+          "content": "### Afectați direct (din 2026)\n\n- **Dezvoltatori imobiliari** care construiesc hale, birouri, centre comerciale, depozite logistice\n- **Firme industriale** care extind sau construiesc hale de producție noi\n- **Lanțuri de retail** care deschid magazine noi\n- **Companii de logistică** care construiesc depozite\n- **Hoteluri și pensiuni** noi sau renovări majore\n- **Primării și instituții publice** — primele vizate, încă din 2026\n\n### Afectați indirect (din 2027-2030)\n\n- **Proprietari de clădiri publice existente** (la renovare majoră)\n- **Dezvoltatori rezidențiali** (din 2029 pentru clădiri noi)\n- **Blocuri de locuințe** — la renovări majore, vor trebui pregătite pentru solar\n\n### Cine NU este afectat (deocamdată)\n\n- Clădiri existente care nu sunt renovate major\n- Clădiri rezidențiale individuale existente (case)\n- Clădiri unde instalarea nu este fezabilă tehnic sau economic (excepțiile sunt evaluate individual)\n\n> **Pragul de 250 m² este important:** Acesta se referă la suprafața utilă a clădirii, nu la suprafața acoperișului. Un depozit de 300 m², un magazin de 500 m², o hală de 2.000 m² — toate intră sub incidența directivei."
+        },
+        {
+          "id": "romania-transpunere",
+          "title": "Situația în România — Unde suntem cu transpunerea?",
+          "content": "România are obligația de a transpune Directiva UE 2024/1275 în legislația națională **până pe 29 mai 2026**.\n\n### Ce știm acum (aprilie 2026)\n\n- Directiva este inclusă în **Planul Anual de Transpunere** al Ministerului Afacerilor Externe\n- Legislația actuală (Legea nr. 372/2005 privind performanța energetică a clădirilor) **nu impune încă** instalarea obligatorie de panouri fotovoltaice\n- Nu există încă un proiect de lege publicat pentru transpunere\n- România are un istoric de **întârzieri** la transpunerea directivelor UE\n\n### Ce se va schimba\n\nOdată transpusă (chiar și cu întârziere), legislația va impune:\n\n- **Standarde noi** de performanță energetică pentru autorizațiile de construire\n- **Obligativitatea** proiectării «solar-ready» pentru toate cl��dirile noi\n- **Instalarea efectivă** de panouri solare pe clădirile comerciale și publice >250 m²\n- **Actualizarea** certificatelor de performanță energetică\n\n### De ce nu trebuie să aștepți transpunerea\n\nChiar dacă România întârzie formal transpunerea:\n\n1. **Directivele UE au efect direct** pentru entitățile publice — autoritățile pot fi obligate să aplice cerințele\n2. **Finanțările europene** (PNRR, Fondul de Modernizare) deja condiționează proiectele de conformitate cu obiectivele climatice\n3. **Investiția oricum se amortizează** în 4-6 ani — nu e doar o obligație, ci și o oportunitate financiară\n4. **Dezvoltatorii inteligenți** deja integrează soluții solare pentru a-și diferenția proiectele pe piață"
+        },
+        {
+          "id": "ce-trebuie-sa-faci",
+          "title": "Ce trebuie să faci ACUM — Ghid practic",
+          "content": "### Dacă construiești o clădire comercială nouă\n\n**Pas 1: Proiectare solar-ready (obligatoriu)**\n- Asigură-te că arhitectul include în proiect capacitatea portantă pentru panouri pe acoperiș\n- Prevede trasee de cabluri de la acoperiș la tabloul electric\n- Alocă spațiu tehnic pentru invertoare (interior, ventilat, accesibil)\n- Orientarea acoperișului: ideal sud, sud-est sau sud-vest\n\n**Pas 2: Dimensionare sistem fotovoltaic**\n- Regulă de bază: **1 kWp per 5-6 m²** de acoperiș disponibil\n- Un depozit de 1.000 m² poate susține ~150-180 kWp\n- Un birou de 500 m² poate susține ~70-90 kWp\n\n**Pas 3: Bugetare**\n- Cost curent: **550-850 EUR/kWp** instalat complet (în funcție de dimensiune)\n- Sistem de 100 kWp: **65.000 - 85.000 EUR**\n- Sistem de 500 kWp: **280.000 - 380.000 EUR**\n- Amortizare: **4-6 ani** fără subvenții\n\n**Pas 4: Identifică finanțări disponibile**\n- [Electric UP 2026](/ghid/electric-up-2026-ghid-aplicare) — până la 100.000 EUR per firmă\n- [Fondul de Modernizare](/ghid/subventii-panouri-fotovoltaice) — finanțări pentru eficiență energetică\n- Credite verzi bancare (BCR, BRD, CEC, Raiffeisen)\n\n**Pas 5: Alege un instalator autorizat**\n- Verifică [directorul nostru de instalatori autorizați](/firme) — toate firmele cu atestat ANRE\n- Cere minim 3 oferte de la instalatori diferiți\n- Verifică experiența pe proiecte similare\n\n### Dacă renovezi o clădire publică existentă\n\nCalendarul e ușor diferit, dar pregătirea e aceeași. Clădirile publice >2.000 m² sunt vizate din 2027, cele >750 m² din 2028."
+        },
+        {
+          "id": "costuri-beneficii",
+          "title": "Costuri vs. beneficii — Merită chiar și fără obligație",
+          "content": "Directiva impune panouri solare, dar realitatea economică le face oricum atractive:\n\n### Calcul rapid pentru o clădire comercială de 500 m²\n\n| Parametru | Valoare |\n|---|---|\n| Suprafață acoperiș utilizabilă | ~400 m² |\n| Sistem fotovoltaic posibil | ~70 kWp |\n| Cost instalare | ~50.000 EUR |\n| Producție anuală | ~84 MWh |\n| Economie anuală (autoconsum 70%) | ~8.800 EUR |\n| Venit surplus energie | ~2.000 EUR |\n| **Beneficiu anual total** | **~10.800 EUR** |\n| **Amortizare** | **~4.6 ani** |\n| **Economie pe 25 ani** | **~270.000 EUR** |\n\n### Beneficii suplimentare\n\n- **Certificat energetic mai bun** — crește valoarea clădirii cu 5-15%\n- **Independență energetică** — protecție contra creșterilor de preț ale energiei\n- **Imagine verde** — tot mai importantă pentru clienți, parteneri și investitori\n- **Conformitate anticipată** — evită costurile mai mari de retrofit ulterior\n- **Acces la finanțări** — multe fonduri UE condiționează proiectele de componenta verde\n\n### Costul NON-conformității\n\nDeși sancțiunile specifice vor fi stabilite de legislația națională de transpunere, în alte țări UE se discută despre:\n\n- Refuzul autorizației de construire\n- Amenduri pentru dezvoltatori\n- Pierderea eligibilității la fonduri europene\n- Obligativitatea de retrofit ulterior (mult mai scump)"
+        },
+        {
+          "id": "red-iii",
+          "title": "RED III — Directiva complementară pentru energie regenerabilă",
+          "content": "Pe lângă EPBD, **Directiva RED III** (UE 2023/2413) privind energia regenerabilă completează cadrul legislativ:\n\n### Ce impune RED III\n\n- Creșterea ponderii energiei regenerabile în clădiri la **minim 49% până în 2030**\n- Standarde mai stricte pentru construcții noi și renovări majore\n- Facilitarea autoconsumului și a comunităților de energie\n- Simplificarea procedurilor de autorizare pentru instalații solare (maxim 1 lună pentru sisteme pe acoperiș <50 kWp)\n\n### Impact combinat EPBD + RED III\n\nCele două directive creează un efect combinat puternic:\n\n1. **EPBD** spune: clădirile trebuie să fie solar-ready și să aibă panouri instalate\n2. **RED III** spune: 49% din energia clădirilor trebuie să fie verde până în 2030\n3. **Împreună** fac din energia solară pe acoperiș soluția evidentă și inevitabilă\n\nPentru firmele din România, mesajul este clar: **investiția în panouri fotovoltaice nu mai este o alegere, ci o necesitate strategică**."
+        },
+        {
+          "id": "intrebari-dezvoltatori",
+          "title": "Întrebări frecvente de la dezvoltatori și proprietari",
+          "content": "### Dacă România nu transpune la timp directiva, sunt obligat să respect cerințele?\n\nPentru entități private — nu direct, până la transpunere. Dar finanțările europene deja condiționează conformitatea, iar transpunerea va veni cu efect retroactiv pentru autorizațiile noi.\n\n### Se aplică și pentru clădiri sub 250 m²?\n\nPentru instalarea efectivă — nu. Cerința de panouri solare pe clădiri se aplică inițial celor >250 m². Dar cerința de proiectare «solar-ready» se aplică tuturor clădirilor noi.\n\n### Pot alege panouri termice în loc de fotovoltaice?\n\nDa. Directiva se referă la instalații de energie solară — include atât panouri fotovoltaice cât și panouri termice. În practică, fotovoltaicele sunt preferate pentru clădiri comerciale datorită versatilității și ROI-ului mai bun.\n\n### Cine suportă costul — dezvoltatorul sau cumpărătorul?\n\nDezvoltatorul include costul în prețul construcției. Pentru cumpărător, beneficiul este direct: facturi mai mici la energie din prima zi.\n\n### Ce se întâmplă cu clădirile existente?\n\nClădirile existente nu sunt obligate să instaleze panouri solare decât la **renovare majoră**. Dar orice renovare majoră a unei clădiri publice >2.000 m² trebuie să includă soluții solare din 2027."
+        }
+      ],
+      "faq": [
+        {
+          "question": "De când sunt obligatorii panourile solare pe clădirile noi în România?",
+          "answer": "Directiva UE 2024/1275 impune panouri solare pe clădirile publice și comerciale noi de peste 250 m² din 31 decembrie 2026. Pentru clădirile rezidențiale noi, termenul este 31 decembrie 2029. România trebuie să transpună directiva în legislația națională până pe 29 mai 2026."
+        },
+        {
+          "question": "Ce clădiri sunt afectate de directiva europeană EPBD?",
+          "answer": "Sunt afectate toate clădirile noi publice și comerciale cu suprafață utilă peste 250 m² (hale, birouri, depozite, magazine, hoteluri). Din 2027-2030, se extinde și la clădirile publice existente la renovare majoră, și la clădirile rezidențiale noi."
+        },
+        {
+          "question": "Cât costă conformarea cu directiva europeană pentru panouri solare?",
+          "answer": "Costul depinde de dimensiunea clădirii. Un sistem de 100 kWp (pentru o clădire de ~600 m²) costă 65.000-85.000 EUR, cu amortizare în 4-6 ani. Investiția se recuperează integral din economii la energie, chiar și fără subvenții."
+        },
+        {
+          "question": "Ce înseamnă clădire «solar-ready» conform directivei UE?",
+          "answer": "Solar-ready înseamnă că clădirea este proiectată pentru a permite instalarea ulterioară a panourilor solare fără modificări structurale: acoperiș cu capacitate portantă adecvată, trasee de cabluri pregătite și spațiu pentru invertoare."
+        },
+        {
+          "question": "Există subvenții pentru conformarea cu directiva europeană?",
+          "answer": "Da. Programele Electric UP (până la 100.000 EUR), Fondul de Modernizare și PNRR oferă finanțări pentru sisteme fotovoltaice comerciale. Multe condiționează deja proiectele de conformitate cu obiectivele climatice UE."
+        },
+        {
+          "question": "Ce se întâmplă dacă nu respect directiva europeană?",
+          "answer": "Sancțiunile specifice vor fi stabilite de legislația națională de transpunere. Se anticipează: refuzul autorizației de construire, amenzi pentru dezvoltatori, pierderea eligibilității la fonduri europene și obligativitatea de retrofit ulterior."
+        }
+      ],
+      "relatedSpecializations": [
+        "hale-industriale",
+        "cladiri-birouri",
+        "retail",
+        "parcuri-logistice",
+        "hotel"
+      ]
     }
   ]
 }
