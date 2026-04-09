@@ -1,6 +1,6 @@
 # Long-Tail Keywords — Instalatori Fotovoltaice
 
-Ultima actualizare: 2026-04-06
+Ultima actualizare: 2026-04-09
 
 ## Legendă
 - ✅ = Acoperit deja (avem ghid/pagină)
@@ -22,8 +22,8 @@ Ultima actualizare: 2026-04-06
 | preț invertoare fotovoltaice Huawei vs Fronius | ✅ | Ghid invertoare |
 | cost baterii stocare energie pentru firmă | ✅ | Ghid stocare energie |
 | energie solară vs energie din rețea costuri | ✅ | Ghid comparație |
-| în cât timp se amortizează panourile fotovoltaice firmă | 🎯 | FAQ sau secțiune dedicată |
-| ROI panouri fotovoltaice comerciale România | 🎯 | Calculator ROI (Faza 2) |
+| în cât timp se amortizează panourile fotovoltaice firmă | ✅ | Secțiune dedicată în ghidul ROI |
+| ROI panouri fotovoltaice comerciale România | ✅ | Secțiune dedicată în ghidul ROI (calculator Faza 2) |
 
 ## 2. Subvenții & Finanțare (trafic sezonier mare)
 
@@ -38,7 +38,7 @@ Ultima actualizare: 2026-04-06
 | finanțare panouri fotovoltaice pentru SRL | 🎯 | Ghid specific forma juridică |
 | leasing panouri fotovoltaice firmă România | 💡 | Opțiune alternativă la subvenții |
 | credit verde panouri solare BCR / BRD / CEC | 💡 | Ghid finanțare bancară |
-| beneficii fiscale energie verde firmă 2026 | 🎯 | Acoperit parțial, merită ghid dedicat |
+| beneficii fiscale energie verde firmă 2026 | ✅ | Secțiune dedicată în ghidul ROI (OUG 8/2026) |
 
 ## 3. Legislație & Prosumator (evergreen cu actualizări anuale)
 
@@ -106,11 +106,11 @@ Ultima actualizare: 2026-04-06
 | Keyword | Status | Notă |
 |---------|--------|------|
 | panouri fotovoltaice casă vs firmă diferențe | ✅ | Ghid existent |
-| merită panouri fotovoltaice pentru firmă 2026 | 🎯 | Articol persuasiv cu calcule |
+| merită panouri fotovoltaice pentru firmă 2026 | ✅ | Ghid ROI cu calcule reale |
 | panouri fotovoltaice vs generator diesel firmă | 💡 | Comparație alternativă |
 | panouri fotovoltaice vs pompă de căldură ce aleg prima | 💡 | Decizie investiție |
-| când nu merită panouri fotovoltaice | 🎯 | Articol contrarian — atrage trafic |
-| riscuri panouri fotovoltaice firmă | 💡 | Articol honest |
+| când nu merită panouri fotovoltaice | ✅ | Secțiune dedicată în ghidul ROI |
+| riscuri panouri fotovoltaice firmă | ✅ | Secțiune dedicată în ghidul ROI |
 
 ## 8. Mentenanță & Post-Instalare
 
@@ -138,8 +138,8 @@ Ultima actualizare: 2026-04-06
 1. **firmă montaj panouri fotovoltaice [JUDEȚ]** — 42 pagini PSEO, trafic local
 2. **cele mai bune firme fotovoltaice comerciale România** — direct legat de director
 3. **fonduri nerambursabile panouri fotovoltaice IMM 2026** — intent comercial mare
-4. **merită panouri fotovoltaice pentru firmă 2026** — bottom-of-funnel
-5. **în cât timp se amortizează panourile fotovoltaice firmă** — FAQ cu calcule
+4. ~~**merită panouri fotovoltaice pentru firmă 2026**~~ — ✅ ACOPERIT (ghid ROI, 9 Apr)
+5. ~~**în cât timp se amortizează panourile fotovoltaice firmă**~~ — ✅ ACOPERIT (secțiune în ghid ROI)
 6. **dimensionare sistem fotovoltaic comercial** — ghid tehnic + calculator
 7. **panouri fotovoltaice parcare solară carport** — trending, neacoperit de competiție
 8. **asigurare panouri fotovoltaice comerciale** — zero competiție pe keyword
