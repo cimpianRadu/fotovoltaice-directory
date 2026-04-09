@@ -448,7 +448,7 @@ Ați verificat vreodată situația financiară a instalatorului înainte să sem
 
 ---
 
-### 📝 Duminică 6 Apr · [M] Micro-fact: Electric UP — 150.000 EUR
+### ✅ Duminică 6 Apr · [M] Micro-fact: Electric UP — 150.000 EUR
 **Imagine:** Grafic „Până la 150.000 EUR nerambursabil"
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/electric-up-2026-ghid-aplicare
 
@@ -466,7 +466,7 @@ Ați aplicat vreodată la Electric UP? Cum a fost experiența?
 
 ---
 
-### 📝 Luni 7 Apr · [G] Electric UP 2026 — Ghid aplicare
+### ✅ Luni 7 Apr · [G] Electric UP 2026 — Ghid aplicare
 **Imagine:** Screenshot secțiunea eligibilitate sau checklist documente
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/electric-up-2026-ghid-aplicare
 
@@ -487,7 +487,7 @@ Planificați să aplicați la următorul apel Electric UP?
 
 ---
 
-### 📝 Marți 8 Apr · [S] Spotlight: FomCo Solar Systems — Mureș
+### ✅ Marți 8 Apr · [S] Spotlight: FomCo Solar Systems — Mureș
 **Imagine:** Screenshot profilul FomCo de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/fomco-solar
 
@@ -503,7 +503,7 @@ Cunoașteți instalatori din zona centrului României (Mureș, Sibiu, Brașov)?
 
 ---
 
-### 📝 Miercuri 9 Apr · [M] Micro-fact: Amortizare super-accelerată
+### ✅ Miercuri 9 Apr · [M] Micro-fact: Amortizare super-accelerată
 **Imagine:** Grafic „65% amortizare în anul 1"
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/subventii-panouri-fotovoltaice
 
@@ -527,7 +527,7 @@ Contabilul vostru v-a menționat vreodată această facilitate?
 
 ---
 
-### 📝 Joi 10 Apr · [J] Brașov — 8 firme
+### ✅ Joi 10 Apr · [J] Brașov — 8 firme
 **Imagine:** Screenshot profil firmă care acoperă Brașov
 **Link:** https://www.instalatori-fotovoltaice.ro/firme
 
@@ -545,7 +545,7 @@ Cine are experiență cu instalatori din zona Brașov?
 
 ---
 
-### 📝 Vineri 11 Apr · [F] Cât durează să devii prosumator?
+### ✅ Vineri 11 Apr · [F] Cât durează să devii prosumator?
 **Imagine:** Screenshot secțiunea procedură din ghidul legislație
 **Link:** https://www.instalatori-fotovoltaice.ro/ghid/legislatie-prosumator-comercial
 
@@ -563,7 +563,7 @@ Ați trecut prin procesul de a deveni prosumator comercial? Cât a durat la voi?
 
 ---
 
-### 📝 Sâmbătă 12 Apr · [S] Spotlight: Electro-Alfa International — Botoșani
+### 📅 Vineri 18 Apr · [S] Spotlight: Electro-Alfa International — Botoșani
 **Imagine:** Screenshot profilul Electro-Alfa de pe site
 **Link:** https://www.instalatori-fotovoltaice.ro/firme/electro-alfa
 

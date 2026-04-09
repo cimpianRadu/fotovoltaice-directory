@@ -995,6 +995,99 @@
         "parcuri-logistice",
         "hotel"
       ]
+    },
+    {
+      "slug": "merita-panouri-fotovoltaice-firma-2026",
+      "published": true,
+      "publishedAt": "2026-04-09",
+      "author": "Radu",
+      "title": "Merită Panouri Fotovoltaice pentru Firmă în 2026? Calcule Reale și ROI",
+      "metaDescription": "Merită panouri fotovoltaice pentru firmă în 2026? Calcule reale de ROI, perioadă de amortizare, beneficii fiscale și când NU merită investiția.",
+      "heroDescription": "Analiză completă cu cifre reale: cât economisești, în cât timp recuperezi investiția și când NU merită să instalezi panouri fotovoltaice pe firma ta.",
+      "sections": [
+        {
+          "id": "raspuns-scurt",
+          "title": "Răspunsul scurt: Da, pentru majoritatea firmelor merită",
+          "content": "Dacă firma ta are facturi de energie de peste **2.000 lei/lună**, un acoperiș potrivit și funcționează preponderent ziua — **da, merită panouri fotovoltaice în 2026**.\n\nCifrele vorbesc de la sine:\n\n- **ROI anual: 15-25%** — mai bun decât orice depozit bancar sau investiție imobiliară\n- **Amortizare în 4-6 ani** fără subvenții, **2-4 ani** cu Electric UP sau alte fonduri\n- **Prețul energiei pentru firme: 0,80-1,40 lei/kWh** — și nu dă semne de scădere semnificativă\n- **Costul sistemelor a scăzut cu 50%** în ultimii 6 ani (de la ~1.200 EUR/kWp la 450-650 EUR/kWp)\n\nDar nu pentru orice firmă e o investiție bună. Citește mai departe pentru calculele detaliate și cazurile în care **nu merită**."
+        },
+        {
+          "id": "cat-costa-si-cat-economisesti",
+          "title": "Cât costă și cât economisești — calcule reale 2026",
+          "content": "### Prețuri sisteme fotovoltaice comerciale în România (2026)\n\n| Dimensiune sistem | Cost instalat (EUR) | Producție anuală | Economie anuală* |\n|---|---|---|---|\n| 50 kWp (atelier, magazin) | 26.500 – 30.000 | ~60 MWh | 7.200 – 10.000 EUR |\n| 100 kWp (hală medie) | 45.000 – 65.000 | ~120 MWh | 14.400 – 20.000 EUR |\n| 250 kWp (fabrică) | 112.000 – 162.000 | ~300 MWh | 36.000 – 50.000 EUR |\n| 500 kWp (parc logistic) | 225.000 – 325.000 | ~600 MWh | 72.000 – 100.000 EUR |\n\n*Economie calculată la autoconsum 80%, preț energie 0,80-1,10 lei/kWh fără TVA*\n\n### Exemplu concret: firmă cu sistem de 100 kWp\n\n- **Investiție:** ~55.000 EUR\n- **Producție anuală:** ~120 MWh (media România: 1.200 kWh/kWp/an)\n- **Autoconsum 80%:** 96 MWh × 0,95 lei/kWh = **91.200 lei/an economie (~18.500 EUR)**\n- **Surplus vândut 20%:** 24 MWh × 0,45 lei/kWh = **10.800 lei/an (~2.200 EUR)**\n- **Total beneficiu anual: ~20.700 EUR**\n- **Amortizare: ~2,7 ani**\n- **Profit net pe 25 ani: ~460.000 EUR** (după amortizare)\n\nPrețul per kWp instalat pentru sisteme comerciale (>50 kWp) este între **450-650 EUR/kWp** — semnificativ mai mic decât sistemele rezidențiale (800-1.000 EUR/kWp)."
+        },
+        {
+          "id": "in-cat-timp-se-amortizeaza",
+          "title": "În cât timp se amortizează panourile fotovoltaice pentru firmă",
+          "content": "Perioada de recuperare a investiției depinde de trei factori principali:\n\n### 1. Prețul energiei pe care o plătești acum\nCu cât plătești mai mult pe kWh, cu atât amortizarea e mai rapidă.\n\n| Preț energie (lei/kWh) | Amortizare fără subvenții | Amortizare cu subvenții 50% |\n|---|---|---|\n| 0,60 lei/kWh | 7-8 ani | 3,5-4 ani |\n| 0,80 lei/kWh | 5-6 ani | 2,5-3 ani |\n| 1,00 lei/kWh | 4-5 ani | 2-2,5 ani |\n| 1,20 lei/kWh | 3-4 ani | 1,5-2 ani |\n| 1,40 lei/kWh | 2,5-3,5 ani | 1,5-2 ani |\n\n### 2. Rata de autoconsum\nEnergia consumată direct de firmă valorează de 2-3x mai mult decât cea vândută în rețea. O rată de autoconsum de 70-90% este ideală. Firmele cu program de lucru 8:00-18:00, de luni până vineri, se potrivesc perfect cu curba de producție solară.\n\n### 3. Zona geografică\nProducția variază semnificativ pe regiuni:\n\n| Regiune | Producție (kWh/kWp/an) | Amortizare* |\n|---|---|---|\n| Dobrogea (Constanța, Tulcea) | 1.350 – 1.450 | 3,5-5 ani |\n| Muntenia Sud (București, Giurgiu) | 1.300 – 1.400 | 4-5,5 ani |\n| Oltenia (Craiova, Dolj) | 1.300 – 1.380 | 4-5,5 ani |\n| Banat (Timișoara, Arad) | 1.200 – 1.350 | 4,5-6 ani |\n| Transilvania (Cluj, Brașov) | 1.100 – 1.250 | 5-6,5 ani |\n| Moldova (Iași, Suceava) | 1.050 – 1.200 | 5,5-7 ani |\n\n*La preț energie 0,90 lei/kWh, autoconsum 80%, fără subvenții*\n\n**Concluzie:** Chiar și în cele mai puțin însorite zone din România, amortizarea se face în **maxim 7 ani** — dintr-o durată de viață de 25-30 ani."
+        },
+        {
+          "id": "beneficii-fiscale",
+          "title": "Beneficii fiscale pentru energie verde — firmă 2026",
+          "content": "### Amortizare supraaccelerată (OUG 8/2026 — NOU!)\n\nDin 2026, firmele beneficiază de **amortizare supraaccelerată** pentru echipamente noi, inclusiv sisteme fotovoltaice:\n\n- **Anul 1: poți amortiza până la 65% din valoarea fiscală** a sistemului\n- Restul se repartizează liniar pe durata normală rămasă\n- Anterior, amortizarea accelerată standard permitea maxim 50% în primul an\n\n**Exemplu practic:** pentru un sistem de 55.000 EUR:\n- Anul 1: amortizezi 35.750 EUR (65%) → **reducere impozit profit: ~5.720 EUR** (la 16%)\n- Impact cashflow real: recuperezi suplimentar ~5.700 EUR din primul an fiscal\n\n### Deductibilitate integrală\n\nToate cheltuielile cu achiziția echipamentelor regenerabile (panouri, invertoare, baterii, structuri) sunt **100% deductibile fiscal**.\n\n### Reducere impozit pe clădiri\n\nConsiliile locale pot acorda:\n- **Reducere 50%** la impozitul pe clădiri (ex: Cluj-Napoca)\n- **Scutire 100%** (ex: Constanța)\n\nVerifică cu primăria ta locală — tot mai multe municipii oferă acest beneficiu pentru clădiri cu sisteme fotovoltaice.\n\n### Prag minim mijloc fix\n\nDin 2026, pragul a crescut de la 2.500 lei la **5.000 lei** (OUG 8/2026). Echipamentele sub acest prag se trec direct pe cheltuieli."
+        },
+        {
+          "id": "roi-panouri-fotovoltaice",
+          "title": "ROI panouri fotovoltaice comerciale — de ce bate orice altă investiție",
+          "content": "### Comparație ROI: fotovoltaice vs alte investiții\n\n| Investiție | ROI anual | Risc | Lichiditate |\n|---|---|---|---|\n| **Panouri fotovoltaice (firmă)** | **15-25%** | Scăzut | Medie |\n| Depozit bancar | 5-7% | Foarte scăzut | Ridicată |\n| Obligațiuni de stat | 6-8% | Scăzut | Medie |\n| Imobiliare (chirie) | 5-8% | Mediu | Scăzută |\n| Bursă (BVB) | 8-15% | Ridicat | Ridicată |\n\n### De ce fotovoltaicele au ROI mai bun?\n\n**1. Economie garantată, nu speculativă**\nSoarele răsare în fiecare zi. Producția unui sistem fotovoltaic este predictibilă (±5% de la an la an). Spre deosebire de bursă sau imobiliare, nu depinzi de piață.\n\n**2. Protecție contra inflației energetice**\nPrețul energiei crește în medie cu 5-10% pe an. Fiecare creștere de preț îți mărește ROI-ul automat. Un sistem instalat în 2026 la prețul actual va fi și mai profitabil în 2030.\n\n**3. Durată lungă de viață**\nPanourile moderne au garanție de performanță pe 25-30 ani. Degradarea este de doar ~0,5%/an. După amortizare, ai **15-20 ani de energie aproape gratuită**.\n\n**4. Venituri duale**\n- Economie pe autoconsumul zilnic (valoare mare: 0,80-1,40 lei/kWh)\n- Venituri din vânzare surplus ca prosumator (valoare mai mică, dar constantă)"
+        },
+        {
+          "id": "subventii-disponibile",
+          "title": "Subvenții disponibile în 2026 — cum reduci investiția la jumătate",
+          "content": "### Electric UP 2026\n- **Finanțare:** până la 100.000 EUR (nerambursabil)\n- **Acoperire:** 50% din costul sistemului\n- **Beneficiari:** IMM-uri și microîntreprinderi\n- **Status:** runde de finanțare active — verifică [ghidul nostru Electric UP](/ghid/electric-up-2026-ghid-aplicare)\n\n### Fondul de Modernizare\n- **Finanțare:** sume mai mari, pentru proiecte industriale\n- **Acoperire:** 30-60% din investiție\n- **Beneficiari:** companii mari și medii\n\n### Casa Verde (pentru componenta comercială)\n- **Finanțare:** până la 30.000 EUR\n- **Acoperire:** până la 90% din cost\n- **Beneficiari:** întreprinderi mici — verifică [ghidul Casa Verde](/ghid/casa-verde-fotovoltaice-2026)\n\n### PNRR Energie Verde\n- **Finanțare:** proiecte de eficiență energetică\n- **Acoperire:** variabilă, 30-80%\n\n### Leasing și credite verzi\nBăncile oferă **credite verzi** cu dobânzi preferențiale (BRD, BCR, CEC Bank) specifice pentru investiții în energie regenerabilă. Avantaj: păstrezi lichiditatea firmei.\n\n**Strategie optimă:** Combină o subvenție (Electric UP sau Fondul de Modernizare) cu amortizarea supraaccelerată (65% anul 1) pentru a recupera 70-80% din investiție în primii 2 ani."
+        },
+        {
+          "id": "cand-nu-merita",
+          "title": "Când NU merită panouri fotovoltaice pentru firmă",
+          "content": "Onestitatea e importantă. Iată situațiile în care **nu recomandăm** investiția:\n\n### 1. Facturi mici de energie (sub 1.000 lei/lună)\nPentru un consum sub 500 kWh/lună, sistemul minim de 10-15 kWp (5.000-10.000 EUR) se amortizează greu. Mai bine optimizezi consumul existent.\n\n### 2. Consum majoritar noaptea\nRestaurante, cluburi, firme cu schimb de noapte — producția solară este zilnică. Fără baterii de stocare (cost suplimentar de 200-400 EUR/kWh), autoconsumul scade sub 30%, iar ROI-ul se prăbușește.\n\n### 3. Clădire închiriată sau contract scurt (<5 ani)\nNu investești 30.000-100.000 EUR pe un acoperiș care nu e al tău. Excepție: dacă proprietarul acceptă să împarți costul sau prelungești contractul.\n\n### 4. Acoperiș inadecvat\n- Orientare predominant nord\n- Umbrire masivă de clădiri vecine sau copaci\n- Structură portantă insuficientă (necesită consolidare costisitoare)\n- Acoperiș vechi care necesită reparații în 5 ani\n\n### 5. Firma are probleme financiare\nFotovoltaicele sunt o investiție pe termen lung. Dacă firma are datorii, cashflow negativ sau risc de insolvență, există priorități mai urgente.\n\n### 6. Tarif foarte mic la energie (<0,50 lei/kWh)\nFirmele cu contracte foarte avantajoase de energie au ROI de 8+ ani. Merită să aștepți până la expirarea contractului.\n\n### 7. Speculație pe vânzare surplus\nA dimensiona sistemul doar pentru a vinde în rețea **nu e profitabil**. Prețul de injecție (0,30-0,50 lei/kWh) este mult sub prețul de consum. Dimensionează pentru autoconsum, nu pentru export."
+        },
+        {
+          "id": "riscuri",
+          "title": "Riscuri panouri fotovoltaice pentru firmă — ce poate merge prost",
+          "content": "### Riscuri reale (și cum le eviți)\n\n**1. Instalator necalificat**\nCel mai mare risc. Un montaj greșit înseamnă:\n- Producție sub așteptări (15-30% mai puțin)\n- Infiltrații pe acoperiș\n- Probleme la racordare cu distribuitorul\n- Pierderea garanției pe echipamente\n\n→ **Soluție:** Alege doar instalatori cu [autorizare ANRE C2A](/ghid/cum-alegi-instalator-fotovoltaic) și verifică-i în [directorul nostru](/firme).\n\n**2. Supradimensionare**\nUn sistem prea mare = surplus mare vândut la preț mic. Regula: dimensionează la 80% din consumul diurn.\n\n→ **Soluție:** Cere studiu de fezabilitate bazat pe facturile tale reale din ultimele 12 luni.\n\n**3. Echipamente no-name**\nPanouri și invertoare ieftine de calitate îndoielnică: degradare rapidă, garanții nerespectate, producător dispărut.\n\n→ **Soluție:** Alege branduri consacrate (panouri: JA Solar, Longi, Canadian Solar, Trina; invertoare: Huawei, Fronius, SMA, Sungrow).\n\n**4. Degradare în timp**\nPanourile pierd ~0,5%/an din eficiență. După 25 ani, produc ~87% din capacitatea inițială. Nu e un risc real — e factorizat deja în calculele de ROI.\n\n**5. Schimbări legislative**\nPrețul de achiziție a surplusului de energie s-ar putea reduce în viitor. De aceea, dimensionează pentru autoconsum, nu pentru export.\n\n**6. Costuri ascunse**\n- Înlocuire invertor la 12-15 ani (~2.000-5.000 EUR)\n- Mentenanță anuală: 1-2% din valoarea sistemului\n- Curățare periodică (2x/an)\n\n→ **Soluție:** Include aceste costuri în calculul ROI de la început. Chiar și cu ele, investiția rămâne profitabilă."
+        },
+        {
+          "id": "checklist-decizie",
+          "title": "Checklist: merită pentru firma ta?",
+          "content": "Răspunde la aceste 8 întrebări:\n\n**✅ Merită dacă bifezi 5+ din 8:**\n\n- [ ] Factura de energie depășește 2.000 lei/lună\n- [ ] Firma funcționează preponderent ziua (8:00-18:00)\n- [ ] Ești proprietar pe clădire sau ai contract >7 ani\n- [ ] Acoperișul e orientat sud/est/vest, fără umbrire majoră\n- [ ] Ai capacitate de investiție (sau accesezi o subvenție)\n- [ ] Prețul actual pe kWh e peste 0,70 lei\n- [ ] Firma e stabilă financiar și planifici pe termen lung\n- [ ] Ai identificat un instalator autorizat ANRE în zona ta\n\n**Pasul următor:** [Cere ofertă gratuită](/cere-oferta) de la instalatorii verificați din directorul nostru sau [caută un instalator](/firme) în județul tău."
+        }
+      ],
+      "faq": [
+        {
+          "question": "Merită panouri fotovoltaice pentru firmă în 2026?",
+          "answer": "Da, pentru majoritatea firmelor cu facturi de energie peste 2.000 lei/lună. ROI-ul anual este de 15-25%, iar amortizarea se face în 4-6 ani fără subvenții și 2-4 ani cu subvenții."
+        },
+        {
+          "question": "În cât timp se amortizează panourile fotovoltaice pentru o firmă?",
+          "answer": "Perioada de amortizare este de 4-6 ani fără subvenții și 2-4 ani cu programe precum Electric UP. Depinde de prețul energiei, rata de autoconsum și zona geografică."
+        },
+        {
+          "question": "Ce ROI au panourile fotovoltaice comerciale în România?",
+          "answer": "ROI-ul anual este între 15-25%, semnificativ mai mare decât depozitele bancare (5-7%) sau investițiile imobiliare (5-8%). Fotovoltaicele oferă economii garantate și predictibile."
+        },
+        {
+          "question": "Ce beneficii fiscale există pentru panouri fotovoltaice firmă în 2026?",
+          "answer": "Din 2026, firmele beneficiază de amortizare supraaccelerată (65% în anul 1 prin OUG 8/2026), deductibilitate integrală a echipamentelor și posibilă reducere 50-100% a impozitului pe clădiri la nivel local."
+        },
+        {
+          "question": "Când NU merită panouri fotovoltaice pentru firmă?",
+          "answer": "Nu merită dacă: factura e sub 1.000 lei/lună, consumul e majoritar noaptea, clădirea e închiriată pe termen scurt, acoperișul e orientat nord cu umbrire, sau firma are probleme financiare."
+        },
+        {
+          "question": "Cât costă un sistem fotovoltaic comercial de 100 kWp în 2026?",
+          "answer": "Un sistem de 100 kWp costă între 45.000-65.000 EUR instalat complet. Cu subvenții (Electric UP), costul net poate scădea la 22.500-32.500 EUR. Producția anuală: ~120 MWh."
+        },
+        {
+          "question": "Ce riscuri au panourile fotovoltaice pentru firmă?",
+          "answer": "Principalele riscuri sunt: instalator necalificat, supradimensionare, echipamente no-name, și costuri ascunse (înlocuire invertor la 12-15 ani). Toate se evită prin alegerea unui instalator autorizat ANRE și echipamente de brand."
+        }
+      ],
+      "relatedSpecializations": [
+        "hale-industriale",
+        "cladiri-birouri",
+        "retail",
+        "parcuri-logistice",
+        "agricol"
+      ]
     }
   ]
 }
