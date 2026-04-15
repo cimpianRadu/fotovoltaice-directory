@@ -12,7 +12,7 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Instalatori Fotovoltaice România | Director Firme Panouri Solare',
+    default: 'Instalatori Fotovoltaice România | Lista Completă de Firme Panouri Solare',
     template: '%s | Instalatori Fotovoltaice România',
   },
   description:
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Instalatori Fotovoltaice România - Director Firme Panouri Solare',
+        alt: 'Instalatori Fotovoltaice România - Lista Completă de Firme Panouri Solare',
       },
     ],
   },

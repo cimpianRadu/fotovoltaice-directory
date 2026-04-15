@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import LeadForm from '@/components/forms/LeadForm';
@@ -86,6 +87,35 @@ export default function DesprePage() {
                 la <a href="mailto:contact@instalatori-fotovoltaice.ro" className="text-primary hover:underline">contact@instalatori-fotovoltaice.ro</a>.
                 Listarea de bază este gratuită.
               </p>
+            </section>
+
+            <section className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl border border-primary/15 p-6">
+              <h2 className="text-lg font-bold text-gray-900 mb-3">Promovează-ți firma</h2>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Vrei să fii mai vizibil în fața clienților care caută instalatori fotovoltaici?
+                Oferim pachete de promovare adaptate nevoilor tale — de la badge &quot;Partener Verificat&quot;
+                și poziție prioritară în listă, până la bannere pe ghiduri și articole sponsorizate.
+              </p>
+              <ul className="text-sm text-gray-600 space-y-2 mb-5">
+                <li className="flex items-start gap-2">
+                  <span className="text-green-500 shrink-0">&#10003;</span>
+                  <span><strong>Listing Sponsor</strong> — logo și link pe toate ghidurile (de la 29 EUR/lună)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-500 shrink-0">&#10003;</span>
+                  <span><strong>Profil Premium</strong> — badge verificat, poziție prioritară, lead-uri (de la 49 EUR/lună)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-500 shrink-0">&#10003;</span>
+                  <span><strong>Enterprise</strong> — tot din Premium + banner pe ghiduri și articol dedicat (de la 99 EUR/lună)</span>
+                </li>
+              </ul>
+              <Link
+                href="/publicitate"
+                className="inline-flex items-center bg-primary hover:bg-primary-dark text-white font-semibold px-5 py-2.5 rounded-lg transition-colors text-sm"
+              >
+                Vezi opțiunile de promovare &rarr;
+              </Link>
             </section>
           </div>
 

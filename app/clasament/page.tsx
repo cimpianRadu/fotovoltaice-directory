@@ -274,7 +274,7 @@ export default function ClasamentPage() {
           <p>
             Cauți o firmă de instalare panouri fotovoltaice? Consultă{' '}
             <Link href="/firme" className="text-primary hover:underline">
-              directorul complet
+              lista completă de firme
             </Link>{' '}
             pentru a filtra după județ, specializare sau capacitate. Sau citește{' '}
             <Link href="/ghid/cum-alegi-instalator-fotovoltaic" className="text-primary hover:underline">

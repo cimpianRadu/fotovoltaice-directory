@@ -7,7 +7,7 @@ import { generateBreadcrumbJsonLd } from '@/lib/seo';
 export const metadata: Metadata = {
   title: 'Panouri Fotovoltaice Rezidențiale - În Curând',
   description:
-    'Directorul pentru panouri fotovoltaice rezidențiale va fi disponibil în curând. Înscrie-te pentru a fi notificat la lansare.',
+    'Platforma pentru panouri fotovoltaice rezidențiale va fi disponibilă în curând. Înscrie-te pentru a fi notificat la lansare.',
   alternates: { canonical: '/rezidential' },
 };
 
@@ -33,10 +33,10 @@ export default function RezidentialPage() {
 
           <p className="text-sm font-medium text-primary-dark mb-2">În curând</p>
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Director Panouri Fotovoltaice Rezidențiale
+            Panouri Fotovoltaice Rezidențiale
           </h1>
           <p className="text-lg text-gray-500 mb-8 max-w-lg mx-auto">
-            Lucrăm la directorul pentru panouri fotovoltaice pentru casă. Înscrie-te pentru a fi printre primii notificați la lansare.
+            Lucrăm la platforma dedicată panourilor fotovoltaice pentru casă. Înscrie-te pentru a fi printre primii notificați la lansare.
           </p>
 
           <div className="flex justify-center mb-8">

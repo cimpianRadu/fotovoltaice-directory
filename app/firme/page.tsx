@@ -34,7 +34,7 @@ export default function FirmePage() {
             Găsește instalatorul potrivit pentru proiectul tău industrial sau comercial
           </p>
           <p className="text-sm text-gray-500 mt-3 max-w-3xl">
-            Directorul include 42 de firme verificate de instalare sisteme fotovoltaice din România,
+            Lista include 42 de firme verificate de instalare sisteme fotovoltaice din România,
             cu date reale din registrele publice. Compară instalatori autorizați ANRE după
             experiență, certificări, specializări și acoperire geografică. Filtrează după județ,
             specializare sau dimensiunea proiectului și solicită ofertă gratuită.
