@@ -1033,7 +1033,10 @@
         "retail",
         "agricol"
       ],
-      "certifications": [],
+      "certifications": [
+        "ANRE-C2A",
+        "ANRE-C1A"
+      ],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 5000,
@@ -1457,7 +1460,10 @@
         "parcuri-logistice",
         "agricol"
       ],
-      "certifications": [],
+      "certifications": [
+        "ANRE-C2A",
+        "ANRE-C1A"
+      ],
       "capacity": {
         "minProjectKw": 100,
         "maxProjectKw": 50000,
@@ -1999,7 +2005,9 @@
       "certifications": [
         "ISO-9001",
         "ISO-14001",
-        "ISO-45001"
+        "ISO-45001",
+        "ANRE-C2A",
+        "ANRE-C1A"
       ],
       "capacity": {
         "minProjectKw": 50,
@@ -2113,7 +2121,10 @@
         "retail",
         "agricol"
       ],
-      "certifications": [],
+      "certifications": [
+        "ANRE-C2A",
+        "ANRE-C1A"
+      ],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 1000,
