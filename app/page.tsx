@@ -91,6 +91,49 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Promo Banner — Premium Profile Preview */}
+      <section className="max-w-7xl mx-auto px-4 pt-8">
+        <Link
+          href="/publicitate"
+          className="block rounded-xl border-2 border-primary/30 bg-primary/5 p-4 sm:p-5 hover:border-primary/50 hover:shadow-md transition-all group"
+        >
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <p className="text-[10px] sm:text-xs font-semibold text-primary-dark uppercase tracking-wider">
+              Profil Premium — Exemplu
+            </p>
+            <span className="text-xs text-primary-dark font-medium group-hover:underline hidden sm:inline">
+              Află mai multe &rarr;
+            </span>
+          </div>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 sm:p-4 rounded-lg bg-white border border-primary/20">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center shrink-0">
+              <svg className="w-5 h-5 text-primary-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2 mb-0.5">
+                <p className="text-sm font-semibold text-gray-900">Firma Ta Premium S.R.L.</p>
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-green-50 text-green-700 border border-green-200">
+                  &#10003; Partener Verificat
+                </span>
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-primary/10 text-primary-dark">
+                  &#9733; Premium
+                </span>
+              </div>
+              <p className="text-xs text-gray-500">București &middot; Instalare sisteme fotovoltaice comerciale și industriale, proiecte EPC la cheie</p>
+            </div>
+            <div className="hidden sm:flex flex-col items-end shrink-0 text-right">
+              <p className="text-xs text-gray-400">De la</p>
+              <p className="text-sm font-bold text-primary-dark">49 EUR/lună</p>
+            </div>
+          </div>
+          <p className="text-[11px] text-gray-400 mt-2 text-center sm:text-left">
+            Poziție prioritară &middot; Lead-uri din &quot;Cere Ofertă&quot; &middot; Badge verificat &middot; Statistici profil
+          </p>
+        </Link>
+      </section>
+
       {/* Featured Companies */}
       <section className="max-w-7xl mx-auto px-4 py-16">
         <div className="flex items-center justify-between mb-8">
