@@ -113,7 +113,7 @@ export default function HomePage() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex flex-wrap items-center gap-2 mb-0.5">
-                <p className="text-sm font-semibold text-gray-900">Firma Ta Premium S.R.L.</p>
+                <p className="text-sm font-semibold text-gray-900">Exemplu Promovare</p>
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-green-50 text-green-700 border border-green-200">
                   &#10003; Partener Verificat
                 </span>
@@ -121,7 +121,7 @@ export default function HomePage() {
                   &#9733; Premium
                 </span>
               </div>
-              <p className="text-xs text-gray-500">București &middot; Instalare sisteme fotovoltaice comerciale și industriale, proiecte EPC la cheie</p>
+              <p className="text-xs text-gray-500">Firma ta poate fi promovată aici</p>
             </div>
             <div className="hidden sm:flex flex-col items-end shrink-0 text-right">
               <p className="text-xs text-gray-400">De la</p>
