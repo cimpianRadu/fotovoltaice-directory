@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import companiesData from '@/data/companies.json';
 import guidesData from '@/data/guides.json';
-import { getCoveredCounties, slugifyCounty } from '@/lib/utils';
+import { getCoveredCounties, slugifyCounty, slugifyCity, MAJOR_CITIES } from '@/lib/utils';
 
 const BASE_URL = 'https://instalatori-fotovoltaice.ro';
 
@@ -42,5 +42,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...companyPages, ...guidePages, ...countyPages];
+  const cityPages = MAJOR_CITIES.map((city) => ({
+    url: `${BASE_URL}/firme/oras/${slugifyCity(city)}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...companyPages, ...guidePages, ...countyPages, ...cityPages];
 }

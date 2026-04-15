@@ -5,14 +5,17 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import CompanyCard from '@/components/company/CompanyCard';
 import Button from '@/components/ui/Button';
-import { generateBreadcrumbJsonLd } from '@/lib/seo';
+import FAQ from '@/components/seo/FAQ';
+import { generateBreadcrumbJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import {
   getCountyBySlug,
   getCompaniesByCounty,
   getCoveredCounties,
   slugifyCounty,
+  slugifyCity,
   sortCompanies,
   getSpecializationLabel,
+  MAJOR_CITIES,
 } from '@/lib/utils';
 
 interface Props {
@@ -97,7 +100,7 @@ export default async function CountyPage({ params }: Props) {
                 instalare panouri solare care acoperă județul {county}, cu date reale din registrele publice.
                 {hasAnre.length > 0 && (
                   <> Dintre acestea, <strong>{hasAnre.length} {hasAnre.length === 1 ? 'are' : 'au'} atestat
-                  ANRE C2A</strong> — certificarea obligatorie pentru montajul sistemelor fotovoltaice comerciale.</>
+                  ANRE C2A verificat</strong> în registrele publice.</>
                 )}
               </p>
 
@@ -130,6 +133,32 @@ export default async function CountyPage({ params }: Props) {
                 direct pe platformă.
               </p>
             </div>
+          );
+        })()}
+
+        {/* FAQ */}
+        {(() => {
+          const countyFaqs = [
+            {
+              question: `Câte firme de instalare panouri fotovoltaice sunt în ${county}?`,
+              answer: `Pe platforma noastră sunt listate ${companies.length} firme verificate de instalare panouri fotovoltaice care acoperă județul ${county}. Toate firmele au date verificate din registrele publice, inclusiv certificări, date financiare și experiență.`,
+            },
+            {
+              question: `Cât costă montajul panourilor fotovoltaice în ${county}?`,
+              answer: `Costul instalării unui sistem fotovoltaic comercial în ${county} variază între 550-850 EUR/kWp, în funcție de dimensiunea proiectului. Un sistem de 100 kWp costă între 55.000 și 85.000 EUR, cu amortizare în 4-6 ani. Solicită oferte de la mai mulți instalatori pentru cel mai bun preț.`,
+            },
+            {
+              question: `Cum aleg cel mai bun instalator fotovoltaic din ${county}?`,
+              answer: `Verifică atestatul ANRE C2A (obligatoriu), experiența pe proiecte comerciale similare, certificări ISO, stabilitatea financiară și referințele de la clienți anteriori. Pe platforma noastră poți compara toate aceste criterii pentru fiecare firmă din ${county}.`,
+            },
+          ];
+          return (
+            <>
+              <JsonLd data={generateFAQJsonLd(countyFaqs)} />
+              <div className="mb-10">
+                <FAQ items={countyFaqs} title={`Întrebări frecvente — instalatori fotovoltaici ${county}`} />
+              </div>
+            </>
           );
         })()}
 
@@ -171,6 +200,43 @@ export default async function CountyPage({ params }: Props) {
             </Link>
           </div>
         </div>
+
+        {/* Major cities in this county or nearby */}
+        {(() => {
+          const citiesInCounty = companies
+            .map((c) => c.location.city)
+            .filter((city) => MAJOR_CITIES.includes(city as (typeof MAJOR_CITIES)[number]));
+          const uniqueCities = [...new Set(citiesInCounty)];
+          // Always show all major cities for cross-linking
+          const otherCities = MAJOR_CITIES.filter((c) => !uniqueCities.includes(c));
+          return (
+            <div className="mt-10">
+              <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                Instalatori fotovoltaici per oraș
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {uniqueCities.map((c) => (
+                  <Link
+                    key={c}
+                    href={`/firme/oras/${slugifyCity(c)}`}
+                    className="text-sm px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary-dark font-medium hover:bg-primary/10 transition-colors"
+                  >
+                    {c}
+                  </Link>
+                ))}
+                {otherCities.map((c) => (
+                  <Link
+                    key={c}
+                    href={`/firme/oras/${slugifyCity(c)}`}
+                    className="text-sm px-3 py-1.5 rounded-full border border-border text-gray-600 hover:border-primary/30 hover:text-primary-dark transition-colors"
+                  >
+                    {c}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Internal linking to other counties */}
         <div className="mt-10">

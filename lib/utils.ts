@@ -187,6 +187,59 @@ export function getCoveredCounties(): string[] {
   return Array.from(covered).sort((a, b) => a.localeCompare(b, 'ro'));
 }
 
+export function slugifyCity(city: string): string {
+  return city
+    .toLowerCase()
+    .replace(/ă/g, 'a')
+    .replace(/â/g, 'a')
+    .replace(/î/g, 'i')
+    .replace(/ș/g, 's')
+    .replace(/ț/g, 't')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+export function getCityBySlug(slug: string): string | undefined {
+  const cities = getCoveredCities();
+  return cities.find((c) => slugifyCity(c) === slug);
+}
+
+export function getCompaniesByCity(city: string): Company[] {
+  return companiesData.companies.filter((c) => c.location.city === city);
+}
+
+export function getCompaniesByCityArea(city: string): Company[] {
+  // Returns companies headquartered in the city OR covering the county the city is in
+  const companiesInCity = companiesData.companies.filter((c) => c.location.city === city);
+  const counties = [...new Set(companiesInCity.map((c) => c.location.county))];
+  const companiesInArea = companiesData.companies.filter(
+    (c) => counties.some((county) => c.coverage.includes(county))
+  );
+  // Deduplicate and put city-based companies first
+  const seen = new Set<string>();
+  const result: Company[] = [];
+  for (const c of [...companiesInCity, ...companiesInArea]) {
+    if (!seen.has(c.id)) {
+      seen.add(c.id);
+      result.push(c);
+    }
+  }
+  return result;
+}
+
+export function getCoveredCities(): string[] {
+  const cities = new Set<string>();
+  for (const c of companiesData.companies) {
+    cities.add(c.location.city);
+  }
+  return Array.from(cities).sort((a, b) => a.localeCompare(b, 'ro'));
+}
+
+// Major cities that get dedicated pages (enough search volume)
+export const MAJOR_CITIES = [
+  'București', 'Cluj-Napoca', 'Timișoara', 'Iași', 'Brașov', 'Craiova', 'Sibiu', 'Oradea',
+] as const;
+
 export const SITE_NAME = 'Instalatori Fotovoltaice România';
 export const SITE_URL = 'https://instalatori-fotovoltaice.ro';
 export const SITE_DESCRIPTION =
