@@ -1,6 +1,38 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import Badge from '@/components/ui/Badge';
 import { type Company, getSpecializationLabel, formatNumber } from '@/lib/utils';
+
+function CompanyLogo({ company, size = 40 }: { company: Company; size?: number }) {
+  const initials = company.name
+    .split(/[\s-]+/)
+    .filter(w => w.length > 1 && w[0] === w[0].toUpperCase())
+    .slice(0, 2)
+    .map(w => w[0])
+    .join('');
+
+  if (company.logo) {
+    return (
+      <Image
+        src={company.logo}
+        alt={`Logo ${company.name}`}
+        width={size}
+        height={size}
+        className="rounded-lg object-contain bg-white"
+        style={{ width: size, height: size }}
+      />
+    );
+  }
+
+  return (
+    <div
+      className="rounded-lg bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center text-secondary font-semibold text-sm"
+      style={{ width: size, height: size }}
+    >
+      {initials}
+    </div>
+  );
+}
 
 interface CompanyCardProps {
   company: Company;
@@ -14,6 +46,7 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
         href={`/firme/${company.slug}`}
         className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all bg-white"
       >
+        <CompanyLogo company={company} size={32} />
         <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-gray-900 text-sm">{company.name}</h3>
           <p className="text-xs text-gray-500">{company.location.city}, {company.location.county}</p>
@@ -33,10 +66,15 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
       href={`/firme/${company.slug}`}
       className="flex flex-col p-5 rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all bg-white"
     >
-      <h3 className="font-semibold text-gray-900 mb-1">{company.name}</h3>
-      <p className="text-sm text-gray-500 mb-3">
-        {company.location.city}, {company.location.county}
-      </p>
+      <div className="flex items-center gap-3 mb-3">
+        <CompanyLogo company={company} size={40} />
+        <div className="min-w-0">
+          <h3 className="font-semibold text-gray-900">{company.name}</h3>
+          <p className="text-sm text-gray-500">
+            {company.location.city}, {company.location.county}
+          </p>
+        </div>
+      </div>
 
       <p className="text-sm text-gray-600 mb-4 line-clamp-2">{company.description}</p>
 
