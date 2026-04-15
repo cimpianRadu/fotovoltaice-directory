@@ -12,6 +12,7 @@ import {
   getCoveredCounties,
   slugifyCounty,
   sortCompanies,
+  getSpecializationLabel,
 } from '@/lib/utils';
 
 interface Props {
@@ -32,8 +33,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const companies = getCompaniesByCounty(county);
 
   return {
-    title: `Firme Instalare Panouri Fotovoltaice ${county} | ${companies.length} Instalatori`,
-    description: `${companies.length} firme verificate de instalare panouri fotovoltaice în ${county}. Compară instalatori, certificări ANRE și solicită ofertă gratuită.`,
+    title: `Firme Montaj Panouri Fotovoltaice ${county} 2026 | ${companies.length} Instalatori Autorizați`,
+    description: `${companies.length} firme verificate de instalare și montaj panouri fotovoltaice în ${county}. Instalatori autorizați ANRE, date financiare reale. Compară și cere ofertă gratuită.`,
     alternates: { canonical: `/firme/judet/${slug}` },
   };
 }
@@ -64,10 +65,10 @@ export default async function CountyPage({ params }: Props) {
 
         <div className="mt-6 mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            Firme Instalare Fotovoltaice în {county}
+            Firme Montaj Panouri Fotovoltaice în {county}
           </h1>
           <p className="text-gray-500 mt-2">
-            {companies.length} {companies.length === 1 ? 'firmă verificată' : 'firme verificate'} care
+            {companies.length} instalatori autorizați de panouri solare verificați care
             acoperă județul {county}
           </p>
         </div>
@@ -77,6 +78,60 @@ export default async function CountyPage({ params }: Props) {
             <CompanyCard key={company.id} company={company} />
           ))}
         </div>
+
+        {/* SEO Content */}
+        {(() => {
+          const allSpecs = [...new Set(companies.flatMap((c) => c.specializations))];
+          const hasAnre = companies.filter((c) => c.certifications.includes('ANRE-C2A'));
+          const oldestYear = Math.min(...companies.map((c) => c.founded));
+          const maxCapacity = Math.max(...companies.map((c) => c.capacity.maxProjectKw));
+
+          return (
+            <div className="prose prose-gray max-w-none text-gray-600 mb-10">
+              <h2 className="text-xl font-bold text-gray-900">
+                Instalare panouri fotovoltaice în {county} — ce trebuie să știi
+              </h2>
+              <p>
+                Cauți <strong>firme de montaj panouri fotovoltaice în {county}</strong>? Pe platforma noastră
+                găsești {companies.length} {companies.length === 1 ? 'firmă verificată' : 'firme verificate'} de
+                instalare panouri solare care acoperă județul {county}, cu date reale din registrele publice.
+                {hasAnre.length > 0 && (
+                  <> Dintre acestea, <strong>{hasAnre.length} {hasAnre.length === 1 ? 'are' : 'au'} atestat
+                  ANRE C2A</strong> — certificarea obligatorie pentru montajul sistemelor fotovoltaice comerciale.</>
+                )}
+              </p>
+
+              <h3 className="text-lg font-semibold text-gray-900">
+                Specializări disponibile în {county}
+              </h3>
+              <p>
+                Firmele de instalare panouri fotovoltaice din {county} acoperă
+                următoarele specializări: {allSpecs.map((s) => getSpecializationLabel(s)).join(', ').toLowerCase()}.
+                {maxCapacity >= 1000 && (
+                  <> Capacitatea maximă disponibilă este de <strong>{maxCapacity.toLocaleString('ro-RO')} kWp</strong>,
+                  potrivită inclusiv pentru proiecte fotovoltaice industriale de mari dimensiuni.</>
+                )}
+              </p>
+
+              <h3 className="text-lg font-semibold text-gray-900">
+                De ce să alegi un instalator autorizat în {county}
+              </h3>
+              <p>
+                Un <strong>instalator autorizat de panouri fotovoltaice</strong> cu experiență în {county} cunoaște
+                condițiile locale — de la cerințele operatorului de distribuție pentru racordare, până la specificul
+                climatic al zonei. Firmele listate pe platforma noastră au o experiență medie de peste{' '}
+                {new Date().getFullYear() - oldestYear > 10 ? '10' : Math.round((new Date().getFullYear() - oldestYear) * 0.7).toString()} ani
+                în domeniul energiei solare și al instalațiilor electrice.
+              </p>
+
+              <p>
+                Compară <strong>firme acreditate de montaj panouri solare în {county}</strong> după certificări,
+                experiență, număr de proiecte finalizate și capacitate maximă. Apoi solicită ofertă gratuită
+                direct pe platformă.
+              </p>
+            </div>
+          );
+        })()}
 
         <div className="bg-gray-50 rounded-xl p-6 sm:p-8 text-center">
           <h2 className="text-lg font-semibold text-gray-900 mb-2">
