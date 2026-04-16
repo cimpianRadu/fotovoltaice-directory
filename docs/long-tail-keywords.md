@@ -32,12 +32,12 @@ Ultima actualizare: 2026-04-09
 | subvenții panouri fotovoltaice 2026 | ✅ | Ghid existent |
 | electric up 2026 ghid aplicare | ✅ | Ghid existent |
 | casa verde fotovoltaice 2026 | ✅ | Ghid existent |
-| fondul de modernizare 2026 fotovoltaice | 🎯 | Planificat în calendar |
-| PNRR energie verde 2026 cum aplici | 🎯 | Planificat în calendar |
-| fonduri nerambursabile panouri fotovoltaice IMM 2026 | 🎯 | Variație pe subvenții |
-| finanțare panouri fotovoltaice pentru SRL | 🎯 | Ghid specific forma juridică |
-| leasing panouri fotovoltaice firmă România | 💡 | Opțiune alternativă la subvenții |
-| credit verde panouri solare BCR / BRD / CEC | 💡 | Ghid finanțare bancară |
+| fondul de modernizare 2026 fotovoltaice | ✅ | Ghid fonduri nerambursabile |
+| PNRR energie verde 2026 cum aplici | ✅ | Ghid fonduri nerambursabile |
+| fonduri nerambursabile panouri fotovoltaice IMM 2026 | ✅ | Ghid fonduri nerambursabile |
+| finanțare panouri fotovoltaice pentru SRL | ✅ | Ghid fonduri nerambursabile |
+| leasing panouri fotovoltaice firmă România | ✅ | Ghid fonduri nerambursabile |
+| credit verde panouri solare BCR / BRD / CEC | ✅ | Ghid fonduri nerambursabile |
 | beneficii fiscale energie verde firmă 2026 | ✅ | Secțiune dedicată în ghidul ROI (OUG 8/2026) |
 
 ## 3. Legislație & Prosumator (evergreen cu actualizări anuale)
@@ -137,7 +137,7 @@ Ultima actualizare: 2026-04-09
 
 1. **firmă montaj panouri fotovoltaice [JUDEȚ]** — 42 pagini PSEO, trafic local
 2. **cele mai bune firme fotovoltaice comerciale România** — direct legat de director
-3. **fonduri nerambursabile panouri fotovoltaice IMM 2026** — intent comercial mare
+3. ~~**fonduri nerambursabile panouri fotovoltaice IMM 2026**~~ — ✅ ACOPERIT (ghid finanțare, 16 Apr)
 4. ~~**merită panouri fotovoltaice pentru firmă 2026**~~ — ✅ ACOPERIT (ghid ROI, 9 Apr)
 5. ~~**în cât timp se amortizează panourile fotovoltaice firmă**~~ — ✅ ACOPERIT (secțiune în ghid ROI)
 6. **dimensionare sistem fotovoltaic comercial** — ghid tehnic + calculator
