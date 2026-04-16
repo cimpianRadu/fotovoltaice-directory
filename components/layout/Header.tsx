@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation';
 const navLinks = [
   { href: '/firme', label: 'Firme' },
   { href: '/clasament', label: 'Clasament' },
+  { href: '/verificare-anre', label: 'Verificare ANRE' },
   { href: '/ghid', label: 'Ghid' },
   { href: '/intrebari-frecvente', label: 'FAQ' },
   { href: '/despre', label: 'Despre' },

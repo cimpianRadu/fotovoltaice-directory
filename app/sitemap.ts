@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/cere-oferta`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
     { url: `${BASE_URL}/intrebari-frecvente`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.7 },
     { url: `${BASE_URL}/despre`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.5 },
+    { url: `${BASE_URL}/verificare-anre`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.7 },
     { url: `${BASE_URL}/rezidential`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.4 },
     { url: `${BASE_URL}/politica-confidentialitate`, lastModified: new Date(), changeFrequency: 'yearly' as const, priority: 0.3 },
     { url: `${BASE_URL}/termeni-conditii`, lastModified: new Date(), changeFrequency: 'yearly' as const, priority: 0.3 },
