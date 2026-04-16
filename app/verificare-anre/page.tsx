@@ -121,6 +121,88 @@ export default function VerificareAnrePage() {
             </div>
           </div>
         </section>
+
+        {/* SEO content section */}
+        <section className="mt-12 space-y-6 text-gray-700 text-[15px] leading-relaxed">
+          <h2 className="text-xl font-semibold text-secondary-dark">
+            De ce e important să verifici atestatul ANRE al instalatorului
+          </h2>
+          <p>
+            Instalarea unui sistem fotovoltaic presupune lucrări electrice complexe — de la racordarea la rețeaua de distribuție, la configurarea invertoarelor și a sistemelor de protecție. Un instalator fără atestat ANRE valid nu are dreptul legal de a executa aceste lucrări, iar consecințele pot fi grave: de la refuzul operatorului de distribuție de a racorda sistemul, până la pierderea garanției echipamentelor sau, în cel mai rău caz, riscuri de incendiu.
+          </p>
+          <p>
+            <strong>Autoritatea Națională de Reglementare în Domeniul Energiei (ANRE)</strong> este singura instituție din România care atestă operatorii economici pentru proiectarea și executarea instalațiilor electrice. Atestatul ANRE confirmă că firma deține personalul calificat, echipamentele necesare și procedurile de lucru conforme cu normativele tehnice în vigoare.
+          </p>
+
+          <h3 className="text-lg font-semibold text-secondary-dark">
+            Ce atestat ANRE trebuie să aibă instalatorul de panouri fotovoltaice
+          </h3>
+          <p>
+            Depinde de dimensiunea proiectului. Pentru un <strong>sistem rezidențial sau comercial mic</strong> (sub 50 kWp), este suficient un atestat <strong>tip B</strong> (executare instalații electrice de joasă tensiune). Pentru <strong>proiecte comerciale și industriale</strong> mai mari de 50 kWp — hale industriale, clădiri de birouri, parcuri logistice — este necesar atestatul <strong>tip C2A</strong>, care acoperă proiectarea și executarea instalațiilor electrice exterioare de medie și înaltă tensiune.
+          </p>
+          <p>
+            Multe firme dețin și atestate complementare: <strong>A3</strong> (proiectare generală), <strong>E1</strong> și <strong>E2</strong> (verificare instalații), <strong>D1/D2</strong> (rețele electrice). Cu cât o firmă are mai multe tipuri de atestate active, cu atât poate acoperi mai multe etape ale proiectului fără a apela la subcontractori.
+          </p>
+
+          <h3 className="text-lg font-semibold text-secondary-dark">
+            Cum funcționează instrumentul nostru de verificare
+          </h3>
+          <p>
+            Instrumentul de verificare de pe această pagină interoghează în timp real <strong>registrul oficial ANRE</strong> al operatorilor economici atestați. Introduci numele firmei sau codul unic de înregistrare (CUI) și primești instantaneu lista completă a atestatelor — active, expirate sau retrase — cu numărul atestatului, data emiterii și data expirării.
+          </p>
+          <p>
+            Spre deosebire de portalul oficial ANRE (portal.anre.ro), care are o interfață dificil de navigat, instrumentul nostru afișează rezultatele într-un format clar, cu evidențierea atestatelor relevante pentru instalarea de panouri fotovoltaice și badge-uri vizuale pentru starea fiecărei certificări.
+          </p>
+
+          <h3 className="text-lg font-semibold text-secondary-dark">
+            Sfaturi pentru alegerea unui instalator verificat
+          </h3>
+          <ul className="list-disc pl-5 space-y-2">
+            <li>Verifică <strong>atestatul C2A</strong> pentru orice proiect comercial sau industrial — este obligatoriu pentru sisteme peste 50 kWp</li>
+            <li>Asigură-te că atestatul este în stare <strong>„Atestat"</strong> (activ), nu „Expirat" sau „Retras"</li>
+            <li>Verifică <strong>data de expirare</strong> — un atestat care expiră în curând ar putea cauza probleme dacă proiectul durează mai mult</li>
+            <li>Cere referințe și vizitează proiecte finalizate — atestatul ANRE este o condiție necesară, dar nu suficientă</li>
+            <li>Verifică și <strong>certificările ISO</strong> (9001, 14001, 45001) pentru un indicator suplimentar de profesionalism</li>
+          </ul>
+
+          <div className="bg-primary/5 border border-primary/10 rounded-xl p-5 mt-6">
+            <p className="text-sm text-gray-800">
+              <strong>Cauți un instalator fotovoltaic verificat?</strong> În{' '}
+              <a href="/firme" className="text-primary-dark font-medium hover:underline">platforma noastră</a>{' '}
+              găsești doar firme cu date verificate din surse publice oficiale, inclusiv certificări ANRE confirmate.
+              Poți filtra după tip de atestat, județ și specializare.
+            </p>
+          </div>
+        </section>
+
+        {/* FAQ section visible */}
+        <section className="mt-12 space-y-4">
+          <h2 className="text-xl font-semibold text-secondary-dark">
+            Întrebări frecvente despre atestatele ANRE
+          </h2>
+          <div className="space-y-3">
+            <details className="bg-surface rounded-xl border border-border p-4 group">
+              <summary className="font-medium text-secondary-dark cursor-pointer">Ce este atestatul ANRE?</summary>
+              <p className="mt-2 text-sm text-gray-600">Atestatul ANRE este o certificare emisă de Autoritatea Națională de Reglementare în domeniul Energiei care confirmă că un operator economic are competența de a proiecta și/sau executa instalații electrice. Este obligatoriu pentru orice firmă care realizează lucrări electrice în România.</p>
+            </details>
+            <details className="bg-surface rounded-xl border border-border p-4 group">
+              <summary className="font-medium text-secondary-dark cursor-pointer">Ce înseamnă atestat ANRE tip C2A?</summary>
+              <p className="mt-2 text-sm text-gray-600">Atestatul C2A permite proiectarea și executarea instalațiilor electrice exterioare de medie și înaltă tensiune. Este esențial pentru proiecte fotovoltaice comerciale și industriale mai mari de 50 kWp — hale, clădiri de birouri, parcuri logistice.</p>
+            </details>
+            <details className="bg-surface rounded-xl border border-border p-4 group">
+              <summary className="font-medium text-secondary-dark cursor-pointer">Cum verific dacă un instalator are atestat ANRE valid?</summary>
+              <p className="mt-2 text-sm text-gray-600">Folosește instrumentul de verificare de pe această pagină. Introdu numele firmei sau CUI-ul și vei vedea toate certificările active, expirate sau retrase din registrul oficial ANRE, afișate într-un format ușor de înțeles.</p>
+            </details>
+            <details className="bg-surface rounded-xl border border-border p-4 group">
+              <summary className="font-medium text-secondary-dark cursor-pointer">Ce atestat trebuie să aibă un instalator fotovoltaic?</summary>
+              <p className="mt-2 text-sm text-gray-600">Pentru sisteme rezidențiale sau mici (sub 50 kWp) este suficient atestatul tip B. Pentru proiecte comerciale și industriale (peste 50 kWp) este necesar atestatul tip C2A. Ideal, firma ar trebui să aibă și atestate complementare (A3, E1, E2).</p>
+            </details>
+            <details className="bg-surface rounded-xl border border-border p-4 group">
+              <summary className="font-medium text-secondary-dark cursor-pointer">Un instalator fără atestat ANRE poate monta panouri fotovoltaice?</summary>
+              <p className="mt-2 text-sm text-gray-600">Legal, nu. Orice lucrare electrică în România trebuie executată de un operator economic atestat ANRE. Un instalator fără atestat valid riscă să nu obțină racordarea la rețea de la operatorul de distribuție, iar clientul poate pierde garanția echipamentelor.</p>
+            </details>
+          </div>
+        </section>
       </div>
     </>
   );

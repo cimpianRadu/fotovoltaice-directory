@@ -35,7 +35,7 @@ const homeFaqs = [
   {
     question: 'Cum găsesc un instalator autorizat de panouri fotovoltaice în România?',
     answer:
-      'Pe instalatori-fotovoltaice.ro poți compara 42 de firme de instalare panouri fotovoltaice verificate, cu date din registre publice. Filtrează după județ, specializare și certificări ANRE pentru a găsi instalatorul potrivit.',
+      'Pe instalatori-fotovoltaice.ro poți compara 45 de firme de instalare panouri fotovoltaice verificate, cu date din registre publice. Filtrează după județ, specializare și certificări ANRE pentru a găsi instalatorul potrivit.',
   },
   {
     question: 'Ce certificări trebuie să aibă un instalator de panouri fotovoltaice?',
@@ -81,7 +81,7 @@ export default function HomePage() {
             <span className="text-primary-light"> Panouri Fotovoltaice România</span>
           </h1>
           <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Găsește instalatori de panouri fotovoltaice verificați pentru hale industriale, fabrici, clădiri de birouri și spații comerciale. 42 firme cu atestat ANRE din 41 de județe.
+            Găsește instalatori de panouri fotovoltaice verificați pentru hale industriale, fabrici, clădiri de birouri și spații comerciale. 45 firme cu atestat ANRE din 41 de județe.
           </p>
 
           <div className="flex justify-center mb-8">
@@ -165,7 +165,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SEO Content */}
+      {/* SEO Content + Stats + ANRE Verification */}
       <section className="max-w-7xl mx-auto px-4 py-16">
         <div className="max-w-4xl">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
@@ -179,25 +179,42 @@ export default function HomePage() {
               probleme din primul an.
             </p>
             <p>
-              Pe <strong>instalatori-fotovoltaice.ro</strong> găsești <strong>42 de instalatori autorizați
+              Pe <strong>instalatori-fotovoltaice.ro</strong> găsești <strong>45 de instalatori autorizați
               de panouri fotovoltaice</strong> din România, verificați cu date reale din registrele oficiale.
-              Fiecare firmă de instalare panouri fotovoltaice are CUI verificat, date financiare publice
-              și informații despre certificări ANRE, specializări și acoperire geografică în 41 de județe.
+              Fiecare firmă are CUI verificat, date financiare publice și informații despre certificări ANRE,
+              specializări și acoperire geografică în 41 de județe.
             </p>
-            <div className="grid sm:grid-cols-3 gap-6 my-8 not-prose">
-              <div className="text-center p-4 rounded-lg bg-surface border border-border">
-                <div className="text-3xl font-bold text-primary-dark">42</div>
-                <div className="text-sm text-gray-500 mt-1">Firme verificate</div>
-              </div>
-              <div className="text-center p-4 rounded-lg bg-surface border border-border">
-                <div className="text-3xl font-bold text-primary-dark">41</div>
-                <div className="text-sm text-gray-500 mt-1">Județe acoperite</div>
-              </div>
-              <div className="text-center p-4 rounded-lg bg-surface border border-border">
-                <div className="text-3xl font-bold text-primary-dark">13</div>
-                <div className="text-sm text-gray-500 mt-1">Cu atestat ANRE C2A</div>
-              </div>
-            </div>
+          </div>
+        </div>
+
+        {/* Stats + ANRE CTA row */}
+        <div className="mt-8 grid sm:grid-cols-4 gap-4 max-w-4xl">
+          <div className="text-center p-4 rounded-xl bg-surface border border-border">
+            <div className="text-3xl font-bold text-primary-dark">45</div>
+            <div className="text-sm text-gray-500 mt-1">Firme verificate</div>
+          </div>
+          <div className="text-center p-4 rounded-xl bg-surface border border-border">
+            <div className="text-3xl font-bold text-primary-dark">28</div>
+            <div className="text-sm text-gray-500 mt-1">Cu atestat ANRE C2A</div>
+          </div>
+          <div className="text-center p-4 rounded-xl bg-surface border border-border">
+            <div className="text-3xl font-bold text-primary-dark">41</div>
+            <div className="text-sm text-gray-500 mt-1">Județe acoperite</div>
+          </div>
+          <Link
+            href="/verificare-anre"
+            className="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-secondary/20 bg-secondary-dark/5 hover:border-secondary/40 hover:shadow-md transition-all text-center group"
+          >
+            <svg className="w-7 h-7 text-secondary-dark mb-1 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+            </svg>
+            <div className="text-sm font-semibold text-secondary-dark">Verifică ANRE</div>
+            <div className="text-xs text-gray-500">Caută după CUI sau nume</div>
+          </Link>
+        </div>
+
+        <div className="max-w-4xl mt-8">
+          <div className="prose prose-gray max-w-none text-gray-600 space-y-4">
             <p>
               Spre deosebire de alte surse, nu listăm firme pe baza plăților sau a
               auto-declarațiilor. Toate datele sunt colectate din surse publice — <em>termene.ro</em>,{' '}
