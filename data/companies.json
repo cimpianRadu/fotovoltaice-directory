@@ -1364,7 +1364,9 @@
         "retail",
         "agricol"
       ],
-      "certifications": [],
+      "certifications": [
+        "ANRE-B"
+      ],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 0,
@@ -1748,7 +1750,9 @@
         "cladiri-birouri",
         "agricol"
       ],
-      "certifications": [],
+      "certifications": [
+        "ANRE-B"
+      ],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 94,
@@ -1858,7 +1862,9 @@
         "cladiri-birouri",
         "agricol"
       ],
-      "certifications": [],
+      "certifications": [
+        "ANRE-B"
+      ],
       "capacity": {
         "minProjectKw": 0,
         "maxProjectKw": 0,
@@ -1908,7 +1914,9 @@
         "hale-industriale",
         "cladiri-birouri"
       ],
-      "certifications": [],
+      "certifications": [
+        "ANRE-B"
+      ],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 400,
@@ -1961,7 +1969,9 @@
         "cladiri-birouri",
         "retail"
       ],
-      "certifications": [],
+      "certifications": [
+        "ANRE-B"
+      ],
       "capacity": {
         "minProjectKw": 20,
         "maxProjectKw": 314,
@@ -2190,7 +2200,9 @@
         "cladiri-birouri",
         "retail"
       ],
-      "certifications": [],
+      "certifications": [
+        "ANRE-B"
+      ],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 500,
@@ -2415,7 +2427,9 @@
         "agricol",
         "hoteluri"
       ],
-      "certifications": [],
+      "certifications": [
+        "ANRE-B"
+      ],
       "capacity": {
         "minProjectKw": 100,
         "maxProjectKw": 500,
@@ -2530,7 +2544,9 @@
         "hoteluri",
         "agricol"
       ],
-      "certifications": [],
+      "certifications": [
+        "ANRE-B"
+      ],
       "capacity": {
         "minProjectKw": 50,
         "maxProjectKw": 5900,
