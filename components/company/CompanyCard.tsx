@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import Badge from '@/components/ui/Badge';
-import { type Company, getSpecializationLabel, formatNumber } from '@/lib/utils';
+import { type Company, getSpecializationLabel, getCertificationLabel, formatNumber } from '@/lib/utils';
 
 function CompanyLogo({ company, size = 40 }: { company: Company; size?: number }) {
   const initials = company.name
@@ -53,6 +53,11 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
         </div>
 
         <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500 shrink-0">
+          {company.certifications.filter(c => c.startsWith('ANRE-')).map(cert => (
+            <Badge key={cert} variant={cert === 'ANRE-C2A' ? 'success' : 'outline'} size="sm">
+              {getCertificationLabel(cert)}
+            </Badge>
+          ))}
           <span>Până la {formatNumber(company.capacity.maxProjectKw)} kW</span>
           <span className="text-gray-300">|</span>
           <span>Din {company.founded}</span>
@@ -78,13 +83,23 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
 
       <p className="text-sm text-gray-600 mb-4 line-clamp-2">{company.description}</p>
 
-      <div className="flex flex-wrap gap-1.5 mb-4">
+      <div className="flex flex-wrap gap-1.5 mb-3">
         {company.specializations.slice(0, 3).map((spec) => (
           <Badge key={spec} variant="outline" size="sm">
             {getSpecializationLabel(spec)}
           </Badge>
         ))}
       </div>
+
+      {company.certifications.filter(c => c.startsWith('ANRE-')).length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {company.certifications.filter(c => c.startsWith('ANRE-')).map(cert => (
+            <Badge key={cert} variant={cert === 'ANRE-C2A' ? 'success' : 'default'} size="sm">
+              {getCertificationLabel(cert)}
+            </Badge>
+          ))}
+        </div>
+      )}
 
       <div className="mt-auto pt-3 border-t border-border flex items-center justify-between text-xs text-gray-500">
         <span>Până la {formatNumber(company.capacity.maxProjectKw)} kW</span>

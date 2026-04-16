@@ -13,6 +13,7 @@ import {
   getCompanies,
   getSpecializationLabel,
   getCertificationLabel,
+  getCertificationDescription,
   getTagLabel,
 } from '@/lib/utils';
 import { generateLocalBusinessJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo';
@@ -106,13 +107,22 @@ export default async function CompanyDetailPage({ params }: Props) {
             {/* Certifications */}
             <div>
               <h2 className="text-lg font-bold text-gray-900 mb-3">Certificări</h2>
-              <div className="flex flex-wrap gap-2">
-                {company.certifications.map((cert) => (
-                  <Badge key={cert} variant="success" size="md">
-                    {getCertificationLabel(cert)}
-                  </Badge>
-                ))}
-              </div>
+              {company.certifications.length > 0 ? (
+                <div className="space-y-3">
+                  {company.certifications.map((cert) => (
+                    <div key={cert} className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-border">
+                      <Badge variant={cert.startsWith('ANRE-') ? 'success' : 'primary'} size="md">
+                        {getCertificationLabel(cert)}
+                      </Badge>
+                      <p className="text-sm text-gray-600 pt-0.5">
+                        {getCertificationDescription(cert)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-gray-500">Nicio certificare ANRE sau ISO confirmată.</p>
+              )}
             </div>
 
             {/* Tags */}

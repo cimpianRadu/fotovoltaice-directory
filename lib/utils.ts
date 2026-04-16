@@ -45,11 +45,27 @@ export function formatNumber(num: number): string {
 export function getCertificationLabel(cert: string): string {
   const labels: Record<string, string> = {
     'ANRE-C2A': 'ANRE C2A',
+    'ANRE-B': 'ANRE B',
     'ISO-9001': 'ISO 9001',
     'ISO-14001': 'ISO 14001',
     'ISO-45001': 'ISO 45001',
   };
   return labels[cert] ?? cert;
+}
+
+export function getCertificationDescription(cert: string): string {
+  const descriptions: Record<string, string> = {
+    'ANRE-C2A': 'Atestat pentru proiectare și executare instalații electrice exterioare (medie/înaltă tensiune). Necesar pentru proiecte comerciale și industriale peste 50 kWp.',
+    'ANRE-B': 'Atestat pentru executare instalații electrice de joasă tensiune. Acoperă proiecte rezidențiale și comerciale mici (sub 50 kWp).',
+    'ISO-9001': 'Sistem de management al calității conform standardului internațional ISO 9001.',
+    'ISO-14001': 'Sistem de management de mediu conform standardului internațional ISO 14001.',
+    'ISO-45001': 'Sistem de management al sănătății și securității ocupaționale conform ISO 45001.',
+  };
+  return descriptions[cert] ?? '';
+}
+
+export function isAnreCertification(cert: string): boolean {
+  return cert.startsWith('ANRE-');
 }
 
 export function getTagLabel(tag: string): string {
