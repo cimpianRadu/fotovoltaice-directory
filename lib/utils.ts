@@ -1,9 +1,34 @@
-import companiesData from '@/data/companies.json';
+import companiesDataRaw from '@/data/companies.json';
 import specializationsData from '@/data/specializations.json';
 import countiesData from '@/data/counties.json';
+import { hasActiveAnreCert } from './anre';
 
-export type Company = (typeof companiesData.companies)[number];
+export interface Company {
+  id: string;
+  slug: string;
+  name: string;
+  cui: string;
+  logo?: string;
+  description: string;
+  founded: number;
+  employees: number;
+  location: { city: string; county: string; address: string };
+  contact: { phone: string; email: string; website: string };
+  coverage: string[];
+  specializations: string[];
+  certifications: string[];
+  capacity: { minProjectKw: number; maxProjectKw: number; projectsCompleted: number };
+  financials: { year: number; revenue: number; profit: number };
+  tags: string[];
+  featured: boolean;
+  verified: boolean;
+  createdAt: string;
+  updatedAt: string;
+  anreMatch: { societate: string; judet: string } | null;
+}
 export type Specialization = (typeof specializationsData.specializations)[number];
+
+const companiesData = { companies: companiesDataRaw.companies as unknown as Company[] };
 
 export function getCompanies(): Company[] {
   return companiesData.companies;
@@ -125,11 +150,13 @@ export function filterCompanies(
     ) {
       return false;
     }
-    if (
-      filters.certification &&
-      !company.certifications.includes(filters.certification)
-    ) {
-      return false;
+    if (filters.certification) {
+      if (filters.certification.startsWith('ANRE-')) {
+        const code = filters.certification.replace(/^ANRE-/, '');
+        if (!hasActiveAnreCert(company.anreMatch, code)) return false;
+      } else if (!company.certifications.includes(filters.certification)) {
+        return false;
+      }
     }
     if (filters.tag && !company.tags.includes(filters.tag)) {
       return false;

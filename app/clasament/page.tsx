@@ -4,6 +4,7 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 import { getCompanies, formatCurrency } from '@/lib/utils';
+import { getCompanyAnreCerts, getAnreCodeLabel } from '@/lib/anre';
 import { rankCompanies, getBadge, METHODOLOGY } from '@/lib/scoring';
 import CorrectionForm from '@/components/forms/CorrectionForm';
 
@@ -113,20 +114,33 @@ export default function ClasamentPage() {
                         {yearsExp > 0 ? `${yearsExp} ani` : '-'}
                       </td>
                       <td className="px-4 py-3 text-center">
-                        {company.certifications.length > 0 ? (
-                          <div className="flex flex-wrap justify-center gap-1">
-                            {company.certifications.map((cert) => (
-                              <span
-                                key={cert}
-                                className="inline-block text-[10px] bg-green-50 text-green-700 px-1.5 py-0.5 rounded"
-                              >
-                                {cert.replace('ANRE-', '').replace('ISO-', 'ISO ')}
-                              </span>
-                            ))}
-                          </div>
-                        ) : (
-                          <span className="text-gray-300">-</span>
-                        )}
+                        {(() => {
+                          const anreCerts = getCompanyAnreCerts(company.anreMatch);
+                          const isoCerts = (company.certifications || []).filter((c) => !c.startsWith('ANRE-'));
+                          if (anreCerts.length + isoCerts.length === 0) {
+                            return <span className="text-gray-300">-</span>;
+                          }
+                          return (
+                            <div className="flex flex-wrap justify-center gap-1">
+                              {anreCerts.map((cert) => (
+                                <span
+                                  key={cert.code}
+                                  className="inline-block text-[10px] bg-green-50 text-green-700 px-1.5 py-0.5 rounded"
+                                >
+                                  {getAnreCodeLabel(cert.code).replace('ANRE ', '')}
+                                </span>
+                              ))}
+                              {isoCerts.map((cert) => (
+                                <span
+                                  key={cert}
+                                  className="inline-block text-[10px] bg-green-50 text-green-700 px-1.5 py-0.5 rounded"
+                                >
+                                  {cert.replace('ISO-', 'ISO ')}
+                                </span>
+                              ))}
+                            </div>
+                          );
+                        })()}
                       </td>
                     </tr>
                   );
@@ -182,18 +196,31 @@ export default function ClasamentPage() {
                     {company.employees > 0 && <span>{company.employees} angajați</span>}
                     {yearsExp > 0 && <span>{yearsExp} ani exp.</span>}
                   </div>
-                  {company.certifications.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-1 pl-11">
-                      {company.certifications.map((cert) => (
-                        <span
-                          key={cert}
-                          className="inline-block text-[10px] bg-green-50 text-green-700 px-1.5 py-0.5 rounded"
-                        >
-                          {cert.replace('ANRE-', '').replace('ISO-', 'ISO ')}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  {(() => {
+                    const anreCerts = getCompanyAnreCerts(company.anreMatch);
+                    const isoCerts = (company.certifications || []).filter((c) => !c.startsWith('ANRE-'));
+                    if (anreCerts.length + isoCerts.length === 0) return null;
+                    return (
+                      <div className="mt-2 flex flex-wrap gap-1 pl-11">
+                        {anreCerts.map((cert) => (
+                          <span
+                            key={cert.code}
+                            className="inline-block text-[10px] bg-green-50 text-green-700 px-1.5 py-0.5 rounded"
+                          >
+                            {getAnreCodeLabel(cert.code).replace('ANRE ', '')}
+                          </span>
+                        ))}
+                        {isoCerts.map((cert) => (
+                          <span
+                            key={cert}
+                            className="inline-block text-[10px] bg-green-50 text-green-700 px-1.5 py-0.5 rounded"
+                          >
+                            {cert.replace('ISO-', 'ISO ')}
+                          </span>
+                        ))}
+                      </div>
+                    );
+                  })()}
                   {badge && company.rank > 3 && (
                     <div className="mt-2 pl-11">
                       <span

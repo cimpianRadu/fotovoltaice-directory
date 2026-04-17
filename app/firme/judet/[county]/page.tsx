@@ -17,6 +17,7 @@ import {
   getSpecializationLabel,
   MAJOR_CITIES,
 } from '@/lib/utils';
+import { hasActiveAnreCert } from '@/lib/anre';
 
 interface Props {
   params: Promise<{ county: string }>;
@@ -85,7 +86,7 @@ export default async function CountyPage({ params }: Props) {
         {/* SEO Content */}
         {(() => {
           const allSpecs = [...new Set(companies.flatMap((c) => c.specializations))];
-          const hasAnre = companies.filter((c) => c.certifications.includes('ANRE-C2A'));
+          const hasAnre = companies.filter((c) => hasActiveAnreCert(c.anreMatch, 'C2A'));
           const oldestYear = Math.min(...companies.map((c) => c.founded));
           const maxCapacity = Math.max(...companies.map((c) => c.capacity.maxProjectKw));
 

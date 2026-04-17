@@ -16,6 +16,12 @@ import {
   getCertificationDescription,
   getTagLabel,
 } from '@/lib/utils';
+import {
+  getCompanyAnreCerts,
+  getAnreCodeLabel,
+  getAnreCodeDescription,
+  formatAnreDate,
+} from '@/lib/anre';
 import { generateLocalBusinessJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo';
 import guidesData from '@/data/guides.json';
 
@@ -54,6 +60,10 @@ export default async function CompanyDetailPage({ params }: Props) {
         ? 'Solidă'
         : 'Bună'
       : 'N/A';
+
+  const anreCerts = getCompanyAnreCerts(company.anreMatch);
+  const isoCerts = (company.certifications || []).filter((c) => !c.startsWith('ANRE-'));
+  const hasAnyCert = anreCerts.length > 0 || isoCerts.length > 0;
 
   return (
     <>
@@ -107,11 +117,29 @@ export default async function CompanyDetailPage({ params }: Props) {
             {/* Certifications */}
             <div>
               <h2 className="text-lg font-bold text-gray-900 mb-3">Certificări</h2>
-              {company.certifications.length > 0 ? (
+              {hasAnyCert ? (
                 <div className="space-y-3">
-                  {company.certifications.map((cert) => (
+                  {anreCerts.map((cert) => (
+                    <div key={cert.code} className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-border">
+                      <Badge variant="success" size="md">
+                        {getAnreCodeLabel(cert.code)}
+                      </Badge>
+                      <div className="flex-1 min-w-0 pt-0.5">
+                        <p className="text-sm text-gray-600">
+                          {getAnreCodeDescription(cert.code)}
+                        </p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          Nr. atestat {cert.nrAtestat}
+                          {cert.variant ? ` (${cert.variant})` : ''}
+                          {' · '}emis {formatAnreDate(cert.dataEmitere)}
+                          {' · '}valabil până la {formatAnreDate(cert.dataExpirare)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                  {isoCerts.map((cert) => (
                     <div key={cert} className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-border">
-                      <Badge variant={cert.startsWith('ANRE-') ? 'success' : 'primary'} size="md">
+                      <Badge variant="primary" size="md">
                         {getCertificationLabel(cert)}
                       </Badge>
                       <p className="text-sm text-gray-600 pt-0.5">
@@ -119,6 +147,23 @@ export default async function CompanyDetailPage({ params }: Props) {
                       </p>
                     </div>
                   ))}
+                  {anreCerts.length > 0 && (
+                    <p className="text-xs text-gray-500">
+                      Sursa atestatelor ANRE:{' '}
+                      <a
+                        href="https://portal.anre.ro/cautare_atestate"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary-dark hover:underline"
+                      >
+                        portal.anre.ro
+                      </a>
+                      {' · '}
+                      <Link href="/verificare-anre" className="text-primary-dark hover:underline">
+                        cum verificăm datele
+                      </Link>
+                    </p>
+                  )}
                 </div>
               ) : (
                 <p className="text-sm text-gray-500">Nicio certificare ANRE sau ISO confirmată.</p>

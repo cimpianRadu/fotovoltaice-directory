@@ -18,7 +18,9 @@ import { trackEvent } from '@/lib/analytics';
 const ITEMS_PER_PAGE = 9;
 
 const certOptions = [
-  { value: 'ANRE-C2A', label: 'ANRE C2A' },
+  { value: 'ANRE-C2A', label: 'ANRE C2A (comercial >50kW)' },
+  { value: 'ANRE-C1A', label: 'ANRE C1A (proiectare)' },
+  { value: 'ANRE-B', label: 'ANRE B (joasă tensiune)' },
   { value: 'ISO-9001', label: 'ISO 9001' },
   { value: 'ISO-14001', label: 'ISO 14001' },
   { value: 'ISO-45001', label: 'ISO 45001' },

@@ -18,6 +18,7 @@ import {
   getSpecializationLabel,
   MAJOR_CITIES,
 } from '@/lib/utils';
+import { hasActiveAnreCert } from '@/lib/anre';
 
 interface Props {
   params: Promise<{ city: string }>;
@@ -51,7 +52,7 @@ export default async function CityPage({ params }: Props) {
   const companiesHQ = getCompaniesByCity(city);
   const companiesArea = sortCompanies(getCompaniesByCityArea(city), 'relevance');
   const allSpecs = [...new Set(companiesArea.flatMap((c) => c.specializations))];
-  const hasAnre = companiesArea.filter((c) => c.certifications.includes('ANRE-C2A'));
+  const hasAnre = companiesArea.filter((c) => hasActiveAnreCert(c.anreMatch, 'C2A'));
   const maxCapacity = Math.max(...companiesArea.map((c) => c.capacity.maxProjectKw));
 
   const faqs = [

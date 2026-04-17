@@ -1,4 +1,5 @@
 import type { Company } from './utils';
+import { getCompanyAnreCerts } from './anre';
 
 export interface RankedCompany extends Company {
   score: number;
@@ -35,7 +36,11 @@ export function rankCompanies(companies: Company[]): RankedCompany[] {
   const employees = companies.map((c) => c.employees);
   const experiences = companies.map((c) => (c.founded > 0 ? currentYear - c.founded : 0));
   const capacities = companies.map((c) => c.capacity.maxProjectKw);
-  const certCounts = companies.map((c) => c.certifications.length);
+  // Total cert count = live ANRE PV-relevant certs + non-ANRE certifications (ISO, etc.)
+  const certCountFor = (c: Company) =>
+    getCompanyAnreCerts(c.anreMatch).length +
+    (c.certifications || []).filter((x) => !x.startsWith('ANRE-')).length;
+  const certCounts = companies.map(certCountFor);
 
   const ranges = {
     revenue: { min: Math.min(...revenues), max: Math.max(...revenues) },
@@ -52,7 +57,7 @@ export function rankCompanies(companies: Company[]): RankedCompany[] {
       revenue: Math.round(normalize(company.financials.revenue, ranges.revenue.min, ranges.revenue.max) * WEIGHTS.revenue),
       employees: Math.round(normalize(company.employees, ranges.employees.min, ranges.employees.max) * WEIGHTS.employees),
       experience: Math.round(normalize(yearsExp, ranges.experience.min, ranges.experience.max) * WEIGHTS.experience),
-      certifications: Math.round(normalize(company.certifications.length, ranges.certifications.min, ranges.certifications.max) * WEIGHTS.certifications),
+      certifications: Math.round(normalize(certCountFor(company), ranges.certifications.min, ranges.certifications.max) * WEIGHTS.certifications),
       capacity: Math.round(normalize(company.capacity.maxProjectKw, ranges.capacity.min, ranges.capacity.max) * WEIGHTS.capacity),
     };
 

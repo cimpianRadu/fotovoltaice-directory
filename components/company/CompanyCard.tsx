@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import Badge from '@/components/ui/Badge';
-import { type Company, getSpecializationLabel, getCertificationLabel, formatNumber } from '@/lib/utils';
+import { type Company, getSpecializationLabel, formatNumber } from '@/lib/utils';
+import { getCompanyAnreCerts, getAnreCodeLabel } from '@/lib/anre';
 
 function CompanyLogo({ company, size = 40 }: { company: Company; size?: number }) {
   const initials = company.name
@@ -40,6 +41,8 @@ interface CompanyCardProps {
 }
 
 export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps) {
+  const anreCerts = getCompanyAnreCerts(company.anreMatch);
+
   if (view === 'list') {
     return (
       <Link
@@ -53,9 +56,9 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
         </div>
 
         <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500 shrink-0">
-          {company.certifications.filter(c => c.startsWith('ANRE-')).map(cert => (
-            <Badge key={cert} variant={cert === 'ANRE-C2A' ? 'success' : 'outline'} size="sm">
-              {getCertificationLabel(cert)}
+          {anreCerts.map((cert) => (
+            <Badge key={cert.code} variant={cert.code === 'C2A' ? 'success' : 'outline'} size="sm">
+              {getAnreCodeLabel(cert.code)}
             </Badge>
           ))}
           <span>Până la {formatNumber(company.capacity.maxProjectKw)} kW</span>
@@ -91,11 +94,11 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
         ))}
       </div>
 
-      {company.certifications.filter(c => c.startsWith('ANRE-')).length > 0 && (
+      {anreCerts.length > 0 && (
         <div className="flex flex-wrap gap-1.5 mb-4">
-          {company.certifications.filter(c => c.startsWith('ANRE-')).map(cert => (
-            <Badge key={cert} variant={cert === 'ANRE-C2A' ? 'success' : 'default'} size="sm">
-              {getCertificationLabel(cert)}
+          {anreCerts.map((cert) => (
+            <Badge key={cert.code} variant={cert.code === 'C2A' ? 'success' : 'default'} size="sm">
+              {getAnreCodeLabel(cert.code)}
             </Badge>
           ))}
         </div>

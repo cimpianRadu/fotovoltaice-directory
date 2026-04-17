@@ -39,8 +39,7 @@
       "certifications": [
         "ISO-9001",
         "ISO-14001",
-        "ISO-45001",
-        "ANRE-C2A"
+        "ISO-45001"
       ],
       "capacity": {
         "minProjectKw": 100,
@@ -61,7 +60,11 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20"
+      "updatedAt": "2026-02-20",
+      "anreMatch": {
+        "societate": "SIMTEL TEAM",
+        "judet": "Bucuresti"
+      }
     },
     {
       "id": "energobit",
@@ -122,7 +125,11 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20"
+      "updatedAt": "2026-02-20",
+      "anreMatch": {
+        "societate": "ENERGOBIT Cluj Napoca",
+        "judet": "Cluj"
+      }
     },
     {
       "id": "energomontaj",
@@ -162,8 +169,7 @@
       ],
       "certifications": [
         "ISO-9001",
-        "ISO-14001",
-        "ANRE-C2A"
+        "ISO-14001"
       ],
       "capacity": {
         "minProjectKw": 50,
@@ -184,7 +190,11 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20"
+      "updatedAt": "2026-02-20",
+      "anreMatch": {
+        "societate": "ENERGOMONTAJ",
+        "judet": "Bucuresti"
+      }
     },
     {
       "id": "romsir-impex",
@@ -224,9 +234,7 @@
         "agricol",
         "hoteluri"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 20,
         "maxProjectKw": 20000,
@@ -247,7 +255,11 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20"
+      "updatedAt": "2026-02-20",
+      "anreMatch": {
+        "societate": "ROMSIR-IMPEX",
+        "judet": "Olt"
+      }
     },
     {
       "id": "renovatio-solar",
@@ -284,8 +296,7 @@
       ],
       "certifications": [
         "ISO-9001",
-        "ISO-14001",
-        "ANRE-C2A"
+        "ISO-14001"
       ],
       "capacity": {
         "minProjectKw": 500,
@@ -305,7 +316,11 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20"
+      "updatedAt": "2026-02-20",
+      "anreMatch": {
+        "societate": "RENOVATIO SOLAR",
+        "judet": "Ilfov"
+      }
     },
     {
       "id": "mrb-electric",
@@ -342,9 +357,7 @@
         "agricol",
         "cladiri-birouri"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 20,
         "maxProjectKw": 5000,
@@ -363,7 +376,11 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20"
+      "updatedAt": "2026-02-20",
+      "anreMatch": {
+        "societate": "MRB ELECTRIC",
+        "judet": "Cluj"
+      }
     },
     {
       "id": "alfa-energetic",
@@ -401,9 +418,7 @@
         "agricol",
         "retail"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 50,
         "maxProjectKw": 24000,
@@ -421,7 +436,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20"
+      "updatedAt": "2026-02-20",
+      "anreMatch": {
+        "societate": "ALFA ENERGETIC ESCO",
+        "judet": "Ilfov"
+      }
     },
     {
       "id": "stratospark",
@@ -462,9 +481,7 @@
         "scoli",
         "spitale"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 20,
         "maxProjectKw": 5000,
@@ -484,7 +501,11 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20"
+      "updatedAt": "2026-02-20",
+      "anreMatch": {
+        "societate": "STRATOSPARK",
+        "judet": "Bucuresti"
+      }
     },
     {
       "id": "eebc",
@@ -547,7 +568,11 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20"
+      "updatedAt": "2026-02-20",
+      "anreMatch": {
+        "societate": "East European Business Center (E.E.B.C.)",
+        "judet": "Sibiu"
+      }
     },
     {
       "id": "genway",
@@ -583,9 +608,7 @@
         "retail",
         "agricol"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 20,
         "maxProjectKw": 10000,
@@ -605,7 +628,11 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20"
+      "updatedAt": "2026-02-20",
+      "anreMatch": {
+        "societate": "ELECTRO-SERVICE DISTRIBUTIE",
+        "judet": "Bucuresti"
+      }
     },
     {
       "id": "photon-energy",
@@ -664,7 +691,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25"
+      "updatedAt": "2026-02-25",
+      "anreMatch": {
+        "societate": "PHOTON ENERGY ENGINEERING ROMANIA",
+        "judet": "Bucuresti"
+      }
     },
     {
       "id": "electrica-serv",
@@ -729,7 +760,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25"
+      "updatedAt": "2026-02-25",
+      "anreMatch": {
+        "societate": "FISE ELECTRICA SERV",
+        "judet": "Bucuresti"
+      }
     },
     {
       "id": "expert-energy",
@@ -762,9 +797,7 @@
         "cladiri-birouri",
         "retail"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 0,
@@ -781,7 +814,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25"
+      "updatedAt": "2026-02-25",
+      "anreMatch": {
+        "societate": "EXPERT ENERGY",
+        "judet": "Sibiu"
+      }
     },
     {
       "id": "sinpur-energy",
@@ -811,9 +848,7 @@
         "cladiri-birouri",
         "agricol"
       ],
-      "certifications": [
-        "ANRE-B"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 5,
         "maxProjectKw": 0,
@@ -831,7 +866,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25"
+      "updatedAt": "2026-02-25",
+      "anreMatch": {
+        "societate": "SINPUR ENERGY",
+        "judet": "Iasi"
+      }
     },
     {
       "id": "eurotehnica-itc",
@@ -864,9 +903,7 @@
         "retail",
         "agricol"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 5,
         "maxProjectKw": 0,
@@ -885,7 +922,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25"
+      "updatedAt": "2026-02-25",
+      "anreMatch": {
+        "societate": "EUROTEHNICA IT&C",
+        "judet": "Dolj"
+      }
     },
     {
       "id": "fomco-solar",
@@ -921,7 +962,6 @@
         "agricol"
       ],
       "certifications": [
-        "ANRE-C2A",
         "ISO-9001",
         "ISO-14001"
       ],
@@ -943,7 +983,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25"
+      "updatedAt": "2026-02-25",
+      "anreMatch": {
+        "societate": "FOMCO SOLAR SYSTEMS",
+        "judet": "Mures"
+      }
     },
     {
       "id": "electro-alfa",
@@ -977,7 +1021,6 @@
         "parcuri-logistice"
       ],
       "certifications": [
-        "ANRE-C2A",
         "ISO-9001",
         "ISO-14001",
         "ISO-45001"
@@ -1001,7 +1044,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25"
+      "updatedAt": "2026-02-25",
+      "anreMatch": {
+        "societate": "ELECTRO-ALFA INTERNATIONAL",
+        "judet": "Botosani"
+      }
     },
     {
       "id": "ensys",
@@ -1038,10 +1085,7 @@
         "retail",
         "agricol"
       ],
-      "certifications": [
-        "ANRE-C2A",
-        "ANRE-C1A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 5000,
@@ -1060,7 +1104,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25"
+      "updatedAt": "2026-02-25",
+      "anreMatch": {
+        "societate": "ENSYS RENEWABLE SOLUTIONS",
+        "judet": "Bihor"
+      }
     },
     {
       "id": "veltol-energy",
@@ -1096,7 +1144,6 @@
         "cladiri-birouri"
       ],
       "certifications": [
-        "ANRE-C2A",
         "ISO-14001"
       ],
       "capacity": {
@@ -1117,7 +1164,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25"
+      "updatedAt": "2026-02-25",
+      "anreMatch": {
+        "societate": "VELTOL HOLDING",
+        "judet": "Mures"
+      }
     },
     {
       "id": "wiren-romania",
@@ -1151,9 +1202,7 @@
         "parcuri-logistice",
         "agricol"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 50,
         "maxProjectKw": 5000,
@@ -1173,7 +1222,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25"
+      "updatedAt": "2026-02-25",
+      "anreMatch": {
+        "societate": "WIREN ROMANIA",
+        "judet": "Arad"
+      }
     },
     {
       "id": "volta-x-solar",
@@ -1205,8 +1258,6 @@
         "retail"
       ],
       "certifications": [
-        "ANRE-C1A",
-        "ANRE-C2A",
         "ISO-9001",
         "ISO-14001"
       ],
@@ -1228,7 +1279,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-26",
-      "updatedAt": "2026-02-26"
+      "updatedAt": "2026-02-26",
+      "anreMatch": {
+        "societate": "VOLTA X SOLAR SYSTEMS",
+        "judet": "Neamt"
+      }
     },
     {
       "id": "elsaco-solutions",
@@ -1260,9 +1315,7 @@
         "cladiri-birouri",
         "retail"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 30,
         "maxProjectKw": 5000,
@@ -1281,7 +1334,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-26",
-      "updatedAt": "2026-02-26"
+      "updatedAt": "2026-02-26",
+      "anreMatch": {
+        "societate": "ELSACO SOLUTIONS",
+        "judet": "Botosani"
+      }
     },
     {
       "id": "enevo-group",
@@ -1330,7 +1387,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-26",
-      "updatedAt": "2026-02-26"
+      "updatedAt": "2026-02-26",
+      "anreMatch": {
+        "societate": "ENEVO GROUP",
+        "judet": "Bucuresti"
+      }
     },
     {
       "id": "sun-power-center",
@@ -1364,9 +1425,7 @@
         "retail",
         "agricol"
       ],
-      "certifications": [
-        "ANRE-B"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 0,
@@ -1383,7 +1442,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-26",
-      "updatedAt": "2026-02-26"
+      "updatedAt": "2026-02-26",
+      "anreMatch": {
+        "societate": "SUN POWER CENTER",
+        "judet": "Iasi"
+      }
     },
     {
       "id": "waldevar-energy",
@@ -1439,7 +1502,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-26",
-      "updatedAt": "2026-02-26"
+      "updatedAt": "2026-02-26",
+      "anreMatch": {
+        "societate": "WALDEVAR ENERGY",
+        "judet": "Tulcea"
+      }
     },
     {
       "id": "allview-solar-energy",
@@ -1471,10 +1538,7 @@
         "parcuri-logistice",
         "agricol"
       ],
-      "certifications": [
-        "ANRE-C2A",
-        "ANRE-C1A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 100,
         "maxProjectKw": 50000,
@@ -1494,7 +1558,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-27",
-      "updatedAt": "2026-02-27"
+      "updatedAt": "2026-02-27",
+      "anreMatch": {
+        "societate": "VISUAL FAN",
+        "judet": "Brasov"
+      }
     },
     {
       "id": "inosolar",
@@ -1528,9 +1596,7 @@
         "cladiri-birouri",
         "retail"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 1000,
@@ -1549,7 +1615,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-27",
-      "updatedAt": "2026-02-27"
+      "updatedAt": "2026-02-27",
+      "anreMatch": {
+        "societate": "INOCOM BIZ ",
+        "judet": "Ilfov"
+      }
     },
     {
       "id": "restart-energy",
@@ -1602,7 +1672,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-27",
-      "updatedAt": "2026-02-27"
+      "updatedAt": "2026-02-27",
+      "anreMatch": {
+        "societate": "RESTART ENERGY ONE",
+        "judet": "Timis"
+      }
     },
     {
       "id": "greentech-professionals",
@@ -1631,9 +1705,7 @@
         "hale-industriale",
         "parcuri-logistice"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 100,
         "maxProjectKw": 50000,
@@ -1653,7 +1725,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-27",
-      "updatedAt": "2026-02-27"
+      "updatedAt": "2026-02-27",
+      "anreMatch": {
+        "societate": "GREENTECH PROFESSIONALS",
+        "judet": "Bucuresti"
+      }
     },
     {
       "id": "flexik-automation",
@@ -1685,9 +1761,7 @@
         "parcuri-logistice",
         "cladiri-birouri"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 50,
         "maxProjectKw": 5000,
@@ -1707,7 +1781,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-27",
-      "updatedAt": "2026-02-27"
+      "updatedAt": "2026-02-27",
+      "anreMatch": {
+        "societate": "FLEXIK AUTOMATION",
+        "judet": "Timis"
+      }
     },
     {
       "id": "carpat-energy",
@@ -1750,9 +1828,7 @@
         "cladiri-birouri",
         "agricol"
       ],
-      "certifications": [
-        "ANRE-B"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 94,
@@ -1772,7 +1848,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-02",
-      "updatedAt": "2026-03-02"
+      "updatedAt": "2026-03-02",
+      "anreMatch": {
+        "societate": "CARPAT ENERGY",
+        "judet": "Cluj"
+      }
     },
     {
       "id": "kilowat",
@@ -1809,9 +1889,7 @@
         "retail",
         "hoteluri"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 27,
         "maxProjectKw": 150,
@@ -1831,7 +1909,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-02",
-      "updatedAt": "2026-03-02"
+      "updatedAt": "2026-03-02",
+      "anreMatch": {
+        "societate": "ALTIGE IMPEX ",
+        "judet": "Valcea"
+      }
     },
     {
       "id": "e-acumulatori",
@@ -1862,9 +1944,7 @@
         "cladiri-birouri",
         "agricol"
       ],
-      "certifications": [
-        "ANRE-B"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 0,
         "maxProjectKw": 0,
@@ -1884,7 +1964,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-02",
-      "updatedAt": "2026-03-02"
+      "updatedAt": "2026-03-02",
+      "anreMatch": {
+        "societate": "P PLUS 2002",
+        "judet": "Bucuresti"
+      }
     },
     {
       "id": "ecosolaris",
@@ -1914,9 +1998,7 @@
         "hale-industriale",
         "cladiri-birouri"
       ],
-      "certifications": [
-        "ANRE-B"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 400,
@@ -1936,7 +2018,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-02",
-      "updatedAt": "2026-03-02"
+      "updatedAt": "2026-03-02",
+      "anreMatch": {
+        "societate": "ECOSOLARIS SERVICES ",
+        "judet": "Ilfov"
+      }
     },
     {
       "id": "rominstal-solar",
@@ -1969,9 +2055,7 @@
         "cladiri-birouri",
         "retail"
       ],
-      "certifications": [
-        "ANRE-B"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 20,
         "maxProjectKw": 314,
@@ -1990,7 +2074,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-02",
-      "updatedAt": "2026-03-02"
+      "updatedAt": "2026-03-02",
+      "anreMatch": {
+        "societate": "ROMINSTAL SOLAR",
+        "judet": "Bucuresti"
+      }
     },
     {
       "id": "exe-green-holding",
@@ -2028,9 +2116,7 @@
       "certifications": [
         "ISO-9001",
         "ISO-14001",
-        "ISO-45001",
-        "ANRE-C2A",
-        "ANRE-C1A"
+        "ISO-45001"
       ],
       "capacity": {
         "minProjectKw": 50,
@@ -2051,7 +2137,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08"
+      "updatedAt": "2026-03-08",
+      "anreMatch": {
+        "societate": "EXE GREEN HOLDING",
+        "judet": "Ilfov"
+      }
     },
     {
       "id": "lumio-energy",
@@ -2085,7 +2175,6 @@
         "cladiri-birouri"
       ],
       "certifications": [
-        "ANRE-C2A",
         "ISO-9001",
         "ISO-14001"
       ],
@@ -2108,7 +2197,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08"
+      "updatedAt": "2026-03-08",
+      "anreMatch": {
+        "societate": "MAPA ROM INVEST",
+        "judet": "Iasi"
+      }
     },
     {
       "id": "energis",
@@ -2144,10 +2237,7 @@
         "retail",
         "agricol"
       ],
-      "certifications": [
-        "ANRE-C2A",
-        "ANRE-C1A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 1000,
@@ -2166,7 +2256,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08"
+      "updatedAt": "2026-03-08",
+      "anreMatch": {
+        "societate": "PRIMA ELECTRO CONSTRUCT",
+        "judet": "Bucuresti"
+      }
     },
     {
       "id": "east-solar-electric",
@@ -2200,9 +2294,7 @@
         "cladiri-birouri",
         "retail"
       ],
-      "certifications": [
-        "ANRE-B"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 10,
         "maxProjectKw": 500,
@@ -2221,7 +2313,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08"
+      "updatedAt": "2026-03-08",
+      "anreMatch": {
+        "societate": "EAST SOLAR ELECTRIC",
+        "judet": "Constanta"
+      }
     },
     {
       "id": "solargroup-energy",
@@ -2273,7 +2369,8 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08"
+      "updatedAt": "2026-03-08",
+      "anreMatch": null
     },
     {
       "id": "astra-electric",
@@ -2308,9 +2405,7 @@
         "cladiri-birouri",
         "agricol"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 20,
         "maxProjectKw": 2000,
@@ -2329,7 +2424,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08"
+      "updatedAt": "2026-03-08",
+      "anreMatch": {
+        "societate": "ASTRA ELECTRIC",
+        "judet": "Arad"
+      }
     },
     {
       "id": "darcom-energy",
@@ -2363,9 +2462,7 @@
         "parcuri-logistice",
         "cladiri-birouri"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 50,
         "maxProjectKw": 5000,
@@ -2385,7 +2482,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08"
+      "updatedAt": "2026-03-08",
+      "anreMatch": {
+        "societate": "DARCOM ENERGY SOLUTIONS",
+        "judet": "Bucuresti"
+      }
     },
     {
       "id": "greenvolt-next",
@@ -2427,9 +2528,7 @@
         "agricol",
         "hoteluri"
       ],
-      "certifications": [
-        "ANRE-B"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 100,
         "maxProjectKw": 500,
@@ -2448,7 +2547,8 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-27",
-      "updatedAt": "2026-03-27"
+      "updatedAt": "2026-03-27",
+      "anreMatch": null
     },
     {
       "id": "volt-energy",
@@ -2485,9 +2585,7 @@
         "cladiri-birouri",
         "retail"
       ],
-      "certifications": [
-        "ANRE-C2A"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 30,
         "maxProjectKw": 5500,
@@ -2506,7 +2604,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-27",
-      "updatedAt": "2026-03-27"
+      "updatedAt": "2026-03-27",
+      "anreMatch": {
+        "societate": "VOLT EVSE DISTRIBUTION",
+        "judet": "Bucuresti"
+      }
     },
     {
       "id": "2k-solution",
@@ -2544,9 +2646,7 @@
         "hoteluri",
         "agricol"
       ],
-      "certifications": [
-        "ANRE-B"
-      ],
+      "certifications": [],
       "capacity": {
         "minProjectKw": 50,
         "maxProjectKw": 5900,
@@ -2564,7 +2664,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-27",
-      "updatedAt": "2026-03-27"
+      "updatedAt": "2026-03-27",
+      "anreMatch": {
+        "societate": "2K SOLUTION ",
+        "judet": "Brasov"
+      }
     },
     {
       "id": "electro-construct-pecica",
@@ -2593,9 +2697,6 @@
         "cladiri-birouri"
       ],
       "certifications": [
-        "ANRE-C2A",
-        "ANRE-C1A",
-        "ANRE-A3",
         "ISO-9001",
         "ISO-14001"
       ],
@@ -2616,7 +2717,11 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-17",
-      "updatedAt": "2026-04-17"
+      "updatedAt": "2026-04-17",
+      "anreMatch": {
+        "societate": "ELECTRO - CONSTRUCT",
+        "judet": "Arad"
+      }
     }
   ]
 }
