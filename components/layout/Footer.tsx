@@ -103,12 +103,24 @@ export default function Footer() {
             <Link href="/politica-cookies" className="hover:text-gray-200 transition-colors">Cookies</Link>
             <Link href="/despre" className="hover:text-gray-200 transition-colors">Despre Noi</Link>
           </div>
-          <div className="mt-3 sm:mt-0 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-400">
+          <div className="mt-3 sm:mt-0 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-400">
             <a href="mailto:contact@instalatori-fotovoltaice.ro" className="hover:text-gray-200 transition-colors">
               contact@instalatori-fotovoltaice.ro
             </a>
             <a href="tel:+40751547174" className="hover:text-gray-200 transition-colors">
               0751 547 174
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61587772223405"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Pagina de Facebook"
+              className="inline-flex items-center gap-1.5 hover:text-gray-200 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true">
+                <path d="M13.5 22v-8.5h2.86l.43-3.33H13.5V8.04c0-.96.27-1.62 1.65-1.62h1.76V3.44A23.6 23.6 0 0 0 14.34 3.3c-2.54 0-4.28 1.55-4.28 4.4v2.47H7.2v3.33h2.86V22h3.44Z" />
+              </svg>
+              Facebook
             </a>
           </div>
         </div>
