@@ -2565,6 +2565,58 @@
       "verified": true,
       "createdAt": "2026-03-27",
       "updatedAt": "2026-03-27"
+    },
+    {
+      "id": "electro-construct-pecica",
+      "slug": "electro-construct-pecica",
+      "name": "Electro - Construct S.R.L.",
+      "cui": "RO9122494",
+      "logo": "/logos/electro-construct-pecica.png",
+      "description": "Firmă din Pecica (Arad) înființată în 1997, cu activitate principală lucrări de instalații electrice (CAEN 4321). Specializată în proiectare și executare instalații electrice interioare pentru construcții civile și industriale, linii electrice aeriene și subterane (0.4 kV - 20 kV) și servicii de iluminat public. Deține atestat ANRE C2A cu mențiunea «Relevant fotovoltaice», certificare pentru proiectare-execuție sisteme fotovoltaice racordate la rețea.",
+      "founded": 1997,
+      "employees": 34,
+      "location": {
+        "city": "Pecica",
+        "county": "Arad",
+        "address": "Str. 305, Nr. 16, Pecica"
+      },
+      "contact": {
+        "phone": "+40724356934",
+        "email": "secretariat@electroconstructpecica.ro",
+        "website": "https://www.electroconstructpecica.ro"
+      },
+      "coverage": [
+        "Arad"
+      ],
+      "specializations": [
+        "hale-industriale",
+        "cladiri-birouri"
+      ],
+      "certifications": [
+        "ANRE-C2A",
+        "ANRE-C1A",
+        "ANRE-A3",
+        "ISO-9001",
+        "ISO-14001"
+      ],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 22477552,
+        "profit": 3727726
+      },
+      "tags": [
+        "experienta-peste-20-ani",
+        "atestari-anre-multiple"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-04-17",
+      "updatedAt": "2026-04-17"
     }
   ]
 }
