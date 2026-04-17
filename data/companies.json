@@ -2722,6 +2722,223 @@
         "societate": "ELECTRO - CONSTRUCT",
         "judet": "Arad"
       }
+    },
+    {
+      "id": "black-solar",
+      "slug": "black-solar",
+      "name": "Bio Green Power Solutions S.R.L.",
+      "cui": "RO45726950",
+      "logo": "/logos/black-solar.png",
+      "description": "Integrator fotovoltaic din Hunedoara, cunoscut sub brandul Black Solar, cu peste 10 MW instalați în proiecte comerciale și industriale la cheie. Execută sisteme on-grid de mare capacitate și parcuri fotovoltaice pentru clienți business la nivel național.",
+      "founded": 2022,
+      "employees": 0,
+      "location": {
+        "city": "Luncoiu de Jos",
+        "county": "Hunedoara",
+        "address": ""
+      },
+      "contact": {
+        "phone": "+40757351141",
+        "email": "",
+        "website": "https://blacksolar.ro"
+      },
+      "coverage": [
+        "Hunedoara",
+        "Alba",
+        "Arad",
+        "Timiș",
+        "Cluj",
+        "București"
+      ],
+      "specializations": [
+        "hale-industriale",
+        "cladiri-birouri",
+        "parcuri-logistice",
+        "retail"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 10800000,
+        "profit": 0
+      },
+      "tags": [
+        "proiecte-mari",
+        "parcuri-fotovoltaice"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-04-17",
+      "updatedAt": "2026-04-17",
+      "anreMatch": {
+        "societate": "BIO GREEN POWER SOLUTIONS",
+        "judet": "Hunedoara"
+      }
+    },
+    {
+      "id": "eco-dimos-energy",
+      "slug": "eco-dimos-energy",
+      "name": "Eco Dimos Energy S.R.L.",
+      "cui": "RO32796806",
+      "logo": "/logos/eco-dimos-energy.png",
+      "description": "Firmă din Hunedoara cu peste 12 ani de experiență în instalații electrice și fotovoltaice pentru clienți comerciali și publici. A executat proiecte finanțate cu fonduri europene, inclusiv centrala solară de la Vama Buzăului, fiind specializată în sisteme on-grid industriale de capacitate medie-mare.",
+      "founded": 2014,
+      "employees": 15,
+      "location": {
+        "city": "Beriu",
+        "county": "Hunedoara",
+        "address": ""
+      },
+      "contact": {
+        "phone": "+40769435225",
+        "email": "",
+        "website": ""
+      },
+      "coverage": [
+        "Hunedoara",
+        "Alba",
+        "Sibiu",
+        "Arad"
+      ],
+      "specializations": [
+        "hale-industriale",
+        "cladiri-birouri"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 4600000,
+        "profit": 0
+      },
+      "tags": [
+        "experienta-peste-10-ani",
+        "fonduri-europene"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-04-17",
+      "updatedAt": "2026-04-17",
+      "anreMatch": {
+        "societate": "ECO DIMOS ENERGY",
+        "judet": "Hunedoara"
+      }
+    },
+    {
+      "id": "dagesim-fotovoltaic",
+      "slug": "dagesim-fotovoltaic",
+      "name": "Dagesim Fotovoltaic S.R.L.",
+      "cui": "RO39835422",
+      "logo": "/logos/dagesim-fotovoltaic.png",
+      "description": "Firmă din Craiova specializată în sisteme fotovoltaice comerciale și industriale, cu peste 7 ani de experiență. Instalează sisteme on-grid și off-grid de la 5 kW până la 900+ kW pentru clienți business din Oltenia și la nivel național.",
+      "founded": 2018,
+      "employees": 26,
+      "location": {
+        "city": "Craiova",
+        "county": "Dolj",
+        "address": ""
+      },
+      "contact": {
+        "phone": "+40764117191",
+        "email": "",
+        "website": "https://dasimpower.ro"
+      },
+      "coverage": [
+        "Dolj",
+        "Olt",
+        "Mehedinți",
+        "Gorj",
+        "Vâlcea"
+      ],
+      "specializations": [
+        "hale-industriale",
+        "cladiri-birouri",
+        "agricol"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 3580000,
+        "profit": 0
+      },
+      "tags": [
+        "on-grid",
+        "off-grid"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-04-17",
+      "updatedAt": "2026-04-17",
+      "anreMatch": {
+        "societate": "DAGESIM FOTOVOLTAIC",
+        "judet": "Dolj"
+      }
+    },
+    {
+      "id": "duzoc-green-energy",
+      "slug": "duzoc-green-energy",
+      "name": "Duzoc Green Energy S.R.L.",
+      "cui": "RO47236769",
+      "logo": "/logos/duzoc-green-energy.png",
+      "description": "Firmă din Bacău care execută instalații fotovoltaice on-grid pentru clienți comerciali și industriali din regiunea Moldova. Validată AFM pentru programele de finanțare, cu acoperire în Bacău, Neamț, Iași și Vaslui.",
+      "founded": 2022,
+      "employees": 9,
+      "location": {
+        "city": "Bacău",
+        "county": "Bacău",
+        "address": ""
+      },
+      "contact": {
+        "phone": "+40755414045",
+        "email": "",
+        "website": "https://dge.ro"
+      },
+      "coverage": [
+        "Bacău",
+        "Neamț",
+        "Iași",
+        "Vaslui"
+      ],
+      "specializations": [
+        "hale-industriale",
+        "cladiri-birouri"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 1180000,
+        "profit": 0
+      },
+      "tags": [
+        "afm-validat"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-04-17",
+      "updatedAt": "2026-04-17",
+      "anreMatch": {
+        "societate": "DUZOC GREEN ENERGY",
+        "judet": "Bacau"
+      }
     }
   ]
 }
