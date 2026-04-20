@@ -17,7 +17,7 @@ export default function CrossPromoCard() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (localStorage.getItem(STORAGE_KEY) === 'dismissed') return;
+    if (sessionStorage.getItem(STORAGE_KEY) === 'dismissed') return;
 
     const timer = setTimeout(() => {
       setVisible(true);
@@ -29,7 +29,7 @@ export default function CrossPromoCard() {
 
   const dismiss = () => {
     setVisible(false);
-    localStorage.setItem(STORAGE_KEY, 'dismissed');
+    sessionStorage.setItem(STORAGE_KEY, 'dismissed');
     window.umami?.track('cross-promo-dismiss', { target: 'reviewqr' });
   };
 
