@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Top-left finder pattern -->
+  <rect x="8" y="8" width="38" height="38" rx="9" fill="none" stroke="#0ea5e9" stroke-width="7"/>
+  <rect x="19" y="19" width="16" height="16" rx="3.5" fill="#0ea5e9"/>
+
+  <!-- Top-right finder pattern -->
+  <rect x="82" y="8" width="38" height="38" rx="9" fill="none" stroke="#0ea5e9" stroke-width="7"/>
+  <rect x="93" y="19" width="16" height="16" rx="3.5" fill="#0ea5e9"/>
+
+  <!-- Bottom-left finder pattern -->
+  <rect x="8" y="82" width="38" height="38" rx="9" fill="none" stroke="#0ea5e9" stroke-width="7"/>
+  <rect x="19" y="93" width="16" height="16" rx="3.5" fill="#0ea5e9"/>
+
+  <!-- J-curve connector (between top finders) -->
+  <path d="M 64 15 L 64 44 Q 64 57 51 57" fill="none" stroke="#0ea5e9" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- Left data dots -->
+  <circle cx="15" cy="67" r="4.5" fill="#0ea5e9"/>
+  <circle cx="38" cy="67" r="4.5" fill="#0ea5e9"/>
+
+  <!-- Right data elements -->
+  <rect x="80" y="62" width="18" height="9" rx="4.5" fill="#0ea5e9"/>
+  <circle cx="113" cy="67" r="4.5" fill="#0ea5e9"/>
+
+  <!-- Center vertical data -->
+  <circle cx="64" cy="77" r="4.5" fill="#0ea5e9"/>
+  <rect x="59.5" y="87" width="9" height="18" rx="4.5" fill="#0ea5e9"/>
+
+  <!-- Bottom-right r-shape -->
+  <path d="M 93 114 L 93 93 Q 93 80 106 80 L 120 80" fill="none" stroke="#0ea5e9" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- Bottom-right corner dot -->
+  <circle cx="114" cy="114" r="4.5" fill="#0ea5e9"/>
+</svg>

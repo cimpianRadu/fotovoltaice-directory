@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 declare global {
@@ -63,13 +64,17 @@ export default function CrossPromoCard() {
         className="block p-4 pr-8"
       >
         <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-2">
-          Un alt proiect de-al meu
+          Partener
         </p>
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-100 to-amber-50 border border-amber-200 flex items-center justify-center shrink-0">
-            <svg className="w-5 h-5 text-amber-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v1m6.364 1.636l-.707.707M20 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-            </svg>
+          <div className="w-10 h-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center shrink-0 overflow-hidden">
+            <Image
+              src="/images/partners/reviewqr.svg"
+              alt="ReviewQR"
+              width={32}
+              height={32}
+              className="w-8 h-8"
+            />
           </div>
           <div className="min-w-0">
             <p className="font-semibold text-gray-900 text-sm">ReviewQR</p>
