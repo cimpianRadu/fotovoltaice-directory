@@ -32,7 +32,7 @@ function MockBrowser({ children, url }: { children: React.ReactNode; url: string
 /** Listing Sponsor preview — sidebar card on guide pages */
 function PreviewListingSponsor() {
   return (
-    <MockBrowser url="instalatori-fotovoltaice.ro/ghid/electric-up-2026">
+    <MockBrowser url="instalatori-fotovoltaice.ro/ghid/electric-up-2026-ghid-aplicare">
       <p className="text-[10px] text-gray-400 mb-2 uppercase tracking-wider font-semibold">Pe fiecare pagină de ghid</p>
       <div className="flex gap-3">
         {/* Fake article content */}
@@ -119,10 +119,47 @@ function PreviewProfilPremium() {
   );
 }
 
+/** Sidebar Popup preview — dismissible floating card, bottom-right */
+function PreviewSidebarPopup() {
+  return (
+    <MockBrowser url="instalatori-fotovoltaice.ro">
+      <p className="text-[10px] text-gray-400 mb-2 uppercase tracking-wider font-semibold">
+        Popup discret, dismissible — pe tot site-ul
+      </p>
+      <div className="relative bg-gray-50 rounded-lg p-3 h-[160px] overflow-hidden">
+        {/* Fake page content */}
+        <div className="space-y-1.5">
+          <div className="h-2.5 bg-gray-200 rounded w-2/3" />
+          <div className="h-2 bg-gray-100 rounded w-full" />
+          <div className="h-2 bg-gray-100 rounded w-5/6" />
+          <div className="h-2 bg-gray-100 rounded w-full" />
+          <div className="h-2 bg-gray-100 rounded w-3/4" />
+          <div className="h-2 bg-gray-100 rounded w-full" />
+        </div>
+        {/* Fake popup — bottom right */}
+        <div className="absolute bottom-2 right-2 w-44 rounded-lg border border-gray-200 bg-white shadow-md p-2">
+          <div className="absolute top-1 right-1 w-3 h-3 text-gray-300 text-[10px] leading-3">×</div>
+          <p className="text-[7px] font-semibold uppercase tracking-wider text-gray-400 mb-1">
+            Un alt proiect
+          </p>
+          <div className="flex items-start gap-1.5">
+            <div className="w-5 h-5 rounded bg-primary/10 border border-primary/20 shrink-0" />
+            <div className="min-w-0">
+              <p className="text-[9px] font-semibold text-gray-900">Firma Ta</p>
+              <p className="text-[8px] text-gray-500 leading-tight">Descriere scurtă a proiectului tău</p>
+              <p className="text-[8px] font-semibold text-primary-dark mt-0.5">Vezi mai mult →</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </MockBrowser>
+  );
+}
+
 /** Enterprise preview — banner on guide + premium card */
 function PreviewEnterprise() {
   return (
-    <MockBrowser url="instalatori-fotovoltaice.ro/ghid/stocare-energie-baterii">
+    <MockBrowser url="instalatori-fotovoltaice.ro/ghid/stocare-energie-baterii-firme">
       <p className="text-[10px] text-gray-400 mb-2 uppercase tracking-wider font-semibold">Banner pe ghiduri + articol dedicat</p>
       {/* Banner mock */}
       <div className="rounded-lg border border-primary/30 bg-linear-to-r from-primary/10 to-primary/5 p-2.5 mb-2.5 flex items-center gap-3">
@@ -238,6 +275,42 @@ export default function AdvertisePage() {
               </ul>
             </div>
             <PreviewListingSponsor />
+          </div>
+
+          {/* Sidebar Popup */}
+          <div className="grid gap-6 sm:grid-cols-2 items-start">
+            <div className="rounded-xl border border-border p-6">
+              <h3 className="font-bold text-gray-900">Sidebar Popup</h3>
+              <p className="text-sm text-gray-500 mt-1 mb-4">
+                Card discret în dreapta jos, pe tot site-ul
+              </p>
+              <p className="text-2xl font-bold text-gray-900 mb-4">
+                39 <span className="text-base font-normal text-gray-500">EUR/lună</span>
+              </p>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex gap-2">
+                  <span className="text-green-500 shrink-0">&#10003;</span>
+                  Apare după 15 secunde, pe toate paginile
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-green-500 shrink-0">&#10003;</span>
+                  Dismissible — user-ul nu mai e deranjat o dată ce a închis
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-green-500 shrink-0">&#10003;</span>
+                  Logo + titlu + descriere scurtă + CTA către site-ul tău
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-green-500 shrink-0">&#10003;</span>
+                  Tracking impresii, click-uri și dismiss via Umami
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-green-500 shrink-0">&#10003;</span>
+                  Exclusiv — un singur sponsor activ la un moment dat
+                </li>
+              </ul>
+            </div>
+            <PreviewSidebarPopup />
           </div>
 
           {/* Profil Premium */}

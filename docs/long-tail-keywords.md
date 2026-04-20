@@ -47,7 +47,7 @@ Ultima actualizare: 2026-04-09
 | legislație prosumator comercial 2026 | ✅ | Ghid existent |
 | cum devin prosumator comercial România | ✅ | Acoperit parțial |
 | contract prosumator ANRE firmă | 🎯 | Ghid procedură pas cu pas |
-| avize și autorizații instalare fotovoltaice firmă | 🎯 | Ghid birocrație |
+| avize și autorizații instalare fotovoltaice firmă | ✅ | Ghid existent (20 Apr) |
 | certificat verde energie fotovoltaică România | 💡 | |
 | taxe și impozite panouri fotovoltaice firmă | 🎯 | Implicații fiscale |
 | vânzare surplus energie fotovoltaică preț 2026 | 🎯 | Preț de achiziție surplus |
@@ -144,7 +144,7 @@ Ultima actualizare: 2026-04-09
 7. **panouri fotovoltaice parcare solară carport** — trending, neacoperit de competiție
 8. **asigurare panouri fotovoltaice comerciale** — zero competiție pe keyword
 9. **directiva europeană panouri solare clădiri noi 2026** — newsjacking, timing perfect
-10. **avize și autorizații instalare fotovoltaice firmă** — pain point real, zero content bun pe piață
+10. ~~**avize și autorizații instalare fotovoltaice firmă**~~ — ✅ ACOPERIT (ghid birocrație, 20 Apr)
 
 ---
 

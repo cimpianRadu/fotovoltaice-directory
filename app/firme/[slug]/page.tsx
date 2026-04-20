@@ -43,8 +43,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: `${company.name} din ${company.location.city} - ${company.description.slice(0, 150)}`,
     alternates: { canonical: `/firme/${slug}` },
     openGraph: {
-      title: company.name,
+      type: 'profile',
+      url: `/firme/${slug}`,
+      title: `${company.name} - Instalator Panouri Fotovoltaice`,
       description: company.description,
+      images: [
+        {
+          url: '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: `${company.name} - Instalator Fotovoltaice`,
+        },
+      ],
     },
   };
 }

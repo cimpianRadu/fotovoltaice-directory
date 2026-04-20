@@ -86,7 +86,6 @@ function CompanyLogo({ company, size = 40 }: { company: Company; size?: number }
 export default function ClasamentPage() {
   const companies = getCompanies();
   const ranked = rankCompanies(companies);
-  const featured = ranked.filter((c) => c.featured).slice(0, 3);
   const companyOptions = ranked.map((c) => ({ slug: c.slug, name: `#${c.rank} ${c.name}` }));
 
   const itemListJsonLd = {
@@ -142,36 +141,33 @@ export default function ClasamentPage() {
           </div>
         </div>
 
-        {/* Parteneri Verificați — above ranking, clearly separated */}
-        {featured.length > 0 && (
-          <section className="mb-10">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">
-                ★ Parteneri Verificați
-              </span>
-              <span className="text-xs text-gray-400">
-                Firme care și-au revendicat profilul și au completat date detaliate
+        {/* Ad slot — promo banner pentru firmele care vor să apară aici */}
+        <section className="mb-10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">
+              ★ Spațiu publicitar
+            </span>
+            <span className="text-xs text-gray-400">Vizibilitate maximă, deasupra clasamentului</span>
+          </div>
+          <Link
+            href="/publicitate"
+            className="group block p-6 bg-gradient-to-br from-amber-50 via-white to-amber-50/40 border-2 border-dashed border-amber-300 rounded-xl hover:border-amber-400 hover:shadow-md transition-all"
+          >
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex-1 min-w-0">
+                <div className="font-semibold text-gray-900 text-base mb-1">
+                  Firma ta poate fi aici
+                </div>
+                <div className="text-sm text-gray-600">
+                  Pagina de clasament e una dintre cele mai vizitate secțiuni. Rezervă-ți locul pentru vizibilitate prioritară și acces la lead-uri calificate.
+                </div>
+              </div>
+              <span className="text-sm font-semibold text-amber-700 group-hover:text-amber-800 whitespace-nowrap">
+                Află mai multe →
               </span>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {featured.map((c) => (
-                <Link
-                  key={c.slug}
-                  href={`/firme/${c.slug}`}
-                  className="flex items-center gap-3 p-4 bg-gradient-to-br from-amber-50/50 to-white border border-amber-200 rounded-xl hover:border-amber-300 hover:shadow-md transition-all"
-                >
-                  <CompanyLogo company={c} size={44} />
-                  <div className="min-w-0">
-                    <div className="font-semibold text-gray-900 text-sm truncate">{c.name}</div>
-                    <div className="text-xs text-gray-500">
-                      {c.location.city}, {c.location.county}
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
+          </Link>
+        </section>
 
         {/* Criterii — visible by default */}
         <section id="criterii" className="mb-12 scroll-mt-20">

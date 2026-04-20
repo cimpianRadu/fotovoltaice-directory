@@ -45,11 +45,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: guide.metaDescription,
     alternates: { canonical: `/ghid/${topic}` },
     openGraph: {
+      type: 'article',
+      url: `/ghid/${topic}`,
       title: guide.title,
       description: guide.metaDescription,
-      ...(heroImage && {
-        images: [{ url: heroImage, width: 1200, height: 630, alt: guide.title }],
-      }),
+      publishedTime: guide.publishedAt,
+      authors: [guide.author],
+      images: heroImage
+        ? [{ url: heroImage, width: 1200, height: 630, alt: guide.title }]
+        : [{ url: '/og-image.png', width: 1200, height: 630, alt: guide.title }],
     },
   };
 }
