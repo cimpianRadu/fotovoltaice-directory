@@ -11,9 +11,19 @@ export const metadata: Metadata = {
     canonical: '/verificare-anre',
   },
   openGraph: {
+    type: 'website',
+    url: '/verificare-anre',
     title: 'Verificare Atestat ANRE — Caută Instalator Autorizat',
     description:
       'Verifică online atestatele ANRE ale instalatorilor fotovoltaici. Caută după nume sau CUI și vezi certificările active, expirate sau retrase.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Verificare Atestat ANRE Instalatori Fotovoltaici',
+      },
+    ],
   },
 };
 
