@@ -7,10 +7,12 @@ interface CompanyStatsProps {
 export default function CompanyStats({ company }: CompanyStatsProps) {
   const stats = [
     { label: 'Fondat', value: String(company.founded) },
-    {
-      label: 'Capacitate maximă',
-      value: `${formatNumber(company.capacity.maxProjectKw)} kW`,
-    },
+    ...(company.capacity.maxProjectKw > 0
+      ? [{
+          label: 'Capacitate maximă',
+          value: `${formatNumber(company.capacity.maxProjectKw)} kW`,
+        }]
+      : []),
   ];
 
   return (

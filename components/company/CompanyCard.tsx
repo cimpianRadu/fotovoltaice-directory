@@ -61,8 +61,12 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
               {getAnreCodeLabel(cert.code)}
             </Badge>
           ))}
-          <span>Până la {formatNumber(company.capacity.maxProjectKw)} kW</span>
-          <span className="text-gray-300">|</span>
+          {company.capacity.maxProjectKw > 0 && (
+            <>
+              <span>Până la {formatNumber(company.capacity.maxProjectKw)} kW</span>
+              <span className="text-gray-300">|</span>
+            </>
+          )}
           <span>Din {company.founded}</span>
           {company.createdAt && (
             <>
@@ -112,7 +116,11 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
 
       <div className="mt-auto pt-3 border-t border-border text-xs text-gray-500">
         <div className="flex items-center justify-between">
-          <span>Până la {formatNumber(company.capacity.maxProjectKw)} kW</span>
+          {company.capacity.maxProjectKw > 0 ? (
+            <span>Până la {formatNumber(company.capacity.maxProjectKw)} kW</span>
+          ) : (
+            <span />
+          )}
           <span>Din {company.founded}</span>
         </div>
         {company.createdAt && (

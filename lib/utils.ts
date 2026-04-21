@@ -147,7 +147,7 @@ export function getTotalStats() {
     (sum, c) => sum + c.capacity.projectsCompleted,
     0
   );
-  const counties = new Set(companies.flatMap((c) => c.coverage));
+  const counties = new Set(companies.map((c) => c.location.county));
 
   return {
     companiesCount: companies.length,
@@ -169,7 +169,7 @@ export function filterCompanies(
   }
 ): Company[] {
   return companies.filter((company) => {
-    if (filters.county && !company.coverage.includes(filters.county)) {
+    if (filters.county && company.location.county !== filters.county) {
       return false;
     }
     if (
@@ -255,15 +255,13 @@ export function getCountyBySlug(slug: string): string | undefined {
 }
 
 export function getCompaniesByCounty(county: string): Company[] {
-  return companiesData.companies.filter((c) => c.coverage.includes(county));
+  return companiesData.companies.filter((c) => c.location.county === county);
 }
 
 export function getCoveredCounties(): string[] {
   const covered = new Set<string>();
   for (const c of companiesData.companies) {
-    for (const county of c.coverage) {
-      covered.add(county);
-    }
+    covered.add(c.location.county);
   }
   return Array.from(covered).sort((a, b) => a.localeCompare(b, 'ro'));
 }
@@ -290,11 +288,11 @@ export function getCompaniesByCity(city: string): Company[] {
 }
 
 export function getCompaniesByCityArea(city: string): Company[] {
-  // Returns companies headquartered in the city OR covering the county the city is in
+  // Returns companies headquartered in the city OR in the same county as the city
   const companiesInCity = companiesData.companies.filter((c) => c.location.city === city);
   const counties = [...new Set(companiesInCity.map((c) => c.location.county))];
   const companiesInArea = companiesData.companies.filter(
-    (c) => counties.some((county) => c.coverage.includes(county))
+    (c) => counties.includes(c.location.county)
   );
   // Deduplicate and put city-based companies first
   const seen = new Set<string>();
