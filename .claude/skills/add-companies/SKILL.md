@@ -1,145 +1,113 @@
 ---
 name: add-companies
-description: Research și adăugare firme noi de instalare fotovoltaice în director. Folosește când user-ul cere să adauge firme noi.
+description: MASTER orchestrator for adding new PV firms to the directory. Runs discover → prefilter → research → add pipeline. Use when user says "adaugă N firme" or "adaugă N firme din <județ>".
 ---
 
-# Adăugare Firme Noi în Director
+# Add Companies — master orchestrator
 
-Research și adăugare firme de instalare panouri fotovoltaice în `data/companies.json`.
+Calls the sub-skills in order. One entry point for "adaugă N firme" requests.
 
-## Pasul 0: Pre-check — Verifică firmele existente
-**IMPORTANT: Înainte de orice research, verifică ce firme sunt deja în director.**
-```bash
-node scripts/company-tools.js stats
-# La fiecare candidat nou:
-node scripts/company-tools.js check-bulk <CUI-uri>
-```
+## Inputs
 
-## Pasul 1: Discovery
-
-**Cu WebSearch (preferat):**
-```
-WebSearch → "firme instalare panouri fotovoltaice comerciale Romania 2026"
-WebSearch → "top companii EPC solar Romania"
-WebSearch → "cele mai mari firme instalare panouri fotovoltaice comerciale Romania"
-```
-
-**Cu Firecrawl (liste specifice):**
-```
-firecrawl_search → "firme fotovoltaice Romania"
-firecrawl_scrape → portal.anre.ro/cautare_atestate (extract JSON: societate, judet, cod, nr atestat)
-```
-
-**Surse:** portal.anre.ro, altreal.ro/comparator, financiarul.ro, zf.ro
-
-**ANRE pre-researched:** `data/anre-atestate.json` conține deja TOATE atestatele ANRE scrape-uite. Caută în el firme cu cod `C2A`, `C1A`, `B`, `BP`, `BE` (PV-relevant) și `stare: "Atestat"` care NU sunt încă în `companies.json` — ele sunt candidați de top (deja pre-validate ANRE). După ce Task #5 (`anre-discover.js`) e gata, scriptul va genera automat lista în `docs/anre-candidates.md`.
-
-## Pasul 2: Colectare date
-
-**Schema completă (oglindește interfața `Company` din `lib/utils.ts`):**
-```json
-{
-  "id": "slug-firma",
-  "slug": "slug-firma",
-  "name": "Nume Firma S.R.L.",
-  "cui": "RO12345678",
-  "logo": "/logos/slug-firma.png",
-  "description": "Descriere 2-3 propoziții, factuală, din surse publice.",
-  "founded": 2010,
-  "employees": 50,
-  "location": { "city": "", "county": "", "address": "" },
-  "contact": { "phone": "+40...", "email": "", "website": "https://..." },
-  "coverage": ["Județ1", "Județ2"],
-  "specializations": ["hale-industriale", "parcuri-logistice", "cladiri-birouri", "retail", "agricol", "hotel"],
-  "certifications": ["ISO-9001", "ISO-14001", "ISO-45001"],
-  "capacity": { "minProjectKw": 0, "maxProjectKw": 0, "projectsCompleted": 0 },
-  "financials": { "year": 2024, "revenue": 0, "profit": 0 },
-  "tags": ["experienta-10-ani", "proiecte-mari", "mentenanta-inclusa"],
-  "featured": false,
-  "verified": true,
-  "createdAt": "2026-04-17",
-  "updatedAt": "2026-04-17",
-  "anreMatch": { "societate": "NUME EXACT DIN REGISTRU ANRE", "judet": "Județul din registru" }
-}
-```
-
-### Reguli critice pentru câmpuri
-- **`certifications[]`**: **NUMAI certificări non-ANRE** (ISO-9001, ISO-14001, ISO-45001 etc.). **NU adăuga „ANRE-C2A", „ANRE-B" etc.** — acestea se rezolvă **live** din `data/anre-atestate.json` prin `lib/anre.ts` (`getCompanyAnreCerts(company.anreMatch)`). Orice „ANRE-*" scris aici e ignorat la afișare și va fi eliminat automat de `anre-apply-match.js`.
-- **`anreMatch`**: obligatoriu pentru firmele cu atestat. `societate` și `judet` trebuie să fie **exact** cum apar în `data/anre-atestate.json` (case-sensitive, diacritice păstrate). Dacă firma nu e pe ANRE → `null`.
-- **`logo`**: `/logos/<slug>.png`. Poți rula `node scripts/download-logos.mjs` după adăugare (sau descarcă manual de pe site-ul firmei în `public/logos/`).
-- **`verified: true`** doar dacă ai verificat CUI + date financiare dintr-o sursă publică (termene.ro/risco.ro). `featured: false` by default.
-- **`capacity` și `projectsCompleted`**: dacă nu sunt verificabile din surse publice, pune `0`. **NU estima.**
-
-## Pasul 2b: ANRE matching (obligatoriu)
-
-După ce ai adăugat firmele în `companies.json`, leagă-le de registrul ANRE:
-
-**Opțiunea A — automat (recomandat):**
-```bash
-node scripts/anre-match-companies.js   # scrie data/anre-match-proposal.json (match prin CUI → nume+județ → telefon)
-node scripts/anre-apply-match.js --dry-run   # preview
-node scripts/anre-apply-match.js       # aplică: setează anreMatch + șterge ANRE-* din certifications[]
-```
-
-**Opțiunea B — manual:**
-Caută firma în `data/anre-atestate.json` după `cui` sau `societate`. Copiază `societate` și `judet` exact așa cum apar și pune-le în `anreMatch`. Firmele fără atestat ANRE → `"anreMatch": null`.
-
-**Verificare rapidă:**
-```bash
-node -e "const {getCompanyAnreCerts} = require('./lib/anre.ts'); /* folosește un REPL TS sau verifică în browser după build */"
-# sau pur și simplu: npx next build && vezi paginile firmei
-```
-
-## Pasul 3: Verificare date
-
-**Cu Firecrawl:**
-```
-firecrawl_scrape → termene.ro/firma/CUI (revenue, profit, angajați, an înființare, CAEN)
-firecrawl_scrape → risco.ro/firma/CUI (date financiare, stare firmă)
-firecrawl_scrape → site-firma.ro (telefon, email, adresă, portofoliu)
-firecrawl_scrape → portal.anre.ro/cautare_atestate (cert ANRE activ — nr atestat, stare, data expirare)
-firecrawl_map → site-firma.ro (descoperă: /contact, /proiecte, /despre-noi)
-```
-
-**Cu WebSearch:**
-```
-WebSearch → "firma X SRL CUI Y date financiare Romania"
-WebSearch → "X SRL proiecte fotovoltaice"
-```
-
-**Sursa autoritară pentru ANRE:** `portal.anre.ro/cautare_atestate` + `data/anre-atestate.json` (sincronizat cu `scripts/anre-sync.js`). NU te baza pe ce zice site-ul firmei — verifică întotdeauna în registru.
-
-## Pasul 4: Workflow complet (batch)
-```
-1. WebSearch → "firme EPC solar comercial Romania" → listă candidați
-2. Cross-check cu data/anre-atestate.json (firme cu C2A/C1A/B active) → prioritizează pre-validated
-3. node scripts/company-tools.js check-bulk <CUI-uri> → filtrare duplicate
-4. Pentru fiecare firmă unică:
-   a. firecrawl_scrape → termene.ro/firma/CUI → date financiare + CAEN + nr angajați
-   b. firecrawl_scrape → site-firma.ro → contact, descriere, certificări ISO
-   c. firecrawl_map → site-firma.ro → pagini relevante
-5. Adaugă în companies.json (fără „ANRE-*" în certifications[])
-6. node scripts/anre-match-companies.js → generează propunerea de match
-7. node scripts/anre-apply-match.js → setează anreMatch + curăță certifications[]
-8. node scripts/download-logos.mjs (opțional) → descarcă logo-uri
-9. node scripts/company-tools.js validate → verificare completă
-10. npx next build → confirmă că build-ul trece și certurile ANRE apar live
-11. node scripts/company-tools.js stats → summary
-```
-
-## Pasul 5: Validare
-- Firma trebuie să aibă minim 2-3 ani activitate
-- Preferabil cu atestat ANRE activ (C2A pentru >50kW, sau C1A/B/BP/BE pentru rezidențial)
-- Date financiare verificabile (nu self-reported)
-- Focus pe comercial/industrial (nu doar rezidențial)
-- `anreMatch` validat prin `scripts/anre-match-companies.js` (match de încredere high/medium) sau confirmat manual
-
-## REGULA DE AUR: NU ESTIMA, NU UMFLA DATE
-- **NICIODATĂ** nu inventa sau estima date (nr. proiecte, angajați, capacități, cifre financiare)
-- Dacă un câmp nu e verificabil din surse publice, lasă-l gol sau pune 0
-- Mai bine afișăm mai puțin decât afișăm date false
-- Surse acceptate: termene.ro, risco.ro, listafirme.eu, portal.anre.ro, site-ul oficial al firmei
+- `N` — number of firms to add (default 5)
+- `judet` — optional, e.g. "Bucuresti", "Cluj", "Ilfov"
 
 ## Pipeline
-- Firme pre-researched generic: `docs/company-pipeline.md`
-- Candidați ANRE pre-validate (după Task #5): `docs/anre-candidates.md`
+
+### 1. `/anre-discover`
+```bash
+node scripts/anre-discover.js
+```
+Refreshes `docs/anre-candidates.md`. Script already filters:
+- firms in `data/companies.json` (via anreMatch, normalized name+judet, CUI)
+- firms in `data/anre-rejected.json` (persisted rejections)
+
+### 2. `/anre-prefilter` — cheap CAEN/revenue gate
+```bash
+node scripts/anre-prefilter-input.js --judet=<judet> --limit=<N*3>
+```
+Then **in main Claude context** (not in a subagent), call `firecrawl_extract` on `https://www.targetare.ro/<CUI>` for each candidate in `data/anre-prefilter-input.json`.
+
+Schema: `{caen_code, caen_label, website, revenue_2024, profit_2024, employees, address, activity_description}`
+
+Score each:
+- CAEN 4321 / 7112 / 3511: +3
+- "fotovoltaic"/"solar"/"PV" în activitate: +3
+- website resolvable: +2
+- revenue ≥ 500k / ≥ 2M: +2 / +1
+- age ≥ 3y: +1
+- hasBoth C1A+C2A: +1
+
+Write `data/anre-prefilter-results.json` + `docs/anre-prefiltered.md`. Show user the scored table.
+
+### 3. `/company-research` — ONE agent, sequential
+Pick top N from `anre-prefilter-results.json` (score ≥ 6). Launch **one** general-purpose agent with:
+- the prefilter data (CUI, website, CAEN, revenue, employees, address already populated)
+- a fixed per-firm pattern: homepage → /proiecte → /contact → extract description + projects + ISO certs
+- explicit "NEVER estimate" rule (see MEMORY.md)
+
+Agent returns `{ ready: [<company objects>], reject: [<rejection records>] }`.
+
+Write ready array to `scripts/add-batch-YYYY-MM-DD.js`.
+
+### 4. `/company-reject` — persist rejections
+Append agent's `reject` array + any score ≤ 3 firms from prefilter to `data/anre-rejected.json`.
+
+### 5. `/company-add` — execute pipeline
+```bash
+node scripts/add-batch-YYYY-MM-DD.js
+node scripts/anre-match-companies.js
+node scripts/anre-apply-match.js
+node scripts/download-logos.mjs
+node scripts/company-tools.js validate
+node scripts/company-tools.js stats
+```
+
+### 6. Memory update
+Update `MEMORY.md` "Content Status" with new total count + named new firms.
+
+## Verification steps at each stage
+
+| Stage | What's verified |
+|---|---|
+| discover | existing firms filtered out via 3 dedup strategies; rejected filtered out |
+| prefilter-input | same 3 dedup + CUI existence required |
+| prefilter | CAEN code real, revenue real, website fetchable |
+| research | agent's output matches `Company` schema; all references to ANRE stripped from `certifications[]` |
+| add | `company-tools.js validate` catches schema errors before commit |
+
+## Token budget (baseline)
+
+| Stage | Tokens |
+|---|---|
+| anre-discover | ~0 (node script) |
+| prefilter-input | ~0 (node script) |
+| prefilter firecrawl (15 firms) | 7-10k |
+| research agent (5 firms, pre-populated) | 15-25k |
+| **Total for 5 firms added** | **~25-35k** |
+
+vs. previous flow: 3 parallel agents × 40k = 120k for 3 firms, 50% reject rate.
+
+## When user says...
+
+- "adaugă 5 firme" → run full pipeline, default judet = auto (whatever has most C2A+C1A candidates)
+- "adaugă 5 firme din București" → `--judet=Bucuresti`
+- "adaugă 5 firme din județe neacoperite" → pick judet with 0 firms in directory + highest candidate count
+- "respinge firma X" → `/company-reject` only
+- "refresh candidați" → `/anre-discover` only
+
+## Company schema (authoritative)
+
+Defined in `lib/utils.ts` interface `Company`. Critical fields:
+- `certifications[]`: ISO only, NEVER "ANRE-*" (live from registry via `anreMatch`)
+- `anreMatch`: `{ societate, judet }` exact from `data/anre-atestate.json`, case-sensitive
+- `capacity`, `projectsCompleted`, `employees`, `financials`: real or `0` / empty. **Never estimate.**
+- `verified: true` only if website + revenue ≥ 500k confirmed
+- `featured: false` by default
+- `createdAt`, `updatedAt`: today ISO date
+
+## Valid specializations (from `data/specializations.json`)
+`hale-industriale, cladiri-birouri, parcuri-logistice, agricol, retail, hoteluri, spitale, scoli`
+
+## Valid ISO certifications
+`ISO-9001, ISO-14001, ISO-45001, ISO-27001, ISO-50001`
