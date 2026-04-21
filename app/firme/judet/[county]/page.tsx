@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
-import CompanyCard from '@/components/company/CompanyCard';
+import CountyCompanyList from './CountyCompanyList';
 import Button from '@/components/ui/Button';
 import FAQ from '@/components/seo/FAQ';
 import { generateBreadcrumbJsonLd, generateFAQJsonLd } from '@/lib/seo';
@@ -77,11 +77,7 @@ export default async function CountyPage({ params }: Props) {
           </p>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 mb-10">
-          {companies.map((company) => (
-            <CompanyCard key={company.id} company={company} />
-          ))}
-        </div>
+        <CountyCompanyList companies={companies} county={county} />
 
         {/* SEO Content */}
         {(() => {

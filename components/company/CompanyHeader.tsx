@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import type { Company } from '@/lib/utils';
+import { type Company, formatShortDate } from '@/lib/utils';
 
 interface CompanyHeaderProps {
   company: Company;
@@ -35,6 +35,11 @@ export default function CompanyHeader({ company }: CompanyHeaderProps) {
           <p className="text-gray-500">
             {company.location.city}, {company.location.county} &middot; CUI: {company.cui}
           </p>
+          {company.createdAt && (
+            <p className="text-xs text-gray-400 mt-0.5">
+              Listat pe platformă {formatShortDate(company.createdAt)}
+            </p>
+          )}
         </div>
       </div>
 

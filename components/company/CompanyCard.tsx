@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import Badge from '@/components/ui/Badge';
-import { type Company, getSpecializationLabel, formatNumber } from '@/lib/utils';
+import { type Company, getSpecializationLabel, formatNumber, formatShortDate } from '@/lib/utils';
 import { getCompanyAnreCerts, getAnreCodeLabel } from '@/lib/anre';
 
 function CompanyLogo({ company, size = 40 }: { company: Company; size?: number }) {
@@ -64,6 +64,12 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
           <span>Până la {formatNumber(company.capacity.maxProjectKw)} kW</span>
           <span className="text-gray-300">|</span>
           <span>Din {company.founded}</span>
+          {company.createdAt && (
+            <>
+              <span className="text-gray-300">|</span>
+              <span>Adăugat {formatShortDate(company.createdAt)}</span>
+            </>
+          )}
         </div>
       </Link>
     );
@@ -104,9 +110,16 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
         </div>
       )}
 
-      <div className="mt-auto pt-3 border-t border-border flex items-center justify-between text-xs text-gray-500">
-        <span>Până la {formatNumber(company.capacity.maxProjectKw)} kW</span>
-        <span>Din {company.founded}</span>
+      <div className="mt-auto pt-3 border-t border-border text-xs text-gray-500">
+        <div className="flex items-center justify-between">
+          <span>Până la {formatNumber(company.capacity.maxProjectKw)} kW</span>
+          <span>Din {company.founded}</span>
+        </div>
+        {company.createdAt && (
+          <p className="mt-1 text-[11px] text-gray-400">
+            Adăugat {formatShortDate(company.createdAt)}
+          </p>
+        )}
       </div>
     </Link>
   );

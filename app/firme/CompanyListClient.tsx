@@ -12,6 +12,7 @@ import {
   filterCompanies,
   sortCompanies,
   getTagLabel,
+  fuzzyMatchCompanyName,
 } from '@/lib/utils';
 import { trackEvent } from '@/lib/analytics';
 
@@ -54,7 +55,7 @@ const capacityOptions = [
 export default function CompanyListClient() {
   const searchParams = useSearchParams();
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') ?? '');
   const [county, setCounty] = useState(searchParams.get('judet') ?? '');
   const [specialization, setSpecialization] = useState(searchParams.get('specializare') ?? '');
   const [minCapacity, setMinCapacity] = useState('');
@@ -78,8 +79,7 @@ export default function CompanyListClient() {
       tag: selectedTags[0] || undefined,
     });
     if (searchQuery.trim()) {
-      const q = searchQuery.trim().toLowerCase();
-      result = result.filter((c) => c.name.toLowerCase().includes(q));
+      result = result.filter((c) => fuzzyMatchCompanyName(c.name, searchQuery));
     }
     return sortCompanies(result, sortBy);
   }, [allCompanies, county, specialization, minCapacity, certification, selectedTags, sortBy, searchQuery]);

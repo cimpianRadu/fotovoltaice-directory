@@ -67,6 +67,40 @@ export function formatNumber(num: number): string {
   return new Intl.NumberFormat('ro-RO').format(num);
 }
 
+const RO_MONTHS_SHORT = ['ian', 'feb', 'mar', 'apr', 'mai', 'iun', 'iul', 'aug', 'sep', 'oct', 'noi', 'dec'];
+
+export function formatShortDate(iso: string | undefined | null): string {
+  if (!iso) return '';
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (!m) return '';
+  const year = m[1];
+  const month = RO_MONTHS_SHORT[parseInt(m[2], 10) - 1];
+  const day = parseInt(m[3], 10);
+  return `${day} ${month} ${year}`;
+}
+
+// Fuzzy-match a company by name: diacritic-insensitive, token-based substring match,
+// ignoring common legal suffixes (S.R.L., S.A.). Returns true if every token in the
+// normalized query appears as a substring of the normalized candidate.
+export function normalizeCompanyName(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\b(s\.?r\.?l\.?|s\.?a\.?)\b/g, '')
+    .replace(/[^a-z0-9 ]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+export function fuzzyMatchCompanyName(name: string, query: string): boolean {
+  const q = normalizeCompanyName(query);
+  if (!q) return true;
+  const n = normalizeCompanyName(name);
+  const tokens = q.split(' ').filter(Boolean);
+  return tokens.every((t) => n.includes(t));
+}
+
 export function getCertificationLabel(cert: string): string {
   const labels: Record<string, string> = {
     'ANRE-C2A': 'ANRE C2A',
