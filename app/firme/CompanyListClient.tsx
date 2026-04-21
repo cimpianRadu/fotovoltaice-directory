@@ -37,6 +37,7 @@ const tagOptions = [
 
 const sortOptions = [
   { value: 'relevance', label: 'Relevanță' },
+  { value: 'newest', label: 'Cel mai recent adăugate' },
   { value: 'projects', label: 'Proiecte finalizate' },
   { value: 'founded', label: 'Anul înființării' },
   { value: 'capacity', label: 'Capacitate maximă' },

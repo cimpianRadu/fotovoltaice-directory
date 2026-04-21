@@ -190,6 +190,10 @@ export function sortCompanies(
       return sorted.sort(
         (a, b) => b.capacity.maxProjectKw - a.capacity.maxProjectKw
       );
+    case 'newest':
+      return sorted.sort((a, b) =>
+        (b.createdAt || '').localeCompare(a.createdAt || '')
+      );
     default:
       // Relevance: featured first, then by projects
       return sorted.sort((a, b) => {

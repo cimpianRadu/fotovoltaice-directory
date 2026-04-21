@@ -1,0 +1,37 @@
+[
+  {
+    "societate": "ALLIANCE POWER",
+    "judet": "Bucuresti",
+    "cui": "22767064",
+    "reason": "General electrical contractor (JT/MT). Portofoliu exclusiv pe hoteluri, bănci, restaurante — zero PV. Site WordPress 3.8 (2014) neactualizat.",
+    "rejectedAt": "2026-04-21"
+  },
+  {
+    "societate": "BMA CONSULTING ENERGY",
+    "judet": "Bucuresti",
+    "cui": "41760771",
+    "reason": "Branșamente electrice, posturi transformare, măsurători PRAM. Zero mențiune PV pe site. Pur electrotehnic.",
+    "rejectedAt": "2026-04-21"
+  },
+  {
+    "societate": "BRACO ENGINEERING CONSTRUCTION",
+    "judet": "Bucuresti",
+    "cui": "38475244",
+    "reason": "Fără website activ. CAEN 4291 (construcții hidrotehnice). Zero dovezi PV publice, microîntreprindere cu pierderi.",
+    "rejectedAt": "2026-04-21"
+  },
+  {
+    "societate": "MIRA RENEWABLES",
+    "judet": "Bucuresti",
+    "cui": "50730915",
+    "reason": "Firmă nouă (oct 2024), 1 angajat, 52k RON CA. CAEN 7499 (nu 4321). Pagina /proiecte goală — zero instalații finalizate. Dezvoltator, nu instalator.",
+    "rejectedAt": "2026-04-21"
+  },
+  {
+    "societate": "F&F ENERGY SOLUTIONS",
+    "judet": "Bucuresti",
+    "cui": "36695944",
+    "reason": "Fără website. Business principal rețele electrice JT/MT, PV doar mențiune în job scope. Date insuficiente pentru listing complet.",
+    "rejectedAt": "2026-04-21"
+  }
+]
