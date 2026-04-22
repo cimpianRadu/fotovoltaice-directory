@@ -3154,7 +3154,7 @@
       "name": "Solar Prod Ecoinvent S.R.L.",
       "cui": "RO46334220",
       "logo": "/logos/solar-prod-ecoinvent.png",
-      "description": "Firmă din comuna Horea (județul Alba) înființată în 2022, atestată ANRE cu certificări C1A și C2A pentru lucrări la instalații electrice. Activitate principală CAEN 4321 — lucrări de instalații electrice. Cifra de afaceri: 5,11M RON (2024), 9 angajați.",
+      "description": "Firmă din comuna Horea (județul Alba) înființată în 2022, atestată ANRE cu certificări C1A și C2A. Oferă consultanță, proiectare și execuție sisteme fotovoltaice pentru clienți rezidențiali și industriali, precum și lucrări de instalații electrice. Cifra de afaceri: 5,11M RON (2024), 9 angajați.",
       "founded": 2022,
       "employees": 9,
       "location": {
@@ -3164,11 +3164,13 @@
       },
       "contact": {
         "phone": "+40725325992",
-        "email": "solarprodecoinvent@yahoo.com",
-        "website": ""
+        "email": "contact@solarprodecoinvent.ro",
+        "website": "https://solarprodecoinvent.ro/"
       },
       "coverage": [],
-      "specializations": [],
+      "specializations": [
+        "hale-industriale"
+      ],
       "certifications": [],
       "capacity": {},
       "financials": {
@@ -3178,7 +3180,7 @@
       },
       "tags": [],
       "featured": false,
-      "verified": false,
+      "verified": true,
       "createdAt": "2026-04-22",
       "updatedAt": "2026-04-22",
       "anreMatch": {
@@ -3316,7 +3318,7 @@
       "name": "Ted Electro S.R.L.",
       "cui": "RO46875942",
       "logo": "/logos/ted-electro.png",
-      "description": "Firmă din Alba Iulia înființată în 2022, atestată ANRE cu certificări C1A și C2A pentru lucrări la instalații electrice. Activitate principală CAEN 4321 — lucrări de instalații electrice. Cifra de afaceri: 2,60M RON (2024), 10 angajați.",
+      "description": "Firmă din Alba Iulia înființată în 2022, atestată ANRE cu certificări C1A și C2A. Execută lucrări de instalații electrice rezidențiale, comerciale și industriale — branșamente, tablouri electrice, verificări și mentenanță în județele Alba, Sibiu și Hunedoara. Cifra de afaceri: 2,60M RON (2024), 10 angajați.",
       "founded": 2022,
       "employees": 10,
       "location": {
@@ -3325,12 +3327,15 @@
         "address": "Bld. Ferdinand I, Nr. 3"
       },
       "contact": {
-        "phone": "",
-        "email": "",
-        "website": ""
+        "phone": "+40752555000",
+        "email": "tedelectroalba@gmail.com",
+        "website": "https://tedelectro.ro/"
       },
       "coverage": [],
-      "specializations": [],
+      "specializations": [
+        "hale-industriale",
+        "cladiri-birouri"
+      ],
       "certifications": [],
       "capacity": {},
       "financials": {
@@ -3340,7 +3345,7 @@
       },
       "tags": [],
       "featured": false,
-      "verified": false,
+      "verified": true,
       "createdAt": "2026-04-22",
       "updatedAt": "2026-04-22",
       "anreMatch": {
@@ -3392,7 +3397,7 @@
       "name": "Electroalba Electris S.R.L.",
       "cui": "RO45029163",
       "logo": "/logos/electroalba-electris.png",
-      "description": "Firmă din Alba Iulia înființată în 2021, atestată ANRE cu certificări C1A și C2A pentru lucrări la instalații electrice. Activitate principală CAEN 4321 — lucrări de instalații electrice. Cifra de afaceri: 1,35M RON (2024), 7 angajați.",
+      "description": "Firmă din Alba Iulia înființată în 2021, atestată ANRE cu certificări C1A și C2A. Specializată în proiectarea și execuția instalațiilor electrice pentru construcții civile, industriale și infrastructură: rețele de joasă și medie tensiune, iluminat public, paratrăsnete, branșamente aeriene și subterane, posturi de transformare. Cifra de afaceri: 1,35M RON (2024), 7 angajați.",
       "founded": 2021,
       "employees": 7,
       "location": {
@@ -3402,11 +3407,14 @@
       },
       "contact": {
         "phone": "+40746784180",
-        "email": "ana.ghibu@yahoo.com",
-        "website": ""
+        "email": "office@electroalbaelectris.ro",
+        "website": "https://www.electroalbaelectris.ro/"
       },
       "coverage": [],
-      "specializations": [],
+      "specializations": [
+        "hale-industriale",
+        "cladiri-birouri"
+      ],
       "certifications": [],
       "capacity": {},
       "financials": {
@@ -3416,7 +3424,7 @@
       },
       "tags": [],
       "featured": false,
-      "verified": false,
+      "verified": true,
       "createdAt": "2026-04-22",
       "updatedAt": "2026-04-22",
       "anreMatch": {
@@ -3430,7 +3438,7 @@
       "name": "Electrotimeia S.R.L.",
       "cui": "RO17223317",
       "logo": "/logos/electrotimeia.png",
-      "description": "Firmă din Sebeș (județul Alba) înființată în 2005, atestată ANRE cu certificare C2A pentru lucrări la instalații electrice. Activitate principală CAEN 4321 — lucrări de instalații electrice. Cifra de afaceri: 7,48M RON (2024), 18 angajați.",
+      "description": "Firmă din Sebeș (județul Alba) înființată în 2005, atestată ANRE cu certificare C2A. Execută lucrări de instalații electrice și branșamente la rețeaua de distribuție. Cifra de afaceri: 7,48M RON (2024), 18 angajați.",
       "founded": 2005,
       "employees": 18,
       "location": {
@@ -3441,10 +3449,12 @@
       "contact": {
         "phone": "+40741104586",
         "email": "electrotimeia@yahoo.com",
-        "website": ""
+        "website": "https://electrotimeia.ro/"
       },
       "coverage": [],
-      "specializations": [],
+      "specializations": [
+        "hale-industriale"
+      ],
       "certifications": [],
       "capacity": {},
       "financials": {
@@ -3454,7 +3464,7 @@
       },
       "tags": [],
       "featured": false,
-      "verified": false,
+      "verified": true,
       "createdAt": "2026-04-22",
       "updatedAt": "2026-04-22",
       "anreMatch": {
@@ -3506,7 +3516,7 @@
       "name": "Tobimar Group S.R.L.",
       "cui": "RO21171933",
       "logo": "/logos/tobimar-group.png",
-      "description": "Firmă din Vințu de Jos (județul Alba) înființată în 2007, atestată ANRE cu certificare C2A pentru lucrări la instalații electrice. Activitate principală CAEN 4321 — lucrări de instalații electrice. Cifra de afaceri: 20,55M RON (2024), 17 angajați.",
+      "description": "Firmă din Vințu de Jos (județul Alba) înființată în 2007, atestată ANRE cu certificare C2A. Distribuitor național de materiale electrice, corpuri de iluminat (arhitectural, industrial, stradal), panouri fotovoltaice, stații de încărcare EV și soluții smart building. Fabrică de tablouri electrice în Parcul Industrial Drâmbar. Cifra de afaceri: 20,55M RON (2024), 17 angajați.",
       "founded": 2007,
       "employees": 17,
       "location": {
@@ -3515,12 +3525,16 @@
         "address": "Sat Vințu de Jos, Com. Vințu de Jos, Str. Mihai Eminescu, Nr. 58"
       },
       "contact": {
-        "phone": "",
-        "email": "tobimargroup@tobimar.ro",
-        "website": ""
+        "phone": "+40258818191",
+        "email": "office@tobimar.ro",
+        "website": "https://www.tobimar.ro/"
       },
       "coverage": [],
-      "specializations": [],
+      "specializations": [
+        "hale-industriale",
+        "cladiri-birouri",
+        "retail"
+      ],
       "certifications": [],
       "capacity": {},
       "financials": {
@@ -3530,7 +3544,7 @@
       },
       "tags": [],
       "featured": false,
-      "verified": false,
+      "verified": true,
       "createdAt": "2026-04-22",
       "updatedAt": "2026-04-22",
       "anreMatch": {
