@@ -9,7 +9,7 @@ import guidesData from '@/data/guides.json';
 export const metadata: Metadata = {
   title: 'Publicitate - Promovează-ți Firma pe Instalatori Fotovoltaice',
   description:
-    'Opțiuni de publicitate pe platforma Instalatori Fotovoltaice România. 3 pachete pentru firmele de instalare (gratuit, Premium 49€, Enterprise 99€) + Listing Sponsor pentru furnizorii de echipamente.',
+    'Opțiuni de publicitate pe platforma Instalatori Fotovoltaice România. 3 pachete pentru instalatori (gratuit, Premium 49€, Enterprise 99€) + Listing Sponsor pentru furnizori (29€) + Popup Partner pentru SaaS și tools (8.99€). Toate prețurile + TVA.',
   alternates: { canonical: '/publicitate' },
 };
 
@@ -232,8 +232,9 @@ export default function AdvertisePage() {
           </h1>
           <p className="text-gray-600 mt-2 max-w-2xl leading-relaxed">
             Ajunge direct la decidenții care caută soluții fotovoltaice pentru hale industriale,
-            clădiri de birouri și spații comerciale din România. Două produse distincte — în funcție
-            de ce oferi.
+            clădiri de birouri și spații comerciale din România. Trei categorii de produse — în
+            funcție de ce oferi. Toate prețurile sunt în EUR, facturare în RON la cursul BNR din
+            ziua emiterii facturii.
           </p>
           <div className="mt-4 flex flex-wrap gap-3 text-sm">
             <a href="#instalatori" className="text-primary hover:underline font-medium">
@@ -241,7 +242,11 @@ export default function AdvertisePage() {
             </a>
             <span className="text-gray-300">·</span>
             <a href="#furnizori" className="text-primary hover:underline font-medium">
-              → Pentru furnizori de echipamente
+              → Pentru furnizori
+            </a>
+            <span className="text-gray-300">·</span>
+            <a href="#popup-partner" className="text-primary hover:underline font-medium">
+              → Popup Partner (8.99€)
             </a>
           </div>
         </div>
@@ -297,9 +302,10 @@ export default function AdvertisePage() {
                 <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Nivel 1</span>
               </div>
               <p className="text-sm text-gray-500 mb-4">Baza pe care e construit directorul</p>
-              <p className="text-3xl font-bold text-gray-900 mb-5">
+              <p className="text-3xl font-bold text-gray-900 mb-1">
                 0 <span className="text-base font-normal text-gray-500">EUR/lună</span>
               </p>
+              <p className="text-xs text-gray-400 mb-5">fără costuri ascunse</p>
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ce primești</p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <Feature>Profil în director cu date contact, certificări, localizare</Feature>
@@ -326,9 +332,10 @@ export default function AdvertisePage() {
                 <span className="text-xs bg-primary/10 text-primary-dark px-2 py-0.5 rounded-full">Nivel 2</span>
               </div>
               <p className="text-sm text-gray-500 mb-4">Vizibilitate prioritară + lead-uri</p>
-              <p className="text-3xl font-bold text-gray-900 mb-5">
+              <p className="text-3xl font-bold text-gray-900 mb-1">
                 49 <span className="text-base font-normal text-gray-500">EUR/lună</span>
               </p>
+              <p className="text-xs text-gray-400 mb-5">+ TVA</p>
 
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
                 Tot din Listare Gratuită, plus:
@@ -353,33 +360,20 @@ export default function AdvertisePage() {
                 <span className="text-xs bg-secondary/10 text-secondary-dark px-2 py-0.5 rounded-full">Nivel 3</span>
               </div>
               <p className="text-sm text-gray-500 mb-4">Vizibilitate maximă pe tot site-ul</p>
-              <p className="text-3xl font-bold text-gray-900 mb-5">
+              <p className="text-3xl font-bold text-gray-900 mb-1">
                 99 <span className="text-base font-normal text-gray-500">EUR/lună</span>
               </p>
-
-              {/* Headline feature — popup */}
-              <div className="rounded-lg border border-secondary/30 bg-white p-3 mb-4">
-                <p className="text-[10px] font-semibold text-secondary-dark uppercase tracking-wider mb-1">
-                  🎯 Inventar exclusiv
-                </p>
-                <p className="text-sm font-semibold text-gray-900 leading-snug">
-                  Slotul popup din colțul dreapta-jos — <span className="text-primary-dark">un singur sponsor activ pe tot site-ul</span>
-                </p>
-                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
-                  Apare după 15 secunde pe toate paginile, se poate închide. Dacă e ocupat, intri pe listă de așteptare.
-                </p>
-              </div>
+              <p className="text-xs text-gray-400 mb-5">+ TVA</p>
 
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
                 Tot din Profil Premium, plus:
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
-                <Feature strong>Slot popup exclusiv (descris mai sus)</Feature>
                 <Feature strong>Banner promoțional pe ghidurile relevante din nișa ta</Feature>
                 <Feature strong>Articol sponsorizat dedicat — studiu de caz pe un proiect al tău</Feature>
-                <Feature>Featured pe homepage, secțiune „Firme Recomandate"</Feature>
+                <Feature strong>Featured pe homepage, secțiune „Firme Recomandate"</Feature>
                 <Feature>Menționare pe toate paginile de județ în care operezi</Feature>
-                <Feature>Raport performanță campanii: impresii banner, click popup, timp citire articol</Feature>
+                <Feature>Raport performanță campanii: impresii banner, timp citire articol, conversii</Feature>
               </ul>
             </div>
             <PreviewEnterprise />
@@ -405,12 +399,13 @@ export default function AdvertisePage() {
             <div className="rounded-xl border border-border p-6">
               <div className="flex items-center gap-2 mb-1">
                 <h3 className="font-bold text-gray-900 text-lg">Listing Sponsor</h3>
-                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Furnizori</span>
+                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Nivel furnizor</span>
               </div>
               <p className="text-sm text-gray-500 mb-4">Vizibil pe toate ghidurile, lângă conținut</p>
-              <p className="text-3xl font-bold text-gray-900 mb-5">
+              <p className="text-3xl font-bold text-gray-900 mb-1">
                 29 <span className="text-base font-normal text-gray-500">EUR/lună</span>
               </p>
+              <p className="text-xs text-gray-400 mb-5">+ TVA</p>
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ce primești</p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <Feature>Afișare în secțiunea „Furnizori Recomandați" pe toate ghidurile</Feature>
@@ -424,6 +419,78 @@ export default function AdvertisePage() {
           </div>
         </section>
 
+        {/* ═══════════════════════════════════════════════════════════
+             SECTION C: Popup Partner (cross-promo, low-tier)
+           ═══════════════════════════════════════════════════════════ */}
+        <section id="popup-partner" className="mb-12 scroll-mt-20">
+          <div className="mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+              Pentru parteneri complementari (SaaS, tools, servicii)
+            </h2>
+            <p className="text-sm text-gray-600 max-w-2xl leading-relaxed">
+              Dacă ai un tool, o platformă sau un serviciu util pentru firmele de instalare
+              fotovoltaică (dar nu ești nici instalator, nici furnizor de echipamente), ai un singur
+              produs disponibil — slotul popup de pe tot site-ul. E cel mai ieftin punct de intrare.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 items-start">
+            <div className="rounded-xl border border-border p-6">
+              <div className="flex items-center gap-2 mb-1">
+                <h3 className="font-bold text-gray-900 text-lg">Popup Partner</h3>
+                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Nivel partener</span>
+              </div>
+              <p className="text-sm text-gray-500 mb-4">Slot popup exclusiv, pe toate paginile</p>
+              <p className="text-3xl font-bold text-gray-900 mb-1">
+                8.99 <span className="text-base font-normal text-gray-500">EUR/lună</span>
+              </p>
+              <p className="text-xs text-gray-400 mb-5">+ TVA</p>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ce primești</p>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <Feature strong>Slot popup exclusiv — un singur partener activ la un moment dat</Feature>
+                <Feature>Apare după 15 secunde pe toate paginile site-ului</Feature>
+                <Feature>Logo + nume + descriere scurtă (max 120 caractere) + link cu UTM</Feature>
+                <Feature>Dismissible — user-ul îl poate închide, nu mai apare în sesiune</Feature>
+                <Feature>Vizibil doar pe desktop (mobile ascuns — nu deranjăm)</Feature>
+                <Feature>Raport lunar: impresii, click-uri, rata de dismiss</Feature>
+              </ul>
+              <p className="text-xs text-gray-500 mt-4 italic leading-relaxed">
+                Exemple de ce se potrivește: tool-uri de review management, software CRM pentru
+                instalatori, platforme de cotații, calculatoare ROI, cursuri/certificări.
+              </p>
+            </div>
+            <MockBrowser url="instalatori-fotovoltaice.ro">
+              <p className="text-[10px] text-gray-400 mb-2 uppercase tracking-wider font-semibold">
+                Popup discret pe tot site-ul
+              </p>
+              <div className="relative bg-gray-50 rounded-lg p-3 h-[160px] overflow-hidden">
+                <div className="space-y-1.5">
+                  <div className="h-2.5 bg-gray-200 rounded w-2/3" />
+                  <div className="h-2 bg-gray-100 rounded w-full" />
+                  <div className="h-2 bg-gray-100 rounded w-5/6" />
+                  <div className="h-2 bg-gray-100 rounded w-full" />
+                  <div className="h-2 bg-gray-100 rounded w-3/4" />
+                  <div className="h-2 bg-gray-100 rounded w-full" />
+                </div>
+                <div className="absolute bottom-2 right-2 w-44 rounded-lg border border-gray-200 bg-white shadow-md p-2">
+                  <div className="absolute top-1 right-1 w-3 h-3 text-gray-300 text-[10px] leading-3">×</div>
+                  <p className="text-[7px] font-semibold uppercase tracking-wider text-gray-400 mb-1">
+                    Partener
+                  </p>
+                  <div className="flex items-start gap-1.5">
+                    <div className="w-5 h-5 rounded bg-primary/10 border border-primary/20 shrink-0" />
+                    <div className="min-w-0">
+                      <p className="text-[9px] font-semibold text-gray-900">Brand-ul Tău</p>
+                      <p className="text-[8px] text-gray-500 leading-tight">Descriere scurtă a serviciului tău</p>
+                      <p className="text-[8px] font-semibold text-primary-dark mt-0.5">Încearcă gratuit →</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </MockBrowser>
+          </div>
+        </section>
+
         {/* Meta callout — explain the live popup */}
         <div className="mb-8 rounded-xl border border-primary/30 bg-primary/5 p-4 flex items-start gap-3">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-primary-dark flex-shrink-0 mt-0.5" aria-hidden="true">
@@ -432,9 +499,12 @@ export default function AdvertisePage() {
           <div className="flex-1 text-sm">
             <p className="font-semibold text-gray-900">Popup-ul din colțul dreapta-jos pe care-l vezi acum?</p>
             <p className="text-gray-700 mt-1 leading-relaxed">
-              Exact acela e <strong>slotul exclusiv din pachetul Enterprise</strong>. Momentan îl folosim
-              pentru un proiect al nostru — locul e liber pentru primul sponsor plătitor. Un singur
-              client activ la un moment dat, pe tot site-ul, pe toate paginile.
+              Exact acela e <strong>slotul Popup Partner — 8.99 EUR/lună + TVA</strong>. Momentan îl folosim
+              pentru un proiect al nostru, dar locul e liber pentru primul partener plătitor. Un
+              singur client activ la un moment dat, pe tot site-ul, pe toate paginile.{' '}
+              <a href="#popup-partner" className="text-primary-dark hover:underline font-medium">
+                Vezi detaliile →
+              </a>
             </p>
           </div>
         </div>
@@ -464,22 +534,30 @@ export default function AdvertisePage() {
                     Profil Premium <span className="text-[10px] bg-primary text-white px-1.5 py-0.5 rounded-full ml-1">★</span>
                   </td>
                   <td className="px-4 py-3 text-gray-600">Instalatori</td>
-                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">49 €</td>
-                  <td className="px-4 py-3 text-gray-600">+ badge, poziție prioritară, lead-uri</td>
+                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">49 € + TVA</td>
+                  <td className="px-4 py-3 text-gray-600">+ badge, poziție prioritară, lead-uri, rapoarte trafic</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium text-gray-900">Enterprise</td>
                   <td className="px-4 py-3 text-gray-600">Instalatori</td>
-                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">99 €</td>
+                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">99 € + TVA</td>
                   <td className="px-4 py-3 text-gray-600">
-                    + <strong className="text-gray-900">popup exclusiv</strong>, banner ghiduri, articol sponsor, featured
+                    + banner ghiduri, articol sponsor, featured, rapoarte campanii
                   </td>
                 </tr>
                 <tr className="border-t-2 border-border">
                   <td className="px-4 py-3 font-medium text-gray-900">Listing Sponsor</td>
                   <td className="px-4 py-3 text-gray-600">Furnizori</td>
-                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">29 €</td>
+                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">29 € + TVA</td>
                   <td className="px-4 py-3 text-gray-600">Logo + link pe toate ghidurile</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-gray-900">Popup Partner</td>
+                  <td className="px-4 py-3 text-gray-600">Parteneri complementari</td>
+                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">8.99 € + TVA</td>
+                  <td className="px-4 py-3 text-gray-600">
+                    <strong className="text-gray-900">Popup exclusiv</strong> — un singur partener activ
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -489,7 +567,7 @@ export default function AdvertisePage() {
         {/* Placeholder Partners */}
         <div className="mb-10">
           <h2 className="text-lg font-bold text-gray-900 mb-4">Partenerii Noștri</h2>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-3">
             <div className="rounded-xl border border-dashed border-gray-300 p-5 flex items-start gap-4">
               <div className="w-12 h-12 rounded-lg bg-gray-50 flex items-center justify-center shrink-0">
                 <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -498,8 +576,8 @@ export default function AdvertisePage() {
               </div>
               <div>
                 <p className="font-semibold text-gray-400">Firma ta aici</p>
-                <p className="text-sm text-gray-400">Firmă de instalare panouri fotovoltaice</p>
-                <p className="text-xs text-gray-300 mt-1">Profil Premium sau Enterprise</p>
+                <p className="text-sm text-gray-400">Firmă de instalare fotovoltaică</p>
+                <p className="text-xs text-gray-300 mt-1">Premium sau Enterprise</p>
               </div>
             </div>
             <div className="rounded-xl border border-dashed border-gray-300 p-5 flex items-start gap-4">
@@ -510,8 +588,20 @@ export default function AdvertisePage() {
               </div>
               <div>
                 <p className="font-semibold text-gray-400">Furnizorul tău aici</p>
-                <p className="text-sm text-gray-400">Furnizor de echipamente și materiale fotovoltaice</p>
+                <p className="text-sm text-gray-400">Echipamente și materiale fotovoltaice</p>
                 <p className="text-xs text-gray-300 mt-1">Listing Sponsor</p>
+              </div>
+            </div>
+            <div className="rounded-xl border border-dashed border-gray-300 p-5 flex items-start gap-4">
+              <div className="w-12 h-12 rounded-lg bg-gray-50 flex items-center justify-center shrink-0">
+                <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                </svg>
+              </div>
+              <div>
+                <p className="font-semibold text-gray-400">Brand-ul tău aici</p>
+                <p className="text-sm text-gray-400">SaaS, tools, servicii complementare</p>
+                <p className="text-xs text-gray-300 mt-1">Popup Partner</p>
               </div>
             </div>
           </div>
@@ -541,11 +631,11 @@ export default function AdvertisePage() {
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
               <summary className="font-semibold text-gray-900 text-sm cursor-pointer list-none flex justify-between items-start gap-3">
-                <span>Pot cumula Profil Premium cu Listing Sponsor?</span>
+                <span>Pot cumula mai multe produse?</span>
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Doar dacă firma ta face ambele activități (instalări + vânzare materiale către alți instalatori). Sunt audiențe diferite, produse diferite. În practică, 95% dintre firme aleg un singur produs. Dacă ești în ambele categorii, îți oferim 20% discount la pachetul al doilea.
+                Da, dacă intri în mai multe categorii de audiență. O firmă de instalare care vinde și materiale poate avea Premium + Listing Sponsor. Un Enterprise care vrea și slotul popup îl poate cumpăra separat (99 + 8.99 €). În practică, 90% dintre firme aleg un singur produs adecvat nișei lor. Pentru cumulări de 2+ pachete oferim 15% discount la pachetul secundar.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
@@ -554,7 +644,7 @@ export default function AdvertisePage() {
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Popup-ul din Enterprise e <strong>exclusiv</strong> — un singur sponsor activ la un moment dat pe tot site-ul. Bannerele pe ghiduri sunt rotative între Enterprise plătitori (dacă sunt mai mulți). Listing Sponsor nu e exclusiv — pot fi 3-5 furnizori activi simultan, toți vizibili în sidebar-ul de ghiduri.
+                <strong>Popup Partner</strong> e exclusiv — un singur partener activ la un moment dat pe tot site-ul, cu listă de așteptare dacă slotul e ocupat. Bannerele pe ghiduri din Enterprise sunt rotative între plătitori (dacă sunt mai mulți). Listing Sponsor nu e exclusiv — pot fi 3-5 furnizori activi simultan, toți vizibili în sidebar-ul de ghiduri. Profil Premium și Enterprise nu au limită de locuri.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
