@@ -36,11 +36,25 @@ Second script hits targetare.ro API (general + financial + websites endpoints), 
 
 Scoring: CAEN 4321/7112/3511 (+3), solar keywords (+3), website (+2), revenue ≥2M (+2) or ≥500k (+1), age ≥3y (+1), hasBoth C1A+C2A (+1). Threshold ≥6 → research; ≤3 → auto-reject candidate.
 
-### 3. Fetch contacts for top N
+### 2.5 **PV content gate** — scrape homepage, verify PV activity
 ```bash
-node scripts/targetare-contacts.js --min-score=6 --limit=<N>
+node scripts/anre-prefilter-content.js
 ```
-Hits `/phones` + `/emails` endpoints. Writes `data/anre-contacts.json` with full dataset: cui, name, address, **phone**, **email**, website, year_founded, employees, revenue, profit, caen, codes, hasBoth, score.
+Fetches homepage (+ /servicii, /despre-noi, /portofoliu) of each score ≥6 firm. Counts distinct PV keyword matches (fotovoltaic, panouri solare, kWp, invertor, prosumator, on/off-grid, etc.). Updates `anre-prefilter-results.json` with:
+- `pvGate: 'pass'` (3+ hits) — definitely PV → prioritize for contacts + research
+- `pvGate: 'weak'` (1-2 hits) — worth researching, PV may be minor service
+- `pvGate: 'fail'` (0 hits) — non-PV electrical/automation/lighting firm → skip
+- `pvGate: 'dead-site'` — homepage 404/timeout → skip
+
+**Why this step exists:** targetare API scoring (CAEN 4321 + revenue + website flag) yields ~25-40% PV installers in older-discovered judete (Timiș, Ilfov). Content check flips this to ~90%+ by reading what the site actually says. Saves API credits on /phones+/emails and avoids wasted research agent turns.
+
+Validated on Ilfov batch 2026-04-22: 2 PASS = 2 accepted, 3 FAIL + 1 DEAD-SITE = 4 rejected → 100% match with research agent decisions.
+
+### 3. Fetch contacts for PV-pass firms only
+```bash
+node scripts/targetare-contacts.js --min-score=6 --limit=<N*2> --pv-gate=pass,weak
+```
+Hits `/phones` + `/emails` endpoints **only for firms that passed the PV content gate**. Writes `data/anre-contacts.json` with full dataset.
 
 **This replaces the old firecrawl+listafirme.ro contact scrape.** No more Cloudflare failures, no more manual fallback.
 

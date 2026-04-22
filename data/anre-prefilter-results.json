@@ -26,7 +26,13 @@
     "year_founded": 2004,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Buftea, Str. Rasaritului, Nr.38",
-    "error": null
+    "error": null,
+    "pvContentHits": 5,
+    "pvContentSample": [
+      "nergiei electrice în sisteme cu panouri fotovoltaice și alimentări cu energie electrică a stațiilor de incărcare autoveh",
+      "ucerea energiei electrice în sisteme cu panouri fotovoltaice și alimentări cu energie electrică a stațiilor de incărcare"
+    ],
+    "pvGate": "pass"
   },
   {
     "cui": "42223407",
@@ -55,7 +61,10 @@
     "year_founded": 2020,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Voluntari, Sos Centura, Nr.2-4",
-    "error": null
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail"
   },
   {
     "cui": "47994763",
@@ -84,7 +93,8 @@
     "year_founded": 2023,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Voluntari, Str. Emil Racovita, Nr.70, Vila.84a1",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "12485325",
@@ -113,7 +123,11 @@
     "year_founded": 1999,
     "status": "functiune",
     "address": "Jud. Ilfov, Sat Caldararu Com. Cernica, Str. Oxigenului, Nr.17",
-    "error": null
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "dead-site",
+    "pvError": "home 0 fetch failed"
   },
   {
     "cui": "7614059",
@@ -142,7 +156,10 @@
     "year_founded": 1995,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Popesti-Leordeni, Str. Oituz, Nr.42",
-    "error": null
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail"
   },
   {
     "cui": "42046674",
@@ -170,7 +187,8 @@
     "year_founded": 2019,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Popesti-Leordeni, Drm. Fermei, Nr.112, Demisol. Camera 2, Bl.3, Ap.6",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "33161992",
@@ -198,7 +216,8 @@
     "year_founded": 2014,
     "status": "functiune",
     "address": "Jud. Ilfov, Com. Jilava, Sos Giurgiului, Nr.156, Camera 1 Si Camera 2, Et.1",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "44475451",
@@ -226,7 +245,8 @@
     "year_founded": 2021,
     "status": "functiune",
     "address": "Jud. Ilfov, Com. Jilava, Sos Prelungirea Giurgiului, Nr.29, Corp C8",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "33453571",
@@ -254,7 +274,8 @@
     "year_founded": 2014,
     "status": "functiune",
     "address": "Jud. Ilfov, Com. Jilava, Str Garii, Nr.91",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "48548831",
@@ -282,7 +303,8 @@
     "year_founded": 2023,
     "status": "functiune",
     "address": "Jud. Ilfov, Sat Branesti Com. Branesti, Str. Slt. Petre Ionel, Nr.36",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "35679134",
@@ -310,7 +332,8 @@
     "year_founded": 2016,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Popesti-Leordeni, Sos. Oltenitei, Nr.11b, Bl.3, Et.3, Ap.30",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "32597650",
@@ -338,7 +361,8 @@
     "year_founded": 2013,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Bragadiru, Str Prelungirea Ghencea, Nr.45, Lot 1. Imobil - Bloc D5, Et.2, Ap.23",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "30107204",
@@ -366,7 +390,8 @@
     "year_founded": 2012,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Popesti-Leordeni, Sos. Oltenitei, Nr.181, Camin 3, Ap.3",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "30897146",
@@ -394,7 +419,12 @@
     "year_founded": 2012,
     "status": "functiune",
     "address": "Jud. Ilfov, Sat Stefanestii De Jos Com. Stefanestii De Jos, Sos. Stefanesti, Nr.8-8a",
-    "error": null
+    "error": null,
+    "pvContentHits": 1,
+    "pvContentSample": [
+      "uții de alimentare cu energie utilitară Energie regenerabilă eoliană Rozwiązania Rozwiązania Combustibil alternativ Răsp"
+    ],
+    "pvGate": "weak"
   },
   {
     "cui": "38952394",
@@ -422,7 +452,10 @@
     "year_founded": 2018,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Popesti-Leordeni, Str. Sabarului, Nr.7b, Cam. 1",
-    "error": null
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail"
   },
   {
     "cui": "24980149",
@@ -450,7 +483,13 @@
     "year_founded": 2009,
     "status": "functiune",
     "address": "Jud. Ilfov, Sat Branesti Com. Branesti, Str. Gradinii, Nr.6",
-    "error": null
+    "error": null,
+    "pvContentHits": 9,
+    "pvContentSample": [
+      "Green Costal | Sisteme fotovoltaice – vânzare & instalare Site in lucru - ne cerem scuze pentru eventua",
+      "Accesorii acumulatori Toti acumulatorii Panouri fotovoltaice Controlere de incarcare Accesorii Conectica Monitorizare Pr"
+    ],
+    "pvGate": "pass"
   },
   {
     "cui": "47661475",
@@ -478,7 +517,8 @@
     "year_founded": 2023,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Bragadiru, Str. Iernii, Nr.16c, (cam. 2)",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "43146809",
@@ -505,7 +545,8 @@
     "year_founded": 2020,
     "status": "functiune",
     "address": "Jud. Ilfov, Sat Rosu Com. Chiajna, Str. Rezervelor, Nr.93, Bl.b, Et.7, Ap.109",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "46782762",
@@ -532,7 +573,8 @@
     "year_founded": 2022,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Bragadiru, Str. Verii, Nr.18c, Parter. Camera Nr. 2",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "40801547",
@@ -559,7 +601,8 @@
     "year_founded": 2019,
     "status": "functiune",
     "address": "Jud. Ilfov, Sat Domnesti Com. Domnesti, Str. Floarea Soarelui, Nr.10",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "481338",
@@ -587,7 +630,8 @@
     "year_founded": 1992,
     "status": "functiune",
     "address": "Jud. Ilfov, Com. Domnesti, Nr.1151",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "39194026",
@@ -614,7 +658,8 @@
     "year_founded": 2018,
     "status": "functiune",
     "address": "Jud. Ilfov, Com. 1 Decembrie, Str. Viilor, Nr.6a, Camera 1",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "51454109",
@@ -640,7 +685,8 @@
     "year_founded": 2025,
     "status": "functiune",
     "address": "Jud. Ilfov, Sat Popesti Leordeni Ors. Popesti-Leordeni, Str Biruintei, Nr.71c, Spatiu Birou.parter Si Etaj 1.",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "17412685",
@@ -667,7 +713,8 @@
     "year_founded": 2005,
     "status": "functiune",
     "address": "Jud. Ilfov, Com. Chiajna, Str Italia, Nr.1-7, P3. Bucharest A1 Logistic Park. Depozitul 3",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "2628819",
@@ -694,7 +741,8 @@
     "year_founded": 1992,
     "status": "functiune",
     "address": "Jud. Ilfov, Sat Gagu Com. Dascalu, Str. Cozia, Nr.17, Bl.birou M5",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "24787807",
@@ -721,7 +769,8 @@
     "year_founded": 2008,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Bragadiru, Str. Alunului, Nr.19",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "36438584",
@@ -748,7 +797,8 @@
     "year_founded": 2016,
     "status": "functiune",
     "address": "Jud. Ilfov, Sat Caldararu Com. Cernica, Str. Oxigenului, Nr.4c, Corp C2. Cam. 9, Et.1",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "38798970",
@@ -775,7 +825,8 @@
     "year_founded": 2018,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Voluntari, Bld. Pipera, Nr.150f, Camera 1, Et.1",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "42398441",
@@ -802,7 +853,8 @@
     "year_founded": 2020,
     "status": "functiune",
     "address": "Jud. Ilfov, Ors. Bragadiru, Str. Ciresar, Nr.1c, Ap.1b",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   },
   {
     "cui": "5740581",
@@ -829,6 +881,7 @@
     "year_founded": 1994,
     "status": "functiune",
     "address": "Jud. Constanta, Ors. Navodari, Str. Randunelelor, Nr.42",
-    "error": null
+    "error": null,
+    "pvGate": "skip"
   }
 ]

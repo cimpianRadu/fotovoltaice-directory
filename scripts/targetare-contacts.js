@@ -33,6 +33,8 @@ if (!API_KEY) {
 const args = process.argv.slice(2);
 const minScore = Number((args.find((a) => a.startsWith('--min-score=')) || '=6').split('=')[1]) || 6;
 const limit = Number((args.find((a) => a.startsWith('--limit=')) || '=10').split('=')[1]) || 10;
+const pvGateArg = (args.find((a) => a.startsWith('--pv-gate=')) || '').split('=')[1] || '';
+const pvGateAllow = pvGateArg ? new Set(pvGateArg.split(',').map((s) => s.trim())) : null;
 
 const H = { Authorization: `Bearer ${API_KEY}` };
 
@@ -45,9 +47,13 @@ async function fetchJson(url) {
 (async () => {
   const resultsPath = path.join(__dirname, '..', 'data', 'anre-prefilter-results.json');
   const results = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
-  const candidates = results.filter((r) => r.score >= minScore).slice(0, limit);
+  const candidates = results
+    .filter((r) => r.score >= minScore)
+    .filter((r) => !pvGateAllow || pvGateAllow.has(r.pvGate))
+    .slice(0, limit);
 
-  console.log(`Fetching contacts for ${candidates.length} firms (score >= ${minScore})...`);
+  const gateNote = pvGateAllow ? `, pvGate in {${[...pvGateAllow].join(',')}}` : '';
+  console.log(`Fetching contacts for ${candidates.length} firms (score >= ${minScore}${gateNote})...`);
 
   const contacts = [];
   let remaining = null;
