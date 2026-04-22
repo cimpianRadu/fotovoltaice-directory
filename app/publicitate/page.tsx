@@ -337,8 +337,8 @@ export default function AdvertisePage() {
                 <Feature strong>Badge &quot;Partener Verificat&quot; vizibil pe profil și în listă</Feature>
                 <Feature strong>Poziție prioritară — apari mereu primul în rezultate</Feature>
                 <Feature strong>Primești lead-urile din formularul „Cere Ofertă"</Feature>
+                <Feature strong>Raport lunar de trafic: vizualizări profil, click-uri pe telefon și site, sursa traficului</Feature>
                 <Feature>Portofoliu extins cu imagini și studii de caz</Feature>
-                <Feature>Statistici lunare: vizualizări profil, click-uri telefon/site</Feature>
                 <Feature>Link direct către CV-ul firmei în clasament</Feature>
               </ul>
             </div>
@@ -357,16 +357,29 @@ export default function AdvertisePage() {
                 99 <span className="text-base font-normal text-gray-500">EUR/lună</span>
               </p>
 
+              {/* Headline feature — popup */}
+              <div className="rounded-lg border border-secondary/30 bg-white p-3 mb-4">
+                <p className="text-[10px] font-semibold text-secondary-dark uppercase tracking-wider mb-1">
+                  🎯 Inventar exclusiv
+                </p>
+                <p className="text-sm font-semibold text-gray-900 leading-snug">
+                  Slotul popup din colțul dreapta-jos — <span className="text-primary-dark">un singur sponsor activ pe tot site-ul</span>
+                </p>
+                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                  Apare după 15 secunde pe toate paginile, se poate închide. Dacă e ocupat, intri pe listă de așteptare.
+                </p>
+              </div>
+
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
                 Tot din Profil Premium, plus:
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
-                <Feature strong>Sidebar popup pe tot site-ul — exclusiv, un singur sponsor activ</Feature>
+                <Feature strong>Slot popup exclusiv (descris mai sus)</Feature>
                 <Feature strong>Banner promoțional pe ghidurile relevante din nișa ta</Feature>
                 <Feature strong>Articol sponsorizat dedicat — studiu de caz pe un proiect al tău</Feature>
                 <Feature>Featured pe homepage, secțiune „Firme Recomandate"</Feature>
                 <Feature>Menționare pe toate paginile de județ în care operezi</Feature>
-                <Feature>Acces la rapoarte detaliate: impresii, click-uri, conversii</Feature>
+                <Feature>Raport performanță campanii: impresii banner, click popup, timp citire articol</Feature>
               </ul>
             </div>
             <PreviewEnterprise />
@@ -406,17 +419,25 @@ export default function AdvertisePage() {
                 <Feature>UTM tracking pe linkuri + eveniment Umami dedicat</Feature>
                 <Feature>Contract anual cu 2 luni gratuit (290 EUR/an în loc de 348)</Feature>
               </ul>
-              <p className="text-xs text-gray-500 mt-4 italic">
-                Exemplu real: partenerul nostru actual e{' '}
-                <a href="https://www.diodor.ro" target="_blank" rel="noopener noreferrer" className="text-primary-dark hover:underline">
-                  Diodor (Cluj-Napoca)
-                </a>
-                .
-              </p>
             </div>
             <PreviewListingSponsor />
           </div>
         </section>
+
+        {/* Meta callout — explain the live popup */}
+        <div className="mb-8 rounded-xl border border-primary/30 bg-primary/5 p-4 flex items-start gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-primary-dark flex-shrink-0 mt-0.5" aria-hidden="true">
+            <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+          </svg>
+          <div className="flex-1 text-sm">
+            <p className="font-semibold text-gray-900">Popup-ul din colțul dreapta-jos pe care-l vezi acum?</p>
+            <p className="text-gray-700 mt-1 leading-relaxed">
+              Exact acela e <strong>slotul exclusiv din pachetul Enterprise</strong>. Momentan îl folosim
+              pentru un proiect al nostru — locul e liber pentru primul sponsor plătitor. Un singur
+              client activ la un moment dat, pe tot site-ul, pe toate paginile.
+            </p>
+          </div>
+        </div>
 
         {/* Comparison table */}
         <section className="mb-12">
@@ -450,7 +471,9 @@ export default function AdvertisePage() {
                   <td className="px-4 py-3 font-medium text-gray-900">Enterprise</td>
                   <td className="px-4 py-3 text-gray-600">Instalatori</td>
                   <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">99 €</td>
-                  <td className="px-4 py-3 text-gray-600">+ popup, banner, articol sponsor, featured</td>
+                  <td className="px-4 py-3 text-gray-600">
+                    + <strong className="text-gray-900">popup exclusiv</strong>, banner ghiduri, articol sponsor, featured
+                  </td>
                 </tr>
                 <tr className="border-t-2 border-border">
                   <td className="px-4 py-3 font-medium text-gray-900">Listing Sponsor</td>
@@ -531,7 +554,16 @@ export default function AdvertisePage() {
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Sidebar popup-ul din Enterprise e <strong>exclusiv</strong> — un singur sponsor activ la un moment dat pe tot site-ul. Bannerele pe ghiduri sunt rotative între Enterprise plătitori (dacă sunt mai mulți). Listing Sponsor nu e exclusiv — pot fi 3-5 furnizori activi simultan, toți vizibili în sidebar-ul de ghiduri.
+                Popup-ul din Enterprise e <strong>exclusiv</strong> — un singur sponsor activ la un moment dat pe tot site-ul. Bannerele pe ghiduri sunt rotative între Enterprise plătitori (dacă sunt mai mulți). Listing Sponsor nu e exclusiv — pot fi 3-5 furnizori activi simultan, toți vizibili în sidebar-ul de ghiduri.
+              </p>
+            </details>
+            <details className="bg-white border border-border rounded-xl p-4 group">
+              <summary className="font-semibold text-gray-900 text-sm cursor-pointer list-none flex justify-between items-start gap-3">
+                <span>Cine primește rapoartele de trafic pe profil?</span>
+                <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <p className="mt-3 text-sm text-gray-600 leading-relaxed">
+                Doar firmele Premium și Enterprise. Raportul lunar include vizualizări profil, click-uri pe telefon și site, sursa traficului (organic Google, clasament, pagini de județ etc.). Enterprise primește în plus rapoarte pe campaniile publicitare — impresii banner, click popup, timp citire articol sponsor. Firmele cu Listare Gratuită nu primesc rapoarte.
               </p>
             </details>
           </div>
