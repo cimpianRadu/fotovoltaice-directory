@@ -12,7 +12,7 @@ const navLinks = [
   { href: '/ghid', label: 'Ghid' },
   { href: '/intrebari-frecvente', label: 'FAQ' },
   { href: '/despre', label: 'Despre' },
-  { href: '/cere-oferta', label: 'Cere Ofertă' },
+  { href: '/publicitate', label: 'Publicitate' },
 ];
 
 export default function Header() {
