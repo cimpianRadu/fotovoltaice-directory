@@ -4,6 +4,7 @@ import { Geist } from 'next/font/google';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import CrossPromoCard from '@/components/promo/CrossPromoCard';
+import { getCompanies, getCoveredCounties } from '@/lib/utils';
 import './globals.css';
 
 const geistSans = Geist({
@@ -11,13 +12,15 @@ const geistSans = Geist({
   subsets: ['latin'],
 });
 
+const COMPANY_COUNT = getCompanies().length;
+const COUNTY_COUNT = getCoveredCounties().length;
+
 export const metadata: Metadata = {
   title: {
-    default: 'Instalatori Fotovoltaice România | Lista Completă de Firme Panouri Solare',
+    default: `Instalatori Panouri Fotovoltaice Autorizați ANRE | ${COMPANY_COUNT} Firme România 2026`,
     template: '%s | Instalatori Fotovoltaice România',
   },
-  description:
-    'Găsește instalatori autorizați de panouri fotovoltaice în România. 42 firme verificate cu atestat ANRE, date financiare reale și acoperire în 41 județe. Compară și cere ofertă gratuită.',
+  description: `Găsește instalatori autorizați de panouri fotovoltaice în România. ${COMPANY_COUNT} firme verificate cu atestat ANRE, date financiare reale și acoperire în ${COUNTY_COUNT} județe. Compară și cere ofertă gratuită.`,
   metadataBase: new URL('https://instalatori-fotovoltaice.ro'),
   robots: {
     index: true,

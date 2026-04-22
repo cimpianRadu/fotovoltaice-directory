@@ -38,8 +38,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const companies = getCompaniesByCityArea(city);
 
   return {
-    title: `Firme Montaj Panouri Fotovoltaice ${city} 2026 | ${companies.length} Instalatori`,
-    description: `${companies.length} firme verificate de instalare și montaj panouri fotovoltaice în ${city}. Instalatori autorizați ANRE cu experiență. Compară și cere ofertă gratuită.`,
+    title: `Firme Montaj Panouri Fotovoltaice ${city} 2026 | ${companies.length} Instalatori Autorizați`,
+    description: `${companies.length} firme verificate de instalare și montaj panouri fotovoltaice în ${city}. Instalatori autorizați ANRE cu date financiare reale. Compară și cere ofertă gratuită.`,
     alternates: { canonical: `/firme/oras/${slug}` },
   };
 }

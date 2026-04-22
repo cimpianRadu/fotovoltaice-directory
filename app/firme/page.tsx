@@ -4,13 +4,14 @@ import Link from 'next/link';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
-import { getCoveredCounties, slugifyCounty, getCompaniesByCounty } from '@/lib/utils';
+import { getCompanies, getCoveredCounties, slugifyCounty, getCompaniesByCounty } from '@/lib/utils';
 import CompanyListClient from './CompanyListClient';
 
+const COMPANY_COUNT = getCompanies().length;
+
 export const metadata: Metadata = {
-  title: 'Instalatori Panouri Fotovoltaice România | 42 Firme Verificate 2026',
-  description:
-    '42 firme verificate de instalare panouri fotovoltaice comerciale și industriale. Compară instalatori autorizați ANRE, vezi date financiare reale și cere ofertă gratuită.',
+  title: `TOP ${COMPANY_COUNT} Instalatori Panouri Fotovoltaice 2026 | Autorizați ANRE România`,
+  description: `Lista completă cu ${COMPANY_COUNT} instalatori autorizați ANRE de panouri fotovoltaice comerciale și industriale. Compară firme verificate, vezi date financiare reale, cere ofertă gratuită.`,
   alternates: { canonical: '/firme' },
 };
 
@@ -34,7 +35,7 @@ export default function FirmePage() {
             Găsește instalatorul potrivit pentru proiectul tău industrial sau comercial
           </p>
           <p className="text-sm text-gray-500 mt-3 max-w-3xl">
-            Lista include 42 de firme verificate de instalare sisteme fotovoltaice din România,
+            Lista include {COMPANY_COUNT} de firme verificate de instalare sisteme fotovoltaice din România,
             cu date reale din registrele publice. Compară instalatori autorizați ANRE după
             experiență, certificări, specializări și acoperire geografică. Filtrează după județ,
             specializare sau dimensiunea proiectului și solicită ofertă gratuită.
