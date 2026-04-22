@@ -3931,7 +3931,8 @@
       "anreMatch": {
         "societate": "ELECTROBILD",
         "judet": "Cluj"
-      }
+      },
+      "tags": []
     },
     {
       "id": "flm-teo-electric",
@@ -3978,7 +3979,8 @@
       "anreMatch": {
         "societate": "FLM TEO ELECTRIC",
         "judet": "Cluj"
-      }
+      },
+      "tags": []
     },
     {
       "id": "electrostrat",
@@ -4025,7 +4027,8 @@
       "anreMatch": {
         "societate": "ELECTROSTRAT",
         "judet": "Cluj"
-      }
+      },
+      "tags": []
     }
   ]
 }
