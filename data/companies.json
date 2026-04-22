@@ -582,7 +582,7 @@
       "logo": "/logos/genway.png",
       "description": "Companie cu peste 34 de ani de experiență în domeniul electric, operând sub brandul Genway, cu peste 11.500 de proiecte fotovoltaice instalate cu echipe proprii. Distribuitor și partener oficial Fronius, Huawei FusionSolar și BYD Battery Box în România. Firmă validată AFM în cadrul programelor Casa Verde Fotovoltaice și acreditată ANRE pentru proiectare și instalare în programul ElectricUp.",
       "founded": 2007,
-      "employees": 32,
+      "employees": 115,
       "location": {
         "city": "București",
         "county": "București",
@@ -615,9 +615,9 @@
         "projectsCompleted": 11500
       },
       "financials": {
-        "year": 2022,
-        "revenue": 30788599,
-        "profit": 1874982
+        "year": 2024,
+        "revenue": 88962018,
+        "profit": 20715830
       },
       "tags": [
         "experienta-10-ani",
@@ -628,7 +628,7 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20",
+      "updatedAt": "2026-04-22",
       "anreMatch": {
         "societate": "ELECTRO-SERVICE DISTRIBUTIE",
         "judet": "Bucuresti"
@@ -642,7 +642,7 @@
       "logo": "/logos/photon-energy.png",
       "description": "Filiala românească a grupului Photon Energy N.V. (listat la bursele din Praga, Varșovia și Frankfurt), specializată în servicii EPC pentru centrale fotovoltaice comerciale, industriale și la scară utilitară. Oferă și servicii de operare și mentenanță (O&M) și distribuție de componente fotovoltaice prin platforma B2B proprie.",
       "founded": 2020,
-      "employees": 25,
+      "employees": 5,
       "location": {
         "city": "București",
         "county": "București",
@@ -691,7 +691,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25",
+      "updatedAt": "2026-04-22",
       "anreMatch": {
         "societate": "PHOTON ENERGY ENGINEERING ROMANIA",
         "judet": "Bucuresti"
@@ -828,7 +828,7 @@
       "logo": "/logos/sinpur-energy.png",
       "description": "Companie din Iași specializată în sisteme fotovoltaice on-grid, off-grid și hibride cu stocare. Partener autorizat Fronius și distribuitor Victron Energy, cu certificare ANRE de tip B. Acoperă regiunea de est a României, cu proiecte în județele Iași și Constanța.",
       "founded": 2015,
-      "employees": 10,
+      "employees": 5,
       "location": {
         "city": "Valea Lupului",
         "county": "Iași",
@@ -855,9 +855,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2023,
-        "revenue": 9909820,
-        "profit": 1181436
+        "year": 2025,
+        "revenue": 6232189,
+        "profit": 514529
       },
       "tags": [
         "partener-fronius",
@@ -866,7 +866,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25",
+      "updatedAt": "2026-04-22",
       "anreMatch": {
         "societate": "SINPUR ENERGY",
         "judet": "Iasi"
@@ -3081,7 +3081,7 @@
       "logo": "/logos/clean-energy-revolution.png",
       "description": "Integrator de sisteme fotovoltaice din București care oferă soluții end-to-end pentru clienți rezidențiali și comerciali — audit energetic, proiectare, instalare, obținere statut prosumator, mentenanță și consultanță pentru finanțare (PNRR, facilități bancare). Firmă activă din 2021 cu atestate ANRE C2A și C1A.",
       "founded": 2021,
-      "employees": 0,
+      "employees": 2,
       "location": {
         "city": "București",
         "county": "București",
@@ -3099,12 +3099,16 @@
       ],
       "certifications": [],
       "capacity": {},
-      "financials": {},
+      "financials": {
+        "year": 2024,
+        "revenue": 309970,
+        "profit": -236687
+      },
       "tags": [],
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-21",
-      "updatedAt": "2026-04-21",
+      "updatedAt": "2026-04-22",
       "anreMatch": {
         "societate": "CLEAN ENERGY REVOLUTION",
         "judet": "Bucuresti"
