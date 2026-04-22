@@ -5,6 +5,7 @@ import JsonLd from '@/components/seo/JsonLd';
 import CompanyHeader from '@/components/company/CompanyHeader';
 import CompanyStats from '@/components/company/CompanyStats';
 import CompanyContact from '@/components/company/CompanyContact';
+import FinancialStability from '@/components/company/FinancialStability';
 import Badge from '@/components/ui/Badge';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
@@ -64,16 +65,19 @@ export default async function CompanyDetailPage({ params }: Props) {
   const company = getCompanyBySlug(slug);
   if (!company) notFound();
 
-  const financialHealth =
-    company.financials.profit > 0
-      ? company.financials.profit / company.financials.revenue > 0.1
-        ? 'Solidă'
-        : 'Bună'
-      : 'N/A';
-
   const anreCerts = getCompanyAnreCerts(company.anreMatch);
   const isoCerts = (company.certifications || []).filter((c) => !c.startsWith('ANRE-'));
   const hasAnyCert = anreCerts.length > 0 || isoCerts.length > 0;
+
+  // Fallbacks when we don't have verified data yet:
+  // — Coverage: firma sigur acoperă cel puțin județul în care e sediul
+  // — Specializations: toate firmele din director au CAEN 4321 + ANRE C1A/C2A,
+  //   deci „hale-industriale" e cea mai onestă specializare de bază
+  const coverageList = company.coverage.length > 0 ? company.coverage : [company.location.county];
+  const specializationsList =
+    company.specializations.length > 0 ? company.specializations : ['hale-industriale'];
+  const isCoverageInferred = company.coverage.length === 0;
+  const isSpecInferred = company.specializations.length === 0;
 
   return (
     <>
@@ -104,24 +108,34 @@ export default async function CompanyDetailPage({ params }: Props) {
             <div>
               <h2 className="text-lg font-bold text-gray-900 mb-3">Specializări</h2>
               <div className="flex flex-wrap gap-2">
-                {company.specializations.map((spec) => (
+                {specializationsList.map((spec) => (
                   <Badge key={spec} variant="primary" size="md">
                     {getSpecializationLabel(spec)}
                   </Badge>
                 ))}
               </div>
+              {isSpecInferred && (
+                <p className="text-xs text-gray-500 mt-2">
+                  Specializare de bază inferată din CAEN și atestatele ANRE. Contactează firma pentru detalii.
+                </p>
+              )}
             </div>
 
             {/* Coverage */}
             <div>
               <h2 className="text-lg font-bold text-gray-900 mb-3">Acoperire Județe</h2>
               <div className="flex flex-wrap gap-2">
-                {company.coverage.map((county) => (
+                {coverageList.map((county) => (
                   <Badge key={county} variant="outline" size="md">
                     {county}
                   </Badge>
                 ))}
               </div>
+              {isCoverageInferred && (
+                <p className="text-xs text-gray-500 mt-2">
+                  Sediul firmei e în județul {company.location.county}. Întreabă firma pentru acoperire extinsă.
+                </p>
+              )}
             </div>
 
             {/* Certifications */}
@@ -211,21 +225,7 @@ export default async function CompanyDetailPage({ params }: Props) {
             </div>
 
             {/* Financial Stability */}
-            <div className="bg-surface rounded-xl p-5 border border-border">
-              <h2 className="text-lg font-bold text-gray-900 mb-3">Stabilitate Financiară</h2>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-500">Anul raportării</p>
-                  <p className="font-semibold text-gray-900">{company.financials.year}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Indicator</p>
-                  <p className={`font-semibold ${financialHealth === 'Solidă' ? 'text-green-600' : financialHealth === 'Bună' ? 'text-yellow-600' : 'text-gray-500'}`}>
-                    {financialHealth}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <FinancialStability company={company} />
           </div>
 
           {/* Sidebar */}
@@ -244,7 +244,7 @@ export default async function CompanyDetailPage({ params }: Props) {
               {/* Related guides */}
               {(() => {
                 const relatedGuides = guidesData.guides.filter((g) =>
-                  g.relatedSpecializations?.some((s: string) => company.specializations.includes(s))
+                  g.relatedSpecializations?.some((s: string) => specializationsList.includes(s))
                 );
                 if (relatedGuides.length === 0) return null;
                 return (
