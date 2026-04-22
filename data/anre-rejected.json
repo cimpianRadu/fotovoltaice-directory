@@ -68,5 +68,103 @@
     "cui": "30737188",
     "reason": "Non-PV — CAEN 4683 comerț materiale construcții (distanțieri cofraje)",
     "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "AMUR SOLAR ENERGY",
+    "judet": "Timis",
+    "cui": "33108859",
+    "reason": "Retailer de kit-uri fotovoltaice rezidențiale (500W–250kW), panouri termice și turbine eoliene mici; fără portofoliu C&I documentat — distribuitor, nu integrator EPC.",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "ELTREX",
+    "judet": "Timis",
+    "cui": "11738772",
+    "reason": "Inginerie electrică industrială, tablouri comandă și automatizări procese (farma, auto, anvelope). Zero mențiune PV pe site.",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "ENERGOGREEN SMART HOUSING",
+    "judet": "Timis",
+    "cui": "43986890",
+    "reason": "energogreen.ro returnează directory index LiteSpeed — site mort, imposibil de verificat activitate PV.",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "INSTALNIVA-COMP",
+    "judet": "Timis",
+    "cui": "8063705",
+    "reason": "Instalator electric industrial — focus securitate, detecție incendiu, automatizări. Fără PV pe pagina de servicii sau portofoliu.",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "BACKUP TECHNOLOGY",
+    "judet": "Timis",
+    "cui": "25890788",
+    "reason": "Integrator sisteme de securitate (alarmă, CCTV, control acces). CAEN 6110. Zero activitate PV.",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "BEESPEED AUTOMATIZARI",
+    "judet": "Timis",
+    "cui": "6725121",
+    "reason": "Automatizări industriale VSD/SCADA, tablouri. 31 ani, 65 MW drive-uri — dar zero instalare PV.",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "CRC AG",
+    "judet": "Timis",
+    "cui": "32368923",
+    "reason": "Comerț cu ridicata mașini industria textilă (CAEN 4664) — multibrandmachinery.ro. Nu instalator PV.",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "ELBA-COM",
+    "judet": "Timis",
+    "cui": "13108765",
+    "reason": "Producător/furnizor corpuri de iluminat (stradal, arhitectural, industrial, medical). Reprezentant fabrica ELBA — iluminat exclusiv.",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "EUSKADI",
+    "judet": "Timis",
+    "cui": "17021083",
+    "reason": "Construcții infrastructură apă/canalizare (CAEN 4221). 100+ proiecte municipale, 600+ km rețele — zero PV.",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "CHROME TEHNIC",
+    "judet": "Ilfov",
+    "cui": "42223407",
+    "reason": "Producător tablouri electrice și distribuție. Site fără servicii fotovoltaice.",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "GAMA ELECTRO - CONSTRUCTII",
+    "judet": "Ilfov",
+    "cui": "12485325",
+    "reason": "gamaec.ro redirect 301 către a4action.ro (ONG Snagov). Site mort.",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "PANEF PROD COM 95",
+    "judet": "Ilfov",
+    "cui": "7614059",
+    "reason": "Instalații electrice JT/MT (LEA, LES, posturi trafo). Fără servicii fotovoltaice pe site.",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "AGGREKO SOUTH EAST EUROPE",
+    "judet": "Ilfov",
+    "cui": "30897146",
+    "reason": "Multinațională globală de închiriere echipamente temporare (generatoare, HVAC). CAEN 7739 (leasing). Nu instalator PV local.",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "DSF PROJECT RETELE",
+    "judet": "Ilfov",
+    "cui": "38952394",
+    "reason": "Exclusiv rețele și distribuție gaze naturale (CAEN 4322). Zero mențiune PV.",
+    "rejectedAt": "2026-04-22"
   }
 ]
