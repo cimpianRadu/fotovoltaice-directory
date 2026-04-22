@@ -33,5 +33,40 @@
     "cui": "36695944",
     "reason": "Fără website. Business principal rețele electrice JT/MT, PV doar mențiune în job scope. Date insuficiente pentru listing complet.",
     "rejectedAt": "2026-04-21"
+  },
+  {
+    "societate": "ELECTRIMO CONNECT",
+    "judet": "Cluj",
+    "cui": "44682775",
+    "reason": "Inactive — 61k RON revenue 2024, profit negativ -66k, 1 angajat",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "CPV ELECTRONIC",
+    "judet": "Cluj",
+    "cui": "19207270",
+    "reason": "No online presence, solo-operator (1 angajat, 291k revenue, Dej)",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "ELDAAR DUO ENERGY",
+    "judet": "Cluj",
+    "cui": "45081005",
+    "reason": "No contact, no website, zero prezență online",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "COMPANIA DE SALUBRITATE CAMPIA TURZII",
+    "judet": "Cluj",
+    "cui": "23503516",
+    "reason": "Non-PV — CAEN 3811 salubritate (colectare deșeuri)",
+    "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "CORNER DEPOSIT",
+    "judet": "Cluj",
+    "cui": "30737188",
+    "reason": "Non-PV — CAEN 4683 comerț materiale construcții (distanțieri cofraje)",
+    "rejectedAt": "2026-04-22"
   }
 ]

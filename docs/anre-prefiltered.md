@@ -1,26 +1,36 @@
-# ANRE Prefilter — Alba
+# ANRE Prefilter — Cluj
 Generated: 2026-04-22 via targetare.ro API
-Total: 20 firms • Ready for research (≥6): 10
-Remaining API credits: 4956
+Total: 30 firms • Ready for research (≥6): 17
+Remaining API credits: 4858
 | Score | Firm | CUI | CAEN | Revenue | Emp | Site | Founded | C1/C2 | Notes |
 |-------|------|-----|------|---------|-----|------|---------|-------|-------|
-| 10 | SOLAR PROD ECOINVENT | 46334220 | 4321 | 5.11M | 9 | — | 2022 | ✓ | CAEN 4321 (+3), solar/PV în nume/CAEN (+3), revenue ≥2M (+2), age 4y (+1), C1A+C2A (+1) |
-| 9 | ENER ROM INSTAL | 36398366 | 4321 | 9.21M | 15 | ✓ | 2016 | ✓ | CAEN 4321 (+3), website (+2), revenue ≥2M (+2), age 10y (+1), C1A+C2A (+1) |
-| 9 | NECTARIA PROIECT | 28364486 | 4321 | 12.23M | 10 | ✓ | 2011 | ✓ | CAEN 4321 (+3), website (+2), revenue ≥2M (+2), age 15y (+1), C1A+C2A (+1) |
-| 7 | ELIO INDUSTRIAL | 1771720 | 4321 | 8.46M | 14 | — | 1992 | ✓ | CAEN 4321 (+3), revenue ≥2M (+2), age 34y (+1), C1A+C2A (+1) |
-| 7 | TED ELECTRO | 46875942 | 4321 | 2.60M | 10 | — | 2022 | ✓ | CAEN 4321 (+3), revenue ≥2M (+2), age 4y (+1), C1A+C2A (+1) |
-| 6 | ELECTRO ORIEL | 38655105 | 4321 | 0.53M | 3 | — | 2018 | ✓ | CAEN 4321 (+3), revenue ≥500k (+1), age 8y (+1), C1A+C2A (+1) |
-| 6 | ELECTROALBA ELECTRIS | 45029163 | 4321 | 1.35M | 7 | — | 2021 | ✓ | CAEN 4321 (+3), revenue ≥500k (+1), age 5y (+1), C1A+C2A (+1) |
-| 6 | ELECTROTIMEIA | 17223317 | 4321 | 7.48M | 18 | — | 2005 | C2A | CAEN 4321 (+3), revenue ≥2M (+2), age 21y (+1) |
-| 6 | ENERGO ENCI | 40864839 | 7112 | 2.44M | 3 | — | 2019 | C1A | CAEN 7112 (+3), revenue ≥2M (+2), age 7y (+1) |
-| 6 | TOBIMAR GROUP | 21171933 | 4321 | 20.55M | 17 | — | 2007 | C2A | CAEN 4321 (+3), revenue ≥2M (+2), age 19y (+1) |
-| 5 | ABFOR ENERGY | 34707988 | 4321 | 0.29M | 3 | — | 2015 | ✓ | CAEN 4321 (+3), age 11y (+1), C1A+C2A (+1) |
-| 5 | ALNI ELECTRIC SERVICES | 48921751 | 4321 | 0.46M | 3 | — | 2023 | ✓ | CAEN 4321 (+3), age 3y (+1), C1A+C2A (+1) |
-| 5 | CABRO GRUP | 14426759 | 4321 | 1.83M | 9 | — | 2002 | C2A | CAEN 4321 (+3), revenue ≥500k (+1), age 24y (+1) |
-| 5 | ELECTRIC INVEST | 14377044 | 4321 | 0.85M | 4 | — | 2002 | C2A | CAEN 4321 (+3), revenue ≥500k (+1), age 24y (+1) |
-| 4 | ALBANIC SERVICE | 15172365 | 4322 | 11.15M | 26 | — | 2003 | ✓ | revenue ≥2M (+2), age 23y (+1), C1A+C2A (+1) |
-| 4 | ELECTROCONSTRUCTIA ELCO ALBA IULIA | 3276087 | 4399 | 9.36M | 13 | — | 1993 | ✓ | revenue ≥2M (+2), age 33y (+1), C1A+C2A (+1) |
-| 4 | ENERGO IMPEX | 21278698 | 6310 | — | — | ✓ | 2007 | ✓ | website (+2), age 19y (+1), C1A+C2A (+1) |
-| 4 | DICU DAN FLORIN INTREPRINDERE INDIVIDUALA | 45142404 | 7112 | — | — | — | 2021 | C1A | CAEN 7112 (+3), age 5y (+1) |
-| 3 | ELECTRA EXIM | 8325598 | 4222 | 1.60M | 12 | — | 1996 | ✓ | revenue ≥500k (+1), age 30y (+1), C1A+C2A (+1) |
-| 1 | EXTRABIT | 37887395 | 2399 | — | — | — | 2017 | C2A | age 9y (+1) |
+| 9 | DMA ECO BUILDINGS | 37769985 | 4321 | 4.39M | 7 | ✓ | 2017 | ✓ | CAEN 4321 (+3), website (+2), revenue ≥2M (+2), age 9y (+1), C1A+C2A (+1) |
+| 9 | ELECTRIC LINE | 18428086 | 4321 | 4.66M | 11 | ✓ | 2006 | ✓ | CAEN 4321 (+3), website (+2), revenue ≥2M (+2), age 20y (+1), C1A+C2A (+1) |
+| 9 | IMSAT SERVICE CLUJ | 5178727 | 4321 | 86.05M | 63 | ✓ | 1994 | ✓ | CAEN 4321 (+3), website (+2), revenue ≥2M (+2), age 32y (+1), C1A+C2A (+1) |
+| 8 | CPV ELECTRONIC | 19207270 | 4321 | 0.29M | 1 | — | 2006 | ✓ | CAEN 4321 (+3), solar/PV în nume/CAEN (+3), age 20y (+1), C1A+C2A (+1) |
+| 7 | ELECTRIMO CONNECT | 44682775 | 4321 | 0.06M | 1 | ✓ | 2021 | ✓ | CAEN 4321 (+3), website (+2), age 5y (+1), C1A+C2A (+1) |
+| 7 | ELECTROMEDIA INSTAL | 41908178 | 4321 | 2.91M | 9 | — | 2019 | ✓ | CAEN 4321 (+3), revenue ≥2M (+2), age 7y (+1), C1A+C2A (+1) |
+| 7 | ENERA SWITCH | 46596263 | 4321 | 4.30M | 14 | — | 2022 | ✓ | CAEN 4321 (+3), revenue ≥2M (+2), age 4y (+1), C1A+C2A (+1) |
+| 6 | COMPANIA DE SALUBRITATE CAMPIA TURZII | 23503516 | 3811 | 5.82M | 40 | ✓ | 2008 | ✓ | website (+2), revenue ≥2M (+2), age 18y (+1), C1A+C2A (+1) |
+| 6 | CORNER DEPOSIT | 30737188 | 4683 | 42.56M | 15 | ✓ | 2012 | ✓ | website (+2), revenue ≥2M (+2), age 14y (+1), C1A+C2A (+1) |
+| 6 | DELCOM IMPORT EXPORT | 219923 | 4321 | 1.68M | 5 | — | 1992 | ✓ | CAEN 4321 (+3), revenue ≥500k (+1), age 34y (+1), C1A+C2A (+1) |
+| 6 | ELDAAR DUO ENERGY | 45081005 | 4321 | 0.68M | 3 | — | 2021 | ✓ | CAEN 4321 (+3), revenue ≥500k (+1), age 5y (+1), C1A+C2A (+1) |
+| 6 | ELECTRIS INSTAL | 8728833 | 4321 | 1.73M | 10 | — | 1996 | ✓ | CAEN 4321 (+3), revenue ≥500k (+1), age 30y (+1), C1A+C2A (+1) |
+| 6 | ELECTROBILD | 19315344 | 4321 | 0.92M | 5 | — | 2006 | ✓ | CAEN 4321 (+3), revenue ≥500k (+1), age 20y (+1), C1A+C2A (+1) |
+| 6 | ELECTRODAVI | 18537318 | 4321 | 0.67M | 6 | — | 2006 | ✓ | CAEN 4321 (+3), revenue ≥500k (+1), age 20y (+1), C1A+C2A (+1) |
+| 6 | ELECTROSTRAT | 48172493 | 4321 | 0.56M | 3 | — | 2023 | ✓ | CAEN 4321 (+3), revenue ≥500k (+1), age 3y (+1), C1A+C2A (+1) |
+| 6 | FLM TEO ELECTRIC | 43932245 | 4321 | 1.21M | 3 | — | 2021 | ✓ | CAEN 4321 (+3), revenue ≥500k (+1), age 5y (+1), C1A+C2A (+1) |
+| 6 | FOC PROTECT SPECIALIST | 36780780 | 7120 | 6.95M | 21 | ✓ | 2016 | ✓ | website (+2), revenue ≥2M (+2), age 10y (+1), C1A+C2A (+1) |
+| 5 | AEP SYSTEMS | 36024981 | 4321 | 0.31M | 1 | — | 2016 | ✓ | CAEN 4321 (+3), age 10y (+1), C1A+C2A (+1) |
+| 5 | ARCOM ENERGY | 42355130 | 4321 | 0.19M | 2 | — | 2020 | ✓ | CAEN 4321 (+3), age 6y (+1), C1A+C2A (+1) |
+| 5 | CO CRI PRODSERV | 9527188 | 4321 | 0.13M | 2 | — | 1997 | ✓ | CAEN 4321 (+3), age 29y (+1), C1A+C2A (+1) |
+| 5 | DELARAD COM | 9144735 | 4321 | 0.32M | 4 | — | 1997 | ✓ | CAEN 4321 (+3), age 29y (+1), C1A+C2A (+1) |
+| 5 | ELECTROTERRA | 17921778 | 4321 | 0.21M | 3 | — | 2005 | ✓ | CAEN 4321 (+3), age 21y (+1), C1A+C2A (+1) |
+| 5 | ELMANNPOWER | 39394458 | 4321 | 0.02M | 1 | — | 2018 | ✓ | CAEN 4321 (+3), age 8y (+1), C1A+C2A (+1) |
+| 5 | EXAWATT GRID | 46279044 | 7112 | — | 1 | — | 2022 | ✓ | CAEN 7112 (+3), age 4y (+1), C1A+C2A (+1) |
+| 4 | AUTOCASA | 13255626 | 4532 | 7.10M | 12 | — | 2000 | ✓ | revenue ≥2M (+2), age 26y (+1), C1A+C2A (+1) |
+| 4 | COMPAS SMART TECH INSTAL | 43959984 | 4791 | 2.14M | 1 | — | 2021 | ✓ | revenue ≥2M (+2), age 5y (+1), C1A+C2A (+1) |
+| 3 | CDI ELECTRIC WORLD | 48675720 | 4100 | 0.82M | 1 | — | 2023 | ✓ | revenue ≥500k (+1), age 3y (+1), C1A+C2A (+1) |
+| 2 | ARVINSTAL ENGINEERING | 43236766 | 4312 | 0.34M | 2 | — | 2020 | ✓ | age 6y (+1), C1A+C2A (+1) |
+| 2 | AVANTAJ REAL CONSTRUCT | 37592173 | 4120 | 0.31M | 3 | — | 2017 | ✓ | age 9y (+1), C1A+C2A (+1) |
+| 2 | DEFA SERV | 42772782 | 4322 | 0.15M | — | — | 2020 | ✓ | age 6y (+1), C1A+C2A (+1) |

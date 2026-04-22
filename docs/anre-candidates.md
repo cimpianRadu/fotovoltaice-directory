@@ -6,10 +6,10 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 
 ## Stats
 
-- **Total candidați:** 1528
-- Cu **C2A** activ: 1289
-- Cu **C1A** activ: 1135
-- Cu **ambele**: 896
+- **Total candidați:** 1518
+- Cu **C2A** activ: 1280
+- Cu **C1A** activ: 1127
+- Cu **ambele**: 889
 - **Județe acoperite:** 43
 
 ## Cum folosești
@@ -45,7 +45,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | Arad | 25 |
 | Satu Mare | 25 |
 | Olt | 22 |
-| Alba | 21 |
 | Valcea | 21 |
 | Hunedoara | 20 |
 | Bistrita-Nasaud | 19 |
@@ -57,6 +56,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | Salaj | 14 |
 | Mehedinti | 13 |
 | Teleorman | 12 |
+| Alba | 11 |
 | Giurgiu | 11 |
 | Braila | 10 |
 | Calarasi | 8 |
@@ -68,7 +68,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 
 ## Lista completă
 
-### Alba (21)
+### Alba (11)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -80,19 +80,9 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ELECTRA EXIM | Aiud | C1A + C2A | 16055 | 05.06.2030 | 0744847742 0258 864529 |
 | ELECTRIC INVEST | Lupsa | C2A | 15603 | 17.02.2030 | 0745 907035, 0364265786;0745907035 |
 | ELECTRO ALFA [AB] | Alba-Iulia | C1A + C2A | 12646 | 19.05.2027 | 0722451851 0371149699 |
-| ELECTRO ORIEL | Vintu de Jos | C1A + C2A | 19532 | 11.05.2028 | 0739 881 115 |
-| ELECTROALBA ELECTRIS | Alba Iulia | C1A + C2A | 22402 | 30.09.2029 | 074678180 |
 | ELECTROCONSTRUCTIA ELCO ALBA IULIA | Alba-Iulia | C1A + C2A | 15430 | 13.01.2030 | 0757746291 0258 811607 |
-| ELECTROTIMEIA | Sebes | C2A | 12730 | 29.06.2027 | 0741 104586 0258 735312 |
-| ELIO INDUSTRIAL | Lancram | C1A + C2A | 15861 | 05.05.2030 | 0723602004 0258 887177 |
-| ENER ROM INSTAL | Alba-Iulia | C1A + C2A | 12243 | 22.11.2026 | 0258730529, 0741096001 0258730586 |
-| ENERGO ENCI | Sebes | C1A | 15097 | 02.09.2029 | 0764901568 |
 | ENERGO IMPEX | Aiud | C1A + C2A | 23242 | 03.06.2030 | 0731 306250, 0258 863136 0258 863136 |
 | EXTRABIT | Drâmbar | C2A | 23870 | 31.10.2030 | 0741933594 |
-| NECTARIA PROIECT | Alba Iulia | C1A + C2A | 18564 | 26.08.2027 | 0723172359 |
-| SOLAR PROD ECOINVENT | Horea | C1A + C2A | 19237 | 24.03.2028 | 0760258447 |
-| TED ELECTRO | Alba Iulia | C1A + C2A | 19977 | 23.08.2028 | 0744357709 |
-| TOBIMAR GROUP | Vintu de Jos | C2A | 18961 | 10.01.2028 | 0730205566 |
 
 ### Arad (25)
 
