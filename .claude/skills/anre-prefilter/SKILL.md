@@ -1,76 +1,78 @@
 ---
 name: anre-prefilter
-description: Score top ANRE candidates via targetare.ro Firecrawl extract (CAEN, revenue, website). Cheap gate that filters out non-PV firms BEFORE expensive agent research.
+description: Score top ANRE candidates via targetare.ro API (CAEN, revenue, website, contacts). Cheap gate that filters out non-PV firms BEFORE expensive agent research.
 ---
 
-# ANRE Prefilter — cheap CAEN/revenue gate
+# ANRE Prefilter — targetare.ro API gate
 
-Scores top N candidates by fetching public data from targetare.ro. Goal: filter out firms that are *not actually doing PV* (wrong CAEN, no revenue, no website) before spending agent tokens.
+Scores top N candidates by calling the targetare.ro API directly. Goal: filter out firms that are *not actually doing PV* (wrong CAEN, no revenue) before spending agent tokens, and collect all official registry data (name, CAEN, financials, phone, email, website) in one pass.
+
+## Prereq: `TARGETARE_API_KEY` in `.env.local`
+
+Paid API (179 RON + TVA for 5000 requests / 12 months). Replaces the old firecrawl+listafirme.ro scraping which had ~35% failure rate and burned firecrawl credits.
 
 ## Step 1 — generate shortlist
 
 ```bash
-node scripts/anre-prefilter-input.js [--judet=Bucuresti] [--limit=20]
+node scripts/anre-prefilter-input.js [--judet=Bucuresti] [--limit=30]
 ```
 
 Writes: `data/anre-prefilter-input.json` — top N candidates with `{ societate, judet, cui, codes, hasBoth, telefon, sediu }`.
 
 Verification baked in: filters out existing + rejected + those without CUI.
 
-## Step 2 — fetch targetare.ro data (main Claude, NOT agent)
+## Step 2 — enrich + score via API
 
-For each candidate in the shortlist, call Firecrawl extract on `https://www.targetare.ro/<CUI>`:
-
-```
-firecrawl_extract
-  urls: ["https://www.targetare.ro/<CUI>"]
-  schema:
-    caen_code (string)    — cod CAEN principal (e.g. "4321")
-    caen_label (string)   — denumire CAEN
-    website (string)      — site web dacă e listat
-    revenue_2024 (number) — cifra de afaceri RON
-    profit_2024 (number)
-    employees (number)    — nr. angajați
-    address (string)
-    activity_description (string) — text descriere activitate
+```bash
+node scripts/anre-prefilter-api.js
 ```
 
-**Do this in the main conversation, not in a subagent.** Firecrawl output is compact (~500 tokens per firm with schema). 15 firms ≈ 7-10k tokens total.
+Per firm: 2-3 API calls (general + financial + websites). ~25 requests per 10-firm batch. Loads `.env.local` automatically.
 
-## Step 3 — score + persist
+Writes:
+- `data/anre-prefilter-results.json` — sorted desc by score, with reasons array
+- `docs/anre-prefiltered.md` — markdown table for user review
 
-For each result, compute a score:
+**Scoring (max 12 points):**
 
 | Signal | Points |
 |---|---|
-| CAEN in [4321, 7112, 3511] (electrical/engineering/electricity) | +3 |
-| CAEN in [4120, 4399, 4329, 4399] (construction adj.) | +1 |
-| Website listed + resolvable | +2 |
-| "fotovoltaic" / "solar" / "PV" in `activity_description` | +3 |
-| Revenue ≥ 500k RON | +2 |
-| Revenue ≥ 2M RON | +1 bonus |
-| Age ≥ 3y from `codInmatriculare` | +1 |
-| hasBoth (C1A+C2A already active) | +1 |
+| CAEN in [4321, 7112, 3511] | +3 |
+| "fotovoltaic" / "solar" / "PV" / "panouri" / "energie regenerabil" in name or CAEN label | +3 |
+| Website listed (hasWebsite flag + actual URL) | +2 |
+| Revenue ≥ 2M RON | +2 |
+| Revenue ≥ 500k RON | +1 |
+| Age ≥ 3 years | +1 |
+| hasBoth C1A+C2A | +1 |
 
-Threshold: **score ≥ 6** → pass to research. **score ≤ 3** → suggest auto-reject with reason.
+Threshold: **score ≥ 6** → pass to research. **score ≤ 3** → suggest auto-reject.
 
-Write results to `data/anre-prefilter-results.json`:
-```json
-[
-  { "societate": "...", "judet": "...", "cui": "...",
-    "caen": "4321", "website": "...", "revenue": 1234567,
-    "score": 8, "decision": "pass|borderline|reject", "reason": "..." }
-]
+## Step 3 — fetch contacts for top N
+
+```bash
+node scripts/targetare-contacts.js [--min-score=6] [--limit=10]
 ```
 
-And render `docs/anre-prefiltered.md` with a sortable table (score desc) for user to eyeball.
+Fetches `/phones` + `/emails` endpoints. Writes `data/anre-contacts.json` with full data ready for research agent: cui, name, address, phone, email, website, year_founded, employees, revenue, profit, caen, codes, hasBoth, score.
+
+~20 API requests per 10-firm batch.
+
+## Total budget per 10-firm batch
+
+- ~25 requests prefilter + ~20 contacts = **~45 API credits**
+- On 5000 credit budget: ~110 batches / year = way more than needed
 
 ## Output — hand-off to next skill
 
-- **pass** candidates → `/company-research` picks these up from `anre-prefilter-results.json`
-- **reject** candidates → batch-add to `/company-reject` with the auto-generated reason
+- **pass** candidates → `/company-research` reads `data/anre-contacts.json` (already has ALL contact + financial data)
+- **reject** candidates → batch-add to `/company-reject` with auto-generated reason
 
-## Why this matters
+## Why this matters vs old flow
 
-Previous flow: 3 parallel agents × 40k tokens = 120k for 3 firms, 50% rejected mid-research.
-New flow: 7-10k prefilter + 15-20k focused research = 25-30k for 5-8 qualified firms. **~5× cheaper**.
+| Metric | Old (firecrawl + listafirme) | New (targetare API) |
+|---|---|---|
+| Duration (20 firms) | ~10 min | ~30 sec |
+| Fail rate | ~35% (Cloudflare) | 0% |
+| Firecrawl credits | ~100 | 0 |
+| Agent tokens | ~66k | 0 |
+| Cost | pay per credit | 213 RON / 5000 req / 12mo |

@@ -12,6 +12,10 @@ Calls the sub-skills in order. One entry point for "adaugă N firme" requests.
 - `N` — number of firms to add (default 5)
 - `judet` — optional, e.g. "Bucuresti", "Cluj", "Ilfov"
 
+## Prereq
+
+- `TARGETARE_API_KEY` in `.env.local` (paid API, 179 RON + TVA / 5000 req / 12 months). Scripts auto-load it.
+
 ## Pipeline
 
 ### 1. `/anre-discover`
@@ -22,38 +26,39 @@ Refreshes `docs/anre-candidates.md`. Script already filters:
 - firms in `data/companies.json` (via anreMatch, normalized name+judet, CUI)
 - firms in `data/anre-rejected.json` (persisted rejections)
 
-### 2. `/anre-prefilter` — cheap CAEN/revenue gate
+### 2. `/anre-prefilter` — CAEN/revenue/website gate via targetare.ro API
 ```bash
 node scripts/anre-prefilter-input.js --judet=<judet> --limit=<N*3>
+node scripts/anre-prefilter-api.js
 ```
-Then **in main Claude context** (not in a subagent), call `firecrawl_extract` on `https://www.targetare.ro/<CUI>` for each candidate in `data/anre-prefilter-input.json`.
 
-Schema: `{caen_code, caen_label, website, revenue_2024, profit_2024, employees, address, activity_description}`
+Second script hits targetare.ro API (general + financial + websites endpoints), scores each firm (max 12 pts), writes `data/anre-prefilter-results.json` + `docs/anre-prefiltered.md`. Show scored table to user.
 
-Score each:
-- CAEN 4321 / 7112 / 3511: +3
-- "fotovoltaic"/"solar"/"PV" în activitate: +3
-- website resolvable: +2
-- revenue ≥ 500k / ≥ 2M: +2 / +1
-- age ≥ 3y: +1
-- hasBoth C1A+C2A: +1
+Scoring: CAEN 4321/7112/3511 (+3), solar keywords (+3), website (+2), revenue ≥2M (+2) or ≥500k (+1), age ≥3y (+1), hasBoth C1A+C2A (+1). Threshold ≥6 → research; ≤3 → auto-reject candidate.
 
-Write `data/anre-prefilter-results.json` + `docs/anre-prefiltered.md`. Show user the scored table.
+### 3. Fetch contacts for top N
+```bash
+node scripts/targetare-contacts.js --min-score=6 --limit=<N>
+```
+Hits `/phones` + `/emails` endpoints. Writes `data/anre-contacts.json` with full dataset: cui, name, address, **phone**, **email**, website, year_founded, employees, revenue, profit, caen, codes, hasBoth, score.
 
-### 3. `/company-research` — ONE agent, sequential
-Pick top N from `anre-prefilter-results.json` (score ≥ 6). Launch **one** general-purpose agent with:
-- the prefilter data (CUI, website, CAEN, revenue, employees, address already populated)
-- a fixed per-firm pattern: homepage → /proiecte → /contact → extract description + projects + ISO certs
-- explicit "NEVER estimate" rule (see MEMORY.md)
+**This replaces the old firecrawl+listafirme.ro contact scrape.** No more Cloudflare failures, no more manual fallback.
 
-Agent returns `{ ready: [<company objects>], reject: [<rejection records>] }`.
+### 4. `/company-research` — ONE agent, sequential
+Launch **one** general-purpose agent and feed it `data/anre-contacts.json` (already has all registry data). Agent only needs to scrape the firm's website for:
+- `description` (Romanian, factual, no marketing fluff)
+- `specializations[]` (hale/birouri/agricol/retail/etc. — only what the site shows)
+- `certifications[]` — ISO only, NEVER "ANRE-*"
+- `capacity`, `projectsCompleted` — real numbers from site or 0
 
-Write ready array to `scripts/add-batch-YYYY-MM-DD.js`.
+Explicit "NEVER estimate" rule (see MEMORY.md). If the site is down or uninformative, agent flags `reject` with reason.
 
-### 4. `/company-reject` — persist rejections
+Agent returns `{ ready: [<company objects>], reject: [<rejection records>] }`. Write ready array to `scripts/add-batch-YYYY-MM-DD.js`.
+
+### 5. `/company-reject` — persist rejections
 Append agent's `reject` array + any score ≤ 3 firms from prefilter to `data/anre-rejected.json`.
 
-### 5. `/company-add` — execute pipeline
+### 6. `/company-add` — execute pipeline
 ```bash
 node scripts/add-batch-YYYY-MM-DD.js
 node scripts/anre-match-companies.js
@@ -63,7 +68,7 @@ node scripts/company-tools.js validate
 node scripts/company-tools.js stats
 ```
 
-### 6. Memory update
+### 7. Memory update
 Update `MEMORY.md` "Content Status" with new total count + named new firms.
 
 ## Verification steps at each stage
@@ -72,21 +77,28 @@ Update `MEMORY.md` "Content Status" with new total count + named new firms.
 |---|---|
 | discover | existing firms filtered out via 3 dedup strategies; rejected filtered out |
 | prefilter-input | same 3 dedup + CUI existence required |
-| prefilter | CAEN code real, revenue real, website fetchable |
+| prefilter-api | CAEN code real, revenue real, website flag from registry |
+| contacts | phone + email from official registry (no scraping) |
 | research | agent's output matches `Company` schema; all references to ANRE stripped from `certifications[]` |
 | add | `company-tools.js validate` catches schema errors before commit |
+
+## API budget
+
+- Prefilter: ~2-3 requests/firm (general + financial + websites) = ~25 req per 10-firm batch
+- Contacts: 2 requests/firm (phones + emails) = ~20 req per 10-firm batch
+- **~45 API credits per 10-firm batch** → 5000-credit plan = ~110 batches/year
 
 ## Token budget (baseline)
 
 | Stage | Tokens |
 |---|---|
 | anre-discover | ~0 (node script) |
-| prefilter-input | ~0 (node script) |
-| prefilter firecrawl (15 firms) | 7-10k |
-| research agent (5 firms, pre-populated) | 15-25k |
-| **Total for 5 firms added** | **~25-35k** |
+| prefilter-input + prefilter-api | ~0 (node scripts) |
+| contacts | ~0 (node script) |
+| research agent (N firms, fully pre-populated) | 15-25k |
+| **Total for 5 firms added** | **~15-25k** |
 
-vs. previous flow: 3 parallel agents × 40k = 120k for 3 firms, 50% reject rate.
+vs. old flow (firecrawl scrape): 25-35k tokens + ~100 firecrawl credits + 35% fail rate.
 
 ## When user says...
 

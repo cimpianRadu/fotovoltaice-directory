@@ -1,0 +1,542 @@
+[
+  {
+    "cui": "46334220",
+    "name": "SOLAR PROD ECOINVENT",
+    "judet": "Alba",
+    "localitate": "Horea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 10,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "solar/PV în nume/CAEN (+3)",
+      "revenue ≥2M (+2)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 5114768,
+    "profit_2024": 1597826,
+    "employees": 9,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Alba, Sat Horea Com. Horea, Str. Valea Arazii, Nr.5a",
+    "error": null
+  },
+  {
+    "cui": "36398366",
+    "name": "ENER ROM INSTAL",
+    "judet": "Alba",
+    "localitate": "Alba-Iulia",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 10y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://enerrom.ro/",
+    "revenue_2024": 9212374,
+    "profit_2024": 2866094,
+    "employees": 15,
+    "year_founded": 2016,
+    "status": "functiune",
+    "address": "Jud. Alba, Sat Drambar Com. Ciugud, Str. Energiei, Nr.18",
+    "error": null
+  },
+  {
+    "cui": "28364486",
+    "name": "NECTARIA PROIECT",
+    "judet": "Alba",
+    "localitate": "Alba Iulia",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 15y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://nectaria.solar/",
+    "revenue_2024": 12233921,
+    "profit_2024": 780026,
+    "employees": 10,
+    "year_founded": 2011,
+    "status": "functiune",
+    "address": "Jud. Alba, Mun. Alba Iulia, Str. Eugen Lovinescu, Nr.15",
+    "error": null
+  },
+  {
+    "cui": "1771720",
+    "name": "ELIO INDUSTRIAL",
+    "judet": "Alba",
+    "localitate": "Lancram",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 34y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 8463190,
+    "profit_2024": 2278727,
+    "employees": 14,
+    "year_founded": 1992,
+    "status": "functiune",
+    "address": "Jud. Alba, Loc. Lancram Mun. Sebes, Str. Noua, Nr.398",
+    "error": null
+  },
+  {
+    "cui": "46875942",
+    "name": "TED ELECTRO",
+    "judet": "Alba",
+    "localitate": "Alba Iulia",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2596137,
+    "profit_2024": 104256,
+    "employees": 10,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Alba, Mun. Alba Iulia, Bld. Ferdinand I, Nr.3",
+    "error": null
+  },
+  {
+    "cui": "38655105",
+    "name": "ELECTRO ORIEL",
+    "judet": "Alba",
+    "localitate": "Vintu de Jos",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 8y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 533057,
+    "profit_2024": -245227,
+    "employees": 3,
+    "year_founded": 2018,
+    "status": "functiune",
+    "address": "Jud. Alba, Sat Vurpar Com. Vintu De Jos, Nr.30",
+    "error": null
+  },
+  {
+    "cui": "45029163",
+    "name": "ELECTROALBA ELECTRIS",
+    "judet": "Alba",
+    "localitate": "Alba Iulia",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 5y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1353204,
+    "profit_2024": 107860,
+    "employees": 7,
+    "year_founded": 2021,
+    "status": "functiune",
+    "address": "Jud. Alba, Mun. Alba Iulia, Str. Samuel Micu, Nr.4, Bl.19, Et.3, Ap.12",
+    "error": null
+  },
+  {
+    "cui": "17223317",
+    "name": "ELECTROTIMEIA",
+    "judet": "Alba",
+    "localitate": "Sebes",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 21y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 7478737,
+    "profit_2024": 1229418,
+    "employees": 18,
+    "year_founded": 2005,
+    "status": "functiune",
+    "address": "Jud. Alba, Mun. Sebes, Str. Dorobanti, Nr.75",
+    "error": null
+  },
+  {
+    "cui": "40864839",
+    "name": "ENERGO ENCI",
+    "judet": "Alba",
+    "localitate": "Sebes",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 6,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "revenue ≥2M (+2)",
+      "age 7y (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 2438383,
+    "profit_2024": 1870537,
+    "employees": 3,
+    "year_founded": 2019,
+    "status": "functiune",
+    "address": "Jud. Alba, Sat Daia Romana Com. Daia Romana, Str. Sub Coasta, Nr.510",
+    "error": null
+  },
+  {
+    "cui": "21171933",
+    "name": "TOBIMAR GROUP",
+    "judet": "Alba",
+    "localitate": "Vintu de Jos",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 19y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 20553265,
+    "profit_2024": 3077076,
+    "employees": 17,
+    "year_founded": 2007,
+    "status": "functiune",
+    "address": "Jud. Alba, Sat Vintu De Jos Com. Vintu De Jos, Str. Mihai Eminescu, Nr.58",
+    "error": null
+  },
+  {
+    "cui": "34707988",
+    "name": "ABFOR ENERGY",
+    "judet": "Alba",
+    "localitate": "Zlatna",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 11y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 293401,
+    "profit_2024": -195594,
+    "employees": 3,
+    "year_founded": 2015,
+    "status": "functiune",
+    "address": "Jud. Alba, Ors. Zlatna, Str. Fagulet, Nr.5",
+    "error": null
+  },
+  {
+    "cui": "48921751",
+    "name": "ALNI ELECTRIC SERVICES",
+    "judet": "Alba",
+    "localitate": "Micesti",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 3y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 459727,
+    "profit_2024": 51183,
+    "employees": 3,
+    "year_founded": 2023,
+    "status": "functiune",
+    "address": "Jud. Alba, Loc. Micesti Mun. Alba Iulia, Str. Fagaras, Nr.7",
+    "error": null
+  },
+  {
+    "cui": "14426759",
+    "name": "CABRO GRUP",
+    "judet": "Alba",
+    "localitate": "Sebes",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 24y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1828354,
+    "profit_2024": 32944,
+    "employees": 9,
+    "year_founded": 2002,
+    "status": "functiune",
+    "address": "Jud. Alba, Mun. Sebes, Str. Stejarului, Nr.4",
+    "error": null
+  },
+  {
+    "cui": "14377044",
+    "name": "ELECTRIC INVEST",
+    "judet": "Alba",
+    "localitate": "Lupsa",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 24y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 853245,
+    "profit_2024": 21704,
+    "employees": 4,
+    "year_founded": 2002,
+    "status": "functiune",
+    "address": "Jud. Alba, Sat Valea Lupsii Com. Lupsa, Nr.191",
+    "error": null
+  },
+  {
+    "cui": "15172365",
+    "name": "ALBANIC SERVICE",
+    "judet": "Alba",
+    "localitate": "Alba-Iulia",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 23y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4322",
+    "caen_label": "Lucrari de instalatii sanitare, de incalzire si de aer conditionat",
+    "website": "",
+    "revenue_2024": 11152389,
+    "profit_2024": 6075449,
+    "employees": 26,
+    "year_founded": 2003,
+    "status": "functiune",
+    "address": "Jud. Alba, Mun. Alba Iulia, Bld. Republicii, Nr.44, Spatiu Comercial, Bl.106, Ap.2",
+    "error": null
+  },
+  {
+    "cui": "3276087",
+    "name": "ELECTROCONSTRUCTIA ELCO ALBA IULIA",
+    "judet": "Alba",
+    "localitate": "Alba-Iulia",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 33y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4399",
+    "caen_label": "Alte lucrari speciale de constructii n.c.a.",
+    "website": "",
+    "revenue_2024": 9357773,
+    "profit_2024": 294971,
+    "employees": 13,
+    "year_founded": 1993,
+    "status": "functiune",
+    "address": "Jud. Alba, Mun. Alba Iulia, Str. Ion Arion, Nr.62",
+    "error": null
+  },
+  {
+    "cui": "21278698",
+    "name": "ENERGO IMPEX",
+    "judet": "Alba",
+    "localitate": "Aiud",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "website (+2)",
+      "age 19y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "6310",
+    "caen_label": "Prelucrarea datelor, administrarea paginilor web si activitati conexe",
+    "website": "https://www.energoimpex.ro/",
+    "revenue_2024": 0,
+    "profit_2024": -1597,
+    "employees": 0,
+    "year_founded": 2007,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Mun. Sibiu, Str. Cindrelulului, Nr.8",
+    "error": null
+  },
+  {
+    "cui": "45142404",
+    "name": "DICU DAN FLORIN INTREPRINDERE INDIVIDUALA",
+    "judet": "Alba",
+    "localitate": "Alba Iulia",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 4,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "age 5y (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 2021,
+    "status": "functiune",
+    "address": "Jud. Alba, Mun. Alba Iulia, Str. Tuberozelor, Nr.19",
+    "error": null
+  },
+  {
+    "cui": "8325598",
+    "name": "ELECTRA EXIM",
+    "judet": "Alba",
+    "localitate": "Aiud",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 3,
+    "reasons": [
+      "revenue ≥500k (+1)",
+      "age 30y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4222",
+    "caen_label": "Lucrari de constructii a proiectelor utilitare pentru electricitate si telecomunicatii",
+    "website": "",
+    "revenue_2024": 1601974,
+    "profit_2024": -552715,
+    "employees": 12,
+    "year_founded": 1996,
+    "status": "functiune",
+    "address": "Jud. Alba, Mun. Aiud, Str. Vulcan, Nr.2-10",
+    "error": null
+  },
+  {
+    "cui": "37887395",
+    "name": "EXTRABIT",
+    "judet": "Alba",
+    "localitate": "Drâmbar",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 1,
+    "reasons": [
+      "age 9y (+1)"
+    ],
+    "caen_code": "2399",
+    "caen_label": "Fabricarea altor produse din minerale nemetalice, n.c.a.",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": -707,
+    "employees": 0,
+    "year_founded": 2017,
+    "status": "functiune",
+    "address": "Jud. Alba, Sat Drambar Com. Ciugud, Cal. Alba Iulia, Nr.2",
+    "error": null
+  }
+]

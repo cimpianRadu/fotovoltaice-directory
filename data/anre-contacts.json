@@ -1,0 +1,219 @@
+[
+  {
+    "cui": "46334220",
+    "name": "SOLAR PROD ECOINVENT",
+    "judet": "Alba",
+    "localitate": "Horea",
+    "address": "Jud. Alba, Sat Horea Com. Horea, Str. Valea Arazii, Nr.5a",
+    "phone": "+40725325992",
+    "email": "solarprodecoinvent@yahoo.com",
+    "website": "",
+    "year_founded": 2022,
+    "employees": 9,
+    "revenue_2024": 5114768,
+    "profit_2024": 1597826,
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 10
+  },
+  {
+    "cui": "36398366",
+    "name": "ENER ROM INSTAL",
+    "judet": "Alba",
+    "localitate": "Alba-Iulia",
+    "address": "Jud. Alba, Sat Drambar Com. Ciugud, Str. Energiei, Nr.18",
+    "phone": "+40741096001",
+    "email": "office@enerrom.ro",
+    "website": "https://enerrom.ro/",
+    "year_founded": 2016,
+    "employees": 15,
+    "revenue_2024": 9212374,
+    "profit_2024": 2866094,
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9
+  },
+  {
+    "cui": "28364486",
+    "name": "NECTARIA PROIECT",
+    "judet": "Alba",
+    "localitate": "Alba Iulia",
+    "address": "Jud. Alba, Mun. Alba Iulia, Str. Eugen Lovinescu, Nr.15",
+    "phone": "+40723172359",
+    "email": "nectariaproiect@gmail.com",
+    "website": "https://nectaria.solar/",
+    "year_founded": 2011,
+    "employees": 10,
+    "revenue_2024": 12233921,
+    "profit_2024": 780026,
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9
+  },
+  {
+    "cui": "1771720",
+    "name": "ELIO INDUSTRIAL",
+    "judet": "Alba",
+    "localitate": "Lancram",
+    "address": "Jud. Alba, Loc. Lancram Mun. Sebes, Str. Noua, Nr.398",
+    "phone": "+40723602004",
+    "email": "elio.industrial@yahoo.com",
+    "website": "",
+    "year_founded": 1992,
+    "employees": 14,
+    "revenue_2024": 8463190,
+    "profit_2024": 2278727,
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7
+  },
+  {
+    "cui": "46875942",
+    "name": "TED ELECTRO",
+    "judet": "Alba",
+    "localitate": "Alba Iulia",
+    "address": "Jud. Alba, Mun. Alba Iulia, Bld. Ferdinand I, Nr.3",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "year_founded": 2022,
+    "employees": 10,
+    "revenue_2024": 2596137,
+    "profit_2024": 104256,
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7
+  },
+  {
+    "cui": "38655105",
+    "name": "ELECTRO ORIEL",
+    "judet": "Alba",
+    "localitate": "Vintu de Jos",
+    "address": "Jud. Alba, Sat Vurpar Com. Vintu De Jos, Nr.30",
+    "phone": "+40740897538",
+    "email": "office.ogr@yahoo.com",
+    "website": "",
+    "year_founded": 2018,
+    "employees": 3,
+    "revenue_2024": 533057,
+    "profit_2024": -245227,
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6
+  },
+  {
+    "cui": "45029163",
+    "name": "ELECTROALBA ELECTRIS",
+    "judet": "Alba",
+    "localitate": "Alba Iulia",
+    "address": "Jud. Alba, Mun. Alba Iulia, Str. Samuel Micu, Nr.4, Bl.19, Et.3, Ap.12",
+    "phone": "+40746784180",
+    "email": "ana.ghibu@yahoo.com",
+    "website": "",
+    "year_founded": 2021,
+    "employees": 7,
+    "revenue_2024": 1353204,
+    "profit_2024": 107860,
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6
+  },
+  {
+    "cui": "17223317",
+    "name": "ELECTROTIMEIA",
+    "judet": "Alba",
+    "localitate": "Sebes",
+    "address": "Jud. Alba, Mun. Sebes, Str. Dorobanti, Nr.75",
+    "phone": "+40741104586",
+    "email": "electrotimeia@yahoo.com",
+    "website": "",
+    "year_founded": 2005,
+    "employees": 18,
+    "revenue_2024": 7478737,
+    "profit_2024": 1229418,
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 6
+  },
+  {
+    "cui": "40864839",
+    "name": "ENERGO ENCI",
+    "judet": "Alba",
+    "localitate": "Sebes",
+    "address": "Jud. Alba, Sat Daia Romana Com. Daia Romana, Str. Sub Coasta, Nr.510",
+    "phone": "+40764901568",
+    "email": "popmihaiaugustin@gmail.com",
+    "website": "",
+    "year_founded": 2019,
+    "employees": 3,
+    "revenue_2024": 2438383,
+    "profit_2024": 1870537,
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 6
+  },
+  {
+    "cui": "21171933",
+    "name": "TOBIMAR GROUP",
+    "judet": "Alba",
+    "localitate": "Vintu de Jos",
+    "address": "Jud. Alba, Sat Vintu De Jos Com. Vintu De Jos, Str. Mihai Eminescu, Nr.58",
+    "phone": "",
+    "email": "tobimargroup@tobimar.ro",
+    "website": "",
+    "year_founded": 2007,
+    "employees": 17,
+    "revenue_2024": 20553265,
+    "profit_2024": 3077076,
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 6
+  }
+]

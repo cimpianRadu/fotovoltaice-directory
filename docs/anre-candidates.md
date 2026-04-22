@@ -1,15 +1,15 @@
 # ANRE Candidates — C2A / C1A (industrial/comercial)
 
-_Generated: 2026-04-21_
+_Generated: 2026-04-22_
 
 Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **nu** sunt încă în `data/companies.json`. Sursă: `data/anre-atestate.json`.
 
 ## Stats
 
-- **Total candidați:** 1533
-- Cu **C2A** activ: 1294
-- Cu **C1A** activ: 1140
-- Cu **ambele**: 901
+- **Total candidați:** 1528
+- Cu **C2A** activ: 1289
+- Cu **C1A** activ: 1135
+- Cu **ambele**: 896
 - **Județe acoperite:** 43
 
 ## Cum folosești
@@ -22,7 +22,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 
 | Județ | Candidați |
 |---|---:|
-| Bucuresti | 228 |
+| Bucuresti | 223 |
 | Cluj | 99 |
 | Ilfov | 85 |
 | Timis | 74 |
@@ -427,7 +427,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | TEODORESCU EXTRACT | Tarlungeni | C1A + C2A | 23686 | 28.08.2030 | 0743438143 |
 | TOP ECOMAX | Brasov | C1A + C2A | 15702 | 06.03.2030 | 0723020482 0368 424578 |
 
-### Bucuresti (228)
+### Bucuresti (223)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -438,10 +438,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ADEMI DESIGN | Bucuresti | C1A | 17576 | 09.08.2026 | 0741133005 |
 | ADURO | Bucuresti | C2A | 18128 | 08.04.2027 | 0748.179.489 |
 | ALERION SERVICE RO | Bucuresti | C1A + C2A | 22023 | 15.07.2029 | 0747055436 |
-| ALLSYS ENERGY | Bucuresti | C1A + C2A | 15247 | 17.10.2029 | 021.2234209, 0723628848 021.2234207 |
 | ALSIM ALARKO SANAYI TESISLERI VE TICARET ANONIM SIRKETI ISTANBUL - SUCURSALA BUCURESTI M6 METRO | Bucuresti | C1A + C2A | 22039 | 15.07.2029 | 0724323266, 0731000015 |
-| ALTER MAN ENGINEERING | Bucuresti | C1A + C2A | 14287 | 18.01.2029 | 0734415672 0213303109 |
-| AMIRAS GREEN PROIECT | Bucuresti | C1A + C2A | 23062 | 14.04.2030 | 0735191678 |
 | ANSTHALL ACCENT | Bucuresti | C2A | 19213 | 24.03.2028 | 0725094804 |
 | APA NOVA BUCURESTI | Bucuresti | C2A | 18527 | 17.08.2027 | 0213100274 0213124437 |
 | ARHITECTURES PROJECTS DEVELOPMENT-8 | Bucuresti | C2A | 19240 | 27.03.2028 | 0769625859 |
@@ -460,7 +457,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | CARMIN POPSTAR PROD | Bucuresti | C1A + C2A | 19994 | 24.08.2028 | 0723566411 |
 | CHEMOIL ENERGY | Bucuresti | C2A | 23845 | 27.10.2030 | 0722539375 |
 | CLAR ELECTRIC | Bucuresti | C1A + C2A | 15298 | 29.08.2029 | 0212411273, 0722325327 0212411273 |
-| CLEAN ENERGY REVOLUTION | Bucuresti | C1A + C2A | 18006 | 22.02.2027 | 0761468115 |
 | CONCEPT ALFA ENERGY | Bucuresti | C2A | 18412 | 13.07.2027 | 0788857117, 0784254787 0314256077 |
 | CONSIS PROIECT | Bucuresti | C1A | 23446 | 11.07.2030 | 0737039066 021/2426657 |
 | CONSTRUCTII ERBASU | Bucuresti | C1A + C2A | 19293 | 05.04.2028 | 021.232.35.45,0746224654 021.232.35.05 |
@@ -587,7 +583,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | POWER & LIGHTING TEHNOROB | Bucuresti | C2A | 15244 | 01.10.2029 | 0786 278592 ; 0723380103 ; 021.569. 021 5694648, 021 5694649 |
 | PROBIT | Bucuresti | C1A + C2A | 15586 | 05.02.2030 | 021 2529294, 0744 538983 021 2529295 |
 | PRODESIGN ENGINEERING & CONSTRUCTION | Bucuresti | C1A | 22517 | 30.10.2029 | 0213355445, 0728060013 0213350734 |
-| PROSOLAR GREEN EVOLUTION | Bucuresti | C1A + C2A | 19584 | 16.05.2028 | 0723911433 |
 | RACODA ELECTRIC | Bucuresti | C2A | 16569 | 03.11.2030 | 0724533092, 0720053450, 0724254193 |
 | RENERGY POWER PLANTS | Bucuresti | C1A | 21082 | 23.10.2028 | 0733380765, 0371163274 |
 | RENOVATIO MOBILITY | Bucuresti | C1A + C2A | 21409 | 12.02.2029 | 0212360061 |

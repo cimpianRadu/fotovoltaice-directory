@@ -18,6 +18,12 @@ async function downloadLogo(company) {
     return;
   }
 
+  // Skip firms without a website — no favicon/logo to fetch
+  if (!company.contact.website) {
+    results.failed.push({ slug, name: company.name, website: '', reason: 'no website' });
+    return;
+  }
+
   const domain = new URL(company.contact.website).hostname.replace('www.', '');
 
   // Try Google Favicon API (most reliable, 128px)
