@@ -27,6 +27,11 @@ const FAQS = [
       'Cifra de afaceri, profitul net și numărul de angajați sunt extrase din bilanțurile oficiale depuse la Ministerul Finanțelor (mfinante.gov.ro), agregate prin API-ul targetare.ro. Anul înființării provine din Registrul Comerțului. Pentru fiecare firmă listăm CUI-ul, deci datele pot fi verificate independent.',
   },
   {
+    question: 'De ce majoritatea datelor sunt pentru 2024 și nu 2025?',
+    answer:
+      'În România, firmele au obligația să depună bilanțul anual la ANAF până pe 30 mai a anului următor. Asta înseamnă că în aprilie 2026, ultimul an fiscal cu bilanțuri complete și publice la Ministerul Finanțelor este 2024 — firmele depun chiar acum raportările pentru 2025. Câteva firme care au depus deja (early filers) apar în tabel cu date 2025 — poți vedea anul exact sub fiecare cifră de afaceri. Refacem extragerea datelor vara 2026, când majoritatea bilanțurilor 2025 vor fi publice.',
+  },
+  {
     question: 'Ce înseamnă atestatele ANRE și cum le folosesc la filtrare?',
     answer:
       'Atestatele ANRE sunt emise de Autoritatea Națională de Reglementare în Energie și autorizează firma să proiecteze și execute instalații electrice. Pentru proiecte fotovoltaice comerciale contează în principal C2A (medie și înaltă tensiune, obligatoriu peste 50 kWp conectat la rețea), C1A (joasă și medie tensiune), B (proiectare) și BP/BE (proiectare/execuție pentru anumite categorii). Bifează codurile dorite în filtru — vei vedea doar firmele care le au pe toate active simultan. Statusul se verifică direct în portal.anre.ro.',
