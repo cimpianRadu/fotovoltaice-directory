@@ -35,6 +35,8 @@ export default function Footer() {
           <FooterAccordion title="Pagini">
             <ul className="space-y-2">
               <li><Link href="/firme" className={linkClass}>Firme Instalatoare</Link></li>
+              <li><Link href="/clasament" className={linkClass}>Clasament Firme</Link></li>
+              <li><Link href="/verificare-anre" className={linkClass}>Verificare ANRE</Link></li>
               <li><Link href="/listeaza-firma" className={linkClass}>Listează-ți Firma</Link></li>
               <li><Link href="/cere-oferta" className={linkClass}>Cere Ofertă</Link></li>
               <li><Link href="/intrebari-frecvente" className={linkClass}>Întrebări Frecvente</Link></li>

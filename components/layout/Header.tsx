@@ -91,28 +91,29 @@ export default function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
-            {moreOpen && (
-              <div
-                role="menu"
-                className="absolute right-0 mt-2 w-60 rounded-xl border border-border bg-white shadow-lg py-2"
-              >
-                {moreLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    role="menuitem"
-                    onClick={() => setMoreOpen(false)}
-                    className={`block px-4 py-2.5 text-sm transition-colors ${
-                      isActive(link.href)
-                        ? 'text-primary-dark bg-primary/5 font-medium'
-                        : 'text-gray-700 hover:bg-surface hover:text-secondary-dark'
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            )}
+            {/* Always render in DOM (SEO) — toggle visibility with CSS */}
+            <div
+              role="menu"
+              className={`absolute right-0 mt-2 w-60 rounded-xl border border-border bg-white shadow-lg py-2 ${
+                moreOpen ? 'block' : 'hidden'
+              }`}
+            >
+              {moreLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  role="menuitem"
+                  onClick={() => setMoreOpen(false)}
+                  className={`block px-4 py-2.5 text-sm transition-colors ${
+                    isActive(link.href)
+                      ? 'text-primary-dark bg-primary/5 font-medium'
+                      : 'text-gray-700 hover:bg-surface hover:text-secondary-dark'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
           </div>
 
           <Link
@@ -148,27 +149,25 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile nav overlay — all links flat, no grouping */}
-      {mobileOpen && (
-        <div className="md:hidden border-t border-border bg-white">
-          <nav className="flex flex-col p-4 gap-1">
-            {allMobileLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className={`text-base font-medium rounded-lg px-3 py-2.5 transition-colors ${
-                  isActive(link.href)
-                    ? 'text-primary-dark bg-primary/5'
-                    : 'text-gray-700 hover:text-secondary-dark hover:bg-surface'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
+      {/* Mobile nav overlay — always in DOM for SEO, toggled with CSS */}
+      <div className={`md:hidden border-t border-border bg-white ${mobileOpen ? 'block' : 'hidden'}`}>
+        <nav className="flex flex-col p-4 gap-1">
+          {allMobileLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMobileOpen(false)}
+              className={`text-base font-medium rounded-lg px-3 py-2.5 transition-colors ${
+                isActive(link.href)
+                  ? 'text-primary-dark bg-primary/5'
+                  : 'text-gray-700 hover:text-secondary-dark hover:bg-surface'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+      </div>
     </header>
   );
 }
