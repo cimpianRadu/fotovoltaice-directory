@@ -77,19 +77,40 @@ export default function HomePage() {
 
       {/* Hero */}
       <section className="bg-gradient-to-br from-secondary-dark via-secondary to-secondary-light text-white">
-        <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24 text-center">
+        <div className="max-w-7xl mx-auto px-4 py-10 sm:py-20 text-center">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
             Instalatori Autorizați
             <br className="hidden sm:block" />
             <span className="text-primary-light"> Panouri Fotovoltaice România</span>
           </h1>
-          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Găsește instalatori de panouri fotovoltaice verificați pentru hale industriale, fabrici, clădiri de birouri și spații comerciale. {COMPANY_COUNT} firme cu atestat ANRE din {COUNTY_COUNT} de județe.
+          <p className="text-base sm:text-lg text-gray-300 mb-6 max-w-2xl mx-auto">
+            Găsește instalatori verificați pentru hale industriale, fabrici, clădiri de birouri și spații comerciale.
           </p>
 
-          <div className="flex justify-center mb-8">
+          {/* Live-data proof bar — what distinguishes us from generic directories */}
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 text-xs sm:text-sm">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+              <strong className="font-semibold">{COMPANY_COUNT}</strong>
+              <span className="text-gray-200">firme listate</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
+              <strong className="font-semibold">{ANRE_COUNT}</strong>
+              <span className="text-gray-200">cu ANRE C2A verificat live</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
+              <strong className="font-semibold">{COUNTY_COUNT}</strong>
+              <span className="text-gray-200">județe</span>
+            </span>
+          </div>
+
+          <div className="flex justify-center mb-4">
             <SearchBar />
           </div>
+
+          <p className="text-xs text-gray-300">
+            Date reale din registrele publice — nu listări plătite sau auto-declarații
+          </p>
 
         </div>
       </section>
@@ -101,7 +122,7 @@ export default function HomePage() {
           className="block rounded-xl border-2 border-primary/30 bg-primary/5 p-4 sm:p-5 hover:border-primary/50 hover:shadow-md transition-all group"
         >
           <div className="flex items-center justify-between gap-4 mb-3">
-            <p className="text-[10px] sm:text-xs font-semibold text-primary-dark uppercase tracking-wider">
+            <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider">
               Profil Premium — Exemplu
             </p>
             <span className="text-xs text-primary-dark font-medium group-hover:underline hidden sm:inline">
@@ -117,21 +138,23 @@ export default function HomePage() {
             <div className="flex-1 min-w-0">
               <div className="flex flex-wrap items-center gap-2 mb-0.5">
                 <p className="text-sm font-semibold text-gray-900">Exemplu Promovare</p>
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-green-50 text-green-700 border border-green-200">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-200">
                   &#10003; Partener Verificat
                 </span>
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-primary/10 text-primary-dark">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary-dark">
                   &#9733; Premium
                 </span>
               </div>
               <p className="text-xs text-gray-500">Firma ta poate fi promovată aici</p>
+              <p className="text-sm font-bold text-primary-dark mt-1 sm:hidden">De la 49 EUR/lună + TVA</p>
             </div>
             <div className="hidden sm:flex flex-col items-end shrink-0 text-right">
-              <p className="text-xs text-gray-400">De la</p>
+              <p className="text-xs text-gray-500">De la</p>
               <p className="text-sm font-bold text-primary-dark">49 EUR/lună</p>
+              <p className="text-xs text-gray-500">+ TVA</p>
             </div>
           </div>
-          <p className="text-[11px] text-gray-400 mt-2 text-center sm:text-left">
+          <p className="text-xs text-gray-600 mt-2 text-center sm:text-left">
             Poziție prioritară &middot; Lead-uri din &quot;Cere Ofertă&quot; &middot; Badge verificat &middot; Statistici profil
           </p>
         </Link>
@@ -297,38 +320,48 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA for companies */}
-      <section className="bg-primary/5 border-y border-primary/10">
-        <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">Ești firmă de instalare panouri fotovoltaice?</h2>
-          <p className="text-gray-600 mb-6 max-w-lg mx-auto">
-            Listează-ți firma pe platforma noastră și fii vizibil pentru clienții care caută instalatori autorizați de panouri fotovoltaice în zona ta. Înscrierea este gratuită.
-          </p>
-          <Link
-            href="/listeaza-firma"
-            className="inline-flex items-center bg-primary hover:bg-primary-dark text-white font-semibold px-8 py-3 rounded-lg transition-colors"
-          >
-            Listează-ți Firma Gratuit
-          </Link>
-        </div>
-      </section>
-
       {/* FAQ */}
       <section className="max-w-3xl mx-auto px-4 py-16">
         <FAQ items={homeFaqs} title="Întrebări Frecvente" />
       </section>
 
-      {/* Waitlist Rezidential */}
-      <section className="bg-surface border-t border-border">
-        <div className="max-w-7xl mx-auto px-4 py-12 text-center">
-          <p className="text-sm font-medium text-primary-dark mb-2">În curând</p>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">
-            Cauți panouri fotovoltaice pentru casă?
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Lansăm în curând platforma pentru rezidențial. Înscrie-te pentru a fi notificat.
+      {/* DOMINANT CTA — listează firma (single next-step for visitors who are companies) */}
+      <section className="bg-gradient-to-br from-primary/10 via-primary/5 to-white border-y border-primary/20">
+        <div className="max-w-7xl mx-auto px-4 py-16 sm:py-20 text-center">
+          <p className="text-sm font-semibold text-primary-dark uppercase tracking-wider mb-3">
+            Pentru firme de instalare
           </p>
-          <div className="flex justify-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
+            Ești firmă de instalare fotovoltaică?
+          </h2>
+          <p className="text-base text-gray-600 mb-8 max-w-xl mx-auto">
+            Listează-ți firma gratuit și fii vizibil pentru managerii care caută instalatori autorizați ANRE în zona ta.
+          </p>
+          <Link
+            href="/listeaza-firma"
+            className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-base px-8 min-h-[52px] rounded-lg transition-colors shadow-sm"
+          >
+            Listează-ți Firma Gratuit
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </Link>
+          <p className="text-xs text-gray-500 mt-4">Fără carduri, fără contract — gata în 5 minute</p>
+        </div>
+      </section>
+
+      {/* Waitlist Rezidential — compact, sub footer area, nu CTA dominant */}
+      <section className="bg-surface border-t border-border">
+        <div className="max-w-3xl mx-auto px-4 py-8 sm:py-10 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
+          <div className="flex-1">
+            <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider mb-1">
+              În curând · Rezidențial
+            </p>
+            <p className="text-sm text-gray-700">
+              <strong>Cauți panouri pentru casă?</strong> Lansăm în curând platforma pentru rezidențial.
+            </p>
+          </div>
+          <div className="shrink-0">
             <WaitlistForm />
           </div>
         </div>

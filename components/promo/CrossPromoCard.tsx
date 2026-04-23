@@ -63,7 +63,7 @@ export default function CrossPromoCard() {
         onClick={handleClick}
         className="block p-4 pr-8"
       >
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-2">
+        <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
           Partener
         </p>
         <div className="flex items-start gap-3">

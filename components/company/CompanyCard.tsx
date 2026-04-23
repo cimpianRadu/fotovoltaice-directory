@@ -104,29 +104,32 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
         ))}
       </div>
 
-      {anreCerts.length > 0 && (
+      {/* Capability signals — ANRE + capacity (what differentiates companies) */}
+      {(anreCerts.length > 0 || company.capacity.maxProjectKw > 0) && (
         <div className="flex flex-wrap gap-1.5 mb-4">
           {anreCerts.map((cert) => (
             <Badge key={cert.code} variant={cert.code === 'C2A' ? 'success' : 'default'} size="sm">
               {getAnreCodeLabel(cert.code)}
             </Badge>
           ))}
+          {company.capacity.maxProjectKw > 0 && (
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary-dark border border-primary/20">
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              până la {formatNumber(company.capacity.maxProjectKw)} kW
+            </span>
+          )}
         </div>
       )}
 
-      <div className="mt-auto pt-3 border-t border-border text-xs text-gray-500">
-        <div className="flex items-center justify-between">
-          {company.capacity.maxProjectKw > 0 ? (
-            <span>Până la {formatNumber(company.capacity.maxProjectKw)} kW</span>
-          ) : (
-            <span />
-          )}
-          <span>Din {company.founded}</span>
-        </div>
+      {/* Metadata — founded + added (low priority) */}
+      <div className="mt-auto pt-3 border-t border-border flex items-center justify-between text-xs text-gray-500">
+        <span>Din {company.founded}</span>
         {company.createdAt && (
-          <p className="mt-1 text-[11px] text-gray-400">
+          <span className="text-gray-400">
             Adăugat {formatShortDate(company.createdAt)}
-          </p>
+          </span>
         )}
       </div>
     </Link>

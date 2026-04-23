@@ -56,7 +56,7 @@ export default function SponsorBanner() {
       </div>
       <a
         href="/publicitate"
-        className="block mt-3 text-[11px] text-gray-400 hover:text-primary-dark transition-colors text-center"
+        className="block mt-3 text-xs text-gray-500 hover:text-primary-dark transition-colors text-center"
       >
         Firma ta aici? Află mai multe →
       </a>
