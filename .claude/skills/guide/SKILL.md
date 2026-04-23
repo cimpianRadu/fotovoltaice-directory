@@ -62,6 +62,23 @@ firecrawl_search → "piata fotovoltaice Romania 2026" (surse: zf.ro, profit.ro)
 - Autor: "Radu, Specialist Instalatori Fotovoltaice" cu logo
 - **NICIODATĂ** nu inventa sau estima date — dacă nu e verificabil, nu include
 
+### Reguli pentru menționarea firmelor (cazurile "top firme X")
+Când ghidul enumeră firme din director, pentru FIECARE firmă:
+- Folosește doar date din `data/companies.json` (cifră afaceri, angajați, an înființare, coverage, certificări ISO) — NU căuta alte cifre pe web
+- Atestate ANRE: din `anreMatch` → lookup în `data/anre-atestate.json`. Dacă firma nu are `anreMatch`, NU scrie "Atestate ANRE: ..."
+- Dacă un câmp lipsește în JSON (ex: cifră 0 sau coverage gol), nu-l enumera deloc. Nu completa cu estimări.
+- Website: **întotdeauna ca link markdown underlined** → `[website.ro](https://website.ro)` nu "Website: website.ro"
+- Nume firmă: exact cum e în `companies.json` câmpul `name`, fără corecții/normalizări
+
+### Reguli pentru link-uri interne
+- NU scrie URL-uri raw în text ("pagina /clasament", "/verificare-anre")
+- Folosește link markdown cu text descriptiv:
+  - ✅ `[clasamentul firmelor după cifră de afaceri](/clasament)`
+  - ✅ `[verifică atestatele ANRE](/verificare-anre)`
+  - ❌ `pagina /clasament`
+  - ❌ `/verificare-anre`
+- Textul link-ului trebuie să fie natural în propoziție, nu URL-ul gol
+
 ## Pasul 3: Generare Hero Image
 
 Folosește nano-banana MCP (`mcp__nano-banana-2__generate_image`):
