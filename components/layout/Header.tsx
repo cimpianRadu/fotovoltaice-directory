@@ -7,13 +7,13 @@ import { usePathname } from 'next/navigation';
 
 const primaryLinks = [
   { href: '/firme', label: 'Firme' },
+  { href: '/clasament', label: 'Clasament' },
+  { href: '/verificare-anre', label: 'Verificare ANRE' },
   { href: '/ghid', label: 'Ghiduri' },
   { href: '/publicitate', label: 'Publicitate' },
 ];
 
 const moreLinks = [
-  { href: '/clasament', label: 'Clasament firme' },
-  { href: '/verificare-anre', label: 'Verificare ANRE' },
   { href: '/intrebari-frecvente', label: 'Întrebări frecvente' },
   { href: '/despre', label: 'Despre noi' },
 ];
