@@ -109,7 +109,7 @@ export default function HomePage() {
           </div>
 
           <p className="text-xs text-gray-300">
-            Date reale din registrele publice — nu listări plătite sau auto-declarații
+            Date verificate din registre publice — ANRE, CUI, situații financiare
           </p>
 
         </div>
@@ -201,7 +201,7 @@ export default function HomePage() {
                 De ce instalatori-fotovoltaice.ro
               </h2>
               <p className="text-gray-600 mb-6">
-                Cauți un <strong>instalator de panouri fotovoltaice</strong> pentru firma ta? Pe platforma noastră găsești <strong>{COMPANY_COUNT} de firme verificate</strong> cu date reale din registrele oficiale — nu listări plătite sau auto-declarații. Fiecare firmă are CUI verificat, certificări ANRE confirmate și date financiare publice.
+                Cauți un <strong>instalator de panouri fotovoltaice</strong> pentru firma ta? Pe platforma noastră găsești <strong>{COMPANY_COUNT} de firme verificate</strong> cu date din registrele oficiale. Fiecare firmă are CUI verificat, certificări ANRE confirmate live din portal.anre.ro și date financiare publice.
               </p>
 
               <div className="grid grid-cols-3 gap-4 mb-6">
