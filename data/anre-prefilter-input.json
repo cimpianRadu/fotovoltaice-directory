@@ -1,392 +1,773 @@
 [
   {
-    "societate": "ABAC PROIECT ENERGIE",
-    "judet": "Ilfov",
-    "cui": "16912291",
+    "societate": "ACOM DISTRIBUTIE",
+    "judet": "Bihor",
+    "cui": "22850975",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0743055055 021 3529374",
-    "sediu": "Str. Rasaritului nr. 38",
-    "localitate": "Buftea"
+    "telefon": "0744861255",
+    "sediu": "Hidiselu de Jos nr 183 A",
+    "localitate": "Hidiselu de Jos"
   },
   {
-    "societate": "AGGREKO SOUTH EAST EUROPE",
-    "judet": "Ilfov",
-    "cui": "30897146",
+    "societate": "AMPER ELECTRO INSTAL",
+    "judet": "Bihor",
+    "cui": "35599191",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0756189302",
-    "sediu": "Sat Stefanestii de Jos, Sos. Stefanesti nr. 8-8A",
-    "localitate": "Stefanestii de Jos"
+    "telefon": "0745534082, 0747602687",
+    "sediu": "Str. Episcop Roman Ciorogariu nr  15 ,Ap 18",
+    "localitate": "Oradea"
   },
   {
-    "societate": "ANANDA ELECTRIC",
-    "judet": "Ilfov",
-    "cui": "51454109",
+    "societate": "BAD CAB DYNAMIC",
+    "judet": "Bihor",
+    "cui": "44882358",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0758916491",
+    "sediu": "SÂNTANDREI  NR 493",
+    "localitate": "Sintandrei (BH)"
+  },
+  {
+    "societate": "BESTEN",
+    "judet": "Bihor",
+    "cui": "30655118",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0775147757",
+    "sediu": "Lugasu de Jos  251/A",
+    "localitate": "Lungasu de Jos"
+  },
+  {
+    "societate": "BIOTOP INSTAL",
+    "judet": "Bihor",
+    "cui": "38374266",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0730123416, 0730123417",
+    "sediu": "Str. Vincent van Gogh   35",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "BITROOT SOLUTION",
+    "judet": "Bihor",
+    "cui": "43679658",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0771104417",
+    "sediu": "Str. REPUBLICII   31  Ap:4",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "COMPLET ELECTRO PROJECT",
+    "judet": "Bihor",
+    "cui": "40656021",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0747844161",
+    "sediu": "Str. Progresului, nr.6",
+    "localitate": "Santandrei"
+  },
+  {
+    "societate": "CRITO PROD",
+    "judet": "Bihor",
+    "cui": "6534482",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0722911933 0259.423.819",
+    "sediu": "Str.  Coriolan Hora, nr. 2H",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "DHELECTRIC SYSTEM",
+    "judet": "Bihor",
+    "cui": "34229972",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0745537993; 0359191675",
+    "sediu": "Str. Episcop Ignatie Darabant nr.8B",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "DINAMIC ELECTRO",
+    "judet": "Bihor",
+    "cui": "18010619",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0731653726 0359881011",
+    "sediu": "Str. Padisului, nr. 5A, jud Bihor",
+    "localitate": "Sintandrei (BH)"
+  },
+  {
+    "societate": "DYNAMIC BUSINESS FOR YOU",
+    "judet": "Bihor",
+    "cui": "42259346",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0749600325",
+    "sediu": "SÂNTANDREI   284",
+    "localitate": "Sântandrei"
+  },
+  {
+    "societate": "ELECTRIC MARK",
+    "judet": "Bihor",
+    "cui": "18507210",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0727 895038, 0727882177",
+    "sediu": "Str Kolcsey Ferencz nr. 22",
+    "localitate": "Marghita"
+  },
+  {
+    "societate": "ELECTRO CONTROL INST",
+    "judet": "Bihor",
+    "cui": "17035836",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0731896690, 0722954597 0359175068, 0359814822",
+    "sediu": "Aleea Zidarilor nr. 2, bl. Z4, ap. 4",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "ELECTRO EXPERT VEST ONE",
+    "judet": "Bihor",
+    "cui": "43992034",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0758084747",
+    "sediu": "Str. Fluierasului nr 5   cp 410230",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "ELECTRO LUC",
+    "judet": "Bihor",
+    "cui": "16214299",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0742 082661, 0359 179290 0259 436145",
+    "sediu": "Str. Vladeasa nr. 38",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "ELECTRO VITAL",
+    "judet": "Bihor",
+    "cui": "24324560",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0741 016261, 0745526436 0259 432165",
+    "sediu": "Str Iza, nr 27, Bl F12, Sc E, Et 3, Ap 96",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "ELECTROFOR",
+    "judet": "Bihor",
+    "cui": "13663102",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0359 802746, 0728 110120; 072150414 0359 802747",
+    "sediu": "Str. Clujului nr. 127, ap. 2",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "ELECTROGAL SOLUTIONS",
+    "judet": "Bihor",
+    "cui": "44119080",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0771135761",
+    "sediu": "Str. Sovata Nr  33  Bl:PB11  Et:2  Ap:11",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "ELECTROVALCAN",
+    "judet": "Bihor",
+    "cui": "33695389",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0744201027",
+    "sediu": "Sat Dusesti, nr.84, Bihor",
+    "localitate": "Ceica"
+  },
+  {
+    "societate": "ELESAL",
+    "judet": "Bihor",
+    "cui": "16376681",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0728 304800, 0359 454943 0259 371282",
+    "sediu": "Str.Imparatul Traian, nr.4",
+    "localitate": "Salonta"
+  },
+  {
+    "societate": "ENERGETIC MONTREL",
+    "judet": "Bihor",
+    "cui": "26011941",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0730504182 0359414467, 0359418063",
+    "sediu": "Sat. Pausa, nr 66",
+    "localitate": "Nojorid"
+  },
+  {
+    "societate": "ENERGOTEH PROIECT",
+    "judet": "Bihor",
+    "cui": "26741440",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0731879285, 0771093731, 0372921491",
+    "sediu": "Str. Mircea Eliade nr. 45",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "ENERGOVAT",
+    "judet": "Bihor",
+    "cui": "25269161",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0729 943881 0259 322997",
+    "sediu": "Str. Poet Gheorghe Pitut nr. 16, cp 415200",
+    "localitate": "Beius"
+  },
+  {
+    "societate": "GENIU INSTAL SERV",
+    "judet": "Bihor",
+    "cui": "41610928",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0742323761",
+    "sediu": "Str. Profesor Marin Dacian Bica nr. 29",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "GHP INTELLIGENT SYSTEMS",
+    "judet": "Bihor",
+    "cui": "28647270",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0731320993",
+    "sediu": "Str. Anghel I Saligny nr 34, judetul Bihor",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "GIS ENERGY",
+    "judet": "Bihor",
+    "cui": "36601516",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0725350505",
+    "sediu": "Str. Lanului   68",
+    "localitate": "Sântandrei"
+  },
+  {
+    "societate": "GRUP EXPANSIUNEA",
+    "judet": "Bihor",
+    "cui": "9579594",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0744602808",
+    "sediu": "Str. Regele Decebal, nr 20,",
+    "localitate": "Sanmartin [BH]"
+  },
+  {
+    "societate": "HELION",
+    "judet": "Bihor",
+    "cui": "152297",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0744134134, 0744617215",
+    "sediu": "Str. POET ANDREI MURESANU   -   Bl:AN6            parter.   Stei",
+    "localitate": "Stei"
+  },
+  {
+    "societate": "INTELIGENT POWER ENERGI",
+    "judet": "Bihor",
+    "cui": "51252231",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0728184347",
+    "sediu": "Ale ZIDARILOR   2   Bl:Z4   Sc:C      Ap:42",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "IRIBOZ",
+    "judet": "Bihor",
+    "cui": "40470400",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0758633187, 0748805963",
+    "sediu": "Loc. Vascau, Str. Crisului nr. 1, ap. 9",
+    "localitate": "Vascau"
+  },
+  {
+    "societate": "MAIRA ENERGY",
+    "judet": "Bihor",
+    "cui": "40132477",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0722615202",
+    "sediu": "Str Apateului nr 53B",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "MARDION",
+    "judet": "Bihor",
+    "cui": "17602833",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0754591958 0359410607",
+    "sediu": "Str. Eftimie Murgu, nr.71, bl. D50, ap.9",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "MOGATECH ENERGY",
+    "judet": "Bihor",
+    "cui": "40060362",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0746222698",
+    "sediu": "Str Salcamilor nr 13",
+    "localitate": "Beius"
+  },
+  {
+    "societate": "NETIQ SOLUTIONS",
+    "judet": "Bihor",
+    "cui": "26535466",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0742222007",
+    "sediu": "Str Morii nr 65",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "NEXIA CONSULTING",
+    "judet": "Bihor",
+    "cui": "13186178",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0771761146 / 0742091630",
+    "sediu": "str Nufarului, nr. 121A1",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "OVINSTAL ELECTRIC",
+    "judet": "Bihor",
+    "cui": "28433799",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0743502884",
+    "sediu": "Str. Ceyrat nr. 35A, parter, bl. WR6, ap. S3",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "PORTATIV",
+    "judet": "Bihor",
+    "cui": "11490927",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0721 282593, 0372780247 0372870770",
+    "sediu": "Str. Apateului nr.140/A",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "PRECON TRANSILVANIA",
+    "judet": "Bihor",
+    "cui": "40807310",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0720223675",
+    "sediu": "B-dul DECEBAL   4   Bl:B52   Ap:1",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "PROIECT BIHOR INVEST",
+    "judet": "Bihor",
+    "cui": "41294922",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0774900125",
+    "sediu": "bloc D, Ap. 6",
+    "localitate": "DOBRESTI"
+  },
+  {
+    "societate": "RAVOLTSOLAR",
+    "judet": "Bihor",
+    "cui": "47504713",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
     "telefon": "0731039377",
-    "sediu": "Str Biruin?ei   71C   spatiu birou.parter si etaj 1.   Popesti Leordeni",
-    "localitate": "Popesti-Leordeni"
+    "sediu": "Str. Stelelor   24   -   Cihei  Jud Bihor",
+    "localitate": "Cihei"
   },
   {
-    "societate": "ARTEON AUTOMATIZATION GROUP",
-    "judet": "Ilfov",
-    "cui": "42046674",
+    "societate": "RITMOTEH",
+    "judet": "Bihor",
+    "cui": "14489781",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0775521840",
-    "sediu": "Drm FERMEI   112   Bl:3         Ap:6   Demisol. Camera 2",
-    "localitate": "Popesti-Leordeni"
+    "telefon": "0259427943, 0728243680 0259427943",
+    "sediu": "Str. Avram Iancu nr 4, cp 410094",
+    "localitate": "Oradea"
   },
   {
-    "societate": "AXA ELECTRIC",
-    "judet": "Ilfov",
-    "cui": "33161992",
+    "societate": "ROMELECTROTECH",
+    "judet": "Bihor",
+    "cui": "33163764",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0723043937",
-    "sediu": "Sos Giurgiului, nr 156, Cam 1 si 2, Et 1,",
-    "localitate": "Jilava"
+    "telefon": "0735250351",
+    "sediu": "Com Balc, nr 151",
+    "localitate": "Saldabagiu de Barcau"
   },
   {
-    "societate": "BND WERT",
-    "judet": "Ilfov",
-    "cui": "38798970",
+    "societate": "SAMLIGHT GROUP",
+    "judet": "Bihor",
+    "cui": "48425154",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0765174022",
-    "sediu": "B-dul Pipera nr  150F  Et:1   Cam 1",
-    "localitate": "Voluntari"
+    "telefon": "0740808994",
+    "sediu": "Tinca, Str. Avram Iancu, nr. 2",
+    "localitate": "Tinca"
   },
   {
-    "societate": "CHROME TEHNIC",
-    "judet": "Ilfov",
-    "cui": "42223407",
+    "societate": "SELECTION SOLAR SISTEM",
+    "judet": "Bihor",
+    "cui": "45843748",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0754292523",
-    "sediu": "Soseaua Centura, Nr. 2-4",
-    "localitate": "Voluntari"
+    "telefon": "0774057953",
+    "sediu": "Calea BORSULUI nr  22",
+    "localitate": "Oradea"
   },
   {
-    "societate": "CONELECTRO TEHNIC",
-    "judet": "Ilfov",
-    "cui": "44475451",
+    "societate": "SEMELECTRIC",
+    "judet": "Bihor",
+    "cui": "51556222",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0744351579",
-    "sediu": "Sos. PRELUNGIREA GIURGIULUI   29               CORP C8",
-    "localitate": "Jilava"
+    "telefon": "0749159399",
+    "sediu": "B-dul Dacia, nr 46, Bloc p11, Ap. 1",
+    "localitate": "Oradea"
   },
   {
-    "societate": "DALIX ELECTRIC SERV",
-    "judet": "Ilfov",
-    "cui": "33453571",
+    "societate": "SIMSTA PLUS",
+    "judet": "Bihor",
+    "cui": "47294590",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0752319880",
-    "sediu": "Strada GARII, Nr. 91",
-    "localitate": "Jilava"
+    "telefon": "0745241223",
+    "sediu": "Sat Santandrei, Str. Estului nr. 1",
+    "localitate": "Santandrei"
   },
   {
-    "societate": "DSF PROJECT RETELE",
-    "judet": "Ilfov",
-    "cui": "38952394",
+    "societate": "SMART 2 TECH IMPEX",
+    "judet": "Bihor",
+    "cui": "47877763",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0760.636.213",
-    "sediu": "orasul Popesti Leordeni, str. Sabarului, nr. 7B, camera 1",
-    "localitate": "Popesti-Leordeni"
+    "telefon": "0756389291",
+    "sediu": "Str. Barsei nr. 2A, bl. PB20, ap. 13",
+    "localitate": "Oradea"
   },
   {
-    "societate": "ECI SOLAR",
-    "judet": "Ilfov",
-    "cui": "47994763",
+    "societate": "STIL ELECTRO MAX",
+    "judet": "Bihor",
+    "cui": "24296877",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0725107411",
-    "sediu": "Str. EMIL RACOVITA   70  Vila.84A1   Oras Voluntari",
-    "localitate": "Voluntari"
+    "telefon": "0753761576, 0749 159399 0359 467747",
+    "sediu": "Str. Doina nr. 34, bl. D76, ap. 22,Jd Bh",
+    "localitate": "Oradea"
   },
   {
-    "societate": "ELBI ELECTRIC & LIGHTING",
-    "judet": "Ilfov",
-    "cui": "17412685",
+    "societate": "TERSEL",
+    "judet": "Bihor",
+    "cui": "15149494",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0751789874",
-    "sediu": "str Italia nr 1-7, P3, Bucharest A1 Logistic Park, Depozitul 3",
-    "localitate": "Chiajna"
+    "telefon": "0259413122, 0743105793 0259413123",
+    "sediu": "Str. Ciheiului nr. 65",
+    "localitate": "Oradea"
   },
   {
-    "societate": "ELECTRO CAM ELITE",
-    "judet": "Ilfov",
-    "cui": "48548831",
+    "societate": "TONY INSTAL",
+    "judet": "Bihor",
+    "cui": "14550810",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0725037852",
-    "sediu": "Str. Slt. PETRE IONEL nr  36",
-    "localitate": "Branesti (IF)"
+    "telefon": "0729 881626",
+    "sediu": "str Crisan nr 63 A",
+    "localitate": "Tileagd"
   },
   {
-    "societate": "ELIOS ELECTRIC",
-    "judet": "Ilfov",
-    "cui": "43146809",
+    "societate": "WEB EYE ELECTRIC SERVICES",
+    "judet": "Bihor",
+    "cui": "43589997",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0723078537 / 0763652853",
-    "sediu": "Str Rezervelor nr 93, Bl B, et 7, Ap. 109",
-    "localitate": "Chiajna"
+    "telefon": "0741681556",
+    "sediu": "Aleea Penes Curcanu Nr  22   Bl:R25   Sc:D   Et:2   Ap:12",
+    "localitate": "Oradea"
   },
   {
-    "societate": "ENERG CONSTRUCT BRANSAMENTE",
-    "judet": "Ilfov",
-    "cui": "46782762",
+    "societate": "AMPER PROIECT",
+    "judet": "Bihor",
+    "cui": "5597695",
     "codes": [
-      "C1A",
       "C2A"
     ],
-    "hasBoth": true,
-    "telefon": "0733088033",
-    "sediu": "Str. VERII   18C   parter, camera nr. 2",
-    "localitate": "Bragadiru [IF]"
+    "hasBoth": false,
+    "telefon": "0359 405489, 0745 518097,073011798 0359 405489",
+    "sediu": "Str. Abraham Lincoln, nr 19,",
+    "localitate": "Oradea"
   },
   {
-    "societate": "ESD SERVICII ELECTRICE",
-    "judet": "Ilfov",
-    "cui": "40801547",
+    "societate": "AMT CRISANA TRAVEL",
+    "judet": "Bihor",
+    "cui": "39791920",
     "codes": [
-      "C1A",
-      "C2A"
+      "C1A"
     ],
-    "hasBoth": true,
-    "telefon": "0758101011",
-    "sediu": "Str. Floarea Soarelui nr  10",
-    "localitate": "Domnesti [IF]"
+    "hasBoth": false,
+    "telefon": "0721394345",
+    "sediu": "GEPIS   7B   Jud Bihor",
+    "localitate": "Gepiu"
   },
   {
-    "societate": "GAMA ELECTRO - CONSTRUCTII",
-    "judet": "Ilfov",
-    "cui": "12485325",
+    "societate": "ANDALUSIA IMPEX",
+    "judet": "Bihor",
+    "cui": "117362",
     "codes": [
-      "C1A",
       "C2A"
     ],
-    "hasBoth": true,
-    "telefon": "0213308658, 0745122215 0213302684",
-    "sediu": "Sat Caldararu, Str. Oxigenului nr. 17",
-    "localitate": "Cernica"
+    "hasBoth": false,
+    "telefon": "0728938809, 0259332187 0259332187",
+    "sediu": "Sat Bradet, nr.180",
+    "localitate": "Buntesti"
   },
   {
-    "societate": "GREEN COSTAL",
-    "judet": "Ilfov",
-    "cui": "24980149",
+    "societate": "BPS ELECTRIC UP",
+    "judet": "Bihor",
+    "cui": "48185949",
     "codes": [
-      "C1A",
       "C2A"
     ],
-    "hasBoth": true,
-    "telefon": "0722328357",
-    "sediu": "Str Gradinii nr 6",
-    "localitate": "Branesti (IF)"
+    "hasBoth": false,
+    "telefon": "0770 975731",
+    "sediu": "Sat Cabesti nr. 268",
+    "localitate": "Cabesti"
   },
   {
-    "societate": "GSA SERV CONSULT",
-    "judet": "Ilfov",
-    "cui": "42398441",
+    "societate": "DAVAL CONSTRUCT",
+    "judet": "Bihor",
+    "cui": "30684458",
     "codes": [
-      "C1A",
       "C2A"
     ],
-    "hasBoth": true,
-    "telefon": "0728921936",
-    "sediu": "str. Ciresar, nr. 1C, ap. 1B",
-    "localitate": "Bragadiru [IF]"
+    "hasBoth": false,
+    "telefon": "0727477292",
+    "sediu": "Comuna Rieni, nr.36",
+    "localitate": "Valea de Jos ( BH)"
   },
   {
-    "societate": "Inginerie si Tehnologie Industriala Electra",
-    "judet": "Ilfov",
-    "cui": "2628819",
+    "societate": "ELECTRO EXCEL GREEN CONSULTING",
+    "judet": "Bihor",
+    "cui": "31047178",
     "codes": [
-      "C1A",
       "C2A"
     ],
-    "hasBoth": true,
-    "telefon": "021 3118616, 0722389870 021 3162680",
-    "sediu": "Com Dascalu,Str. Cozia nr. 17, bir M5",
-    "localitate": "Gagu"
+    "hasBoth": false,
+    "telefon": "0359-800155; 0729075591 0359800155",
+    "sediu": "Str. Thurzo Sandor, nr.36, cam. 2",
+    "localitate": "Oradea"
   },
   {
-    "societate": "IULIAN",
-    "judet": "Ilfov",
-    "cui": "5740581",
+    "societate": "ELECTROBIHOR",
+    "judet": "Bihor",
+    "cui": "40415660",
     "codes": [
-      "C1A",
-      "C2A"
+      "C1A"
     ],
-    "hasBoth": true,
-    "telefon": "0762709085 0724649100",
-    "sediu": "str. Vlasiei, nr. 63, ap. camera 2",
-    "localitate": "Buftea"
+    "hasBoth": false,
+    "telefon": "0722900068",
+    "sediu": "Str EPISCOP ROMAN CIOROGARIU   65      PARTER. CORP B",
+    "localitate": "Oradea"
   },
   {
-    "societate": "LIFE SECURITY",
-    "judet": "Ilfov",
-    "cui": "35679134",
+    "societate": "ERUSA",
+    "judet": "Bihor",
+    "cui": "51258536",
     "codes": [
-      "C1A",
       "C2A"
     ],
-    "hasBoth": true,
-    "telefon": "0745177070",
-    "sediu": "Sos. OLTENITEI   11B   Bl:3      Et:3   Ap:30",
-    "localitate": "Popesti Leordeni"
+    "hasBoth": false,
+    "telefon": "",
+    "sediu": "Bld DECEBAL   28      Sc:B      Ap:19   BIROUL 2",
+    "localitate": "Oradea"
   },
   {
-    "societate": "LUXCON CARPATI",
-    "judet": "Ilfov",
-    "cui": "481338",
+    "societate": "HIQUAL ELECTRO",
+    "judet": "Bihor",
+    "cui": "35125112",
     "codes": [
-      "C1A",
       "C2A"
     ],
-    "hasBoth": true,
-    "telefon": "0213515135, 0722292798 0213515135",
-    "sediu": "com. Domnesti nr.1151, jud. Ilfov",
-    "localitate": "Domnesti [IF]"
-  },
-  {
-    "societate": "MAROK ENERGY",
-    "judet": "Ilfov",
-    "cui": "32597650",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0727314060",
-    "sediu": "Str Prelungirea Ghencea nr 45,Bl d5, Etaj 2, Ap 23",
-    "localitate": "Bragadiru [IF]"
-  },
-  {
-    "societate": "MASTER GAZ",
-    "judet": "Ilfov",
-    "cui": "24787807",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0766 422 879 0721.633.982",
-    "sediu": "str. Alunului nr. 19",
-    "localitate": "Bragadiru [IF]"
-  },
-  {
-    "societate": "NOVASYS PRIME",
-    "judet": "Ilfov",
-    "cui": "39194026",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0743009003",
-    "sediu": "Str. Viilor nr. 6A, cam. 1",
-    "localitate": "1 Decembrie"
-  },
-  {
-    "societate": "ONIX ECO ENERGY",
-    "judet": "Ilfov",
-    "cui": "47661475",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0734506846",
-    "sediu": "Str. IERNII   16C  (Cam. 2)",
-    "localitate": "Bragadiru [IF]"
-  },
-  {
-    "societate": "PANEF PROD COM 95",
-    "judet": "Ilfov",
-    "cui": "7614059",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "021 6732414, 0722 670321",
-    "sediu": "Str. Oituz, nr. 42, CP 077160",
-    "localitate": "Popesti-Leordeni"
-  },
-  {
-    "societate": "PRIME BATTERIES TECHNOLOGY",
-    "judet": "Ilfov",
-    "cui": "36438584",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0784706384",
-    "sediu": "sat Caldararu, str Oxigenului, nr 4C, corp C2, cam 9, et 1",
-    "localitate": "Cernica"
-  },
-  {
-    "societate": "PRIME MIH CORPORATION",
-    "judet": "Ilfov",
-    "cui": "30107204",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0732 408420, 0213615975; 0768684471 0214101987",
-    "sediu": "Sos Oltenitei nr. 181, camin 3, ap. 3",
-    "localitate": "Popesti-Leordeni"
+    "hasBoth": false,
+    "telefon": "0744767879",
+    "sediu": "Str. MILCOVULUI   5   Bl:D27 ;AP70",
+    "localitate": "Oradea"
   }
 ]

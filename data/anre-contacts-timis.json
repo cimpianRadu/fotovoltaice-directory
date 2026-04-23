@@ -1,0 +1,24 @@
+[
+  {
+    "cui": "27413092",
+    "name": "SOLAR - SERVICE",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "address": "Jud. Timis, Mun. Timisoara, Str. Oglinzilor, Nr.25, Camera 1, Bl.32, Sc.b, Ap.1",
+    "phone": "+40720996713",
+    "email": "info@solar-service.ro",
+    "website": "https://www.solar-service.ro/",
+    "year_founded": 2010,
+    "employees": 0,
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 10
+  }
+]

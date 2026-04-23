@@ -1,49 +1,5 @@
 [
   {
-    "cui": "47367268",
-    "name": "SOLARI ELECTRIC ENERGY",
-    "judet": "Constanta",
-    "localitate": "Constanta",
-    "address": "Jud. Constanta, Mun. Constanta, Int. Nordului, Nr.10, Garaj",
-    "phone": "+40739774560",
-    "email": "office@solari.ro",
-    "website": "https://solari.ro/",
-    "year_founded": 2022,
-    "employees": 1,
-    "revenue_2024": 142530,
-    "profit_2024": 36626,
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 10
-  },
-  {
-    "cui": "27413092",
-    "name": "SOLAR - SERVICE",
-    "judet": "Timis",
-    "localitate": "Timisoara",
-    "address": "Jud. Timis, Mun. Timisoara, Str. Oglinzilor, Nr.25, Camera 1, Bl.32, Sc.b, Ap.1",
-    "phone": "+40720996713",
-    "email": "info@solar-service.ro",
-    "website": "https://www.solar-service.ro/",
-    "year_founded": 2010,
-    "employees": 0,
-    "revenue_2024": 0,
-    "profit_2024": 0,
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 10
-  },
-  {
     "cui": "44119080",
     "name": "ELECTROGAL SOLUTIONS",
     "judet": "Bihor",

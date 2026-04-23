@@ -1,9 +1,73 @@
 [
   {
-    "cui": "16912291",
-    "name": "ABAC PROIECT ENERGIE",
-    "judet": "Ilfov",
-    "localitate": "Buftea",
+    "cui": "43679658",
+    "name": "BITROOT SOLUTION",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 5y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://bitroot.ro/",
+    "revenue_2024": 6603488,
+    "profit_2024": -462097,
+    "employees": 14,
+    "year_founded": 2021,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Episcop Roman Ciorogariu, Nr.7, Ap.5",
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail"
+  },
+  {
+    "cui": "6534482",
+    "name": "CRITO PROD",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 32y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://crito.ro/",
+    "revenue_2024": 25094868,
+    "profit_2024": 4208753,
+    "employees": 55,
+    "year_founded": 1994,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Coriolan Hora, Nr.2 H",
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail"
+  },
+  {
+    "cui": "16214299",
+    "name": "ELECTRO LUC",
+    "judet": "Bihor",
+    "localitate": "Oradea",
     "codes": [
       "C1A",
       "C2A"
@@ -19,88 +83,23 @@
     ],
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://abacproiect.ro/",
-    "revenue_2024": 19855722,
-    "profit_2024": 1594323,
-    "employees": 37,
+    "website": "https://electroluc.ro/",
+    "revenue_2024": 4575745,
+    "profit_2024": 333110,
+    "employees": 5,
     "year_founded": 2004,
     "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Buftea, Str. Rasaritului, Nr.38",
-    "error": null,
-    "pvContentHits": 5,
-    "pvContentSample": [
-      "nergiei electrice în sisteme cu panouri fotovoltaice și alimentări cu energie electrică a stațiilor de incărcare autoveh",
-      "ucerea energiei electrice în sisteme cu panouri fotovoltaice și alimentări cu energie electrică a stațiilor de incărcare"
-    ],
-    "pvGate": "pass"
-  },
-  {
-    "cui": "42223407",
-    "name": "CHROME TEHNIC",
-    "judet": "Ilfov",
-    "localitate": "Voluntari",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 9,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 6y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://chrome-tehnic.ro/",
-    "revenue_2024": 12910919,
-    "profit_2024": 3572635,
-    "employees": 13,
-    "year_founded": 2020,
-    "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Voluntari, Sos Centura, Nr.2-4",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Vladeasa, Nr.38",
     "error": null,
     "pvContentHits": 0,
     "pvContentSample": [],
     "pvGate": "fail"
   },
   {
-    "cui": "47994763",
-    "name": "ECI SOLAR",
-    "judet": "Ilfov",
-    "localitate": "Voluntari",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 9,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "solar/PV în nume/CAEN (+3)",
-      "revenue ≥500k (+1)",
-      "age 3y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 1359593,
-    "profit_2024": 239641,
-    "employees": 9,
-    "year_founded": 2023,
-    "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Voluntari, Str. Emil Racovita, Nr.70, Vila.84a1",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "12485325",
-    "name": "GAMA ELECTRO - CONSTRUCTII",
-    "judet": "Ilfov",
-    "localitate": "Cernica",
+    "cui": "44119080",
+    "name": "ELECTROGAL SOLUTIONS",
+    "judet": "Bihor",
+    "localitate": "Oradea",
     "codes": [
       "C1A",
       "C2A"
@@ -110,149 +109,402 @@
     "reasons": [
       "CAEN 4321 (+3)",
       "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 27y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://gamaec.ro/",
-    "revenue_2024": 9231489,
-    "profit_2024": 2595512,
-    "employees": 21,
-    "year_founded": 1999,
-    "status": "functiune",
-    "address": "Jud. Ilfov, Sat Caldararu Com. Cernica, Str. Oxigenului, Nr.17",
-    "error": null,
-    "pvContentHits": 0,
-    "pvContentSample": [],
-    "pvGate": "dead-site",
-    "pvError": "home 0 fetch failed"
-  },
-  {
-    "cui": "7614059",
-    "name": "PANEF PROD COM 95",
-    "judet": "Ilfov",
-    "localitate": "Popesti-Leordeni",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 9,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 31y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://www.panef.ro/",
-    "revenue_2024": 5982587,
-    "profit_2024": 893682,
-    "employees": 21,
-    "year_founded": 1995,
-    "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Popesti-Leordeni, Str. Oituz, Nr.42",
-    "error": null,
-    "pvContentHits": 0,
-    "pvContentSample": [],
-    "pvGate": "fail"
-  },
-  {
-    "cui": "42046674",
-    "name": "ARTEON AUTOMATIZATION GROUP",
-    "judet": "Ilfov",
-    "localitate": "Popesti-Leordeni",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 7y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 2049760,
-    "profit_2024": 267564,
-    "employees": 5,
-    "year_founded": 2019,
-    "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Popesti-Leordeni, Drm. Fermei, Nr.112, Demisol. Camera 2, Bl.3, Ap.6",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "33161992",
-    "name": "AXA ELECTRIC",
-    "judet": "Ilfov",
-    "localitate": "Jilava",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 12y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 2828197,
-    "profit_2024": 44398,
-    "employees": 9,
-    "year_founded": 2014,
-    "status": "functiune",
-    "address": "Jud. Ilfov, Com. Jilava, Sos Giurgiului, Nr.156, Camera 1 Si Camera 2, Et.1",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "44475451",
-    "name": "CONELECTRO TEHNIC",
-    "judet": "Ilfov",
-    "localitate": "Jilava",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
       "revenue ≥2M (+2)",
       "age 5y (+1)",
       "C1A+C2A (+1)"
     ],
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 2895515,
-    "profit_2024": 4856,
-    "employees": 21,
+    "website": "https://electrogalsolutions.com/",
+    "revenue_2024": 2295593,
+    "profit_2024": 505364,
+    "employees": 14,
     "year_founded": 2021,
     "status": "functiune",
-    "address": "Jud. Ilfov, Com. Jilava, Sos Prelungirea Giurgiului, Nr.29, Corp C8",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Sovata, Nr.33, Bl.pb11, Et.2, Ap.11",
+    "error": null,
+    "pvContentHits": 4,
+    "pvContentSample": [
+      "ranșamente Instalații electrice Panouri fotovoltaice Servicii conexe Proiecte Contact Contact Acasă Despre noi Servicii",
+      "rvicii Branșamente Instalații electrice Panouri fotovoltaice Servicii conexe Proiecte Contact Contact Acasă Despre noi S"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "26011941",
+    "name": "ENERGETIC MONTREL",
+    "judet": "Bihor",
+    "localitate": "Nojorid",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 17y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://energeticmontrel.ro/",
+    "revenue_2024": 6757812,
+    "profit_2024": 780970,
+    "employees": 13,
+    "year_founded": 2009,
+    "status": "functiune",
+    "address": "Jud. Bihor, Sat Pausa Com. Nojorid, Pausa, Nr.66",
+    "error": null,
+    "pvContentHits": 5,
+    "pvContentSample": [
+      "FIRMA MONTAJ | INSTALARE Panouri fotovoltaice | Bihor, Oradea suciuemr@yahoo.com 0730 504 182 Acasa Despre noi Se",
+      "FIRMA MONTAJ | INSTALARE Panouri fotovoltaice | Bihor, Oradea suciuemr@yahoo.com 0730 504 182 Acasa Despr"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "26741440",
+    "name": "ENERGOTEH PROIECT",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 16y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "https://www.energotehproiect.ro/",
+    "revenue_2024": 4919037,
+    "profit_2024": 465188,
+    "employees": 10,
+    "year_founded": 2010,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Mircea Eliade, Nr.45",
+    "error": null,
+    "pvContentHits": 4,
+    "pvContentSample": [
+      "are în domeniul energetic Acasă Sisteme fotovoltaice Instalații electrice Alte Servicii Comerț Contact WhatsApp Acasă Si",
+      "proiectare în domeniul energetic Acasă Sisteme fotovoltaice Instalații electrice Alte Servicii Comerț Contact WhatsApp"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "28433799",
+    "name": "OVINSTAL ELECTRIC",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 15y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://ovinstalelectric.ro/",
+    "revenue_2024": 11556008,
+    "profit_2024": 1810556,
+    "employees": 26,
+    "year_founded": 2011,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Ceyrat, Nr.35a, Parter, Bl.wr6, Ap.s3",
+    "error": null,
+    "pvContentHits": 3,
+    "pvContentSample": [
+      "Contact Acceseaza Programul Casa Verde Fotovoltaice 2024 Selecteaza OVINSTAL ELECTRIC ca instalator. Detalii Acasa ovin",
+      "Ovinstal Electric ca instalator pentru panouri fotovoltaice Lista Instalatorilor validati in cadrul Programului Casa Ve"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "35125112",
+    "name": "HIQUAL ELECTRO",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 8,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 11y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://hiqualelectro.ro/",
+    "revenue_2024": 9017701,
+    "profit_2024": 2357757,
+    "employees": 16,
+    "year_founded": 2015,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Transilvaniei, Nr.16, Bl.u1, Sc.a, Ap.35",
+    "error": null,
+    "pvContentHits": 2,
+    "pvContentSample": [
+      "instalații electrice LOTUS CENTER parc fotovoltaic 9.600 panouri – 3MW M INSTALL SRL- ERBASU SA noua sală a sporturilor",
+      "crări instalații electrice LOTUS CENTER parc fotovoltaic 9.600 panouri – 3MW M INSTALL SRL- ERBASU SA noua sală a sportu"
+    ],
+    "pvGate": "weak"
+  },
+  {
+    "cui": "38374266",
+    "name": "BIOTOP INSTAL",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 9y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 3211446,
+    "profit_2024": 447876,
+    "employees": 6,
+    "year_founded": 2017,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Vincent Van Gogh, Nr.35",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "33453571",
-    "name": "DALIX ELECTRIC SERV",
-    "judet": "Ilfov",
-    "localitate": "Jilava",
+    "cui": "34229972",
+    "name": "DHELECTRIC SYSTEM",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 11y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 24666926,
+    "profit_2024": 7534982,
+    "employees": 25,
+    "year_founded": 2015,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Pta. Episcop Ignatie Darabant, Nr.8b",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "18010619",
+    "name": "DINAMIC ELECTRO",
+    "judet": "Bihor",
+    "localitate": "Sintandrei (BH)",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 21y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 3412242,
+    "profit_2024": 779711,
+    "employees": 3,
+    "year_founded": 2005,
+    "status": "functiune",
+    "address": "Jud. Bihor, Sat Santandrei Com. Santandrei, Str. Padisului, Nr.5a",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "18507210",
+    "name": "ELECTRIC MARK",
+    "judet": "Bihor",
+    "localitate": "Marghita",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 20y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 3426182,
+    "profit_2024": 804359,
+    "employees": 6,
+    "year_founded": 2006,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Marghita, Str. Kolcsey Ferencz, Nr.22",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "17035836",
+    "name": "ELECTRO CONTROL INST",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 22y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2404699,
+    "profit_2024": 163671,
+    "employees": 6,
+    "year_founded": 2004,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Aleea Zidarilor, Nr.2, Bl.z 4, Ap.4",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "43992034",
+    "name": "ELECTRO EXPERT VEST ONE",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "revenue ≥2M (+2)",
+      "age 5y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 5571545,
+    "profit_2024": 213966,
+    "employees": 11,
+    "year_founded": 2021,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Fluierasului, Nr.5",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "24324560",
+    "name": "ELECTRO VITAL",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 18y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 7808588,
+    "profit_2024": 1309200,
+    "employees": 15,
+    "year_founded": 2008,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str Borsului, Nr.19/a",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "13663102",
+    "name": "ELECTROFOR",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 25y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 18051331,
+    "profit_2024": 1304968,
+    "employees": 28,
+    "year_founded": 2001,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Cal. Clujului, Nr.127, Ap.2",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "33695389",
+    "name": "ELECTROVALCAN",
+    "judet": "Bihor",
+    "localitate": "Ceica",
     "codes": [
       "C1A",
       "C2A"
@@ -268,20 +520,20 @@
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 7901483,
-    "profit_2024": 1421663,
-    "employees": 34,
+    "revenue_2024": 3433690,
+    "profit_2024": 618602,
+    "employees": 15,
     "year_founded": 2014,
     "status": "functiune",
-    "address": "Jud. Ilfov, Com. Jilava, Str Garii, Nr.91",
+    "address": "Jud. Bihor, Sat Dusesti Com. Ceica, Dusesti, Nr.84",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "48548831",
-    "name": "ELECTRO CAM ELITE",
-    "judet": "Ilfov",
-    "localitate": "Branesti (IF)",
+    "cui": "16376681",
+    "name": "ELESAL",
+    "judet": "Bihor",
+    "localitate": "Salonta",
     "codes": [
       "C1A",
       "C2A"
@@ -291,26 +543,26 @@
     "reasons": [
       "CAEN 4321 (+3)",
       "revenue ≥2M (+2)",
-      "age 3y (+1)",
+      "age 22y (+1)",
       "C1A+C2A (+1)"
     ],
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 2931155,
-    "profit_2024": 388560,
-    "employees": 10,
-    "year_founded": 2023,
+    "revenue_2024": 22798851,
+    "profit_2024": 3244767,
+    "employees": 35,
+    "year_founded": 2004,
     "status": "functiune",
-    "address": "Jud. Ilfov, Sat Branesti Com. Branesti, Str. Slt. Petre Ionel, Nr.36",
+    "address": "Jud. Bihor, Mun. Salonta, Str. Imparatul Traian, Nr.4",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "35679134",
-    "name": "LIFE SECURITY",
-    "judet": "Ilfov",
-    "localitate": "Popesti Leordeni",
+    "cui": "36601516",
+    "name": "GIS ENERGY",
+    "judet": "Bihor",
+    "localitate": "Sântandrei",
     "codes": [
       "C1A",
       "C2A"
@@ -326,20 +578,20 @@
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 8678595,
-    "profit_2024": 991504,
-    "employees": 19,
+    "revenue_2024": 18571040,
+    "profit_2024": 3354438,
+    "employees": 20,
     "year_founded": 2016,
     "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Popesti-Leordeni, Sos. Oltenitei, Nr.11b, Bl.3, Et.3, Ap.30",
+    "address": "Jud. Bihor, Sat Santandrei Com. Santandrei, Str. Lanului, Nr.68",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "32597650",
-    "name": "MAROK ENERGY",
-    "judet": "Ilfov",
-    "localitate": "Bragadiru [IF]",
+    "cui": "40132477",
+    "name": "MAIRA ENERGY",
+    "judet": "Bihor",
+    "localitate": "Oradea",
     "codes": [
       "C1A",
       "C2A"
@@ -348,154 +600,261 @@
     "score": 7,
     "reasons": [
       "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 13y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 9794576,
-    "profit_2024": 2355198,
-    "employees": 17,
-    "year_founded": 2013,
-    "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Bragadiru, Str Prelungirea Ghencea, Nr.45, Lot 1. Imobil - Bloc D5, Et.2, Ap.23",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "30107204",
-    "name": "PRIME MIH CORPORATION",
-    "judet": "Ilfov",
-    "localitate": "Popesti-Leordeni",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 14y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 2632126,
-    "profit_2024": 59417,
-    "employees": 14,
-    "year_founded": 2012,
-    "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Popesti-Leordeni, Sos. Oltenitei, Nr.181, Camin 3, Ap.3",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "30897146",
-    "name": "AGGREKO SOUTH EAST EUROPE",
-    "judet": "Ilfov",
-    "localitate": "Stefanestii de Jos",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 14y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "7739",
-    "caen_label": "Activitati de inchirierea si leasing cu alte masini, echipamente si bunuri tangibile n.c.a.",
-    "website": "https://www.aggreko.com/",
-    "revenue_2024": 118297768,
-    "profit_2024": 4127124,
-    "employees": 48,
-    "year_founded": 2012,
-    "status": "functiune",
-    "address": "Jud. Ilfov, Sat Stefanestii De Jos Com. Stefanestii De Jos, Sos. Stefanesti, Nr.8-8a",
-    "error": null,
-    "pvContentHits": 1,
-    "pvContentSample": [
-      "uții de alimentare cu energie utilitară Energie regenerabilă eoliană Rozwiązania Rozwiązania Combustibil alternativ Răsp"
-    ],
-    "pvGate": "weak"
-  },
-  {
-    "cui": "38952394",
-    "name": "DSF PROJECT RETELE",
-    "judet": "Ilfov",
-    "localitate": "Popesti-Leordeni",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "website (+2)",
       "revenue ≥2M (+2)",
       "age 8y (+1)",
       "C1A+C2A (+1)"
     ],
-    "caen_code": "4322",
-    "caen_label": "Lucrari de instalatii sanitare, de incalzire si de aer conditionat",
-    "website": "https://dsfretele.ro/",
-    "revenue_2024": 22222819,
-    "profit_2024": 1026823,
-    "employees": 112,
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2521612,
+    "profit_2024": 307536,
+    "employees": 3,
     "year_founded": 2018,
     "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Popesti-Leordeni, Str. Sabarului, Nr.7b, Cam. 1",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Apateului, Nr.53b",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "40060362",
+    "name": "MOGATECH ENERGY",
+    "judet": "Bihor",
+    "localitate": "Beius",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 8y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2640235,
+    "profit_2024": 7701,
+    "employees": 17,
+    "year_founded": 2018,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Beius, Str. Salcamilor, Nr.13",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "14489781",
+    "name": "RITMOTEH",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 24y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 20895188,
+    "profit_2024": 5347775,
+    "employees": 34,
+    "year_founded": 2002,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Avram Iancu, Nr.4",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "45843748",
+    "name": "SELECTION SOLAR SISTEM",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "solar/PV în nume/CAEN (+3)",
+      "revenue ≥2M (+2)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "3512",
+    "caen_label": "Transportul energiei electrice",
+    "website": "",
+    "revenue_2024": 3035945,
+    "profit_2024": -409091,
+    "employees": 8,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Cal. Borsului, Nr.22",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "24296877",
+    "name": "STIL ELECTRO MAX",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 18y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 46562286,
+    "profit_2024": 14126765,
+    "employees": 3,
+    "year_founded": 2008,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Doina, Nr.34, Bl.d76, Ap.22",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "15149494",
+    "name": "TERSEL",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 23y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 4212539,
+    "profit_2024": 71657,
+    "employees": 23,
+    "year_founded": 2003,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Ciheiului, Nr.65",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "14550810",
+    "name": "TONY INSTAL",
+    "judet": "Bihor",
+    "localitate": "Tileagd",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 24y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 5103988,
+    "profit_2024": 247936,
+    "employees": 17,
+    "year_founded": 2002,
+    "status": "functiune",
+    "address": "Jud. Bihor, Sat Tileagd Com. Tileagd, Str. Crisan, Nr.63a",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "43589997",
+    "name": "WEB EYE ELECTRIC SERVICES",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 5y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2826163,
+    "profit_2024": 233722,
+    "employees": 7,
+    "year_founded": 2021,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Aleea Penes Curcanu, Nr.22, Bl.r25, Sc.d, Et.2, Ap.12",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "22850975",
+    "name": "ACOM DISTRIBUTIE",
+    "judet": "Bihor",
+    "localitate": "Hidiselu de Jos",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 19y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "0322",
+    "caen_label": "Acvacultura in ape dulci",
+    "website": "https://acom.ro/",
+    "revenue_2024": 12400657,
+    "profit_2024": 1541962,
+    "employees": 31,
+    "year_founded": 2007,
+    "status": "functiune",
+    "address": "Jud. Bihor, Sat Hidiselu De Jos Com. Hidiselu De Sus, Hidiselu De Jos, Nr.183 A",
     "error": null,
     "pvContentHits": 0,
     "pvContentSample": [],
     "pvGate": "fail"
   },
   {
-    "cui": "24980149",
-    "name": "GREEN COSTAL",
-    "judet": "Ilfov",
-    "localitate": "Branesti (IF)",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 17y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4619",
-    "caen_label": "Intermedieri in comertul cu produse diverse",
-    "website": "https://greencostal.ro/",
-    "revenue_2024": 4571197,
-    "profit_2024": 57460,
-    "employees": 5,
-    "year_founded": 2009,
-    "status": "functiune",
-    "address": "Jud. Ilfov, Sat Branesti Com. Branesti, Str. Gradinii, Nr.6",
-    "error": null,
-    "pvContentHits": 9,
-    "pvContentSample": [
-      "Green Costal | Sisteme fotovoltaice – vânzare & instalare Site in lucru - ne cerem scuze pentru eventua",
-      "Accesorii acumulatori Toti acumulatorii Panouri fotovoltaice Controlere de incarcare Accesorii Conectica Monitorizare Pr"
-    ],
-    "pvGate": "pass"
-  },
-  {
-    "cui": "47661475",
-    "name": "ONIX ECO ENERGY",
-    "judet": "Ilfov",
-    "localitate": "Bragadiru [IF]",
+    "cui": "35599191",
+    "name": "AMPER ELECTRO INSTAL",
+    "judet": "Bihor",
+    "localitate": "Oradea",
     "codes": [
       "C1A",
       "C2A"
@@ -505,26 +864,202 @@
     "reasons": [
       "CAEN 4321 (+3)",
       "revenue ≥500k (+1)",
-      "age 3y (+1)",
+      "age 10y (+1)",
       "C1A+C2A (+1)"
     ],
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 1359757,
-    "profit_2024": 1072820,
+    "revenue_2024": 525516,
+    "profit_2024": -86318,
     "employees": 5,
-    "year_founded": 2023,
+    "year_founded": 2016,
     "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Bragadiru, Str. Iernii, Nr.16c, (cam. 2)",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Episcop Roman Ciorogariu, Nr.15, Ap.18",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "43146809",
-    "name": "ELIOS ELECTRIC",
-    "judet": "Ilfov",
-    "localitate": "Chiajna",
+    "cui": "44882358",
+    "name": "BAD CAB DYNAMIC",
+    "judet": "Bihor",
+    "localitate": "Sintandrei (BH)",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 5y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1426144,
+    "profit_2024": 56838,
+    "employees": 4,
+    "year_founded": 2021,
+    "status": "functiune",
+    "address": "Jud. Bihor, Sat Santandrei Com. Santandrei, Santandrei, Nr.493",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "13186178",
+    "name": "NEXIA CONSULTING",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 26y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "6202",
+    "caen_label": "Activitati de consultanta in tehnologia informatiei",
+    "website": "https://nexia.ro/",
+    "revenue_2024": 8739389,
+    "profit_2024": 259684,
+    "employees": 19,
+    "year_founded": 2000,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Nufarului, Nr.121a1",
+    "error": null,
+    "pvContentHits": 4,
+    "pvContentSample": [
+      "me Companie Servicii si solutii Sisteme Fotovoltaice NOU Supraveghere video gazduita NOU Retelistica Metodologie de desi",
+      "Set ventiloconvectoare – 1 buc; Sistem panouri solare – 1 buc; Grup pompe de caldura – 1 buc; Mobilier receptie – 1 buc"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "47504713",
+    "name": "RAVOLTSOLAR",
+    "judet": "Bihor",
+    "localitate": "Cihei",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "solar/PV în nume/CAEN (+3)",
+      "revenue ≥500k (+1)",
+      "age 3y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4399",
+    "caen_label": "Alte lucrari speciale de constructii n.c.a.",
+    "website": "",
+    "revenue_2024": 1706186,
+    "profit_2024": 352815,
+    "employees": 1,
+    "year_founded": 2023,
+    "status": "functiune",
+    "address": "Jud. Bihor, Sat Cihei Com. Sanmartin, Str. Stelelor, Nr.24",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "47294590",
+    "name": "SIMSTA PLUS",
+    "judet": "Bihor",
+    "localitate": "Santandrei",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1284675,
+    "profit_2024": 238428,
+    "employees": 10,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Bihor, Sat Santandrei Com. Santandrei, Str. Estului, Nr.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "31047178",
+    "name": "ELECTRO EXCEL GREEN CONSULTING",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 6,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "revenue ≥2M (+2)",
+      "age 14y (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 12092845,
+    "profit_2024": 79432,
+    "employees": 26,
+    "year_founded": 2012,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Thurzo Sandor, Nr.36, Camera 2",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "40656021",
+    "name": "COMPLET ELECTRO PROJECT",
+    "judet": "Bihor",
+    "localitate": "Santandrei",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "age 7y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 253402,
+    "profit_2024": 62825,
+    "employees": 0,
+    "year_founded": 2019,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Aurel Vlaicu, Nr.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "42259346",
+    "name": "DYNAMIC BUSINESS FOR YOU",
+    "judet": "Bihor",
+    "localitate": "Sântandrei",
     "codes": [
       "C1A",
       "C2A"
@@ -539,20 +1074,20 @@
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 0,
-    "profit_2024": -920,
-    "employees": 0,
+    "revenue_2024": 189066,
+    "profit_2024": -112885,
+    "employees": 1,
     "year_founded": 2020,
     "status": "functiune",
-    "address": "Jud. Ilfov, Sat Rosu Com. Chiajna, Str. Rezervelor, Nr.93, Bl.b, Et.7, Ap.109",
+    "address": "Jud. Bihor, Sat Santandrei Com. Santandrei, Santandrei, Nr.284",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "46782762",
-    "name": "ENERG CONSTRUCT BRANSAMENTE",
-    "judet": "Ilfov",
-    "localitate": "Bragadiru [IF]",
+    "cui": "25269161",
+    "name": "ENERGOVAT",
+    "judet": "Bihor",
+    "localitate": "Beius",
     "codes": [
       "C1A",
       "C2A"
@@ -561,26 +1096,26 @@
     "score": 5,
     "reasons": [
       "CAEN 4321 (+3)",
-      "age 4y (+1)",
+      "age 17y (+1)",
       "C1A+C2A (+1)"
     ],
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 127433,
-    "profit_2024": 46326,
-    "employees": 1,
-    "year_founded": 2022,
+    "revenue_2024": 179652,
+    "profit_2024": 2228,
+    "employees": 2,
+    "year_founded": 2009,
     "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Bragadiru, Str. Verii, Nr.18c, Parter. Camera Nr. 2",
+    "address": "Jud. Bihor, Mun. Beius, Str. Poet Gheorghe Pitut, Nr.16",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "40801547",
-    "name": "ESD SERVICII ELECTRICE",
-    "judet": "Ilfov",
-    "localitate": "Domnesti [IF]",
+    "cui": "41610928",
+    "name": "GENIU INSTAL SERV",
+    "judet": "Bihor",
+    "localitate": "Oradea",
     "codes": [
       "C1A",
       "C2A"
@@ -595,49 +1130,20 @@
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 492027,
-    "profit_2024": -101013,
+    "revenue_2024": 375981,
+    "profit_2024": 41118,
     "employees": 4,
     "year_founded": 2019,
     "status": "functiune",
-    "address": "Jud. Ilfov, Sat Domnesti Com. Domnesti, Str. Floarea Soarelui, Nr.10",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Profesor Marin Dacian Bica, Nr.29",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "481338",
-    "name": "LUXCON CARPATI",
-    "judet": "Ilfov",
-    "localitate": "Domnesti [IF]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 5,
-    "reasons": [
-      "website (+2)",
-      "revenue ≥500k (+1)",
-      "age 34y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4120",
-    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
-    "website": "https://luxconcarpati.ro/",
-    "revenue_2024": 887749,
-    "profit_2024": 76848,
-    "employees": 6,
-    "year_founded": 1992,
-    "status": "functiune",
-    "address": "Jud. Ilfov, Com. Domnesti, Nr.1151",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "39194026",
-    "name": "NOVASYS PRIME",
-    "judet": "Ilfov",
-    "localitate": "1 Decembrie",
+    "cui": "9579594",
+    "name": "GRUP EXPANSIUNEA",
+    "judet": "Bihor",
+    "localitate": "Sanmartin [BH]",
     "codes": [
       "C1A",
       "C2A"
@@ -646,26 +1152,166 @@
     "score": 5,
     "reasons": [
       "CAEN 4321 (+3)",
-      "age 8y (+1)",
+      "age 29y (+1)",
       "C1A+C2A (+1)"
     ],
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 31780,
-    "profit_2024": 72,
-    "employees": 1,
-    "year_founded": 2018,
+    "revenue_2024": 337867,
+    "profit_2024": 33057,
+    "employees": 2,
+    "year_founded": 1997,
     "status": "functiune",
-    "address": "Jud. Ilfov, Com. 1 Decembrie, Str. Viilor, Nr.6a, Camera 1",
+    "address": "Jud. Bihor, Sat Sanmartin Com. Sanmartin, Str. Regele Decebal, Nr.20",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "51454109",
-    "name": "ANANDA ELECTRIC",
-    "judet": "Ilfov",
-    "localitate": "Popesti-Leordeni",
+    "cui": "40470400",
+    "name": "IRIBOZ",
+    "judet": "Bihor",
+    "localitate": "Vascau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 7y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 294364,
+    "profit_2024": 47673,
+    "employees": 2,
+    "year_founded": 2019,
+    "status": "functiune",
+    "address": "Jud. Bihor, Ors. Vascau, Str. Crisului, Nr.1, Ap.9",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "33163764",
+    "name": "ROMELECTROTECH",
+    "judet": "Bihor",
+    "localitate": "Saldabagiu de Barcau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 12y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 324445,
+    "profit_2024": 10910,
+    "employees": 1,
+    "year_founded": 2014,
+    "status": "functiune",
+    "address": "Jud. Bihor, Sat Saldabagiu De Barcau Com. Balc, Saldabagiu De Barcau, Nr.151",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "48425154",
+    "name": "SAMLIGHT GROUP",
+    "judet": "Bihor",
+    "localitate": "Tinca",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 3y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 68563,
+    "profit_2024": 1142,
+    "employees": 1,
+    "year_founded": 2023,
+    "status": "functiune",
+    "address": "Jud. Bihor, Sat Sanmartin Com. Sanmartin, Str. Vasile Alecsandri, Nr.2",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "30655118",
+    "name": "BESTEN",
+    "judet": "Bihor",
+    "localitate": "Lungasu de Jos",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 14y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4690",
+    "caen_label": "Comert cu ridicata nespecializat",
+    "website": "",
+    "revenue_2024": 2655097,
+    "profit_2024": 378396,
+    "employees": 2,
+    "year_founded": 2012,
+    "status": "functiune",
+    "address": "Jud. Bihor, Sat Lugasu De Jos Com. Lugasu De Jos, Lugasu De Jos, Nr.251/a",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "28647270",
+    "name": "GHP INTELLIGENT SYSTEMS",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 15y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "8020",
+    "caen_label": "Activitati de servicii privind sistemele de securizare",
+    "website": "",
+    "revenue_2024": 4945676,
+    "profit_2024": 232601,
+    "employees": 15,
+    "year_founded": 2011,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Anghel I. Saligny, Nr.34",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "51252231",
+    "name": "INTELIGENT POWER ENERGI",
+    "judet": "Bihor",
+    "localitate": "Oradea",
     "codes": [
       "C1A",
       "C2A"
@@ -684,15 +1330,15 @@
     "employees": 0,
     "year_founded": 2025,
     "status": "functiune",
-    "address": "Jud. Ilfov, Sat Popesti Leordeni Ors. Popesti-Leordeni, Str Biruintei, Nr.71c, Spatiu Birou.parter Si Etaj 1.",
+    "address": "Jud. Bihor, Mun. Oradea, Aleea Zidarilor, Nr.2, Bl.z4, Sc.c, Ap.42",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "17412685",
-    "name": "ELBI ELECTRIC & LIGHTING",
-    "judet": "Ilfov",
-    "localitate": "Chiajna",
+    "cui": "17602833",
+    "name": "MARDION",
+    "judet": "Bihor",
+    "localitate": "Oradea",
     "codes": [
       "C1A",
       "C2A"
@@ -704,23 +1350,23 @@
       "age 21y (+1)",
       "C1A+C2A (+1)"
     ],
-    "caen_code": "4643",
-    "caen_label": "Comert cu ridicata al aparatelor electrice de uz gospodaresc, al aparatelor de radio si televizoarelor",
+    "caen_code": "4690",
+    "caen_label": "Comert cu ridicata nespecializat",
     "website": "",
-    "revenue_2024": 398015302,
-    "profit_2024": 4255161,
-    "employees": 270,
+    "revenue_2024": 4182930,
+    "profit_2024": 620344,
+    "employees": 7,
     "year_founded": 2005,
     "status": "functiune",
-    "address": "Jud. Ilfov, Com. Chiajna, Str Italia, Nr.1-7, P3. Bucharest A1 Logistic Park. Depozitul 3",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Eftimie Murgu, Nr.71, Bl.d50, Ap.9",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "2628819",
-    "name": "Inginerie si Tehnologie Industriala Electra",
-    "judet": "Ilfov",
-    "localitate": "Gagu",
+    "cui": "26535466",
+    "name": "NETIQ SOLUTIONS",
+    "judet": "Bihor",
+    "localitate": "Oradea",
     "codes": [
       "C1A",
       "C2A"
@@ -729,82 +1375,159 @@
     "score": 4,
     "reasons": [
       "revenue ≥2M (+2)",
-      "age 34y (+1)",
+      "age 16y (+1)",
       "C1A+C2A (+1)"
     ],
-    "caen_code": "2712",
-    "caen_label": "Fabricarea aparatelor de distributie si control a electricitatii",
+    "caen_code": "6201",
+    "caen_label": "Activitati de realizare a soft-ului la comanda (software orientat client)",
     "website": "",
-    "revenue_2024": 6632298,
-    "profit_2024": 837615,
-    "employees": 29,
+    "revenue_2024": 10710454,
+    "profit_2024": 1489026,
+    "employees": 19,
+    "year_founded": 2010,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Morii, Nr.65",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "40807310",
+    "name": "PRECON TRANSILVANIA",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 7y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4211",
+    "caen_label": "Lucrari de constructii a drumurilor si autostrazilor",
+    "website": "",
+    "revenue_2024": 178233566,
+    "profit_2024": 17481598,
+    "employees": 173,
+    "year_founded": 2019,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Cal. Borsului, Nr.14g",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "51556222",
+    "name": "SEMELECTRIC",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 2025,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Bld. Dacia, Nr.46, Bl.p11, Ap.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "117362",
+    "name": "ANDALUSIA IMPEX",
+    "judet": "Bihor",
+    "localitate": "Buntesti",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 4,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 34y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 288828,
+    "profit_2024": 211041,
+    "employees": 1,
     "year_founded": 1992,
     "status": "functiune",
-    "address": "Jud. Ilfov, Sat Gagu Com. Dascalu, Str. Cozia, Nr.17, Bl.birou M5",
+    "address": "Jud. Bihor, Sat Bradet Com. Buntesti, Bradet, Nr.180",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "24787807",
-    "name": "MASTER GAZ",
-    "judet": "Ilfov",
-    "localitate": "Bragadiru [IF]",
+    "cui": "48185949",
+    "name": "BPS ELECTRIC UP",
+    "judet": "Bihor",
+    "localitate": "Cabesti",
     "codes": [
-      "C1A",
       "C2A"
     ],
-    "hasBoth": true,
+    "hasBoth": false,
     "score": 4,
     "reasons": [
-      "revenue ≥2M (+2)",
-      "age 18y (+1)",
-      "C1A+C2A (+1)"
+      "CAEN 4321 (+3)",
+      "age 3y (+1)"
     ],
-    "caen_code": "4322",
-    "caen_label": "Lucrari de instalatii sanitare, de incalzire si de aer conditionat",
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 16856330,
-    "profit_2024": 1954867,
-    "employees": 59,
-    "year_founded": 2008,
+    "revenue_2024": 413971,
+    "profit_2024": 69990,
+    "employees": 2,
+    "year_founded": 2023,
     "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Bragadiru, Str. Alunului, Nr.19",
+    "address": "Jud. Bihor, Sat Cabesti Com. Cabesti, Cabesti, Nr.268, Str. Principala. Camera 1. Parter. Suprafata 10 Mp",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "36438584",
-    "name": "PRIME BATTERIES TECHNOLOGY",
-    "judet": "Ilfov",
-    "localitate": "Cernica",
+    "cui": "40415660",
+    "name": "ELECTROBIHOR",
+    "judet": "Bihor",
+    "localitate": "Oradea",
     "codes": [
-      "C1A",
-      "C2A"
+      "C1A"
     ],
-    "hasBoth": true,
+    "hasBoth": false,
     "score": 4,
     "reasons": [
-      "revenue ≥2M (+2)",
-      "age 10y (+1)",
-      "C1A+C2A (+1)"
+      "CAEN 7112 (+3)",
+      "age 7y (+1)"
     ],
-    "caen_code": "2720",
-    "caen_label": "Fabricarea de acumulatori si baterii",
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
     "website": "",
-    "revenue_2024": 276341224,
-    "profit_2024": 51028311,
-    "employees": 123,
-    "year_founded": 2016,
+    "revenue_2024": 69758,
+    "profit_2024": 33257,
+    "employees": 4,
+    "year_founded": 2019,
     "status": "functiune",
-    "address": "Jud. Ilfov, Sat Caldararu Com. Cernica, Str. Oxigenului, Nr.4c, Corp C2. Cam. 9, Et.1",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Episcop Roman Ciorogariu, Nr.65, Parter. Corp B",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "38798970",
-    "name": "BND WERT",
-    "judet": "Ilfov",
-    "localitate": "Voluntari",
+    "cui": "41294922",
+    "name": "PROIECT BIHOR INVEST",
+    "judet": "Bihor",
+    "localitate": "DOBRESTI",
     "codes": [
       "C1A",
       "C2A"
@@ -813,75 +1536,194 @@
     "score": 3,
     "reasons": [
       "revenue ≥500k (+1)",
-      "age 8y (+1)",
+      "age 7y (+1)",
       "C1A+C2A (+1)"
     ],
-    "caen_code": "7021",
-    "caen_label": "Activitati de consultanta in domeniul relatiilor publice si al comunicarii",
+    "caen_code": "7111",
+    "caen_label": "Activitati de arhitectura",
     "website": "",
-    "revenue_2024": 743660,
-    "profit_2024": -60872,
-    "employees": 4,
+    "revenue_2024": 1988269,
+    "profit_2024": 35838,
+    "employees": 9,
+    "year_founded": 2019,
+    "status": "functiune",
+    "address": "Jud. Bihor, Sat Dobresti Com. Dobresti, G Dobresti, C.f. Nr.1223-Dobresti. Nr. Cadastral 57, Bl.d, Ap.6",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "47877763",
+    "name": "SMART 2 TECH IMPEX",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 3,
+    "reasons": [
+      "revenue ≥500k (+1)",
+      "age 3y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4791",
+    "caen_label": "Comert cu amanuntul prin intermediul caselor de comenzi sau prin Internet",
+    "website": "",
+    "revenue_2024": 578067,
+    "profit_2024": 210634,
+    "employees": 1,
+    "year_founded": 2023,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Str. Barsei, Nr.2a, Bl.pb20, Ap.13",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "51258536",
+    "name": "ERUSA",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 3,
+    "reasons": [
+      "CAEN 4321 (+3)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 2025,
+    "status": "functiune",
+    "address": "Jud. Bihor, Mun. Oradea, Bld. Decebal, Nr.28, Biroul 2, Sc.b, Ap.19",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "39791920",
+    "name": "AMT CRISANA TRAVEL",
+    "judet": "Bihor",
+    "localitate": "Gepiu",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 2,
+    "reasons": [
+      "revenue ≥500k (+1)",
+      "age 8y (+1)"
+    ],
+    "caen_code": "5520",
+    "caen_label": "Facilitati de cazare pentru vacante si perioade de scurta durata",
+    "website": "",
+    "revenue_2024": 1403666,
+    "profit_2024": 230440,
+    "employees": 1,
     "year_founded": 2018,
     "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Voluntari, Bld. Pipera, Nr.150f, Camera 1, Et.1",
+    "address": "Jud. Bihor, Sat Gepis Com. Lazareni, Gepis, Nr.7b",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "42398441",
-    "name": "GSA SERV CONSULT",
-    "judet": "Ilfov",
-    "localitate": "Bragadiru [IF]",
+    "cui": "30684458",
+    "name": "DAVAL CONSTRUCT",
+    "judet": "Bihor",
+    "localitate": "Valea de Jos ( BH)",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 1,
+    "reasons": [
+      "age 14y (+1)"
+    ],
+    "caen_code": "4100",
+    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
+    "website": "",
+    "revenue_2024": 236312,
+    "profit_2024": 23170,
+    "employees": 2,
+    "year_founded": 2012,
+    "status": "functiune",
+    "address": "Jud. Bihor, Sat Valea De Jos Com. Rieni, G Valea De Jos, Nr.36",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "152297",
+    "name": "HELION",
+    "judet": "Bihor",
+    "localitate": "Stei",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "score": 3,
-    "reasons": [
-      "revenue ≥500k (+1)",
-      "age 6y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4322",
-    "caen_label": "Lucrari de instalatii sanitare, de incalzire si de aer conditionat",
+    "score": 0,
+    "reasons": [],
+    "caen_code": "",
+    "caen_label": "",
     "website": "",
-    "revenue_2024": 670107,
-    "profit_2024": -16470,
-    "employees": 3,
-    "year_founded": 2020,
-    "status": "functiune",
-    "address": "Jud. Ilfov, Ors. Bragadiru, Str. Ciresar, Nr.1c, Ap.1b",
-    "error": null,
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 0,
+    "status": "",
+    "address": "",
+    "error": "404 Not Found — /companies/152297 — {\"success\":false,\"error\":{\"code\":\"404\",\"message\":\"Company not found\"}}",
     "pvGate": "skip"
   },
   {
-    "cui": "5740581",
-    "name": "IULIAN",
-    "judet": "Ilfov",
-    "localitate": "Buftea",
+    "cui": "11490927",
+    "name": "PORTATIV",
+    "judet": "Bihor",
+    "localitate": "Oradea",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "score": 3,
-    "reasons": [
-      "revenue ≥500k (+1)",
-      "age 32y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4520",
-    "caen_label": "Intretinerea si repararea autovehiculelor",
+    "score": 0,
+    "reasons": [],
+    "caen_code": "",
+    "caen_label": "",
     "website": "",
-    "revenue_2024": 963184,
-    "profit_2024": -35953,
-    "employees": 5,
-    "year_founded": 1994,
-    "status": "functiune",
-    "address": "Jud. Constanta, Ors. Navodari, Str. Randunelelor, Nr.42",
-    "error": null,
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 0,
+    "status": "",
+    "address": "",
+    "error": "404 Not Found — /companies/11490927 — {\"success\":false,\"error\":{\"code\":\"404\",\"message\":\"Company not found\"}}",
+    "pvGate": "skip"
+  },
+  {
+    "cui": "5597695",
+    "name": "AMPER PROIECT",
+    "judet": "Bihor",
+    "localitate": "Oradea",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 0,
+    "reasons": [],
+    "caen_code": "",
+    "caen_label": "",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 0,
+    "status": "",
+    "address": "",
+    "error": "404 Not Found — /companies/5597695 — {\"success\":false,\"error\":{\"code\":\"404\",\"message\":\"Company not found\"}}",
     "pvGate": "skip"
   }
 ]
