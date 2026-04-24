@@ -166,5 +166,61 @@
     "cui": "38952394",
     "reason": "Exclusiv rețele și distribuție gaze naturale (CAEN 4322). Zero mențiune PV.",
     "rejectedAt": "2026-04-22"
+  },
+  {
+    "societate": "ENERGO PREST COMPANY",
+    "judet": "Prahova",
+    "cui": "5312305",
+    "reason": "site lists only PV park maintenance, no PV installation services; core business is electrical installations for industrial/civil buildings and public lighting",
+    "rejectedAt": "2026-04-24"
+  },
+  {
+    "societate": "ELECTRICON YARD",
+    "judet": "Arges",
+    "cui": "14305650",
+    "reason": "no mention of solar/photovoltaic/panou on homepage or servicii page; focus on transformer posts, MV/LV lines and industrial electrical connections",
+    "rejectedAt": "2026-04-24"
+  },
+  {
+    "societate": "AQVA TERMO SANIT",
+    "judet": "Arges",
+    "cui": "10026350",
+    "reason": "site mentions only solar thermal panels for heating, no PV/photovoltaic electricity systems; focus is HVAC, sanitary, gas and heating installations",
+    "rejectedAt": "2026-04-24"
+  },
+  {
+    "societate": "COMPANIA ENERGOPETROL",
+    "judet": "Prahova",
+    "cui": "1323700",
+    "reason": "2024 revenue only 114k RON with 0 profit — firm effectively dormant; core activity is oil/gas pipeline and telecom infrastructure",
+    "rejectedAt": "2026-04-24"
+  },
+  {
+    "societate": "QUARTZ MATRIX",
+    "judet": "Iasi",
+    "cui": "5150840",
+    "reason": "Firmă IT/eficiență energetică (senys.ro blocheaza scraping, quartzmatrix.ro menționează consultanță eficiență energetică, nu instalare PV)",
+    "rejectedAt": "2026-04-24"
+  },
+  {
+    "societate": "BEL ENERGY SOLUTIONS",
+    "judet": "Iasi",
+    "cui": "47154146",
+    "reason": "Site-ul listează eficiență energetică, iluminat, stații EV, smart city și hidrogen — nu menționează instalare panouri fotovoltaice",
+    "rejectedAt": "2026-04-24"
+  },
+  {
+    "societate": "2M TECH",
+    "judet": "Iasi",
+    "cui": "35049309",
+    "reason": "Firmă de construcții și amenajări (HVAC, sanitare, automatizări). Nu menționează servicii de instalare panouri fotovoltaice",
+    "rejectedAt": "2026-04-24"
+  },
+  {
+    "societate": "CATENA",
+    "judet": "Iasi",
+    "cui": "5885051",
+    "reason": "Distribuție materiale electrice — Fotovoltaice apare doar ca categorie de produse în shop, fără servicii de instalare",
+    "rejectedAt": "2026-04-24"
   }
 ]

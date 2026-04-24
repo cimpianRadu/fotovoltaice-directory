@@ -1,15 +1,15 @@
 # ANRE Candidates — C2A / C1A (industrial/comercial)
 
-_Generated: 2026-04-23_
+_Generated: 2026-04-24_
 
 Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **nu** sunt încă în `data/companies.json`. Sursă: `data/anre-atestate.json`.
 
 ## Stats
 
-- **Total candidați:** 1484
-- Cu **C2A** activ: 1246
-- Cu **C1A** activ: 1093
-- Cu **ambele**: 855
+- **Total candidați:** 1477
+- Cu **C2A** activ: 1239
+- Cu **C1A** activ: 1087
+- Cu **ambele**: 849
 - **Județe acoperite:** 43
 
 ## Cum folosești
@@ -25,16 +25,16 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | Bucuresti | 223 |
 | Cluj | 84 |
 | Ilfov | 78 |
-| Bihor | 68 |
-| Timis | 62 |
+| Bihor | 63 |
+| Timis | 61 |
 | Arges | 58 |
 | Maramures | 57 |
 | Iasi | 56 |
 | Prahova | 52 |
 | Dolj | 51 |
 | Brasov | 50 |
-| Constanta | 49 |
 | Bacau | 48 |
+| Constanta | 48 |
 | Sibiu | 47 |
 | Galati | 40 |
 | Suceava | 32 |
@@ -230,7 +230,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | SOFIN INVEST | Bacau | C1A + C2A | 14680 | 27.05.2029 | 0724544446, 0372703403 0234578555 |
 | TG SERVICES | Bacau | C1A + C2A | 22611 | 25.11.2029 | 0741190729 |
 
-### Bihor (68)
+### Bihor (63)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -259,12 +259,9 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ELECTRO VITAL | Oradea | C1A + C2A | 17253 | 23.04.2026 | 0741 016261, 0745526436 0259 432165 |
 | ELECTROBIHOR | Oradea | C1A | 23120 | 09.05.2030 | 0722900068 |
 | ELECTROFOR | Oradea | C1A + C2A | 15647 | 27.01.2030 | 0359 802746, 0728 110120; 072150414 0359 802747 |
-| ELECTROGAL SOLUTIONS | Oradea | C1A + C2A | 20099 | 21.09.2028 | 0771135761 |
 | ELECTROINSTAL [BH] | Oradea | C2A | 12785 | 29.08.2027 | 0722876107, 0259411058 0259 411058 |
 | ELECTROVALCAN | Ceica | C1A + C2A | 16346 | 05.09.2030 | 0744201027 |
 | ELESAL | Salonta | C1A + C2A | 17525 | 12.07.2026 | 0728 304800, 0359 454943 0259 371282 |
-| ENERGETIC MONTREL | Nojorid | C1A + C2A | 14493 | 15.04.2029 | 0730504182 0359414467, 0359418063 |
-| ENERGOTEH PROIECT | Oradea | C1A + C2A | 12762 | 08.07.2027 | 0731879285, 0771093731, 0372921491 |
 | ENERGOVAT | Beius | C1A + C2A | 16317 | 01.08.2030 | 0729 943881 0259 322997 |
 | ERUSA | Oradea | C2A | 23524 | 31.07.2030 |  |
 | GENIU INSTAL SERV | Oradea | C1A + C2A | 21692 | 08.05.2029 | 0742323761 |
@@ -272,7 +269,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | GIS ENERGY | Sântandrei | C1A + C2A | 23393 | 30.06.2030 | 0725350505 |
 | GRUP EXPANSIUNEA | Sanmartin [BH] | C1A + C2A | 23874 | 31.10.2030 | 0744602808 |
 | HELION | Stei | C1A + C2A | 23963 | 09.12.2030 | 0744134134, 0744617215 |
-| HIQUAL ELECTRO | Oradea | C2A | 16129 | 27.06.2030 | 0744767879 |
 | INTELIGENT POWER ENERGI | Oradea | C1A + C2A | 23251 | 05.06.2030 | 0728184347 |
 | INTER-PAL SERVICII | Diosig | C2A | 13029 | 19.12.2027 | 0744 125185;0259350393 0259 350393 |
 | IRIBOZ | Vascau | C1A + C2A | 23030 | 01.04.2030 | 0758633187, 0748805963 |
@@ -284,7 +280,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | NETIQ SOLUTIONS | Oradea | C1A + C2A | 16609 | 11.11.2030 | 0742222007 |
 | NEXIA CONSULTING | Oradea | C1A + C2A | 23956 | 05.12.2030 | 0771761146 / 0742091630 |
 | NORD VEST RETELE | Remeti (BH) | C1A | 19801 | 13.07.2028 | 0747601721 |
-| OVINSTAL ELECTRIC | Oradea | C1A + C2A | 12219 | 06.12.2026 | 0743502884 |
 | PORTATIV | Oradea | C1A + C2A | 12550 | 06.04.2027 | 0721 282593, 0372780247 0372870770 |
 | PRECON TRANSILVANIA | Oradea | C1A + C2A | 21946 | 28.06.2029 | 0720223675 |
 | PROIECT BIHOR INVEST | DOBRESTI | C1A + C2A | 24301 | 03.03.2031 | 0774900125 |
@@ -794,7 +789,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | TOPOTRUST CONSTRUCT | Cluj-Napoca | C1A + C2A | 21995 | 04.07.2029 | 0729 633305 0264/406498 |
 | URBIS CONCEPT | Cluj-Napoca | C1A | 24218 | 16.02.2031 | 0745560814, 0775521840 |
 
-### Constanta (49)
+### Constanta (48)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -842,7 +837,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ROLUMIAL ELECTRIC EXPERTS | Navodari | C1A + C2A | 17589 | 09.08.2026 | 0341171453, 0279994642, 0729994642 |
 | SAN ELECTROTERM GRUP | Constanta | C1A | 17224 | 23.04.2026 | 0241 627700 ,0746174074; 0748205040 0241 627700 |
 | SIELBOL | Constanta | C1A + C2A | 15195 | 01.10.2029 | 0241 677312, 0722 316 11 0241 677312 |
-| SOLARI ELECTRIC ENERGY | Constanta | C1A + C2A | 24313 | 09.03.2031 | 0739774560 |
 | STANDARD PRO INSTAL | Constanta | C1A + C2A | 14033 | 18.12.2028 | 0724 670 975 |
 | STEF INSTAL CONECT | Constanta | C1A + C2A | 12967 | 07.10.2027 | 0722393710 / 0722502442 |
 | TRANSPETRU SERV | Albesti [CT] | C2A | 20015 | 28.08.2028 | 0743796645 |
@@ -1624,7 +1618,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | RONY BIO GROUP | Izvoarele (TR) | C1A + C2A | 21908 | 20.06.2029 | 0722118999 |
 | SOLSTAR ENERGY PRO | Alexandria | C1A | 13474 | 19.07.2028 | 0761403143 |
 
-### Timis (62)
+### Timis (61)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -1679,7 +1673,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | SECURISTIKA | Timisoara | C1A + C2A | 24304 | 03.03.2031 | 0720187099 |
 | SGROM SERVICE | Timisoara | C1A + C2A | 21763 | 29.05.2029 | 0749654766 |
 | SMART ELKISS | Timisoara | C2A | 22204 | 05.08.2029 | 0736067524 |
-| SOLAR - SERVICE | Timisoara | C1A + C2A | 24306 | 03.03.2031 | 0720996713 |
 | SOLEIL PROFESIONAL SERVICE | Dumbravita [TM] | C2A | 21189 | 21.11.2028 | 0752904891 |
 | SULFATIM | Timisoara | C2A | 15382 | 04.12.2029 | 0723 598366, 0256 490822 0256 490822 |
 | T & M ELECTROSTART 2009 | Sannicolau Mare | C1A + C2A | 12812 | 19.09.2027 | 0730.114443, 0256.371610 0256.371610 |
