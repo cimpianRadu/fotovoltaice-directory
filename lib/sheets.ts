@@ -67,6 +67,9 @@ export async function saveListingToSheet(listing: {
   website?: string;
   specializare?: string;
   descriere?: string;
+  anreFirmName?: string;
+  anreCerts?: string;
+  anreStatus?: string;
 }) {
   await appendRow('Listări', [
     new Date().toISOString(),
@@ -81,6 +84,9 @@ export async function saveListingToSheet(listing: {
     listing.specializare || '',
     listing.descriere || '',
     'Nou', // coloana Status
+    listing.anreStatus || '',
+    listing.anreFirmName || '',
+    listing.anreCerts || '',
   ]);
 }
 

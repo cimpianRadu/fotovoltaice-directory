@@ -1,12 +1,16 @@
 interface InputProps {
   label: string;
   name: string;
-  type?: 'text' | 'email' | 'tel' | 'number' | 'textarea';
+  type?: 'text' | 'email' | 'tel' | 'number' | 'textarea' | 'url';
   required?: boolean;
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   error?: string;
+  inputMode?: 'text' | 'email' | 'tel' | 'numeric' | 'url';
+  autoComplete?: string;
+  hint?: string;
 }
 
 export default function Input({
@@ -17,7 +21,11 @@ export default function Input({
   placeholder,
   value,
   onChange,
+  onBlur,
   error,
+  inputMode,
+  autoComplete,
+  hint,
 }: InputProps) {
   const baseStyles =
     'w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors';
@@ -37,6 +45,7 @@ export default function Input({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
           rows={4}
           className={`${baseStyles} ${errorStyles} resize-y`}
         />
@@ -49,10 +58,17 @@ export default function Input({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
+          inputMode={inputMode}
+          autoComplete={autoComplete}
           className={`${baseStyles} ${errorStyles}`}
         />
       )}
-      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
+      {error ? (
+        <p className="mt-1 text-xs text-red-500">{error}</p>
+      ) : hint ? (
+        <p className="mt-1 text-xs text-gray-500">{hint}</p>
+      ) : null}
     </div>
   );
 }

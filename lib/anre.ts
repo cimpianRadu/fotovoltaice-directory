@@ -72,6 +72,67 @@ export function findAnreFirm(match: AnreMatch | null | undefined): AnreFirm | nu
   return firmIndex.get(`${match.societate}|${match.judet}`) || null;
 }
 
+function normalizeForMatch(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\b(s\.?r\.?l\.?|s\.?a\.?|s\.?c\.?|srl|sa)\b/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Diacritic-insensitive lookup of ANRE firms by name within a county.
+ * Used by the listing form to verify a firm has an ANRE entry on submit.
+ * Returns matches where the normalized firm name equals or contains the
+ * normalized query (or vice versa). Empty if name shorter than 3 chars.
+ */
+export function findAnreFirmsByName(rawName: string, judet: string): AnreFirm[] {
+  if (!rawName || !judet) return [];
+  const targetName = normalizeForMatch(rawName);
+  const targetJudet = normalizeForMatch(judet);
+  if (!targetName || targetName.length < 3 || !targetJudet) return [];
+
+  const exact: AnreFirm[] = [];
+  const partial: AnreFirm[] = [];
+  for (const f of anreFirms) {
+    if (normalizeForMatch(f.judet) !== targetJudet) continue;
+    const firmNorm = normalizeForMatch(f.societate);
+    if (!firmNorm) continue;
+    if (firmNorm === targetName) {
+      exact.push(f);
+    } else if (firmNorm.includes(targetName) || targetName.includes(firmNorm)) {
+      partial.push(f);
+    }
+  }
+  return [...exact, ...partial];
+}
+
+/**
+ * Convenience for the listing flow: returns the best match (if any) and
+ * its currently active PV-relevant certs. Picks the firm with the most
+ * active PV certs when multiple candidates match.
+ */
+export function lookupAnreForListing(rawName: string, judet: string): {
+  firm: AnreFirm | null;
+  certs: ResolvedCert[];
+} {
+  const candidates = findAnreFirmsByName(rawName, judet);
+  if (candidates.length === 0) return { firm: null, certs: [] };
+
+  let best: { firm: AnreFirm; certs: ResolvedCert[] } | null = null;
+  for (const firm of candidates) {
+    const match: AnreMatch = { societate: firm.societate, judet: firm.judet };
+    const certs = getCompanyAnreCerts(match);
+    if (!best || certs.length > best.certs.length) {
+      best = { firm, certs };
+    }
+  }
+  return best ?? { firm: candidates[0], certs: [] };
+}
+
 /**
  * Returns PV-relevant active certs for a company's anreMatch, ordered by relevance.
  * Only includes certs with state === "Atestat" (currently valid).

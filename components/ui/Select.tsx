@@ -11,6 +11,7 @@ interface SelectProps {
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   onValueChange?: (value: string) => void;
   placeholder?: string;
+  error?: string;
 }
 
 export default function Select({
@@ -22,6 +23,7 @@ export default function Select({
   onChange,
   onValueChange,
   placeholder = 'Selectează...',
+  error,
 }: SelectProps) {
   function handleChange(val: string) {
     onValueChange?.(val);
@@ -43,6 +45,7 @@ export default function Select({
       value={value}
       onValueChange={handleChange}
       placeholder={placeholder}
+      error={error}
     />
   );
 }
