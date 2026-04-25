@@ -91,7 +91,7 @@ function validateField(name: keyof FormValues, value: string | boolean, all: For
       if (!String(value).trim()) return 'Selectați județul sediului social.';
       return '';
     case 'specializare':
-      if (!String(value).trim()) return 'Selectați specializarea principală.';
+      if (!String(value).trim()) return 'Selectați activitatea principală.';
       return '';
     case 'website':
       if (!String(value).trim()) return '';
@@ -361,7 +361,7 @@ export default function ListingForm() {
         </div>
 
         <Select
-          label="Specializare principală"
+          label="Activitate principală"
           name="specializare"
           options={specializationOptions}
           required
@@ -383,7 +383,7 @@ export default function ListingForm() {
           label="Scurtă descriere a firmei (opțional)"
           name="descriere"
           type="textarea"
-          placeholder="Experiență, certificări, tipuri de proiecte realizate..."
+          placeholder="Experiență, certificări, tipuri de proiecte realizate. Dacă aveți și alte activități care nu apar în lista de mai sus, menționați-le aici."
           value={values.descriere}
           onChange={(e) => setField('descriere', e.target.value)}
         />

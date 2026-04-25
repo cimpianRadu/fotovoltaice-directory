@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     if (!String(email || '').trim()) errors.push('email');
     if (!String(telefon || '').trim()) errors.push('telefon');
     if (!String(judet || '').trim()) errors.push('județ');
-    if (!String(specializare || '').trim()) errors.push('specializare');
+    if (!String(specializare || '').trim()) errors.push('activitate principală');
 
     if (errors.length > 0) {
       return NextResponse.json(
