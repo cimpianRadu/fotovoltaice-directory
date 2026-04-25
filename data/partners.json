@@ -1,0 +1,15 @@
+{
+  "maxActive": 8,
+  "rotationSeconds": 15,
+  "partners": [
+    {
+      "slug": "reviewqr",
+      "name": "ReviewQR",
+      "description": "Generează coduri QR pentru recenzii Google — util pentru firmele de instalare.",
+      "cta": "Încearcă gratuit →",
+      "logo": "/images/partners/reviewqr.svg",
+      "url": "https://www.reviewqr.app/?utm_source=instalatori-fotovoltaice&utm_medium=popup-carousel&utm_campaign=partner-slot",
+      "active": true
+    }
+  ]
+}

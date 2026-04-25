@@ -3,7 +3,7 @@ import Script from 'next/script';
 import { Geist } from 'next/font/google';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import CrossPromoCard from '@/components/promo/CrossPromoCard';
+import PartnerCarousel from '@/components/promo/PartnerCarousel';
 import { getCompanies, getCoveredCounties } from '@/lib/utils';
 import './globals.css';
 
@@ -74,7 +74,7 @@ export default function RootLayout({
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />
-        <CrossPromoCard />
+        <PartnerCarousel />
       </body>
     </html>
   );
