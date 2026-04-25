@@ -222,5 +222,12 @@
     "cui": "5885051",
     "reason": "Distribuție materiale electrice — Fotovoltaice apare doar ca categorie de produse în shop, fără servicii de instalare",
     "rejectedAt": "2026-04-24"
+  },
+  {
+    "societate": "CBS EASTERN EUROPE",
+    "judet": "Sibiu",
+    "cui": "16962540",
+    "reason": "HVAC/MEP contractor (CAEN 4322), 140 emp, 43.5M revenue. PV listed as 1 of 9 expertise areas — fără proiecte PV cuantificate, fără capacități, fără portofoliu PV. Clienți Marquardt/Continental/Bosch/Kaufland — building MEP, nu PV-led.",
+    "rejectedAt": "2026-04-25"
   }
 ]
