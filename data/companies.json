@@ -5029,8 +5029,8 @@
       "slug": "dg-solar",
       "name": "DG Solar",
       "cui": "RO25289665",
-      "logo": "",
-      "description": "Firmă fondată în 2009 în Cristian, județul Brașov, activă în distribuția și montajul echipamentelor fotovoltaice (panouri, invertoare, regulatoare, baterii) sub brandul „Depozit Fotovoltaice\". Furnizează soluții on-grid și off-grid (12V/24V/48V) pentru locuințe, hale industriale, hoteluri și spitale, inclusiv stocare cu acumulatori litiu.",
+      "logo": "/logos/dg-solar.png",
+      "description": "Firmă fondată în 2009 în Cristian, județul Brașov, distribuitor și instalator de sisteme solare. Comercializează online panouri solare termice (heat pipe, tuburi vidate), panouri fotovoltaice, invertoare, structuri de montaj, boilere și sisteme de apă caldă, cu site-uri sister depozitfotovoltaice.ro și structuri-panouri-fotovoltaice.ro.",
       "founded": 2009,
       "employees": 28,
       "location": {
@@ -5041,7 +5041,7 @@
       "contact": {
         "phone": "+40786690264",
         "email": "office@dgsolar.ro",
-        "website": "https://depozitfotovoltaice.ro/"
+        "website": "https://www.dgsolar.ro/"
       },
       "coverage": [
         "Brașov"
