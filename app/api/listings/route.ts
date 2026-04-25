@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { saveListingToSheet } from '@/lib/sheets';
 import { lookupAnreForListing, getAnreCodeLabel } from '@/lib/anre';
+import { sendListingNotification } from '@/lib/email';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_RE = /^(?:\+?40|0040|0)\s*[0-9](?:[\s\-()]*[0-9]){8}$/;
@@ -65,7 +66,7 @@ export async function POST(request: Request) {
         : 'found-no-pv-cert'
       : 'not-found';
 
-    await saveListingToSheet({
+    const listingPayload = {
       numeFirma: String(numeFirma),
       cui: String(cui),
       numeContact: String(numeContact),
@@ -79,6 +80,14 @@ export async function POST(request: Request) {
       anreFirmName: firm?.societate,
       anreCerts: anreCertsLabel,
       anreStatus: anreNote,
+    };
+
+    await saveListingToSheet(listingPayload);
+
+    // Best-effort email notification — don't fail the request if it errors out.
+    // The listing is already in the sheet.
+    sendListingNotification(listingPayload).catch((err) => {
+      console.warn('[listings] notification failed:', err);
     });
 
     return NextResponse.json({ success: true, anreVerified });
