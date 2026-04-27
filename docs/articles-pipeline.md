@@ -4,7 +4,7 @@
 >
 > Când publici un articol, mută-l în secțiunea **Publicat** cu link + data + next-step (GSC Request Indexing, distribuție).
 
-Ultima actualizare: 2026-04-23
+Ultima actualizare: 2026-04-27
 
 ## Format intrare
 
@@ -37,6 +37,22 @@ Ultima actualizare: 2026-04-23
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Instalatori Autorizați ANRE Panouri Fotovoltaice 2026 — Top Firme Verificate
+- **Publicat:** 2026-04-27 → [/ghid/instalatori-autorizati-anre-panouri-fotovoltaice-2026](/ghid/instalatori-autorizati-anre-panouri-fotovoltaice-2026)
+- **Cluster GSC țintă (snapshot 2026-04-27):**
+  - "instalatori sisteme fotovoltaice" — 50
+  - "top firme panouri fotovoltaice" — 49
+  - "instalatori panouri fotovoltaice" — 41
+  - "panouri fotovoltaice instalatori autorizati" — 38
+  - "instalatori autorizati fotovoltaice" — 34
+  - "firme acreditate panouri fotovoltaice" — 28
+  - "instalator panouri fotovoltaice" — 24
+  - "instalator panouri fotovoltaice autorizat" — 23
+  - "firma panouri fotovoltaice" — 21
+  - **Total ~308 impresii/lună, 0 clicks la baseline. Intent național, fără oraș.**
+- **Strategie:** replică template-ul București (publicat 23 Apr) la nivel național. Diferențiator: live ANRE lookup (/verificare-anre) + clasament sortable (/clasament) + 12 firme top selectate cu cifră de afaceri verificată ANAF.
+- **Next step:** GSC Request Indexing manual, monitorizare 14/30 zile. KPI: clicks pe ghid + impresii rank pe queries head ("instalatori sisteme fotovoltaice", "top firme panouri fotovoltaice").
 
 ### Top Firme Panouri Fotovoltaice București 2026 — Instalatori Autorizați ANRE
 - **Publicat:** 2026-04-23 → [/ghid/top-firme-panouri-fotovoltaice-bucuresti-2026](/ghid/top-firme-panouri-fotovoltaice-bucuresti-2026)
