@@ -1,0 +1,441 @@
+[
+  {
+    "cui": "32905555",
+    "name": "TECHNICAL SYNERGY",
+    "judet": "Dolj",
+    "localitate": "Craiova",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 12y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://www.technicalsynergy.ro/",
+    "revenue_2024": 2633056,
+    "profit_2024": 1462035,
+    "employees": 5,
+    "year_founded": 2014,
+    "status": "functiune",
+    "address": "Jud. Dolj, Mun. Craiova, Str. Maramures, Nr.16, Bl.21-27, Sc.1, Ap.1",
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail"
+  },
+  {
+    "cui": "3440022",
+    "name": "AL TRADING",
+    "judet": "Dolj",
+    "localitate": "Craiova",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "revenue ≥2M (+2)",
+      "age 33y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 15026147,
+    "profit_2024": 10706136,
+    "employees": 8,
+    "year_founded": 1993,
+    "status": "functiune",
+    "address": "Jud. Dolj, Mun. Craiova, Bld. Carol I, Nr.84",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "39782093",
+    "name": "ATT TECHNOLOGY",
+    "judet": "Dolj",
+    "localitate": "Pielesti",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "age 8y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://att-technology.ro/",
+    "revenue_2024": 498921,
+    "profit_2024": 199838,
+    "employees": 1,
+    "year_founded": 2018,
+    "status": "functiune",
+    "address": "Jud. Dolj, Sat Pielesti Com. Pielesti, Str. Aviatorilor, Nr.27a",
+    "error": null,
+    "pvContentHits": 4,
+    "pvContentSample": [
+      "t Skip to footer Acasă Servicii Sisteme fotovoltaice Stații de încărcare auto Instalații electrice industriale și rezide",
+      "nătate. Detalii Sisteme fotovoltaice Un panou fotovoltaic prezintă numeroase avantaje, printre care, amintim faptul că a"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "47874864",
+    "name": "ELPREST INSTAL",
+    "judet": "Dolj",
+    "localitate": "Pielesti",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 3y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 7028505,
+    "profit_2024": 14000,
+    "employees": 48,
+    "year_founded": 2023,
+    "status": "functiune",
+    "address": "Jud. Dolj, Sat Pielesti Com. Pielesti, Cal. Bucuresti, Nr.139/11",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "19027155",
+    "name": "TRAFLOR ELECTRIC",
+    "judet": "Dolj",
+    "localitate": "Melinesti",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 20y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2748911,
+    "profit_2024": 303290,
+    "employees": 11,
+    "year_founded": 2006,
+    "status": "functiune",
+    "address": "Jud. Dolj, Sat Bodaiesti Com. Melinesti, , Nr.76",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "31434700",
+    "name": "CHEAP CONSULTING",
+    "judet": "Dolj",
+    "localitate": "Segarcea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 13y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1333747,
+    "profit_2024": 227323,
+    "employees": 10,
+    "year_founded": 2013,
+    "status": "functiune",
+    "address": "Jud. Dolj, Ors. Segarcea, Str. Prunului, Nr.9",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "9385890",
+    "name": "ELECMOND ELECTRIC",
+    "judet": "Dolj",
+    "localitate": "Carcea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 29y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "2711",
+    "caen_label": "Fabricarea motoarelor, generatoarelor si transformatoarelor electrice",
+    "website": "https://elecmond.ro/",
+    "revenue_2024": 11994608,
+    "profit_2024": 3280924,
+    "employees": 43,
+    "year_founded": 1997,
+    "status": "functiune",
+    "address": "Jud. Dolj, Sat Carcea Com. Carcea, Str. Tudor Vladimirescu, Nr.34",
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail"
+  },
+  {
+    "cui": "2313870",
+    "name": "ENERGOREP",
+    "judet": "Dolj",
+    "localitate": "Craiova",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 34y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 686496,
+    "profit_2024": 5347,
+    "employees": 8,
+    "year_founded": 1992,
+    "status": "functiune",
+    "address": "Jud. Dolj, Mun. Craiova, Calea Brestei, Nr.310",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "44692485",
+    "name": "FORCE ELECTRIC INVEST",
+    "judet": "Dolj",
+    "localitate": "Galicea Mare",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 5y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1114529,
+    "profit_2024": 355843,
+    "employees": 5,
+    "year_founded": 2021,
+    "status": "functiune",
+    "address": "Jud. Dolj, Sat Galicea Mare Com. Galicea Mare, Sos. Bailestiului, Nr.20",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "6847617",
+    "name": "LONGREEN PROD",
+    "judet": "Dolj",
+    "localitate": "Craiova",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 31y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 685367,
+    "profit_2024": 70585,
+    "employees": 5,
+    "year_founded": 1995,
+    "status": "functiune",
+    "address": "Jud. Dolj, Mun. Craiova, Aleea 1 Depoului, Nr.10",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "14701875",
+    "name": "SADRYF",
+    "judet": "Dolj",
+    "localitate": "Craiova",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "website (+2)",
+      "revenue ≥500k (+1)",
+      "age 24y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4690",
+    "caen_label": "Comert cu ridicata nespecializat",
+    "website": "https://www.ambalajeflorale.ro/",
+    "revenue_2024": 1025294,
+    "profit_2024": 40362,
+    "employees": 6,
+    "year_founded": 2002,
+    "status": "functiune",
+    "address": "Jud. Dolj, Mun. Craiova, Bld. Oltenia, Nr.18, Bl.151c, Sc.1, Ap.7",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "51029745",
+    "name": "AVANTEC ELEKTRA SOCIETATE CU RASPUNDERE LIMITATA",
+    "judet": "Dolj",
+    "localitate": "Podari",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 2024,
+    "status": "functiune",
+    "address": "Jud. Dolj, Sat Podari Com. Podari, Str. Dunarii, Nr.125",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "6590750",
+    "name": "EUROMAGNUM TRADE",
+    "judet": "Dolj",
+    "localitate": "Craiova",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 3,
+    "reasons": [
+      "revenue ≥500k (+1)",
+      "age 32y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "2221",
+    "caen_label": "Fabricarea placilor, foliilor, tuburilor si profilelor din material plastic",
+    "website": "",
+    "revenue_2024": 1037854,
+    "profit_2024": 30562,
+    "employees": 4,
+    "year_founded": 1994,
+    "status": "functiune",
+    "address": "Jud. Dolj, Mun. Craiova, Str. Nicolae Titulescu, Nr.43, Bl.a1, Sc.1, Ap.2",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "47795582",
+    "name": "SOLROM CONSTRUCT",
+    "judet": "Dolj",
+    "localitate": "Diosti",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 3,
+    "reasons": [
+      "revenue ≥500k (+1)",
+      "age 3y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4322",
+    "caen_label": "Lucrari de instalatii sanitare, de incalzire si de aer conditionat",
+    "website": "",
+    "revenue_2024": 1109895,
+    "profit_2024": 262906,
+    "employees": 1,
+    "year_founded": 2023,
+    "status": "functiune",
+    "address": "Jud. Dolj, Sat Radomir Com. Diosti, Str. Marin Voican, Nr.34",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "27680162",
+    "name": "SSM LAUMI",
+    "judet": "Dolj",
+    "localitate": "Craiova",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 2,
+    "reasons": [
+      "age 16y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "7490",
+    "caen_label": "Alte activitati profesionale, stiintifice si tehnice n.c.a.",
+    "website": "",
+    "revenue_2024": 499505,
+    "profit_2024": 337230,
+    "employees": 2,
+    "year_founded": 2010,
+    "status": "functiune",
+    "address": "Jud. Dolj, Mun. Craiova, Str. Stefan Velovan, Nr.25, Bl.3, Sc.2, Et.2, Ap.12",
+    "error": null,
+    "pvGate": "skip"
+  }
+]

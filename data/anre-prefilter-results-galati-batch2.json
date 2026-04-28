@@ -1,0 +1,519 @@
+[
+  {
+    "cui": "17108415",
+    "name": "PRAMTUDAN",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 21y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 3754629,
+    "profit_2024": 627208,
+    "employees": 13,
+    "year_founded": 2005,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Ing. Anghel Saligny, Nr.108, Bl.2b, Ap.17",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "33708772",
+    "name": "RBX ELECTRIC FLASH LED",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 12y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 9285354,
+    "profit_2024": -1240912,
+    "employees": 41,
+    "year_founded": 2014,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Gheorghe Doja, Nr.9, Camera 1, Bl.c2, Sc.7, Et.2, Ap.154",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "16822822",
+    "name": "GEX ELECTRIC",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥500k (+1)",
+      "age 22y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://gexelectric.ro/",
+    "revenue_2024": 1868946,
+    "profit_2024": 1082949,
+    "employees": 3,
+    "year_founded": 2004,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. G-ral Alexandru Cernat, Nr.77",
+    "error": null,
+    "pvContentHits": 3,
+    "pvContentSample": [
+      "rgetice Eficiență energetică Instalații fotovoltaice Noutăți Servicii energetice 0 by GEX Electric 20 septembrie 2022 20",
+      "surse regenerabile, prin folosirea unui sistem fotovoltaic. Această investiție răspunde coroborării strategiei de dezvol"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "25425686",
+    "name": "BOSADI CONSTRUCT",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 17y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2847607,
+    "profit_2024": 233748,
+    "employees": 11,
+    "year_founded": 2009,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Movilei, Nr.2, Bl.d, Sc.3, Et.4, Ap.42",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "14989833",
+    "name": "EXE GROUP",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 24y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2092602,
+    "profit_2024": 368841,
+    "employees": 21,
+    "year_founded": 2002,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Constructorilor, Nr.9, Bl.b1, Sc.1, Ap.2",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "34948250",
+    "name": "LUGANA ELECTRIC",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 11y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 16737700,
+    "profit_2024": 3027178,
+    "employees": 13,
+    "year_founded": 2015,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Arcasilor, Nr.8-C",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "47085070",
+    "name": "RAM-TECH ENERGY POWER",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 237321,
+    "profit_2024": 13685,
+    "employees": 1,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Otelarilor, Nr.17, Bl.d11b, Et.parter",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "46707337",
+    "name": "420 ADST DEER GRID",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 5,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "revenue ≥500k (+1)",
+      "age 4y (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 1563798,
+    "profit_2024": 972457,
+    "employees": 4,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Traian, Nr.164, Cartier Piata Centrala. Birou 1, Bl.a12, Sc.2, Et.parter",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "1634561",
+    "name": "CITADINA 98",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 5,
+    "reasons": [
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 34y (+1)"
+    ],
+    "caen_code": "4211",
+    "caen_label": "Lucrari de constructii a drumurilor si autostrazilor",
+    "website": "https://www.citadina98.ro/",
+    "revenue_2024": 382776376,
+    "profit_2024": 33383740,
+    "employees": 375,
+    "year_founded": 1992,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Bld. Siderurgistilor, Nr.7, Mezanin 1. Spatiul Comercial Nr.2, Bl.ps1b, Sc.4",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "36270269",
+    "name": "DISEZA EXPERT",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 10y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 894760,
+    "profit_2024": 130930,
+    "employees": 1,
+    "year_founded": 2016,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Bld. Dunarea, Nr.39, Bl.n6, Sc.3, Et.2, Ap.48",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "8006670",
+    "name": "TANCRAD",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 30y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4211",
+    "caen_label": "Lucrari de constructii a drumurilor si autostrazilor",
+    "website": "",
+    "revenue_2024": 502533871,
+    "profit_2024": 16170792,
+    "employees": 1007,
+    "year_founded": 1996,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Brailei, Nr.169-J",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "18493424",
+    "name": "VIM ENGINEERING",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 20y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4650",
+    "caen_label": "Comert cu ridicata al echipamentului informatic si de telecomunicatii",
+    "website": "",
+    "revenue_2024": 4631441,
+    "profit_2024": 495071,
+    "employees": 19,
+    "year_founded": 2006,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Tecuci, Nr.156d, Bl.t4, Et.2, Ap.11",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "33990338",
+    "name": "DBC PROJECT & DESIGN",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 4,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "age 11y (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 424310,
+    "profit_2024": 208476,
+    "employees": 1,
+    "year_founded": 2015,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Rosiori, Nr.18, Bl.paltin2, Sc.1, Et.4, Ap.14",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "43956430",
+    "name": "CRIOMEC HIDRO",
+    "judet": "Galati",
+    "localitate": "Sendreni",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 3,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 5y (+1)"
+    ],
+    "caen_code": "2221",
+    "caen_label": "Fabricarea placilor, foliilor, tuburilor si profilelor din material plastic",
+    "website": "",
+    "revenue_2024": 2453494,
+    "profit_2024": 301507,
+    "employees": 8,
+    "year_founded": 2021,
+    "status": "functiune",
+    "address": "Municipiul Bucuresti, Sector 2, Str Poiana Cu Aluni, Nr.6, Camera 1, Bl.17, Sc.3, Et.4, Ap.89",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "21286399",
+    "name": "GENDAV",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 3,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 19y (+1)"
+    ],
+    "caen_code": "4211",
+    "caen_label": "Lucrari de constructii a drumurilor si autostrazilor",
+    "website": "",
+    "revenue_2024": 80529642,
+    "profit_2024": 6126394,
+    "employees": 108,
+    "year_founded": 2007,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Alexandru Ioan Cuza, Nr.55",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "50366807",
+    "name": "MYRALEX ELECTRIC",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 3,
+    "reasons": [
+      "CAEN 4321 (+3)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 232885,
+    "profit_2024": 144851,
+    "employees": 1,
+    "year_founded": 2024,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Regimentul 11 Siret, Nr.33b, Bl.t1, Et.3, Ap.312",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "32633655",
+    "name": "AGV NAVICONS",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 2,
+    "reasons": [
+      "revenue ≥500k (+1)",
+      "age 12y (+1)"
+    ],
+    "caen_code": "4322",
+    "caen_label": "Lucrari de instalatii sanitare, de incalzire si de aer conditionat",
+    "website": "",
+    "revenue_2024": 583138,
+    "profit_2024": -34965,
+    "employees": 9,
+    "year_founded": 2014,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Tecuci, Nr.8, Spatiul 1, Bl.v4, Et.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "4006880",
+    "name": "ELECTRO T.G.",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 2,
+    "reasons": [
+      "revenue ≥500k (+1)",
+      "age 33y (+1)"
+    ],
+    "caen_code": "3314",
+    "caen_label": "Repararea echipamentelor electrice",
+    "website": "",
+    "revenue_2024": 1604453,
+    "profit_2024": 19259,
+    "employees": 7,
+    "year_founded": 1993,
+    "status": "functiune",
+    "address": "Jud. Galati, Mun. Galati, Str. Barbosi, Nr.35, Bl.k3, Sc.2, Et.2, Ap.43",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "35602092",
+    "name": "MAKINI GRUP",
+    "judet": "Galati",
+    "localitate": "Galati",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 1,
+    "reasons": [
+      "age 10y (+1)"
+    ],
+    "caen_code": "6290",
+    "caen_label": "Alte activitati de servicii privind tehnologia informatiei",
+    "website": "",
+    "revenue_2024": 202722,
+    "profit_2024": 4310,
+    "employees": 3,
+    "year_founded": 2016,
+    "status": "functiune",
+    "address": "Jud. Cluj, Sat Jucu De Mijloc Com. Jucu, Aleea Stejarului, Nr.7",
+    "error": null,
+    "pvGate": "skip"
+  }
+]

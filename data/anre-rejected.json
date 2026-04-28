@@ -229,5 +229,61 @@
     "cui": "16962540",
     "reason": "HVAC/MEP contractor (CAEN 4322), 140 emp, 43.5M revenue. PV listed as 1 of 9 expertise areas — fără proiecte PV cuantificate, fără capacități, fără portofoliu PV. Clienți Marquardt/Continental/Bosch/Kaufland — building MEP, nu PV-led.",
     "rejectedAt": "2026-04-25"
+  },
+  {
+    "societate": "CONSTRUCT BUSINESS ELECTRIC TEAM",
+    "judet": "Arad",
+    "cui": "34492331",
+    "reason": "Fără website. Daibau.ro listează doar instalații electrice generale, nu PV. Email personal gmail. Niciun portofoliu PV online.",
+    "rejectedAt": "2026-04-28"
+  },
+  {
+    "societate": "ELECTRO IMED 2012",
+    "judet": "Arad",
+    "cui": "30546560",
+    "reason": "Fără website. Daibau descrie firma exclusiv ca instalații electrice/branșamente. Activitatea PV pare separată în firma soră ELECTRO FOTOVOLTAIC SISTEM (CUI 47215804).",
+    "rejectedAt": "2026-04-28"
+  },
+  {
+    "societate": "ENERGO-PROIECT",
+    "judet": "Arad",
+    "cui": "23568027",
+    "reason": "CAEN 7112 inginerie/consultanță. Fără website. Profit -404k 2024. Niciun portofoliu PV verificabil.",
+    "rejectedAt": "2026-04-28"
+  },
+  {
+    "societate": "MIBU ELECTRIC",
+    "judet": "Arad",
+    "cui": "31939797",
+    "reason": "Fără website. Listing generic Necesit.ro pentru electrician. Niciun semnal PV.",
+    "rejectedAt": "2026-04-28"
+  },
+  {
+    "societate": "ELECTRO FARIO",
+    "judet": "Arad",
+    "cui": "24524487",
+    "reason": "Fără website. Email personal yahoo.es. Niciun listing public dincolo de registre fiscale.",
+    "rejectedAt": "2026-04-28"
+  },
+  {
+    "societate": "ELTRI TECH",
+    "judet": "Arad",
+    "cui": "50659793",
+    "reason": "Firmă tânără (oct 2024). Fără website, fără email, fără content PV online. Probabil subcontract industrial.",
+    "rejectedAt": "2026-04-28"
+  },
+  {
+    "societate": "MATCOMPANY",
+    "judet": "Arad",
+    "cui": "50618912",
+    "reason": "Fără website. Niciun rezultat în afara registrelor fiscale. Niciun semnal PV.",
+    "rejectedAt": "2026-04-28"
+  },
+  {
+    "societate": "ELECON PLUS",
+    "judet": "Arad",
+    "cui": "9851191",
+    "reason": "PV gate FAIL (0 hits). Site elecon.ro nu menționează fotovoltaic/panouri/PV — firmă electrice industriale generale.",
+    "rejectedAt": "2026-04-28"
   }
 ]

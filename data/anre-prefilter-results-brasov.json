@@ -1,0 +1,437 @@
+[
+  {
+    "cui": "45800313",
+    "name": "ANDALEX GENERSY",
+    "judet": "Brasov",
+    "localitate": "Zarnesti (BV)",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://genersy.ro/",
+    "revenue_2024": 3214809,
+    "profit_2024": 1227117,
+    "employees": 3,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Brasov, Ors. Zarnesti, Str. Birsei, Nr.73, Biroul 2",
+    "error": null,
+    "pvContentHits": 6,
+    "pvContentSample": [
+      "ere pentru implementarea de echipamente fotovoltaice Acasă Oferte sisteme fotovoltaice Sisteme fotovoltaice Ofertă Casa",
+      "rofesionalism în soluții tehnice pentru panouri fotovoltaice și branșamente electrice Servicii complete și optimizate Of"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "8523129",
+    "name": "CIUCHEANU SERVICE",
+    "judet": "Brasov",
+    "localitate": "Brasov",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 30y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://electrice.info.ro/",
+    "revenue_2024": 2889106,
+    "profit_2024": 214225,
+    "employees": 13,
+    "year_founded": 1996,
+    "status": "functiune",
+    "address": "Jud. Brasov, Mun. Sacele, Bld. Brasovului, Nr.247e",
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail"
+  },
+  {
+    "cui": "25289665",
+    "name": "DG SOLAR",
+    "judet": "Brasov",
+    "localitate": "Cristian (BV)",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "solar/PV în nume/CAEN (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 17y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "2562",
+    "caen_label": "Operatiuni de mecanica generala",
+    "website": "https://depozitfotovoltaice.ro/",
+    "revenue_2024": 6270213,
+    "profit_2024": -480945,
+    "employees": 28,
+    "year_founded": 2009,
+    "status": "functiune",
+    "address": "Jud. Brasov, Sat Cristian Com. Cristian, Str. Vulcanului, Nr.3, Ap.1",
+    "error": null,
+    "pvContentHits": 6,
+    "pvContentSample": [
+      "Panouri fotovoltaice Brasov, pret panouri solare, instalatii solare Brasov, panouri sola",
+      "Panouri fotovoltaice Brasov, pret panouri solare, instalatii solare Brasov, pano"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "18717343",
+    "name": "ENERGOSIG",
+    "judet": "Brasov",
+    "localitate": "Brasov",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 20y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 5952211,
+    "profit_2024": 717656,
+    "employees": 16,
+    "year_founded": 2006,
+    "status": "functiune",
+    "address": "Jud. Brasov, Mun. Brasov, Str. Oituz, Nr.20, Cam. 1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "9052704",
+    "name": "FRONTEX-TRADE",
+    "judet": "Brasov",
+    "localitate": "Harman",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 29y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 5287247,
+    "profit_2024": 453440,
+    "employees": 22,
+    "year_founded": 1997,
+    "status": "functiune",
+    "address": "Jud. Brasov, Sat Harman Com. Harman, Str. Oltului, Nr.9",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "25039650",
+    "name": "CONAV ELECTRIC",
+    "judet": "Brasov",
+    "localitate": "Poiana Marului (BV)",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 17y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1159437,
+    "profit_2024": 211940,
+    "employees": 5,
+    "year_founded": 2009,
+    "status": "functiune",
+    "address": "Jud. Brasov, Sat Poiana Marului Com. Poiana Marului, , Nr.1062, Zona Varf, Cam.2",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "5287520",
+    "name": "4 Alternative Electric Energy  (4 A.E.E.)",
+    "judet": "Brasov",
+    "localitate": "Brasov",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 32y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 333454,
+    "profit_2024": 141749,
+    "employees": 2,
+    "year_founded": 1994,
+    "status": "functiune",
+    "address": "Jud. Brasov, Mun. Brasov, Str. Florilor, Nr.20, Bl.7, Sc.c, Ap.6",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "33207623",
+    "name": "ANDALEX SPY",
+    "judet": "Brasov",
+    "localitate": "Zarnesti (BV)",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 12y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 22413,
+    "profit_2024": -49701,
+    "employees": 1,
+    "year_founded": 2014,
+    "status": "inactiva",
+    "address": "Jud. Brasov, Ors. Zarnesti, Str. Riului, Nr.74",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "36730936",
+    "name": "ANSEBO ELECTRIC",
+    "judet": "Brasov",
+    "localitate": "Brasov",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 10y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 174325,
+    "profit_2024": 83739,
+    "employees": 1,
+    "year_founded": 2016,
+    "status": "functiune",
+    "address": "Jud. Brasov, Mun. Brasov, Str. Egretei, Nr.29, Cam.2, Ap.70",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "46495072",
+    "name": "ELTA VOLT",
+    "judet": "Brasov",
+    "localitate": "Budila",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 352145,
+    "profit_2024": 36124,
+    "employees": 2,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Brasov, Sat Budila Com. Budila, Budila, Nr.1v-/m, Biroul 1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "8587114",
+    "name": "66 PRO",
+    "judet": "Brasov",
+    "localitate": "Poiana Marului (BV)",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 30y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4711",
+    "caen_label": "Comert cu amanuntul in magazine nespecializate, cu vanzare predominanta de produse alimentare, bauturi si tutun",
+    "website": "",
+    "revenue_2024": 3261969,
+    "profit_2024": 16502,
+    "employees": 12,
+    "year_founded": 1996,
+    "status": "functiune",
+    "address": "Jud. Brasov, Com. Poiana Marului, Str. Vanatorilor, Nr.86",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "21584069",
+    "name": "AFTERNET",
+    "judet": "Brasov",
+    "localitate": "Brasov",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 19y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "6190",
+    "caen_label": "Alte activitati de telecomunicatii",
+    "website": "",
+    "revenue_2024": 3470215,
+    "profit_2024": 433277,
+    "employees": 2,
+    "year_founded": 2007,
+    "status": "functiune",
+    "address": "Jud. Brasov, Mun. Brasov, Str. Molidului, Nr.43b, Et.10, Ap.138",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "8928130",
+    "name": "DUMIAN",
+    "judet": "Brasov",
+    "localitate": "Brasov",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 2,
+    "reasons": [
+      "age 30y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4941",
+    "caen_label": "Transporturi rutiere de marfuri",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 456,
+    "employees": 0,
+    "year_founded": 1996,
+    "status": "radiata",
+    "address": "Jud. Constanta, Mun. Constanta, Aleea Vanatori, Nr.19",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "12430249",
+    "name": "FERNICO",
+    "judet": "Brasov",
+    "localitate": "Predeal",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 2,
+    "reasons": [
+      "age 27y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "1310",
+    "caen_label": "Pregatirea fibrelor si filarea fibrelor textile",
+    "website": "",
+    "revenue_2024": 9179,
+    "profit_2024": 6979,
+    "employees": 0,
+    "year_founded": 1999,
+    "status": "functiune",
+    "address": "Jud. Bihor, Sat Palota Com. Santandrei, Palota, Nr.180",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "18126673",
+    "name": "BOGDAN ELECTRIC",
+    "judet": "Brasov",
+    "localitate": "Rucar",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 0,
+    "reasons": [],
+    "caen_code": "",
+    "caen_label": "",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 0,
+    "status": "",
+    "address": "",
+    "error": "404 Not Found — /companies/18126673 — {\"success\":false,\"error\":{\"code\":\"404\",\"message\":\"Company not found\"}}",
+    "pvGate": "skip"
+  }
+]

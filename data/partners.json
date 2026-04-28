@@ -10,6 +10,15 @@
       "logo": "/images/partners/reviewqr.svg",
       "url": "https://www.reviewqr.app/?utm_source=instalatori-fotovoltaice&utm_medium=popup-carousel&utm_campaign=partner-slot",
       "active": true
+    },
+    {
+      "slug": "diodor",
+      "name": "Diodor",
+      "description": "Materiale electrice și echipamente fotovoltaice — distribuitor Cluj-Napoca.",
+      "cta": "Vezi oferta →",
+      "logo": "/logos/diodor.png",
+      "url": "https://diodor.ro?utm_source=instalatori-fotovoltaice&utm_medium=popup-carousel&utm_campaign=partner-slot",
+      "active": true
     }
   ]
 }

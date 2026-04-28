@@ -1,0 +1,445 @@
+[
+  {
+    "cui": "4904660",
+    "name": "ELECTRICAL STANDARD",
+    "judet": "Sibiu",
+    "localitate": "Sura Mica",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 33y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "https://electrical-standard.ro/",
+    "revenue_2024": 3033198,
+    "profit_2024": -602725,
+    "employees": 11,
+    "year_founded": 1993,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Sat Sura Mica Com. Sura Mica, , Parc Industrial Nr. P20",
+    "error": null,
+    "pvContentHits": 3,
+    "pvContentSample": [
+      "Electro-Energetice 20-0.4 kV Instalatii FotoVoltaice Panouri FotoVoltaice 400Kw 2020 Proiectare, Asistenta Tehnica, Aviz",
+      "etice 20-0.4 kV Instalatii FotoVoltaice Panouri FotoVoltaice 400Kw 2020 Proiectare, Asistenta Tehnica, Avize si Autoriza"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "34403121",
+    "name": "ELECTRICOSEB INSTAL",
+    "judet": "Sibiu",
+    "localitate": "Sebesu de Jos",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 11y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://www.electrico-instal.ro/",
+    "revenue_2024": 3803459,
+    "profit_2024": 85598,
+    "employees": 8,
+    "year_founded": 2015,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Sat Sebesu De Jos Com. Turnu Rosu, Nr.147",
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail"
+  },
+  {
+    "cui": "21754287",
+    "name": "CONECON RO",
+    "judet": "Sibiu",
+    "localitate": "Medias",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 19y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 23198450,
+    "profit_2024": 945822,
+    "employees": 87,
+    "year_founded": 2007,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Mun. Medias, Str. Greweln, Nr.1a",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "29643160",
+    "name": "ELECTRIC SERVCOM",
+    "judet": "Sibiu",
+    "localitate": "Sibiu",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 14y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 3152260,
+    "profit_2024": 619633,
+    "employees": 5,
+    "year_founded": 2012,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Mun. Sibiu, Cal. Surii Mici, Nr.39",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "28413970",
+    "name": "ELECTRO INSTAL MATERIALE",
+    "judet": "Sibiu",
+    "localitate": "Medias",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 15y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 5150367,
+    "profit_2024": 388945,
+    "employees": 11,
+    "year_founded": 2011,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Mun. Medias, Sos. Sibiului, Nr.18, Ap.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "21328443",
+    "name": "HH & CO SERV",
+    "judet": "Sibiu",
+    "localitate": "Medias",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 19y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 3692327,
+    "profit_2024": 1139744,
+    "employees": 7,
+    "year_founded": 2007,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Mun. Medias, Str. Michael Weiss, Nr.4b",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "26266511",
+    "name": "C & C ELECTRO TRANS CONSTRUCT",
+    "judet": "Sibiu",
+    "localitate": "Medias",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 17y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1856216,
+    "profit_2024": 207783,
+    "employees": 10,
+    "year_founded": 2009,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Mun. Medias, Str. Stejarului, Nr.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "16962540",
+    "name": "CBS EASTERN EUROPE",
+    "judet": "Sibiu",
+    "localitate": "Sibiu",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 22y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4322",
+    "caen_label": "Lucrari de instalatii sanitare, de incalzire si de aer conditionat",
+    "website": "https://www.cbs-ee.ro/",
+    "revenue_2024": 43537944,
+    "profit_2024": 2079676,
+    "employees": 140,
+    "year_founded": 2004,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Mun. Sibiu, Str. Tiglari, Nr.101",
+    "error": null,
+    "pvContentHits": 2,
+    "pvContentSample": [
+      "nstalații încălzire și sanitare SISTEME FOTOVOLTAICE Instalații automatizare Instalații de ventilație și climatizare Ins",
+      "ertiză Instalații încălzire și sanitare SISTEME FOTOVOLTAICE Instalații automatizare Instalații de ventilație și climati"
+    ],
+    "pvGate": "weak"
+  },
+  {
+    "cui": "46332903",
+    "name": "ENERG.GEO START",
+    "judet": "Sibiu",
+    "localitate": "Sibiu",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1662988,
+    "profit_2024": 54782,
+    "employees": 3,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Mun. Sibiu, Str. Oncesti, Nr.7, Ap.38",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "31233421",
+    "name": "INTEGRATED ENGINEERING SOLUTIONS",
+    "judet": "Sibiu",
+    "localitate": "Sibiu",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 13y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1094831,
+    "profit_2024": 520741,
+    "employees": 5,
+    "year_founded": 2013,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Mun. Sibiu, Cal. Turnisorului, Nr.83",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "13491562",
+    "name": "ELECTRO MIR",
+    "judet": "Sibiu",
+    "localitate": "Sibiu",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 26y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 228337,
+    "profit_2024": 71263,
+    "employees": 1,
+    "year_founded": 2000,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Mun. Sibiu, Str. Laminorului, Nr.24, Ap.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "46720808",
+    "name": "JOHANN ELECTRIC POWER",
+    "judet": "Sibiu",
+    "localitate": "Cisnadie",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 43092,
+    "profit_2024": 22379,
+    "employees": 0,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Ors. Cisnadie, Str. Merilor, Nr.8",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "36678412",
+    "name": "ORBITAL TELECOM",
+    "judet": "Sibiu",
+    "localitate": "Sibiu",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 10y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 453524,
+    "profit_2024": 20671,
+    "employees": 3,
+    "year_founded": 2016,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Mun. Sibiu, Str. Gales, Nr.10, Ap.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "28374420",
+    "name": "LUTGHART SOLUTIONS",
+    "judet": "Sibiu",
+    "localitate": "Sibiu",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 3,
+    "reasons": [
+      "revenue ≥500k (+1)",
+      "age 15y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "2224",
+    "caen_label": "Fabricarea articolelor din material plastic pentru constructii",
+    "website": "",
+    "revenue_2024": 780518,
+    "profit_2024": 76540,
+    "employees": 4,
+    "year_founded": 2011,
+    "status": "functiune",
+    "address": "Jud. Sibiu, Mun. Sibiu, Str. Cetatii, Nr.6, Ap.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "22821490",
+    "name": "ENERGO STAR",
+    "judet": "Sibiu",
+    "localitate": "Sibiu",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 2,
+    "reasons": [
+      "age 19y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "3530",
+    "caen_label": "Furnizarea de abur si aer conditionat",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 2007,
+    "status": "inactiva",
+    "address": "Jud. Giurgiu, Mun. Giurgiu, Sos. Balanoaiei, Nr.2",
+    "error": null,
+    "pvGate": "skip"
+  }
+]

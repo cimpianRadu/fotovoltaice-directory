@@ -1,15 +1,15 @@
 # ANRE Candidates — C2A / C1A (industrial/comercial)
 
-_Generated: 2026-04-25_
+_Generated: 2026-04-28_
 
 Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **nu** sunt încă în `data/companies.json`. Sursă: `data/anre-atestate.json`.
 
 ## Stats
 
-- **Total candidați:** 1463
-- Cu **C2A** activ: 1227
-- Cu **C1A** activ: 1075
-- Cu **ambele**: 839
+- **Total candidați:** 1453
+- Cu **C2A** activ: 1218
+- Cu **C1A** activ: 1065
+- Cu **ambele**: 830
 - **Județe acoperite:** 43
 
 ## Cum folosești
@@ -29,14 +29,14 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | Timis | 61 |
 | Maramures | 57 |
 | Arges | 54 |
-| Dolj | 51 |
-| Brasov | 50 |
+| Dolj | 50 |
 | Prahova | 50 |
-| Bacau | 48 |
+| Brasov | 48 |
 | Constanta | 48 |
 | Iasi | 48 |
-| Sibiu | 47 |
-| Galati | 40 |
+| Bacau | 47 |
+| Sibiu | 45 |
+| Galati | 36 |
 | Suceava | 32 |
 | Dambovita | 31 |
 | Buzau | 29 |
@@ -173,14 +173,13 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | VECTRUM SOLUTIONS | Pitesti | C2A | 13951 | 22.11.2028 | 0726273383 0348800879 |
 | ZEUS | Pitesti | C1A + C2A | 13911 | 16.11.2028 | 0248/251450, 0746116361 0248/251450 |
 
-### Bacau (48)
+### Bacau (47)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
 | ADF INSTAL ELECTRIC | Buda [BC] | C2A | 16530 | 23.10.2030 | 0722208451; 0334421930; 0767020269; 0334421930, 0743060653 |
 | AXIS AG | Bacau | C1A + C2A | 15486 | 16.01.2030 | 0741119687 0234544717 |
 | BEST TEAM ASSISTANCE | Bacau | C1A + C2A | 17831 | 06.12.2026 | 0733533133 |
-| BEST TEAM FOTOVOLTAICE | Bacau | C1A + C2A | 18891 | 21.12.2027 | 0730024724 |
 | BRENNEKA INSTALL | Bacau | C2A | 24120 | 29.01.2031 | 0721637080, 0744568196 / 072260776 0314313002 |
 | COM FAVOR | Bacau | C1A + C2A | 21423 | 15.02.2029 | 0234582081, 0724277038 0234-582081 |
 | CONEXTRUST | Blagesti | C2A | 17269 | 10.05.2026 | 0243/5767020732 760740 0234/515831 |
@@ -353,7 +352,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ROFLOVI ELECTRIC | Insuratei [BR] | C1A + C2A | 18004 | 22.02.2027 | 0735549063 |
 | SEVENERG | Braila | C1A + C2A | 17481 | 28.06.2026 | 0744 535972, 0239 682338 0239 682338 |
 
-### Brasov (50)
+### Brasov (48)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -362,7 +361,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | A.B.INTELIGENT AX | Brasov | C2A | 19366 | 03.05.2028 | 0799819729 0368429512 |
 | ADVANCED TECHNIQUE INSTAL | Brasov | C2A | 24207 | 16.02.2031 | 0726690115 |
 | AFTERNET | Brasov | C1A + C2A | 15644 | 03.03.2030 | 0722513051 |
-| ANDALEX GENERSY | Zarnesti (BV) | C1A + C2A | 19179 | 09.03.2028 | 0741032885 |
 | ANDALEX SPY | Zarnesti (BV) | C1A + C2A | 18926 | 29.12.2027 | 0735130859 |
 | ANDARIANA | Brasov | C2A | 18161 | 14.04.2027 | 0756267641, 0742246655 |
 | ANSEBO ELECTRIC | Brasov | C1A + C2A | 23244 | 03.06.2030 | 0727705485 |
@@ -375,7 +373,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | CONCIDAL CONSTRUCT | Brasov | C2A | 19768 | 29.06.2028 | 0721227424 |
 | COPAS ACTIV ENERGY | Sacele [BV] | C1A | 18046 | 09.03.2027 | 0754997132 |
 | D K ELECTRIC | Brasov | C1A + C2A | 12740 | 03.08.2027 | 0773929984 0371103107 |
-| DG SOLAR | Cristian (BV) | C1A + C2A | 12523 | 25.05.2027 | 0769.637864 |
 | DUMIAN | Brasov | C1A + C2A | 23306 | 18.06.2030 | 0767675782, 0730746788 |
 | EDIFICIA SERV | Predeal | C2A | 21896 | 20.06.2029 | 0744548702 |
 | ELTA VOLT | Budila | C1A + C2A | 18676 | 07.10.2027 | 0766692522 |
@@ -886,7 +883,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | T-ELECTRIF PROD | Bucsani [DB] | C1A | 12921 | 07.10.2027 | 0722469295 0245235119 |
 | TRIVOLT POWER | Potlogi | C2A | 22105 | 23.07.2029 | 0723770620 |
 
-### Dolj (51)
+### Dolj (50)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -895,7 +892,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ALM POWER GROUP | Craiova | C1A | 18410 | 13.07.2027 | 0723609015, 0371174040 0372895898 |
 | ANDREI & PAUL ELECTRICAL LTD | Golenti | C2A | 24048 | 19.01.2031 | 0784 863 365/ 0763 601 187 |
 | ATON GRID | Craiova | C2A | 22781 | 21.01.2030 | 0760 651 600 / 07286302/ 0725256300 |
-| ATT TECHNOLOGY | Pielesti | C1A + C2A | 19122 | 27.02.2028 | 0753010505 |
 | AVANTEC ELEKTRA SOCIETATE CU RASPUNDERE LIMITATA | Podari | C1A + C2A | 23108 | 30.04.2030 | 0725330384 |
 | BOGERALDOS | Craiova | C2A | 15573 | 06.02.2030 | 0351453926, 0743073895 0351172892 |
 | CHEAP CONSULTING | Segarcea | C1A + C2A | 18188 | 21.04.2027 | 0751056493 |
@@ -942,7 +938,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | TWINSMAR | Craiova | C1A + C2A | 23542 | 06.08.2030 | 0765805612 |
 | VICAM CM | Craiova | C1A | 13862 | 31.10.2028 | 0749090528 |
 
-### Galati (40)
+### Galati (36)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -950,19 +946,16 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | AEG TEHNOLOGY | Galati | C1A + C2A | 13582 | 27.07.2028 | 0749150452 0336401080 |
 | AGV NAVICONS | Galati | C2A | 17266 | 10.05.2026 | 0744494409 ; |
 | ARCIF AG | Galati | C1A + C2A | 18765 | 21.11.2027 | 0744752002, 0236412565 |
-| ATRIA CONCEPT | Liesti | C1A + C2A | 12609 | 02.06.2027 | 0757400860 |
 | BOSADI CONSTRUCT | Galati | C2A | 16370 | 25.08.2030 | 0745903811, 0374 005002, 0745105105 0236 497616 |
 | CALORGAL | Galati | C1A + C2A | 21812 | 06.06.2029 | 0236-473.100/0236473000 0236-465.550 |
 | CITADINA 98 | Galati | C2A | 17217 | 23.04.2026 | 0336802232 0336802233 |
 | CRIDEN CONSTRUCT | Galati | C1A + C2A | 18734 | 28.10.2027 | 0236 444444, 0729004067 0236 444444 |
 | CRIOMEC | Galati | C1A + C2A | 13800 | 27.09.2028 | 0722381241 0236/312437 |
 | CRIOMEC HIDRO | Sendreni | C2A | 21846 | 13.06.2029 | 0770355381 |
-| DANDIS NUTA | Vanatori (GL) | C1A + C2A | 18640 | 03.10.2027 | 0745550037, 0758427891 |
 | DBC PROJECT & DESIGN | Galati | C1A | 18756 | 16.11.2027 | 0742064631 |
 | DG LUC ELEC ANDPAV | Tecuci | C1A + C2A | 21743 | 23.05.2029 | 0742094726 |
 | DIAMSES | Galati | C1A + C2A | 13871 | 16.11.2028 | 0236 473880, 0721286576 0236 473880 |
 | DISEZA EXPERT | Galati | C2A | 17298 | 10.05.2026 | 0741572652 |
-| DOCEROM SISTEM | Sendreni | C1A + C2A | 12829 | 23.09.2027 | 0769425435 0336 437167 |
 | DRUM CONSTRUCT | Galati | C1A + C2A | 12616 | 19.04.2027 | 0741135878, 0773371622 |
 | EL MARP COMPANY | Galati | C1A + C2A | 14021 | 25.05.2028 | 0336417609,0753113919 0336417609 |
 | ELECTRICA GALATI | Vanatori (GL) | C1A + C2A | 21675 | 29.04.2029 | 0740050264 |
@@ -972,7 +965,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | EXE GROUP | Galati | C2A | 23681 | 28.08.2030 | 0771 238177, 0722 514424 0336 802459 |
 | GALFLOR INSTAL ELECTRIC | Galati | C1A + C2A | 21181 | 21.11.2028 | 0743425920 |
 | GENDAV | Galati | C2A | 22361 | 17.09.2029 | 0740212008, 0742909415 0236468392 |
-| GEX ELECTRIC | Galati | C1A | 17993 | 16.02.2027 | 0336805808, 0730678362 0336 433455 |
 | GIALEXTRONIC | Galati | C1A + C2A | 13025 | 17.01.2028 | 0745 886015 0336 803931 |
 | HIENTZAN ELECTRIC | Galati | C1A + C2A | 17615 | 09.08.2026 | 0746858179 |
 | IBEX CONSTRUCT | Galati | C1A + C2A | 22905 | 14.02.2030 | 0746988666 |
@@ -1498,13 +1490,12 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | UNVEST ENGINEERING | Satu Mare [SM] | C1A + C2A | 23502 | 22.07.2030 | 0745170759 |
 | VASI CONSTRANS 1995 | Batarci | C1A + C2A | 23283 | 12.06.2030 | 0741463588 |
 
-### Sibiu (47)
+### Sibiu (45)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
 | BI EDIL ELECTRIC | Sibiu | C2A | 21533 | 12.03.2029 | 0736162230, 0728007214 |
 | C & C ELECTRO TRANS CONSTRUCT | Medias | C1A + C2A | 14597 | 13.05.2029 | 0369808647, 0749301688 0369 808647 |
-| CBS EASTERN EUROPE | Sibiu | C1A + C2A | 14198 | 06.02.2029 | 0369.408.917 0747.055.790 0721 0369.408.918 |
 | CMA ELECTRIC | Dumbraveni (SB) | C2A | 15251 | 08.10.2029 | 0745371427, 0741149630 0369405963 |
 | CON-A MEP | Selimbar | C2A | 15958 | 30.05.2030 | 0269206300,0728994712 |
 | CONECON RO | Medias | C1A + C2A | 15838 | 14.04.2030 | 0269806560, 0758042021 0269806566 |
@@ -1514,7 +1505,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | DRAGOMIR ELECTRO DEL | Sibiu | C1A | 16040 | 12.06.2030 | 0744 306287, 0269240392, |
 | ELCONINSTAL 2021 | Selimbar | C2A | 21552 | 20.03.2029 | 0729500696 |
 | ELECTRIC SERVCOM | Sibiu | C1A + C2A | 14558 | 10.05.2029 | 0731358360, 0724642051 |
-| ELECTRICAL STANDARD | Sura Mica | C1A + C2A | 14205 | 05.02.2029 | 0369566900, 0745119935, 0269 254903 0369566900 |
 | ELECTRICOSEB INSTAL | Sebesu de Jos | C1A + C2A | 18820 | 25.11.2027 | 0742913462 |
 | ELECTRO INSTAL MATERIALE | Medias | C1A + C2A | 14055 | 12.01.2029 | 0269820920,0724517389 0269820920 |
 | ELECTRO MIR | Sibiu | C1A + C2A | 23747 | 17.09.2030 | 0766015001, 0740 065055 0269239877 |

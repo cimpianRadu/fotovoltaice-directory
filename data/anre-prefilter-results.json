@@ -1,9 +1,9 @@
 [
   {
-    "cui": "22587462",
-    "name": "ALGINA ELECTRIC",
-    "judet": "Iasi",
-    "localitate": "Valea Adinca",
+    "cui": "14452634",
+    "name": "AMBRA SERVICE",
+    "judet": "Arad",
+    "localitate": "Socodor",
     "codes": [
       "C1A",
       "C2A"
@@ -14,1452 +14,30 @@
       "CAEN 4321 (+3)",
       "website (+2)",
       "revenue ≥2M (+2)",
-      "age 19y (+1)",
+      "age 24y (+1)",
       "C1A+C2A (+1)"
     ],
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://alginaelectric.ro/",
-    "revenue_2024": 9690441,
-    "profit_2024": 689447,
-    "employees": 13,
-    "year_founded": 2007,
+    "website": "https://ambraservice.ro/",
+    "revenue_2024": 20398360,
+    "profit_2024": 3272557,
+    "employees": 49,
+    "year_founded": 2002,
     "status": "functiune",
-    "address": "Jud. Iasi, Sat Valea Adanca Com. Miroslava, Str. Latcu Voda, Nr.40a, Subsol. Birou Nr. 6",
-    "error": null,
-    "pvContentHits": 0,
-    "pvContentSample": [],
-    "pvGate": "fail"
-  },
-  {
-    "cui": "13438020",
-    "name": "ELECTRIC INSTAL",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 9,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 26y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://electricinstalsrl.ro/",
-    "revenue_2024": 10343736,
-    "profit_2024": 1085345,
-    "employees": 34,
-    "year_founded": 2000,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Str. Cazangiilor, Nr.2a",
-    "error": null,
-    "pvContentHits": 5,
-    "pvContentSample": [
-      "e Despre noi Serviciile noastre Contact Fotovoltaice HOME DESPRE NOI CONTACT Fotovoltaice 0745396450 Electric Instal SRL",
-      "tric Instal Srl- Instalare, Casa Verde, Panouri Solare Suna-ne acum la 0745665860 0745396450 electricinstalsrl@yahoo.com"
-    ],
-    "pvGate": "pass"
-  },
-  {
-    "cui": "14327151",
-    "name": "ELSYS DESIGN",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 9,
-    "reasons": [
-      "CAEN 7112 (+3)",
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 25y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "7112",
-    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
-    "website": "https://www.elsysdesign.ro/",
-    "revenue_2024": 5054535,
-    "profit_2024": 567887,
-    "employees": 17,
-    "year_founded": 2001,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Aleea Rozelor, Nr.28, Sc.a, Et.1, Ap.6",
-    "error": null,
-    "pvContentHits": 0,
-    "pvContentSample": [],
-    "pvGate": "fail"
-  },
-  {
-    "cui": "8357395",
-    "name": "GENERAL TEHNIC",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 9,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 30y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://generaltehnic.ro/",
-    "revenue_2024": 30637173,
-    "profit_2024": 3897117,
-    "employees": 68,
-    "year_founded": 1996,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Cal. Chisinaului, Nr.29, Grup Social Depozit 03",
-    "error": null,
-    "pvContentHits": 0,
-    "pvContentSample": [],
-    "pvGate": "fail"
-  },
-  {
-    "cui": "6267210",
-    "name": "LINCAS",
-    "judet": "Iasi",
-    "localitate": "Pascani [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 9,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 32y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://www.lincas.ro/",
-    "revenue_2024": 7276055,
-    "profit_2024": 500484,
-    "employees": 40,
-    "year_founded": 1994,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Pascani, Str. Vatra, Nr.84",
-    "error": null,
-    "pvContentHits": 6,
-    "pvContentSample": [
-      "✅Montaj aer conditionat✔️Montaj panouri fotovoltaice✔️Lincas Pascani | Instalatii si echipamente electrice Pascani✔️Mont",
-      "lectrice✅Montaj aer conditionat✔️Montaj panouri fotovoltaice✔️Lincas Pascani | Instalatii si echipamente electrice Pasca"
-    ],
-    "pvGate": "pass"
-  },
-  {
-    "cui": "36024515",
-    "name": "RETELE IASI",
-    "judet": "Iasi",
-    "localitate": "Valea Lupului",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 9,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 10y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://retele-iasi.ro/",
-    "revenue_2024": 2528542,
-    "profit_2024": 553986,
-    "employees": 7,
-    "year_founded": 2016,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Valea Lupului Com. Valea Lupului, Fdc. Spiru Haret, Nr.1, Camera 8",
-    "error": null,
-    "pvContentHits": 2,
-    "pvContentSample": [
-      "tudine și seriozitate Instalare panouri fotovoltaice Paratrăsnet PDA inteligent Verificare PRAM Audit energetic Servicii",
-      "Promptitudine și seriozitate Instalare panouri fotovoltaice Paratrăsnet PDA inteligent Verificare PRAM Audit energetic"
-    ],
-    "pvGate": "weak"
-  },
-  {
-    "cui": "5150840",
-    "name": "QUARTZ MATRIX",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C2A"
-    ],
-    "hasBoth": false,
-    "score": 8,
-    "reasons": [
-      "CAEN 7112 (+3)",
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 32y (+1)"
-    ],
-    "caen_code": "7112",
-    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
-    "website": "https://senys.ro/",
-    "revenue_2024": 95038082,
-    "profit_2024": 7625884,
-    "employees": 85,
-    "year_founded": 1994,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Bld. Carol I, Nr.5d",
-    "error": null,
-    "pvContentHits": 2,
-    "pvContentSample": [
-      "rea și instalarea sistemelor de panouri fotovoltaice și a stațiilor de încărcare pentru vehicule electrice cu o putere d",
-      "iziționarea și instalarea sistemelor de panouri fotovoltaice și a stațiilor de încărcare pentru vehicule electrice cu o"
-    ],
-    "pvGate": "weak"
-  },
-  {
-    "cui": "46205314",
-    "name": "FAN ELECTRIC GRUP",
-    "judet": "Iasi",
-    "localitate": "Valea Lupului",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 4y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 5318276,
-    "profit_2024": 666164,
-    "employees": 12,
-    "year_founded": 2022,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Valea Lupului Com. Valea Lupului, Str. Luminii, Nr.16a, Demisol, Ap.1",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "19130478",
-    "name": "GIGA INSTAL",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 20y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 6394709,
-    "profit_2024": 1383388,
-    "employees": 12,
-    "year_founded": 2006,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Cal. Chisinaului, Nr.17, Et.p, Ap.cam.5",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "42994959",
-    "name": "GRS-PROJECT GLOBAL",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 7112 (+3)",
-      "revenue ≥2M (+2)",
-      "age 6y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "7112",
-    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
-    "website": "",
-    "revenue_2024": 6115281,
-    "profit_2024": 466824,
-    "employees": 23,
-    "year_founded": 2020,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Sos. Nicolina, Nr.70, Bl.987, Sc.b, Et.1, Ap.5",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "35085824",
-    "name": "INSTALATII IBM",
-    "judet": "Iasi",
-    "localitate": "Scanteia",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 11y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 2824602,
-    "profit_2024": 450104,
-    "employees": 9,
-    "year_founded": 2015,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Scanteia Com. Scanteia, Str. La Bariera, Nr.109",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "23668557",
-    "name": "MAESTRO ELECTRIC",
-    "judet": "Iasi",
-    "localitate": "Pascani [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 18y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 4708346,
-    "profit_2024": 781567,
-    "employees": 17,
-    "year_founded": 2008,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Pascani, Str. Mihail Kogalniceanu, Nr.32, Bl.j, Sc.a, Ap.7",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "30130916",
-    "name": "MARICAT ENERGY",
-    "judet": "Iasi",
-    "localitate": "Barnova",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 7112 (+3)",
-      "revenue ≥2M (+2)",
-      "age 14y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "7112",
-    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
-    "website": "",
-    "revenue_2024": 2253561,
-    "profit_2024": 119529,
-    "employees": 15,
-    "year_founded": 2012,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Paun Com. Barnova, Str. Crucea Paun, Nr.27, Camera 1",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "34467524",
-    "name": "ROMENERG ENERGIE",
-    "judet": "Iasi",
-    "localitate": "Victoria [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 11y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 3248086,
-    "profit_2024": 108459,
-    "employees": 20,
-    "year_founded": 2015,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Victoria Com. Victoria, , Imobil 229",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "46087600",
-    "name": "SKY ENERGY SYSTEM",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "website (+2)",
-      "age 4y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://solarenergy.ro/",
-    "revenue_2024": 412949,
-    "profit_2024": -19600,
-    "employees": 1,
-    "year_founded": 2022,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Sos. Pacurari, Nr.157, Birou Nr. 13, Et.1",
-    "error": null,
-    "pvContentHits": 8,
-    "pvContentSample": [
-      "Acasa - Panouri solare fotovoltaice Produse Panouri fotovoltaice Invertoare Acumulatori solari Eoliene",
-      "Acasa - Panouri solare fotovoltaice Produse Panouri fotovoltaice Invertoare Acumulatori"
-    ],
-    "pvGate": "pass"
-  },
-  {
-    "cui": "27884111",
-    "name": "URBIO DOWNSTREAM",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 15y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 16489711,
-    "profit_2024": 2177459,
-    "employees": 10,
-    "year_founded": 2011,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Sos. Nationala, Nr.178-180, Parter. Biroul Nr. 8. Spatiu Comercial",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "47154146",
-    "name": "BEL ENERGY SOLUTIONS",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "score": 7,
-    "reasons": [
-      "CAEN 7112 (+3)",
-      "website (+2)",
-      "revenue ≥500k (+1)",
-      "age 4y (+1)"
-    ],
-    "caen_code": "7112",
-    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
-    "website": "https://belenergy.ro/",
-    "revenue_2024": 621521,
-    "profit_2024": 379315,
-    "employees": 1,
-    "year_founded": 2022,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Aleea Tudor Neculai, Nr.105, Camera 2, Bl.995, Sc.b, Et.3, Ap.13",
-    "error": null,
-    "pvContentHits": 2,
-    "pvContentSample": [
-      "servicii de proiectare pentru: sisteme fotovoltaice, instalații electrice de joasă tensiune, instalații de iluminat, st",
-      "alizează servicii de proiectare pentru: sisteme fotovoltaice, instalații electrice de joasă tensiune, instalații de ilum"
-    ],
-    "pvGate": "weak"
-  },
-  {
-    "cui": "35049309",
-    "name": "2M TECH",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 11y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4100",
-    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
-    "website": "https://2mtech.ro/",
-    "revenue_2024": 6396141,
-    "profit_2024": 521875,
-    "employees": 10,
-    "year_founded": 2015,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Std. Barboi, Nr.5, Cam.1, Bl.c2, Et.3, Ap.12",
-    "error": null,
-    "pvContentHits": 2,
-    "pvContentSample": [
-      "trol acces, supreveghere video, panouri fotovoltaice 11. lucrari atipice, usi tezaur, usi antifoc, scari metalice, struc",
-      "rme, control acces, supreveghere video, panouri fotovoltaice 11. lucrari atipice, usi tezaur, usi antifoc, scari metalic"
-    ],
-    "pvGate": "weak"
-  },
-  {
-    "cui": "5885051",
-    "name": "CATENA",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 32y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4643",
-    "caen_label": "Comert cu ridicata al aparatelor electrice de uz gospodaresc, al aparatelor de radio si televizoarelor",
-    "website": "https://www.catenaelectric.ro/",
-    "revenue_2024": 54873990,
-    "profit_2024": 1016450,
-    "employees": 55,
-    "year_founded": 1994,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Bld. C. A. Rosetti, Nr.1, Bl.304, Et.p",
+    "address": "Jud. Arad, Com. Socodor, , Nr.fn",
     "error": null,
     "pvContentHits": 1,
     "pvContentSample": [
-      "aterminal Banda LED si iluminat Cabluri Fotovoltaice Paratrasnet si impamantare Statii de incarcare Trasee cabluri Autom"
+      "vicii | Servicii Instalatii industriale Energie regenerabila Portofoliu | Certificari | Certificari - Atestate Diplome -"
     ],
     "pvGate": "weak"
   },
   {
-    "cui": "36605011",
-    "name": "FDF ELECTRIC GRUP",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
-      "age 10y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 670142,
-    "profit_2024": -97605,
-    "employees": 9,
-    "year_founded": 2016,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Aleea Pacurari, Nr.12, Cam. 1, Bl.g2, Sc.a, Et.4, Ap.20",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "35913862",
-    "name": "IDES ELECTRIC",
-    "judet": "Iasi",
-    "localitate": "Movileni (IS)",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 10y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "2712",
-    "caen_label": "Fabricarea aparatelor de distributie si control a electricitatii",
-    "website": "https://www.ides-electric.ro/",
-    "revenue_2024": 3903835,
-    "profit_2024": 27549,
-    "employees": 11,
-    "year_founded": 2016,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Larga-Jijia Com. Movileni, Str Pescarilor, Nr.25",
-    "error": null,
-    "pvContentHits": 2,
-    "pvContentSample": [
-      "fice / Industrial / Infrastructură Parc fotovoltaic 2.5MW Centrala electrică 8MW Birouri productie Laborator Linie Pilot",
-      "& Office / Industrial / Infrastructură Parc fotovoltaic 2.5MW Centrala electrică 8MW Birouri productie Laborator Linie"
-    ],
-    "pvGate": "weak"
-  },
-  {
-    "cui": "18954390",
-    "name": "PACO CONSTRUCT GROUP",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
-      "age 20y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 998231,
-    "profit_2024": -142156,
-    "employees": 8,
-    "year_founded": 2006,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Aleea Cimitirul Evreesc, Nr.2, Etaj Complex Administrativ Inv.1001",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "42255999",
-    "name": "SMART BMS ENGINEERING",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
-      "age 6y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 1341764,
-    "profit_2024": -328643,
-    "employees": 15,
-    "year_founded": 2020,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Str. Luca Arbore, Nr.3, Bl.403, Sc.a, Et.3, Ap.13",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "32396028",
-    "name": "SORADI DEVELOPMENT",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "CAEN 7112 (+3)",
-      "revenue ≥500k (+1)",
-      "age 13y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "7112",
-    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
-    "website": "",
-    "revenue_2024": 1792387,
-    "profit_2024": -423037,
-    "employees": 1,
-    "year_founded": 2013,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Sos. Pacurari, Nr.131-131a, Tr. 1, Parter, Ap.1",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "45419476",
-    "name": "STREET LIGHTING ENGINEERING",
-    "judet": "Iasi",
-    "localitate": "Aroneanu",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "CAEN 7112 (+3)",
-      "revenue ≥500k (+1)",
-      "age 5y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "7112",
-    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
-    "website": "",
-    "revenue_2024": 742630,
-    "profit_2024": 381457,
-    "employees": 0,
-    "year_founded": 2021,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Aroneanu Com. Aroneanu, Str. Vantu, Nr.17a",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "32614831",
-    "name": "URBIOLED",
-    "judet": "Iasi",
-    "localitate": "Valea Lupului",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 13y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "2740",
-    "caen_label": "Fabricarea de echipamente electrice de iluminat",
-    "website": "https://urbio-romania.ro/",
-    "revenue_2024": 212651386,
-    "profit_2024": 76667863,
-    "employees": 91,
-    "year_founded": 2013,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Valea Lupului Com. Valea Lupului, Str. Victoriei, Nr.69",
-    "error": null,
-    "pvContentHits": 1,
-    "pvContentSample": [
-      "ILUMINAT SMART CITY PROIECTARE TEHNICĂ ENERGIE REGENERABILĂ Inovăm, producem și integrăm soluții smart city. URBIO este"
-    ],
-    "pvGate": "weak"
-  },
-  {
-    "cui": "7954166",
-    "name": "CRISBO COMPANY",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "score": 6,
-    "reasons": [
-      "CAEN 7112 (+3)",
-      "revenue ≥2M (+2)",
-      "age 31y (+1)"
-    ],
-    "caen_code": "7112",
-    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
-    "website": "",
-    "revenue_2024": 7956828,
-    "profit_2024": 2074518,
-    "employees": 13,
-    "year_founded": 1995,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Sos. Nationala, Nr.178-180, Parter",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "42082723",
-    "name": "ELECTRO INSTAL ENERGY",
-    "judet": "Iasi",
-    "localitate": "Pascani [IS]",
-    "codes": [
-      "C2A"
-    ],
-    "hasBoth": false,
-    "score": 6,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 6y (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 2292601,
-    "profit_2024": 738448,
-    "employees": 10,
-    "year_founded": 2020,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Pascani, Str. Gradinitei, Nr.48, Parter, Spatiul Comercial 2, Bl.n1, Sc.a",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "27324394",
-    "name": "RECOM INSTAL",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C2A"
-    ],
-    "hasBoth": false,
-    "score": 6,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 16y (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 9038528,
-    "profit_2024": 2863112,
-    "employees": 0,
-    "year_founded": 2010,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Str. Aurel Vlaicu, Nr.88, Constructia C1 Cladire Birouri Poarta",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "15324749",
-    "name": "SMART ELECTRICAL EQUIPMENT",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C2A"
-    ],
-    "hasBoth": false,
-    "score": 6,
-    "reasons": [
-      "CAEN 7112 (+3)",
-      "revenue ≥2M (+2)",
-      "age 23y (+1)"
-    ],
-    "caen_code": "7112",
-    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
-    "website": "",
-    "revenue_2024": 4731748,
-    "profit_2024": 644457,
-    "employees": 17,
-    "year_founded": 2003,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Bld. Chimiei, Nr.14",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "24923658",
-    "name": "SPC ELITE CONSULTING",
-    "judet": "Iasi",
-    "localitate": "Barnova",
-    "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "score": 6,
-    "reasons": [
-      "CAEN 7112 (+3)",
-      "revenue ≥2M (+2)",
-      "age 17y (+1)"
-    ],
-    "caen_code": "7112",
-    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
-    "website": "",
-    "revenue_2024": 2601405,
-    "profit_2024": 115610,
-    "employees": 12,
-    "year_founded": 2009,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Paun Com. Barnova, , Etajul 2 Cu Exceptia Camerei Nr. 9 Din Imobilul Cu Nr. Cadastral (127/2-127/1-2005)/1/1/1-C1",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "38314990",
-    "name": "LINES ENERGY",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "age 9y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 216487,
-    "profit_2024": -99396,
-    "employees": 8,
-    "year_founded": 2017,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Str. Splai Bahlui, Nr.10, Camera 1, Sc.a, Et.4, Ap.17",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "17101905",
-    "name": "ALEX EXPERT GROUP",
-    "judet": "Iasi",
-    "localitate": "Aroneanu",
-    "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
-      "age 21y (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 1104327,
-    "profit_2024": -444286,
-    "employees": 8,
-    "year_founded": 2005,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Str. Trei Fantani, Nr.1, Biroul C32",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "36219894",
-    "name": "ELECTRO LUNGU",
-    "judet": "Iasi",
-    "localitate": "Erbiceni",
-    "codes": [
-      "C2A"
-    ],
-    "hasBoth": false,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
-      "age 10y (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 590966,
-    "profit_2024": 34931,
-    "employees": 5,
-    "year_founded": 2016,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Spranceana Com. Erbiceni, Str. Principala, Nr.88",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "12448866",
-    "name": "ELMOND COM",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "score": 5,
-    "reasons": [
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 27y (+1)"
-    ],
-    "caen_code": "4222",
-    "caen_label": "Lucrari de constructii a proiectelor utilitare pentru electricitate si telecomunicatii",
-    "website": "https://elmondcomis.ro/",
-    "revenue_2024": 25558219,
-    "profit_2024": 2900301,
-    "employees": 62,
-    "year_founded": 1999,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Std. Alexandru Voda Ipsilanti, Nr.2, Et.1",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "33658747",
-    "name": "EXPERT PROJECT TEAM",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "score": 5,
-    "reasons": [
-      "CAEN 7112 (+3)",
-      "revenue ≥500k (+1)",
-      "age 12y (+1)"
-    ],
-    "caen_code": "7112",
-    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
-    "website": "",
-    "revenue_2024": 671490,
-    "profit_2024": -790526,
-    "employees": 18,
-    "year_founded": 2014,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Cal. Galata, Nr.14, Bl.e4a, Sc.b, Et.3, Ap.12",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "36713340",
-    "name": "HIL DESIGN",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
-      "age 10y (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 767380,
-    "profit_2024": 207401,
-    "employees": 2,
-    "year_founded": 2016,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Str. Elena Doamna, Nr.24, Parter. Camera 1, Bl.1, Sc.b, Ap.7",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "30833576",
-    "name": "MEM PROJECT CONSTRUCT",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "score": 5,
-    "reasons": [
-      "CAEN 7112 (+3)",
-      "revenue ≥500k (+1)",
-      "age 14y (+1)"
-    ],
-    "caen_code": "7112",
-    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
-    "website": "",
-    "revenue_2024": 1285858,
-    "profit_2024": 42440,
-    "employees": 2,
-    "year_founded": 2012,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Str. Ciurchi, Nr.82, Cam.1, Bl.d6, Sc.a, Et.5, Ap.22",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "24931723",
-    "name": "OPTIMAL PROJECT",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "score": 5,
-    "reasons": [
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 17y (+1)"
-    ],
-    "caen_code": "7111",
-    "caen_label": "Activitati de arhitectura",
-    "website": "https://optimalproject.ro/",
-    "revenue_2024": 4219166,
-    "profit_2024": 1913816,
-    "employees": 20,
-    "year_founded": 2009,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Str. Zimbrului, Nr.11+13+15, Demisol, Birou 5, Ap.1",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "19173045",
-    "name": "PENCRAFT",
-    "judet": "Iasi",
-    "localitate": "Tomesti",
-    "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "score": 5,
-    "reasons": [
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 20y (+1)"
-    ],
-    "caen_code": "7020",
-    "caen_label": "Activitati de consultanta in afaceri si management",
-    "website": "https://www.pencraft.ro/",
-    "revenue_2024": 8190191,
-    "profit_2024": 1238503,
-    "employees": 25,
-    "year_founded": 2006,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Tomesti Com. Tomesti, Com. Tomesti, Bl.9, Sc.b, Et.3, Ap.14",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "37593870",
-    "name": "RED SOCKET",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
-      "age 9y (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 735543,
-    "profit_2024": 91343,
-    "employees": 2,
-    "year_founded": 2017,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Aleea Valea Adanca, Nr.5b",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "31935620",
-    "name": "REKAINSTAL SHOP",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 4,
-    "reasons": [
-      "revenue ≥2M (+2)",
-      "age 13y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4221",
-    "caen_label": "Lucrari de constructii a proiectelor utilitare pentru fluide",
-    "website": "",
-    "revenue_2024": 6256297,
-    "profit_2024": 772755,
-    "employees": 17,
-    "year_founded": 2013,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Valea Adanca Com. Miroslava, Str. Sub Cosere, Nr.5b, Ap.3",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "46523016",
-    "name": "SOLID CONSTRUCT SUN RESIDENCE",
-    "judet": "Iasi",
-    "localitate": "Ciurea",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 4,
-    "reasons": [
-      "revenue ≥2M (+2)",
-      "age 4y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4100",
-    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
-    "website": "",
-    "revenue_2024": 6891004,
-    "profit_2024": 212823,
-    "employees": 20,
-    "year_founded": 2022,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Lunca Cetatuii Com. Ciurea, Str. Crinului, Nr.10",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "39852750",
-    "name": "POPA ELECTRIC",
-    "judet": "Iasi",
-    "localitate": "Barnova",
-    "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "score": 4,
-    "reasons": [
-      "CAEN 7112 (+3)",
-      "age 8y (+1)"
-    ],
-    "caen_code": "7112",
-    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
-    "website": "",
-    "revenue_2024": 0,
-    "profit_2024": -797,
-    "employees": 0,
-    "year_founded": 2018,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Pietraria Com. Barnova, Str. Romantei, Nr.25",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "27504298",
-    "name": "VELIS AG",
-    "judet": "Iasi",
-    "localitate": "Tutora",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 3,
-    "reasons": [
-      "revenue ≥500k (+1)",
-      "age 16y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4120",
-    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
-    "website": "",
-    "revenue_2024": 1610849,
-    "profit_2024": 161432,
-    "employees": 8,
-    "year_founded": 2010,
-    "status": "functiune",
-    "address": "Jud. Iasi, Mun. Iasi, Bld. Socola, Nr.2, Bl.f, Sc.e, Et.8, Ap.30",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "37969398",
-    "name": "ALROSEL PROJECT",
-    "judet": "Iasi",
-    "localitate": "Razboieni [IS]",
-    "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "score": 3,
-    "reasons": [
-      "revenue ≥2M (+2)",
-      "age 9y (+1)"
-    ],
-    "caen_code": "7020",
-    "caen_label": "Activitati de consultanta in afaceri si management",
-    "website": "",
-    "revenue_2024": 13295838,
-    "profit_2024": 7804019,
-    "employees": 15,
-    "year_founded": 2017,
-    "status": "functiune",
-    "address": "Jud. Iasi, Sat Razboieni Com. Ion Neculce, Nr.510, Camera 1",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "1149184",
-    "name": "ELECTRO UNIVERS",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 2,
-    "reasons": [
-      "age 34y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "6820",
-    "caen_label": "Inchirierea si subinchirierea bunurilor imobiliare proprii sau inchiriate",
-    "website": "",
-    "revenue_2024": 428901,
-    "profit_2024": 128709,
-    "employees": 1,
-    "year_founded": 1992,
-    "status": "functiune",
-    "address": "Jud. Buzau, Mun. Buzau, Str. Cuza-Voda, Nr.88",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "38233623",
-    "name": "MAGIC ORIZONT",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 2,
-    "reasons": [
-      "age 9y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4120",
-    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
-    "website": "",
-    "revenue_2024": 167448,
-    "profit_2024": -517575,
-    "employees": 4,
-    "year_founded": 2017,
-    "status": "radiata",
-    "address": "Jud. Iasi, Mun. Iasi, Str. Ciric, Nr.44, Parter, Bl.l2, Sc.a, Ap.4",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "11683871",
-    "name": "INVEST COMPANY",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 0,
-    "reasons": [],
-    "caen_code": "",
-    "caen_label": "",
-    "website": "",
-    "revenue_2024": 0,
-    "profit_2024": 0,
-    "employees": 0,
-    "year_founded": 0,
-    "status": "",
-    "address": "",
-    "error": "404 Not Found — /companies/11683871 — {\"success\":false,\"error\":{\"code\":\"404\",\"message\":\"Company not found\"}}",
-    "pvGate": "skip"
-  },
-  {
-    "cui": "4833321",
-    "name": "LUCIMAR",
-    "judet": "Iasi",
-    "localitate": "Iasi [IS]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 0,
-    "reasons": [],
-    "caen_code": "",
-    "caen_label": "",
-    "website": "",
-    "revenue_2024": 0,
-    "profit_2024": 0,
-    "employees": 0,
-    "year_founded": 0,
-    "status": "",
-    "address": "",
-    "error": "404 Not Found — /companies/4833321 — {\"success\":false,\"error\":{\"code\":\"404\",\"message\":\"Company not found\"}}",
-    "pvGate": "skip"
-  },
-  {
-    "cui": "36662440",
-    "name": "ELECTRO CLIP MAP",
-    "judet": "Maramures",
-    "localitate": "Valenii Lapusului",
+    "cui": "9851191",
+    "name": "ELECON PLUS",
+    "judet": "Arad",
+    "localitate": "Arad",
     "codes": [
       "C1A",
       "C2A"
@@ -1470,28 +48,28 @@
       "CAEN 4321 (+3)",
       "website (+2)",
       "revenue ≥2M (+2)",
-      "age 10y (+1)",
+      "age 29y (+1)",
       "C1A+C2A (+1)"
     ],
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://electroclip.ro/",
-    "revenue_2024": 8681283,
-    "profit_2024": 1256512,
-    "employees": 20,
-    "year_founded": 2016,
+    "website": "https://elecon.ro/",
+    "revenue_2024": 10456486,
+    "profit_2024": 830834,
+    "employees": 22,
+    "year_founded": 1997,
     "status": "functiune",
-    "address": "Jud. Maramures, Sat Valenii Lapusului Com. Coroieni, Str. Valenii Lapusului, Nr.27",
+    "address": "Jud. Arad, Mun. Arad, Str. Biruintei, Nr.fn",
     "error": null,
     "pvContentHits": 0,
     "pvContentSample": [],
     "pvGate": "fail"
   },
   {
-    "cui": "35881639",
-    "name": "ELECTRO TERM INSTAL",
-    "judet": "Maramures",
-    "localitate": "Calinesti [MM]",
+    "cui": "14870335",
+    "name": "PRECON ELECTRIC",
+    "judet": "Arad",
+    "localitate": "Arad",
     "codes": [
       "C1A",
       "C2A"
@@ -1502,133 +80,31 @@
       "CAEN 4321 (+3)",
       "website (+2)",
       "revenue ≥2M (+2)",
-      "age 10y (+1)",
+      "age 24y (+1)",
       "C1A+C2A (+1)"
     ],
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://electroterminstal.ro/",
-    "revenue_2024": 3794823,
-    "profit_2024": 254414,
-    "employees": 6,
-    "year_founded": 2016,
+    "website": "https://precon-electric.ro/",
+    "revenue_2024": 5098540,
+    "profit_2024": 389809,
+    "employees": 15,
+    "year_founded": 2002,
     "status": "functiune",
-    "address": "Jud. Maramures, Sat Calinesti Com. Calinesti, Calinesti, Nr.148",
+    "address": "Jud. Arad, Mun. Arad, Str. Poetului, Nr.1c, Hala 25-26",
     "error": null,
-    "pvContentHits": 7,
+    "pvContentHits": 4,
     "pvContentSample": [
-      "viciile Companiei Instalatii si Sisteme Fotovoltaice Bransamente Electrice Instalatii Electrice Posturi de transformare",
-      "ovoltaice.  Servicii tehnice de montaj panouri fotovoltaice.  Alte servicii de natura electrica si electronica. Nume A"
+      "ia PRE CON ELECTRIC Despre noi Servicii Fotovoltaice Contact // EST. 2002 — ARAD, ROMÂNIA CONECTĂM ENERGIA & OMENIA Inst",
+      "iale premium, termene respectate. 03 ☀️ Panouri Fotovoltaice Proiectare și montaj sisteme fotovoltaice rezidențiale și i"
     ],
     "pvGate": "pass"
   },
   {
-    "cui": "13366535",
-    "name": "ELECTROCENTER DUE",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 9,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "website (+2)",
-      "revenue ≥2M (+2)",
-      "age 26y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://www.electrocenterdue.ro/",
-    "revenue_2024": 49401887,
-    "profit_2024": 3797724,
-    "employees": 71,
-    "year_founded": 2000,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Str. Pasunii, Nr.1b, Ap.59",
-    "error": null,
-    "pvContentHits": 0,
-    "pvContentSample": [],
-    "pvGate": "fail"
-  },
-  {
-    "cui": "42988183",
-    "name": "ELECTRO METERING",
-    "judet": "Maramures",
-    "localitate": "Lapusel",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 8,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "website (+2)",
-      "revenue ≥500k (+1)",
-      "age 6y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://electrometering.ro/",
-    "revenue_2024": 1443915,
-    "profit_2024": 266496,
-    "employees": 6,
-    "year_founded": 2020,
-    "status": "functiune",
-    "address": "Jud. Maramures, Sat Lapusel Com. Recea, Str. Nucului, Nr.9",
-    "error": null,
-    "pvContentHits": 3,
-    "pvContentSample": [
-      "e, instalare si mentenanta a panourilor fotovoltaice, bransamente electrice aeriene si subterane atat monofazate, cat si",
-      "ultanta in alegerea celor mai potrivite panouri solare si poate asigura instalarea si mentenanta acestora, pentru a maxi"
-    ],
-    "pvGate": "pass"
-  },
-  {
-    "cui": "16676956",
-    "name": "INTERAMPER-MM",
-    "judet": "Maramures",
-    "localitate": "Recea (MM)",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 8,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "website (+2)",
-      "revenue ≥500k (+1)",
-      "age 22y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "https://interamper.ro/",
-    "revenue_2024": 955334,
-    "profit_2024": -12990,
-    "employees": 7,
-    "year_founded": 2004,
-    "status": "functiune",
-    "address": "Jud. Maramures, Sat Lapusel Com. Recea, Nr.199",
-    "error": null,
-    "pvContentHits": 2,
-    "pvContentSample": [
-      "rgie verde Instalatii eoliene , panouri fotovoltaice . Instalatii si automatizari pentru agricultura Instalatii automate",
-      "shed Energie verde Instalatii eoliene , panouri fotovoltaice . Instalatii si automatizari pentru agricultura Instalatii"
-    ],
-    "pvGate": "weak"
-  },
-  {
-    "cui": "44792700",
-    "name": "BLUE PREST ELECTRIC",
-    "judet": "Maramures",
-    "localitate": "Satu Nou de Jos [MM]",
+    "cui": "34492331",
+    "name": "CONSTRUCT BUSINESS ELECTRIC TEAM",
+    "judet": "Arad",
+    "localitate": "Gurahont",
     "codes": [
       "C1A",
       "C2A"
@@ -1638,229 +114,26 @@
     "reasons": [
       "CAEN 4321 (+3)",
       "revenue ≥2M (+2)",
-      "age 5y (+1)",
+      "age 11y (+1)",
       "C1A+C2A (+1)"
     ],
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 4585296,
-    "profit_2024": 275029,
-    "employees": 12,
-    "year_founded": 2021,
+    "revenue_2024": 6520389,
+    "profit_2024": 502192,
+    "employees": 15,
+    "year_founded": 2015,
     "status": "functiune",
-    "address": "Jud. Maramures, Sat Satu Nou De Jos Com. Grosi, Str. Scolii, Nr.13",
+    "address": "Jud. Arad, Sat Gurahont Com. Gurahont, Str. Crisan, Nr.7",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "37625181",
-    "name": "CALIN RAUL ELECTROROM",
-    "judet": "Maramures",
-    "localitate": "Strimtura",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 9y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 2396202,
-    "profit_2024": 482900,
-    "employees": 8,
-    "year_founded": 2017,
-    "status": "functiune",
-    "address": "Jud. Maramures, Sat Stramtura Com. Stramtura, Strimtura, Nr.322",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "21766168",
-    "name": "COMP SGS ELECTROGRUP",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 19y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 5693967,
-    "profit_2024": 873475,
-    "employees": 14,
-    "year_founded": 2007,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Bld. Unirii, Bl.7, Ap.56",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "16233142",
-    "name": "EL-FLUX",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 22y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 2802804,
-    "profit_2024": 797594,
-    "employees": 5,
-    "year_founded": 2004,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Str. Potcoavei, Nr.3",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "31225178",
-    "name": "ELECTRONET CONCEPT",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 13y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 30684134,
-    "profit_2024": 1509385,
-    "employees": 68,
-    "year_founded": 2013,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Bld. Unirii, Nr.53",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "32501379",
-    "name": "FLOMARTEO INSTAL",
-    "judet": "Maramures",
-    "localitate": "Miresu Mare (MM)",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 13y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 4732685,
-    "profit_2024": 925597,
-    "employees": 10,
-    "year_founded": 2013,
-    "status": "functiune",
-    "address": "Jud. Maramures, Sat Miresu Mare Com. Miresu Mare, Miresu Mare, Nr.297",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "43502493",
-    "name": "IANFER ELECTRIC",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 6y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 4420937,
-    "profit_2024": 1219001,
-    "employees": 7,
-    "year_founded": 2020,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Str. Cristian, Nr.5d, Ap.4",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "36672487",
-    "name": "RGB ENERGY TEAM",
-    "judet": "Maramures",
-    "localitate": "Sighetu Marmatiei",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 7,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥2M (+2)",
-      "age 10y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 7318545,
-    "profit_2024": 1172859,
-    "employees": 12,
-    "year_founded": 2016,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Sighetu Marmatiei, Pta. Cuza Voda, Nr.7",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "30323445",
-    "name": "ROLY & DENY ELECTRIC",
-    "judet": "Maramures",
-    "localitate": "Viseu de Sus",
+    "cui": "30546560",
+    "name": "ELECTRO IMED 2012",
+    "judet": "Arad",
+    "localitate": "Arad",
     "codes": [
       "C1A",
       "C2A"
@@ -1876,165 +149,78 @@
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 2564921,
-    "profit_2024": 193157,
-    "employees": 10,
+    "revenue_2024": 3598365,
+    "profit_2024": 488035,
+    "employees": 8,
     "year_founded": 2012,
     "status": "functiune",
-    "address": "Jud. Maramures, Ors. Viseu De Sus, Str. Rodnei, Nr.2a",
+    "address": "Jud. Arad, Mun. Arad, Str. Flacara, Nr.14",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "6983899",
-    "name": "BUDA-ETAP",
-    "judet": "Maramures",
-    "localitate": "Lapus",
+    "cui": "23568027",
+    "name": "ENERGO-PROIECT",
+    "judet": "Arad",
+    "localitate": "Sanleani",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "score": 6,
+    "score": 7,
     "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
-      "age 31y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 1053422,
-    "profit_2024": 347901,
-    "employees": 4,
-    "year_founded": 1995,
-    "status": "functiune",
-    "address": "Jud. Maramures, Sat Lapus Com. Lapus, Nr.848",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "23298667",
-    "name": "CRISBEL",
-    "judet": "Maramures",
-    "localitate": "Borsa [MM]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
+      "CAEN 7112 (+3)",
+      "revenue ≥2M (+2)",
       "age 18y (+1)",
       "C1A+C2A (+1)"
     ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
     "website": "",
-    "revenue_2024": 539302,
-    "profit_2024": 17947,
-    "employees": 3,
+    "revenue_2024": 5867765,
+    "profit_2024": -404562,
+    "employees": 21,
     "year_founded": 2008,
-    "status": "functiune",
-    "address": "Jud. Maramures, Ors. Borsa, Str. Izvorului, Nr.32a",
+    "status": "faliment",
+    "address": "Jud. Arad, Sat Sanleani Com. Livada, Sinleani, Nr.524",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "32819470",
-    "name": "DGM GRAD ELECTRIC",
-    "judet": "Maramures",
-    "localitate": "Targu Lapus",
+    "cui": "31939797",
+    "name": "MIBU ELECTRIC",
+    "judet": "Arad",
+    "localitate": "Livada (AR)",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "score": 6,
+    "score": 7,
     "reasons": [
       "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
-      "age 12y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 990842,
-    "profit_2024": 14387,
-    "employees": 10,
-    "year_founded": 2014,
-    "status": "functiune",
-    "address": "Jud. Maramures, Ors. Targu Lapus, Str. Liliacului, Nr.3",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "32259675",
-    "name": "ELECTRO MEGAWAT",
-    "judet": "Maramures",
-    "localitate": "Lapus",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
+      "revenue ≥2M (+2)",
       "age 13y (+1)",
       "C1A+C2A (+1)"
     ],
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 1482811,
-    "profit_2024": 266414,
-    "employees": 5,
+    "revenue_2024": 2760323,
+    "profit_2024": 9884,
+    "employees": 7,
     "year_founded": 2013,
     "status": "functiune",
-    "address": "Jud. Maramures, Sat Lapus Com. Lapus, Lapus, Nr.558",
+    "address": "Jud. Arad, Sat Livada Com. Livada, Livada, Nr.817",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "16205614",
-    "name": "ELECTRO POL CITY",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
-      "age 22y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 716570,
-    "profit_2024": 70801,
-    "employees": 2,
-    "year_founded": 2004,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Str. Olteniei, Nr.3, Ap.38",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "24551090",
-    "name": "ELECTRO-CONSTRUCTII-PARCHET",
-    "judet": "Maramures",
-    "localitate": "Ulmeni (MM)",
+    "cui": "24524487",
+    "name": "ELECTRO FARIO",
+    "judet": "Arad",
+    "localitate": "Gurahont",
     "codes": [
       "C1A",
       "C2A"
@@ -2050,20 +236,20 @@
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 1375227,
-    "profit_2024": 240793,
-    "employees": 2,
+    "revenue_2024": 1910389,
+    "profit_2024": 825231,
+    "employees": 8,
     "year_founded": 2008,
     "status": "functiune",
-    "address": "Jud. Maramures, Sat Ulmeni Ors. Ulmeni, Str. Garii, Nr.2",
+    "address": "Jud. Arad, Sat Gurahont Com. Gurahont, Str. 22 Decembrie 1989, Nr.6",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "27734025",
-    "name": "ENERGOGRAL",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
+    "cui": "50659793",
+    "name": "ELTRI TECH",
+    "judet": "Arad",
+    "localitate": "Vladimirescu [AR]",
     "codes": [
       "C1A",
       "C2A"
@@ -2072,451 +258,82 @@
     "score": 6,
     "reasons": [
       "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
-      "age 16y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 1677327,
-    "profit_2024": 271570,
-    "employees": 2,
-    "year_founded": 2010,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Str. Gheorghe Doja, Nr.2",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "43933011",
-    "name": "GOOD WATCOM",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
-      "age 5y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 1878201,
-    "profit_2024": 304153,
-    "employees": 3,
-    "year_founded": 2021,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Bld. Independentei, Nr.57m",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "35758327",
-    "name": "PROF CON INVEST",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 6,
-    "reasons": [
-      "website (+2)",
       "revenue ≥2M (+2)",
-      "age 10y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4120",
-    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
-    "website": "https://profconinvest.ro/",
-    "revenue_2024": 97599881,
-    "profit_2024": 22651735,
-    "employees": 12,
-    "year_founded": 2016,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Str. Vasile Lucaciu, Nr.162",
-    "error": null,
-    "pvContentHits": 0,
-    "pvContentSample": [],
-    "pvGate": "fail"
-  },
-  {
-    "cui": "37509349",
-    "name": "B.H.T. SMART CONCEPT",
-    "judet": "Maramures",
-    "localitate": "Tulghies",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "age 9y (+1)",
       "C1A+C2A (+1)"
     ],
     "caen_code": "4321",
     "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 278430,
-    "profit_2024": -7284,
-    "employees": 5,
-    "year_founded": 2017,
-    "status": "functiune",
-    "address": "Jud. Maramures, Sat Tulghies Com. Miresu Mare, Tulghies, Nr.115",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "47567266",
-    "name": "DGM ELECTRIC AD",
-    "judet": "Maramures",
-    "localitate": "Targu Lapus",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "age 3y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 0,
-    "profit_2024": 0,
-    "employees": 0,
-    "year_founded": 2023,
-    "status": "functiune",
-    "address": "Jud. Maramures, Ors. Targu Lapus, Str. Liliacului, Nr.3",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "44402107",
-    "name": "FS GREEN CONSTRUCT",
-    "judet": "Maramures",
-    "localitate": "Mocira",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 5,
-    "reasons": [
-      "website (+2)",
-      "revenue ≥500k (+1)",
-      "age 5y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4391",
-    "caen_label": "Lucrari de invelitori, sarpante si terase la constructii",
-    "website": "https://smartgreenconstruct.ro/",
-    "revenue_2024": 511230,
-    "profit_2024": 55645,
-    "employees": 3,
-    "year_founded": 2021,
-    "status": "functiune",
-    "address": "Jud. Maramures, Sat Mocira Com. Recea, Str. Rozelor, Nr.4",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "45676356",
-    "name": "GEO SALES",
-    "judet": "Maramures",
-    "localitate": "Seini",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "age 4y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 0,
-    "profit_2024": -1638,
-    "employees": 0,
-    "year_founded": 2022,
-    "status": "functiune",
-    "address": "Jud. Maramures, Ors. Seini, Str. Seinel, Nr.49a",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "46557442",
-    "name": "GREEN INVEST ELECTRICS",
-    "judet": "Maramures",
-    "localitate": "Viseu de Sus",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "age 4y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 321110,
-    "profit_2024": -121811,
+    "revenue_2024": 4141402,
+    "profit_2024": 232901,
     "employees": 6,
-    "year_founded": 2022,
+    "year_founded": 2024,
     "status": "functiune",
-    "address": "Jud. Maramures, Ors. Viseu De Sus, Str. Zavoiului, Nr.20",
+    "address": "Jud. Arad, Sat Cicir Com. Vladimirescu, Cicir, Nr.283",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "46284695",
-    "name": "GREENSTAR ELECTRICAL",
-    "judet": "Maramures",
-    "localitate": "UNGURENI",
+    "cui": "50618912",
+    "name": "MATCOMPANY",
+    "judet": "Arad",
+    "localitate": "Santana",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "score": 5,
+    "score": 6,
     "reasons": [
       "CAEN 4321 (+3)",
-      "age 4y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 121015,
-    "profit_2024": -127760,
-    "employees": 2,
-    "year_founded": 2022,
-    "status": "functiune",
-    "address": "Jud. Maramures, Sat Ungureni Com. Cupseni, Ungureni, Nr.278",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "37487453",
-    "name": "MCG ELECTRICAL SOLUTIONS",
-    "judet": "Maramures",
-    "localitate": "Cernesti",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "age 9y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 401643,
-    "profit_2024": 20273,
-    "employees": 3,
-    "year_founded": 2017,
-    "status": "functiune",
-    "address": "Jud. Maramures, Sat Fanate Com. Cernesti, Finate, Nr.193a",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "43128101",
-    "name": "OAN ELECTRIC",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "age 6y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 122300,
-    "profit_2024": -58922,
-    "employees": 2,
-    "year_founded": 2020,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Str. Dimitrie Cantemir, Nr.6, Ap.106",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "18300868",
-    "name": "P.C. - LUMEX - F.I.",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "age 20y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 329635,
-    "profit_2024": -274513,
-    "employees": 5,
-    "year_founded": 2006,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Bld. Regele Mihai I, Nr.35, Ap.47",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "47146062",
-    "name": "REVOLUT ELECTRIC",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "age 4y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 0,
-    "profit_2024": 0,
-    "employees": 0,
-    "year_founded": 2022,
-    "status": "inactiva",
-    "address": "Jud. Maramures, Mun. Baia Mare, Bld. Regele Ferdinand, Nr.102, Ap.17",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "31237334",
-    "name": "VOLTELECT LINE",
-    "judet": "Maramures",
-    "localitate": "Recea (MM)",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "age 13y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 263612,
-    "profit_2024": -62393,
-    "employees": 3,
-    "year_founded": 2013,
-    "status": "functiune",
-    "address": "Jud. Maramures, Sat Recea Com. Recea, Str. Stadionului, Nr.7",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "19200476",
-    "name": "BARSAN ELECTRIC",
-    "judet": "Maramures",
-    "localitate": "BARSANA",
-    "codes": [
-      "C2A"
-    ],
-    "hasBoth": false,
-    "score": 5,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "revenue ≥500k (+1)",
-      "age 20y (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 620175,
-    "profit_2024": 18520,
-    "employees": 5,
-    "year_founded": 2006,
-    "status": "functiune",
-    "address": "Jud. Maramures, Sat Barsana Com. Barsana, , Nr.709",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "25073067",
-    "name": "BYG EUROHAZARD",
-    "judet": "Maramures",
-    "localitate": "Viseu de Jos",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 4,
-    "reasons": [
       "revenue ≥2M (+2)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2639651,
+    "profit_2024": -74685,
+    "employees": 2,
+    "year_founded": 2024,
+    "status": "functiune",
+    "address": "Jud. Arad, Sat Santana Ors. Santana, Str. Slavici Ioan, Nr.37",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "25247678",
+    "name": "LOU ELECTRIC",
+    "judet": "Arad",
+    "localitate": "Zimandu Nou",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
       "age 17y (+1)",
       "C1A+C2A (+1)"
     ],
-    "caen_code": "8020",
-    "caen_label": "Activitati de servicii privind sistemele de securizare",
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
     "website": "",
-    "revenue_2024": 2642160,
-    "profit_2024": 51790,
-    "employees": 4,
+    "revenue_2024": 429138,
+    "profit_2024": -165864,
+    "employees": 6,
     "year_founded": 2009,
     "status": "functiune",
-    "address": "Jud. Maramures, Sat Viseu De Jos Com. Viseu De Jos, Nr.123",
+    "address": "Jud. Arad, Sat Zimandcuz Com. Zimandu Nou, G Zimandcuz, Nr.651",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "41521260",
-    "name": "CONPREST EDILITAR",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
+    "cui": "15160492",
+    "name": "COSERI ELECTRIC CO",
+    "judet": "Arad",
+    "localitate": "Ineu [AR]",
     "codes": [
       "C1A",
       "C2A"
@@ -2525,220 +342,26 @@
     "score": 4,
     "reasons": [
       "revenue ≥2M (+2)",
-      "age 7y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4100",
-    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
-    "website": "",
-    "revenue_2024": 4138727,
-    "profit_2024": 683681,
-    "employees": 14,
-    "year_founded": 2019,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Str. Victoriei, Nr.59a, Et.1, Ap.18",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "11611514",
-    "name": "ECOCENTER SERV",
-    "judet": "Maramures",
-    "localitate": "Sighetu Marmatiei",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 4,
-    "reasons": [
-      "revenue ≥2M (+2)",
-      "age 27y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4759",
-    "caen_label": "Comert cu amanuntul al mobilei, al articolelor de iluminat si al articole de uz casnic n.c.a., in magazine specializate",
-    "website": "",
-    "revenue_2024": 7138263,
-    "profit_2024": 678325,
-    "employees": 15,
-    "year_founded": 1999,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Sighetu Marmatiei, Str. Traian, Nr.29, Ap.58",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "50277360",
-    "name": "ELECTROMEDIA SERV",
-    "judet": "Maramures",
-    "localitate": "Târgu Lapus",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 4,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 61992,
-    "profit_2024": 28600,
-    "employees": 1,
-    "year_founded": 2024,
-    "status": "functiune",
-    "address": "Jud. Maramures, Sat Libotin Com. Cupseni, , Nr.351",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "50045491",
-    "name": "EXPERT AVANTAJ ELECTRIC",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 4,
-    "reasons": [
-      "CAEN 4321 (+3)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4321",
-    "caen_label": "Lucrari de instalatii electrice",
-    "website": "",
-    "revenue_2024": 12205,
-    "profit_2024": -4268,
-    "employees": 0,
-    "year_founded": 2024,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Bld. Regele Ferdinand, Nr.102, Ap.17",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "17530389",
-    "name": "IERDAN",
-    "judet": "Maramures",
-    "localitate": "Valea Chioarului",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 4,
-    "reasons": [
-      "revenue ≥2M (+2)",
-      "age 21y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4100",
-    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
-    "website": "",
-    "revenue_2024": 5772605,
-    "profit_2024": 726109,
-    "employees": 13,
-    "year_founded": 2005,
-    "status": "functiune",
-    "address": "Jud. Maramures, Sat Valea Chioarului Com. Valea Chioarului, , Nr.22",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "37157200",
-    "name": "S.I.V.A. TENTEA",
-    "judet": "Maramures",
-    "localitate": "Borsa [MM]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 4,
-    "reasons": [
-      "revenue ≥2M (+2)",
-      "age 9y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4332",
-    "caen_label": "Lucrari de tamplarie si dulgherie",
-    "website": "",
-    "revenue_2024": 7025444,
-    "profit_2024": 1718275,
-    "employees": 22,
-    "year_founded": 2017,
-    "status": "functiune",
-    "address": "Jud. Maramures, Ors. Borsa, Str. Alexandru Ioan Cuza, Nr.174a",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "41452194",
-    "name": "URBAN BUILDSKILL",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 4,
-    "reasons": [
-      "website (+2)",
-      "age 7y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4120",
-    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
-    "website": "https://urbanbuildskill.ro/",
-    "revenue_2024": 4076,
-    "profit_2024": -503387,
-    "employees": 5,
-    "year_founded": 2019,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Str. Liliacului, Nr.17d/1",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "15360202",
-    "name": "CPG TUR",
-    "judet": "Maramures",
-    "localitate": "Cavnic [MM]",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 3,
-    "reasons": [
-      "revenue ≥500k (+1)",
       "age 23y (+1)",
       "C1A+C2A (+1)"
     ],
-    "caen_code": "0145",
-    "caen_label": "Cresterea ovinelor si caprinelor",
+    "caen_code": "4222",
+    "caen_label": "Lucrari de constructii a proiectelor utilitare pentru electricitate si telecomunicatii",
     "website": "",
-    "revenue_2024": 1691817,
-    "profit_2024": 14440,
-    "employees": 10,
+    "revenue_2024": 6667511,
+    "profit_2024": 681598,
+    "employees": 25,
     "year_founded": 2003,
     "status": "functiune",
-    "address": "Jud. Maramures, Ors. Cavnic, Str. Rotunda, Nr.26/17",
+    "address": "Jud. Arad, Ors. Ineu, Str. Decebal, Nr.34",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "23452056",
-    "name": "VILLER",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
+    "cui": "40334930",
+    "name": "CLEVERVOLT",
+    "judet": "Arad",
+    "localitate": "Arad",
     "codes": [
       "C1A",
       "C2A"
@@ -2747,52 +370,54 @@
     "score": 3,
     "reasons": [
       "revenue ≥500k (+1)",
-      "age 18y (+1)",
+      "age 8y (+1)",
       "C1A+C2A (+1)"
     ],
-    "caen_code": "4100",
-    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
+    "caen_code": "4322",
+    "caen_label": "Lucrari de instalatii sanitare, de incalzire si de aer conditionat",
     "website": "",
-    "revenue_2024": 579121,
-    "profit_2024": 444585,
-    "employees": 2,
-    "year_founded": 2008,
+    "revenue_2024": 930757,
+    "profit_2024": 83994,
+    "employees": 30,
+    "year_founded": 2018,
     "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Str. Grivitei, Nr.49",
+    "address": "Jud. Arad, Mun. Arad, Str. Hatman Arbore, Nr.1/2",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "2196150",
-    "name": "ANTREPRIZA MONTAJ INSTALATII",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
+    "cui": "37375522",
+    "name": "ELECTROCM SERVICII",
+    "judet": "Arad",
+    "localitate": "Ineu [AR]",
     "codes": [
+      "C1A",
       "C2A"
     ],
-    "hasBoth": false,
+    "hasBoth": true,
     "score": 3,
     "reasons": [
-      "revenue ≥2M (+2)",
-      "age 34y (+1)"
+      "revenue ≥500k (+1)",
+      "age 9y (+1)",
+      "C1A+C2A (+1)"
     ],
-    "caen_code": "4221",
-    "caen_label": "Lucrari de constructii a proiectelor utilitare pentru fluide",
+    "caen_code": "4222",
+    "caen_label": "Lucrari de constructii a proiectelor utilitare pentru electricitate si telecomunicatii",
     "website": "",
-    "revenue_2024": 81574216,
-    "profit_2024": 1490124,
-    "employees": 149,
-    "year_founded": 1992,
+    "revenue_2024": 1304943,
+    "profit_2024": 201587,
+    "employees": 2,
+    "year_founded": 2017,
     "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Aleea Electrolizei, Nr.1",
+    "address": "Jud. Arad, Ors. Ineu, Str. Decebal, Nr.26, Ap.2",
     "error": null,
     "pvGate": "skip"
   },
   {
-    "cui": "36782250",
-    "name": "ALPESIRAL",
-    "judet": "Maramures",
-    "localitate": "Baia Mare",
+    "cui": "11028287",
+    "name": "GIRO CONSTRUCT",
+    "judet": "Arad",
+    "localitate": "Arad",
     "codes": [
       "C1A",
       "C2A"
@@ -2800,99 +425,18 @@
     "hasBoth": true,
     "score": 2,
     "reasons": [
-      "age 10y (+1)",
+      "age 28y (+1)",
       "C1A+C2A (+1)"
     ],
-    "caen_code": "4120",
-    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
-    "website": "",
-    "revenue_2024": 85622,
-    "profit_2024": 3126,
-    "employees": 0,
-    "year_founded": 2016,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Baia Mare, Str. Margeanului, Nr.7",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "44716207",
-    "name": "FAM MOB DESIGN",
-    "judet": "Maramures",
-    "localitate": "COPALNIC-MANASTUR",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 2,
-    "reasons": [
-      "age 5y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "3109",
-    "caen_label": "Fabricarea de mobila n.c.a.",
+    "caen_code": "7111",
+    "caen_label": "Activitati de arhitectura",
     "website": "",
     "revenue_2024": 0,
     "profit_2024": 0,
     "employees": 0,
-    "year_founded": 2021,
-    "status": "inactiva",
-    "address": "Jud. Maramures, Sat Copalnic-Manastur Com. Copalnic-Manastur, Copalnic-Manastur, Nr.175",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "51542910",
-    "name": "MAXBUILD",
-    "judet": "Maramures",
-    "localitate": "Sighetu Marmatiei",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 2,
-    "reasons": [
-      "revenue ≥500k (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "4100",
-    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
-    "website": "",
-    "revenue_2024": 850611,
-    "profit_2024": 362173,
-    "employees": 2,
-    "year_founded": 2025,
-    "status": "functiune",
-    "address": "Jud. Maramures, Mun. Sighetu Marmatiei, Pta. Cuza Voda, Nr.7",
-    "error": null,
-    "pvGate": "skip"
-  },
-  {
-    "cui": "37605680",
-    "name": "SGC SMARTSERV NOVIS",
-    "judet": "Maramures",
-    "localitate": "Viseu de Sus",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "score": 2,
-    "reasons": [
-      "age 9y (+1)",
-      "C1A+C2A (+1)"
-    ],
-    "caen_code": "3314",
-    "caen_label": "Repararea echipamentelor electrice",
-    "website": "",
-    "revenue_2024": 96923,
-    "profit_2024": 1225,
-    "employees": 2,
-    "year_founded": 2017,
-    "status": "functiune",
-    "address": "Jud. Maramures, Ors. Viseu De Sus, Str. Dragos Voda, Nr.75",
+    "year_founded": 1998,
+    "status": "radiata",
+    "address": "Jud. Brasov, Mun. Brasov, Str. Nucului, Nr.3",
     "error": null,
     "pvGate": "skip"
   }

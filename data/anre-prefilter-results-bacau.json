@@ -1,0 +1,456 @@
+[
+  {
+    "cui": "46627114",
+    "name": "BEST TEAM FOTOVOLTAICE",
+    "judet": "Bacau",
+    "localitate": "Bacau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 10,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "solar/PV în nume/CAEN (+3)",
+      "website (+2)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://panourilefotovoltaice.ro/",
+    "revenue_2024": 450781,
+    "profit_2024": 29068,
+    "employees": 4,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Bacau, Mun. Bacau, Str. Nicolae Balcescu, Nr.1, Sc.c, Ap.121",
+    "error": null,
+    "pvContentHits": 3,
+    "pvContentSample": [
+      "Sisteme de panouri fotovoltaice la cheie - Best Team Assistance Sari la conținut (0040) 733 533 133",
+      "Sisteme de panouri fotovoltaice la cheie - Best Team Assistance Sari la conținut (0040) 733"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "36562379",
+    "name": "AXIS AG",
+    "judet": "Bacau",
+    "localitate": "Bacau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 10y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://ssab-ie.ro/",
+    "revenue_2024": 22300473,
+    "profit_2024": 3844395,
+    "employees": 22,
+    "year_founded": 2016,
+    "status": "functiune",
+    "address": "Jud. Bacau, Mun. Bacau, Pta. Revolutiei, Nr.1, Et.2",
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail"
+  },
+  {
+    "cui": "11111063",
+    "name": "ELECTROIND",
+    "judet": "Bacau",
+    "localitate": "Onesti",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 28y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://electroind.ro/",
+    "revenue_2024": 4340643,
+    "profit_2024": 452909,
+    "employees": 20,
+    "year_founded": 1998,
+    "status": "functiune",
+    "address": "Jud. Bacau, Mun. Onesti, Str. Industriilor, Nr.3",
+    "error": null,
+    "pvContentHits": 2,
+    "pvContentSample": [
+      "ecuţie şi mentenanta Proiectare Panouri Fotovoltaice Instalații electrice Avertizare și protecție în caz de incendiu Sis",
+      "le de execuţie şi mentenanta Proiectare Panouri Fotovoltaice Instalații electrice Avertizare și protecție în caz de ince"
+    ],
+    "pvGate": "weak"
+  },
+  {
+    "cui": "46603425",
+    "name": "ECOLIGHTNINGINSTAL",
+    "judet": "Bacau",
+    "localitate": "Bacau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 8,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥500k (+1)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://ecolightning-instal.ro/",
+    "revenue_2024": 974594,
+    "profit_2024": 155268,
+    "employees": 6,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Bacau, Mun. Bacau, Str. Constantin Musat, Nr.3 , Vila Nr.8, Et.2, Ap.12",
+    "error": null,
+    "pvContentHits": 6,
+    "pvContentSample": [
+      "Montare Panouri Fotovoltaice - Ecolightning Instal 0741.371.379 contact@ecolightning-instal.ro U",
+      "Montare Panouri Fotovoltaice - Ecolightning Instal 0741.371.379 contact@ecolightning-ins"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "33469462",
+    "name": "BEST TEAM ASSISTANCE",
+    "judet": "Bacau",
+    "localitate": "Bacau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 12y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 12165745,
+    "profit_2024": 2603336,
+    "employees": 28,
+    "year_founded": 2014,
+    "status": "functiune",
+    "address": "Jud. Bacau, Sat Letea Veche Com. Letea Veche, Str. Al. I. Cuza, Nr.201",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "32319718",
+    "name": "EL-SYC SERV",
+    "judet": "Bacau",
+    "localitate": "Comanesti (BC)",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 13y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2701685,
+    "profit_2024": 741825,
+    "employees": 4,
+    "year_founded": 2013,
+    "status": "functiune",
+    "address": "Jud. Bacau, Ors. Comanesti, Str. Mihail Sadoveanu, Nr.7",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "33692790",
+    "name": "ELBIM GRUPSERV",
+    "judet": "Bacau",
+    "localitate": "Onesti",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 12y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 38384438,
+    "profit_2024": 6554570,
+    "employees": 44,
+    "year_founded": 2014,
+    "status": "functiune",
+    "address": "Jud. Bacau, Mun. Onesti, Str. Cauciucului, Nr.16, Sc.a, Ap.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "37954540",
+    "name": "ELECTRIC PUZZLE",
+    "judet": "Bacau",
+    "localitate": "Rusi-Ciutea",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 9y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2446376,
+    "profit_2024": 787692,
+    "employees": 5,
+    "year_founded": 2017,
+    "status": "functiune",
+    "address": "Jud. Bacau, Sat Rusi-Ciutea Com. Letea Veche, Str. Lavandei, Nr.48",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "31328440",
+    "name": "ENA ELECTRIC",
+    "judet": "Bacau",
+    "localitate": "Lilieci",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 13y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 3131359,
+    "profit_2024": 102757,
+    "employees": 16,
+    "year_founded": 2013,
+    "status": "functiune",
+    "address": "Jud. Bacau, Sat Lilieci Com. Hemeius, G Lilieci, Nr.54, Str. Bradului",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "36927491",
+    "name": "ENERGEX",
+    "judet": "Bacau",
+    "localitate": "Bacau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 9y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2475634,
+    "profit_2024": 427832,
+    "employees": 1,
+    "year_founded": 2017,
+    "status": "functiune",
+    "address": "Jud. Bacau, Mun. Bacau, Str. 22 Decembrie, Nr.119, Et.parter, Ap.2",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "7848432",
+    "name": "COM FAVOR",
+    "judet": "Bacau",
+    "localitate": "Bacau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 31y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 563973,
+    "profit_2024": 95474,
+    "employees": 4,
+    "year_founded": 1995,
+    "status": "functiune",
+    "address": "Jud. Bacau, Mun. Bacau, Cal. Moldovei, Nr.27",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "16607867",
+    "name": "ELGEDI",
+    "judet": "Bacau",
+    "localitate": "Podu Turcului",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 22y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1378398,
+    "profit_2024": 196612,
+    "employees": 3,
+    "year_founded": 2004,
+    "status": "functiune",
+    "address": "Jud. Bacau, Sat Podu Turcului Com. Podu Turcului, Str. Tudor Vladimirescu, Nr.287",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "40481558",
+    "name": "ENERGIS CONSULT",
+    "judet": "Bacau",
+    "localitate": "Traian",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 7y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1856623,
+    "profit_2024": 430899,
+    "employees": 7,
+    "year_founded": 2019,
+    "status": "functiune",
+    "address": "Jud. Bacau, Sat Traian Com. Traian, Traian, Nr.46",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "49144882",
+    "name": "DO IT ELECTRIC",
+    "judet": "Bacau",
+    "localitate": "Beresti-Tazlau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 3y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 410738,
+    "profit_2024": 281761,
+    "employees": 1,
+    "year_founded": 2023,
+    "status": "functiune",
+    "address": "Jud. Bacau, Sat Enachesti Com. Beresti-Tazlau, Enachesti, Nr.71, Str. Stefan Cel Mare",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "31109130",
+    "name": "Direct Group Solutions",
+    "judet": "Bacau",
+    "localitate": "Bacau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 13y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "3320",
+    "caen_label": "Instalarea masinilor si echipamentelor industriale",
+    "website": "",
+    "revenue_2024": 14940162,
+    "profit_2024": 3559310,
+    "employees": 23,
+    "year_founded": 2013,
+    "status": "functiune",
+    "address": "Jud. Bacau, Mun. Bacau, Cal. Marasesti, Nr.116, Sc.b, Et.p",
+    "error": null,
+    "pvGate": "skip"
+  }
+]
