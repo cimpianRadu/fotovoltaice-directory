@@ -4,7 +4,7 @@
 >
 > Când publici un articol, mută-l în secțiunea **Publicat** cu link + data + next-step (GSC Request Indexing, distribuție).
 
-Ultima actualizare: 2026-04-27
+Ultima actualizare: 2026-04-30
 
 ## Format intrare
 
@@ -23,20 +23,50 @@ Ultima actualizare: 2026-04-27
 ## 🎯 Propuneri active
 
 ### 2 — Quick win: update title pe /clasament
-- **Status:** 💡 idee (5 min, nu e articol)
-- **Cluster GSC:** "top firme panouri fotovoltaice" — 44 impresii, 0 clicks
-- **Pagină existentă:** `/clasament` — 317 impresii / 5 clicks
-- **De ce:** Title curent nu conține "top firme panouri fotovoltaice" — query literal. Fix de 5 minute, potențial +10 clicks/lună fără articol nou.
-- **Next step:** edit `app/clasament/page.tsx` metadata, verificare GSC după 14 zile.
+- **Status:** ✅ done — title + meta actualizate pentru a capta "top firme panouri fotovoltaice" + sortare/atestate ANRE. Recheck GSC după 14 zile.
 
-### 3 — (placeholder) Replicate București template pentru Cluj
-- **Status:** 💡 idee, blocat de validarea #1
-- **Declanșator:** dacă #1 aduce >5 clicks/săpt pe /firme/judet/bucuresti în 2 săpt
+### 3 — Quick win: meta /casa-verde
+- **Status:** ✅ done (commit 3cfc347, 2026-04-29) — title + meta rescrise pentru queries înscrieri/finanțare. Recheck CTR în GSC după 14 zile.
+
+### 5 — Vânzare surplus energie fotovoltaică — preț 2026 (prosumator firmă)
+- **Status:** 💡 idee
+- **Cluster GSC:** "vânzare surplus energie fotovoltaică preț", "preț achiziție surplus prosumator", "OUG surplus fotovoltaice 2026" — în creștere odată cu modificările legislative recente.
+- **Pagină existentă:** ghid prosumator comercial (pillar), nu acoperă tactic prețul de surplus.
+- **De ce:** Spike sezonier când apar OUG-uri pe surplus. Întreabă prosumatorii activi, complementar pillar-ului.
+- **Linkuri interne:** ghid prosumator comercial, ghid legislație, ghid ROI.
+- **Next step:** monitorizare ANRE + furnizori (Hidroelectrica, Electrica, Engie) pentru prețuri de achiziție 2026; comparație contracte.
+
+### 6 — Sistem fotovoltaic 50 / 100 / 250 kW pentru firmă — preț, suprafață, producție
+- **Status:** 💡 idee
+- **Cluster GSC:** "preț sistem fotovoltaic 50 kw firmă", "preț sistem fotovoltaic 100 kw industrial", "cât costă 250 kw fotovoltaic" — query-uri cu intent comercial maxim, neacoperite.
+- **Pagină existentă:** ghid costuri (general), ghid hale (calitativ — nu are dimensiuni concrete).
+- **De ce:** Cumpărătorul comercial caută cu putere instalată specifică. Răspunsul direct = breakdown pe kWp + suprafață acoperiș + producție anuală + ROI estimat.
+- **Format:** unul singur cu 3 secțiuni paralele (50/100/250 kW), nu 3 ghiduri separate.
+- **Linkuri interne:** ghid ROI, ghid costuri, ghid hale industriale, /clasament (firme cu istoric pe taglia respectivă).
+- **Next step:** culege 5-10 oferte reale per dimensiune (de la firmele din director sau public), normalizează RON/kWp, suprafață m²/kWp pe acoperiș plat vs înclinat.
+
+### 7 — Dimensionare sistem fotovoltaic comercial (+ mini-calculator)
+- **Status:** 💡 idee
+- **Cluster GSC:** "dimensionare sistem fotovoltaic comercial", "câți kw fotovoltaic pentru firmă", "kwh consum vs kwp panouri".
+- **Pagină existentă:** niciuna dedicată dimensionării.
+- **De ce:** Pereche naturală cu #6 — top of funnel pentru același intent. Mini-calculator (input: kWh/an consum + județ → output: kWp recomandat + suprafață + producție estimată) crește dwell time și CTR backlink.
+- **Linkuri interne:** #6 (50/100/250 kW), ghid ROI, ghid costuri.
+- **Next step:** decide dacă calculator-ul e component React în pagină sau static cu tabel; cere yield specific per județ (kWh/kWp/an) din datele PVGIS.
+
+### 8 — (placeholder) Replicate București template pentru Cluj
+- **Status:** 💡 idee, blocat de validarea ghidului București + național
+- **Declanșator:** dacă /firme/judet/bucuresti aduce >5 clicks/săpt în 2 săpt de la 27 Apr (ghid național)
 - **De ce:** Cluj are 10 firme acum (post 2026-04-22 batch), pagina județ există deja. Dacă template funcționează pe București, scalezi ieftin.
 
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Asigurare Panouri Fotovoltaice Firmă 2026 — Ghid Complet pentru Sisteme Comerciale
+- **Publicat:** 2026-04-30 → [/ghid/asigurare-panouri-fotovoltaice-comerciale](/ghid/asigurare-panouri-fotovoltaice-comerciale)
+- **Cluster GSC țintă:** "asigurare panouri fotovoltaice comerciale" + variații (firmă/SRL/hală) — bottom-of-funnel, zero competiție serioasă în RO. Hero image lipsă (nano-banana indispon. la generare — de regenerat manual cu /guide-image).
+- **Strategie:** singurul ghid din director pe nișa de operare/protecție post-instalare. Audiență pre-calificată (au făcut deja investiția). Acoperă: all-risks vs name-perils, riscuri acoperite, excluderi tipice, BI, cost, checklist 10 puncte, asiguratori activi pe RO (Allianz-Țiriac, Omniasig, Generali, Groupama, UNIQA).
+- **Next step:** GSC Request Indexing manual, monitorizare 14/30 zile. KPI: clicks pe ghid + impresii pe queries head ("asigurare centrale fotovoltaice", "asigurare panouri fotovoltaice firmă"). Dacă urcă, considerăm ramificații (asigurare parc solar, BI calculator).
 
 ### Instalatori Autorizați ANRE Panouri Fotovoltaice 2026 — Top Firme Verificate
 - **Publicat:** 2026-04-27 → [/ghid/instalatori-autorizati-anre-panouri-fotovoltaice-2026](/ghid/instalatori-autorizati-anre-panouri-fotovoltaice-2026)
