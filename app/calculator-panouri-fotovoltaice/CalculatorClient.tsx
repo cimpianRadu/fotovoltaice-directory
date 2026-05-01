@@ -48,6 +48,11 @@ export default function CalculatorClient() {
     [],
   );
 
+  const yieldKwhPerKwp = useMemo(() => {
+    const baseYield = YIELDS[judet] ?? 1250;
+    return Math.round(baseYield * FACTORS[mounting]);
+  }, [judet, mounting]);
+
   const result = useMemo(() => {
     const consumLunarNum = Number(consumLunar);
     const tarifNum = Number(tarif);
@@ -55,8 +60,6 @@ export default function CalculatorClient() {
     if (!Number.isFinite(tarifNum) || tarifNum <= 0) return null;
 
     const consumAnual = consumLunarNum * 12;
-    const baseYield = YIELDS[judet] ?? 1250;
-    const yieldKwhPerKwp = Math.round(baseYield * FACTORS[mounting]);
 
     const kwp = consumAnual / yieldKwhPerKwp;
     const kwpRounded = Math.max(1, Math.round(kwp * 10) / 10);
@@ -105,7 +108,7 @@ export default function CalculatorClient() {
       co2Tone,
       pricePerKwp: pricePerKwp(kwpRounded),
     };
-  }, [consumLunar, tarif, judet, mounting, autoconsum]);
+  }, [consumLunar, tarif, autoconsum, yieldKwhPerKwp]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -126,8 +129,8 @@ export default function CalculatorClient() {
     <div className="space-y-8">
       {/* Disclaimer top */}
       <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-        <strong>Estimare orientativă.</strong> Calculele folosesc medii statistice (yield PVGIS, prețuri piață 2026, tarif buy-back prosumator ~0,30 RON/kWh).
-        Pentru ofertă reală cere oferte de la 3 instalatori — variația poate fi ±20% în funcție de acoperiș, orientare, umbrire, tip invertor și condiții site.
+        <strong>Estimare orientativă.</strong> Calculele folosesc medii statistice (producția specifică pe județ din modelul PVGIS, prețuri de piață pentru 2026, tarif prosumator de aproximativ 0,30 RON/kWh).
+        Pentru o ofertă reală, cere oferte de la cel puțin trei instalatori — variația poate fi de ±20%, în funcție de acoperiș, orientare, umbrire, tip de invertor și condițiile concrete ale locației.
       </div>
 
       <form
@@ -151,15 +154,35 @@ export default function CalculatorClient() {
             <p className="mt-1 text-xs text-gray-500">Vezi pe factură. Tipic: birou mic 1.500–3.000, hală 5.000–30.000.</p>
           </div>
 
-          <SearchableSelect
-            label="Județ"
-            name="judet"
-            required
-            value={judet}
-            onValueChange={(v) => v && setJudet(v)}
-            options={countyOptions}
-            placeholder="Selectează județul"
-          />
+          <div>
+            <SearchableSelect
+              label="Județ"
+              name="judet"
+              required
+              value={judet}
+              onValueChange={(v) => v && setJudet(v)}
+              options={countyOptions}
+              placeholder="Selectează județul"
+            />
+          </div>
+
+          <div className="sm:col-span-2 -mt-1">
+            <div className="rounded-lg bg-amber-50/60 border border-amber-200/70 p-3 flex items-start gap-3">
+              <svg className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2.25a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.06 1.06a.75.75 0 0 0 1.06 1.06l1.06-1.06ZM21.75 12a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.06-1.06a.75.75 0 0 0-1.06 1.06l1.06 1.06ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.243a.75.75 0 1 0-1.06-1.06l-1.061 1.06a.75.75 0 0 0 1.06 1.06l1.06-1.06ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.06-1.06a.75.75 0 1 0-1.061 1.06l1.06 1.06Z" />
+              </svg>
+              <div className="text-sm">
+                <div className="flex items-baseline gap-2">
+                  <span className="font-medium text-secondary-dark">Producție specifică în {judet}:</span>
+                  <span className="font-semibold text-primary-dark">~{formatNumber(yieldKwhPerKwp)} kWh/kWp/an</span>
+                </div>
+                <p className="text-xs text-gray-600 mt-1 leading-relaxed">
+                  Cantitatea de energie produsă într-un an de fiecare kWp instalat. Depinde de cât soare primește județul (radiația solară) și de tipul de montaj.
+                  În România, valorile variază între ~1.140 kWh/kWp/an în zonele montane și ~1.380 kWh/kWp/an în sudul Dobrogei. Sursa: model PVGIS, medii multianuale 2005–2023.
+                </p>
+              </div>
+            </div>
+          </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Tip montaj</label>
@@ -195,13 +218,13 @@ export default function CalculatorClient() {
               required
               className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none"
             />
-            <p className="mt-1 text-xs text-gray-500">Preț total pe factură ÷ kWh consumați (TVA inclus).</p>
+            <p className="mt-1 text-xs text-gray-500">Preț total pe factură împărțit la kWh consumați (TVA inclus).</p>
           </div>
 
           <div className="sm:col-span-2">
             <div className="flex items-center justify-between mb-1">
               <label className="block text-sm font-medium text-gray-700">
-                Cota de autoconsum
+                Cotă estimată de autoconsum
               </label>
               <span className="text-sm font-semibold text-primary-dark">{autoconsum}%</span>
             </div>
@@ -215,7 +238,7 @@ export default function CalculatorClient() {
               className="w-full accent-primary"
             />
             <p className="mt-1 text-xs text-gray-500">
-              Procentul din producție consumat direct (restul se injectează în rețea la ~0,30 RON/kWh). Tipic 60–80% pentru firme cu activitate diurnă.
+              Cât din energia produsă o consumă firma direct (restul se injectează în rețea, plătit la tariful prosumator de aproximativ 0,30 RON/kWh). Pentru firme cu activitate de zi, tipic 60–80%.
             </p>
           </div>
         </div>
@@ -238,7 +261,7 @@ export default function CalculatorClient() {
               Sistem recomandat: {formatNumber(result.kwp)} kWp
             </h2>
             <p className="text-sm text-gray-600">
-              Yield estimat: {formatNumber(result.yieldKwhPerKwp)} kWh/kWp/an · Suprafață necesară: ~{result.suprafata} m²
+              Producție specifică folosită: {formatNumber(result.yieldKwhPerKwp)} kWh/kWp/an · Suprafață necesară: ~{result.suprafata} m²
             </p>
           </div>
 
@@ -256,11 +279,11 @@ export default function CalculatorClient() {
               </p>
             </div>
             <div className="bg-white rounded-xl border border-border p-5">
-              <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Payback</p>
+              <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Amortizare</p>
               <p className="text-2xl font-bold text-secondary-dark">
                 {result.payback ? `${result.payback.toFixed(1)} ani` : '—'}
               </p>
-              <p className="text-xs text-gray-500 mt-1">Recuperare investiție din economii</p>
+              <p className="text-xs text-gray-500 mt-1">Recuperarea investiției din economii</p>
             </div>
           </div>
 
@@ -306,13 +329,13 @@ export default function CalculatorClient() {
                 </div>
               </dl>
               <p className="text-xs text-gray-500 mt-3">
-                Cu degradare panouri 0,5%/an. Nu include reînnoirea invertorului (~10–12 ani, ~5–8% din investiție).
+                Calculat cu o degradare a panourilor de 0,5% pe an. Nu include înlocuirea invertorului (necesară la 10–12 ani, aproximativ 5–8% din investiția inițială).
               </p>
             </div>
           </div>
 
           <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-            <strong>Cifrele de mai sus sunt estimări orientative.</strong> Pentru o ofertă reală adaptată la consumul, acoperișul și locația ta, cere oferte de la cel puțin 3 instalatori autorizați ANRE.
+            <strong>Cifrele de mai sus sunt estimări orientative.</strong> Pentru o ofertă reală, adaptată la consumul, acoperișul și locația firmei tale, cere oferte de la cel puțin trei instalatori autorizați ANRE.
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
