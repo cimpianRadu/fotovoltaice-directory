@@ -8,12 +8,13 @@ import { usePathname } from 'next/navigation';
 const primaryLinks = [
   { href: '/firme', label: 'Firme' },
   { href: '/clasament', label: 'Clasament' },
+  { href: '/calculator-panouri-fotovoltaice', label: 'Calculator' },
   { href: '/verificare-anre', label: 'Verificare ANRE' },
   { href: '/ghid', label: 'Ghiduri' },
-  { href: '/publicitate', label: 'Publicitate' },
 ];
 
 const moreLinks = [
+  { href: '/publicitate', label: 'Publicitate' },
   { href: '/intrebari-frecvente', label: 'Întrebări frecvente' },
   { href: '/despre', label: 'Despre noi' },
 ];
