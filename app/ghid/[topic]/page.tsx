@@ -8,6 +8,7 @@ import FAQ from '@/components/seo/FAQ';
 import Button from '@/components/ui/Button';
 import Markdown from '@/components/ui/Markdown';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
+import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import guidesData from '@/data/guides.json';
@@ -159,6 +160,11 @@ export default async function GuidePage({ params }: Props) {
             </section>
           ))}
         </div>
+
+        <PremiumPoolSection
+          title="Instalatori Recomandați"
+          subtitle="Firme partenere care fac proiecte ca cel din ghid"
+        />
 
         {/* CTA */}
         <div className="bg-primary/5 rounded-xl border border-primary/10 p-6 my-10 text-center">

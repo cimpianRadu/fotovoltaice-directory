@@ -3,6 +3,15 @@ import specializationsData from '@/data/specializations.json';
 import countiesData from '@/data/counties.json';
 import { hasActiveAnreCert } from './anre';
 
+export type PromoTier = 'free' | 'basic' | 'plus' | 'premium' | 'bundle';
+
+export interface CompanySocials {
+  facebook?: string;
+  linkedin?: string;
+  instagram?: string;
+  youtube?: string;
+}
+
 export interface Company {
   id: string;
   slug: string;
@@ -10,10 +19,12 @@ export interface Company {
   cui: string;
   logo?: string;
   description: string;
+  longDescription?: string;
   founded: number;
   employees: number;
   location: { city: string; county: string; address: string };
   contact: { phone: string; email: string; website: string };
+  socials?: CompanySocials;
   coverage: string[];
   specializations: string[];
   certifications: string[];
@@ -22,9 +33,39 @@ export interface Company {
   tags: string[];
   featured: boolean;
   verified: boolean;
+  promoTier?: PromoTier;
   createdAt: string;
   updatedAt: string;
   anreMatch: { societate: string; judet: string } | null;
+}
+
+export const PROMO_CAPS = {
+  basic: 8,
+  plusPerCounty: 3,
+  plusOnAnre: 5,
+  premiumPool: 5,
+} as const;
+
+export function hasPlusPlacement(c: Company): boolean {
+  return c.promoTier === 'plus' || c.promoTier === 'bundle';
+}
+
+export function hasPremiumPlacement(c: Company): boolean {
+  return c.promoTier === 'premium' || c.promoTier === 'bundle';
+}
+
+export function getPlusCompaniesForCounty(county: string): Company[] {
+  return companiesData.companies
+    .filter((c) => c.location.county === county && hasPlusPlacement(c))
+    .slice(0, PROMO_CAPS.plusPerCounty);
+}
+
+export function getPlusCompaniesForAnre(): Company[] {
+  return companiesData.companies.filter(hasPlusPlacement).slice(0, PROMO_CAPS.plusOnAnre);
+}
+
+export function getPremiumCompanies(): Company[] {
+  return companiesData.companies.filter(hasPremiumPlacement).slice(0, PROMO_CAPS.premiumPool);
 }
 export type Specialization = (typeof specializationsData.specializations)[number];
 

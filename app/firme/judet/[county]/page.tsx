@@ -11,6 +11,8 @@ import {
   getCountyBySlug,
   getCompaniesByCounty,
   getCoveredCounties,
+  getPlusCompaniesForCounty,
+  PROMO_CAPS,
   slugifyCounty,
   slugifyCity,
   sortCompanies,
@@ -18,6 +20,7 @@ import {
   MAJOR_CITIES,
 } from '@/lib/utils';
 import { hasActiveAnreCert } from '@/lib/anre';
+import PromovateSection from '@/components/promo/PromovateSection';
 
 interface Props {
   params: Promise<{ county: string }>;
@@ -49,6 +52,7 @@ export default async function CountyPage({ params }: Props) {
   if (!county) notFound();
 
   const companies = sortCompanies(getCompaniesByCounty(county), 'relevance');
+  const plusCompanies = getPlusCompaniesForCounty(county);
 
   return (
     <>
@@ -76,6 +80,15 @@ export default async function CountyPage({ params }: Props) {
             acoperă județul {county}
           </p>
         </div>
+
+        {plusCompanies.length > 0 && (
+          <PromovateSection
+            companies={plusCompanies}
+            max={PROMO_CAPS.plusPerCounty}
+            title="Promovate"
+            subtitle={`Firme partenere din ${county}`}
+          />
+        )}
 
         <CountyCompanyList companies={companies} county={county} />
 

@@ -7,6 +7,7 @@ import { getCompanies, SITE_URL } from '@/lib/utils';
 import { getCompanyAnreCerts, PV_RELEVANT_CODES } from '@/lib/anre';
 import CorrectionForm from '@/components/forms/CorrectionForm';
 import ClasamentTable from '@/components/clasament/ClasamentTable';
+import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
 
 export const metadata: Metadata = {
   title: 'Clasament Firme Panouri Fotovoltaice România 2026 — Sortare după Cifră, Angajați, Atestate ANRE',
@@ -175,6 +176,11 @@ export default function ClasamentPage() {
             </div>
           </Link>
         </section>
+
+        <PremiumPoolSection
+          title="Parteneri Verificați"
+          subtitle="Firme partenere ale platformei — apar separat, nu influențează ordinea din tabel"
+        />
 
         {/* Table */}
         <section id="clasament" className="mb-12 scroll-mt-20">

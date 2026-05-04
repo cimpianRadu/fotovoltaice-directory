@@ -183,14 +183,6 @@ function Feature({ children, strong = false }: { children: React.ReactNode; stro
   );
 }
 
-function ComingSoonBadge() {
-  return (
-    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
-      În pregătire
-    </span>
-  );
-}
-
 /* ── Page ─────────────────────────────────────────────────────── */
 
 export default function AdvertisePage() {
@@ -381,7 +373,6 @@ export default function AdvertisePage() {
               <div className="flex items-center gap-2 mb-1 mt-1 flex-wrap">
                 <h3 className="font-bold text-gray-900 text-lg">Plus</h3>
                 <span className="text-xs bg-primary/10 text-primary-dark px-2 py-0.5 rounded-full">Doar instalatori</span>
-                <ComingSoonBadge />
               </div>
               <p className="text-sm text-gray-500 mb-4">Vizibilitate prioritară pe județul tău + verificare ANRE</p>
               <p className="text-3xl font-bold text-gray-900 mb-1">
@@ -398,15 +389,15 @@ export default function AdvertisePage() {
                 <Feature>Raport lunar: impresii pagină, click-uri pe profil, click-uri telefon/site</Feature>
               </ul>
               <div className="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
-                <strong>În pregătire — early access:</strong> Plus se lansează în Q3 2026. Înscrie-te acum și prinzi locul în județul tău la prețul de lansare (max 3 firme/județ — first come, first served).
+                <strong>Cap pe județ — first come, first served:</strong> max 3 firme Plus simultan per județ. Dacă județul tău e plin, intri pe lista de așteptare.
               </div>
               <Button
-                href="mailto:contact@instalatori-fotovoltaice.ro?subject=Early%20Access%20Plus%20(99%20EUR%2Flun%C4%83)&body=Bun%C4%83%2C%0A%0AVreau%20early%20access%20la%20pachetul%20Plus%20pentru%20firma%3A%0A%0ANume%20firm%C4%83%3A%20%0ACUI%3A%20%0AJude%C8%9B%3A%20%0APersoan%C4%83%20contact%3A%20%0ATelefon%3A%20%0A%0AMul%C8%9Bumesc%21"
+                href="mailto:contact@instalatori-fotovoltaice.ro?subject=Activare%20Plus%20(99%20EUR%2Flun%C4%83)&body=Bun%C4%83%2C%0A%0AVreau%20s%C4%83%20activez%20pachetul%20Plus%20pentru%20firma%3A%0A%0ANume%20firm%C4%83%3A%20%0ACUI%3A%20%0AJude%C8%9B%3A%20%0APersoan%C4%83%20contact%3A%20%0ATelefon%3A%20%0A%0AMul%C8%9Bumesc%21"
                 variant="primary"
                 size="md"
                 className="w-full mt-5"
               >
-                Rezervă loc în județul tău
+                Activează Plus
               </Button>
             </div>
             <div className="hidden sm:block">
@@ -422,7 +413,6 @@ export default function AdvertisePage() {
               <div className="flex items-center gap-2 mb-1 flex-wrap">
                 <h3 className="font-bold text-gray-900 text-lg">Premium</h3>
                 <span className="text-xs bg-secondary/10 text-secondary-dark px-2 py-0.5 rounded-full">Doar instalatori</span>
-                <ComingSoonBadge />
               </div>
               <p className="text-sm text-gray-500 mb-4">Expunere națională + profil complet</p>
               <p className="text-3xl font-bold text-gray-900 mb-1">
@@ -448,20 +438,99 @@ export default function AdvertisePage() {
                 <Feature>Raport lunar extins: impresii, timp citire, conversii</Feature>
               </ul>
               <div className="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
-                <strong>În pregătire — early access:</strong> Premium se lansează în Q3 2026. Cap pool max 5 firme la nivel național — early access îți garantează locul la prețul de lansare.
+                <strong>Cap național — first come, first served:</strong> max 5 firme Premium în pool-ul global. Dacă pool-ul e plin, intri pe lista de așteptare.
               </div>
               <Button
-                href="mailto:contact@instalatori-fotovoltaice.ro?subject=Early%20Access%20Premium%20(249%20EUR%2Flun%C4%83)&body=Bun%C4%83%2C%0A%0AVreau%20early%20access%20la%20pachetul%20Premium%20pentru%20firma%3A%0A%0ANume%20firm%C4%83%3A%20%0ACUI%3A%20%0APersoan%C4%83%20contact%3A%20%0ATelefon%3A%20%0A%0AMul%C8%9Bumesc%21"
+                href="mailto:contact@instalatori-fotovoltaice.ro?subject=Activare%20Premium%20(249%20EUR%2Flun%C4%83)&body=Bun%C4%83%2C%0A%0AVreau%20s%C4%83%20activez%20pachetul%20Premium%20pentru%20firma%3A%0A%0ANume%20firm%C4%83%3A%20%0ACUI%3A%20%0APersoan%C4%83%20contact%3A%20%0ATelefon%3A%20%0A%0AMul%C8%9Bumesc%21"
                 variant="secondary"
                 size="md"
                 className="w-full mt-5"
               >
-                Rezervă loc în pool-ul național
+                Activează Premium
               </Button>
             </div>
             <div className="hidden sm:block">
               <PreviewPremium />
             </div>
+          </div>
+        </section>
+
+        {/* Rotation & Share-of-Voice explainer */}
+        <section className="mb-12">
+          <div className="rounded-xl border border-primary/20 bg-linear-to-br from-primary/5 via-white to-secondary/5 p-6 sm:p-8">
+            <div className="flex items-center gap-2 mb-4">
+              <svg className="w-5 h-5 text-primary-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+              </svg>
+              <h2 className="text-lg font-bold text-gray-900">Cum funcționează rotația — transparență totală</h2>
+            </div>
+            <p className="text-sm text-gray-600 leading-relaxed mb-5">
+              Pe Basic, Plus și Premium avem mai multe firme plătitoare per slot. Ca să fie corect față de toți, folosim <strong>rotație random egală</strong> — fiecare firmă apare pentru o parte din vizitatori, comunicat explicit. Niciun pachet NU promite „mereu primul&quot; (e fizic imposibil când ai 2+ plătitori), ci <strong>share echitabil garantat prin cap pe slot</strong>.
+            </p>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              {/* Basic rotation */}
+              <div className="rounded-lg border border-border bg-white p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">Basic</span>
+                  <span className="text-[10px] bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded-full font-mono">29€</span>
+                </div>
+                <p className="text-sm font-semibold text-gray-900 mb-1">Popup carousel</p>
+                <p className="text-xs text-gray-600 leading-relaxed mb-3">
+                  Popup-ul din colț dreapta-jos rotește la fiecare <strong>15 secunde</strong> între parteneri. Maxim 8 activi simultan. Un ciclu complet = 2 minute.
+                </p>
+                <div className="text-[11px] text-gray-500 space-y-0.5">
+                  <p>• Cap: <strong>max 8 parteneri</strong></p>
+                  <p>• Share: <strong>1/8 din timp (~12.5%)</strong> per partener</p>
+                  <p>• Rotație: <strong>timp-based, 15s</strong></p>
+                </div>
+              </div>
+
+              {/* Plus rotation */}
+              <div className="rounded-lg border-2 border-primary/30 bg-primary/5 p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-primary-dark">Plus</span>
+                  <span className="text-[10px] bg-primary/15 text-primary-dark px-1.5 py-0.5 rounded-full font-mono">99€</span>
+                </div>
+                <p className="text-sm font-semibold text-gray-900 mb-1">Top „Promovate&quot; pe județ</p>
+                <p className="text-xs text-gray-600 leading-relaxed mb-3">
+                  Pe pagina județului, secțiunea „Promovate&quot; afișează firmele plătite. La fiecare reload, ordinea e <strong>random</strong> între cele 3 sloturi. Featured pe <code className="text-[10px] bg-white px-1 rounded">/verificare-anre</code> funcționează la fel (pool 5).
+                </p>
+                <div className="text-[11px] text-gray-500 space-y-0.5">
+                  <p>• Cap: <strong>max 3 firme/județ</strong></p>
+                  <p>• Share: <strong>~33% vizualizări fiecare</strong></p>
+                  <p>• Rotație: <strong>random la reload</strong></p>
+                </div>
+              </div>
+
+              {/* Premium rotation */}
+              <div className="rounded-lg border border-secondary/30 bg-secondary/5 p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-secondary-dark">Premium</span>
+                  <span className="text-[10px] bg-secondary/15 text-secondary-dark px-1.5 py-0.5 rounded-full font-mono">249€</span>
+                </div>
+                <p className="text-sm font-semibold text-gray-900 mb-1">Pool global rotativ</p>
+                <p className="text-xs text-gray-600 leading-relaxed mb-3">
+                  Pe homepage, ghiduri, <code className="text-[10px] bg-white px-1 rounded">/calculator</code> și <code className="text-[10px] bg-white px-1 rounded">/clasament</code> avem un pool unic de max 5 firme. La fiecare reload, ordinea e <strong>random</strong>.
+                </p>
+                <div className="text-[11px] text-gray-500 space-y-0.5">
+                  <p>• Cap: <strong>max 5 firme național</strong></p>
+                  <p>• Share: <strong>~33% vizualizări fiecare</strong></p>
+                  <p>• Rotație: <strong>random la reload</strong></p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-5 p-4 rounded-lg bg-white border border-gray-200">
+              <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Exemplu concret pentru Plus</p>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                Dacă pagina <code className="text-xs bg-gray-100 px-1 rounded">/firme/judet/cluj</code> are <strong>~3.000 vizualizări/lună</strong> și avem 3 firme Plus active în Cluj, fiecare primește în medie <strong>~1.000 impresii/lună</strong> în secțiunea „Promovate&quot;. Datele exacte le primești în raportul lunar Umami.
+              </p>
+            </div>
+
+            <p className="text-xs text-gray-500 mt-4 leading-relaxed">
+              <strong>De ce nu garantăm „mereu primul&quot;:</strong> când 3 firme plătesc același pachet pentru același placement, e matematic imposibil ca toate să fie „primele&quot;. Rotația random egală e singura soluție corectă — toți primesc share comparabil, transparent comunicat. Modelul e folosit de directoare ca G2.com, Houzz Pro, Clutch.co.
+            </p>
           </div>
         </section>
 
@@ -663,11 +732,11 @@ export default function AdvertisePage() {
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
               <summary className="font-semibold text-gray-900 text-sm cursor-pointer list-none flex justify-between items-start gap-3">
-                <span>De ce „În pregătire&quot; pe Plus și Premium?</span>
+                <span>Ce se întâmplă dacă județul/pool-ul Plus sau Premium e plin?</span>
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Plus și Premium sunt pachete noi pe care le construim activ. Lansare Q3 2026. Înscrierea acum garantează locul în județ (Plus) sau în pool-ul național (Premium) la prețul de lansare. Capacitățile sunt limitate (max 3/județ, max 5 național) — first come, first served. Basic e disponibil acum.
+                Plus = max 3 firme/județ. Premium = max 5 firme național. Dacă slot-urile sunt ocupate, intri pe lista de așteptare și te anunțăm când se eliberează un loc — first come, first served. Bundle Total are alocare prioritară pe toate trei pachetele.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">

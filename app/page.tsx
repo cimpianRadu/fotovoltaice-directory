@@ -21,7 +21,8 @@ import FAQ from '@/components/seo/FAQ';
 import JsonLd from '@/components/seo/JsonLd';
 import WaitlistForm from '@/components/forms/WaitlistForm';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
-import { getCompanies, getCoveredCounties, getFeaturedCompanies } from '@/lib/utils';
+import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
+import { getCompanies, getCoveredCounties, getFeaturedCompanies, getPremiumCompanies } from '@/lib/utils';
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import guidesData from '@/data/guides.json';
 
@@ -69,6 +70,7 @@ const homeFaqs = [
 
 export default function HomePage() {
   const featured = getFeaturedCompanies();
+  const hasPremium = getPremiumCompanies().length > 0;
 
   return (
     <>
@@ -115,80 +117,75 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Promo Banner — Premium Profile Preview */}
-      <section className="max-w-7xl mx-auto px-4 pt-8">
-        <Link
-          href="/publicitate"
-          className="block rounded-xl border-2 border-primary/30 bg-primary/5 p-4 sm:p-5 hover:border-primary/50 hover:shadow-md transition-all group"
-        >
-          <div className="flex items-center justify-between gap-4 mb-3">
-            <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider">
-              Profil Premium — Exemplu
+      {!hasPremium && (
+        <section className="max-w-7xl mx-auto px-4 pt-8">
+          <Link
+            href="/publicitate"
+            className="block rounded-xl border-2 border-primary/30 bg-primary/5 p-4 sm:p-5 hover:border-primary/50 hover:shadow-md transition-all group"
+          >
+            <div className="flex items-center justify-between gap-4 mb-2">
+              <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider">
+                Promovează-ți firma pe platformă
+              </p>
+              <span className="text-xs text-primary-dark font-medium group-hover:underline hidden sm:inline">
+                Vezi pachetele &rarr;
+              </span>
+            </div>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              Patru pachete cu placement-uri proprii — Basic <strong>29€</strong>, Plus <strong>99€</strong>, Premium <strong>249€</strong>, sau Bundle Total cu <strong>15% reducere</strong>. Audiență 100% nișată B2B fotovoltaic.
             </p>
-            <span className="text-xs text-primary-dark font-medium group-hover:underline hidden sm:inline">
-              Află mai multe &rarr;
-            </span>
-          </div>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 sm:p-4 rounded-lg bg-white border border-primary/20">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center shrink-0">
-              <svg className="w-5 h-5 text-primary-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex flex-wrap items-center gap-2 mb-0.5">
-                <p className="text-sm font-semibold text-gray-900">Exemplu Promovare</p>
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-200">
-                  &#10003; Partener Verificat
-                </span>
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary-dark">
-                  &#9733; Premium
-                </span>
-              </div>
-              <p className="text-xs text-gray-500">Firma ta poate fi promovată aici</p>
-              <p className="text-sm font-bold text-primary-dark mt-1 sm:hidden">De la 49 EUR/lună + TVA</p>
-            </div>
-            <div className="hidden sm:flex flex-col items-end shrink-0 text-right">
-              <p className="text-xs text-gray-500">De la</p>
-              <p className="text-sm font-bold text-primary-dark">49 EUR/lună</p>
-              <p className="text-xs text-gray-500">+ TVA</p>
-            </div>
-          </div>
-          <p className="text-xs text-gray-600 mt-2 text-center sm:text-left">
-            Poziție prioritară &middot; Lead-uri din &quot;Cere Ofertă&quot; &middot; Badge verificat &middot; Statistici profil
-          </p>
-        </Link>
-      </section>
+          </Link>
+        </section>
+      )}
 
-      {/* Featured Companies */}
+      {/* Featured Companies — Premium pool when available, fallback to editorial */}
       <section className="max-w-7xl mx-auto px-4 py-16">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">Instalatori de Panouri Fotovoltaice Recomandați</h2>
-            <p className="text-gray-500 mt-1">Firme verificate cu atestat ANRE și experiență dovedită</p>
-          </div>
-          <Link
-            href="/firme"
-            className="hidden sm:inline-flex text-sm font-medium text-primary-dark hover:text-primary transition-colors"
-          >
-            Vezi toate firmele &rarr;
-          </Link>
-        </div>
+        {hasPremium ? (
+          <>
+            <PremiumPoolSection
+              title="Instalatori de Panouri Fotovoltaice Recomandați"
+              subtitle="Firme partenere Premium — verificate cu atestat ANRE și experiență dovedită"
+            />
+            <div className="text-center">
+              <Link
+                href="/firme"
+                className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-primary transition-colors"
+              >
+                Vezi toate firmele &rarr;
+              </Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">Instalatori de Panouri Fotovoltaice Recomandați</h2>
+                <p className="text-gray-500 mt-1">Firme verificate cu atestat ANRE și experiență dovedită</p>
+              </div>
+              <Link
+                href="/firme"
+                className="hidden sm:inline-flex text-sm font-medium text-primary-dark hover:text-primary transition-colors"
+              >
+                Vezi toate firmele &rarr;
+              </Link>
+            </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {featured.slice(0, 6).map((company) => (
-            <CompanyCard key={company.id} company={company} />
-          ))}
-        </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {featured.slice(0, 6).map((company) => (
+                <CompanyCard key={company.id} company={company} />
+              ))}
+            </div>
 
-        <div className="mt-8 text-center sm:hidden">
-          <Link
-            href="/firme"
-            className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-primary transition-colors"
-          >
-            Vezi toate firmele &rarr;
-          </Link>
-        </div>
+            <div className="mt-8 text-center sm:hidden">
+              <Link
+                href="/firme"
+                className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-primary transition-colors"
+              >
+                Vezi toate firmele &rarr;
+              </Link>
+            </div>
+          </>
+        )}
       </section>
 
       {/* Why trust us + ANRE Verification */}

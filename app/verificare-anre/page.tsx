@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import AnreVerificationClient from './AnreVerificationClient';
+import PromovateSection from '@/components/promo/PromovateSection';
+import { getPlusCompaniesForAnre, PROMO_CAPS } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'Verificare Atestat ANRE — Caută Instalator Autorizat',
@@ -73,6 +75,21 @@ export default function VerificareAnrePage() {
         </p>
 
         <AnreVerificationClient />
+
+        {(() => {
+          const plusOnAnre = getPlusCompaniesForAnre();
+          if (plusOnAnre.length === 0) return null;
+          return (
+            <div className="mt-10">
+              <PromovateSection
+                companies={plusOnAnre}
+                max={PROMO_CAPS.plusOnAnre}
+                title="Instalatori Parteneri Verificați ANRE"
+                subtitle="Firme partenere ale platformei — toate cu atestat ANRE activ"
+              />
+            </div>
+          );
+        })()}
 
         {/* Info section about certificate types */}
         <section className="mt-12 space-y-6">

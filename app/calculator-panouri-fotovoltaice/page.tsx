@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import CalculatorClient from './CalculatorClient';
+import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
 
 export const metadata: Metadata = {
   title: 'Calculator Amortizare Panouri Fotovoltaice 2026 — Cost și Producție',
@@ -88,6 +89,11 @@ export default function CalculatorPage() {
         </p>
 
         <CalculatorClient />
+
+        <PremiumPoolSection
+          title="Instalatori Recomandați"
+          subtitle="Firme partenere care pot prelua proiectul tău"
+        />
 
         {/* SEO content */}
         <section className="mt-16 space-y-6 text-gray-700 text-[15px] leading-relaxed">
