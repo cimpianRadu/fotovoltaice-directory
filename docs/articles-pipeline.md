@@ -28,6 +28,44 @@ Ultima actualizare: 2026-05-04
 ### 3 — Quick win: meta /casa-verde
 - **Status:** ✅ done (commit 3cfc347, 2026-04-29) — title + meta rescrise pentru queries înscrieri/finanțare. Recheck CTR în GSC după 14 zile.
 
+### 4 — 🎯 NEXT: Anunț feature /calculator-panouri-fotovoltaice — Calculator gratuit cost & ROI sistem fotovoltaic firmă 2026
+- **Status:** 💡 idee — următor în pipeline (prioritar)
+- **Format:** ghid de tip **announcement-but-keyword-rich**. Anunțăm public lansarea calculatorului (commit f440367, 2026-05-03), dar structurat ca răspuns SEO la queries comerciale, nu ca post de blog corporate.
+- **Title propus (testabil):** "Calculator Panouri Fotovoltaice Firmă 2026 — Estimează Cost, Producție și ROI Gratuit Online"
+- **Meta description propus:** "Calculator gratuit pentru sisteme fotovoltaice comerciale: introdu kWh/an, județ și suprafață acoperiș, primește dimensiunea kWp recomandată, costul estimativ, producția anuală și perioada de amortizare."
+- **Cluster GSC țintă (validate via WebSearch 2026-05-04, intent comercial maxim):**
+  - "calculator panouri fotovoltaice" (head, mass intent)
+  - "calculator panouri fotovoltaice firmă" / "firma" (commercial qualifier)
+  - "calculator fotovoltaic online gratuit" (free tool intent)
+  - "calculator ROI panouri fotovoltaice" (financial intent)
+  - "calculator dimensionare sistem fotovoltaic" (technical intent)
+  - "câți kw fotovoltaic pentru firmă" (raw question)
+  - "cât economisesc cu panouri fotovoltaice firmă 2026" (savings intent)
+  - "calcul rentabilitate panouri fotovoltaice"
+  - "calculator amortizare sistem fotovoltaic"
+  - "simulator sistem fotovoltaic comercial"
+- **Competitori existenți (de bătut prin specializare B2B + indep.):** Enera Switch, Enel X simulator, Re-Energy, GreenLead, ECOVOLT, PVGIS24, Brig.ro. Toți au calculator + articol. Diferențiator-ul nostru: **independent, fără intent de vânzare directă** (doar director) + transparența formulei.
+- **Structură propusă (8-10 secțiuni, ~2.500-3.500 cuvinte):**
+  1. **Intro:** anunț scurt al lansării + de ce un calculator independent contează (toți ceilalți te duc spre ofertă proprie)
+  2. **Ce face calculatorul** — input-urile (kWh/an consum, județ, suprafață acoperiș, tarif energie), output-urile (kWp recomandat, cost estimativ EUR și RON, producție anuală kWh, economie anuală RON, ROI ani)
+  3. **Cum interpretezi rezultatul** — ce înseamnă fiecare cifră, când e estimarea conservatoare vs optimistă
+  4. **3 scenarii walk-through:** firmă mică (consum 30 MWh/an), firmă medie (80 MWh/an), firmă mare (250 MWh/an) — cu screenshots/cifre din calculator
+  5. **Formula din spate** — yield specific per județ (PVGIS), preț EUR/kWp pe taglie comercială, ipoteze (autoconsum vs surplus, preț mediu energie)
+  6. **Limitele calculatorului** — nu modelează dinamica autoconsum vs surplus, nu vede sezonierea reală, nu include subvenții (Electric UP, Casa Verde), nu calculează regimul prosumator (link spre /ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026)
+  7. **De la calculator la ofertă concretă** — ce întrebări să-i pui instalatorului cu cifrele tale; link spre /verificare-anre + /clasament + /firme
+  8. **FAQ** — calculatoare alternative, de ce nu cerem datele tale, e gratis pentru totdeauna, sursa formulelor
+- **Linkuri interne (obligatorii):**
+  - /calculator-panouri-fotovoltaice (CTA principal, embed multiple în corp + final)
+  - /clasament (pentru "după calculator, alege instalatorul")
+  - /firme (browse complet)
+  - /verificare-anre
+  - /ghid/cat-costa-sistem-fotovoltaic-comercial (cost detaliat)
+  - /ghid/merita-panouri-fotovoltaice-firma-2026 (ROI complet)
+  - /ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026 (regim prosumator — gap explicit menționat)
+- **Hero image:** screenshot real al calculatorului (NU AI-generated) — arată tool-ul, nu o imagine generică. Sau split: jumătate screenshot, jumătate fotorealist generat.
+- **Slug propus:** `calculator-panouri-fotovoltaice-firma-2026-cost-roi`
+- **Next step:** unifică cu #7 (dimensionare) — devine același articol. Înainte de scriere, recheck calculator UI + verifică ce câmpuri are exact (input list real) ca să nu inventezi.
+
 ### 6 — Sistem fotovoltaic 50 / 100 / 250 kW pentru firmă — preț, suprafață, producție
 - **Status:** 💡 idee
 - **Cluster GSC:** "preț sistem fotovoltaic 50 kw firmă", "preț sistem fotovoltaic 100 kw industrial", "cât costă 250 kw fotovoltaic" — query-uri cu intent comercial maxim, neacoperite.
@@ -37,27 +75,13 @@ Ultima actualizare: 2026-05-04
 - **Linkuri interne:** ghid ROI, ghid costuri, ghid hale industriale, /clasament (firme cu istoric pe taglia respectivă).
 - **Next step:** culege 5-10 oferte reale per dimensiune (de la firmele din director sau public), normalizează RON/kWp, suprafață m²/kWp pe acoperiș plat vs înclinat.
 
-### 7 — Dimensionare sistem fotovoltaic comercial (+ mini-calculator)
-- **Status:** 💡 idee
-- **Cluster GSC:** "dimensionare sistem fotovoltaic comercial", "câți kw fotovoltaic pentru firmă", "kwh consum vs kwp panouri".
-- **Pagină existentă:** niciuna dedicată dimensionării.
-- **De ce:** Pereche naturală cu #6 — top of funnel pentru același intent. Mini-calculator (input: kWh/an consum + județ → output: kWp recomandat + suprafață + producție estimată) crește dwell time și CTR backlink.
-- **Linkuri interne:** #6 (50/100/250 kW), ghid ROI, ghid costuri.
-- **Next step:** decide dacă calculator-ul e component React în pagină sau static cu tabel; cere yield specific per județ (kWh/kWp/an) din datele PVGIS.
+### 7 — Dimensionare sistem fotovoltaic comercial
+- **Status:** 🟡 absorbit parțial în #4 (calculator) — keyword-urile "dimensionare", "câți kw", "kwh vs kwp" sunt acoperite în #4. Rămâne ca propunere separată DOAR dacă după #4 vedem că query-urile de dimensionare pură au volum suficient să justifice un al doilea articol non-calculator-centric. Re-evaluare după 30 zile de la publicarea #4.
 
 ### 8 — (placeholder) Replicate București template pentru Cluj
 - **Status:** 💡 idee, blocat de validarea ghidului București + național
 - **Declanșator:** dacă /firme/judet/bucuresti aduce >5 clicks/săpt în 2 săpt de la 27 Apr (ghid național)
 - **De ce:** Cluj are 10 firme acum (post 2026-04-22 batch), pagina județ există deja. Dacă template funcționează pe București, scalezi ieftin.
-
-### 9 — Promovare feature /calculator-panouri-fotovoltaice (lansat 2026-05-03)
-- **Status:** 💡 idee — următor în pipeline
-- **Format:** ghid scurt-mediu, hands-on, despre cum dimensionezi sistemul și calculezi ROI cu calculatorul nativ al platformei. NU un articol pur de marketing — un how-to care ca side-effect promovează tool-ul.
-- **Cluster GSC potențial:** "calculator panouri fotovoltaice firmă", "calculator ROI fotovoltaice", "câți kw fotovoltaic pentru firmă", "dimensionare sistem fotovoltaic comercial" (vezi și #7 — overlap parțial; iterația asta înlocuiește #7 sau îi devine intrare).
-- **De ce:** lansare proaspătă, zero indexare; un ghid dedicat care leagă spre /calculator dă context, scoate keyword-uri și creează un punct de intrare SEO. Plus că putem folosi screenshot-uri din calculator în corpul ghidului ca demonstrație.
-- **Structură propusă:** (1) când are sens să dimensionezi singur vs. cu instalator, (2) input-urile critice — kWh/an, județ, suprafață disponibilă, tarif energie — și de ce contează fiecare, (3) walkthrough pe calculator: 3 scenarii (50 kWp, 100 kWp, 250 kWp) cu valorile din tool, (4) ce face calculatorul vs. ce nu poate face (limite — nu modelează autoconsum vs surplus dinamic, nu vede sezonierea consumului), (5) după calculator: cum ceri ofertă concretă, link spre /clasament + /firme.
-- **Linkuri interne:** /calculator-panouri-fotovoltaice (CTA principal, embedat de mai multe ori), /clasament, /firme, /ghid/cat-costa-sistem-fotovoltaic-comercial, /ghid/merita-panouri-fotovoltaice-firma-2026, /ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026 (cross-link pe partea de surplus — calculatorul nu acoperă regimul prosumator).
-- **Next step:** decide dacă rescriu #7 (dimensionare + mini-calculator) sau îl unesc cu intrarea asta. Probabil unesc — "dimensionarea cu calculatorul nostru" e tot un singur articol.
 
 ---
 
