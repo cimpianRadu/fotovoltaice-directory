@@ -4,7 +4,7 @@
 >
 > Când publici un articol, mută-l în secțiunea **Publicat** cu link + data + next-step (GSC Request Indexing, distribuție).
 
-Ultima actualizare: 2026-04-30
+Ultima actualizare: 2026-05-04
 
 ## Format intrare
 
@@ -28,14 +28,6 @@ Ultima actualizare: 2026-04-30
 ### 3 — Quick win: meta /casa-verde
 - **Status:** ✅ done (commit 3cfc347, 2026-04-29) — title + meta rescrise pentru queries înscrieri/finanțare. Recheck CTR în GSC după 14 zile.
 
-### 5 — Vânzare surplus energie fotovoltaică — preț 2026 (prosumator firmă)
-- **Status:** 💡 idee
-- **Cluster GSC:** "vânzare surplus energie fotovoltaică preț", "preț achiziție surplus prosumator", "OUG surplus fotovoltaice 2026" — în creștere odată cu modificările legislative recente.
-- **Pagină existentă:** ghid prosumator comercial (pillar), nu acoperă tactic prețul de surplus.
-- **De ce:** Spike sezonier când apar OUG-uri pe surplus. Întreabă prosumatorii activi, complementar pillar-ului.
-- **Linkuri interne:** ghid prosumator comercial, ghid legislație, ghid ROI.
-- **Next step:** monitorizare ANRE + furnizori (Hidroelectrica, Electrica, Engie) pentru prețuri de achiziție 2026; comparație contracte.
-
 ### 6 — Sistem fotovoltaic 50 / 100 / 250 kW pentru firmă — preț, suprafață, producție
 - **Status:** 💡 idee
 - **Cluster GSC:** "preț sistem fotovoltaic 50 kw firmă", "preț sistem fotovoltaic 100 kw industrial", "cât costă 250 kw fotovoltaic" — query-uri cu intent comercial maxim, neacoperite.
@@ -58,9 +50,24 @@ Ultima actualizare: 2026-04-30
 - **Declanșator:** dacă /firme/judet/bucuresti aduce >5 clicks/săpt în 2 săpt de la 27 Apr (ghid național)
 - **De ce:** Cluj are 10 firme acum (post 2026-04-22 batch), pagina județ există deja. Dacă template funcționează pe București, scalezi ieftin.
 
+### 9 — Promovare feature /calculator-panouri-fotovoltaice (lansat 2026-05-03)
+- **Status:** 💡 idee — următor în pipeline
+- **Format:** ghid scurt-mediu, hands-on, despre cum dimensionezi sistemul și calculezi ROI cu calculatorul nativ al platformei. NU un articol pur de marketing — un how-to care ca side-effect promovează tool-ul.
+- **Cluster GSC potențial:** "calculator panouri fotovoltaice firmă", "calculator ROI fotovoltaice", "câți kw fotovoltaic pentru firmă", "dimensionare sistem fotovoltaic comercial" (vezi și #7 — overlap parțial; iterația asta înlocuiește #7 sau îi devine intrare).
+- **De ce:** lansare proaspătă, zero indexare; un ghid dedicat care leagă spre /calculator dă context, scoate keyword-uri și creează un punct de intrare SEO. Plus că putem folosi screenshot-uri din calculator în corpul ghidului ca demonstrație.
+- **Structură propusă:** (1) când are sens să dimensionezi singur vs. cu instalator, (2) input-urile critice — kWh/an, județ, suprafață disponibilă, tarif energie — și de ce contează fiecare, (3) walkthrough pe calculator: 3 scenarii (50 kWp, 100 kWp, 250 kWp) cu valorile din tool, (4) ce face calculatorul vs. ce nu poate face (limite — nu modelează autoconsum vs surplus dinamic, nu vede sezonierea consumului), (5) după calculator: cum ceri ofertă concretă, link spre /clasament + /firme.
+- **Linkuri interne:** /calculator-panouri-fotovoltaice (CTA principal, embedat de mai multe ori), /clasament, /firme, /ghid/cat-costa-sistem-fotovoltaic-comercial, /ghid/merita-panouri-fotovoltaice-firma-2026, /ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026 (cross-link pe partea de surplus — calculatorul nu acoperă regimul prosumator).
+- **Next step:** decide dacă rescriu #7 (dimensionare + mini-calculator) sau îl unesc cu intrarea asta. Probabil unesc — "dimensionarea cu calculatorul nostru" e tot un singur articol.
+
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Vânzare Surplus Energie Fotovoltaică Prosumator Firmă 2026 — Preț, Mecanism, Furnizori
+- **Publicat:** 2026-05-04 → [/ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026](/ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026)
+- **Cluster GSC țintă:** "vânzare surplus energie fotovoltaică preț", "preț achiziție surplus prosumator", "OUG surplus fotovoltaice 2026", "compensare cantitativă vs regularizare financiară", "tarif surplus prosumator 2026". În creștere odată cu Legea 169/2025 (regim prosumator post 1 iulie 2025).
+- **Strategie:** complementar pillar-ului prosumator (legislație) — acolo cadrul juridic, aici răspunsul tactic la "cât plătește furnizorul kWh injectat". Comparație concretă PPC / E.ON / ENGIE / Hidroelectrica / Electrica + scenarii ROI pe sisteme 100/250/350 kWp + breakdown praguri 200kW vs 200-400kW vs 400+kW.
+- **Next step:** GSC Request Indexing manual, monitorizare 14/30 zile. KPI: clicks pe queries head (vânzare surplus, preț achiziție surplus), impresii rank pe "regularizare financiară". Long-tail bonus: "spread furnizori prosumator" (formulare unică, dacă apare în GSC e dovada că ghidul ranchează pe interogări specifice).
 
 ### Asigurare Panouri Fotovoltaice Firmă 2026 — Ghid Complet pentru Sisteme Comerciale
 - **Publicat:** 2026-04-30 → [/ghid/asigurare-panouri-fotovoltaice-comerciale](/ghid/asigurare-panouri-fotovoltaice-comerciale)
