@@ -21,54 +21,70 @@ const PRESETS: { value: RangePreset; label: string }[] = [
 
 type SearchParams = Promise<{ range?: string }>;
 
+async function safeCall<T>(fn: () => Promise<T>): Promise<{ data: T | null; error: string | null }> {
+  try {
+    const data = await fn();
+    return { data, error: null };
+  } catch (e) {
+    return { data: null, error: e instanceof Error ? e.message : 'Unknown error' };
+  }
+}
+
+function num(v: unknown): number {
+  if (typeof v === 'number' && isFinite(v)) return v;
+  return 0;
+}
+
+function statValue(stats: unknown, key: keyof StatsResponse, field: 'value' | 'prev'): number {
+  if (!stats || typeof stats !== 'object') return 0;
+  const obj = stats as Record<string, unknown>;
+  const node = obj[key];
+  if (!node || typeof node !== 'object') return 0;
+  return num((node as Record<string, unknown>)[field]);
+}
+
 export default async function AnalyticsPage({ searchParams }: { searchParams: SearchParams }) {
   const sp = await searchParams;
   const preset: RangePreset =
     PRESETS.find((p) => p.value === sp.range)?.value ?? 'this-month';
   const { startAt, endAt, label } = resolveRange(preset);
 
-  let stats: StatsResponse | null = null;
-  let topPages: MetricRow[] = [];
-  let topEvents: MetricRow[] = [];
-  let topReferrers: MetricRow[] = [];
-  let error: string | null = null;
+  const [statsRes, pagesRes, eventsRes, refsRes] = await Promise.all([
+    safeCall(() => getStats(startAt, endAt)),
+    safeCall(() => getMetrics(startAt, endAt, 'url', 30)),
+    safeCall(() => getMetrics(startAt, endAt, 'event', 30)),
+    safeCall(() => getMetrics(startAt, endAt, 'referrer', 15)),
+  ]);
 
-  try {
-    [stats, topPages, topEvents, topReferrers] = await Promise.all([
-      getStats(startAt, endAt),
-      getMetrics(startAt, endAt, 'url', 30),
-      getMetrics(startAt, endAt, 'event', 30),
-      getMetrics(startAt, endAt, 'referrer', 15),
-    ]);
-  } catch (e) {
-    error = e instanceof Error ? e.message : 'Unknown error';
-  }
+  const errors = [statsRes, pagesRes, eventsRes, refsRes]
+    .map((r) => r.error)
+    .filter(Boolean) as string[];
 
-  if (error) {
-    return (
-      <div className="rounded-lg border border-red-200 bg-red-50 p-6 text-sm text-red-900">
-        <div className="font-semibold mb-2">Nu pot accesa Umami API</div>
-        <div className="font-mono text-xs">{error}</div>
-        <div className="mt-3 text-xs text-red-800">
-          Verifică <code className="px-1 py-0.5 bg-red-100 rounded">UMAMI_API_KEY</code> în
-          <code className="px-1 py-0.5 bg-red-100 rounded ml-1">.env.local</code>. Generează
-          cheia din cloud.umami.is → Settings → API Keys.
-        </div>
-      </div>
-    );
-  }
+  const stats = statsRes.data;
+  const topPages: MetricRow[] = Array.isArray(pagesRes.data) ? pagesRes.data : [];
+  const topEvents: MetricRow[] = Array.isArray(eventsRes.data) ? eventsRes.data : [];
+  const topReferrers: MetricRow[] = Array.isArray(refsRes.data) ? refsRes.data : [];
 
-  const sessions = stats!.visits.value;
-  const avgDuration = sessions > 0 ? stats!.totaltime.value / sessions : 0;
-  const prevAvgDuration =
-    stats!.visits.prev > 0 ? stats!.totaltime.prev / stats!.visits.prev : 0;
-  const bounceRate = sessions > 0 ? (stats!.bounces.value / sessions) * 100 : 0;
-  const prevBounceRate =
-    stats!.visits.prev > 0 ? (stats!.bounces.prev / stats!.visits.prev) * 100 : 0;
+  const visitors = statValue(stats, 'visitors', 'value');
+  const visitorsPrev = statValue(stats, 'visitors', 'prev');
+  const pageviews = statValue(stats, 'pageviews', 'value');
+  const pageviewsPrev = statValue(stats, 'pageviews', 'prev');
+  const sessions = statValue(stats, 'visits', 'value');
+  const sessionsPrev = statValue(stats, 'visits', 'prev');
+  const totaltime = statValue(stats, 'totaltime', 'value');
+  const totaltimePrev = statValue(stats, 'totaltime', 'prev');
+  const bounces = statValue(stats, 'bounces', 'value');
+  const bouncesPrev = statValue(stats, 'bounces', 'prev');
+
+  const avgDuration = sessions > 0 ? totaltime / sessions : 0;
+  const avgDurationPrev = sessionsPrev > 0 ? totaltimePrev / sessionsPrev : 0;
+  const bounceRate = sessions > 0 ? (bounces / sessions) * 100 : 0;
+  const bounceRatePrev = sessionsPrev > 0 ? (bouncesPrev / sessionsPrev) * 100 : 0;
+  const pagesPerSession = sessions > 0 ? pageviews / sessions : 0;
+  const pagesPerSessionPrev = sessionsPrev > 0 ? pageviewsPrev / sessionsPrev : 0;
 
   return (
     <div className="space-y-8">
-      {/* Range picker */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900">Overview</h1>
@@ -93,53 +109,48 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
         </div>
       </div>
 
-      {/* KPI cards */}
+      {errors.length > 0 && (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+          <div className="font-semibold mb-2">
+            {errors.length} {errors.length === 1 ? 'request a eșuat' : 'request-uri au eșuat'}
+          </div>
+          <ul className="space-y-1 text-xs font-mono">
+            {errors.map((e, i) => (
+              <li key={i} className="break-all">
+                · {e}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-3 text-xs">
+            Verifică <code className="px-1 py-0.5 bg-amber-100 rounded">UMAMI_API_KEY</code> în
+            Vercel env vars (Production scope, fără ghilimele) și redeploy.
+          </div>
+        </div>
+      )}
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <KpiCard
-          label="Vizitatori"
-          value={stats!.visitors.value.toLocaleString('ro-RO')}
-          prev={stats!.visitors.value}
-          prevPrev={stats!.visitors.prev}
-        />
-        <KpiCard
-          label="Pageviews"
-          value={stats!.pageviews.value.toLocaleString('ro-RO')}
-          prev={stats!.pageviews.value}
-          prevPrev={stats!.pageviews.prev}
-        />
-        <KpiCard
-          label="Sesiuni"
-          value={sessions.toLocaleString('ro-RO')}
-          prev={sessions}
-          prevPrev={stats!.visits.prev}
-        />
-        <KpiCard
-          label="Timp mediu"
-          value={formatDuration(avgDuration)}
-          prev={avgDuration}
-          prevPrev={prevAvgDuration}
-        />
+        <KpiCard label="Vizitatori" value={visitors.toLocaleString('ro-RO')} current={visitors} prev={visitorsPrev} />
+        <KpiCard label="Pageviews" value={pageviews.toLocaleString('ro-RO')} current={pageviews} prev={pageviewsPrev} />
+        <KpiCard label="Sesiuni" value={sessions.toLocaleString('ro-RO')} current={sessions} prev={sessionsPrev} />
+        <KpiCard label="Timp mediu" value={formatDuration(avgDuration)} current={avgDuration} prev={avgDurationPrev} />
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <KpiCard
           label="Bounce rate"
           value={`${bounceRate.toFixed(1)}%`}
-          prev={bounceRate}
-          prevPrev={prevBounceRate}
+          current={bounceRate}
+          prev={bounceRatePrev}
           inverse
         />
         <KpiCard
           label="Pagini / sesiune"
-          value={
-            sessions > 0 ? (stats!.pageviews.value / sessions).toFixed(2) : '0'
-          }
-          prev={sessions > 0 ? stats!.pageviews.value / sessions : 0}
-          prevPrev={stats!.visits.prev > 0 ? stats!.pageviews.prev / stats!.visits.prev : 0}
+          value={pagesPerSession.toFixed(2)}
+          current={pagesPerSession}
+          prev={pagesPerSessionPrev}
         />
       </div>
 
-      {/* Tables */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <MetricsTable title="Top pagini" rows={topPages} unit="views" />
         <MetricsTable title="Top events" rows={topEvents} unit="events" />
@@ -148,7 +159,7 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
       <MetricsTable title="Top referrers" rows={topReferrers} unit="vizite" />
 
       <div className="text-xs text-slate-400 pt-4 border-t border-slate-200">
-        Raw data via Umami Cloud API · website {`{49a078c7…}`}
+        Raw data via Umami Cloud API · cache 1h
       </div>
     </div>
   );
@@ -157,17 +168,17 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
 function KpiCard({
   label,
   value,
+  current,
   prev,
-  prevPrev,
   inverse = false,
 }: {
   label: string;
   value: string;
+  current: number;
   prev: number;
-  prevPrev: number;
   inverse?: boolean;
 }) {
-  const delta = pctDelta(prev, prevPrev);
+  const delta = pctDelta(current, prev);
   const isUp = delta.sign === '+';
   const isGood = inverse ? !isUp : isUp;
   const color =
@@ -184,15 +195,7 @@ function KpiCard({
   );
 }
 
-function MetricsTable({
-  title,
-  rows,
-  unit,
-}: {
-  title: string;
-  rows: MetricRow[];
-  unit: string;
-}) {
+function MetricsTable({ title, rows, unit }: { title: string; rows: MetricRow[]; unit: string }) {
   if (!rows || rows.length === 0) {
     return (
       <div className="bg-white border border-slate-200 rounded-lg p-4">
@@ -202,7 +205,7 @@ function MetricsTable({
     );
   }
 
-  const max = Math.max(...rows.map((r) => r.y));
+  const max = Math.max(...rows.map((r) => num(r.y)), 1);
 
   return (
     <div className="bg-white border border-slate-200 rounded-lg p-4">
@@ -211,21 +214,25 @@ function MetricsTable({
         <div className="text-xs text-slate-400">{rows.length} rânduri</div>
       </div>
       <div className="space-y-1">
-        {rows.map((row) => (
-          <div key={row.x} className="relative">
-            <div
-              className="absolute inset-y-0 left-0 bg-amber-50 rounded"
-              style={{ width: `${(row.y / max) * 100}%` }}
-            />
-            <div className="relative flex items-center justify-between px-2 py-1.5 text-xs">
-              <span className="truncate text-slate-700 font-mono">{row.x || '(empty)'}</span>
-              <span className="ml-3 tabular-nums text-slate-900 font-medium">
-                {row.y.toLocaleString('ro-RO')}{' '}
-                <span className="text-slate-400 font-normal">{unit}</span>
-              </span>
+        {rows.map((row, i) => {
+          const y = num(row.y);
+          const x = String(row.x ?? '');
+          return (
+            <div key={`${x}-${i}`} className="relative">
+              <div
+                className="absolute inset-y-0 left-0 bg-amber-50 rounded"
+                style={{ width: `${(y / max) * 100}%` }}
+              />
+              <div className="relative flex items-center justify-between px-2 py-1.5 text-xs">
+                <span className="truncate text-slate-700 font-mono">{x || '(empty)'}</span>
+                <span className="ml-3 tabular-nums text-slate-900 font-medium">
+                  {y.toLocaleString('ro-RO')}{' '}
+                  <span className="text-slate-400 font-normal">{unit}</span>
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
