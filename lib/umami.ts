@@ -18,20 +18,40 @@ async function umamiFetch<T>(
   });
 
   if (!res.ok) {
-    throw new Error(`Umami API ${res.status}: ${await res.text().catch(() => res.statusText)}`);
+    throw new Error(`Umami ${res.status} on ${path}: ${await res.text().catch(() => res.statusText)}`);
   }
   return res.json() as Promise<T>;
 }
 
-export type StatsResponse = {
-  pageviews: { value: number; prev: number };
-  visitors: { value: number; prev: number };
-  visits: { value: number; prev: number };
-  bounces: { value: number; prev: number };
-  totaltime: { value: number; prev: number };
+export type StatsBlock = {
+  pageviews: number;
+  visitors: number;
+  visits: number;
+  bounces: number;
+  totaltime: number;
+};
+
+export type StatsResponse = StatsBlock & {
+  comparison?: StatsBlock;
 };
 
 export type MetricRow = { x: string; y: number };
+
+export type MetricType =
+  | 'url'
+  | 'path'
+  | 'referrer'
+  | 'title'
+  | 'query'
+  | 'event'
+  | 'browser'
+  | 'os'
+  | 'device'
+  | 'country'
+  | 'region'
+  | 'city'
+  | 'language'
+  | 'host';
 
 export async function getStats(startAt: number, endAt: number) {
   return umamiFetch<StatsResponse>(`/websites/${WEBSITE_ID}/stats`, { startAt, endAt });
@@ -40,7 +60,7 @@ export async function getStats(startAt: number, endAt: number) {
 export async function getMetrics(
   startAt: number,
   endAt: number,
-  type: 'url' | 'event' | 'referrer' | 'browser' | 'country' = 'url',
+  type: MetricType = 'path',
   limit = 30,
 ) {
   return umamiFetch<MetricRow[]>(`/websites/${WEBSITE_ID}/metrics`, {

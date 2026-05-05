@@ -7,6 +7,7 @@ import {
   pctDelta,
   type RangePreset,
   type StatsResponse,
+  type StatsBlock,
   type MetricRow,
 } from '@/lib/umami';
 
@@ -35,12 +36,14 @@ function num(v: unknown): number {
   return 0;
 }
 
-function statValue(stats: unknown, key: keyof StatsResponse, field: 'value' | 'prev'): number {
-  if (!stats || typeof stats !== 'object') return 0;
-  const obj = stats as Record<string, unknown>;
-  const node = obj[key];
-  if (!node || typeof node !== 'object') return 0;
-  return num((node as Record<string, unknown>)[field]);
+function curr(stats: StatsResponse | null, key: keyof StatsBlock): number {
+  if (!stats) return 0;
+  return num(stats[key]);
+}
+
+function prev(stats: StatsResponse | null, key: keyof StatsBlock): number {
+  if (!stats || !stats.comparison) return 0;
+  return num(stats.comparison[key]);
 }
 
 export default async function AnalyticsPage({ searchParams }: { searchParams: SearchParams }) {
@@ -51,7 +54,7 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
 
   const [statsRes, pagesRes, eventsRes, refsRes] = await Promise.all([
     safeCall(() => getStats(startAt, endAt)),
-    safeCall(() => getMetrics(startAt, endAt, 'url', 30)),
+    safeCall(() => getMetrics(startAt, endAt, 'path', 30)),
     safeCall(() => getMetrics(startAt, endAt, 'event', 30)),
     safeCall(() => getMetrics(startAt, endAt, 'referrer', 15)),
   ]);
@@ -65,16 +68,16 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
   const topEvents: MetricRow[] = Array.isArray(eventsRes.data) ? eventsRes.data : [];
   const topReferrers: MetricRow[] = Array.isArray(refsRes.data) ? refsRes.data : [];
 
-  const visitors = statValue(stats, 'visitors', 'value');
-  const visitorsPrev = statValue(stats, 'visitors', 'prev');
-  const pageviews = statValue(stats, 'pageviews', 'value');
-  const pageviewsPrev = statValue(stats, 'pageviews', 'prev');
-  const sessions = statValue(stats, 'visits', 'value');
-  const sessionsPrev = statValue(stats, 'visits', 'prev');
-  const totaltime = statValue(stats, 'totaltime', 'value');
-  const totaltimePrev = statValue(stats, 'totaltime', 'prev');
-  const bounces = statValue(stats, 'bounces', 'value');
-  const bouncesPrev = statValue(stats, 'bounces', 'prev');
+  const visitors = curr(stats, 'visitors');
+  const visitorsPrev = prev(stats, 'visitors');
+  const pageviews = curr(stats, 'pageviews');
+  const pageviewsPrev = prev(stats, 'pageviews');
+  const sessions = curr(stats, 'visits');
+  const sessionsPrev = prev(stats, 'visits');
+  const totaltime = curr(stats, 'totaltime');
+  const totaltimePrev = prev(stats, 'totaltime');
+  const bounces = curr(stats, 'bounces');
+  const bouncesPrev = prev(stats, 'bounces');
 
   const avgDuration = sessions > 0 ? totaltime / sessions : 0;
   const avgDurationPrev = sessionsPrev > 0 ? totaltimePrev / sessionsPrev : 0;
