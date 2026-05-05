@@ -1,4 +1,15 @@
+'use client';
+
 import Image from 'next/image';
+import { useEffect, useRef } from 'react';
+
+declare global {
+  interface Window {
+    umami?: { track: (event: string, data?: Record<string, unknown>) => void };
+  }
+}
+
+export type SponsorPosition = 'homepage' | 'ghid-index' | 'ghid-topic';
 
 const sponsors = [
   {
@@ -10,11 +21,40 @@ const sponsors = [
   },
 ];
 
-export default function SponsorBanner() {
+export default function SponsorBanner({ position }: { position: SponsorPosition }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const tracked = useRef(false);
+
+  useEffect(() => {
+    if (sponsors.length === 0) return;
+    const el = ref.current;
+    if (!el) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !tracked.current) {
+            tracked.current = true;
+            sponsors.forEach((sponsor) => {
+              window.umami?.track('sponsor-impression', {
+                sponsor: sponsor.name.toLowerCase(),
+                position,
+              });
+            });
+            obs.disconnect();
+          }
+        });
+      },
+      { threshold: 0.5 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [position]);
+
   if (sponsors.length === 0) return null;
 
   return (
-    <div className="rounded-xl border border-primary/15 bg-primary/5 p-5">
+    <div ref={ref} className="rounded-xl border border-primary/15 bg-primary/5 p-5">
       <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider mb-3">
         Furnizori Recomandați
       </p>
@@ -27,6 +67,7 @@ export default function SponsorBanner() {
             rel="noopener noreferrer"
             data-umami-event="sponsor-click"
             data-umami-event-sponsor={sponsor.name.toLowerCase()}
+            data-umami-event-position={position}
             className="flex items-center gap-3 p-3 rounded-lg bg-white border border-gray-100 hover:border-primary/30 hover:shadow-sm transition-all group"
           >
             <Image

@@ -148,7 +148,7 @@ export default async function GuidePage({ params }: Props) {
 
         {/* Sponsor */}
         <div className="mb-10">
-          <SponsorBanner />
+          <SponsorBanner position="ghid-topic" />
         </div>
 
         {/* Content sections */}

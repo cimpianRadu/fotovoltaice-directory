@@ -71,6 +71,22 @@ export async function getMetrics(
   });
 }
 
+export type EventValueRow = { value: string; total: number };
+
+export async function getEventValues(
+  startAt: number,
+  endAt: number,
+  event: string,
+  propertyName: string,
+) {
+  return umamiFetch<EventValueRow[]>(`/websites/${WEBSITE_ID}/event-data/values`, {
+    startAt,
+    endAt,
+    event,
+    propertyName,
+  });
+}
+
 export type RangePreset = 'this-month' | 'last-month' | 'last-30d' | 'last-7d';
 
 export function resolveRange(preset: RangePreset): { startAt: number; endAt: number; label: string } {

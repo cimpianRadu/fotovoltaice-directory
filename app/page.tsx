@@ -313,7 +313,7 @@ export default function HomePage() {
       {/* Sponsor */}
       <section className="max-w-7xl mx-auto px-4 py-10">
         <div className="max-w-sm mx-auto">
-          <SponsorBanner />
+          <SponsorBanner position="homepage" />
         </div>
       </section>
 

@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Suspense } from 'react';
+import AdminNav from './AdminNav';
 
 export const metadata: Metadata = {
   title: 'Admin · Analytics',
@@ -15,13 +17,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link href="/admin/analytics" className="text-sm font-semibold text-slate-900">
               Admin · Analytics
             </Link>
-            <nav className="flex items-center gap-4 text-sm text-slate-600">
-              <Link href="/admin/analytics" className="hover:text-slate-900">
-                Overview
-              </Link>
-              <span className="text-slate-300">Conținut · soon</span>
-              <span className="text-slate-300">Sponsori · soon</span>
-            </nav>
+            <Suspense fallback={null}>
+              <AdminNav />
+            </Suspense>
           </div>
           <Link href="/" className="text-xs text-slate-500 hover:text-slate-900">
             ← site public

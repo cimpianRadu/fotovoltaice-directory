@@ -102,7 +102,7 @@ export default function GhidIndexPage() {
             })}
           </div>
           <div className="hidden sm:block sticky top-20">
-            <SponsorBanner />
+            <SponsorBanner position="ghid-index" />
           </div>
         </div>
       </div>
