@@ -13,7 +13,7 @@ async function umamiFetch<T>(
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, String(v)));
 
   const res = await fetch(url.toString(), {
-    headers: { 'x-api-key': apiKey, accept: 'application/json' },
+    headers: { 'x-umami-api-key': apiKey, accept: 'application/json' },
     next: { revalidate: REVALIDATE_SECONDS },
   });
 
