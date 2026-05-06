@@ -4,7 +4,7 @@
 >
 > Când publici un articol, mută-l în secțiunea **Publicat** cu link + data + next-step (GSC Request Indexing, distribuție).
 
-Ultima actualizare: 2026-05-04
+Ultima actualizare: 2026-05-07
 
 ## Format intrare
 
@@ -28,44 +28,6 @@ Ultima actualizare: 2026-05-04
 ### 3 — Quick win: meta /casa-verde
 - **Status:** ✅ done (commit 3cfc347, 2026-04-29) — title + meta rescrise pentru queries înscrieri/finanțare. Recheck CTR în GSC după 14 zile.
 
-### 4 — 🎯 NEXT: Anunț feature /calculator-panouri-fotovoltaice — Calculator gratuit cost & ROI sistem fotovoltaic firmă 2026
-- **Status:** 💡 idee — următor în pipeline (prioritar)
-- **Format:** ghid de tip **announcement-but-keyword-rich**. Anunțăm public lansarea calculatorului (commit f440367, 2026-05-03), dar structurat ca răspuns SEO la queries comerciale, nu ca post de blog corporate.
-- **Title propus (testabil):** "Calculator Panouri Fotovoltaice Firmă 2026 — Estimează Cost, Producție și ROI Gratuit Online"
-- **Meta description propus:** "Calculator gratuit pentru sisteme fotovoltaice comerciale: introdu kWh/an, județ și suprafață acoperiș, primește dimensiunea kWp recomandată, costul estimativ, producția anuală și perioada de amortizare."
-- **Cluster GSC țintă (validate via WebSearch 2026-05-04, intent comercial maxim):**
-  - "calculator panouri fotovoltaice" (head, mass intent)
-  - "calculator panouri fotovoltaice firmă" / "firma" (commercial qualifier)
-  - "calculator fotovoltaic online gratuit" (free tool intent)
-  - "calculator ROI panouri fotovoltaice" (financial intent)
-  - "calculator dimensionare sistem fotovoltaic" (technical intent)
-  - "câți kw fotovoltaic pentru firmă" (raw question)
-  - "cât economisesc cu panouri fotovoltaice firmă 2026" (savings intent)
-  - "calcul rentabilitate panouri fotovoltaice"
-  - "calculator amortizare sistem fotovoltaic"
-  - "simulator sistem fotovoltaic comercial"
-- **Competitori existenți (de bătut prin specializare B2B + indep.):** Enera Switch, Enel X simulator, Re-Energy, GreenLead, ECOVOLT, PVGIS24, Brig.ro. Toți au calculator + articol. Diferențiator-ul nostru: **independent, fără intent de vânzare directă** (doar director) + transparența formulei.
-- **Structură propusă (8-10 secțiuni, ~2.500-3.500 cuvinte):**
-  1. **Intro:** anunț scurt al lansării + de ce un calculator independent contează (toți ceilalți te duc spre ofertă proprie)
-  2. **Ce face calculatorul** — input-urile (kWh/an consum, județ, suprafață acoperiș, tarif energie), output-urile (kWp recomandat, cost estimativ EUR și RON, producție anuală kWh, economie anuală RON, ROI ani)
-  3. **Cum interpretezi rezultatul** — ce înseamnă fiecare cifră, când e estimarea conservatoare vs optimistă
-  4. **3 scenarii walk-through:** firmă mică (consum 30 MWh/an), firmă medie (80 MWh/an), firmă mare (250 MWh/an) — cu screenshots/cifre din calculator
-  5. **Formula din spate** — yield specific per județ (PVGIS), preț EUR/kWp pe taglie comercială, ipoteze (autoconsum vs surplus, preț mediu energie)
-  6. **Limitele calculatorului** — nu modelează dinamica autoconsum vs surplus, nu vede sezonierea reală, nu include subvenții (Electric UP, Casa Verde), nu calculează regimul prosumator (link spre /ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026)
-  7. **De la calculator la ofertă concretă** — ce întrebări să-i pui instalatorului cu cifrele tale; link spre /verificare-anre + /clasament + /firme
-  8. **FAQ** — calculatoare alternative, de ce nu cerem datele tale, e gratis pentru totdeauna, sursa formulelor
-- **Linkuri interne (obligatorii):**
-  - /calculator-panouri-fotovoltaice (CTA principal, embed multiple în corp + final)
-  - /clasament (pentru "după calculator, alege instalatorul")
-  - /firme (browse complet)
-  - /verificare-anre
-  - /ghid/cat-costa-sistem-fotovoltaic-comercial (cost detaliat)
-  - /ghid/merita-panouri-fotovoltaice-firma-2026 (ROI complet)
-  - /ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026 (regim prosumator — gap explicit menționat)
-- **Hero image:** screenshot real al calculatorului (NU AI-generated) — arată tool-ul, nu o imagine generică. Sau split: jumătate screenshot, jumătate fotorealist generat.
-- **Slug propus:** `calculator-panouri-fotovoltaice-firma-2026-cost-roi`
-- **Next step:** unifică cu #7 (dimensionare) — devine același articol. Înainte de scriere, recheck calculator UI + verifică ce câmpuri are exact (input list real) ca să nu inventezi.
-
 ### 6 — Sistem fotovoltaic 50 / 100 / 250 kW pentru firmă — preț, suprafață, producție
 - **Status:** 💡 idee
 - **Cluster GSC:** "preț sistem fotovoltaic 50 kw firmă", "preț sistem fotovoltaic 100 kw industrial", "cât costă 250 kw fotovoltaic" — query-uri cu intent comercial maxim, neacoperite.
@@ -86,6 +48,12 @@ Ultima actualizare: 2026-05-04
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Calculator Panouri Fotovoltaice Firmă 2026 — Estimează Cost, Producție și ROI Gratuit Online
+- **Publicat:** 2026-05-07 → [/ghid/calculator-panouri-fotovoltaice-firma-2026-cost-roi](/ghid/calculator-panouri-fotovoltaice-firma-2026-cost-roi)
+- **Cluster GSC țintă:** "calculator panouri fotovoltaice" (head), "calculator panouri fotovoltaice firmă/firma", "calculator fotovoltaic online gratuit", "calculator ROI panouri fotovoltaice", "calculator dimensionare sistem fotovoltaic", "câți kw fotovoltaic pentru firmă", "cât economisesc cu panouri fotovoltaice firmă 2026", "calcul rentabilitate panouri fotovoltaice", "calculator amortizare sistem fotovoltaic", "simulator sistem fotovoltaic comercial".
+- **Strategie:** announcement-but-keyword-rich pentru lansarea /calculator-panouri-fotovoltaice (commit f440367, 2026-05-03). Diferențiator vs Brig/Enera/Greenlead/BilanțVerde: independent, fără lead capture, transparență totală pe formulă (yield PVGIS per județ, factori montaj, praguri preț 4500/3800/3500 RON/kWp, degradare 0.5%/an). 3 scenarii walk-through cu cifre exacte din formulă (București mic, Cluj mediu, Constanța mare). 8 FAQ cu schema FAQPage. ~3.500 cuvinte.
+- **Next step:** GSC Request Indexing manual, monitorizare 14/30 zile. KPI: clicks pe head ("calculator panouri fotovoltaice firmă"), impresii rank pe queries dimensionare ("calculator dimensionare sistem fotovoltaic", "câți kw pentru firmă"). Dacă ranchează, absorbi #7 (dimensionare) definitiv. Verifică și sesiunile de pe /calculator-panouri-fotovoltaice — dacă cresc semnificativ post-publicare, e dovadă că ghidul drives traffic la tool.
 
 ### Vânzare Surplus Energie Fotovoltaică Prosumator Firmă 2026 — Preț, Mecanism, Furnizori
 - **Publicat:** 2026-05-04 → [/ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026](/ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026)
