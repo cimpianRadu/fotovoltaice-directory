@@ -6,18 +6,18 @@ import PromovateSection from '@/components/promo/PromovateSection';
 import { getPlusCompaniesForAnre, PROMO_CAPS } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'Verificare Atestat ANRE — Caută Instalator Autorizat',
+  title: 'Verificare Atestat ANRE — Instalatori Panouri Fotovoltaice',
   description:
-    'Verifică online atestatele ANRE ale instalatorilor fotovoltaici. Caută după nume sau CUI și vezi certificările active, expirate sau retrase direct din registrul ANRE.',
+    'Verifică instant atestatul ANRE al firmelor de panouri fotovoltaice: caută după nume sau CUI și vezi certificările C2A, C1A, B, A3 active sau expirate, live din registrul oficial.',
   alternates: {
     canonical: '/verificare-anre',
   },
   openGraph: {
     type: 'website',
     url: '/verificare-anre',
-    title: 'Verificare Atestat ANRE — Caută Instalator Autorizat',
+    title: 'Verificare Atestat ANRE Instalator Panouri Fotovoltaice',
     description:
-      'Verifică online atestatele ANRE ale instalatorilor fotovoltaici. Caută după nume sau CUI și vezi certificările active, expirate sau retrase.',
+      'Verifică instant atestatul ANRE al oricărei firme de panouri fotovoltaice. Live din registrul oficial ANRE.',
     images: [
       {
         url: '/og-image.png',
@@ -38,7 +38,7 @@ const faqJsonLd = {
       name: 'Ce este atestatul ANRE?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Atestatul ANRE este o certificare emisă de Autoritatea Națională de Reglementare în domeniul Energiei care confirmă că un operator economic are competența de a proiecta și/sau executa instalații electrice.',
+        text: 'Atestatul ANRE este o certificare emisă de Autoritatea Națională de Reglementare în domeniul Energiei care confirmă că un operator economic are competența de a proiecta și/sau executa instalații electrice. Este obligatoriu pentru orice firmă care realizează lucrări electrice în România.',
       },
     },
     {
@@ -46,7 +46,7 @@ const faqJsonLd = {
       name: 'Ce înseamnă atestat ANRE tip C2A?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Atestatul C2A permite proiectarea și executarea instalațiilor electrice exterioare de medie și înaltă tensiune. Este esențial pentru proiecte fotovoltaice comerciale și industriale mai mari de 50 kWp.',
+        text: 'Atestatul C2A permite proiectarea și executarea instalațiilor electrice exterioare de medie și înaltă tensiune. Este esențial pentru proiecte fotovoltaice comerciale și industriale mai mari de 50 kWp — hale, clădiri de birouri, parcuri logistice.',
       },
     },
     {
@@ -54,7 +54,23 @@ const faqJsonLd = {
       name: 'Cum verific dacă un instalator are atestat ANRE valid?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Puteți verifica atestatele ANRE ale oricărui instalator folosind instrumentul nostru de verificare. Introduceți numele firmei sau CUI-ul și veți vedea toate certificările active, expirate sau retrase din registrul oficial ANRE.',
+        text: 'Folosește instrumentul de verificare de pe această pagină. Introdu numele firmei sau CUI-ul și vei vedea toate certificările active, expirate sau retrase din registrul oficial ANRE, afișate într-un format ușor de înțeles.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Ce atestat trebuie să aibă un instalator fotovoltaic?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Pentru sisteme rezidențiale sau mici (sub 50 kWp) este suficient atestatul tip B. Pentru proiecte comerciale și industriale (peste 50 kWp) este necesar atestatul tip C2A. Ideal, firma ar trebui să aibă și atestate complementare (A3, E1, E2).',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Un instalator fără atestat ANRE poate monta panouri fotovoltaice?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Legal, nu. Orice lucrare electrică în România trebuie executată de un operator economic atestat ANRE. Un instalator fără atestat valid riscă să nu obțină racordarea la rețea de la operatorul de distribuție, iar clientul poate pierde garanția echipamentelor.',
       },
     },
   ],

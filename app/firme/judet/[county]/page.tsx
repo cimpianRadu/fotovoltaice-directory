@@ -6,7 +6,7 @@ import JsonLd from '@/components/seo/JsonLd';
 import CountyCompanyList from './CountyCompanyList';
 import Button from '@/components/ui/Button';
 import FAQ from '@/components/seo/FAQ';
-import { generateBreadcrumbJsonLd, generateFAQJsonLd } from '@/lib/seo';
+import { generateBreadcrumbJsonLd, generateFAQJsonLd, generateItemListJsonLd } from '@/lib/seo';
 import {
   getCountyBySlug,
   getCompaniesByCounty,
@@ -40,8 +40,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const companies = getCompaniesByCounty(county);
 
   return {
-    title: `Firme Montaj Panouri Fotovoltaice ${county} 2026 | ${companies.length} Instalatori Autorizați`,
-    description: `${companies.length} firme verificate de instalare și montaj panouri fotovoltaice în ${county}. Instalatori autorizați ANRE, date financiare reale. Compară și cere ofertă gratuită.`,
+    title: `Instalatori Panouri Fotovoltaice ${county} 2026: ${companies.length} Firme Autorizate ANRE`,
+    description: `${companies.length} firme verificate de instalare panouri fotovoltaice și panouri solare în ${county}. Instalatori autorizați ANRE, date financiare reale, listă completă. Compară și cere ofertă gratuită.`,
     alternates: { canonical: `/firme/judet/${slug}` },
   };
 }
@@ -63,6 +63,17 @@ export default async function CountyPage({ params }: Props) {
           { name: county, url: `/firme/judet/${slug}` },
         ])}
       />
+      {companies.length > 0 && (
+        <JsonLd
+          data={generateItemListJsonLd(
+            companies.map((c) => ({
+              name: c.name,
+              url: `/firme/${c.slug}`,
+            })),
+            `Instalatori panouri fotovoltaice ${county}`
+          )}
+        />
+      )}
       <div className="max-w-7xl mx-auto px-4 py-6">
         <Breadcrumbs
           items={[
@@ -73,11 +84,11 @@ export default async function CountyPage({ params }: Props) {
 
         <div className="mt-6 mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            Firme Montaj Panouri Fotovoltaice în {county}
+            Instalatori Panouri Fotovoltaice în {county}
           </h1>
           <p className="text-gray-500 mt-2">
-            {companies.length} instalatori autorizați de panouri solare verificați care
-            acoperă județul {county}
+            {companies.length} firme autorizate ANRE de instalare panouri fotovoltaice și panouri solare
+            care acoperă județul {county} — listă verificată din registrele publice
           </p>
         </div>
 
@@ -102,16 +113,20 @@ export default async function CountyPage({ params }: Props) {
           return (
             <div className="prose prose-gray max-w-none text-gray-600 mb-10">
               <h2 className="text-xl font-bold text-gray-900">
-                Instalare panouri fotovoltaice în {county} — ce trebuie să știi
+                Lista firmelor autorizate de panouri fotovoltaice din {county}
               </h2>
               <p>
-                Cauți <strong>firme de montaj panouri fotovoltaice în {county}</strong>? Pe platforma noastră
-                găsești {companies.length} {companies.length === 1 ? 'firmă verificată' : 'firme verificate'} de
-                instalare panouri solare care acoperă județul {county}, cu date reale din registrele publice.
+                Cauți <strong>firme de montaj panouri fotovoltaice</strong> sau{' '}
+                <strong>panouri solare în {county}</strong>? Pe platforma noastră găsești lista completă cu{' '}
+                {companies.length} {companies.length === 1 ? 'firmă verificată' : 'firme verificate'} de
+                instalare panouri solare care acoperă județul {county}, cu date reale din registrele publice
+                (ANRE, ONRC, termene.ro).
                 {hasAnre.length > 0 && (
                   <> Dintre acestea, <strong>{hasAnre.length} {hasAnre.length === 1 ? 'are' : 'au'} atestat
-                  ANRE C2A verificat</strong> în registrele publice.</>
-                )}
+                  ANRE C2A verificat</strong> în registrul oficial al Autorității Naționale de Reglementare în Energie.</>
+                )}{' '}
+                Toate firmele listate sunt <strong>instalatori autorizați</strong> — verifică badge-ul ANRE
+                pe fiecare profil sau folosește pagina <Link href="/verificare-anre" className="text-primary-dark underline">verificare ANRE</Link>.
               </p>
 
               <h3 className="text-lg font-semibold text-gray-900">
@@ -160,6 +175,14 @@ export default async function CountyPage({ params }: Props) {
             {
               question: `Cum aleg cel mai bun instalator fotovoltaic din ${county}?`,
               answer: `Verifică atestatul ANRE C2A (obligatoriu), experiența pe proiecte comerciale similare, certificări ISO, stabilitatea financiară și referințele de la clienți anteriori. Pe platforma noastră poți compara toate aceste criterii pentru fiecare firmă din ${county}.`,
+            },
+            {
+              question: `Cum verific atestatul ANRE al unei firme de panouri solare din ${county}?`,
+              answer: `Toate firmele listate aici au atestat ANRE verificat live în registrul oficial — vezi badge-ul verde de pe fiecare profil. Poți verifica orice firmă pe pagina noastră /verificare-anre sau direct pe portal.anre.ro. Atestatele relevante pentru panouri solare sunt C1A și C2A (instalații electrice de utilizare).`,
+            },
+            {
+              question: `Care e diferența între "panouri solare" și "panouri fotovoltaice"?`,
+              answer: `În uz comun cei doi termeni sunt folosiți interschimbabil pentru sistemele care produc curent electric din lumina soarelui. Tehnic, "panouri solare" e termenul umbrelă (include și panouri solare termice pentru apă caldă), iar "panouri fotovoltaice" se referă strict la panourile care produc electricitate. Toate firmele din ${county} listate aici instalează panouri fotovoltaice pentru producție de curent.`,
             },
           ];
           return (

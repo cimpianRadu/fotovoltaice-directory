@@ -59,6 +59,65 @@ export function generateFAQJsonLd(
   };
 }
 
+export function generateArticleJsonLd(guide: {
+  slug: string;
+  title: string;
+  metaDescription: string;
+  heroDescription?: string;
+  author: string;
+  publishedAt: string;
+  updatedAt?: string;
+  heroImage?: string | null;
+}) {
+  const url = `${SITE_URL}/ghid/${guide.slug}`;
+  const image = guide.heroImage ? `${SITE_URL}${guide.heroImage}` : `${SITE_URL}/og-image.png`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: guide.title,
+    description: guide.metaDescription,
+    image,
+    datePublished: guide.publishedAt,
+    dateModified: guide.updatedAt || guide.publishedAt,
+    author: {
+      '@type': 'Person',
+      name: guide.author,
+      url: SITE_URL,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/logo.svg`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url,
+    },
+  };
+}
+
+export function generateItemListJsonLd(
+  items: { name: string; url: string }[],
+  listName?: string
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    ...(listName ? { name: listName } : {}),
+    numberOfItems: items.length,
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      url: `${SITE_URL}${item.url}`,
+    })),
+  };
+}
+
 export function generateBreadcrumbJsonLd(
   items: { name: string; url: string }[]
 ) {

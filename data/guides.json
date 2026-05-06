@@ -62,9 +62,10 @@
       "slug": "cost-sistem-fotovoltaic-comercial",
       "published": true,
       "publishedAt": "2026-01-20",
+      "updatedAt": "2026-05-06",
       "author": "Radu",
-      "title": "Cât Costă un Sistem Fotovoltaic Comercial în 2026 - Ghid Prețuri Actualizat",
-      "metaDescription": "Ghid detaliat de prețuri pentru sisteme fotovoltaice comerciale în România. Costuri pe kWp, factori de preț și cum obții cel mai bun raport calitate-preț.",
+      "title": "Cât Costă Sistem Fotovoltaic Firmă 2026: 4.500-6.000 RON/kWp",
+      "metaDescription": "Prețuri reale sisteme fotovoltaice firmă 2026: 4.500-6.000 RON/kWp (30 kW - 1 MWp). Factori cost, calculator ROI, finanțări (Electric UP, fonduri UE).",
       "heroDescription": "Analiză detaliată a costurilor pentru sisteme fotovoltaice comerciale: de la prețuri pe kWp și factori care influențează costul, până la opțiuni de finanțare.",
       "sections": [
         {
@@ -86,6 +87,11 @@
           "id": "finantare",
           "title": "Opțiuni de finanțare disponibile",
           "content": "### 1. Fonduri europene\n- **PNRR** - Componenta C6: Energie - granturi de până la 100% pentru IMM-uri\n- **Programul ELECTRIC UP** - finanțare nerambursabilă de până la 150.000 EUR\n- **Fondul pentru Modernizare** - pentru proiecte industriale mari\n\n### 2. Finanțare bancară\n- Credite verzi cu dobânzi preferențiale (EURIBOR + 2-3%)\n- Leasing operațional pentru echipamente\n- Finanțare de proiect (project finance) pentru sisteme mari\n\n### 3. PPA (Power Purchase Agreement)\n- Un investitor terț instalează și deține sistemul\n- Plătești doar energia produsă, la un preț fix\n- Fără investiție inițială\n- Contract pe 10-20 ani\n\n### 4. Autofinanțare\n- Cea mai bună opțiune dacă ai lichiditate\n- ROI cel mai ridicat (nu plătești dobânzi)\n- Control total asupra sistemului"
+        },
+        {
+          "id": "costuri-recurente",
+          "title": "Costuri pe care nu le vezi în oferta inițială",
+          "content": "Prețul de instalare e doar partea vizibilă. Pentru un calcul ROI realist, adaugă:\n\n**1. Asigurare anuală (centrală fotovoltaică)**\nÎntre **0,15-0,40% din valoarea sistemului/an** pentru o poliță all-risks dedicată — ex. 750-2.000 EUR/an pentru un sistem de 200 kWp. Polița standard a clădirii **nu acoperă** panourile cu valoarea lor reală. Detalii complete: [Asigurare panouri fotovoltaice firmă 2026](/ghid/asigurare-panouri-fotovoltaice-comerciale).\n\n**2. Mentenanță anuală**\n0,5-1% din valoarea sistemului/an pentru contract de mentenanță cu inspecție termografică, curățare panouri, verificare invertor — esențial ca să păstrezi garanțiile producătorilor.\n\n**3. Înlocuire invertor (an 10-12)**\nInvertoarele au durată de viață mai mică decât panourile. Bugetează 8-12% din costul sistemului pentru înlocuire în jurul anului 10.\n\n**4. Avize și autorizații (single fee, dar ușor de uitat)**\nVezi ghidul [Avize și autorizații fotovoltaice firmă 2026](/ghid/avize-autorizatii-instalare-fotovoltaice-firma) — ATR, ISU, notificare primărie. De regulă firma instalatoare le include în ofertă, dar verifică explicit."
         }
       ],
       "faq": [
@@ -100,6 +106,10 @@
         {
           "question": "Merită să investesc în panouri bifaciale?",
           "answer": "Panourile bifaciale produc cu 10-15% mai multă energie, costând doar cu 5-10% mai mult. Sunt recomandate special pentru montaj pe sol sau acoperiș alb reflectorizant."
+        },
+        {
+          "question": "Asigurarea panourilor fotovoltaice e inclusă în prețul instalării?",
+          "answer": "Nu. Prețul instalării acoperă echipamente + manoperă + uneori avize. Asigurarea e o poliță anuală separată (0,15-0,40% din valoarea sistemului/an pentru all-risks dedicată). Polița standard a clădirii nu acoperă panourile cu valoarea lor reală — vezi ghidul nostru de asigurare panouri fotovoltaice comerciale pentru riscuri acoperite și excluderi tipice."
         }
       ],
       "relatedSpecializations": [
@@ -1307,9 +1317,10 @@
       "slug": "top-firme-panouri-fotovoltaice-bucuresti-2026",
       "published": true,
       "publishedAt": "2026-04-23",
+      "updatedAt": "2026-05-06",
       "author": "Radu",
-      "title": "Top Firme Panouri Fotovoltaice București 2026 — Instalatori Autorizați ANRE",
-      "metaDescription": "Top firme de panouri fotovoltaice București 2026: instalatori autorizați ANRE, cifră de afaceri verificată, proiecte realizate. Date reale, nu publicitate.",
+      "title": "Top Firme Panouri Fotovoltaice București 2026: 20 Instalatori ANRE",
+      "metaDescription": "20 firme panouri fotovoltaice București 2026 cu sediu în Capitală, atestat ANRE activ, cifră de afaceri din bilanțuri ANAF. Date reale, fără publicitate plătită.",
       "heroDescription": "În București activează zeci de firme de panouri fotovoltaice. Multe au site frumos și promit livrare în 30 de zile. Foarte puține au atestat ANRE valabil și bilanț financiar care îți dă liniște că vor fi aici și peste 5 ani pentru garanție.",
       "sections": [
         {
@@ -1463,9 +1474,10 @@
       "slug": "asigurare-panouri-fotovoltaice-comerciale",
       "published": true,
       "publishedAt": "2026-04-30",
+      "updatedAt": "2026-05-06",
       "author": "Radu",
-      "title": "Asigurare Panouri Fotovoltaice Firmă 2026 — Ghid Complet pentru Sisteme Comerciale",
-      "metaDescription": "Cum alegi polița de asigurare pentru sistemul fotovoltaic al firmei tale: riscuri acoperite, excluderi tipice, business interruption, cost și checklist.",
+      "title": "Asigurare Panouri Fotovoltaice Firmă 2026: Cost, Riscuri, Excluderi",
+      "metaDescription": "Polița asigurare pentru centrale fotovoltaice comerciale: all-risks vs name-perils, riscuri, excluderi, business interruption, cost real RON/kWp și checklist.",
       "heroDescription": "Asigurarea unui sistem fotovoltaic comercial nu se suprapune peste polița clădirii. Ce acoperă o poliță dedicată, ce excluderi să eviți și cum ceri o ofertă corectă.",
       "sections": [
         {

@@ -12,7 +12,7 @@ import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import guidesData from '@/data/guides.json';
-import { generateFAQJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo';
+import { generateFAQJsonLd, generateBreadcrumbJsonLd, generateArticleJsonLd } from '@/lib/seo';
 
 const HERO_IMAGE_EXTENSIONS = ['webp', 'png', 'jpg'];
 
@@ -68,6 +68,18 @@ export default async function GuidePage({ params }: Props) {
 
   return (
     <>
+      <JsonLd
+        data={generateArticleJsonLd({
+          slug: guide.slug,
+          title: guide.title,
+          metaDescription: guide.metaDescription,
+          heroDescription: guide.heroDescription,
+          author: guide.author,
+          publishedAt: guide.publishedAt,
+          updatedAt: (guide as { updatedAt?: string }).updatedAt,
+          heroImage,
+        })}
+      />
       <JsonLd data={generateFAQJsonLd(guide.faq)} />
       <JsonLd
         data={generateBreadcrumbJsonLd([
