@@ -96,3 +96,29 @@ export async function saveWaitlistToSheet(email: string) {
     email,
   ]);
 }
+
+export async function saveAdInquiryToSheet(inquiry: {
+  tier: string;
+  numeFirma: string;
+  cui?: string;
+  numeContact: string;
+  email: string;
+  telefon: string;
+  judet?: string;
+  website?: string;
+  mesaj?: string;
+}) {
+  await appendRow('Publicitate', [
+    new Date().toISOString(),
+    inquiry.tier,
+    inquiry.numeFirma,
+    inquiry.cui || '',
+    inquiry.numeContact,
+    inquiry.email,
+    inquiry.telefon,
+    inquiry.judet || '',
+    inquiry.website || '',
+    inquiry.mesaj || '',
+    'Nou',
+  ]);
+}

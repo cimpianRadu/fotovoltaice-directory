@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import Button from '@/components/ui/Button';
+import AdInquiryForm from '@/components/forms/AdInquiryForm';
+import TrafficWidget from '@/components/publicitate/TrafficWidget';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 import { getCompanies, getCoveredCounties } from '@/lib/utils';
 import guidesData from '@/data/guides.json';
@@ -9,7 +11,7 @@ import guidesData from '@/data/guides.json';
 export const metadata: Metadata = {
   title: 'Publicitate - Promovează-ți Firma pe Instalatori Fotovoltaice',
   description:
-    'Patru pachete de promovare pe Instalatori Fotovoltaice România: Free, Basic 29€, Plus 99€ și Premium 249€/lună + TVA. Sau Bundle Total cu 15% reducere. Fiecare pachet are placement-uri proprii — nu se suprapun.',
+    'Pachete de promovare pe Instalatori Fotovoltaice România: Basic 49€ (furnizori), Plus 99€ și Premium 249€/lună + TVA. Bundle Național Plus 299€ (Plus+Premium, ~14% reducere). Free pentru instalatori. Fiecare pachet are placement-uri proprii — nu se suprapun.',
   alternates: { canonical: '/publicitate' },
 };
 
@@ -163,7 +165,7 @@ function PreviewPremium() {
           <div className="h-2 bg-gray-100 rounded mt-1" />
         </div>
       </div>
-      <p className="text-[8px] text-gray-400 italic">Pool max 5 firme · ~33% share-of-voice fiecare · rotație random la reload</p>
+      <p className="text-[8px] text-gray-400 italic">Pool max 5 firme · 20% share-of-voice fiecare · rotație random la reload</p>
     </MockBrowser>
   );
 }
@@ -207,7 +209,7 @@ export default function AdvertisePage() {
             Publicitate pe Instalatori Fotovoltaice
           </h1>
           <p className="text-gray-600 mt-2 max-w-2xl leading-relaxed">
-            Patru pachete cu placement-uri proprii — <strong>nu se suprapun</strong>. Alegi unul singur sau combini mai multe pentru acoperire maximă (Bundle Total cu 15% reducere). Toate prețurile sunt în EUR, facturare în RON la cursul BNR din ziua emiterii facturii.
+            Pachete cu placement-uri proprii — <strong>nu se suprapun</strong>. Free pentru instalatori (baza directorului), Basic pentru furnizori și distribuitori, Plus + Premium pentru instalatori care vor expunere prioritară. Bundle <strong>Național Plus</strong> combină Plus + Premium cu ~14% reducere. Prețuri în EUR, facturare în RON la cursul BNR din ziua emiterii facturii.
           </p>
           <div className="mt-5 grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3">
             <a
@@ -220,7 +222,7 @@ export default function AdvertisePage() {
               href="#basic"
               className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-primary/5 border border-primary/20 text-sm font-medium text-primary-dark hover:bg-primary/10 transition-colors"
             >
-              Basic <span className="text-xs text-gray-500">29€</span>
+              Basic <span className="text-xs text-gray-500">49€</span>
             </a>
             <a
               href="#plus"
@@ -238,7 +240,7 @@ export default function AdvertisePage() {
               href="#bundle"
               className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-secondary/10 border border-secondary/30 text-sm font-medium text-secondary-dark hover:bg-secondary/15 transition-colors col-span-2 sm:col-span-1"
             >
-              Bundle <span className="text-xs text-gray-500">319€ <span className="text-secondary-dark">-15%</span></span>
+              Național Plus <span className="text-xs text-gray-500">299€ <span className="text-secondary-dark">-14%</span></span>
             </a>
           </div>
         </div>
@@ -272,6 +274,9 @@ export default function AdvertisePage() {
           </p>
         </div>
 
+        {/* Live traffic widget */}
+        <TrafficWidget />
+
         {/* ═══════════════════════════════════════════════════════════
              Tier-uri NU sunt cumulative — fiecare are placement-urile lui
            ═══════════════════════════════════════════════════════════ */}
@@ -283,7 +288,7 @@ export default function AdvertisePage() {
           <div className="flex-1 text-sm">
             <p className="font-semibold text-gray-900 mb-1">Pachetele NU sunt cumulative</p>
             <p className="text-gray-700 leading-relaxed">
-              Fiecare pachet are placement-uri proprii — nu se suprapun. Dacă vrei expunere maximă pe toate canalele, ia <a href="#bundle" className="text-secondary-dark hover:underline font-medium">Bundle Total (319€/lună, 15% reducere)</a>.
+              Fiecare pachet are placement-uri proprii — nu se suprapun. Plus și Premium sunt complementare (județ vs național) — instalatorii care vor ambele iau <a href="#bundle" className="text-secondary-dark hover:underline font-medium">Național Plus (299€/lună, ~14% reducere)</a>. Basic e dedicat furnizorilor și distribuitorilor.
             </p>
           </div>
         </div>
@@ -330,13 +335,16 @@ export default function AdvertisePage() {
             <div className="rounded-xl border border-border p-6">
               <div className="flex items-center gap-2 mb-1">
                 <h3 className="font-bold text-gray-900 text-lg">Basic</h3>
-                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Oricine — instalatori, furnizori, distribuitori</span>
+                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Furnizori, distribuitori, materiale</span>
               </div>
-              <p className="text-sm text-gray-500 mb-4">Slot în popup carousel — vizibil pe toate paginile</p>
+              <p className="text-sm text-gray-500 mb-4">Slot în popup carousel — vizibil pe toate paginile site-ului</p>
               <p className="text-3xl font-bold text-gray-900 mb-1">
-                29 <span className="text-base font-normal text-gray-500">EUR/lună</span>
+                49 <span className="text-base font-normal text-gray-500">EUR/lună</span>
               </p>
-              <p className="text-sm text-gray-600 mb-5">+ TVA (21%) · Anual 290€ (2 luni gratis)</p>
+              <p className="text-sm text-gray-600 mb-5">+ TVA (21%) · Anual 490€ (2 luni gratis)</p>
+              <div className="mb-4 p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-xs text-blue-900 leading-relaxed">
+                <strong>Pentru cine:</strong> distribuitori panouri/invertoare/structuri, furnizori materiale electrice, echipamente specializate (batatoare stâlpi, structuri, baterii), SaaS și tools pentru industrie. <em>Instalatorii folosesc Plus sau Premium — placement-urile lor sunt mai relevante.</em>
+              </div>
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ce primești</p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <Feature strong>Slot în popup carousel — apare 15 secunde, apoi rotește la următorul</Feature>
@@ -348,12 +356,7 @@ export default function AdvertisePage() {
               <div className="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
                 <strong>Cum funcționează popup-ul:</strong> apare după câteva secunde pe toate paginile site-ului. Fiecare partener primește 15 secunde de vizibilitate, apoi se rotește la următorul. Când ciclul ajunge la capăt, începe iar de la primul. Dismissible — userul îl poate închide în sesiune.
               </div>
-              <Button
-                href="mailto:contact@instalatori-fotovoltaice.ro?subject=Activare%20Basic%20(29%20EUR%2Flun%C4%83)&body=Bun%C4%83%2C%0A%0AVreau%20s%C4%83%20activez%20pachetul%20Basic%20pentru%3A%0A%0ANume%20firm%C4%83%2Fbrand%3A%20%0ACUI%3A%20%0ASite%3A%20%0APersoan%C4%83%20contact%3A%20%0ATelefon%3A%20%0A%0AMul%C8%9Bumesc%21"
-                variant="primary"
-                size="md"
-                className="w-full mt-5"
-              >
+              <Button href="#ad-inquiry?tier=basic" variant="primary" size="md" className="w-full mt-5">
                 Activează Basic
               </Button>
             </div>
@@ -391,13 +394,21 @@ export default function AdvertisePage() {
               <div className="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
                 <strong>Cap pe județ — first come, first served:</strong> max 3 firme Plus simultan per județ. Dacă județul tău e plin, intri pe lista de așteptare.
               </div>
-              <Button
-                href="mailto:contact@instalatori-fotovoltaice.ro?subject=Activare%20Plus%20(99%20EUR%2Flun%C4%83)&body=Bun%C4%83%2C%0A%0AVreau%20s%C4%83%20activez%20pachetul%20Plus%20pentru%20firma%3A%0A%0ANume%20firm%C4%83%3A%20%0ACUI%3A%20%0AJude%C8%9B%3A%20%0APersoan%C4%83%20contact%3A%20%0ATelefon%3A%20%0A%0AMul%C8%9Bumesc%21"
-                variant="primary"
-                size="md"
-                className="w-full mt-5"
-              >
-                Activează Plus
+              <div className="mt-3 p-3 rounded-lg bg-linear-to-r from-secondary/10 to-primary/10 border border-secondary/30">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[10px] bg-secondary text-white px-1.5 py-0.5 rounded-full font-semibold uppercase tracking-wider">First-Mover</span>
+                  <span className="text-sm font-bold text-gray-900">59€/lună × 6 luni</span>
+                  <span className="text-xs text-gray-400 line-through">99€</span>
+                </div>
+                <p className="text-xs text-gray-700 leading-relaxed">
+                  Primele <strong>5 firme</strong> care activează Plus primesc <strong>40% reducere pe 6 luni</strong> (59€/lună în loc de 99€). După cele 6 luni trec la 99€ standard. Tu ne ajuți să dovedim modelul, noi îți dăm preț de pionierat. <strong>Sloturi rămase:</strong> primul venit, primul servit.
+                </p>
+              </div>
+              <Button href="#ad-inquiry?tier=plus-first-mover" variant="primary" size="md" className="w-full mt-3">
+                Activează Plus First-Mover (59€)
+              </Button>
+              <Button href="#ad-inquiry?tier=plus" variant="outline" size="md" className="w-full mt-2">
+                Activează Plus standard (99€)
               </Button>
             </div>
             <div className="hidden sm:block">
@@ -426,7 +437,7 @@ export default function AdvertisePage() {
                 <Feature strong>Banner pe ghidurile relevante pentru nișa ta</Feature>
                 <Feature strong>Featured pe <code className="text-xs bg-gray-100 px-1 rounded">/calculator-panouri-fotovoltaice</code></Feature>
                 <Feature strong>Secțiune Partener pe <code className="text-xs bg-gray-100 px-1 rounded">/clasament</code></Feature>
-                <Feature>Pool max 5 firme · share-of-voice ~33% per pagină · rotație random la reload</Feature>
+                <Feature>Pool max 5 firme · share-of-voice 20% per pagină · rotație random la reload</Feature>
               </ul>
 
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mt-4 mb-2">Profil complet</p>
@@ -440,12 +451,7 @@ export default function AdvertisePage() {
               <div className="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
                 <strong>Cap național — first come, first served:</strong> max 5 firme Premium în pool-ul global. Dacă pool-ul e plin, intri pe lista de așteptare.
               </div>
-              <Button
-                href="mailto:contact@instalatori-fotovoltaice.ro?subject=Activare%20Premium%20(249%20EUR%2Flun%C4%83)&body=Bun%C4%83%2C%0A%0AVreau%20s%C4%83%20activez%20pachetul%20Premium%20pentru%20firma%3A%0A%0ANume%20firm%C4%83%3A%20%0ACUI%3A%20%0APersoan%C4%83%20contact%3A%20%0ATelefon%3A%20%0A%0AMul%C8%9Bumesc%21"
-                variant="secondary"
-                size="md"
-                className="w-full mt-5"
-              >
+              <Button href="#ad-inquiry?tier=premium" variant="secondary" size="md" className="w-full mt-5">
                 Activează Premium
               </Button>
             </div>
@@ -473,7 +479,7 @@ export default function AdvertisePage() {
               <div className="rounded-lg border border-border bg-white p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">Basic</span>
-                  <span className="text-[10px] bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded-full font-mono">29€</span>
+                  <span className="text-[10px] bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded-full font-mono">49€</span>
                 </div>
                 <p className="text-sm font-semibold text-gray-900 mb-1">Popup carousel</p>
                 <p className="text-xs text-gray-600 leading-relaxed mb-3">
@@ -515,7 +521,7 @@ export default function AdvertisePage() {
                 </p>
                 <div className="text-[11px] text-gray-500 space-y-0.5">
                   <p>• Cap: <strong>max 5 firme național</strong></p>
-                  <p>• Share: <strong>~33% vizualizări fiecare</strong></p>
+                  <p>• Share: <strong>20% vizualizări fiecare</strong></p>
                   <p>• Rotație: <strong>random la reload</strong></p>
                 </div>
               </div>
@@ -534,52 +540,43 @@ export default function AdvertisePage() {
           </div>
         </section>
 
-        {/* Bundle Total */}
+        {/* Bundle: Național Plus (Plus + Premium) */}
         <section id="bundle" className="mb-12 scroll-mt-20">
           <div className="rounded-xl border-2 border-secondary/40 bg-linear-to-br from-secondary/10 via-white to-primary/10 p-6 sm:p-8 relative">
             <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap shadow-sm">
-              Economisești 15%
+              Economisești ~14%
             </span>
             <div className="grid gap-6 sm:grid-cols-2 items-center">
               <div>
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
-                  <h3 className="font-bold text-gray-900 text-xl">Bundle Total</h3>
-                  <span className="text-xs bg-secondary/15 text-secondary-dark px-2 py-0.5 rounded-full font-medium">Recomandat pentru jucători naționali</span>
+                  <h3 className="font-bold text-gray-900 text-xl">Național Plus</h3>
+                  <span className="text-xs bg-secondary/15 text-secondary-dark px-2 py-0.5 rounded-full font-medium">Pentru instalatori cu ambiție regională / națională</span>
                 </div>
-                <p className="text-sm text-gray-600 mb-4">Toate trei pachetele simultan — Basic + Plus + Premium</p>
+                <p className="text-sm text-gray-600 mb-4">Plus + Premium simultan — județul tău + paginile globale</p>
                 <div className="flex items-baseline gap-3 mb-1">
                   <p className="text-4xl font-bold text-gray-900">
-                    319 <span className="text-base font-normal text-gray-500">EUR/lună</span>
+                    299 <span className="text-base font-normal text-gray-500">EUR/lună</span>
                   </p>
-                  <p className="text-sm text-gray-400 line-through">377€</p>
+                  <p className="text-sm text-gray-400 line-through">348€</p>
                 </div>
-                <p className="text-sm text-secondary-dark font-medium mb-1">Economisești 58€/lună · 696€/an</p>
-                <p className="text-sm text-gray-600 mb-5">+ TVA (21%) · Anual 3.190€ (2 luni gratis vs 377€×12=4.524€ la lunar separat → economie totală 1.334€/an)</p>
+                <p className="text-sm text-secondary-dark font-medium mb-1">Economisești 49€/lună · 588€/an</p>
+                <p className="text-sm text-gray-600 mb-5">+ TVA (21%) · Anual 2.990€ (2 luni gratis vs 348€×12=4.176€ la lunar separat → economie totală 1.186€/an)</p>
 
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Include simultan</p>
                 <ul className="space-y-2 text-sm text-gray-600 mb-5">
-                  <Feature strong>Tot din Basic — slot popup carousel pe tot site-ul</Feature>
-                  <Feature strong>Tot din Plus — top „Promovate&quot; pe județ + ANRE + badge</Feature>
-                  <Feature strong>Tot din Premium — pool global + profil complet</Feature>
-                  <Feature>Câte 1 slot în fiecare cap (Basic, Plus, Premium) — fără cap mărit</Feature>
-                  <Feature>Reducere garantată dacă rămâi pe Bundle minim 6 luni</Feature>
+                  <Feature strong>Tot din Plus — top „Promovate&quot; pe județul tău + featured /verificare-anre + badge</Feature>
+                  <Feature strong>Tot din Premium — pool global pe homepage, ghiduri, /calculator, /clasament + profil complet</Feature>
+                  <Feature>Câte 1 slot în fiecare cap (Plus, Premium) — fără cap mărit</Feature>
+                  <Feature>Reducere garantată dacă rămâi pe Național Plus minim 6 luni</Feature>
+                  <Feature>Prioritate pe waitlist când se eliberează un slot Plus sau Premium</Feature>
                 </ul>
-                <Button
-                  href="mailto:contact@instalatori-fotovoltaice.ro?subject=Activare%20Bundle%20Total%20(319%20EUR%2Flun%C4%83)&body=Bun%C4%83%2C%0A%0AVreau%20s%C4%83%20activez%20Bundle%20Total%20pentru%20firma%3A%0A%0ANume%20firm%C4%83%3A%20%0ACUI%3A%20%0APersoan%C4%83%20contact%3A%20%0ATelefon%3A%20%0A%0AMul%C8%9Bumesc%21"
-                  variant="secondary"
-                  size="lg"
-                  className="w-full"
-                >
-                  Activează Bundle Total
+                <Button href="#ad-inquiry?tier=bundle" variant="secondary" size="lg" className="w-full">
+                  Activează Național Plus
                 </Button>
               </div>
               <div className="rounded-xl border border-secondary/20 bg-white/60 p-5">
                 <p className="text-xs font-semibold text-secondary-dark uppercase tracking-wider mb-3">Defalcare reducere</p>
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-                    <span className="text-gray-600">Basic</span>
-                    <span className="font-mono text-gray-900">29€</span>
-                  </div>
                   <div className="flex justify-between items-center pb-2 border-b border-gray-100">
                     <span className="text-gray-600">Plus</span>
                     <span className="font-mono text-gray-900">99€</span>
@@ -590,19 +587,19 @@ export default function AdvertisePage() {
                   </div>
                   <div className="flex justify-between items-center pb-2 border-b border-gray-100">
                     <span className="text-gray-700 font-medium">Total separat</span>
-                    <span className="font-mono font-semibold text-gray-900">377€</span>
+                    <span className="font-mono font-semibold text-gray-900">348€</span>
                   </div>
                   <div className="flex justify-between items-center pb-2 border-b border-gray-100">
                     <span className="text-secondary-dark font-medium">Reducere Bundle</span>
-                    <span className="font-mono font-semibold text-secondary-dark">−58€</span>
+                    <span className="font-mono font-semibold text-secondary-dark">−49€</span>
                   </div>
                   <div className="flex justify-between items-center pt-1">
-                    <span className="text-gray-900 font-bold">Bundle Total</span>
-                    <span className="font-mono font-bold text-gray-900 text-lg">319€</span>
+                    <span className="text-gray-900 font-bold">Național Plus</span>
+                    <span className="font-mono font-bold text-gray-900 text-lg">299€</span>
                   </div>
                 </div>
                 <p className="text-[10px] text-gray-400 mt-3 leading-relaxed">
-                  Reducere 15% aplicată la suma celor 3 pachete. La plata anuală, încă 2 luni gratis (319€×10 = 3.190€/an).
+                  Reducere ~14% aplicată la suma celor 2 pachete. La plata anuală, încă 2 luni gratis (299€×10 = 2.990€/an). Bundle e dedicat instalatorilor — Basic se cumpără separat de furnizori/distribuitori.
                 </p>
               </div>
             </div>
@@ -617,9 +614,7 @@ export default function AdvertisePage() {
           <div className="flex-1 text-sm">
             <p className="font-semibold text-gray-900">Popup-ul din colțul dreapta-jos pe care-l vezi acum?</p>
             <p className="text-gray-700 mt-1 leading-relaxed">
-              E slotul popup carousel inclus în <strong>Basic — 29 EUR/lună + TVA</strong>. Fiecare
-              partener primește 15 secunde de vizibilitate, apoi se rotește la următorul. Maxim 8
-              parteneri activi simultan, pe tot site-ul, pe toate paginile.{' '}
+              E slotul popup carousel inclus în <strong>Basic — 49 EUR/lună + TVA</strong>, dedicat furnizorilor și distribuitorilor. Fiecare partener primește 15 secunde de vizibilitate, apoi se rotește la următorul. Maxim 8 parteneri activi simultan, pe tot site-ul, pe toate paginile.{' '}
               <a href="#basic" className="text-primary-dark hover:underline font-medium">
                 Vezi detaliile →
               </a>
@@ -648,9 +643,9 @@ export default function AdvertisePage() {
                   <td className="px-4 py-3 text-gray-600">Profil în director + verificare ANRE live</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-medium text-gray-900">Basic</td>
-                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">29 €</td>
-                  <td className="px-4 py-3 text-gray-600">Popup carousel pe toate paginile (max 8 parteneri, 15s)</td>
+                  <td className="px-4 py-3 font-medium text-gray-900">Basic <span className="text-[10px] text-gray-500 ml-1">furnizori</span></td>
+                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">49 €</td>
+                  <td className="px-4 py-3 text-gray-600">Popup carousel pe toate paginile (max 8 parteneri, 15s) — pentru furnizori și distribuitori</td>
                 </tr>
                 <tr className="bg-primary/5">
                   <td className="px-4 py-3 font-medium text-gray-900">
@@ -668,11 +663,11 @@ export default function AdvertisePage() {
                 </tr>
                 <tr className="bg-secondary/5">
                   <td className="px-4 py-3 font-medium text-gray-900">
-                    Bundle Total <span className="text-[10px] bg-secondary text-white px-1.5 py-0.5 rounded-full ml-1">−15%</span>
+                    Național Plus <span className="text-[10px] bg-secondary text-white px-1.5 py-0.5 rounded-full ml-1">−14%</span>
                   </td>
-                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">319 €</td>
+                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">299 €</td>
                   <td className="px-4 py-3 text-gray-600">
-                    Tot din Basic + Plus + Premium simultan (economisești 58€/lună)
+                    Plus + Premium simultan pentru instalatori (economisești 49€/lună)
                   </td>
                 </tr>
               </tbody>
@@ -682,11 +677,11 @@ export default function AdvertisePage() {
           {/* Mobile: stacked cards */}
           <div className="sm:hidden space-y-3">
             {[
-              { name: 'Free', price: '0 €', desc: 'Profil în director + verificare ANRE live', highlight: false },
-              { name: 'Basic', price: '29 € + TVA', desc: 'Popup carousel pe toate paginile (max 8, 15s)', highlight: false },
-              { name: 'Plus ★', price: '99 € + TVA', desc: 'Top "Promovate" pe județ (max 3) + featured /verificare-anre + badge', highlight: true },
+              { name: 'Free', price: '0 €', desc: 'Profil în director + verificare ANRE live (instalatori)', highlight: false },
+              { name: 'Basic (furnizori)', price: '49 € + TVA', desc: 'Popup carousel pe toate paginile (max 8, 15s) — pentru furnizori, distribuitori', highlight: false },
+              { name: 'Plus ★', price: '99 € + TVA · 59€ first-mover', desc: 'Top "Promovate" pe județ (max 3) + featured /verificare-anre + badge', highlight: true },
               { name: 'Premium', price: '249 € + TVA', desc: 'Pool global rotativ (homepage, ghiduri, calculator, clasament — max 5) + profil complet', highlight: false },
-              { name: 'Bundle Total −15%', price: '319 € + TVA', desc: 'Tot din Basic + Plus + Premium simultan', highlight: false, secondary: true },
+              { name: 'Național Plus −14%', price: '299 € + TVA', desc: 'Plus + Premium simultan pentru instalatori', highlight: false, secondary: true },
             ].map((row) => (
               <div
                 key={row.name}
@@ -718,7 +713,7 @@ export default function AdvertisePage() {
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Nu. Fiecare pachet are placement-uri proprii — Basic e popup carousel, Plus e top pe județul tău + ANRE, Premium e pool pe paginile globale. Dacă vrei toate trei simultan, ia <strong>Bundle Total (319€/lună, 15% reducere)</strong>. Modelul ăsta evită blocaje de capacitate — nu există situația în care „Plus a umplut sloturile pentru Premium&quot;.
+                Nu. Fiecare pachet are placement-uri proprii — Basic e popup carousel pentru furnizori, Plus e top pe județul tău + ANRE, Premium e pool pe paginile globale. Pentru instalatori, dacă vrei Plus + Premium simultan, ia <strong>Național Plus (299€/lună, ~14% reducere)</strong>. Modelul ăsta evită blocaje de capacitate — nu există situația în care „Plus a umplut sloturile pentru Premium&quot;.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
@@ -727,7 +722,16 @@ export default function AdvertisePage() {
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Pe Plus și Premium avem cap-uri pe nr. de firme afișate simultan (max 3 per județ pentru Plus, max 5 pe pool global pentru Premium). La fiecare reload de pagină, ordinea e randomizată — fiecare firmă plătită apare în top pentru ~1/N din vizitatori, unde N = nr. firme active în pool-ul respectiv. Comunicăm transparent share-ul (~33% pe Plus, ~33% pe Premium când pool-ul e plin) — nu promitem „mereu primul&quot;, ci share echitabil.
+                Pe Plus și Premium avem cap-uri pe nr. de firme afișate simultan (max 3 per județ pentru Plus, max 5 pe pool global pentru Premium). La fiecare reload de pagină, ordinea e randomizată — fiecare firmă plătită apare în top pentru ~1/N din vizitatori, unde N = nr. firme active în pool-ul respectiv. Comunicăm transparent share-ul (~33% pe Plus, 20% pe Premium când pool-ul e plin) — nu promitem „mereu primul&quot;, ci share echitabil.
+              </p>
+            </details>
+            <details className="bg-white border border-border rounded-xl p-4 group">
+              <summary className="font-semibold text-gray-900 text-sm cursor-pointer list-none flex justify-between items-start gap-3">
+                <span>Ce înseamnă oferta First-Mover pe Plus?</span>
+                <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <p className="mt-3 text-sm text-gray-600 leading-relaxed">
+                Primele <strong>5 firme</strong> care activează Plus primesc <strong>40% reducere pe primele 6 luni</strong> (59€/lună în loc de 99€). După cele 6 luni trec automat la 99€/lună standard. E o ofertă de pionierat — tu ne ajuți să dovedim modelul cu testimoniale și date reale, noi îți dăm preț preferențial. First come, first served — e limitat la 5 sloturi total pe site, nu pe județ.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
@@ -736,7 +740,7 @@ export default function AdvertisePage() {
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Plus = max 3 firme/județ. Premium = max 5 firme național. Dacă slot-urile sunt ocupate, intri pe lista de așteptare și te anunțăm când se eliberează un loc — first come, first served. Bundle Total are alocare prioritară pe toate trei pachetele.
+                Plus = max 3 firme/județ. Premium = max 5 firme național. Dacă slot-urile sunt ocupate, intri pe lista de așteptare și te anunțăm când se eliberează un loc — first come, first served. Național Plus (Bundle) are prioritate pe waitlist atât pentru Plus cât și pentru Premium.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
@@ -745,7 +749,7 @@ export default function AdvertisePage() {
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Oricine vrea vizibilitate în fața audienței noastre B2B fotovoltaică — instalatori, furnizori de panouri/invertoare/structuri, distribuitori de materiale electrice, SaaS și tools pentru industrie, cursuri/certificări, consultanți energetici. Plus și Premium sunt disponibile exclusiv pentru firme de instalare (au beneficii specifice de listare).
+                Basic e dedicat <strong>furnizorilor și distribuitorilor</strong> care nu sunt firme de instalare — distribuitori panouri/invertoare/structuri, furnizori materiale electrice, echipamente specializate (batatoare stâlpi, structuri, baterii), SaaS și tools pentru industrie, cursuri/certificări. Instalatorii folosesc <strong>Free</strong> (profil de bază) sau <strong>Plus / Premium / Național Plus</strong> (placement-uri prioritare). Logica: instalatorii apar în liste filtrabile, furnizorii apar în popup-ul de awareness.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
@@ -754,7 +758,7 @@ export default function AdvertisePage() {
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Avem maxim 8 parteneri activi simultan în carousel. Dacă slot-urile sunt ocupate, intri pe lista de așteptare și te anunțăm când se eliberează un loc. Bundle Total are slot Basic dedicat — abonații Bundle au prioritate la slot-uri.
+                Avem maxim 8 parteneri activi simultan în carousel. Dacă slot-urile sunt ocupate, intri pe lista de așteptare și te anunțăm când se eliberează un loc.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
@@ -778,23 +782,13 @@ export default function AdvertisePage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <div className="bg-primary/5 rounded-xl border border-primary/10 p-8 text-center">
-          <h2 className="text-xl font-bold text-gray-900 mb-2">
-            Vrei să fii vizibil pe platforma noastră?
-          </h2>
-          <p className="text-sm text-gray-600 mb-6 max-w-lg mx-auto">
-            Contactează-ne pentru detalii, demo live pe profilul tău sau ofertă personalizată. Răspundem în aceeași zi lucrătoare.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-3">
-            <Button href="mailto:contact@instalatori-fotovoltaice.ro?subject=Interes%20publicitate" variant="primary" size="lg">
-              Contactează-ne
-            </Button>
-            <Button href="tel:+40751547174" variant="outline" size="lg">
-              0751 547 174
-            </Button>
+        {/* Inquiry form */}
+        <section id="ad-inquiry" className="mb-12 scroll-mt-20">
+          <AdInquiryForm />
+          <div className="mt-4 text-center text-sm text-gray-500">
+            Preferi telefon? <a href="tel:+40751547174" className="text-primary-dark font-medium hover:underline">0751 547 174</a> · email <a href="mailto:contact@instalatori-fotovoltaice.ro" className="text-primary-dark font-medium hover:underline">contact@instalatori-fotovoltaice.ro</a>
           </div>
-        </div>
+        </section>
       </div>
     </>
   );
