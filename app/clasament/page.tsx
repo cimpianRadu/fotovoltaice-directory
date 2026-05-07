@@ -204,7 +204,7 @@ export default function ClasamentPage() {
 
         {/* Table — top 10 by revenue */}
         <section id="clasament" className="mb-12 scroll-mt-20">
-          <ClasamentTable rows={byRevenue.slice(0, 10)} counties={counties} />
+          <ClasamentTable rows={byRevenue.slice(0, 10)} counties={counties} showFilters={false} />
 
           <div className="mt-6 text-center">
             <Link

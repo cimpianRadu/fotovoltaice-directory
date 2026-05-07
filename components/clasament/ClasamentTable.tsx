@@ -24,6 +24,7 @@ interface Row {
 interface Props {
   rows: Row[];
   counties: string[];
+  showFilters?: boolean;
 }
 
 type SortKey = 'revenue' | 'profit' | 'margin' | 'employees' | 'founded' | 'name';
@@ -48,7 +49,7 @@ function SortArrow({ active, dir }: { active: boolean; dir: SortDir }) {
   return <span className="text-primary ml-1">{dir === 'desc' ? '↓' : '↑'}</span>;
 }
 
-export default function ClasamentTable({ rows, counties }: Props) {
+export default function ClasamentTable({ rows, counties, showFilters = true }: Props) {
   const [sortKey, setSortKey] = useState<SortKey>('revenue');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
   const [selectedCounty, setSelectedCounty] = useState<string>('');
@@ -119,94 +120,96 @@ export default function ClasamentTable({ rows, counties }: Props) {
   return (
     <div>
       {/* Filters */}
-      <div className="bg-white border border-border rounded-xl p-4 mb-4 space-y-3">
-        <div className="flex flex-wrap items-center gap-3">
-          {/* County filter */}
-          <div>
-            <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Județ</label>
-            <select
-              value={selectedCounty}
-              onChange={(e) => setSelectedCounty(e.target.value)}
-              className="text-sm border border-border rounded-lg px-3 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-            >
-              <option value="">Toate județele</option>
-              {counties.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </div>
+      {showFilters && (
+        <div className="bg-white border border-border rounded-xl p-4 mb-4 space-y-3">
+          <div className="flex flex-wrap items-center gap-3">
+            {/* County filter */}
+            <div>
+              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Județ</label>
+              <select
+                value={selectedCounty}
+                onChange={(e) => setSelectedCounty(e.target.value)}
+                className="text-sm border border-border rounded-lg px-3 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+              >
+                <option value="">Toate județele</option>
+                {counties.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {/* Min revenue */}
-          <div>
-            <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Cifră minimă</label>
-            <div className="flex gap-1">
-              {MIN_REVENUE_PRESETS.map((p) => (
-                <button
-                  key={p.label}
-                  type="button"
-                  onClick={() => setMinRevenue(p.value)}
-                  className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
-                    minRevenue === p.value
-                      ? 'bg-primary border-primary text-white font-semibold'
-                      : 'bg-white border-border text-gray-700 hover:border-primary/30'
-                  }`}
-                >
-                  {p.label}
-                </button>
-              ))}
+            {/* Min revenue */}
+            <div>
+              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Cifră minimă</label>
+              <div className="flex gap-1">
+                {MIN_REVENUE_PRESETS.map((p) => (
+                  <button
+                    key={p.label}
+                    type="button"
+                    onClick={() => setMinRevenue(p.value)}
+                    className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
+                      minRevenue === p.value
+                        ? 'bg-primary border-primary text-white font-semibold'
+                        : 'bg-white border-border text-gray-700 hover:border-primary/30'
+                    }`}
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* ANRE cert toggles */}
-        <div>
-          <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
-            Atestate ANRE (trebuie să le aibă pe toate bifate)
-          </label>
-          <div className="flex flex-wrap gap-1.5">
-            {PV_RELEVANT_CODES.map((code) => {
-              const active = activeCertFilters.has(code);
-              return (
-                <button
-                  key={code}
-                  type="button"
-                  onClick={() => toggleCert(code)}
-                  className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
-                    active
-                      ? 'bg-green-600 border-green-600 text-white font-semibold'
-                      : 'bg-white border-border text-gray-700 hover:border-green-400'
-                  }`}
-                >
-                  {active ? '✓ ' : ''}
-                  {code}
-                </button>
-              );
-            })}
+          {/* ANRE cert toggles */}
+          <div>
+            <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+              Atestate ANRE (trebuie să le aibă pe toate bifate)
+            </label>
+            <div className="flex flex-wrap gap-1.5">
+              {PV_RELEVANT_CODES.map((code) => {
+                const active = activeCertFilters.has(code);
+                return (
+                  <button
+                    key={code}
+                    type="button"
+                    onClick={() => toggleCert(code)}
+                    className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+                      active
+                        ? 'bg-green-600 border-green-600 text-white font-semibold'
+                        : 'bg-white border-border text-gray-700 hover:border-green-400'
+                    }`}
+                  >
+                    {active ? '✓ ' : ''}
+                    {code}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Active filter summary */}
+          <div className="flex items-center justify-between text-xs text-gray-500 pt-1">
+            <span>
+              {sorted.length} {sorted.length === 1 ? 'firmă afișată' : 'firme afișate'} din {rows.length}
+            </span>
+            {hasActiveFilters && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedCounty('');
+                  setActiveCertFilters(new Set());
+                  setMinRevenue(0);
+                }}
+                className="text-primary hover:underline font-medium"
+              >
+                Resetează filtre
+              </button>
+            )}
           </div>
         </div>
-
-        {/* Active filter summary */}
-        <div className="flex items-center justify-between text-xs text-gray-500 pt-1">
-          <span>
-            {sorted.length} {sorted.length === 1 ? 'firmă afișată' : 'firme afișate'} din {rows.length}
-          </span>
-          {hasActiveFilters && (
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedCounty('');
-                setActiveCertFilters(new Set());
-                setMinRevenue(0);
-              }}
-              className="text-primary hover:underline font-medium"
-            >
-              Resetează filtre
-            </button>
-          )}
-        </div>
-      </div>
+      )}
 
       {/* Data freshness note */}
       <div className="flex items-start gap-2 mb-3 px-1 text-xs text-gray-500">
