@@ -216,6 +216,31 @@ export default function ClasamentPage() {
           </div>
         </section>
 
+        {/* Promo slot — pitch pentru /publicitate */}
+        <section className="mb-12">
+          <Link
+            href="/publicitate"
+            className="group block p-5 bg-gradient-to-br from-amber-50 via-white to-amber-50/40 border-2 border-dashed border-amber-300 rounded-xl hover:border-amber-400 hover:shadow-md transition-all"
+          >
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-amber-700">★ Spațiu publicitar</span>
+                </div>
+                <div className="font-semibold text-gray-900 text-base mb-0.5">
+                  Firma ta poate fi aici
+                </div>
+                <div className="text-sm text-gray-600">
+                  Pagina de clasament e una dintre cele mai vizitate secțiuni. Rezervă-ți locul pentru vizibilitate prioritară și acces la lead-uri calificate.
+                </div>
+              </div>
+              <span className="text-sm font-semibold text-amber-700 group-hover:text-amber-800 whitespace-nowrap">
+                Află mai multe →
+              </span>
+            </div>
+          </Link>
+        </section>
+
         {/* FAQ */}
         <section id="intrebari" className="mb-12 scroll-mt-20">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Întrebări frecvente</h2>
