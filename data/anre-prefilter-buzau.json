@@ -1,0 +1,563 @@
+[
+  {
+    "cui": "34298727",
+    "name": "ELECTRO ANA LUIZA",
+    "judet": "Buzau",
+    "localitate": "Pogoanele",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 11y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://www.electro-ana.ro/",
+    "revenue_2024": 9169711,
+    "profit_2024": 902005,
+    "employees": 25,
+    "year_founded": 2015,
+    "status": "functiune",
+    "address": "Jud. Buzau, Ors. Pogoanele, Str. Tudor Vladimirescu, Nr.63",
+    "error": null,
+    "pvContentHits": 3,
+    "pvContentSample": [
+      "Despre noi Servicii Inchiriere Utilaje Fotovoltaice Contact Sisteme Fotovoltaice Sistemele fotovoltaice sunt soluții mo",
+      "nergia solară. Acestea sunt compuse din panouri solare, invertori, sisteme de montaj și baterii opționale pentru stocare"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "18546510",
+    "name": "AS PIN",
+    "judet": "Buzau",
+    "localitate": "Buzau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 20y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 6914556,
+    "profit_2024": 1081090,
+    "employees": 17,
+    "year_founded": 2006,
+    "status": "functiune",
+    "address": "Jud. Buzau, Mun. Buzau, Str. Lupeni, Nr.21",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "29976220",
+    "name": "DIOMA ELECTRICE",
+    "judet": "Buzau",
+    "localitate": "Posta Calnau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 14y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 9786808,
+    "profit_2024": 2866667,
+    "employees": 17,
+    "year_founded": 2012,
+    "status": "functiune",
+    "address": "Jud. Buzau, Sat Suditi Com. Posta Calnau, Suditi, Nr.154",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "36213506",
+    "name": "ELECTRO ADI TIME",
+    "judet": "Buzau",
+    "localitate": "Buzau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 10y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2474878,
+    "profit_2024": 410602,
+    "employees": 8,
+    "year_founded": 2016,
+    "status": "functiune",
+    "address": "Jud. Buzau, Mun. Buzau, Bld. Nicolae Balcescu, Bl.3, Sc.d, Et.3, Ap.67",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "17674058",
+    "name": "ELENET 2005",
+    "judet": "Buzau",
+    "localitate": "Ramnicu Sarat",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 21y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 4169162,
+    "profit_2024": 1684925,
+    "employees": 16,
+    "year_founded": 2005,
+    "status": "functiune",
+    "address": "Jud. Buzau, Mun. Ramnicu Sarat, Str. Domneasca, Nr.37",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "31709011",
+    "name": "ENERGIA SERVIS NIC",
+    "judet": "Buzau",
+    "localitate": "Buzau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 13y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2948765,
+    "profit_2024": 599073,
+    "employees": 9,
+    "year_founded": 2013,
+    "status": "functiune",
+    "address": "Jud. Buzau, Mun. Buzau, Str. Bazalt, Nr.15a",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "33611990",
+    "name": "ENERGOMAT DINAMIC",
+    "judet": "Buzau",
+    "localitate": "Ramnicu Sarat",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 12y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 18998102,
+    "profit_2024": 6690123,
+    "employees": 16,
+    "year_founded": 2014,
+    "status": "functiune",
+    "address": "Jud. Buzau, Mun. Ramnicu Sarat, Str. Gheorghita Lupescu, Nr.1, Camera Nr. 2, Et.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "16631296",
+    "name": "GV ELECTRO TOTAL",
+    "judet": "Buzau",
+    "localitate": "Niculesti",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 22y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 5574957,
+    "profit_2024": 1259429,
+    "employees": 21,
+    "year_founded": 2004,
+    "status": "functiune",
+    "address": "Jud. Buzau, Sat Niculesti Com. Vintila Voda, Str. Principala, Nr.174",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "37542221",
+    "name": "OVICOM ELECTRIC DESIGN",
+    "judet": "Buzau",
+    "localitate": "Buzau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 9y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2698075,
+    "profit_2024": 307830,
+    "employees": 8,
+    "year_founded": 2017,
+    "status": "functiune",
+    "address": "Jud. Buzau, Mun. Buzau, Str. Poet Grigore Alexandrescu, Nr.8",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "46795185",
+    "name": "RAM ENERGY CONSTRUCT",
+    "judet": "Buzau",
+    "localitate": "Buzau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 5002974,
+    "profit_2024": 488811,
+    "employees": 10,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Buzau, Mun. Buzau, Bld. Garii, Nr.16",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "5500015",
+    "name": "GENERAL STAN ENERGO",
+    "judet": "Buzau",
+    "localitate": "Maracineni (BZ)",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 32y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1834521,
+    "profit_2024": -143139,
+    "employees": 12,
+    "year_founded": 1994,
+    "status": "functiune",
+    "address": "Jud. Buzau, Sat Maracineni Com. Maracineni, Str. Euro 85, Nr.59",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "44760466",
+    "name": "ELECTROVISION SISTEM CONSTRUCT",
+    "judet": "Buzau",
+    "localitate": "Nehoiu(BZ)",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 5y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 264871,
+    "profit_2024": 27467,
+    "employees": 2,
+    "year_founded": 2021,
+    "status": "functiune",
+    "address": "Jud. Buzau, Ors. Nehoiu, Cal. Mihai Viteazu, Nr.78, Camera 1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "35007435",
+    "name": "ACS NEW ANTREPRENOR CONSTRUCT",
+    "judet": "Buzau",
+    "localitate": "Vadu Pasii",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 11y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4100",
+    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
+    "website": "",
+    "revenue_2024": 49838715,
+    "profit_2024": 4687077,
+    "employees": 86,
+    "year_founded": 2015,
+    "status": "functiune",
+    "address": "Jud. Buzau, Sat Gura Calnaului Com. Vadu Pasii, Str. Bucegi, Nr.49",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "14606229",
+    "name": "CONSTRUCTII FEROVIARE DRUMURI PODURI",
+    "judet": "Buzau",
+    "localitate": "Buzau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 24y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4213",
+    "caen_label": "Constructia de poduri si tuneluri",
+    "website": "",
+    "revenue_2024": 50940835,
+    "profit_2024": 5119874,
+    "employees": 68,
+    "year_founded": 2002,
+    "status": "functiune",
+    "address": "Jud. Buzau, Mun. Buzau, Str Rascoalei , Nr.8",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "28126646",
+    "name": "EUROSTING AAW INDUSTRY",
+    "judet": "Buzau",
+    "localitate": "Buzau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 15y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "7490",
+    "caen_label": "Alte activitati profesionale, stiintifice si tehnice n.c.a.",
+    "website": "",
+    "revenue_2024": 45785936,
+    "profit_2024": 2197498,
+    "employees": 32,
+    "year_founded": 2011,
+    "status": "functiune",
+    "address": "Jud. Buzau, Mun. Buzau, Sos. Brailei, Nr.3-5",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "17701071",
+    "name": "RC ENERGO INSTALL",
+    "judet": "Buzau",
+    "localitate": "Buzau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 21y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4322",
+    "caen_label": "Lucrari de instalatii sanitare, de incalzire si de aer conditionat",
+    "website": "",
+    "revenue_2024": 19637386,
+    "profit_2024": 1474290,
+    "employees": 53,
+    "year_founded": 2005,
+    "status": "functiune",
+    "address": "Jud. Buzau, Mun. Buzau, Str. Transilvaniei, Nr.132",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "5377304",
+    "name": "ELECTRO & CONSTRUCT",
+    "judet": "Buzau",
+    "localitate": "Vernesti",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 0,
+    "reasons": [],
+    "caen_code": "",
+    "caen_label": "",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 0,
+    "status": "",
+    "address": "",
+    "error": "404 Not Found — /companies/5377304 — {\"success\":false,\"error\":{\"code\":\"404\",\"message\":\"Company not found\"}}",
+    "pvGate": "skip"
+  },
+  {
+    "cui": "24247513",
+    "name": "ELMIS",
+    "judet": "Buzau",
+    "localitate": "Maracineni (BZ)",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 0,
+    "reasons": [],
+    "caen_code": "",
+    "caen_label": "",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 0,
+    "status": "",
+    "address": "",
+    "error": "404 Not Found — /companies/24247513 — {\"success\":false,\"error\":{\"code\":\"404\",\"message\":\"Company not found\"}}",
+    "pvGate": "skip"
+  },
+  {
+    "cui": "1882281",
+    "name": "INEL",
+    "judet": "Buzau",
+    "localitate": "Buzau",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 0,
+    "reasons": [],
+    "caen_code": "",
+    "caen_label": "",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 0,
+    "status": "",
+    "address": "",
+    "error": "404 Not Found — /companies/1882281 — {\"success\":false,\"error\":{\"code\":\"404\",\"message\":\"Company not found\"}}",
+    "pvGate": "skip"
+  },
+  {
+    "cui": "13779515",
+    "name": "SOFTCONTROL",
+    "judet": "Buzau",
+    "localitate": "Ramnicu Sarat",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 0,
+    "reasons": [],
+    "caen_code": "",
+    "caen_label": "",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 0,
+    "status": "",
+    "address": "",
+    "error": "404 Not Found — /companies/13779515 — {\"success\":false,\"error\":{\"code\":\"404\",\"message\":\"Company not found\"}}",
+    "pvGate": "skip"
+  }
+]

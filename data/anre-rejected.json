@@ -285,5 +285,40 @@
     "cui": "9851191",
     "reason": "PV gate FAIL (0 hits). Site elecon.ro nu menționează fotovoltaic/panouri/PV — firmă electrice industriale generale.",
     "rejectedAt": "2026-04-28"
+  },
+  {
+    "societate": "ELECTRICAL TEHNOLOGY",
+    "judet": "Suceava",
+    "cui": "31509455",
+    "reason": "Webshop e-commerce de componente electrice (PV ca produse vandute, nu instalator turnkey). Link Servicii fara pagina dedicata.",
+    "rejectedAt": "2026-05-01"
+  },
+  {
+    "societate": "CONSTANT SECURITY",
+    "judet": "Dambovita",
+    "cui": "35326582",
+    "reason": "Webshop securitate (CCTV, alarme) cu PV doar la retail. Nu instalează turnkey. Pattern similar cu ELECTRICAL TEHNOLOGY.",
+    "rejectedAt": "2026-05-04"
+  },
+  {
+    "societate": "IN CASE ENERGY",
+    "judet": "Dambovita",
+    "cui": "35124354",
+    "reason": "Domeniu depozitul-de-fotovoltaice.ro redirectează la energodepot.ro — distribuitor B2B componente PV, nu installer.",
+    "rejectedAt": "2026-05-04"
+  },
+  {
+    "societate": "ELECTRO INSTAL CONSTANTIN",
+    "judet": "Calarasi",
+    "cui": null,
+    "reason": "Score 7 cu PV content prezent dar 1 angajat / 141k RON revenue — sub pragul minim de installer real.",
+    "rejectedAt": "2026-05-04"
+  },
+  {
+    "societate": "GS ELECTRO CONSULT",
+    "judet": "Bucuresti",
+    "cui": null,
+    "reason": "Score 7 cu PV content prezent dar 1 angajat / 137k RON revenue — sub pragul minim de installer real.",
+    "rejectedAt": "2026-05-04"
   }
 ]

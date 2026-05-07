@@ -1,197 +1,1042 @@
 [
   {
-    "societate": "AMBRA SERVICE",
-    "judet": "Arad",
-    "cui": "14452634",
+    "societate": "ACIM",
+    "judet": "Bucuresti",
+    "cui": "2534480",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0766062212 0356505706",
-    "sediu": "Socodor nr FN",
-    "localitate": "Socodor"
+    "telefon": "0745071000",
+    "sediu": "B-dul BASARABIA   256  Sector 3",
+    "localitate": "Bucuresti"
   },
   {
-    "societate": "CLEVERVOLT",
-    "judet": "Arad",
-    "cui": "40334930",
+    "societate": "ACOM DISTRIBUTIE",
+    "judet": "Bihor",
+    "cui": "22850975",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0744861255",
+    "sediu": "Hidiselu de Jos nr 183 A",
+    "localitate": "Hidiselu de Jos"
+  },
+  {
+    "societate": "AEP SYSTEMS",
+    "judet": "Cluj",
+    "cui": "36024981",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0742379405",
+    "sediu": "MAGURI-RACATAU   147",
+    "localitate": "Maguri-Racatau"
+  },
+  {
+    "societate": "ALERION SERVICE RO",
+    "judet": "Bucuresti",
+    "cui": "47938542",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0747055436",
+    "sediu": "Calea FLOREASCA   175         Et:3      PARTEA B",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "ALSIM ALARKO SANAYI TESISLERI VE TICARET ANONIM SIRKETI ISTANBUL - SUCURSALA BUCURESTI M6 METRO",
+    "judet": "Bucuresti",
+    "cui": "45662709",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0724323266, 0731000015",
+    "sediu": "Bd. Doina Cornea nr. 2P, et. 2, sect. 6",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "AMPER ELECTRO INSTAL",
+    "judet": "Bihor",
+    "cui": "35599191",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0745534082, 0747602687",
+    "sediu": "Str. Episcop Roman Ciorogariu nr  15 ,Ap 18",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "ARCOM ENERGY",
+    "judet": "Cluj",
+    "cui": "42355130",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0758532697 /0744309258",
+    "sediu": "Pta Timotetei Ciparu, nr 9, ap 67/2",
+    "localitate": "Cluj-Napoca"
+  },
+  {
+    "societate": "ARVINSTAL ENGINEERING",
+    "judet": "Cluj",
+    "cui": "43236766",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0732934938",
+    "sediu": "Str. SOPORULUI   17  Sc:B   Et:1   Ap:13",
+    "localitate": "Cluj-Napoca"
+  },
+  {
+    "societate": "AUDIOTECH MULTIMEDIA GROUP",
+    "judet": "Bucuresti",
+    "cui": "17867768",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0744484841",
+    "sediu": "Str. CETATEA VECHE   4   Bl:39   Sc:2   Et:2   Ap:32   CAM. 2 sector 4",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "AUTOCASA",
+    "judet": "Cluj",
+    "cui": "13255626",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0751068582 sau 0744 566183 0264 312102, 0264314701",
+    "sediu": "Str. Dr. I. Ratiu nr. 5, bl. P1, sc. D, ap. 38,",
+    "localitate": "Turda"
+  },
+  {
+    "societate": "AVANTAJ REAL CONSTRUCT",
+    "judet": "Cluj",
+    "cui": "37592173",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0745598829",
+    "sediu": "Str. Dinu Lipatti nr. 33",
+    "localitate": "Cluj-Napoca"
+  },
+  {
+    "societate": "AVI PROD GRUP",
+    "judet": "Bucuresti",
+    "cui": "18690809",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "021/256.81.10, 0742091275 021/256.80.18",
+    "sediu": "str. Popa Lazar, nr. 8, sector 2.",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "BAD CAB DYNAMIC",
+    "judet": "Bihor",
+    "cui": "44882358",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0758916491",
+    "sediu": "SÂNTANDREI  NR 493",
+    "localitate": "Sintandrei (BH)"
+  },
+  {
+    "societate": "BAICULESCU CONSTRUCT",
+    "judet": "Bucuresti",
+    "cui": "42825119",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0726.335.353",
+    "sediu": "soseaua Colentina, nr. 2D, camera 1, bl. 5, sc.B, et. 8, ap. 68",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "BESTEN",
+    "judet": "Bihor",
+    "cui": "30655118",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0775147757",
+    "sediu": "Lugasu de Jos  251/A",
+    "localitate": "Lungasu de Jos"
+  },
+  {
+    "societate": "BIOTOP INSTAL",
+    "judet": "Bihor",
+    "cui": "38374266",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0730123416, 0730123417",
+    "sediu": "Str. Vincent van Gogh   35",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "BITROOT SOLUTION",
+    "judet": "Bihor",
+    "cui": "43679658",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0771104417",
+    "sediu": "Str. REPUBLICII   31  Ap:4",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "BMF GRUP SOLUTII INTEGRATE",
+    "judet": "Bucuresti",
+    "cui": "31238674",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0371107478; 0736365171< 0727699999",
+    "sediu": "Calea Vitan nr 289, et. 1, cam.13, sector 3",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "BP GENERAL SOLUTIONS",
+    "judet": "Bucuresti",
+    "cui": "35203911",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0725632750; 0314228649 0314228649",
+    "sediu": "Str. Bacia, nr.14  sect 4",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "CARMIN POPSTAR PROD",
+    "judet": "Bucuresti",
+    "cui": "32814503",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0723566411",
+    "sediu": "Str. Ciucea nr. 8, cam. 2, bl. L18, sc. 2, et. 2, ap. 69, sect. 3",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "CDI ELECTRIC WORLD",
+    "judet": "Cluj",
+    "cui": "48675720",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "",
+    "sediu": "G GILAU   1330A     Biroul 1   Gilau",
+    "localitate": "Gilau"
+  },
+  {
+    "societate": "CLAR ELECTRIC",
+    "judet": "Bucuresti",
+    "cui": "33522345",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0212411273, 0722325327 0212411273",
+    "sediu": "Str. Brigadier Dumitrescu Tanase nr. 5",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "CO CRI PRODSERV",
+    "judet": "Cluj",
+    "cui": "9527188",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0745 607987, 0745 637374, 0264 4418",
+    "sediu": "Str. Vanatorului,  nr. 29",
+    "localitate": "Baciu"
+  },
+  {
+    "societate": "COMPAS SMART TECH INSTAL",
+    "judet": "Cluj",
+    "cui": "43959984",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0745275782",
+    "sediu": "Str. PRIMAVERII   8      Sc:8   Et:1   Ap:271",
+    "localitate": "Cluj-Napoca"
+  },
+  {
+    "societate": "COMPLET ELECTRO PROJECT",
+    "judet": "Bihor",
+    "cui": "40656021",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0747844161",
+    "sediu": "Str. Progresului, nr.6",
+    "localitate": "Santandrei"
+  },
+  {
+    "societate": "CONSTRUCTII ERBASU",
+    "judet": "Bucuresti",
+    "cui": "430008",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "021.232.35.45,0746224654 021.232.35.05",
+    "sediu": "Str. Nicolae Caranfil, nr 72, bl.XXIIA, parter, ap.1, sector 1",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "CONSTRUCTION ART ELECTRIC PROJECT",
+    "judet": "Bucuresti",
+    "cui": "50908037",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0723286605",
+    "sediu": "Str. Principatele Unite nr. 18, Parter, cam. 1, sect. 4",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "CRISTALIN PROJECT MANAGEMENT",
+    "judet": "Bucuresti",
+    "cui": "25028465",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0752023610, 0216685572,0213136026 0213136026",
+    "sediu": "Str. Berveni nr. 2, cam. 1, sect 1",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "CRITO PROD",
+    "judet": "Bihor",
+    "cui": "6534482",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0722911933 0259.423.819",
+    "sediu": "Str.  Coriolan Hora, nr. 2H",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "CXB CONSULTING & TECHNICAL SUPPORT",
+    "judet": "Bucuresti",
+    "cui": "25837539",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0730110000",
+    "sediu": "Str. Romulus Ruslan, nr. 27, Camera 2, Etaj 3, Ap. 4",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "DAMINO PRODCOM",
+    "judet": "Bucuresti",
+    "cui": "5349452",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0722471613",
+    "sediu": "Bdul. Gheorghe Sincai, nr.15, bl.5A, ap.66",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "DEFA SERV",
+    "judet": "Cluj",
+    "cui": "42772782",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0770384585",
+    "sediu": "Intr. GLADIOLEI   3",
+    "localitate": "Turda"
+  },
+  {
+    "societate": "DELARAD COM",
+    "judet": "Cluj",
+    "cui": "9144735",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0743468819",
+    "sediu": "Str. Zambilelor nr. 10, bl. V4, sc. C, et. 2, ap. 28",
+    "localitate": "Turda"
+  },
+  {
+    "societate": "DHELECTRIC SYSTEM",
+    "judet": "Bihor",
+    "cui": "34229972",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0745537993; 0359191675",
+    "sediu": "Str. Episcop Ignatie Darabant nr.8B",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "DIGI ROMANIA",
+    "judet": "Bucuresti",
+    "cui": "5888716",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "031.4004440 031.4004441; 031.4004442",
+    "sediu": "Str.Dr.N.Staicovici nr 75",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "DINAMIC ELECTRO",
+    "judet": "Bihor",
+    "cui": "18010619",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0731653726 0359881011",
+    "sediu": "Str. Padisului, nr. 5A, jud Bihor",
+    "localitate": "Sintandrei (BH)"
+  },
+  {
+    "societate": "DYNAMIC BUSINESS FOR YOU",
+    "judet": "Bihor",
+    "cui": "42259346",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0749600325",
+    "sediu": "SÂNTANDREI   284",
+    "localitate": "Sântandrei"
+  },
+  {
+    "societate": "EDIL VAL CONSTRUCT",
+    "judet": "Bucuresti",
+    "cui": "18154711",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0727808077",
+    "sediu": "Str. Caltunasi   2   Bl:174   Sc:B   Et:1   Ap:23 Sect 4",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "ELBI ENERGY PROJECTS",
+    "judet": "Bucuresti",
+    "cui": "41166842",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0751789874 0374092431",
+    "sediu": "Sos. Alexandriei nr 203 A  cam. 2 sect 5",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "ELECTRIC & LIGHTING PROJECTS",
+    "judet": "Bucuresti",
+    "cui": "45811983",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0722607766",
+    "sediu": "Intr. Pitulicii nr. 5, b. P26, sc. 3, et. 2, ap. 37, sect. 6",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "ELECTRIC GREEN IMPULSE",
+    "judet": "Bucuresti",
+    "cui": "47487841",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
     "telefon": "0731039377",
-    "sediu": "Str Hatman Arbore   1/2",
-    "localitate": "Arad"
+    "sediu": "Str. VLAHITA   1   Bl:PM18bis   Sc:B   Et:9   Ap:123",
+    "localitate": "Bucuresti"
   },
   {
-    "societate": "CONSTRUCT BUSINESS ELECTRIC TEAM",
-    "judet": "Arad",
-    "cui": "34492331",
+    "societate": "ELECTRIC MARK",
+    "judet": "Bihor",
+    "cui": "18507210",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0755071968, 0357819594 0357819594",
-    "sediu": "Str. Crisan, nr.7",
-    "localitate": "Gurahont"
+    "telefon": "0727 895038, 0727882177",
+    "sediu": "Str Kolcsey Ferencz nr. 22",
+    "localitate": "Marghita"
   },
   {
-    "societate": "COSERI ELECTRIC CO",
-    "judet": "Arad",
-    "cui": "15160492",
+    "societate": "ELECTRIC TRIUMF INSTALL SERVICE",
+    "judet": "Bucuresti",
+    "cui": "30278670",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0257511810, 0742134164 0257511192",
-    "sediu": "Str. Decebal nr. 34",
-    "localitate": "Ineu [AR]"
+    "telefon": "0735033254/ 0720053450 0311373937",
+    "sediu": "Str. Aurel persu, nr 85, bl 3, sc 1, parter, ap 2, camera3",
+    "localitate": "Bucuresti"
   },
   {
-    "societate": "ELECON PLUS",
-    "judet": "Arad",
-    "cui": "9851191",
+    "societate": "ELECTRICA RACORD INSTAL",
+    "judet": "Bucuresti",
+    "cui": "32621960",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0257 280047, 0744 568816 0257 280047",
-    "sediu": "Str. Biruntei FN, CP 310428",
-    "localitate": "Arad"
+    "telefon": "0725534479,0744483214 0318 054416",
+    "sediu": "Str. Gorovei Artur, nr 31, Sect  5",
+    "localitate": "Bucuresti"
   },
   {
-    "societate": "ELECTRO FARIO",
-    "judet": "Arad",
-    "cui": "24524487",
+    "societate": "ELECTRICAL INTEGRATION SYSTEMS",
+    "judet": "Bucuresti",
+    "cui": "35314596",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0748418220",
-    "sediu": "Sat Gurahont, Str. 22 Decembrie 1989 nr. 6",
-    "localitate": "Gurahont"
+    "telefon": "0722298044",
+    "sediu": "Str. Dumitru Florescu nr  32  Et:1  Cam 21    sect 1",
+    "localitate": "Bucuresti"
   },
   {
-    "societate": "ELECTRO IMED 2012",
-    "judet": "Arad",
-    "cui": "30546560",
+    "societate": "ELECTRO CONTROL INST",
+    "judet": "Bihor",
+    "cui": "17035836",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0741150089 0357819827",
-    "sediu": "Str. Flacara, nr.14",
-    "localitate": "Arad"
+    "telefon": "0731896690, 0722954597 0359175068, 0359814822",
+    "sediu": "Aleea Zidarilor nr. 2, bl. Z4, ap. 4",
+    "localitate": "Oradea"
   },
   {
-    "societate": "ELECTROCM SERVICII",
-    "judet": "Arad",
-    "cui": "37375522",
+    "societate": "ELECTRO EXPERT VEST ONE",
+    "judet": "Bihor",
+    "cui": "43992034",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0742134164",
-    "sediu": "Str. DECEBAL   26   Ap:2",
-    "localitate": "Ineu [AR]"
+    "telefon": "0758084747",
+    "sediu": "Str. Fluierasului nr 5   cp 410230",
+    "localitate": "Oradea"
   },
   {
-    "societate": "ELTRI TECH",
-    "judet": "Arad",
-    "cui": "50659793",
+    "societate": "ELECTRO LUC",
+    "judet": "Bihor",
+    "cui": "16214299",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0749200543",
-    "sediu": "Sat Cicir nr. 283",
-    "localitate": "Vladimirescu [AR]"
+    "telefon": "0742 082661, 0359 179290 0259 436145",
+    "sediu": "Str. Vladeasa nr. 38",
+    "localitate": "Oradea"
   },
   {
-    "societate": "ENERGO-PROIECT",
-    "judet": "Arad",
-    "cui": "23568027",
+    "societate": "ELECTRO SERV COMPANY",
+    "judet": "Bucuresti",
+    "cui": "14009131",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0746066106, 0744517727, 0257276971 0257218744",
-    "sediu": "Com Livada,Sat Sanleani,nr. 524",
-    "localitate": "Sanleani"
+    "telefon": "0213406697, 0766533004 0213406697",
+    "sediu": "Str. Liviu Rebreanu nr. 6, bl. B1, sc. 1, et. 10, ap. 41, sector 3",
+    "localitate": "Bucuresti"
   },
   {
-    "societate": "GIRO CONSTRUCT",
-    "judet": "Arad",
-    "cui": "11028287",
+    "societate": "ELECTRO TIRON",
+    "judet": "Bucuresti",
+    "cui": "456920",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0728 849055",
-    "sediu": "Str. Griului nr. 5, cp 310192",
-    "localitate": "Arad"
+    "telefon": "021 2202574, 0744 542891 0372897875",
+    "sediu": "Str. Lacul Ursului nr.50, sector 6",
+    "localitate": "Bucuresti"
   },
   {
-    "societate": "LOU ELECTRIC",
-    "judet": "Arad",
-    "cui": "25247678",
+    "societate": "ELECTRO VITAL",
+    "judet": "Bihor",
+    "cui": "24324560",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0357 427602, 0742087375, 0721 27648",
-    "sediu": "Sat Zimandcuz, nr. 651, cp 317405",
-    "localitate": "Zimandu Nou"
+    "telefon": "0741 016261, 0745526436 0259 432165",
+    "sediu": "Str Iza, nr 27, Bl F12, Sc E, Et 3, Ap 96",
+    "localitate": "Oradea"
   },
   {
-    "societate": "MATCOMPANY",
-    "judet": "Arad",
-    "cui": "50618912",
+    "societate": "ELECTROCONSTRUCT DISTRIBUTIE EEG",
+    "judet": "Bucuresti",
+    "cui": "30891593",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0740602246",
-    "sediu": "Str VASILE ALECSANDRI   37",
-    "localitate": "Santana"
+    "telefon": "0752178288 0374033002",
+    "sediu": "Str. Cuza Voda, nr.130, camera nr. 1, bl. 1A, sc.1, etaj 4, ap.17",
+    "localitate": "Bucuresti"
   },
   {
-    "societate": "MIBU ELECTRIC",
-    "judet": "Arad",
-    "cui": "31939797",
+    "societate": "ELECTRODAVI",
+    "judet": "Cluj",
+    "cui": "18537318",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0726187676 0357429420",
-    "sediu": "nr.817",
-    "localitate": "Livada (AR)"
+    "telefon": "0742 742092, 0264 572496 0364 814550",
+    "sediu": "sat Tauti, nr 55A",
+    "localitate": "Floresti [CJ]"
   },
   {
-    "societate": "PRECON ELECTRIC",
-    "judet": "Arad",
-    "cui": "14870335",
+    "societate": "ELECTROFOR",
+    "judet": "Bihor",
+    "cui": "13663102",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0743142263 0257.219322",
-    "sediu": "str. Poetului, nr.1C, Hala nr. 25-26 , Arad",
-    "localitate": "Arad"
+    "telefon": "0359 802746, 0728 110120; 072150414 0359 802747",
+    "sediu": "Str. Clujului nr. 127, ap. 2",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "ELECTROINSTAL SOLUTION",
+    "judet": "Bucuresti",
+    "cui": "23649024",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0726 809256;",
+    "sediu": "Sect 2, Str VATRA LUMINOASA, Nr. 45, CAMERA 1, Etaj 1",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "ELECTROMAGNETICA",
+    "judet": "Bucuresti",
+    "cui": "414118",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0744330082 0214042189, 4042195,4042148",
+    "sediu": "Calea Rahovei 266-268,  sect 5",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "ELECTROTERRA",
+    "judet": "Cluj",
+    "cui": "17921778",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0745 473979, 0264426394",
+    "sediu": "Str. Almasului nr. 2, ap. 33",
+    "localitate": "Cluj-Napoca"
+  },
+  {
+    "societate": "ELECTROTRANSCOM",
+    "judet": "Bucuresti",
+    "cui": "10422029",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0740 056480, 0745110543, 021 344291 021 3442917",
+    "sediu": "Str. Gh. Sincai nr. 14, bl. 11, et. 2, ap. 39, sector 4, CP 040317",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "ELECTROVALCAN",
+    "judet": "Bihor",
+    "cui": "33695389",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0744201027",
+    "sediu": "Sat Dusesti, nr.84, Bihor",
+    "localitate": "Ceica"
+  },
+  {
+    "societate": "ELESAL",
+    "judet": "Bihor",
+    "cui": "16376681",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0728 304800, 0359 454943 0259 371282",
+    "sediu": "Str.Imparatul Traian, nr.4",
+    "localitate": "Salonta"
+  },
+  {
+    "societate": "ELMANNPOWER",
+    "judet": "Cluj",
+    "cui": "39394458",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0745777585",
+    "sediu": "Str. Nicolae Steinhardt, nr. 2-4, Bloc B-C, Etaj7 retras, Ap. 55",
+    "localitate": "Cluj-Napoca"
+  },
+  {
+    "societate": "ELSE ENERGY",
+    "judet": "Bucuresti",
+    "cui": "48053620",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0722528625",
+    "sediu": "B-dul BUREBISTA   3   Bl:D16   Sc:A   Et:5   Ap:23",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "ENERGOVAT",
+    "judet": "Bihor",
+    "cui": "25269161",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0729 943881 0259 322997",
+    "sediu": "Str. Poet Gheorghe Pitut nr. 16, cp 415200",
+    "localitate": "Beius"
+  },
+  {
+    "societate": "ENESCO SERVICES",
+    "judet": "Bucuresti",
+    "cui": "40530596",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0749774985",
+    "sediu": "Calea Plevnei, nr.139, Corp C, Parter",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "ENNERGIES CONS",
+    "judet": "Bucuresti",
+    "cui": "11654434",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0214570904, 0744536189, 0745189400 0214500019",
+    "sediu": "Str. Putul cu Tei nr. 53, sector 4",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "EXAWATT GRID",
+    "judet": "Cluj",
+    "cui": "46279044",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0740215986",
+    "sediu": "Str. Cavaleriei nr. 9",
+    "localitate": "Cluj-Napoca"
+  },
+  {
+    "societate": "EXER CONSTRUCT",
+    "judet": "Bucuresti",
+    "cui": "19174873",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0758730001",
+    "sediu": "Bd. Ghencea nr. 42, bl. C25, sc. 1, et. 6, ap. 22, sect. 6",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "EXER GROUP",
+    "judet": "Bucuresti",
+    "cui": "14676356",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0721 261184 031 4187241",
+    "sediu": "B-dul Ghencea nr. 42, bl C25, sc 1, et 6, ap 22, sect 6",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "FINACON INTERNATIONAL CONSULTING",
+    "judet": "Bucuresti",
+    "cui": "27711528",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0314257071, 0733115993 0317800876",
+    "sediu": "Str. Putul lui Zamfir, Nr. 9  et 1 sect 1",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "FLASH LIGHTING SERVICES",
+    "judet": "Bucuresti",
+    "cui": "13845929",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "021.2334252/4, 0745120252 021.2334255, 021,2039926",
+    "sediu": "bdul. Dimitrie Pompeiu nr. 5-7, sect 2",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "FOC PROTECT SPECIALIST",
+    "judet": "Cluj",
+    "cui": "36780780",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0745676136",
+    "sediu": "Str. THEODOR PALLADY   37B",
+    "localitate": "Cluj-Napoca"
+  },
+  {
+    "societate": "GBC GROUP",
+    "judet": "Bucuresti",
+    "cui": "39822350",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0731600419, 0730768747, 0752.818.90",
+    "sediu": "P-ta Montreal nr. 10, intrarea D, incaperea 1.01, World Trade Center Bucuresti, et. I, sect. 1",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "GENIU INSTAL SERV",
+    "judet": "Bihor",
+    "cui": "41610928",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0742323761",
+    "sediu": "Str. Profesor Marin Dacian Bica nr. 29",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "GEP ENERGY CONSTRUCT PROIECT",
+    "judet": "Bucuresti",
+    "cui": "47625820",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0752101232",
+    "sediu": "Str. CAINENI nr   20   PARTER, CAMERA 2   sect 1",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "GHP INTELLIGENT SYSTEMS",
+    "judet": "Bihor",
+    "cui": "28647270",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0731320993",
+    "sediu": "Str. Anghel I Saligny nr 34, judetul Bihor",
+    "localitate": "Oradea"
+  },
+  {
+    "societate": "GIS ENERGY",
+    "judet": "Bihor",
+    "cui": "36601516",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0725350505",
+    "sediu": "Str. Lanului   68",
+    "localitate": "Sântandrei"
+  },
+  {
+    "societate": "GRUP EXPANSIUNEA",
+    "judet": "Bihor",
+    "cui": "9579594",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0744602808",
+    "sediu": "Str. Regele Decebal, nr 20,",
+    "localitate": "Sanmartin [BH]"
+  },
+  {
+    "societate": "GS ELECTRO CONSULT",
+    "judet": "Bucuresti",
+    "cui": "47644865",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0766513106",
+    "sediu": "Str. DEZROBIRII   43   Bl:P19   Sc:A   Et:4   Ap:13   CAMERA 2",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "GUARD ONE INSTALATII",
+    "judet": "Bucuresti",
+    "cui": "41806542",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0753153524",
+    "sediu": "Str. GEORGE GEORGESCU   49  Et:1   CAMERA 3",
+    "localitate": "Bucuresti"
+  },
+  {
+    "societate": "HALLO UP",
+    "judet": "Bucuresti",
+    "cui": "34015960",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0374863533, 0741177362",
+    "sediu": "Str. Grigore Alexandrescu nr. 62, cam. 8, sect. 1",
+    "localitate": "Bucuresti"
   }
 ]

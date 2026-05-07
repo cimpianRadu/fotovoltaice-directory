@@ -1,0 +1,46 @@
+[
+  {
+    "cui": "31509455",
+    "name": "ELECTRICAL TEHNOLOGY",
+    "judet": "Suceava",
+    "localitate": "Bilca",
+    "address": "Jud. Suceava, Sat Bilca Com. Bilca, Str. Calea Bucovinei, Nr.212",
+    "phone": "+40751600536",
+    "email": "euroinstalatii11@gmail.com",
+    "website": "https://electricaltehnology.ro/",
+    "year_founded": 2013,
+    "employees": 10,
+    "revenue_2024": 2480130,
+    "profit_2024": 187335,
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9
+  },
+  {
+    "cui": "22524553",
+    "name": "VOLTER",
+    "judet": "Suceava",
+    "localitate": "Gura Humorului",
+    "address": "Jud. Suceava, Ors. Gura Humorului, Bld. Bucovina, Nr.97",
+    "phone": "+40726783279",
+    "email": "contact@voltershop.ro",
+    "website": "https://volter.ro/",
+    "year_founded": 2007,
+    "employees": 35,
+    "revenue_2024": 21925295,
+    "profit_2024": 1554677,
+    "caen_code": "4664",
+    "caen_label": "Comert cu ridicata al masinilor pentru industria textila si al masinilor de cusut si de tricotat",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6
+  }
+]

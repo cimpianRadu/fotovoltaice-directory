@@ -1,0 +1,24 @@
+[
+  {
+    "cui": "34298727",
+    "name": "ELECTRO ANA LUIZA",
+    "judet": "Buzau",
+    "localitate": "Pogoanele",
+    "address": "Jud. Buzau, Ors. Pogoanele, Str. Tudor Vladimirescu, Nr.63",
+    "phone": "+40723648102",
+    "email": "electroanaluiza@yahoo.com",
+    "website": "https://www.electro-ana.ro/",
+    "year_founded": 2015,
+    "employees": 25,
+    "revenue_2024": 9169711,
+    "profit_2024": 902005,
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9
+  }
+]
