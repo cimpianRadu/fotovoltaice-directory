@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
@@ -8,7 +9,6 @@ import { getCompanyAnreCerts, PV_RELEVANT_CODES } from '@/lib/anre';
 import CorrectionForm from '@/components/forms/CorrectionForm';
 import ClasamentTable from '@/components/clasament/ClasamentTable';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
-import SponsorBanner from '@/components/sponsor/SponsorBanner';
 
 export const metadata: Metadata = {
   title: 'Clasament Firme Panouri Fotovoltaice România 2026 — Sortare după Cifră, Angajați, Atestate ANRE',
@@ -21,7 +21,7 @@ const FAQS = [
   {
     question: 'Cum e ordonat clasamentul?',
     answer:
-      'Implicit, firmele sunt sortate descrescător după cifra de afaceri din ultimul an fiscal disponibil. Poți schimba sortarea în orice moment — după profit net, marjă, număr de angajați, anul înființării sau alfabetic — făcând click pe antetul coloanei respective. Nu există un „scor agregat" arbitrar: tu alegi ce criteriu contează pentru proiectul tău.',
+      'Afișăm top 10 firme după cifra de afaceri din ultimul an fiscal disponibil. Poți schimba sortarea în orice moment — după profit net, marjă, număr de angajați, anul înființării sau alfabetic — făcând click pe antetul coloanei respective; topul se recalculează corespunzător. Nu există un „scor agregat" arbitrar: tu alegi ce criteriu contează pentru proiectul tău. Pentru lista completă cu toate firmele și filtre după județ, specializare și certificări, vezi pagina /firme.',
   },
   {
     question: 'De unde provin datele financiare?',
@@ -41,7 +41,7 @@ const FAQS = [
   {
     question: 'De ce firma X nu apare în clasament?',
     answer:
-      'Clasamentul include toate firmele adăugate în directorul nostru. Selecția firmelor se face manual pe baza activității reale pe segmentul comercial/industrial și a unui atestat ANRE valid. Dacă administrezi o firmă de instalare fotovoltaică cu experiență C&I care nu e listată, poți solicita adăugarea prin formularul de la /listeaza-firma.',
+      'Clasamentul de pe această pagină arată doar top 10 după criteriul selectat — firmele mai mici după cifra de afaceri nu intră în top, dar sunt listate în /firme cu filtre după județ, specializare și certificări. Selecția firmelor din director se face manual pe baza activității reale pe segmentul comercial/industrial și a unui atestat ANRE valid. Dacă administrezi o firmă de instalare fotovoltaică cu experiență C&I care nu e listată, poți solicita adăugarea prin formularul de la /listeaza-firma.',
   },
   {
     question: 'Firmele plătesc ca să apară mai sus?',
@@ -99,9 +99,9 @@ export default function ClasamentPage() {
   const itemListJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Clasament firme panouri fotovoltaice România 2026',
-    numberOfItems: byRevenue.length,
-    itemListElement: byRevenue.slice(0, 20).map((r, i) => ({
+    name: 'Top 10 firme panouri fotovoltaice România 2026',
+    numberOfItems: 10,
+    itemListElement: byRevenue.slice(0, 10).map((r, i) => ({
       '@type': 'ListItem',
       position: i + 1,
       url: `${SITE_URL}/firme/${r.slug}`,
@@ -129,11 +129,11 @@ export default function ClasamentPage() {
             Clasament Firme Panouri Fotovoltaice România 2026
           </h1>
           <p className="text-gray-600 mt-3 max-w-3xl leading-relaxed">
-            Cele <strong>{rows.length}</strong> de firme din directorul nostru, cu date reale din bilanțurile
-            publice depuse la Ministerul Finanțelor și atestatele ANRE active din portal.anre.ro.
+            <strong>Top 10</strong> firme după cifra de afaceri din cele <strong>{rows.length}</strong> de firme listate, cu date
+            reale din bilanțurile publice depuse la Ministerul Finanțelor și atestatele ANRE active din portal.anre.ro.
             Sortează după criteriul care te interesează — <strong>cifră de afaceri</strong>, <strong>profit</strong>,{' '}
-            <strong>marjă</strong>, <strong>angajați</strong> sau <strong>anul înființării</strong> — și filtrează după județ
-            și atestate ANRE. Fără scoruri arbitrare, fără poziționare plătită.
+            <strong>marjă</strong>, <strong>angajați</strong> sau <strong>anul înființării</strong>. Fără scoruri arbitrare,
+            fără poziționare plătită.
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-3 text-sm">
             <a href="#clasament" className="text-primary hover:underline font-medium">
@@ -150,32 +150,51 @@ export default function ClasamentPage() {
           </div>
         </div>
 
-        {/* Ad slot — promo banner pentru firmele care vor să apară aici */}
+        {/* Featured partner — house slot until firms book it */}
         <section className="mb-8">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">
-              ★ Spațiu publicitar
-            </span>
-            <span className="text-xs text-gray-400">Vizibilitate maximă, deasupra clasamentului</span>
+          <div className="flex items-center justify-between gap-2 mb-3">
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">
+                ★ Partener Featured
+              </span>
+              <span className="text-xs text-gray-400">Pentru echipele de instalare</span>
+            </div>
+            <Link href="/publicitate" className="text-xs text-gray-400 hover:text-amber-700 transition-colors">
+              Vrei locul ăsta? →
+            </Link>
           </div>
-          <Link
-            href="/publicitate"
-            className="group block p-6 bg-gradient-to-br from-amber-50 via-white to-amber-50/40 border-2 border-dashed border-amber-300 rounded-xl hover:border-amber-400 hover:shadow-md transition-all"
+          <a
+            href="https://sopia.xyz?utm_source=instalatori-fotovoltaice&utm_medium=featured-banner&utm_campaign=clasament-top&utm_content=clasament"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-umami-event="sponsor-click"
+            data-umami-event-sponsor="sopia"
+            data-umami-event-position="clasament-featured"
+            className="group block p-6 bg-gradient-to-br from-white via-amber-50/30 to-white border border-amber-200 rounded-xl hover:border-amber-400 hover:shadow-md transition-all"
           >
-            <div className="flex items-center justify-between gap-4 flex-wrap">
-              <div className="flex-1 min-w-0">
-                <div className="font-semibold text-gray-900 text-base mb-1">
-                  Firma ta poate fi aici
+            <div className="flex items-center gap-5 flex-wrap">
+              <div className="w-14 h-14 rounded-lg bg-white border border-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
+                <Image
+                  src="/images/partners/sopia.svg"
+                  alt="Sopia"
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 object-contain"
+                />
+              </div>
+              <div className="flex-1 min-w-[240px]">
+                <div className="font-semibold text-gray-900 text-base mb-0.5">
+                  Sopia — proceduri digitalizate cu asistență AI
                 </div>
-                <div className="text-sm text-gray-600">
-                  Pagina de clasament e una dintre cele mai vizitate secțiuni. Rezervă-ți locul pentru vizibilitate prioritară și acces la lead-uri calificate.
+                <div className="text-sm text-gray-600 leading-relaxed">
+                  Echipa de instalare urmează pașii corect, de fiecare dată. Seniorii nu mai repetă aceleași explicații — AI-ul ghidează tehnicianul prin procedură.
                 </div>
               </div>
               <span className="text-sm font-semibold text-amber-700 group-hover:text-amber-800 whitespace-nowrap">
-                Află mai multe →
+                Vezi cum funcționează →
               </span>
             </div>
-          </Link>
+          </a>
         </section>
 
         <PremiumPoolSection
@@ -183,22 +202,18 @@ export default function ClasamentPage() {
           subtitle="Firme partenere ale platformei — apar separat, nu influențează ordinea din tabel"
         />
 
-        {/* Table */}
+        {/* Table — top 10 by revenue */}
         <section id="clasament" className="mb-12 scroll-mt-20">
-          <ClasamentTable rows={byRevenue} counties={counties} />
+          <ClasamentTable rows={byRevenue.slice(0, 10)} counties={counties} />
 
           <div className="mt-6 text-center">
             <Link
               href="/firme"
               className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
             >
-              Vezi toate cele {rows.length} de firme cu filtre după specializare și alte criterii →
+              Vezi toate cele {rows.length} de firme cu filtre după județ, specializare și certificări →
             </Link>
           </div>
-        </section>
-
-        <section className="mb-12 max-w-md mx-auto">
-          <SponsorBanner position="clasament" />
         </section>
 
         {/* FAQ */}
@@ -242,18 +257,20 @@ export default function ClasamentPage() {
         <div className="prose prose-sm prose-gray max-w-none">
           <h2>Despre clasamentul firmelor de panouri fotovoltaice</h2>
           <p>
-            Clasamentul include {rows.length} de firme de instalare panouri fotovoltaice
-            comerciale și industriale din România, cu date reale și verificabile independent.
-            Spre deosebire de alte topuri, <strong>nu acceptăm plăți pentru poziționare</strong> —
+            Pe această pagină afișăm <strong>top 10 firme de instalare panouri fotovoltaice</strong>{' '}
+            comerciale și industriale din România după criteriul ales (implicit, cifra de afaceri),
+            din cele {rows.length} de firme listate în director. Datele sunt reale și verificabile
+            independent. Spre deosebire de alte topuri, <strong>nu acceptăm plăți pentru poziționare</strong> —
             firmele marcate „Partener Verificat" apar separat, deasupra tabelului, clar etichetate.
           </p>
           <p>
             Tabelul afișează <strong>cifra de afaceri</strong>, <strong>profitul net</strong>,{' '}
             <strong>marja de profit</strong>, <strong>numărul de angajați</strong> și <strong>anul înființării</strong>{' '}
             — extrase din bilanțurile depuse la Ministerul Finanțelor și Registrul Comerțului — plus
-            atestatele ANRE active (verificate în portal.anre.ro). Poți schimba sortarea făcând click
-            pe antetul oricărei coloane și poți filtra după județ, cifră minimă sau combinații de
-            atestate ANRE ({PV_RELEVANT_CODES.join(', ')}).
+            atestatele ANRE active (verificate în portal.anre.ro). Poți schimba criteriul făcând click
+            pe antetul oricărei coloane; topul se recalculează după coloana selectată. Pentru lista
+            completă cu toate cele {rows.length} de firme și filtre după județ, specializare și
+            certificări ({PV_RELEVANT_CODES.join(', ')}), folosește pagina <Link href="/firme" className="text-primary hover:underline">/firme</Link>.
           </p>
           <p>
             Pentru un proiect comercial mare (peste 50 kWp — hale industriale, parcuri logistice,
