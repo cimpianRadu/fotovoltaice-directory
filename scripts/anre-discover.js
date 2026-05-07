@@ -97,7 +97,8 @@ function cleanPhone(p) {
 }
 
 function main() {
-  const companies = JSON.parse(fs.readFileSync(COMPANIES_PATH, 'utf8')).companies;
+  const companiesRaw = JSON.parse(fs.readFileSync(COMPANIES_PATH, 'utf8'));
+  const companies = Array.isArray(companiesRaw) ? companiesRaw : companiesRaw.companies;
   const anre = JSON.parse(fs.readFileSync(ANRE_PATH, 'utf8'));
   const cuiEnriched = JSON.parse(fs.readFileSync(CUI_PATH, 'utf8'));
   const rejected = fs.existsSync(REJECTED_PATH)

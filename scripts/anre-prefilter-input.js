@@ -73,7 +73,8 @@ function activeCodes(firm) {
 
 const anre = JSON.parse(fs.readFileSync(ANRE, 'utf8'));
 const cuiIdx = JSON.parse(fs.readFileSync(CUI, 'utf8'));
-const companies = JSON.parse(fs.readFileSync(COMPANIES, 'utf8')).companies;
+const _companiesRaw = JSON.parse(fs.readFileSync(COMPANIES, 'utf8'));
+const companies = Array.isArray(_companiesRaw) ? _companiesRaw : _companiesRaw.companies;
 const rejected = fs.existsSync(REJECTED) ? JSON.parse(fs.readFileSync(REJECTED, 'utf8')) : [];
 
 // Index CUI by (societate|judet)
@@ -111,7 +112,10 @@ for (const firm of anre) {
   if (occupiedNorm.has(`${normalizeName(firm.societate)}|${normalizeJudet(firm.judet)}`)) continue;
   const cui = cuiByKey.get(key);
   if (!cui) continue; // need CUI for targetare.ro
-  if (judetFilter && normalizeJudet(firm.judet) !== normalizeJudet(judetFilter)) continue;
+  if (judetFilter) {
+    const wanted = judetFilter.split(',').map((s) => normalizeJudet(s));
+    if (!wanted.includes(normalizeJudet(firm.judet))) continue;
+  }
 
   out.push({
     societate: firm.societate.trim(),
