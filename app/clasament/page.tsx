@@ -8,6 +8,7 @@ import { getCompanyAnreCerts, PV_RELEVANT_CODES } from '@/lib/anre';
 import CorrectionForm from '@/components/forms/CorrectionForm';
 import ClasamentTable from '@/components/clasament/ClasamentTable';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
+import SponsorBanner from '@/components/sponsor/SponsorBanner';
 
 export const metadata: Metadata = {
   title: 'Clasament Firme Panouri Fotovoltaice România 2026 — Sortare după Cifră, Angajați, Atestate ANRE',
@@ -194,6 +195,10 @@ export default function ClasamentPage() {
               Vezi toate cele {rows.length} de firme cu filtre după specializare și alte criterii →
             </Link>
           </div>
+        </section>
+
+        <section className="mb-12 max-w-md mx-auto">
+          <SponsorBanner position="clasament" />
         </section>
 
         {/* FAQ */}

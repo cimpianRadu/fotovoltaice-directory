@@ -9,17 +9,34 @@ declare global {
   }
 }
 
-export type SponsorPosition = 'homepage' | 'ghid-index' | 'ghid-topic';
+export type SponsorPosition = 'homepage' | 'ghid-index' | 'ghid-topic' | 'clasament' | 'calculator';
 
 const sponsors = [
   {
     name: 'Diodor',
     description: 'Materiale electrice și echipamente fotovoltaice',
     logo: '/logos/diodor.png',
-    url: 'https://diodor.ro?utm_source=instalatori-fotovoltaice&utm_medium=sponsor&utm_campaign=listing-sponsor',
+    baseUrl: 'https://diodor.ro',
     location: 'Cluj-Napoca',
   },
+  {
+    name: 'Sopia',
+    description: 'Digitalizare proceduri și asistență AI la execuție',
+    logo: '/images/partners/sopia.svg',
+    baseUrl: 'https://sopia.xyz',
+    location: 'EU',
+  },
 ];
+
+function buildUrl(baseUrl: string, position: SponsorPosition) {
+  const params = new URLSearchParams({
+    utm_source: 'instalatori-fotovoltaice',
+    utm_medium: 'sponsor-banner',
+    utm_campaign: 'listing-sponsor',
+    utm_content: position,
+  });
+  return `${baseUrl}?${params.toString()}`;
+}
 
 export default function SponsorBanner({ position }: { position: SponsorPosition }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -56,13 +73,13 @@ export default function SponsorBanner({ position }: { position: SponsorPosition 
   return (
     <div ref={ref} className="rounded-xl border border-primary/15 bg-primary/5 p-5">
       <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider mb-3">
-        Furnizori Recomandați
+        Parteneri Recomandați
       </p>
       <div className="space-y-2.5">
         {sponsors.map((sponsor) => (
           <a
             key={sponsor.name}
-            href={sponsor.url}
+            href={buildUrl(sponsor.baseUrl, position)}
             target="_blank"
             rel="noopener noreferrer"
             data-umami-event="sponsor-click"

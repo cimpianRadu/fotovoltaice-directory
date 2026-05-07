@@ -77,6 +77,15 @@ export default function PartnerCarousel() {
     window.umami?.track('partner-carousel-click', { partner: partner.slug });
   };
 
+  const buildPartnerUrl = (partner: Partner) => {
+    const pathname =
+      typeof window !== 'undefined' && window.location.pathname
+        ? window.location.pathname.replace(/^\/|\/$/g, '').replace(/\//g, '-') || 'home'
+        : 'unknown';
+    const sep = partner.url.includes('?') ? '&' : '?';
+    return `${partner.url}${sep}utm_content=${encodeURIComponent(pathname)}`;
+  };
+
   if (!visible || ACTIVE_PARTNERS.length === 0) return null;
 
   const partner = ACTIVE_PARTNERS[index];
@@ -101,7 +110,7 @@ export default function PartnerCarousel() {
 
       <a
         key={partner.slug}
-        href={partner.url}
+        href={buildPartnerUrl(partner)}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => handleClick(partner)}

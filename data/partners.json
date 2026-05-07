@@ -19,6 +19,15 @@
       "logo": "/logos/diodor.png",
       "url": "https://diodor.ro?utm_source=instalatori-fotovoltaice&utm_medium=popup-carousel&utm_campaign=partner-slot",
       "active": true
+    },
+    {
+      "slug": "sopia",
+      "name": "Sopia",
+      "description": "Digitalizare proceduri și asistență AI la execuție — echipa urmează pașii corect, de fiecare dată.",
+      "cta": "Vezi cum funcționează →",
+      "logo": "/images/partners/sopia.svg",
+      "url": "https://sopia.xyz?utm_source=instalatori-fotovoltaice&utm_medium=popup-carousel&utm_campaign=partner-slot",
+      "active": true
     }
   ]
 }
