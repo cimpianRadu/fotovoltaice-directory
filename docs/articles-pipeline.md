@@ -4,7 +4,7 @@
 >
 > Când publici un articol, mută-l în secțiunea **Publicat** cu link + data + next-step (GSC Request Indexing, distribuție).
 
-Ultima actualizare: 2026-05-07
+Ultima actualizare: 2026-05-11
 
 ## Format intrare
 
@@ -28,15 +28,6 @@ Ultima actualizare: 2026-05-07
 ### 3 — Quick win: meta /casa-verde
 - **Status:** ✅ done (commit 3cfc347, 2026-04-29) — title + meta rescrise pentru queries înscrieri/finanțare. Recheck CTR în GSC după 14 zile.
 
-### 6 — Sistem fotovoltaic 50 / 100 / 250 kW pentru firmă — preț, suprafață, producție
-- **Status:** 💡 idee
-- **Cluster GSC:** "preț sistem fotovoltaic 50 kw firmă", "preț sistem fotovoltaic 100 kw industrial", "cât costă 250 kw fotovoltaic" — query-uri cu intent comercial maxim, neacoperite.
-- **Pagină existentă:** ghid costuri (general), ghid hale (calitativ — nu are dimensiuni concrete).
-- **De ce:** Cumpărătorul comercial caută cu putere instalată specifică. Răspunsul direct = breakdown pe kWp + suprafață acoperiș + producție anuală + ROI estimat.
-- **Format:** unul singur cu 3 secțiuni paralele (50/100/250 kW), nu 3 ghiduri separate.
-- **Linkuri interne:** ghid ROI, ghid costuri, ghid hale industriale, /clasament (firme cu istoric pe taglia respectivă).
-- **Next step:** culege 5-10 oferte reale per dimensiune (de la firmele din director sau public), normalizează RON/kWp, suprafață m²/kWp pe acoperiș plat vs înclinat.
-
 ### 7 — Dimensionare sistem fotovoltaic comercial
 - **Status:** 🟡 absorbit parțial în #4 (calculator) — keyword-urile "dimensionare", "câți kw", "kwh vs kwp" sunt acoperite în #4. Rămâne ca propunere separată DOAR dacă după #4 vedem că query-urile de dimensionare pură au volum suficient să justifice un al doilea articol non-calculator-centric. Re-evaluare după 30 zile de la publicarea #4.
 
@@ -48,6 +39,12 @@ Ultima actualizare: 2026-05-07
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Sistem Fotovoltaic 50, 100 și 250 kW pentru Firmă 2026 — Preț, Suprafață Acoperiș, Producție Anuală
+- **Publicat:** 2026-05-11 → [/ghid/sistem-fotovoltaic-50-100-250-kw-firma-pret-suprafata-productie](/ghid/sistem-fotovoltaic-50-100-250-kw-firma-pret-suprafata-productie)
+- **Cluster GSC țintă:** "preț sistem fotovoltaic 50 kw firmă", "preț sistem fotovoltaic 100 kw industrial", "cât costă 250 kw fotovoltaic", "sistem fotovoltaic 50 kw preț", "sistem fotovoltaic 100 kwp preț", "panouri fotovoltaice 100 kw cost", "fotovoltaic 250 kw producție anuală", "câți metri pătrați pentru 100 kw fotovoltaic", "suprafață acoperiș 50 kw panouri" — queries cu intent comercial maxim, neacoperite în piață.
+- **Strategie:** un singur ghid cu 3 secțiuni paralele (50/100/250 kWp) + breakdown comparativ pe un singur tabel. Preț în RON cu medianele validate în calculator (4.500/3.800/3.500 RON/kWp), suprafață m²/kWp pe înclinat vs terasă, producție anuală pe 3 zone PVGIS (București/Cluj/Constanța), amortizare estimată. 10 FAQ cu schema FAQPage. Leagă /calculator + /clasament + /verificare-anre + ghidul costuri + ghidul ROI + ghidul hale + ghid surplus prosumator + ghid stocare baterii.
+- **Next step:** GSC Request Indexing manual, monitorizare 14/30 zile. KPI: clicks pe queries head ("preț sistem fotovoltaic 100 kw industrial", "cât costă 250 kw fotovoltaic"), impresii rank pe queries dimensionare ("câți metri pătrați pentru 100 kw fotovoltaic"). Long-tail bonus: combinări "50 kw + acoperiș" sau "250 kw + amortizare" — dacă apar în GSC e dovada că ghidul ranchează granular.
 
 ### Calculator Panouri Fotovoltaice Firmă 2026 — Estimează Cost, Producție și ROI Gratuit Online
 - **Publicat:** 2026-05-07 → [/ghid/calculator-panouri-fotovoltaice-firma-2026-cost-roi](/ghid/calculator-panouri-fotovoltaice-firma-2026-cost-roi)
