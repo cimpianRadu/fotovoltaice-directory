@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { saveAdInquiryToSheet } from '@/lib/sheets';
 
-const ALLOWED_TIERS = ['basic', 'plus', 'plus-first-mover', 'premium', 'bundle'] as const;
+const ALLOWED_TIERS = ['waitlist', 'basic', 'plus', 'plus-first-mover', 'premium', 'bundle'] as const;
 
 export async function POST(request: Request) {
   try {

@@ -1,11 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Input from '@/components/ui/Input';
-import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
 import Toast from '@/components/ui/Toast';
-import { getCounties } from '@/lib/utils';
 
 declare global {
   interface Window {
@@ -13,48 +11,9 @@ declare global {
   }
 }
 
-const TIER_OPTIONS = [
-  { value: 'basic', label: 'Basic — 49€/lună (furnizori, distribuitori)' },
-  { value: 'plus-first-mover', label: 'Plus First-Mover — 59€/lună × 6 luni (instalatori, primele 5 firme)' },
-  { value: 'plus', label: 'Plus — 99€/lună (instalatori)' },
-  { value: 'premium', label: 'Premium — 249€/lună (instalatori)' },
-  { value: 'bundle', label: 'Național Plus (Bundle) — 299€/lună (instalatori)' },
-];
-
-const TIER_LABEL: Record<string, string> = {
-  basic: 'Basic 49€',
-  plus: 'Plus 99€',
-  'plus-first-mover': 'Plus First-Mover 59€',
-  premium: 'Premium 249€',
-  bundle: 'Național Plus 299€',
-};
-
-function readTierFromHash(): string | null {
-  if (typeof window === 'undefined') return null;
-  const m = window.location.hash.match(/tier=([a-z-]+)/i);
-  if (!m) return null;
-  const t = m[1].toLowerCase();
-  return TIER_OPTIONS.some((o) => o.value === t) ? t : null;
-}
-
 export default function AdInquiryForm() {
-  const [tier, setTier] = useState<string>('plus');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
-  const counties = getCounties();
-
-  useEffect(() => {
-    const sync = () => {
-      const t = readTierFromHash();
-      if (t) {
-        setTier(t);
-        window.umami?.track('ad_inquiry_opened', { tier: t });
-      }
-    };
-    sync();
-    window.addEventListener('hashchange', sync);
-    return () => window.removeEventListener('hashchange', sync);
-  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -68,16 +27,16 @@ export default function AdInquiryForm() {
       const res = await fetch('/api/ad-inquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...body, tier }),
+        body: JSON.stringify({ ...body, tier: 'waitlist' }),
       });
 
       if (!res.ok) throw new Error('Eroare la trimitere');
 
-      window.umami?.track('ad_inquiry_submitted', { tier });
+      window.umami?.track('ad_inquiry_submitted', { tier: 'waitlist' });
 
       setStatus('success');
       setToast({
-        message: 'Cererea a fost trimisă! Te contactăm în aceeași zi lucrătoare.',
+        message: 'Cererea a fost trimisă. Te contactăm direct când e cazul.',
         type: 'success',
       });
       form.reset();
@@ -90,28 +49,17 @@ export default function AdInquiryForm() {
     }
   }
 
-  const showJudet = tier === 'plus' || tier === 'plus-first-mover' || tier === 'bundle';
-
   return (
     <>
       <div className="rounded-xl border border-primary/20 bg-white p-6 sm:p-8 shadow-sm">
         <div className="mb-5">
-          <h3 className="text-lg font-bold text-gray-900 mb-1">Activează pachetul</h3>
+          <h3 className="text-lg font-bold text-gray-900 mb-1">Lista de interes — partener comercial</h3>
           <p className="text-sm text-gray-600">
-            Selectează pachetul, completează datele și te contactăm în aceeași zi lucrătoare cu factura proforma și pașii de activare.
+            Directorul e în creștere și nu vindem încă pachete comerciale standard. Dacă vrei să fii contactat când le lansăm — sau să propui un parteneriat individual acum (testimonial, pilot, cross-promotion) — lasă-ne datele.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <Select
-            label="Pachet dorit"
-            name="tierLabel"
-            options={TIER_OPTIONS}
-            value={tier}
-            onValueChange={(v) => setTier(v)}
-            required
-          />
-
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input label="Nume firmă / brand" name="numeFirma" required placeholder="SC Firma SRL" />
             <Input label="CUI (opțional)" name="cui" placeholder="RO12345678" />
@@ -127,20 +75,11 @@ export default function AdInquiryForm() {
             <Input label="Website (opțional)" name="website" type="url" placeholder="https://firma.ro" />
           </div>
 
-          {showJudet && (
-            <Select
-              label="Județ țintit (pentru Plus)"
-              name="judet"
-              options={counties.map((c) => ({ value: c, label: c }))}
-              required
-            />
-          )}
-
           <Input
-            label="Mesaj (opțional)"
+            label="Despre ce e vorba?"
             name="mesaj"
             type="textarea"
-            placeholder="Întrebări, observații, particularități..."
+            placeholder="Ce te interesează: vizibilitate pe pagina județului, pe homepage, pe ghiduri, pilot gratuit cu testimonial, sau altceva? Scrie ce ai în cap, vorbim direct."
           />
 
           <div className="flex items-start gap-2">
@@ -152,7 +91,7 @@ export default function AdInquiryForm() {
               className="mt-1 w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
             />
             <label htmlFor="ad-gdpr" className="text-xs text-gray-600 leading-relaxed">
-              Sunt de acord cu prelucrarea datelor pentru a fi contactat în legătură cu pachetul de publicitate selectat. *
+              Sunt de acord cu prelucrarea datelor pentru a fi contactat. *
             </label>
           </div>
 
@@ -163,14 +102,8 @@ export default function AdInquiryForm() {
             disabled={status === 'submitting'}
             className="w-full"
           >
-            {status === 'submitting'
-              ? 'Se trimite...'
-              : `Trimite cererea${tier ? ` — ${TIER_LABEL[tier] ?? ''}` : ''}`}
+            {status === 'submitting' ? 'Se trimite...' : 'Trimite — te contactăm direct'}
           </Button>
-
-          <p className="text-[11px] text-gray-500 text-center">
-            Răspuns în aceeași zi lucrătoare. Fără contract minim — poți închide oricând.
-          </p>
         </form>
       </div>
 
