@@ -185,15 +185,6 @@ function Feature({ children, strong = false }: { children: React.ReactNode; stro
   );
 }
 
-/** Reusable "anulare 7 zile" microcopy under CTAs */
-function NoRiskMicro() {
-  return (
-    <p className="mt-2 text-[11px] text-gray-500 text-center leading-relaxed">
-      <span className="inline-block align-middle mr-1">✓</span>
-      Anulare gratuită în primele 7 zile · fără contract minim · fără întrebări
-    </p>
-  );
-}
 
 /* ── Page ─────────────────────────────────────────────────────── */
 
@@ -403,7 +394,6 @@ export default function AdvertisePage() {
               <Button href="#ad-inquiry?tier=plus" variant="outline" size="md" className="w-full mt-2">
                 Activează Plus standard (99€)
               </Button>
-              <NoRiskMicro />
             </div>
             <div className="hidden sm:block">
               <PreviewPlus />
@@ -448,7 +438,6 @@ export default function AdvertisePage() {
               <Button href="#ad-inquiry?tier=premium" variant="secondary" size="md" className="w-full mt-5">
                 Activează Premium
               </Button>
-              <NoRiskMicro />
             </div>
             <div className="hidden sm:block">
               <PreviewPremium />
@@ -573,7 +562,6 @@ export default function AdvertisePage() {
                 <Button href="#ad-inquiry?tier=bundle" variant="secondary" size="lg" className="w-full">
                   Activează Național Plus
                 </Button>
-                <NoRiskMicro />
               </div>
               <div className="rounded-xl border border-secondary/20 bg-white/60 p-5">
                 <p className="text-xs font-semibold text-secondary-dark uppercase tracking-wider mb-3">Defalcare reducere</p>
@@ -655,7 +643,6 @@ export default function AdvertisePage() {
               <Button href="#ad-inquiry?tier=basic" variant="primary" size="md" className="w-full mt-3">
                 Activează Basic
               </Button>
-              <NoRiskMicro />
             </div>
             <div className="hidden sm:block">
               <PreviewBasic />
@@ -826,6 +813,23 @@ export default function AdvertisePage() {
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
                 Toate pachetele plătite primesc raport lunar. Basic — impresii popup, click-uri, dismiss rate. Plus — adaugă vizualizări profil, click-uri telefon/site, sursa traficului. Premium — extins cu impresii pool global, timp citire profil, conversii. Free nu primește rapoarte.
               </p>
+            </details>
+            <details className="bg-white border border-border rounded-xl p-4 group">
+              <summary className="font-semibold text-gray-900 text-sm cursor-pointer list-none flex justify-between items-start gap-3">
+                <span>Cum se compară cu Google Ads sau Facebook Ads?</span>
+                <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="mt-3 text-sm text-gray-600 leading-relaxed space-y-2">
+                <p>
+                  Plătesc lucruri diferite. <strong>Google/Facebook Ads</strong> sunt CPC — plătești pentru fiecare click, dar lupți la licitație cu marketing-ul tuturor jucătorilor (inclusiv brand-uri mari care nu au nicio legătură cu fotovoltaice comerciale). Buget realist 99€/lună în Google Ads = 30-50 click-uri pe keyword-uri competitive ca „panouri fotovoltaice firmă&quot;, dintre care 70-80% sunt browser/curioși, nu prospecți reali. Cost lead calificat: 5-15€ × close rate scăzut = ROI imprevizibil.
+                </p>
+                <p>
+                  <strong>Plus 99€/lună la noi</strong> = placement permanent timp de o lună pe pagina județului tău, văzut DOAR de oameni care au căutat activ „instalator fotovoltaic [județ]&quot; și au ajuns pe un director. <strong>Intent-ul e declarat</strong> (caută un instalator, nu citesc un articol generic). Lead-urile sunt mai puține numeric, dar calificate ca volum și mult mai bine convertibile. Plus, beneficiezi de SEO long-term — directory listing-ul tău rămâne indexat în Google și după ce nu mai plătești promovare prioritară.
+                </p>
+                <p>
+                  <strong>Concluzie practică:</strong> Google Ads = volum de click-uri (bun pentru awareness top-funnel). Directory placement = lead-uri calificate bottom-funnel (oameni gata să ceară ofertă). Multe firme le folosesc complementar — nu sunt înlocuitori unul pentru altul.
+                </p>
+              </div>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
               <summary className="font-semibold text-gray-900 text-sm cursor-pointer list-none flex justify-between items-start gap-3">
