@@ -4,7 +4,7 @@
 >
 > Când publici un articol, mută-l în secțiunea **Publicat** cu link + data + next-step (GSC Request Indexing, distribuție).
 
-Ultima actualizare: 2026-05-11
+Ultima actualizare: 2026-05-14
 
 ## Format intrare
 
@@ -39,6 +39,12 @@ Ultima actualizare: 2026-05-11
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Noua Lege a Prosumatorilor 2026 pentru Firmă — Plata Lunară, Compensare Multi-Locație, Client Activ și Dezechilibre
+- **Publicat:** 2026-05-14 → [/ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre](/ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre)
+- **Cluster GSC țintă:** "legea prosumatorilor 2026", "noua lege prosumator", "lege prosumator firma", "modificari lege prosumator 2026", "prosumator plata lunara energie livrata", "compensare prosumator multiple locuri consum", "compensare cantitativa vs financiara prosumator", "dezechilibre prosumator firma", "client activ prosumator", "vanzare energie invertor prosumator 400 kw", "energy sharing prosumator romania", "lege prosumator 200 kw 400 kw" — cluster head + commercial intent maxim, declanșat de CCR rejected 29 apr 2026 + promulgare mai 2026.
+- **Strategie:** ghid de actualitate pe legea promulgată în mai 2026, complementar ghidului Feb 17 (legislație generală, acum baseline) și ghidului May 4 (preț achiziție surplus). Acoperă cele 8 modificări concrete: plata lunară, compensare multi-locație (același furnizor + OD), praguri 200/400 kWp, vânzare directă invertor, client activ + dezechilibre (~1.000-7.500 RON/an pe taglă), energy sharing, exclusio compensare gaz pentru firme. Plan operațional 90 zile pentru decident firmă. ~4.500 cuvinte, 10 FAQ schema FAQPage. Leagă /ghid/legislatie-prosumator-comercial + /ghid/vanzare-surplus + /ghid/stocare-energie-baterii-firme + /ghid/calculator + /clasament + /verificare-anre + /firme.
+- **Next step:** GSC Request Indexing manual, monitorizare 14/30 zile. KPI: clicks pe queries head ("legea prosumatorilor 2026", "noua lege prosumator", "compensare prosumator multiple locuri consum"), impresii rank pe queries tehnice ("client activ prosumator", "dezechilibre prosumator firma"). Long-tail bonus: "compensare cantitativa vs financiara 200 kw" sau "vanzare energie invertor parc industrial" — dacă apar e dovada că ghidul ranchează granular. **Update obligatoriu** când ANRE publică normele tehnice (60 zile de la intrarea în vigoare a legii) — adaugă procedura concretă pe compensare multi-locație + cost real dezechilibre + procedura vânzare directă.
 
 ### Sistem Fotovoltaic 50, 100 și 250 kW pentru Firmă 2026 — Preț, Suprafață Acoperiș, Producție Anuală
 - **Publicat:** 2026-05-11 → [/ghid/sistem-fotovoltaic-50-100-250-kw-firma-pret-suprafata-productie](/ghid/sistem-fotovoltaic-50-100-250-kw-firma-pret-suprafata-productie)
