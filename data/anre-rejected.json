@@ -320,5 +320,12 @@
     "cui": null,
     "reason": "Score 7 cu PV content prezent dar 1 angajat / 137k RON revenue — sub pragul minim de installer real.",
     "rejectedAt": "2026-05-04"
+  },
+  {
+    "societate": "AUTOMATIC CONTROL",
+    "judet": "Satu Mare",
+    "cui": "22525966",
+    "reason": "Site automatic-shop.ro = e-commerce/distribuție produse automatizare + electrice + invertoare/PV — fără serviciu instalare turnkey",
+    "rejectedAt": "2026-05-08"
   }
 ]
