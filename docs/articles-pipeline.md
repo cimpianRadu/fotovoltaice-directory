@@ -4,7 +4,7 @@
 >
 > Când publici un articol, mută-l în secțiunea **Publicat** cu link + data + next-step (GSC Request Indexing, distribuție).
 
-Ultima actualizare: 2026-05-14
+Ultima actualizare: 2026-05-14 (#8 Cluj + #9 Timișoara propuse — replica template București pentru capitale regionale)
 
 ## Format intrare
 
@@ -31,10 +31,25 @@ Ultima actualizare: 2026-05-14
 ### 7 — Dimensionare sistem fotovoltaic comercial
 - **Status:** 🟡 absorbit parțial în #4 (calculator) — keyword-urile "dimensionare", "câți kw", "kwh vs kwp" sunt acoperite în #4. Rămâne ca propunere separată DOAR dacă după #4 vedem că query-urile de dimensionare pură au volum suficient să justifice un al doilea articol non-calculator-centric. Re-evaluare după 30 zile de la publicarea #4.
 
-### 8 — (placeholder) Replicate București template pentru Cluj
-- **Status:** 💡 idee, blocat de validarea ghidului București + național
-- **Declanșator:** dacă /firme/judet/bucuresti aduce >5 clicks/săpt în 2 săpt de la 27 Apr (ghid național)
-- **De ce:** Cluj are 10 firme acum (post 2026-04-22 batch), pagina județ există deja. Dacă template funcționează pe București, scalezi ieftin.
+### 8 — Top Firme Panouri Fotovoltaice Cluj-Napoca 2026 — Instalatori Autorizați ANRE
+- **Status:** 💡 idee
+- **Cluster GSC țintă (de validat înainte de scriere, după modelul București ~190 impresii/lună):** "firme montaj panouri fotovoltaice cluj", "firme montaj panouri solare cluj", "instalare panouri fotovoltaice cluj-napoca", "montaj panouri fotovoltaice cluj", "panouri fotovoltaice cluj", "firme panouri fotovoltaice cluj-napoca", "instalatori autorizati ANRE cluj", "firme acreditate panouri fotovoltaice cluj", "instalator panouri fotovoltaice cluj-napoca", "panouri solare cluj firma" — cluster geo, intent comercial regional N-V foarte puternic.
+- **Pagini existente relevante:** [/firme/judet/cluj](/firme/judet/cluj), [/firme/oras/cluj-napoca](/firme/oras/cluj-napoca)
+- **De ce:** Cluj e capital regional N-V cu cea mai mare densitate de firme listate (10+ după batch 2026-04-22). Template-ul București (publicat 23 Apr) e validat pentru a fi replicat pe alte capitale regionale. Cluj e cel mai cost-eficient de scalat — date complete, pagina județ + pagina oraș există, multe firme cu cifre verificate ANAF + atestate ANRE live.
+- **Strategie:** replică structura ghid București — H1 keyword-rich, 8-10 secțiuni (de ce Cluj, cum am ales firmele, top 10 firme cu profile scurte, criterii alegere instalator, prețuri Cluj specifice cu yield PVGIS local ~1.180 kWh/kWp/an, scheme finanțare disponibile, FAQ local). Diferențiator: live ANRE lookup ([/verificare-anre](/verificare-anre)) + clasament sortable filtrabil pe județ ([/clasament](/clasament)) + 10 firme top din [/firme/judet/cluj](/firme/judet/cluj) cu cifră de afaceri verificată.
+- **Linkuri interne obligatorii:** /firme/judet/cluj, /firme/oras/cluj-napoca, /verificare-anre, /clasament, /calculator-panouri-fotovoltaice + ghid 50/100/250 kW + ghid prețuri + ghid ROI + ghid legislație prosumator
+- **Pre-write task:** verifică în GSC dacă /firme/judet/cluj a urcat în clicks după publicarea ghidului național (27 Apr) și a ghidului București (23 Apr) — dacă >2-3 clicks/săpt, validate, scrii. Verifică și volum impresii pe "panouri fotovoltaice cluj" + "instalatori cluj" în GSC ca să prioritizezi sub-queries.
+- **Next step dacă publicat:** GSC Request Indexing manual, monitorizare 14/30 zile. KPI: clicks pe queries geo head ("panouri fotovoltaice cluj", "instalatori cluj"). Dacă urcă, replică pentru Timișoara (#9).
+
+### 9 — Top Firme Panouri Fotovoltaice Timișoara 2026 — Instalatori Autorizați ANRE
+- **Status:** 💡 idee
+- **Cluster GSC țintă (de validat înainte de scriere):** "firme montaj panouri fotovoltaice timisoara", "firme montaj panouri solare timisoara", "instalare panouri fotovoltaice timisoara", "montaj panouri fotovoltaice timisoara", "panouri fotovoltaice timisoara", "firme panouri fotovoltaice timis", "instalatori autorizati ANRE timisoara", "instalator panouri fotovoltaice timisoara", "panouri solare timisoara firma", "firme acreditate fotovoltaice timis" — cluster geo capital regional V, intent B2B industrial puternic (Banat = hub manufacturing).
+- **Pagini existente relevante:** [/firme/judet/timis](/firme/judet/timis), [/firme/oras/timisoara](/firme/oras/timisoara)
+- **De ce:** Timișoara = capital regional V, hub industrial puternic (Continental, Hella, manufacturing UE), demand B2B pentru PV mare. ~5-8 firme Timiș listate (CBM Elpro Instal, Eltal Group, Melbo Instal, Solar-Service + altele). Cluster GSC neexploatat momentan.
+- **Strategie:** identic cu #8 Cluj — replică template București. Diferențiator local: angle B2B industrial (Timișoara are profil business mai pronunțat decât Cluj-Napoca pe segmentul fabrică/hală producție). Yield PVGIS Timișoara ~1.220-1.250 kWh/kWp/an (intermediar între Cluj și București).
+- **Linkuri interne obligatorii:** /firme/judet/timis, /firme/oras/timisoara, /verificare-anre, /clasament, /calculator-panouri-fotovoltaice + ghid 50/100/250 kW + ghid hale industriale + ghid ROI + ghid legislație prosumator
+- **Pre-write task:** verifică în GSC volum impresii pe "panouri fotovoltaice timisoara" + variații. Dacă #8 Cluj ranchează în 2-4 săptămâni de la publicare (impresii crescute, clicks pe queries geo head), declanșează automat #9. Dacă Cluj nu ranchează, parchează #9 până înțelegem de ce template-ul nu scalează la alte capitale regionale.
+- **Next step dacă publicat:** GSC Request Indexing manual, monitorizare 14/30 zile. KPI: clicks pe queries geo head ("panouri fotovoltaice timisoara", "instalatori timisoara"). Dacă ambele Cluj + Timișoara ranchează, pattern validat = continui cu Iași, Brașov, Constanța, Oradea, Sibiu (toate au pagină oraș existentă).
 
 ---
 
