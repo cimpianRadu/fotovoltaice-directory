@@ -47,6 +47,22 @@ export default async function TrafficWidget() {
     views: pathMap.get(p.path) ?? 0,
   }));
 
+  // Aggregate per-tier views for derived impressions
+  const premiumViews = rows.filter((r) => r.tier === 'Premium').reduce((s, r) => s + r.views, 0);
+  const plusJudetRows = rows.filter((r) => r.tier === 'Plus' && r.path.startsWith('/firme/judet/'));
+  const avgJudetViews = plusJudetRows.length
+    ? Math.round(plusJudetRows.reduce((s, r) => s + r.views, 0) / plusJudetRows.length)
+    : 0;
+
+  const premiumImpressionsFull = Math.round(premiumViews * 0.2); // 5 firme pool = 20% SOV
+  const plusImpressionsFull = Math.round(avgJudetViews * 0.33); // 3 firme/județ = 33% SOV
+
+  const hasData = premiumViews > 0 || avgJudetViews > 0;
+
+  // Effective CPM in EUR (advertiser-friendly framing)
+  const premiumCpm = premiumImpressionsFull > 0 ? (249 / (premiumImpressionsFull / 1000)).toFixed(1) : null;
+  const plusCpm = plusImpressionsFull > 0 ? (99 / (plusImpressionsFull / 1000)).toFixed(1) : null;
+
   return (
     <div className="rounded-xl border border-primary/20 bg-linear-to-br from-primary/5 via-white to-secondary/5 p-5 sm:p-6 mb-10">
       <div className="flex items-start justify-between gap-3 mb-4 flex-wrap">
@@ -101,8 +117,42 @@ export default async function TrafficWidget() {
         </table>
       </div>
 
+      {/* Derived: what these numbers mean per tier */}
+      {hasData && (
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-lg border border-secondary/30 bg-secondary/5 p-3">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-secondary-dark mb-1">
+              Premium · pool plin 5 firme
+            </p>
+            <p className="text-sm text-gray-900 leading-snug">
+              <strong className="text-lg font-bold">~{fmt(premiumImpressionsFull)}</strong> impresii / lună pentru brand-ul tău
+            </p>
+            <p className="text-[11px] text-gray-600 mt-1 leading-relaxed">
+              20% din {fmt(premiumViews)} vizualizări cumulate pe homepage + ghiduri + /calculator + /clasament.
+              {premiumCpm && (
+                <> CPM efectiv: <strong>~{premiumCpm}€</strong> la 249€/lună.</>
+              )}
+            </p>
+          </div>
+          <div className="rounded-lg border border-primary/30 bg-primary/5 p-3">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-primary-dark mb-1">
+              Plus · pool plin 3 firme/județ
+            </p>
+            <p className="text-sm text-gray-900 leading-snug">
+              <strong className="text-lg font-bold">~{fmt(plusImpressionsFull)}</strong> impresii / lună (medie pe județele top)
+            </p>
+            <p className="text-[11px] text-gray-600 mt-1 leading-relaxed">
+              33% din ~{fmt(avgJudetViews)} vizualizări pe pagina județului. Județe ca București, Cluj, Timiș vor genera mai mult; județele rurale, mai puțin.
+              {plusCpm && (
+                <> CPM efectiv: <strong>~{plusCpm}€</strong> la 99€/lună.</>
+              )}
+            </p>
+          </div>
+        </div>
+      )}
+
       <p className="text-[11px] text-gray-500 mt-3 leading-relaxed">
-        <strong>Cum citești tabelul:</strong> Premium apare pe paginile globale (homepage, clasament, calculator, ghiduri) — cumulativ vezi suma vizualizărilor lor. Plus apare pe pagina județului tău și pe /verificare-anre. Cu pool-ul plin (3 firme Plus / județ, 5 firme Premium național), share-ul tău e <strong>~33% din vizualizările Plus</strong>, respectiv <strong>20% din vizualizările Premium</strong>.
+        <strong>Cum citești tabelul:</strong> Premium apare pe paginile globale (homepage, clasament, calculator, ghiduri) — cumulativ vezi suma vizualizărilor lor. Plus apare pe pagina județului tău și pe /verificare-anre. Cu pool-ul plin (3 firme Plus / județ, 5 firme Premium național), share-ul tău e <strong>~33% din vizualizările Plus</strong>, respectiv <strong>20% din vizualizările Premium</strong>. {hasData && <em>Notă: până se umple pool-ul, primii plătitori primesc share mai mare (până la 100%).</em>}
       </p>
     </div>
   );

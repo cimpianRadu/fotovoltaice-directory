@@ -185,6 +185,16 @@ function Feature({ children, strong = false }: { children: React.ReactNode; stro
   );
 }
 
+/** Reusable "anulare 7 zile" microcopy under CTAs */
+function NoRiskMicro() {
+  return (
+    <p className="mt-2 text-[11px] text-gray-500 text-center leading-relaxed">
+      <span className="inline-block align-middle mr-1">✓</span>
+      Anulare gratuită în primele 7 zile · fără contract minim · fără întrebări
+    </p>
+  );
+}
+
 /* ── Page ─────────────────────────────────────────────────────── */
 
 export default function AdvertisePage() {
@@ -211,18 +221,13 @@ export default function AdvertisePage() {
           <p className="text-gray-600 mt-2 max-w-2xl leading-relaxed">
             Pachete cu placement-uri proprii — <strong>nu se suprapun</strong>. Free pentru instalatori (baza directorului), Basic pentru furnizori și distribuitori, Plus + Premium pentru instalatori care vor expunere prioritară. Bundle <strong>Național Plus</strong> combină Plus + Premium cu ~14% reducere. Prețuri în EUR, facturare în RON la cursul BNR din ziua emiterii facturii.
           </p>
-          <div className="mt-5 grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3">
+          <p className="mt-5 text-[11px] font-semibold uppercase tracking-wider text-gray-500">Pentru instalatori</p>
+          <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
             <a
               href="#free"
               className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-primary/5 border border-primary/20 text-sm font-medium text-primary-dark hover:bg-primary/10 transition-colors"
             >
               Free <span className="text-xs text-gray-500">0€</span>
-            </a>
-            <a
-              href="#basic"
-              className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-primary/5 border border-primary/20 text-sm font-medium text-primary-dark hover:bg-primary/10 transition-colors"
-            >
-              Basic <span className="text-xs text-gray-500">49€</span>
             </a>
             <a
               href="#plus"
@@ -238,9 +243,18 @@ export default function AdvertisePage() {
             </a>
             <a
               href="#bundle"
-              className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-secondary/10 border border-secondary/30 text-sm font-medium text-secondary-dark hover:bg-secondary/15 transition-colors col-span-2 sm:col-span-1"
+              className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-secondary/10 border border-secondary/30 text-sm font-medium text-secondary-dark hover:bg-secondary/15 transition-colors"
             >
               Național Plus <span className="text-xs text-gray-500">299€ <span className="text-secondary-dark">-14%</span></span>
+            </a>
+          </div>
+          <p className="mt-4 text-[11px] font-semibold uppercase tracking-wider text-gray-500">Pentru furnizori / distribuitori</p>
+          <div className="mt-2 grid grid-cols-1 sm:grid-cols-4 gap-2 sm:gap-3">
+            <a
+              href="#basic"
+              className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors sm:col-span-1"
+            >
+              Basic <span className="text-xs text-gray-500">49€</span>
             </a>
           </div>
         </div>
@@ -281,7 +295,7 @@ export default function AdvertisePage() {
              Tier-uri NU sunt cumulative — fiecare are placement-urile lui
            ═══════════════════════════════════════════════════════════ */}
 
-        <div className="mb-8 rounded-xl border border-secondary/20 bg-secondary/5 p-4 flex items-start gap-3">
+        <div className="mb-4 rounded-xl border border-secondary/20 bg-secondary/5 p-4 flex items-start gap-3">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-secondary-dark flex-shrink-0 mt-0.5" aria-hidden="true">
             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clipRule="evenodd" />
           </svg>
@@ -289,6 +303,19 @@ export default function AdvertisePage() {
             <p className="font-semibold text-gray-900 mb-1">Pachetele NU sunt cumulative</p>
             <p className="text-gray-700 leading-relaxed">
               Fiecare pachet are placement-uri proprii — nu se suprapun. Plus și Premium sunt complementare (județ vs național) — instalatorii care vor ambele iau <a href="#bundle" className="text-secondary-dark hover:underline font-medium">Național Plus (299€/lună, ~14% reducere)</a>. Basic e dedicat furnizorilor și distribuitorilor.
+            </p>
+          </div>
+        </div>
+
+        {/* No-risk guarantee */}
+        <div className="mb-8 rounded-xl border border-green-200 bg-green-50/60 p-4 flex items-start gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" aria-hidden="true">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
+          </svg>
+          <div className="flex-1 text-sm">
+            <p className="font-semibold text-gray-900 mb-1">Anulare gratuită în primele 7 zile</p>
+            <p className="text-gray-700 leading-relaxed">
+              Activezi orice pachet plătit, îl încerci 7 zile cu date Umami reale, iar dacă nu te convinge anulăm fără întrebări — refund 100% pe luna în curs. <strong>Fără contract minim</strong>, fără cost ascuns, fără ca tu să riști ceva în primele 7 zile.
             </p>
           </div>
         </div>
@@ -329,44 +356,7 @@ export default function AdvertisePage() {
           </div>
         </section>
 
-        {/* Tier 2: Basic */}
-        <section id="basic" className="mb-10 scroll-mt-20">
-          <div className="grid gap-6 sm:grid-cols-2 items-start">
-            <div className="rounded-xl border border-border p-6">
-              <div className="flex items-center gap-2 mb-1">
-                <h3 className="font-bold text-gray-900 text-lg">Basic</h3>
-                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Furnizori, distribuitori, materiale</span>
-              </div>
-              <p className="text-sm text-gray-500 mb-4">Slot în popup carousel — vizibil pe toate paginile site-ului</p>
-              <p className="text-3xl font-bold text-gray-900 mb-1">
-                49 <span className="text-base font-normal text-gray-500">EUR/lună</span>
-              </p>
-              <p className="text-sm text-gray-600 mb-5">+ TVA (21%) · Anual 490€ (2 luni gratis)</p>
-              <div className="mb-4 p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-xs text-blue-900 leading-relaxed">
-                <strong>Pentru cine:</strong> distribuitori panouri/invertoare/structuri, furnizori materiale electrice, echipamente specializate (batatoare stâlpi, structuri, baterii), SaaS și tools pentru industrie. <em>Instalatorii folosesc Plus sau Premium — placement-urile lor sunt mai relevante.</em>
-              </div>
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ce primești</p>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <Feature strong>Slot în popup carousel — apare 15 secunde, apoi rotește la următorul</Feature>
-                <Feature>Maxim 8 parteneri activi simultan în carousel — fără diluare</Feature>
-                <Feature>Vizibil pe toate paginile site-ului (homepage, ghiduri, firme, etc.)</Feature>
-                <Feature>UTM tracking pe linkuri + eveniment Umami dedicat</Feature>
-                <Feature>Raport lunar: impresii popup, click-uri, rata dismiss</Feature>
-              </ul>
-              <div className="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
-                <strong>Cum funcționează popup-ul:</strong> apare după câteva secunde pe toate paginile site-ului. Fiecare partener primește 15 secunde de vizibilitate, apoi se rotește la următorul. Când ciclul ajunge la capăt, începe iar de la primul. Dismissible — userul îl poate închide în sesiune.
-              </div>
-              <Button href="#ad-inquiry?tier=basic" variant="primary" size="md" className="w-full mt-5">
-                Activează Basic
-              </Button>
-            </div>
-            <div className="hidden sm:block">
-              <PreviewBasic />
-            </div>
-          </div>
-        </section>
-
-        {/* Tier 3: Plus */}
+        {/* Tier 2: Plus */}
         <section id="plus" className="mb-10 scroll-mt-20">
           <div className="grid gap-6 sm:grid-cols-2 items-start">
             <div className="rounded-xl border-2 border-primary p-6 relative bg-white">
@@ -403,6 +393,9 @@ export default function AdvertisePage() {
                 <p className="text-xs text-gray-700 leading-relaxed">
                   Primele <strong>5 firme</strong> care activează Plus primesc <strong>40% reducere pe 6 luni</strong> (59€/lună în loc de 99€). După cele 6 luni trec la 99€ standard. Tu ne ajuți să dovedim modelul, noi îți dăm preț de pionierat. <strong>Sloturi rămase:</strong> primul venit, primul servit.
                 </p>
+                <p className="text-[11px] text-gray-600 mt-2 leading-relaxed border-t border-secondary/20 pt-2">
+                  <strong>Reguli cap:</strong> oferta respectă cap-ul standard de <strong>max 3 firme Plus / județ</strong> și e limitată la <strong>1 First-Mover / județ</strong> ca să nu blocheze o singură zonă. Cele 5 sloturi vor fi distribuite în județe diferite.
+                </p>
               </div>
               <Button href="#ad-inquiry?tier=plus-first-mover" variant="primary" size="md" className="w-full mt-3">
                 Activează Plus First-Mover (59€)
@@ -410,6 +403,7 @@ export default function AdvertisePage() {
               <Button href="#ad-inquiry?tier=plus" variant="outline" size="md" className="w-full mt-2">
                 Activează Plus standard (99€)
               </Button>
+              <NoRiskMicro />
             </div>
             <div className="hidden sm:block">
               <PreviewPlus />
@@ -417,7 +411,7 @@ export default function AdvertisePage() {
           </div>
         </section>
 
-        {/* Tier 4: Premium */}
+        {/* Tier 3: Premium */}
         <section id="premium" className="mb-10 scroll-mt-20">
           <div className="grid gap-6 sm:grid-cols-2 items-start">
             <div className="rounded-xl border border-secondary/30 bg-linear-to-br from-secondary/5 via-white to-primary/5 p-6 relative">
@@ -454,6 +448,7 @@ export default function AdvertisePage() {
               <Button href="#ad-inquiry?tier=premium" variant="secondary" size="md" className="w-full mt-5">
                 Activează Premium
               </Button>
+              <NoRiskMicro />
             </div>
             <div className="hidden sm:block">
               <PreviewPremium />
@@ -566,13 +561,19 @@ export default function AdvertisePage() {
                 <ul className="space-y-2 text-sm text-gray-600 mb-5">
                   <Feature strong>Tot din Plus — top „Promovate&quot; pe județul tău + featured /verificare-anre + badge</Feature>
                   <Feature strong>Tot din Premium — pool global pe homepage, ghiduri, /calculator, /clasament + profil complet</Feature>
-                  <Feature>Câte 1 slot în fiecare cap (Plus, Premium) — fără cap mărit</Feature>
+                </ul>
+
+                <p className="text-xs font-semibold text-secondary-dark uppercase tracking-wide mb-2">Exclusiv Național Plus (nu se vând separat)</p>
+                <ul className="space-y-2 text-sm text-gray-600 mb-5">
+                  <Feature strong>Badge „Verified Top&quot; — distinct vizual de Plus/Premium standard, pe profil + în listări</Feature>
+                  <Feature strong>Raport săptămânal de trafic (vs lunar pe Plus/Premium) — vezi tendințele aproape real-time</Feature>
+                  <Feature strong>Prioritate absolută pe waitlist (Plus + Premium) când se eliberează sloturi</Feature>
                   <Feature>Reducere garantată dacă rămâi pe Național Plus minim 6 luni</Feature>
-                  <Feature>Prioritate pe waitlist când se eliberează un slot Plus sau Premium</Feature>
                 </ul>
                 <Button href="#ad-inquiry?tier=bundle" variant="secondary" size="lg" className="w-full">
                   Activează Național Plus
                 </Button>
+                <NoRiskMicro />
               </div>
               <div className="rounded-xl border border-secondary/20 bg-white/60 p-5">
                 <p className="text-xs font-semibold text-secondary-dark uppercase tracking-wider mb-3">Defalcare reducere</p>
@@ -602,6 +603,62 @@ export default function AdvertisePage() {
                   Reducere ~14% aplicată la suma celor 2 pachete. La plata anuală, încă 2 luni gratis (299€×10 = 2.990€/an). Bundle e dedicat instalatorilor — Basic se cumpără separat de furnizori/distribuitori.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── Section break: pentru furnizori / distribuitori ─── */}
+        <div className="my-12 flex items-center gap-4">
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 whitespace-nowrap">
+            Pentru furnizori și distribuitori
+          </p>
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+        </div>
+
+        {/* Tier 4: Basic (moved to end — furnizori only) */}
+        <section id="basic" className="mb-10 scroll-mt-20">
+          <div className="grid gap-6 sm:grid-cols-2 items-start">
+            <div className="rounded-xl border border-border p-6">
+              <div className="flex items-center gap-2 mb-1">
+                <h3 className="font-bold text-gray-900 text-lg">Basic</h3>
+                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Furnizori, distribuitori, materiale</span>
+              </div>
+              <p className="text-sm text-gray-500 mb-4">Slot în popup carousel — vizibil pe toate paginile site-ului</p>
+              <p className="text-3xl font-bold text-gray-900 mb-1">
+                49 <span className="text-base font-normal text-gray-500">EUR/lună</span>
+              </p>
+              <p className="text-sm text-gray-600 mb-5">+ TVA (21%) · Anual 490€ (2 luni gratis)</p>
+              <div className="mb-4 p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-xs text-blue-900 leading-relaxed">
+                <strong>Pentru cine:</strong> distribuitori panouri/invertoare/structuri, furnizori materiale electrice, echipamente specializate (batatoare stâlpi, structuri, baterii), SaaS și tools pentru industrie. <em>Instalatorii folosesc Plus sau Premium — placement-urile lor sunt mai relevante.</em>
+              </div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ce primești</p>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <Feature strong>Slot în popup carousel — apare 15 secunde, apoi rotește la următorul</Feature>
+                <Feature>Maxim 8 parteneri activi simultan în carousel — fără diluare</Feature>
+                <Feature>Vizibil pe toate paginile site-ului (homepage, ghiduri, firme, etc.)</Feature>
+                <Feature>UTM tracking pe linkuri + eveniment Umami dedicat</Feature>
+                <Feature>Raport lunar: impresii popup, click-uri, rata dismiss</Feature>
+              </ul>
+              <div className="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
+                <strong>Cum funcționează popup-ul:</strong> apare după câteva secunde pe toate paginile site-ului. Fiecare partener primește 15 secunde de vizibilitate, apoi se rotește la următorul. Când ciclul ajunge la capăt, începe iar de la primul. Dismissible — userul îl poate închide în sesiune.
+              </div>
+              <div className="mt-3 p-3 rounded-lg bg-linear-to-r from-green-50 to-amber-50 border border-green-300">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[10px] bg-green-600 text-white px-1.5 py-0.5 rounded-full font-semibold uppercase tracking-wider">100% SOV</span>
+                  <span className="text-sm font-bold text-gray-900">Primii 3 parteneri</span>
+                </div>
+                <p className="text-xs text-gray-700 leading-relaxed">
+                  Pool-ul Basic e abia la început. <strong>Primii 3 plătitori au 100% timp de vizibilitate</strong> în popup până se umple primul ciclu de 4. Practic: cumperi 49€/lună și ești singurul (sau unul din 2-3) afișat pe tot site-ul. Cu cât pool-ul crește, SOV-ul tău scade gradual spre 12.5%, dar reducerea NU se aplică retroactiv — beneficiezi cât timp e gol pool-ul.
+                </p>
+              </div>
+              <Button href="#ad-inquiry?tier=basic" variant="primary" size="md" className="w-full mt-3">
+                Activează Basic
+              </Button>
+              <NoRiskMicro />
+            </div>
+            <div className="hidden sm:block">
+              <PreviewBasic />
             </div>
           </div>
         </section>
@@ -731,7 +788,7 @@ export default function AdvertisePage() {
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Primele <strong>5 firme</strong> care activează Plus primesc <strong>40% reducere pe primele 6 luni</strong> (59€/lună în loc de 99€). După cele 6 luni trec automat la 99€/lună standard. E o ofertă de pionierat — tu ne ajuți să dovedim modelul cu testimoniale și date reale, noi îți dăm preț preferențial. First come, first served — e limitat la 5 sloturi total pe site, nu pe județ.
+                Primele <strong>5 firme</strong> care activează Plus primesc <strong>40% reducere pe primele 6 luni</strong> (59€/lună în loc de 99€). După cele 6 luni trec automat la 99€/lună standard. E o ofertă de pionierat — tu ne ajuți să dovedim modelul cu testimoniale și date reale, noi îți dăm preț preferențial. <strong>Reguli cap:</strong> max 5 sloturi total, max 1 First-Mover / județ (ca să nu blocheze o singură zonă) și respectă cap-ul general de 3 firme Plus / județ. Dacă în județul tău e deja 1 First-Mover sau 3 firme Plus standard, oferta nu mai e disponibilă — first come, first served.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
@@ -768,6 +825,15 @@ export default function AdvertisePage() {
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
                 Toate pachetele plătite primesc raport lunar. Basic — impresii popup, click-uri, dismiss rate. Plus — adaugă vizualizări profil, click-uri telefon/site, sursa traficului. Premium — extins cu impresii pool global, timp citire profil, conversii. Free nu primește rapoarte.
+              </p>
+            </details>
+            <details className="bg-white border border-border rounded-xl p-4 group">
+              <summary className="font-semibold text-gray-900 text-sm cursor-pointer list-none flex justify-between items-start gap-3">
+                <span>Cum funcționează garanția de 7 zile?</span>
+                <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <p className="mt-3 text-sm text-gray-600 leading-relaxed">
+                Activezi pachetul, primești prima factură. În primele 7 zile calendaristice de la activare ai dreptul să anulezi din orice motiv (sau fără motiv) — printr-un email simplu. Returnăm 100% din suma facturată pe luna curentă, iar placement-urile se opresc imediat. Datele Umami pe care le primești în primele zile rămân la tine ca să-ți confirmi singur dacă merită. Garanția se aplică doar la prima activare, nu și la reînnoiri ulterioare.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
