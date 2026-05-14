@@ -31,6 +31,11 @@ const ROTATION_MS = partnersData.rotationSeconds * 1000;
 
 export default function PartnerCarousel() {
   const [visible, setVisible] = useState(false);
+  // Start at 0 server-side (matches SSR) then randomize on client mount before
+  // the popup becomes visible. This way every page load gets a different first
+  // partner — without random start, partner at index N is only seen by visitors
+  // who stay > N×rotationSeconds (e.g. with 3 partners + 15s, the 3rd appears
+  // only after 30s, so short-bounce traffic never sees it).
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -38,10 +43,15 @@ export default function PartnerCarousel() {
     if (ACTIVE_PARTNERS.length === 0) return;
     if (sessionStorage.getItem(STORAGE_KEY) === 'dismissed') return;
 
+    // Random starting index — equal share-of-voice across page loads
+    const startIndex = Math.floor(Math.random() * ACTIVE_PARTNERS.length);
+    setIndex(startIndex);
+
     const timer = setTimeout(() => {
       setVisible(true);
       window.umami?.track('partner-carousel-view', {
-        partner: ACTIVE_PARTNERS[0]?.slug,
+        partner: ACTIVE_PARTNERS[startIndex]?.slug,
+        position: startIndex + 1,
       });
     }, SHOW_AFTER_MS);
 
