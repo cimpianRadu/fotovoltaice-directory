@@ -24,6 +24,7 @@ import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
 import { getCompanies, getCoveredCounties, getFeaturedCompanies, getPremiumCompanies } from '@/lib/utils';
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
+import { PRICING, BUNDLE } from '@/lib/pricing';
 import guidesData from '@/data/guides.json';
 
 const COMPANY_COUNT = getCompanies().length;
@@ -132,7 +133,7 @@ export default function HomePage() {
               </span>
             </div>
             <p className="text-sm text-gray-700 leading-relaxed">
-              Patru pachete cu placement-uri proprii — Basic <strong>29€</strong>, Plus <strong>99€</strong>, Premium <strong>249€</strong>, sau Bundle Total cu <strong>15% reducere</strong>. Audiență 100% nișată B2B fotovoltaic.
+              Patru pachete cu placement-uri proprii — Basic <strong>{PRICING.basic.monthly}€</strong>, Plus <strong>{PRICING.plus.monthly}€</strong>, Premium <strong>{PRICING.premium.monthly}€</strong>, sau {PRICING.bundle.label} cu <strong>{BUNDLE.discountPct}% reducere</strong>. Audiență 100% nișată B2B fotovoltaic.
             </p>
           </Link>
         </section>

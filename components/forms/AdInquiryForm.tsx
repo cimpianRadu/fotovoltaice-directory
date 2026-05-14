@@ -6,6 +6,7 @@ import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
 import Toast from '@/components/ui/Toast';
 import { getCounties } from '@/lib/utils';
+import { PRICING, tierSelectLabel, type TierId } from '@/lib/pricing';
 
 declare global {
   interface Window {
@@ -13,19 +14,16 @@ declare global {
   }
 }
 
-const TIER_OPTIONS = [
-  { value: 'basic', label: 'Basic — 19€/lună (furnizori, distribuitori)' },
-  { value: 'plus', label: 'Plus — 39€/lună (instalatori)' },
-  { value: 'premium', label: 'Premium — 79€/lună (instalatori)' },
-  { value: 'bundle', label: 'Național Plus (Bundle) — 99€/lună (instalatori)' },
-];
+const PAID_TIERS: TierId[] = ['basic', 'plus', 'premium', 'bundle'];
 
-const TIER_LABEL: Record<string, string> = {
-  basic: 'Basic 19€',
-  plus: 'Plus 39€',
-  premium: 'Premium 79€',
-  bundle: 'Național Plus 99€',
-};
+const TIER_OPTIONS = PAID_TIERS.map((id) => ({
+  value: id,
+  label: tierSelectLabel(PRICING[id]),
+}));
+
+const TIER_LABEL: Record<string, string> = Object.fromEntries(
+  PAID_TIERS.map((id) => [id, `${PRICING[id].label} ${PRICING[id].monthly}€`]),
+);
 
 function readTierFromHash(): string | null {
   if (typeof window === 'undefined') return null;

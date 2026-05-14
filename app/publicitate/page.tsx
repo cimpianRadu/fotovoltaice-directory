@@ -6,12 +6,12 @@ import AdInquiryForm from '@/components/forms/AdInquiryForm';
 import TrafficWidget from '@/components/publicitate/TrafficWidget';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 import { getCompanies, getCoveredCounties } from '@/lib/utils';
+import { PRICING, BUNDLE, SOV, TVA_PCT } from '@/lib/pricing';
 import guidesData from '@/data/guides.json';
 
 export const metadata: Metadata = {
   title: 'Publicitate - Promovează-ți Firma pe Instalatori Fotovoltaice',
-  description:
-    'Pachete de promovare pe Instalatori Fotovoltaice România: Basic 19€ (furnizori), Plus 39€ și Premium 79€/lună + TVA. Bundle Național Plus 99€ (Plus+Premium, ~16% reducere). Free pentru instalatori. Fiecare pachet are placement-uri proprii — nu se suprapun.',
+  description: `Pachete de promovare pe Instalatori Fotovoltaice România: Basic ${PRICING.basic.monthly}€ (furnizori), Plus ${PRICING.plus.monthly}€ și Premium ${PRICING.premium.monthly}€/lună + TVA. Bundle ${PRICING.bundle.label} ${PRICING.bundle.monthly}€ (Plus+Premium, ~${BUNDLE.discountPct}% reducere). Free pentru instalatori. Fiecare pachet are placement-uri proprii — nu se suprapun.`,
   alternates: { canonical: '/publicitate' },
 };
 
@@ -224,19 +224,19 @@ export default function AdvertisePage() {
               href="#plus"
               className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-primary/5 border border-primary/20 text-sm font-medium text-primary-dark hover:bg-primary/10 transition-colors"
             >
-              Plus <span className="text-xs text-gray-500">39€</span>
+              Plus <span className="text-xs text-gray-500">{PRICING.plus.monthly}€</span>
             </a>
             <a
               href="#premium"
               className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-primary/5 border border-primary/20 text-sm font-medium text-primary-dark hover:bg-primary/10 transition-colors"
             >
-              Premium <span className="text-xs text-gray-500">79€</span>
+              Premium <span className="text-xs text-gray-500">{PRICING.premium.monthly}€</span>
             </a>
             <a
               href="#bundle"
               className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-secondary/10 border border-secondary/30 text-sm font-medium text-secondary-dark hover:bg-secondary/15 transition-colors"
             >
-              Național Plus <span className="text-xs text-gray-500">99€ <span className="text-secondary-dark">-16%</span></span>
+              {PRICING.bundle.label} <span className="text-xs text-gray-500">{PRICING.bundle.monthly}€ <span className="text-secondary-dark">-{BUNDLE.discountPct}%</span></span>
             </a>
           </div>
           <p className="mt-4 text-[11px] font-semibold uppercase tracking-wider text-gray-500">Pentru furnizori / distribuitori</p>
@@ -245,7 +245,7 @@ export default function AdvertisePage() {
               href="#basic"
               className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors sm:col-span-1"
             >
-              Basic <span className="text-xs text-gray-500">19€</span>
+              Basic <span className="text-xs text-gray-500">{PRICING.basic.monthly}€</span>
             </a>
           </div>
         </div>
@@ -293,7 +293,7 @@ export default function AdvertisePage() {
           <div className="flex-1 text-sm">
             <p className="font-semibold text-gray-900 mb-1">Pachetele NU sunt cumulative</p>
             <p className="text-gray-700 leading-relaxed">
-              Fiecare pachet are placement-uri proprii — nu se suprapun. Plus și Premium sunt complementare (județ vs național) — instalatorii care vor ambele iau <a href="#bundle" className="text-secondary-dark hover:underline font-medium">Național Plus (99€/lună, ~16% reducere)</a>. Basic e dedicat furnizorilor și distribuitorilor.
+              Fiecare pachet are placement-uri proprii — nu se suprapun. Plus și Premium sunt complementare (județ vs național) — instalatorii care vor ambele iau <a href="#bundle" className="text-secondary-dark hover:underline font-medium">{PRICING.bundle.label} ({PRICING.bundle.monthly}€/lună, ~{BUNDLE.discountPct}% reducere)</a>. Basic e dedicat furnizorilor și distribuitorilor.
             </p>
           </div>
         </div>
@@ -360,9 +360,9 @@ export default function AdvertisePage() {
               </div>
               <p className="text-sm text-gray-500 mb-4">Vizibilitate prioritară pe județul tău + verificare ANRE</p>
               <p className="text-3xl font-bold text-gray-900 mb-1">
-                39 <span className="text-base font-normal text-gray-500">EUR/lună</span>
+                {PRICING.plus.monthly} <span className="text-base font-normal text-gray-500">EUR/lună</span>
               </p>
-              <p className="text-sm text-gray-600 mb-5">+ TVA (21%) · Anual 390€ (2 luni gratis)</p>
+              <p className="text-sm text-gray-600 mb-5">+ TVA ({TVA_PCT}%) · Anual {PRICING.plus.annual}€ (2 luni gratis)</p>
 
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ce primești</p>
               <ul className="space-y-2 text-sm text-gray-600">
@@ -395,9 +395,9 @@ export default function AdvertisePage() {
               </div>
               <p className="text-sm text-gray-500 mb-4">Expunere națională + profil complet</p>
               <p className="text-3xl font-bold text-gray-900 mb-1">
-                79 <span className="text-base font-normal text-gray-500">EUR/lună</span>
+                {PRICING.premium.monthly} <span className="text-base font-normal text-gray-500">EUR/lună</span>
               </p>
-              <p className="text-sm text-gray-600 mb-5">+ TVA (21%) · Anual 790€ (2 luni gratis)</p>
+              <p className="text-sm text-gray-600 mb-5">+ TVA ({TVA_PCT}%) · Anual {PRICING.premium.annual}€ (2 luni gratis)</p>
 
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Placement-uri (pool rotativ pe paginile globale)</p>
               <ul className="space-y-2 text-sm text-gray-600">
@@ -447,7 +447,7 @@ export default function AdvertisePage() {
               <div className="rounded-lg border border-border bg-white p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">Basic</span>
-                  <span className="text-[10px] bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded-full font-mono">19€</span>
+                  <span className="text-[10px] bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded-full font-mono">{PRICING.basic.monthly}€</span>
                 </div>
                 <p className="text-sm font-semibold text-gray-900 mb-1">Popup carousel</p>
                 <p className="text-xs text-gray-600 leading-relaxed mb-3">
@@ -464,7 +464,7 @@ export default function AdvertisePage() {
               <div className="rounded-lg border-2 border-primary/30 bg-primary/5 p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xs font-semibold uppercase tracking-wider text-primary-dark">Plus</span>
-                  <span className="text-[10px] bg-primary/15 text-primary-dark px-1.5 py-0.5 rounded-full font-mono">39€</span>
+                  <span className="text-[10px] bg-primary/15 text-primary-dark px-1.5 py-0.5 rounded-full font-mono">{PRICING.plus.monthly}€</span>
                 </div>
                 <p className="text-sm font-semibold text-gray-900 mb-1">Top „Promovate&quot; pe județ</p>
                 <p className="text-xs text-gray-600 leading-relaxed mb-3">
@@ -481,7 +481,7 @@ export default function AdvertisePage() {
               <div className="rounded-lg border border-secondary/30 bg-secondary/5 p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xs font-semibold uppercase tracking-wider text-secondary-dark">Premium</span>
-                  <span className="text-[10px] bg-secondary/15 text-secondary-dark px-1.5 py-0.5 rounded-full font-mono">79€</span>
+                  <span className="text-[10px] bg-secondary/15 text-secondary-dark px-1.5 py-0.5 rounded-full font-mono">{PRICING.premium.monthly}€</span>
                 </div>
                 <p className="text-sm font-semibold text-gray-900 mb-1">Pool global rotativ</p>
                 <p className="text-xs text-gray-600 leading-relaxed mb-3">
@@ -512,7 +512,7 @@ export default function AdvertisePage() {
         <section id="bundle" className="mb-12 scroll-mt-20">
           <div className="rounded-xl border-2 border-secondary/40 bg-linear-to-br from-secondary/10 via-white to-primary/10 p-6 sm:p-8 relative">
             <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap shadow-sm">
-              Economisești ~16%
+              Economisești ~{BUNDLE.discountPct}%
             </span>
             <div className="grid gap-6 sm:grid-cols-2 items-center">
               <div>
@@ -523,12 +523,12 @@ export default function AdvertisePage() {
                 <p className="text-sm text-gray-600 mb-4">Plus + Premium simultan — județul tău + paginile globale</p>
                 <div className="flex items-baseline gap-3 mb-1">
                   <p className="text-4xl font-bold text-gray-900">
-                    99 <span className="text-base font-normal text-gray-500">EUR/lună</span>
+                    {PRICING.bundle.monthly} <span className="text-base font-normal text-gray-500">EUR/lună</span>
                   </p>
-                  <p className="text-sm text-gray-400 line-through">118€</p>
+                  <p className="text-sm text-gray-400 line-through">{BUNDLE.separateSum}€</p>
                 </div>
-                <p className="text-sm text-secondary-dark font-medium mb-1">Economisești 19€/lună · 228€/an</p>
-                <p className="text-sm text-gray-600 mb-5">+ TVA (21%) · Anual 990€ (2 luni gratis)</p>
+                <p className="text-sm text-secondary-dark font-medium mb-1">Economisești {BUNDLE.monthlySavings}€/lună · {BUNDLE.annualSavings}€/an</p>
+                <p className="text-sm text-gray-600 mb-5">+ TVA ({TVA_PCT}%) · Anual {PRICING.bundle.annual}€ (2 luni gratis)</p>
 
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Include simultan</p>
                 <ul className="space-y-2 text-sm text-gray-600 mb-5">
@@ -545,27 +545,27 @@ export default function AdvertisePage() {
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between items-center pb-2 border-b border-gray-100">
                     <span className="text-gray-600">Plus</span>
-                    <span className="font-mono text-gray-900">39€</span>
+                    <span className="font-mono text-gray-900">{PRICING.plus.monthly}€</span>
                   </div>
                   <div className="flex justify-between items-center pb-2 border-b border-gray-100">
                     <span className="text-gray-600">Premium</span>
-                    <span className="font-mono text-gray-900">79€</span>
+                    <span className="font-mono text-gray-900">{PRICING.premium.monthly}€</span>
                   </div>
                   <div className="flex justify-between items-center pb-2 border-b border-gray-100">
                     <span className="text-gray-700 font-medium">Total separat</span>
-                    <span className="font-mono font-semibold text-gray-900">118€</span>
+                    <span className="font-mono font-semibold text-gray-900">{BUNDLE.separateSum}€</span>
                   </div>
                   <div className="flex justify-between items-center pb-2 border-b border-gray-100">
                     <span className="text-secondary-dark font-medium">Reducere Bundle</span>
-                    <span className="font-mono font-semibold text-secondary-dark">−19€</span>
+                    <span className="font-mono font-semibold text-secondary-dark">−{BUNDLE.monthlySavings}€</span>
                   </div>
                   <div className="flex justify-between items-center pt-1">
-                    <span className="text-gray-900 font-bold">Național Plus</span>
-                    <span className="font-mono font-bold text-gray-900 text-lg">99€</span>
+                    <span className="text-gray-900 font-bold">{PRICING.bundle.label}</span>
+                    <span className="font-mono font-bold text-gray-900 text-lg">{PRICING.bundle.monthly}€</span>
                   </div>
                 </div>
                 <p className="text-[10px] text-gray-400 mt-3 leading-relaxed">
-                  Reducere ~16% aplicată la suma celor 2 pachete. La plata anuală, încă 2 luni gratis (99€×10 = 990€/an). Bundle e dedicat instalatorilor — Basic se cumpără separat de furnizori/distribuitori.
+                  Reducere ~{BUNDLE.discountPct}% aplicată la suma celor 2 pachete. La plata anuală, încă 2 luni gratis ({PRICING.bundle.monthly}€×10 = {PRICING.bundle.annual}€/an). Bundle e dedicat instalatorilor — Basic se cumpără separat de furnizori/distribuitori.
                 </p>
               </div>
             </div>
@@ -591,9 +591,9 @@ export default function AdvertisePage() {
               </div>
               <p className="text-sm text-gray-500 mb-4">Slot în popup carousel — vizibil pe toate paginile site-ului</p>
               <p className="text-3xl font-bold text-gray-900 mb-1">
-                19 <span className="text-base font-normal text-gray-500">EUR/lună</span>
+                {PRICING.basic.monthly} <span className="text-base font-normal text-gray-500">EUR/lună</span>
               </p>
-              <p className="text-sm text-gray-600 mb-5">+ TVA (21%) · Anual 190€ (2 luni gratis)</p>
+              <p className="text-sm text-gray-600 mb-5">+ TVA ({TVA_PCT}%) · Anual {PRICING.basic.annual}€ (2 luni gratis)</p>
               <div className="mb-4 p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-xs text-blue-900 leading-relaxed">
                 <strong>Pentru cine:</strong> distribuitori panouri/invertoare/structuri, furnizori materiale electrice, echipamente specializate (batatoare stâlpi, structuri, baterii), SaaS și tools pentru industrie. <em>Instalatorii folosesc Plus sau Premium — placement-urile lor sunt mai relevante.</em>
               </div>
@@ -626,7 +626,7 @@ export default function AdvertisePage() {
           <div className="flex-1 text-sm">
             <p className="font-semibold text-gray-900">Popup-ul din colțul dreapta-jos pe care-l vezi acum?</p>
             <p className="text-gray-700 mt-1 leading-relaxed">
-              E slotul popup carousel inclus în <strong>Basic — 19 EUR/lună + TVA</strong>, dedicat furnizorilor și distribuitorilor. Fiecare partener primește 15 secunde de vizibilitate, apoi se rotește la următorul. Maxim 8 parteneri activi simultan, pe tot site-ul, pe toate paginile.{' '}
+              E slotul popup carousel inclus în <strong>Basic — {PRICING.basic.monthly} EUR/lună + TVA</strong>, dedicat furnizorilor și distribuitorilor. Fiecare partener primește 15 secunde de vizibilitate, apoi se rotește la următorul. Maxim 8 parteneri activi simultan, pe tot site-ul, pe toate paginile.{' '}
               <a href="#basic" className="text-primary-dark hover:underline font-medium">
                 Vezi detaliile →
               </a>
@@ -656,30 +656,30 @@ export default function AdvertisePage() {
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium text-gray-900">Basic <span className="text-[10px] text-gray-500 ml-1">furnizori</span></td>
-                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">19 €</td>
-                  <td className="px-4 py-3 text-gray-600">Popup carousel pe toate paginile (max 8 parteneri, 15s) — pentru furnizori și distribuitori</td>
+                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">{PRICING.basic.monthly} €</td>
+                  <td className="px-4 py-3 text-gray-600">Popup carousel pe toate paginile (max {SOV.basic.cap} parteneri, {SOV.basic.rotationSeconds}s) — pentru furnizori și distribuitori</td>
                 </tr>
                 <tr className="bg-primary/5">
                   <td className="px-4 py-3 font-medium text-gray-900">
                     Plus <span className="text-[10px] bg-primary text-white px-1.5 py-0.5 rounded-full ml-1">★</span>
                   </td>
-                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">39 €</td>
-                  <td className="px-4 py-3 text-gray-600">Top &quot;Promovate&quot; pe județ (max 3) + featured /verificare-anre + badge</td>
+                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">{PRICING.plus.monthly} €</td>
+                  <td className="px-4 py-3 text-gray-600">Top &quot;Promovate&quot; pe județ (max {SOV.plus.cap}) + featured /verificare-anre + badge</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium text-gray-900">Premium</td>
-                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">79 €</td>
+                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">{PRICING.premium.monthly} €</td>
                   <td className="px-4 py-3 text-gray-600">
-                    Pool global rotativ (homepage, ghiduri, calculator, clasament — max 5) + profil complet (logo, descriere lungă, SM links)
+                    Pool global rotativ (homepage, ghiduri, calculator, clasament — max {SOV.premium.cap}) + profil complet (logo, descriere lungă, SM links)
                   </td>
                 </tr>
                 <tr className="bg-secondary/5">
                   <td className="px-4 py-3 font-medium text-gray-900">
-                    Național Plus <span className="text-[10px] bg-secondary text-white px-1.5 py-0.5 rounded-full ml-1">−16%</span>
+                    {PRICING.bundle.label} <span className="text-[10px] bg-secondary text-white px-1.5 py-0.5 rounded-full ml-1">−{BUNDLE.discountPct}%</span>
                   </td>
-                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">99 €</td>
+                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">{PRICING.bundle.monthly} €</td>
                   <td className="px-4 py-3 text-gray-600">
-                    Plus + Premium simultan pentru instalatori (economisești 19€/lună)
+                    Plus + Premium simultan pentru instalatori (economisești {BUNDLE.monthlySavings}€/lună)
                   </td>
                 </tr>
               </tbody>
@@ -690,10 +690,10 @@ export default function AdvertisePage() {
           <div className="sm:hidden space-y-3">
             {[
               { name: 'Free', price: '0 €', desc: 'Profil în director + verificare ANRE live (instalatori)', highlight: false },
-              { name: 'Basic (furnizori)', price: '19 € + TVA', desc: 'Popup carousel pe toate paginile (max 8, 15s) — pentru furnizori, distribuitori', highlight: false },
-              { name: 'Plus ★', price: '39 € + TVA', desc: 'Top "Promovate" pe județ (max 3) + featured /verificare-anre + badge', highlight: true },
-              { name: 'Premium', price: '79 € + TVA', desc: 'Pool global rotativ (homepage, ghiduri, calculator, clasament — max 5) + profil complet', highlight: false },
-              { name: 'Național Plus −16%', price: '99 € + TVA', desc: 'Plus + Premium simultan pentru instalatori', highlight: false, secondary: true },
+              { name: 'Basic (furnizori)', price: `${PRICING.basic.monthly} € + TVA`, desc: `Popup carousel pe toate paginile (max ${SOV.basic.cap}, ${SOV.basic.rotationSeconds}s) — pentru furnizori, distribuitori`, highlight: false },
+              { name: 'Plus ★', price: `${PRICING.plus.monthly} € + TVA`, desc: `Top "Promovate" pe județ (max ${SOV.plus.cap}) + featured /verificare-anre + badge`, highlight: true },
+              { name: 'Premium', price: `${PRICING.premium.monthly} € + TVA`, desc: `Pool global rotativ (homepage, ghiduri, calculator, clasament — max ${SOV.premium.cap}) + profil complet`, highlight: false },
+              { name: `${PRICING.bundle.label} −${BUNDLE.discountPct}%`, price: `${PRICING.bundle.monthly} € + TVA`, desc: 'Plus + Premium simultan pentru instalatori', highlight: false, secondary: true },
             ].map((row) => (
               <div
                 key={row.name}
@@ -725,7 +725,7 @@ export default function AdvertisePage() {
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Nu. Fiecare pachet are placement-uri proprii — Basic e popup carousel pentru furnizori, Plus e top pe județul tău + ANRE, Premium e pool pe paginile globale. Pentru instalatori, dacă vrei Plus + Premium simultan, ia <strong>Național Plus (99€/lună, ~16% reducere)</strong>. Modelul ăsta evită blocaje de capacitate — nu există situația în care „Plus a umplut sloturile pentru Premium&quot;.
+                Nu. Fiecare pachet are placement-uri proprii — Basic e popup carousel pentru furnizori, Plus e top pe județul tău + ANRE, Premium e pool pe paginile globale. Pentru instalatori, dacă vrei Plus + Premium simultan, ia <strong>{PRICING.bundle.label} ({PRICING.bundle.monthly}€/lună, ~{BUNDLE.discountPct}% reducere)</strong>. Modelul ăsta evită blocaje de capacitate — nu există situația în care „Plus a umplut sloturile pentru Premium&quot;.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
