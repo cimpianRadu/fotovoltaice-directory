@@ -9,6 +9,7 @@ import { getCompanyAnreCerts, PV_RELEVANT_CODES } from '@/lib/anre';
 import CorrectionForm from '@/components/forms/CorrectionForm';
 import ClasamentTable from '@/components/clasament/ClasamentTable';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
+import SponsorImpression from '@/components/sponsor/SponsorImpression';
 
 export const metadata: Metadata = {
   title: 'Clasament Firme Panouri Fotovoltaice România 2026 — Sortare după Cifră, Angajați, Atestate ANRE',
@@ -163,6 +164,7 @@ export default function ClasamentPage() {
               Vrei locul ăsta? →
             </Link>
           </div>
+          <SponsorImpression sponsor="sopia" position="clasament-featured">
           <a
             href="https://sopia.xyz?utm_source=instalatori-fotovoltaice&utm_medium=featured-banner&utm_campaign=clasament-top&utm_content=clasament"
             target="_blank"
@@ -195,6 +197,7 @@ export default function ClasamentPage() {
               </span>
             </div>
           </a>
+          </SponsorImpression>
         </section>
 
         <PremiumPoolSection

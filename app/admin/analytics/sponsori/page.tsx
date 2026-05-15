@@ -16,12 +16,14 @@ type Partner = {
 
 const PARTNERS = (partnersData.partners as Partner[]).filter((p) => p.active);
 
-const SPONSOR_BANNER_NAMES: string[] = ['diodor'];
+const SPONSOR_BANNER_NAMES: string[] = ['diodor', 'sopia'];
 
 const POSITION_LABELS: Record<string, string> = {
   homepage: 'Homepage',
   'ghid-index': '/ghid (index)',
   'ghid-topic': '/ghid/[topic]',
+  calculator: '/calculator',
+  'clasament-featured': '/clasament (featured)',
 };
 
 async function safe<T>(fn: () => Promise<T>): Promise<{ data: T | null; error: string | null }> {
@@ -101,8 +103,8 @@ export default async function SponsoriPage({ searchParams }: { searchParams: Sea
             Banner Sponsori (&quot;Furnizori Recomandați&quot;)
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            Apare pe homepage (sub fold), /ghid (sticky sidebar) și /ghid/[topic] (sub
-            cuprins).
+            Apare pe homepage (sub fold), /ghid (sticky sidebar), /ghid/[topic] (sub
+            cuprins), /calculator (sub rezultat) și /clasament (featured partner slot).
           </p>
         </div>
 
