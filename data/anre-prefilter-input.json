@@ -1,226 +1,522 @@
 [
   {
-    "societate": "ELECTROVALCEA",
-    "judet": "Valcea",
-    "cui": "5071860",
+    "societate": "AET LUXINSTAL",
+    "judet": "Salaj",
+    "cui": "31527664",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0740012188, 0250739188, 0784251406 0250739188",
-    "sediu": "str Ferdinand nr 19, cp 240571",
-    "localitate": "Ramnicu Valcea"
+    "telefon": "0742926523, 0752928513",
+    "sediu": "Sat Rus nr. 322",
+    "localitate": "Rus [SJ]"
   },
   {
-    "societate": "ELSERV",
-    "judet": "Valcea",
-    "cui": "2160733",
+    "societate": "ALBORA ELECTRO CONS",
+    "judet": "Mures",
+    "cui": "41921169",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0721299711, 0350404949 0350404948",
-    "sediu": "Str. Gib Mihaescu, nr.21",
-    "localitate": "Ramnicu Valcea"
+    "telefon": "0742480051",
+    "sediu": "Str. 1 Decembrie 1918 nr. 46, bl. V2, ap. 12",
+    "localitate": "Tarnaveni"
   },
   {
-    "societate": "ENERGY HOUSE CONSTRUCT",
-    "judet": "Valcea",
-    "cui": "45766955",
+    "societate": "ALEX INSTAL SYSTEM",
+    "judet": "Bistrita-Nasaud",
+    "cui": "41710609",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0749999149",
-    "sediu": "VULPUESTI   76A",
-    "localitate": "Mihaesti [VL]"
+    "telefon": "0741275804",
+    "sediu": "Aleea Orizontului nr  3",
+    "localitate": "Bistrita"
   },
   {
-    "societate": "ONELI SERV",
-    "judet": "Valcea",
-    "cui": "11510510",
+    "societate": "ALPESIRAL",
+    "judet": "Maramures",
+    "cui": "36782250",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0744867417, 0250734897 0250734897",
-    "sediu": "Sat Vladuceni nr. 68",
-    "localitate": "Pausesti-Maglasi"
+    "telefon": "0743224491",
+    "sediu": "Str. Margeanului nr. 7",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "RST EXPERT",
-    "judet": "Valcea",
-    "cui": "35195029",
+    "societate": "B.H.T. SMART CONCEPT",
+    "judet": "Maramures",
+    "cui": "37509349",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0742110796",
-    "sediu": "str. Ion Creanga, nr. 18, demisol",
-    "localitate": "Ramnicu Valcea"
+    "telefon": "0749811815",
+    "sediu": "Str. Principala, nr 115",
+    "localitate": "Tulghies"
   },
   {
-    "societate": "VALLON",
-    "judet": "Valcea",
-    "cui": "1467471",
+    "societate": "BERAR COMPLEX",
+    "judet": "Salaj",
+    "cui": "44756040",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0722.266332; 0250.743491 0250.743491",
-    "sediu": "Str.Aleea Randunelelor nr. 1bis",
-    "localitate": "Ramnicu Valcea"
+    "telefon": "0744926437, 0742747169",
+    "sediu": "JAC   1A",
+    "localitate": "Jac"
   },
   {
-    "societate": "VALORIS",
-    "judet": "Valcea",
-    "cui": "151208",
+    "societate": "BINDEAN SERVICII",
+    "judet": "Bistrita-Nasaud",
+    "cui": "15203984",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "00250.732227, 0721.299711,073535013 0250732227",
-    "sediu": "Str Raureni, nr. 266",
-    "localitate": "Ramnicu Valcea"
+    "telefon": "0741275804 0263 212469",
+    "sediu": "Aleea Orizontului, nr. 3",
+    "localitate": "Bistrita"
   },
   {
-    "societate": "YES SYSTEMS",
-    "judet": "Valcea",
-    "cui": "36804480",
+    "societate": "BLUE PREST ELECTRIC",
+    "judet": "Maramures",
+    "cui": "44792700",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0745045942",
-    "sediu": "Sat Popesti nr. 8",
-    "localitate": "Popesti [VL]"
+    "telefon": "0786577700",
+    "sediu": "Str. Scolii   nr. 13",
+    "localitate": "Satu Nou de Jos [MM]"
   },
   {
-    "societate": "ALINADI ELECTRIC",
-    "judet": "Valcea",
-    "cui": "32834276",
+    "societate": "BUDA-ETAP",
+    "judet": "Maramures",
+    "cui": "6983899",
     "codes": [
+      "C1A",
       "C2A"
     ],
-    "hasBoth": false,
-    "telefon": "0764397543",
-    "sediu": "Str. Ecaterina Teodoroiu, nr. 48",
-    "localitate": "Balcesti"
+    "hasBoth": true,
+    "telefon": "0262381102, 0745113828",
+    "sediu": "Sat Lapus nr. 848, cp 437175",
+    "localitate": "Lapus"
   },
   {
-    "societate": "CIMELECTRO",
-    "judet": "Valcea",
-    "cui": "16902093",
+    "societate": "BYG EUROHAZARD",
+    "judet": "Maramures",
+    "cui": "25073067",
     "codes": [
+      "C1A",
       "C2A"
     ],
-    "hasBoth": false,
-    "telefon": "0350 419535 , 0730096228 0350 419535",
-    "sediu": "Str. Nicolae Titulescu nr. 15, bl.E2, sc A, ap.11, cp 240621",
-    "localitate": "Ramnicu Valcea"
+    "hasBoth": true,
+    "telefon": "0262354508, 0740841922 0262354508,",
+    "sediu": "Viseu De Jos, nr 123 cp 437390",
+    "localitate": "Viseu de Jos"
   },
   {
-    "societate": "DARO PROIECT",
-    "judet": "Valcea",
-    "cui": "13255090",
+    "societate": "CALIN RAUL ELECTROROM",
+    "judet": "Maramures",
+    "cui": "37625181",
     "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "telefon": "0350804843, 0723197432 0350804843",
-    "sediu": "Str. Carol nr. 35, bl. D23, sc. B, Parter, ap. 3",
-    "localitate": "Ramnicu Valcea"
-  },
-  {
-    "societate": "DUBLUMAR",
-    "judet": "Valcea",
-    "cui": "18881833",
-    "codes": [
+      "C1A",
       "C2A"
     ],
-    "hasBoth": false,
-    "telefon": "0742281110",
-    "sediu": "Str. Tudor Vladimirescu nr. 114, bl. E, sc. B, et. 1, ap. 5",
-    "localitate": "Baile Govora"
+    "hasBoth": true,
+    "telefon": "0748189385",
+    "sediu": "Sat Stramtura nr. 322",
+    "localitate": "Strimtura"
   },
   {
-    "societate": "ELCOPREST CONSTRUCT",
-    "judet": "Valcea",
-    "cui": "22248504",
+    "societate": "COM ELECTRO",
+    "judet": "Mures",
+    "cui": "15320216",
     "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "telefon": "0744616478, 0350 803193 0350803193",
-    "sediu": "Str. Stolnicenii, nr 225A",
-    "localitate": "Ramnicu Valcea"
-  },
-  {
-    "societate": "ELECTROGRUPAPARATAJ",
-    "judet": "Valcea",
-    "cui": "15933580",
-    "codes": [
+      "C1A",
       "C2A"
     ],
-    "hasBoth": false,
-    "telefon": "0756522063, 0723513686 0250733773",
-    "sediu": "Sat. Racovita, nr 13",
-    "localitate": "Budesti [VL]"
+    "hasBoth": true,
+    "telefon": "0742 122964 0265 776178",
+    "sediu": "str. Andrei Muresan, nr. 30,",
+    "localitate": "Sighisoara"
   },
   {
-    "societate": "ELTOPO",
-    "judet": "Valcea",
-    "cui": "37106699",
+    "societate": "COMP SGS ELECTROGRUP",
+    "judet": "Maramures",
+    "cui": "21766168",
     "codes": [
-      "C1A"
-    ],
-    "hasBoth": false,
-    "telefon": "0721205242",
-    "sediu": "Str Mihai Eminescu nr 47, bl.C13, sc.G, ap.16",
-    "localitate": "Ramnicu Valcea"
-  },
-  {
-    "societate": "ENERGOVIL CEF ENERGY",
-    "judet": "Valcea",
-    "cui": "49696380",
-    "codes": [
+      "C1A",
       "C2A"
     ],
-    "hasBoth": false,
-    "telefon": "0726560372, 0762238515",
-    "sediu": "Sat Priporu, Str. Priporului nr. 67",
-    "localitate": "Vladesti [VL]"
+    "hasBoth": true,
+    "telefon": "0729905773, 0747500979 0362809917",
+    "sediu": "Bd.Unirii, bl. 7, ap. 56",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "GCD ELECTRIC SYSTEMS",
-    "judet": "Valcea",
-    "cui": "51470490",
+    "societate": "CONPREST EDILITAR",
+    "judet": "Maramures",
+    "cui": "41521260",
     "codes": [
+      "C1A",
       "C2A"
     ],
-    "hasBoth": false,
-    "telefon": "0742289801",
-    "sediu": "Str Bisericii   1",
-    "localitate": "Predesti"
+    "hasBoth": true,
+    "telefon": "0757244215",
+    "sediu": "Str. Victoriei nr. 59A, et. 1, ap. 18",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "IAMTAS ELECTRIC",
-    "judet": "Valcea",
-    "cui": "43229831",
+    "societate": "CONSUS ELECTRIC",
+    "judet": "Mures",
+    "cui": "22446757",
     "codes": [
+      "C1A",
       "C2A"
     ],
-    "hasBoth": false,
-    "telefon": "0768225369",
-    "sediu": "Str. Calea lui Traian nr  213, Corp U1`, parter,  Sc:A/B         corp U1, parter",
-    "localitate": "Ramnicu Valcea"
+    "hasBoth": true,
+    "telefon": "0265266539, 0740247058 0365430241",
+    "sediu": "Str. Livezeni nr. 23, ap. 9",
+    "localitate": "Targu Mures"
+  },
+  {
+    "societate": "CPG TUR",
+    "judet": "Maramures",
+    "cui": "15360202",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0722526871, 0722217042",
+    "sediu": "Str. Rotunda nr. 26/17",
+    "localitate": "Cavnic [MM]"
+  },
+  {
+    "societate": "CRISBEL",
+    "judet": "Maramures",
+    "cui": "23298667",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0758970992, 0262342594, 0747686292",
+    "sediu": "Str. Izvorului nr. 32A",
+    "localitate": "Borsa [MM]"
+  },
+  {
+    "societate": "CV ELEKTRO INSTAL THOMAS",
+    "judet": "Bistrita-Nasaud",
+    "cui": "45341024",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0758974048 0363106839",
+    "sediu": "Str. LIBERTATII   41-43         Et:PARTER      CASA POARTA, BIROU NR. 4",
+    "localitate": "Bistrita"
+  },
+  {
+    "societate": "D M O SISTEM",
+    "judet": "Hunedoara",
+    "cui": "37128808",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0748101513",
+    "sediu": "Sat.Livezi nr 16,Com General Berthelot",
+    "localitate": "Livezi"
+  },
+  {
+    "societate": "DATACOR",
+    "judet": "Bistrita-Nasaud",
+    "cui": "14731272",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0720538106, 0724322940; 0263231557 0263214633",
+    "sediu": "Strada Parc Industrial, Nr. 7, Bistrita Nasaud",
+    "localitate": "Bistrita"
+  },
+  {
+    "societate": "DAVID UNIVERSAL",
+    "judet": "Bistrita-Nasaud",
+    "cui": "32239694",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0749754228",
+    "sediu": "nr 453",
+    "localitate": "Unirea (BN)"
+  },
+  {
+    "societate": "DELTIC-INSTAL",
+    "judet": "Bistrita-Nasaud",
+    "cui": "12747302",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0730620060 ; 0372254716",
+    "sediu": "nr 331",
+    "localitate": "Prundu Bargaului"
+  },
+  {
+    "societate": "DGM ELECTRIC AD",
+    "judet": "Maramures",
+    "cui": "47567266",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0744816066",
+    "sediu": "Str. Liliacului  nr 3 cp 435600",
+    "localitate": "Targu Lapus"
+  },
+  {
+    "societate": "DGM GRAD ELECTRIC",
+    "judet": "Maramures",
+    "cui": "32819470",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0740143892,0262384220",
+    "sediu": "Str. Liliacului nr  3",
+    "localitate": "Targu Lapus"
+  },
+  {
+    "societate": "DIACOM PRESTCOM",
+    "judet": "Hunedoara",
+    "cui": "8307982",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0723 328477 0254 561424",
+    "sediu": "Str. Narciselor nr. 11, cp 335600",
+    "localitate": "Lupeni (HD)"
+  },
+  {
+    "societate": "DIN INVEST",
+    "judet": "Salaj",
+    "cui": "22032224",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0741147611, 0260652498 0260656544",
+    "sediu": "Sat Bobota nr. 75, CP 457040",
+    "localitate": "Bobota"
+  },
+  {
+    "societate": "E.N.E.R.",
+    "judet": "Mures",
+    "cui": "23160493",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0745231111",
+    "sediu": "Str. O Goga nr. 6A, Birou nr 6, jud Mures",
+    "localitate": "Sighisoara"
+  },
+  {
+    "societate": "ECOCENTER SERV",
+    "judet": "Maramures",
+    "cui": "11611514",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0743022506, 0262319307 0372898407",
+    "sediu": "Str. Traian, bl 29, sc 4. ap 58, cp 435500",
+    "localitate": "Sighetu Marmatiei"
+  },
+  {
+    "societate": "EL CONSTRUCT",
+    "judet": "Salaj",
+    "cui": "13605900",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0766647138 0260678358",
+    "sediu": "Str.Corneliu Coposu, nr. 16",
+    "localitate": "Simleu Silvaniei"
+  },
+  {
+    "societate": "EL-FLUX",
+    "judet": "Maramures",
+    "cui": "16233142",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0723615710",
+    "sediu": "Str. Potcoavei, nr.3",
+    "localitate": "Baia Mare"
+  },
+  {
+    "societate": "ELCOMPET",
+    "judet": "Hunedoara",
+    "cui": "15079470",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0722607666, 0254548068, 0723976264 0254540510",
+    "sediu": "Str. Haraului nr. 40",
+    "localitate": "Deva"
+  },
+  {
+    "societate": "ELECTRIC GRUP ILUX",
+    "judet": "Bistrita-Nasaud",
+    "cui": "33029739",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0744539353 0371605315",
+    "sediu": "B-dul Granicerilor, nr.94, spatiul 2",
+    "localitate": "Nasaud"
+  },
+  {
+    "societate": "ELECTRIC LIGHT EXPERT",
+    "judet": "Mures",
+    "cui": "26090759",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0745306281 0365 432382",
+    "sediu": "Str.Rasaritului nr. 113B/1",
+    "localitate": "Sancraiu de Mures"
+  },
+  {
+    "societate": "ELECTRIC-INST",
+    "judet": "Harghita",
+    "cui": "15922718",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0266 322519, 0744 261581 0266 322519",
+    "sediu": "Bd Fratiei nr 9, sc B, ap 17,",
+    "localitate": "Miercurea Ciuc"
+  },
+  {
+    "societate": "ELECTRO CHIRILAS",
+    "judet": "Salaj",
+    "cui": "20649968",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0260 660377, 0745 515189 0260 660377",
+    "sediu": "Str. Pacii nr 6 bl P12 ap 21",
+    "localitate": "Zalau"
+  },
+  {
+    "societate": "ELECTRO CLIP MAP",
+    "judet": "Maramures",
+    "cui": "36662440",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0721284914",
+    "sediu": "nr 156",
+    "localitate": "Valenii Lapusului"
+  },
+  {
+    "societate": "ELECTRO GRUP",
+    "judet": "Salaj",
+    "cui": "15956850",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0740481308, 0260614877 0260614820",
+    "sediu": "Bd. Mihai Viteazu nr. 123, CP 450066",
+    "localitate": "Zalau"
+  },
+  {
+    "societate": "ELECTRO MEGAWAT",
+    "judet": "Maramures",
+    "cui": "32259675",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0743219341, 0763679457",
+    "sediu": "Sat Lapus nr. 558",
+    "localitate": "Lapus"
+  },
+  {
+    "societate": "ELECTRO METERING",
+    "judet": "Maramures",
+    "cui": "42988183",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0743887819, 0752018872",
+    "sediu": "Str. Nucului  nr  9",
+    "localitate": "Lapusel"
+  },
+  {
+    "societate": "ELECTRO POL CITY",
+    "judet": "Maramures",
+    "cui": "16205614",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "telefon": "0726 071693; 0262250221 0262 250221",
+    "sediu": "Str. Olteniei nr. 3, ap. 38",
+    "localitate": "Baia Mare"
   }
 ]

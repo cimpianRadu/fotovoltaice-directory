@@ -327,5 +327,47 @@
     "cui": "22525966",
     "reason": "Site automatic-shop.ro = e-commerce/distribuție produse automatizare + electrice + invertoare/PV — fără serviciu instalare turnkey",
     "rejectedAt": "2026-05-08"
+  },
+  {
+    "societate": "AET LUXINSTAL",
+    "judet": "Salaj",
+    "cui": "31527664",
+    "reason": "Site webnode generalist (aet-instal.webnode.ro) prezintă doar servicii generale de electrician — nicio mențiune fotovoltaice/panouri/solar pe pagini. Facebook există dar fără content PV vizibil. Firmă mică (8 emp), profil rural Sălaj."
+  },
+  {
+    "societate": "ALEX INSTAL SYSTEM",
+    "judet": "Bistrita-Nasaud",
+    "cui": "41710609",
+    "reason": "Niciun website declarat; căutările au returnat doar registre (termene, risco, targetare, infoquick) — fără site propriu, fără Facebook, fără content PV online verificabil."
+  },
+  {
+    "societate": "BERAR COMPLEX",
+    "judet": "Salaj",
+    "cui": "44756040",
+    "reason": "Niciun website declarat; căutările au returnat doar registre + un singur contract SICAP. Fără site, fără Facebook, fără content PV online (Berar Septimiu de la Solar Electro este altă firmă, fără legătură)."
+  },
+  {
+    "societate": "BLUE PREST ELECTRIC",
+    "judet": "Maramures",
+    "cui": "44792700",
+    "reason": "Niciun website, niciun telefon și niciun email declarate; căutările au returnat doar registre (verificarefirma). Zero amprentă online care să confirme activitate PV."
+  },
+  {
+    "societate": "CALIN RAUL ELECTROROM",
+    "judet": "Maramures",
+    "cui": "37625181",
+    "reason": "Niciun website declarat; căutările au returnat doar registre (infoquick, risco, termene, totalfirme). Fără site propriu, fără Facebook, fără content PV online — confuzie posibilă cu Electro Călin sau Electro Term Instal (firme diferite)."
+  },
+  {
+    "societate": "DELTIC-INSTAL",
+    "judet": "Bistrita-Nasaud",
+    "cui": "12747302",
+    "reason": "Niciun website propriu; profilul daibau.ro enumeră doar branșamente electrice, instalații JT/MT, iluminat exterior/interior și măsurători PRAM — fotovoltaice absente complet din serviciile listate."
+  },
+  {
+    "societate": "EL CONSTRUCT",
+    "judet": "Salaj",
+    "cui": "13605900",
+    "reason": "Site propriu elconstruct.ro listează doar electrice clasice (construcții civile/industriale/agricole, alimentare, instalații curenți slabi, iluminat public) — niciun serviciu fotovoltaic pe site. Apare ca instalator AFM dar fără PV pe homepage/servicii."
   }
 ]

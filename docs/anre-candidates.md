@@ -1,15 +1,15 @@
 # ANRE Candidates — C2A / C1A (industrial/comercial)
 
-_Generated: 2026-05-08_
+_Generated: 2026-05-18_
 
 Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **nu** sunt încă în `data/companies.json`. Sursă: `data/anre-atestate.json`.
 
 ## Stats
 
-- **Total candidați:** 1431
-- Cu **C2A** activ: 1196
-- Cu **C1A** activ: 1044
-- Cu **ambele**: 809
+- **Total candidați:** 1426
+- Cu **C2A** activ: 1191
+- Cu **C1A** activ: 1040
+- Cu **ambele**: 805
 - **Județe acoperite:** 43
 
 ## Cum folosești
@@ -42,11 +42,11 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | Buzau | 28 |
 | Neamt | 27 |
 | Mures | 26 |
-| Satu Mare | 25 |
 | Olt | 22 |
-| Valcea | 21 |
+| Satu Mare | 22 |
 | Hunedoara | 20 |
 | Bistrita-Nasaud | 19 |
+| Valcea | 19 |
 | Harghita | 17 |
 | Vrancea | 16 |
 | Arad | 15 |
@@ -1440,13 +1440,12 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | TRANS CARPATINA | Zalau | C2A | 22002 | 09.07.2029 | 0756802680 |
 | VARKATA | Zalau | C1A + C2A | 22982 | 14.03.2030 | 0741265052 |
 
-### Satu Mare (25)
+### Satu Mare (22)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
 | ARHITECT SAM MEDIA | Satu Mare [SM] | C1A + C2A | 21942 | 28.06.2029 | 0769035365 |
 | ASI ELECTRIC POWER | Racsa | C2A | 16933 | 16.02.2031 | 0743578088 |
-| AUTOMATIC CONTROL | Negresti-Oas | C1A + C2A | 14553 | 22.04.2029 | 0758 963401,0261855435 0261855435 |
 | BODNAR | Satu Mare [SM] | C1A | 14890 | 16.07.2029 | 0724243627 0261 841571 |
 | BUJORUL | Satu Mare [SM] | C1A + C2A | 16026 | 05.06.2030 | 0261 768729, 0766 338764 0261 768729 |
 | Centrul de Proiectare Judetean Satu Mare | Satu Mare [SM] | C1A | 12935 | 07.12.2027 | 0261710248, 0732409376, 0372875914, 0732409377 |
@@ -1454,7 +1453,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | CORAL ELECTRIC AS | Gherta Mica | C1A + C2A | 14063 | 15.01.2029 | 0744986293, 0727844531 0261838019 |
 | ELECTRIC POINT SATU MARE | Satu Mare [SM] | C1A + C2A | 19320 | 02.05.2028 | 0741773657 / 0752641640 |
 | ELECTRO GAVRAU | CALINESTI-OAS | C1A + C2A | 13002 | 20.12.2027 | 0748601656, 0261872061 0261735008, 0261872061 |
-| ELECTROMEN | Capleni | C1A + C2A | 16299 | 31.07.2030 | 0766564360; 0361427073 0361427507 |
 | ELICON IMPEX | Satu Mare [SM] | C1A + C2A | 16393 | 11.09.2030 | 0728 868770; 0261722090 0261 722090 |
 | ENCODE PLUS ENERGY | Vetis | C1A + C2A | 24294 | 03.03.2031 | 0770301761 |
 | FOUR V SYSTEM | Satu Mare [SM] | C1A + C2A | 17946 | 08.02.2027 | 0729840899 |
@@ -1466,7 +1464,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | M SYS | Satu Mare [SM] | C1A + C2A | 21322 | 18.01.2029 | 0745455664 0361780300 |
 | MONTELECTRO LIGHT | Satu Mare [SM] | C1A + C2A | 13785 | 12.10.2028 | 0751057829, 0361402608 0261710737 |
 | SETURO ELECTRIC | Satu Mare [SM] | C1A + C2A | 21439 | 15.02.2029 | 0742263708 |
-| SMART ELECTRICAL SOLUTIONS | Satu Mare [SM] | C1A + C2A | 12864 | 19.10.2027 | 0769035365, 0769035370 0261768053 |
 | UNVEST ENGINEERING | Satu Mare [SM] | C1A + C2A | 23502 | 22.07.2030 | 0745170759 |
 | VASI CONSTRANS 1995 | Batarci | C1A + C2A | 23283 | 12.06.2030 | 0741463588 |
 
@@ -1647,11 +1644,10 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | SAVE SOLAR ENERGY | Tulcea | C1A + C2A | 23653 | 21.08.2030 | 0771191511 |
 | SPIRU ELECTRA | Tulcea | C1A | 13499 | 21.06.2028 | 0744 333614, 0240536679 0240 536679 |
 
-### Valcea (21)
+### Valcea (19)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
-| ALINADI ELECTRIC | Balcesti | C2A | 14925 | 15.07.2029 | 0764397543 |
 | CIMELECTRO | Ramnicu Valcea | C2A | 12878 | 20.09.2027 | 0350 419535 , 0730096228 0350 419535 |
 | DARO PROIECT | Ramnicu Valcea | C1A | 13638 | 15.09.2028 | 0350804843, 0723197432 0350804843 |
 | DUBLUMAR | Baile Govora | C2A | 14368 | 25.03.2029 | 0742281110 |
@@ -1661,7 +1657,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ELSERV | Ramnicu Valcea | C1A + C2A | 15040 | 07.08.2029 | 0721299711, 0350404949 0350404948 |
 | ELTOPO | Ramnicu Valcea | C1A | 12510 | 12.04.2027 | 0721205242 |
 | ENERGOVIL CEF ENERGY | Vladesti [VL] | C2A | 24330 | 16.03.2031 | 0726560372, 0762238515 |
-| ENERGY HOUSE CONSTRUCT | Mihaesti [VL] | C1A + C2A | 18146 | 12.04.2027 | 0749999149 |
 | GCD ELECTRIC SYSTEMS | Predesti | C2A | 24386 | 30.03.2031 | 0742289801 |
 | IAMTAS ELECTRIC | Ramnicu Valcea | C2A | 17319 | 24.05.2026 | 0768225369 |
 | LES ENERG | Ramnicu Valcea | C2A | 14003 | 14.12.2028 | 0721999653 0350412868 |
