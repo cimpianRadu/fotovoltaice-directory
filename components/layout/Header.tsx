@@ -28,6 +28,7 @@ export default function Header() {
   const [moreOpen, setMoreOpen] = useState(false);
   const pathname = usePathname();
   const moreRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
   function isActive(href: string) {
     if (href === '/') return pathname === '/';
@@ -47,8 +48,19 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [moreOpen]);
 
+  // Close the mobile menu when tapping/clicking outside the header
+  useEffect(() => {
+    function handleClickOutside(e: Event) {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setMobileOpen(false);
+      }
+    }
+    if (mobileOpen) document.addEventListener('pointerdown', handleClickOutside);
+    return () => document.removeEventListener('pointerdown', handleClickOutside);
+  }, [mobileOpen]);
+
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-border">
+    <header ref={headerRef} className="sticky top-0 z-50 bg-white border-b border-border">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-bold text-lg text-secondary-dark">
           <Image src="/logo.svg" alt="Instalatori Fotovoltaice" width={32} height={32} className="w-8 h-8" />

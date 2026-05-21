@@ -18,9 +18,10 @@ function getHeroImage(slug: string): string | null {
 import FAQ from '@/components/seo/FAQ';
 import JsonLd from '@/components/seo/JsonLd';
 import HomeSegmentHero from '@/components/home/HomeSegmentHero';
+import HomeOfertaBand from '@/components/home/HomeOfertaBand';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
-import { getCompanies, getCoveredCounties, getPremiumCompanies } from '@/lib/utils';
+import { getCompanies, getCoveredCounties, getPremiumCompanies, getCompaniesBySegment } from '@/lib/utils';
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { PRICING, BUNDLE } from '@/lib/pricing';
 import guidesData from '@/data/guides.json';
@@ -28,6 +29,16 @@ import guidesData from '@/data/guides.json';
 const COMPANY_COUNT = getCompanies().length;
 const COUNTY_COUNT = getCoveredCounties().length;
 const ANRE_COUNT = getCompanies().filter((c) => c.anreMatch !== null).length;
+function segmentStats(view: 'comercial' | 'rezidential') {
+  const list = getCompaniesBySegment(view);
+  return {
+    count: list.length,
+    anre: list.filter((c) => c.anreMatch !== null).length,
+    judete: new Set(list.map((c) => c.location.county)).size,
+  };
+}
+const COMERCIAL_STATS = segmentStats('comercial');
+const REZIDENTIAL_STATS = segmentStats('rezidential');
 
 export const metadata: Metadata = {
   alternates: {
@@ -76,28 +87,10 @@ export default function HomePage() {
       <JsonLd data={generateFAQJsonLd(homeFaqs)} />
 
       {/* Hero — segment split (Casă vs Firmă) */}
-      <HomeSegmentHero />
+      <HomeSegmentHero comercialStats={COMERCIAL_STATS} rezidentialStats={REZIDENTIAL_STATS} />
 
-      {/* Cere Ofertă — buyer-facing CTA (request offers from installers) */}
-      <section className="max-w-7xl mx-auto px-4 pt-10">
-        <div className="rounded-2xl border border-border bg-surface p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-          <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Ai un proiect fotovoltaic?</h2>
-            <p className="text-gray-600 mt-1">
-              Spune-ne ce ai nevoie — trimitem cererea ta către instalatorii verificați din zona ta. Gratuit, fără obligații.
-            </p>
-          </div>
-          <Link
-            href="/cere-oferta"
-            className="shrink-0 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors"
-          >
-            Cere Ofertă
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </Link>
-        </div>
-      </section>
+      {/* Cere Ofertă — buyer-facing CTA, segment-aware count */}
+      <HomeOfertaBand comercialCount={COMERCIAL_STATS.count} rezidentialCount={REZIDENTIAL_STATS.count} />
 
       {/* Featured Companies — Premium pool when available, else promote ad packages */}
       <section className="max-w-7xl mx-auto px-4 py-16">
