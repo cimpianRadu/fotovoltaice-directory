@@ -84,6 +84,7 @@ export default function ClasamentPage() {
       founded: c.founded || 0,
       activeCerts,
       financialYear: c.financials?.year ?? 0,
+      segment: c.segment ?? 'comercial',
     };
   });
 
@@ -207,7 +208,7 @@ export default function ClasamentPage() {
 
         {/* Table — top 10 by revenue */}
         <section id="clasament" className="mb-12 scroll-mt-20">
-          <ClasamentTable rows={byRevenue.slice(0, 10)} counties={counties} showFilters={false} />
+          <ClasamentTable rows={byRevenue} counties={counties} showFilters={false} limit={10} />
 
           <div className="mt-6 text-center">
             <Link

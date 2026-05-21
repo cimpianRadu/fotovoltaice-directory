@@ -15,13 +15,12 @@ function getHeroImage(slug: string): string | null {
   }
   return null;
 }
-import CompanyCard from '@/components/company/CompanyCard';
 import FAQ from '@/components/seo/FAQ';
 import JsonLd from '@/components/seo/JsonLd';
 import HomeSegmentHero from '@/components/home/HomeSegmentHero';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
-import { getCompanies, getCoveredCounties, getFeaturedCompanies, getPremiumCompanies } from '@/lib/utils';
+import { getCompanies, getCoveredCounties, getPremiumCompanies } from '@/lib/utils';
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { PRICING, BUNDLE } from '@/lib/pricing';
 import guidesData from '@/data/guides.json';
@@ -69,7 +68,6 @@ const homeFaqs = [
 ];
 
 export default function HomePage() {
-  const featured = getFeaturedCompanies();
   const hasPremium = getPremiumCompanies().length > 0;
 
   return (
@@ -80,28 +78,28 @@ export default function HomePage() {
       {/* Hero — segment split (Casă vs Firmă) */}
       <HomeSegmentHero />
 
-      {!hasPremium && (
-        <section className="max-w-7xl mx-auto px-4 pt-8">
-          <Link
-            href="/publicitate"
-            className="block rounded-xl border-2 border-primary/30 bg-primary/5 p-4 sm:p-5 hover:border-primary/50 hover:shadow-md transition-all group"
-          >
-            <div className="flex items-center justify-between gap-4 mb-2">
-              <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider">
-                Promovează-ți firma pe platformă
-              </p>
-              <span className="text-xs text-primary-dark font-medium group-hover:underline hidden sm:inline">
-                Vezi pachetele &rarr;
-              </span>
-            </div>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              Patru pachete cu placement-uri proprii — Basic <strong>{PRICING.basic.monthly}€</strong>, Plus <strong>{PRICING.plus.monthly}€</strong>, Premium <strong>{PRICING.premium.monthly}€</strong>, sau {PRICING.bundle.label} cu <strong>{BUNDLE.discountPct}% reducere</strong>. Audiență 100% nișată B2B fotovoltaic.
+      {/* Cere Ofertă — buyer-facing CTA (request offers from installers) */}
+      <section className="max-w-7xl mx-auto px-4 pt-10">
+        <div className="rounded-2xl border border-border bg-surface p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Ai un proiect fotovoltaic?</h2>
+            <p className="text-gray-600 mt-1">
+              Spune-ne ce ai nevoie — trimitem cererea ta către instalatorii verificați din zona ta. Gratuit, fără obligații.
             </p>
+          </div>
+          <Link
+            href="/cere-oferta"
+            className="shrink-0 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors"
+          >
+            Cere Ofertă
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
           </Link>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* Featured Companies — Premium pool when available, fallback to editorial */}
+      {/* Featured Companies — Premium pool when available, else promote ad packages */}
       <section className="max-w-7xl mx-auto px-4 py-16">
         {hasPremium ? (
           <>
@@ -120,26 +118,29 @@ export default function HomePage() {
           </>
         ) : (
           <>
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900">Instalatori de Panouri Fotovoltaice Recomandați</h2>
-                <p className="text-gray-500 mt-1">Firme verificate cu atestat ANRE și experiență dovedită</p>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Instalatori de Panouri Fotovoltaice Recomandați</h2>
+              <p className="text-gray-500 mt-1">Firme verificate cu atestat ANRE și experiență dovedită</p>
+            </div>
+
+            <Link
+              href="/publicitate"
+              className="block rounded-xl border-2 border-primary/30 bg-primary/5 p-5 sm:p-6 hover:border-primary/50 hover:shadow-md transition-all group"
+            >
+              <div className="flex items-center justify-between gap-4 mb-2">
+                <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider">
+                  Promovează-ți firma pe platformă
+                </p>
+                <span className="text-xs text-primary-dark font-medium group-hover:underline hidden sm:inline">
+                  Vezi pachetele &rarr;
+                </span>
               </div>
-              <Link
-                href="/firme"
-                className="hidden sm:inline-flex text-sm font-medium text-primary-dark hover:text-primary transition-colors"
-              >
-                Vezi toate firmele &rarr;
-              </Link>
-            </div>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                Patru pachete cu placement-uri proprii — Basic <strong>{PRICING.basic.monthly}€</strong>, Plus <strong>{PRICING.plus.monthly}€</strong>, Premium <strong>{PRICING.premium.monthly}€</strong>, sau {PRICING.bundle.label} cu <strong>{BUNDLE.discountPct}% reducere</strong>. Audiență 100% nișată B2B fotovoltaic.
+              </p>
+            </Link>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {featured.slice(0, 6).map((company) => (
-                <CompanyCard key={company.id} company={company} />
-              ))}
-            </div>
-
-            <div className="mt-8 text-center sm:hidden">
+            <div className="mt-6 text-center">
               <Link
                 href="/firme"
                 className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-primary transition-colors"

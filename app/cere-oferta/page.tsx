@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import LeadForm from '@/components/forms/LeadForm';
+import SegmentNotice from './SegmentNotice';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
@@ -29,9 +30,11 @@ export default function CereOfertaPage() {
             Cere Ofertă Gratuită
           </h1>
           <p className="text-gray-500 mt-2">
-            Completează formularul de mai jos și vei fi contactat de instalatori verificați din zona ta. Serviciul este gratuit și fără obligații.
+            Completează formularul de mai jos, iar noi trimitem cererea ta către instalatorii verificați din zona ta. Serviciul este gratuit și fără obligații.
           </p>
         </div>
+
+        <SegmentNotice />
 
         <div className="bg-white rounded-xl border border-border p-6">
           <LeadForm />
@@ -41,8 +44,8 @@ export default function CereOfertaPage() {
           <h2 className="font-semibold text-gray-900 mb-2">Cum funcționează?</h2>
           <ol className="text-sm text-gray-600 space-y-2 list-decimal list-inside">
             <li>Completezi formularul cu detaliile proiectului tău</li>
-            <li>Primești oferte de la instalatori verificați din zona ta</li>
-            <li>Compari ofertele și alegi cel mai potrivit instalator</li>
+            <li>Trimitem cererea ta către instalatorii potriviți de pe platformă, din zona ta</li>
+            <li>Instalatorii interesați te contactează cu oferte, pe care le compari și alegi</li>
           </ol>
         </div>
       </div>

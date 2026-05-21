@@ -118,12 +118,15 @@ export default function CompanyListClient() {
     <div className="mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface border border-border rounded-xl px-4 py-3">
       <p className="text-sm text-gray-600">
         {segment === 'rezidential' ? (
-          <>Arăți instalatori pentru <strong className="text-gray-900">casă</strong> (rezidențial)</>
+          <>Afișăm instalatori pentru <strong className="text-gray-900">casă</strong> (rezidențial)</>
         ) : (
-          <>Arăți instalatori pentru <strong className="text-gray-900">firmă</strong> (comercial / industrial)</>
+          <>Afișăm instalatori pentru <strong className="text-gray-900">firmă</strong> (comercial / industrial)</>
         )}
       </p>
-      <SegmentToggle />
+      {/* Inline toggle on desktop; on mobile the floating toggle handles switching */}
+      <div className="hidden sm:block">
+        <SegmentToggle />
+      </div>
     </div>
 
     <div className="flex flex-col lg:flex-row gap-6">

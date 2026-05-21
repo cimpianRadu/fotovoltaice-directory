@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import PartnerCarousel from '@/components/promo/PartnerCarousel';
 import { SegmentProvider } from '@/components/segment/SegmentProvider';
+import FloatingSegmentToggle from '@/components/segment/FloatingSegmentToggle';
 import { getCompanies, getCoveredCounties } from '@/lib/utils';
 import './globals.css';
 
@@ -77,6 +78,7 @@ export default function RootLayout({
           <main className="min-h-screen">{children}</main>
           <Footer />
           <PartnerCarousel />
+          <FloatingSegmentToggle />
         </SegmentProvider>
       </body>
     </html>

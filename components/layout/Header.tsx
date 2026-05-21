@@ -8,6 +8,7 @@ import SegmentToggle from '@/components/segment/SegmentToggle';
 
 const primaryLinks = [
   { href: '/firme', label: 'Firme' },
+  { href: '/cere-oferta', label: 'Cere Ofertă' },
   { href: '/clasament', label: 'Clasament' },
   { href: '/calculator-panouri-fotovoltaice', label: 'Calculator' },
   { href: '/verificare-anre', label: 'Verificare ANRE' },

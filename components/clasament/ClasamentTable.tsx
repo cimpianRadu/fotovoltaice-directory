@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Company } from '@/lib/utils';
+import { useSegment } from '@/components/segment/SegmentProvider';
 import { PV_RELEVANT_CODES, type PvRelevantCode } from '@/lib/anre';
 
 interface Row {
@@ -19,12 +20,15 @@ interface Row {
   founded: number;
   activeCerts: Set<string>;
   financialYear: number;
+  segment?: string;
 }
 
 interface Props {
   rows: Row[];
   counties: string[];
   showFilters?: boolean;
+  // When set, show only the top N rows after filtering/sorting (e.g. top 10).
+  limit?: number;
 }
 
 type SortKey = 'revenue' | 'profit' | 'margin' | 'employees' | 'founded' | 'name';
@@ -49,7 +53,8 @@ function SortArrow({ active, dir }: { active: boolean; dir: SortDir }) {
   return <span className="text-primary ml-1">{dir === 'desc' ? '↓' : '↑'}</span>;
 }
 
-export default function ClasamentTable({ rows, counties, showFilters = true }: Props) {
+export default function ClasamentTable({ rows, counties, showFilters = true, limit }: Props) {
+  const { segment } = useSegment();
   const [sortKey, setSortKey] = useState<SortKey>('revenue');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
   const [selectedCounty, setSelectedCounty] = useState<string>('');
@@ -76,7 +81,11 @@ export default function ClasamentTable({ rows, counties, showFilters = true }: P
   };
 
   const filtered = useMemo(() => {
-    let out = rows;
+    // Respect the Casă/Firmă segment toggle. Legacy rows (no segment) count as commercial.
+    let out = rows.filter((r) => {
+      const s = r.segment || 'comercial';
+      return s === 'ambele' || s === segment;
+    });
     if (selectedCounty) {
       out = out.filter((r) => r.county === selectedCounty);
     }
@@ -92,7 +101,7 @@ export default function ClasamentTable({ rows, counties, showFilters = true }: P
       });
     }
     return out;
-  }, [rows, selectedCounty, minRevenue, activeCertFilters]);
+  }, [rows, segment, selectedCounty, minRevenue, activeCertFilters]);
 
   const sorted = useMemo(() => {
     const copy = [...filtered];
@@ -113,6 +122,8 @@ export default function ClasamentTable({ rows, counties, showFilters = true }: P
     });
     return copy;
   }, [filtered, sortKey, sortDir]);
+
+  const displayed = typeof limit === 'number' ? sorted.slice(0, limit) : sorted;
 
   const hasActiveFilters =
     selectedCounty !== '' || activeCertFilters.size > 0 || minRevenue > 0;
@@ -268,7 +279,7 @@ export default function ClasamentTable({ rows, counties, showFilters = true }: P
             </tr>
           </thead>
           <tbody>
-            {sorted.map((row, i) => (
+            {displayed.map((row, i) => (
               <tr key={row.slug} className="border-b border-border last:border-b-0 hover:bg-surface/60 transition-colors">
                 <td className="px-3 py-3 text-gray-400 font-medium">{i + 1}</td>
                 <td className="px-3 py-3">
@@ -326,7 +337,7 @@ export default function ClasamentTable({ rows, counties, showFilters = true }: P
                 </td>
               </tr>
             ))}
-            {sorted.length === 0 && (
+            {displayed.length === 0 && (
               <tr>
                 <td colSpan={8} className="px-3 py-10 text-center text-sm text-gray-500">
                   Nicio firmă nu îndeplinește criteriile selectate.
@@ -339,7 +350,7 @@ export default function ClasamentTable({ rows, counties, showFilters = true }: P
 
       {/* Mobile — cards */}
       <div className="md:hidden space-y-2">
-        {sorted.map((row, i) => (
+        {displayed.map((row, i) => (
           <Link
             key={row.slug}
             href={`/firme/${row.slug}`}
@@ -389,7 +400,7 @@ export default function ClasamentTable({ rows, counties, showFilters = true }: P
             </div>
           </Link>
         ))}
-        {sorted.length === 0 && (
+        {displayed.length === 0 && (
           <div className="bg-white border border-border rounded-xl p-8 text-center text-sm text-gray-500">
             Nicio firmă nu îndeplinește criteriile selectate.
           </div>

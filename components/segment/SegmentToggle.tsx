@@ -29,14 +29,22 @@ const OPTIONS: {
   { view: 'comercial', label: 'Firmă', Icon: BuildingIcon, activeClass: 'bg-secondary text-white' },
 ];
 
-export default function SegmentToggle({ className = '' }: { className?: string }) {
+export default function SegmentToggle({
+  className = '',
+  elevated = false,
+}: {
+  className?: string;
+  elevated?: boolean;
+}) {
   const { segment, setSegment } = useSegment();
 
   return (
     <div
       role="group"
       aria-label="Alege: pentru casă sau pentru firmă"
-      className={`inline-flex items-center rounded-full bg-surface border border-border p-0.5 ${className}`}
+      className={`inline-flex items-center rounded-full p-0.5 border border-border ${
+        elevated ? 'bg-white shadow-lg' : 'bg-surface'
+      } ${className}`}
     >
       {OPTIONS.map(({ view, label, Icon, activeClass }) => {
         const active = segment === view;
