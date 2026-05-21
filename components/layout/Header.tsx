@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import SegmentToggle from '@/components/segment/SegmentToggle';
+import { useSegment } from '@/components/segment/SegmentProvider';
+import { trackEvent } from '@/lib/analytics';
 
 const primaryLinks = [
   { href: '/firme', label: 'Firme' },
@@ -27,6 +29,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const pathname = usePathname();
+  const { segment } = useSegment();
   const moreRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
 
@@ -74,6 +77,11 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
+              onClick={
+                link.href === '/cere-oferta'
+                  ? () => trackEvent('cere_oferta_click', { segment, source: 'nav' })
+                  : undefined
+              }
               className={`text-sm font-medium transition-colors ${
                 isActive(link.href)
                   ? 'text-primary-dark border-b-2 border-primary pb-0.5'
@@ -176,7 +184,12 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              onClick={() => setMobileOpen(false)}
+              onClick={() => {
+                setMobileOpen(false);
+                if (link.href === '/cere-oferta') {
+                  trackEvent('cere_oferta_click', { segment, source: 'nav_mobile' });
+                }
+              }}
               className={`text-base font-medium rounded-lg px-3 py-2.5 transition-colors ${
                 isActive(link.href)
                   ? 'text-primary-dark bg-primary/5'

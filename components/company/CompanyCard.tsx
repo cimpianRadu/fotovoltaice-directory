@@ -47,6 +47,9 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
     return (
       <Link
         href={`/firme/${company.slug}`}
+        data-umami-event="company-click"
+        data-umami-event-company={company.slug}
+        data-umami-event-segment={company.segment ?? 'comercial'}
         className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all bg-white"
       >
         <CompanyLogo company={company} size={32} />
@@ -82,6 +85,9 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
   return (
     <Link
       href={`/firme/${company.slug}`}
+      data-umami-event="company-click"
+      data-umami-event-company={company.slug}
+      data-umami-event-segment={company.segment ?? 'comercial'}
       className="flex flex-col p-5 rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all bg-white"
     >
       <div className="flex items-center gap-3 mb-3">
