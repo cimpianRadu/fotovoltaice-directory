@@ -27,7 +27,7 @@ async function appendRow(sheetName: string, values: string[]) {
 }
 
 export async function saveLeadToSheet(lead: {
-  numeCompanie: string;
+  numeCompanie?: string;
   numeContact: string;
   email: string;
   telefon: string;
@@ -38,10 +38,11 @@ export async function saveLeadToSheet(lead: {
   mesaj?: string;
   sourcePage?: string;
   preselectedCompany?: string;
+  segment?: string;
 }) {
   await appendRow('Leads', [
     new Date().toISOString(),
-    lead.numeCompanie,
+    lead.numeCompanie || '',
     lead.numeContact,
     lead.email,
     lead.telefon,
@@ -53,6 +54,7 @@ export async function saveLeadToSheet(lead: {
     lead.sourcePage || 'cere-oferta',
     lead.preselectedCompany || '',
     'Nou', // coloana Status
+    lead.segment || 'comercial', // coloana Segment (trailing — nu mută coloanele existente)
   ]);
 }
 
@@ -66,6 +68,7 @@ export async function saveListingToSheet(listing: {
   functie?: string;
   website?: string;
   specializare?: string;
+  segment?: string;
   descriere?: string;
   anreFirmName?: string;
   anreCerts?: string;
@@ -87,6 +90,7 @@ export async function saveListingToSheet(listing: {
     listing.anreStatus || '',
     listing.anreFirmName || '',
     listing.anreCerts || '',
+    listing.segment || 'comercial', // coloana Segment (trailing)
   ]);
 }
 

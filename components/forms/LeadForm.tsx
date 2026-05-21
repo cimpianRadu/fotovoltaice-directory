@@ -6,9 +6,10 @@ import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
 import Toast from '@/components/ui/Toast';
 import { getCounties } from '@/lib/utils';
+import { useSegment } from '@/components/segment/SegmentProvider';
 import { trackEvent } from '@/lib/analytics';
 
-const projectTypes = [
+const commercialProjectTypes = [
   { value: 'hala-industriala', label: 'Hală industrială' },
   { value: 'cladire-birouri', label: 'Clădire de birouri' },
   { value: 'parc-logistic', label: 'Parc logistic' },
@@ -16,6 +17,14 @@ const projectTypes = [
   { value: 'retail', label: 'Retail (magazin, centru comercial)' },
   { value: 'hotel', label: 'Hotel / Pensiune' },
   { value: 'institutie', label: 'Instituție publică' },
+  { value: 'altele', label: 'Altele' },
+];
+
+const residentialProjectTypes = [
+  { value: 'casa-individuala', label: 'Casă individuală' },
+  { value: 'vila', label: 'Vilă' },
+  { value: 'casa-vacanta', label: 'Casă de vacanță' },
+  { value: 'apartament', label: 'Apartament / bloc' },
   { value: 'altele', label: 'Altele' },
 ];
 
@@ -28,6 +37,9 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const counties = getCounties();
+  const { segment } = useSegment();
+  const isRezidential = segment === 'rezidential';
+  const projectTypes = isRezidential ? residentialProjectTypes : commercialProjectTypes;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -41,7 +53,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
       const res = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...body, sourcePage, preselectedCompany }),
+        body: JSON.stringify({ ...body, sourcePage, preselectedCompany, segment }),
       });
 
       if (!res.ok) throw new Error('Eroare la trimitere');
@@ -49,6 +61,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
       trackEvent('lead_form_submitted', {
         project_type: String(body.tipProiect),
         county: String(body.judet),
+        segment,
       });
 
       setStatus('success');
@@ -63,19 +76,29 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
   return (
     <>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Input label="Nume companie" name="numeCompanie" required placeholder="SC Firma SRL" />
-          <Input label="Nume contact" name="numeContact" required placeholder="Ion Popescu" />
-        </div>
+        {isRezidential ? (
+          <Input label="Nume și prenume" name="numeContact" required placeholder="Ion Popescu" />
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Input label="Nume companie" name="numeCompanie" required placeholder="SC Firma SRL" />
+            <Input label="Nume contact" name="numeContact" required placeholder="Ion Popescu" />
+          </div>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Input label="Email" name="email" type="email" required placeholder="contact@firma.ro" />
+          <Input
+            label="Email"
+            name="email"
+            type="email"
+            required
+            placeholder={isRezidential ? 'nume@email.ro' : 'contact@firma.ro'}
+          />
           <Input label="Telefon" name="telefon" type="tel" required placeholder="0740 123 456" />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Select
-            label="Tip proiect"
+            label={isRezidential ? 'Tip locuință' : 'Tip proiect'}
             name="tipProiect"
             options={projectTypes}
             required
@@ -89,11 +112,30 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Input label="Suprafață estimată (mp)" name="suprafata" type="number" placeholder="ex: 2000" />
-          <Input label="Putere dorită (kW)" name="putere" type="number" placeholder="ex: 200" />
+          <Input
+            label={isRezidential ? 'Suprafață acoperiș (mp)' : 'Suprafață estimată (mp)'}
+            name="suprafata"
+            type="number"
+            placeholder={isRezidential ? 'ex: 60' : 'ex: 2000'}
+          />
+          <Input
+            label="Putere dorită (kW)"
+            name="putere"
+            type="number"
+            placeholder={isRezidential ? 'ex: 5' : 'ex: 200'}
+          />
         </div>
 
-        <Input label="Mesaj (opțional)" name="mesaj" type="textarea" placeholder="Descrieți pe scurt proiectul..." />
+        <Input
+          label="Mesaj (opțional)"
+          name="mesaj"
+          type="textarea"
+          placeholder={
+            isRezidential
+              ? 'Descrieți pe scurt ce vă doriți (ex: vreau panouri prin Casa Verde)...'
+              : 'Descrieți pe scurt proiectul...'
+          }
+        />
 
         <div className="flex items-start gap-2">
           <input

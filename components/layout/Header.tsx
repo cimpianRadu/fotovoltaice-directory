@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import SegmentToggle from '@/components/segment/SegmentToggle';
 
 const primaryLinks = [
   { href: '/firme', label: 'Firme' },
@@ -55,6 +56,7 @@ export default function Header() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
+          <SegmentToggle />
           {primaryLinks.map((link) => (
             <Link
               key={link.href}
@@ -153,6 +155,10 @@ export default function Header() {
       {/* Mobile nav overlay — always in DOM for SEO, toggled with CSS */}
       <div className={`md:hidden border-t border-border bg-white ${mobileOpen ? 'block' : 'hidden'}`}>
         <nav className="flex flex-col p-4 gap-1">
+          <div className="px-1 pb-3 mb-2 border-b border-border">
+            <p className="text-xs font-semibold text-gray-400 mb-2">Caut panouri pentru:</p>
+            <SegmentToggle />
+          </div>
           {allMobileLinks.map((link) => (
             <Link
               key={link.href}

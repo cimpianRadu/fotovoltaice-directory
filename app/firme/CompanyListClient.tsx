@@ -13,7 +13,10 @@ import {
   sortCompanies,
   getTagLabel,
   fuzzyMatchCompanyName,
+  companyMatchesSegment,
 } from '@/lib/utils';
+import { useSegment } from '@/components/segment/SegmentProvider';
+import SegmentToggle from '@/components/segment/SegmentToggle';
 import { trackEvent } from '@/lib/analytics';
 
 const ITEMS_PER_PAGE = 9;
@@ -54,6 +57,7 @@ const capacityOptions = [
 
 export default function CompanyListClient() {
   const searchParams = useSearchParams();
+  const { segment } = useSegment();
 
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') ?? '');
   const [county, setCounty] = useState(searchParams.get('judet') ?? '');
@@ -78,11 +82,12 @@ export default function CompanyListClient() {
       certification: certification || undefined,
       tag: selectedTags[0] || undefined,
     });
+    result = result.filter((c) => companyMatchesSegment(c, segment));
     if (searchQuery.trim()) {
       result = result.filter((c) => fuzzyMatchCompanyName(c.name, searchQuery));
     }
     return sortCompanies(result, sortBy);
-  }, [allCompanies, county, specialization, minCapacity, certification, selectedTags, sortBy, searchQuery]);
+  }, [allCompanies, segment, county, specialization, minCapacity, certification, selectedTags, sortBy, searchQuery]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const paginated = filtered.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
@@ -108,6 +113,19 @@ export default function CompanyListClient() {
   const hasFilters = searchQuery || county || specialization || minCapacity || certification || selectedTags.length > 0;
 
   return (
+    <>
+    {/* Segment context bar — lets visitors confirm/switch between Casă and Firmă */}
+    <div className="mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface border border-border rounded-xl px-4 py-3">
+      <p className="text-sm text-gray-600">
+        {segment === 'rezidential' ? (
+          <>Arăți instalatori pentru <strong className="text-gray-900">casă</strong> (rezidențial)</>
+        ) : (
+          <>Arăți instalatori pentru <strong className="text-gray-900">firmă</strong> (comercial / industrial)</>
+        )}
+      </p>
+      <SegmentToggle />
+    </div>
+
     <div className="flex flex-col lg:flex-row gap-6">
       {/* Mobile filter toggle */}
       <button
@@ -282,5 +300,6 @@ export default function CompanyListClient() {
         )}
       </div>
     </div>
+    </>
   );
 }

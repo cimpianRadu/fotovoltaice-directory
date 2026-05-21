@@ -4,7 +4,7 @@
 >
 > Când publici un articol, mută-l în secțiunea **Publicat** cu link + data + next-step (GSC Request Indexing, distribuție).
 
-Ultima actualizare: 2026-05-21 (#9 Timișoara publicat; nicio propunere activă cu status „idee" rămasă în pipeline — vezi nota la finalul secțiunii „Propuneri active")
+Ultima actualizare: 2026-05-21 (#9 Timișoara publicat; lansare secțiune REZIDENȚIAL — articolul „Casă vs Firmă" programat de publicat joi 28 mai prin rutină, vezi secțiunea „📤 De publicat (programate)". Rutina e acum publish-aware: publică draft-uri programate înainte de a scrie articole noi.)
 
 ## Format intrare
 
@@ -17,6 +17,21 @@ Ultima actualizare: 2026-05-21 (#9 Timișoara publicat; nicio propunere activă 
 - **Linkuri interne:** <ce pagini ajută să urce>
 - **Next step dacă publicat:** <GSC indexing, outreach, etc.>
 ```
+
+---
+
+## 📤 De publicat (programate)
+
+> Articole **deja scrise** (`published: false` în guides.json), programate pentru o dată. Rutina (PASUL 0, luni + joi) le publică automat când **data țintă <= azi** — flip `published: true`, fără a rescrie. Au prioritate peste scrierea unui articol nou (ocupă slotul zilei, fără stacking). După publicare se mută la "✅ Publicate recent".
+
+### Panouri Fotovoltaice pentru Casă vs Firmă — Diferențe și Costuri 2026
+- **Slug:** `panouri-fotovoltaice-casa-vs-firma` (8 secțiuni + 5 FAQ, deja scris)
+- **Data țintă:** 2026-05-28 (rularea de joi `thursday-seo-articol`)
+- **Acțiune rutină:** flip `published: true`. **NU rescrie, NU invoca /guide** — conținutul există.
+- **De ce:** anunțul de lansare a secțiunii rezidențiale (Casă vs Firmă). Ținut dark până rezidențialul e live în producție.
+- **Linkuri interne deja inserate:** /ghid/casa-verde-fotovoltaice-2026 · /calculator-panouri-fotovoltaice?segment=rezidential · /firme?segment=rezidential · /firme?segment=comercial · /verificare-anre · /cere-oferta · /ghid/legislatie-prosumator-comercial · /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre
+- **Cluster GSC țintă:** "panouri fotovoltaice casa vs firma", "diferenta panouri rezidential comercial", "cat costa panouri fotovoltaice casa", "subventie casa verde vs electric up", "amortizare panouri fotovoltaice casa".
+- **Next step după publicare:** GSC Request Indexing pentru /ghid/panouri-fotovoltaice-casa-vs-firma. Monitorizare 14/30 zile — e prima piesă de conținut rezidențial, urmărește dacă clusterul rezidențial prinde.
 
 ---
 

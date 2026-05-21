@@ -6,7 +6,9 @@ interface CompanyStatsProps {
 
 export default function CompanyStats({ company }: CompanyStatsProps) {
   const stats = [
-    { label: 'Fondat', value: String(company.founded) },
+    ...(company.founded > 0
+      ? [{ label: 'Fondat', value: String(company.founded) }]
+      : []),
     ...(company.capacity.maxProjectKw > 0
       ? [{
           label: 'Capacitate maximă',

@@ -7,6 +7,7 @@
     { "id": "retail", "label": "Retail", "icon": "🛒" },
     { "id": "hoteluri", "label": "Hoteluri", "icon": "🏨" },
     { "id": "spitale", "label": "Spitale", "icon": "🏥" },
-    { "id": "scoli", "label": "Școli", "icon": "🏫" }
+    { "id": "scoli", "label": "Școli", "icon": "🏫" },
+    { "id": "rezidential", "label": "Rezidențial / Locuințe", "icon": "🏠" }
   ]
 }

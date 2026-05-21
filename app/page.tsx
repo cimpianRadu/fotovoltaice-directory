@@ -3,7 +3,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { existsSync } from 'fs';
 import { join } from 'path';
-import SearchBar from '@/components/forms/SearchBar';
 
 const HERO_IMAGE_EXTENSIONS = ['webp', 'png', 'jpg'];
 
@@ -19,7 +18,7 @@ function getHeroImage(slug: string): string | null {
 import CompanyCard from '@/components/company/CompanyCard';
 import FAQ from '@/components/seo/FAQ';
 import JsonLd from '@/components/seo/JsonLd';
-import WaitlistForm from '@/components/forms/WaitlistForm';
+import HomeSegmentHero from '@/components/home/HomeSegmentHero';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
 import { getCompanies, getCoveredCounties, getFeaturedCompanies, getPremiumCompanies } from '@/lib/utils';
@@ -78,45 +77,8 @@ export default function HomePage() {
       <JsonLd data={generateOrganizationJsonLd()} />
       <JsonLd data={generateFAQJsonLd(homeFaqs)} />
 
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-secondary-dark via-secondary to-secondary-light text-white">
-        <div className="max-w-7xl mx-auto px-4 py-10 sm:py-20 text-center">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-            Instalatori Autorizați
-            <br className="hidden sm:block" />
-            <span className="text-primary-light"> Panouri Fotovoltaice România</span>
-          </h1>
-          <p className="text-base sm:text-lg text-gray-300 mb-6 max-w-2xl mx-auto">
-            Găsește instalatori verificați pentru hale industriale, fabrici, clădiri de birouri și spații comerciale.
-          </p>
-
-          {/* Live-data proof bar — what distinguishes us from generic directories */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 text-xs sm:text-sm">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              <strong className="font-semibold">{COMPANY_COUNT}</strong>
-              <span className="text-gray-200">firme listate</span>
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
-              <strong className="font-semibold">{ANRE_COUNT}</strong>
-              <span className="text-gray-200">cu ANRE C2A verificat live</span>
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
-              <strong className="font-semibold">{COUNTY_COUNT}</strong>
-              <span className="text-gray-200">județe</span>
-            </span>
-          </div>
-
-          <div className="flex justify-center mb-4">
-            <SearchBar />
-          </div>
-
-          <p className="text-xs text-gray-300">
-            Date verificate din registre publice — ANRE, CUI, situații financiare
-          </p>
-
-        </div>
-      </section>
+      {/* Hero — segment split (Casă vs Firmă) */}
+      <HomeSegmentHero />
 
       {!hasPremium && (
         <section className="max-w-7xl mx-auto px-4 pt-8">
@@ -348,22 +310,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Waitlist Rezidential — compact, sub footer area, nu CTA dominant */}
-      <section className="bg-surface border-t border-border">
-        <div className="max-w-3xl mx-auto px-4 py-8 sm:py-10 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
-          <div className="flex-1">
-            <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider mb-1">
-              În curând · Rezidențial
-            </p>
-            <p className="text-sm text-gray-700">
-              <strong>Cauți panouri pentru casă?</strong> Lansăm în curând platforma pentru rezidențial.
-            </p>
-          </div>
-          <div className="shrink-0">
-            <WaitlistForm />
-          </div>
-        </div>
-      </section>
     </>
   );
 }

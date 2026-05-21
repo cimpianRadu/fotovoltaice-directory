@@ -76,6 +76,7 @@ export async function POST(request: Request) {
       functie: body.functie ? String(body.functie) : undefined,
       website: website ? String(website) : undefined,
       specializare: String(specializare),
+      segment: body.segment ? String(body.segment) : 'comercial',
       descriere: body.descriere ? String(body.descriere) : undefined,
       anreFirmName: firm?.societate,
       anreCerts: anreCertsLabel,

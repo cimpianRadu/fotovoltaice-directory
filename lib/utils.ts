@@ -5,6 +5,10 @@ import { hasActiveAnreCert } from './anre';
 
 export type PromoTier = 'free' | 'basic' | 'plus' | 'premium' | 'bundle';
 
+// Market segment a company serves. Drives the "Casă vs Firmă" split across the site.
+// 'ambele' = serves both residential and commercial.
+export type Segment = 'comercial' | 'rezidential' | 'ambele';
+
 export interface CompanySocials {
   facebook?: string;
   linkedin?: string;
@@ -37,6 +41,21 @@ export interface Company {
   createdAt: string;
   updatedAt: string;
   anreMatch: { societate: string; judet: string } | null;
+  // Market segment served. Defaults to 'comercial' when absent (legacy entries).
+  segment?: Segment;
+}
+
+// Normalize a company's segment, treating legacy entries (no field) as commercial.
+export function getCompanySegment(c: Company): Segment {
+  return c.segment ?? 'comercial';
+}
+
+// Does a company belong in the given view? 'ambele' shows in both. A null/undefined
+// view (no choice made yet) shows everything.
+export function companyMatchesSegment(c: Company, view: Segment | null | undefined): boolean {
+  if (!view) return true;
+  const s = getCompanySegment(c);
+  return s === 'ambele' || s === view;
 }
 
 export const PROMO_CAPS = {
@@ -81,6 +100,10 @@ export function getCompanyBySlug(slug: string): Company | undefined {
 
 export function getFeaturedCompanies(): Company[] {
   return companiesData.companies.filter((c) => c.featured);
+}
+
+export function getCompaniesBySegment(view: Segment | null | undefined): Company[] {
+  return companiesData.companies.filter((c) => companyMatchesSegment(c, view));
 }
 
 export function getSpecializations(): Specialization[] {

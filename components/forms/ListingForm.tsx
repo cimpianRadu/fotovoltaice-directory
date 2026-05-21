@@ -18,6 +18,12 @@ const specializationOptions = [
   { value: 'hotel', label: 'HoReCa (hoteluri, pensiuni)' },
 ];
 
+const segmentOptions = [
+  { value: 'comercial', label: 'Comercial / industrial (hale, fabrici, firme)' },
+  { value: 'rezidential', label: 'Rezidențial (case, Casa Verde)' },
+  { value: 'ambele', label: 'Ambele (rezidențial și comercial)' },
+];
+
 type FormValues = {
   numeFirma: string;
   cui: string;
@@ -28,6 +34,7 @@ type FormValues = {
   judet: string;
   website: string;
   specializare: string;
+  segment: string;
   descriere: string;
   gdpr: boolean;
 };
@@ -42,6 +49,7 @@ const INITIAL: FormValues = {
   judet: '',
   website: '',
   specializare: '',
+  segment: 'comercial',
   descriere: '',
   gdpr: false,
 };
@@ -360,22 +368,31 @@ export default function ListingForm() {
           />
         </div>
 
-        <Select
-          label="Activitate principală"
-          name="specializare"
-          options={specializationOptions}
-          required
-          value={values.specializare}
-          onValueChange={(v) => {
-            setField('specializare', v);
-            setTouched((prev) => ({ ...prev, specializare: true }));
-            setErrors((prev) => ({
-              ...prev,
-              specializare: validateField('specializare', v, { ...values, specializare: v }),
-            }));
-          }}
-          error={errors.specializare}
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Select
+            label="Activitate principală"
+            name="specializare"
+            options={specializationOptions}
+            required
+            value={values.specializare}
+            onValueChange={(v) => {
+              setField('specializare', v);
+              setTouched((prev) => ({ ...prev, specializare: true }));
+              setErrors((prev) => ({
+                ...prev,
+                specializare: validateField('specializare', v, { ...values, specializare: v }),
+              }));
+            }}
+            error={errors.specializare}
+          />
+          <Select
+            label="Pe ce lucrați?"
+            name="segment"
+            options={segmentOptions}
+            value={values.segment}
+            onValueChange={(v) => setField('segment', v)}
+          />
+        </div>
 
         <AnreStatus state={anreCheck} />
 

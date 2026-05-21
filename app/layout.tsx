@@ -4,6 +4,7 @@ import { Geist } from 'next/font/google';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import PartnerCarousel from '@/components/promo/PartnerCarousel';
+import { SegmentProvider } from '@/components/segment/SegmentProvider';
 import { getCompanies, getCoveredCounties } from '@/lib/utils';
 import './globals.css';
 
@@ -71,10 +72,12 @@ export default function RootLayout({
         />
       </head>
       <body className={`${geistSans.variable} antialiased`}>
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-        <PartnerCarousel />
+        <SegmentProvider>
+          <Header />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+          <PartnerCarousel />
+        </SegmentProvider>
       </body>
     </html>
   );

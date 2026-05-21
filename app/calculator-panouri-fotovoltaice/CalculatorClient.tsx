@@ -1,8 +1,9 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import SearchableSelect from '@/components/ui/SearchableSelect';
+import { useSegment } from '@/components/segment/SegmentProvider';
 import { formatCurrency, formatNumber, slugifyCounty } from '@/lib/utils';
 import pvgisData from '@/data/pvgis-yields.json';
 import countiesData from '@/data/counties.json';
@@ -12,6 +13,9 @@ type Mounting = 'inclinat' | 'terasa' | 'sol';
 const YIELDS = pvgisData.yields as Record<string, number>;
 const FACTORS = pvgisData._factors as Record<Mounting, number>;
 const GRID_BUYBACK_RON_PER_KWH = 0.30;
+// Casa Verde Fotovoltaice (AFM) funds up to 90% of the system cost — the beneficiary
+// always pays a minimum 10% contribution. Source: afm.ro program rules.
+const CASA_VERDE_MAX_COVERAGE = 0.90;
 const SYSTEM_LIFETIME_YEARS = 25;
 const ANNUAL_DEGRADATION = 0.005;
 const M2_PER_KWP = 5;
@@ -36,12 +40,27 @@ function trackUmami(event: string, data?: Record<string, string | number>) {
 }
 
 export default function CalculatorClient() {
+  const { segment } = useSegment();
+  const isRezidential = segment === 'rezidential';
+
   const [consumLunar, setConsumLunar] = useState<string>('5000');
   const [judet, setJudet] = useState<string>('București');
   const [mounting, setMounting] = useState<Mounting>('inclinat');
   const [tarif, setTarif] = useState<string>('1.30');
   const [autoconsum, setAutoconsum] = useState<number>(70);
+  const [subventie, setSubventie] = useState<string>('20000');
   const [showResult, setShowResult] = useState<boolean>(false);
+
+  // When the visitor is in residential mode, apply home-appropriate defaults once
+  // (lower consumption + lower daytime self-consumption). Skipped for commercial.
+  const residentialDefaultsApplied = useRef(false);
+  useEffect(() => {
+    if (isRezidential && !residentialDefaultsApplied.current) {
+      residentialDefaultsApplied.current = true;
+      setConsumLunar('300');
+      setAutoconsum(35);
+    }
+  }, [isRezidential]);
 
   const countyOptions = useMemo(
     () => countiesData.counties.map((c) => ({ value: c, label: c })),
@@ -64,7 +83,14 @@ export default function CalculatorClient() {
     const kwp = consumAnual / yieldKwhPerKwp;
     const kwpRounded = Math.max(1, Math.round(kwp * 10) / 10);
     const suprafata = Math.round(kwpRounded * M2_PER_KWP);
-    const investitie = Math.round(kwpRounded * pricePerKwp(kwpRounded));
+    const investitieBruta = Math.round(kwpRounded * pricePerKwp(kwpRounded));
+    // Casa Verde funds up to 90% of the cost (beneficiary pays min. 10%), capped at
+    // the program's max grant. The subsidy can never make the system free.
+    const subventieCap = Math.max(Number(subventie) || 0, 0);
+    const subventieNum = isRezidential
+      ? Math.min(subventieCap, Math.round(investitieBruta * CASA_VERDE_MAX_COVERAGE))
+      : 0;
+    const investitie = investitieBruta - subventieNum;
 
     const productieAnuala = Math.round(kwpRounded * yieldKwhPerKwp);
     const autoFactor = autoconsum / 100;
@@ -97,6 +123,8 @@ export default function CalculatorClient() {
       yieldKwhPerKwp,
       suprafata,
       investitie,
+      investitieBruta,
+      subventie: subventieNum,
       productieAnuala,
       autoconsumKwh,
       injectatKwh,
@@ -108,7 +136,7 @@ export default function CalculatorClient() {
       co2Tone,
       pricePerKwp: pricePerKwp(kwpRounded),
     };
-  }, [consumLunar, tarif, autoconsum, yieldKwhPerKwp]);
+  }, [consumLunar, tarif, autoconsum, yieldKwhPerKwp, isRezidential, subventie]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -151,7 +179,11 @@ export default function CalculatorClient() {
               required
               className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none"
             />
-            <p className="mt-1 text-xs text-gray-500">Vezi pe factură. Tipic: birou mic 1.500–3.000, hală 5.000–30.000.</p>
+            <p className="mt-1 text-xs text-gray-500">
+              {isRezidential
+                ? 'Vezi pe factură. Tipic pentru o casă: 150–500 kWh/lună.'
+                : 'Vezi pe factură. Tipic: birou mic 1.500–3.000, hală 5.000–30.000.'}
+            </p>
           </div>
 
           <div>
@@ -221,6 +253,32 @@ export default function CalculatorClient() {
             <p className="mt-1 text-xs text-gray-500">Preț total pe factură împărțit la kWh consumați (TVA inclus).</p>
           </div>
 
+          {isRezidential && (
+            <div className="sm:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Plafon subvenție Casa Verde (RON)
+              </label>
+              <input
+                type="number"
+                min={0}
+                step={500}
+                value={subventie}
+                onChange={(e) => setSubventie(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+              />
+              <p className="mt-1 text-xs text-gray-500">
+                Programul AFM &laquo;Casa Verde Fotovoltaice&raquo; acoperă <strong>până la 90% din cost</strong> (contribuția ta minimă este 10%), în limita plafonului.
+                Plafonul a fost ~20.000 lei, iar în ediția 2024 a ajuns la 30.000 lei (cu baterie). Verifică sesiunea curentă pe afm.ro. Lasă 0 dacă nu aplici.{' '}
+                <Link
+                  href="/ghid/casa-verde-fotovoltaice-2026"
+                  className="text-primary-dark font-medium hover:underline whitespace-nowrap"
+                >
+                  Mai multe detalii despre Casa Verde →
+                </Link>
+              </p>
+            </div>
+          )}
+
           <div className="sm:col-span-2">
             <div className="flex items-center justify-between mb-1">
               <label className="block text-sm font-medium text-gray-700">
@@ -238,7 +296,9 @@ export default function CalculatorClient() {
               className="w-full accent-primary"
             />
             <p className="mt-1 text-xs text-gray-500">
-              Cât din energia produsă o consumă firma direct (restul se injectează în rețea, plătit la tariful prosumator de aproximativ 0,30 RON/kWh). Pentru firme cu activitate de zi, tipic 60–80%.
+              {isRezidential
+                ? 'Cât din energia produsă o consumi direct în casă (restul se injectează în rețea, plătit la tariful prosumator de aproximativ 0,30 RON/kWh). Fără baterie, o casă cu consum mai ales seara are tipic 25–40%.'
+                : 'Cât din energia produsă o consumă firma direct (restul se injectează în rețea, plătit la tariful prosumator de aproximativ 0,30 RON/kWh). Pentru firme cu activitate de zi, tipic 60–80%.'}
             </p>
           </div>
         </div>
@@ -267,9 +327,17 @@ export default function CalculatorClient() {
 
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="bg-white rounded-xl border border-border p-5">
-              <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Investiție estimată</p>
+              <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">
+                {result.subventie > 0 ? 'Investiție netă (după subvenție)' : 'Investiție estimată'}
+              </p>
               <p className="text-2xl font-bold text-secondary-dark">{formatCurrency(result.investitie)}</p>
-              <p className="text-xs text-gray-500 mt-1">~{formatNumber(result.pricePerKwp)} RON/kWp, sistem la cheie</p>
+              {result.subventie > 0 ? (
+                <p className="text-xs text-gray-500 mt-1">
+                  {formatCurrency(result.investitieBruta)} − {formatCurrency(result.subventie)} subvenție Casa Verde
+                </p>
+              ) : (
+                <p className="text-xs text-gray-500 mt-1">~{formatNumber(result.pricePerKwp)} RON/kWp, sistem la cheie</p>
+              )}
             </div>
             <div className="bg-white rounded-xl border border-border p-5">
               <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Economie anuală</p>
@@ -281,9 +349,17 @@ export default function CalculatorClient() {
             <div className="bg-white rounded-xl border border-border p-5">
               <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Amortizare</p>
               <p className="text-2xl font-bold text-secondary-dark">
-                {result.payback ? `${result.payback.toFixed(1)} ani` : '—'}
+                {result.investitie <= 0
+                  ? 'Imediat'
+                  : result.payback
+                    ? `${result.payback.toFixed(1)} ani`
+                    : '—'}
               </p>
-              <p className="text-xs text-gray-500 mt-1">Recuperarea investiției din economii</p>
+              <p className="text-xs text-gray-500 mt-1">
+                {result.investitie <= 0
+                  ? 'Subvenția acoperă integral sistemul'
+                  : 'Recuperarea investiției din economii'}
+              </p>
             </div>
           </div>
 

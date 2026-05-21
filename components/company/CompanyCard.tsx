@@ -67,7 +67,7 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
               <span className="text-gray-300">|</span>
             </>
           )}
-          <span>Din {company.founded}</span>
+          {company.founded > 0 && <span>Din {company.founded}</span>}
           {company.createdAt && (
             <>
               <span className="text-gray-300">|</span>
@@ -125,7 +125,7 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
 
       {/* Metadata — founded + added (low priority) */}
       <div className="mt-auto pt-3 border-t border-border flex items-center justify-between text-xs text-gray-500">
-        <span>Din {company.founded}</span>
+        {company.founded > 0 && <span>Din {company.founded}</span>}
         {company.createdAt && (
           <span className="text-gray-400">
             Adăugat {formatShortDate(company.createdAt)}

@@ -5,9 +5,10 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const { numeCompanie, numeContact, email, telefon, tipProiect, judet, gdpr } = body;
+    // numeCompanie is optional — residential leads have no company name.
+    const { numeContact, email, telefon, tipProiect, judet, gdpr } = body;
 
-    if (!numeCompanie || !numeContact || !email || !telefon || !tipProiect || !judet) {
+    if (!numeContact || !email || !telefon || !tipProiect || !judet) {
       return NextResponse.json(
         { error: 'Toate câmpurile obligatorii trebuie completate.' },
         { status: 400 }
