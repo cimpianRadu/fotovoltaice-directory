@@ -69,7 +69,7 @@ export default function Header() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
-          <SegmentToggle />
+          <SegmentToggle source="nav" />
           {primaryLinks.map((link) => (
             <Link
               key={link.href}
@@ -170,7 +170,7 @@ export default function Header() {
         <nav className="flex flex-col p-4 gap-1">
           <div className="px-1 pb-3 mb-2 border-b border-border">
             <p className="text-xs font-semibold text-gray-400 mb-2">Caut panouri pentru:</p>
-            <SegmentToggle />
+            <SegmentToggle source="nav_mobile" />
           </div>
           {allMobileLinks.map((link) => (
             <Link

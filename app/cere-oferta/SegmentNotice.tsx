@@ -20,7 +20,7 @@ export default function SegmentNotice() {
           din zona ta.
         </p>
         <div className="shrink-0">
-          <SegmentToggle />
+          <SegmentToggle source="cere_oferta" />
         </div>
       </div>
       <p className="text-xs text-gray-500 mt-2">Nu e ce cauți? Comută mai sus între Casă și Firmă.</p>

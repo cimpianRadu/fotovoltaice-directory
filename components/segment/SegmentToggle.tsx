@@ -1,6 +1,7 @@
 'use client';
 
 import { useSegment, type SegmentView } from './SegmentProvider';
+import { trackEvent } from '@/lib/analytics';
 
 function HouseIcon() {
   return (
@@ -32,9 +33,11 @@ const OPTIONS: {
 export default function SegmentToggle({
   className = '',
   elevated = false,
+  source = 'toggle',
 }: {
   className?: string;
   elevated?: boolean;
+  source?: string;
 }) {
   const { segment, setSegment } = useSegment();
 
@@ -52,7 +55,10 @@ export default function SegmentToggle({
           <button
             key={view}
             type="button"
-            onClick={() => setSegment(view)}
+            onClick={() => {
+              setSegment(view);
+              trackEvent('segment_selected', { segment: view, source });
+            }}
             aria-pressed={active}
             className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full transition-colors ${
               active ? activeClass : 'text-gray-500 hover:text-gray-800'

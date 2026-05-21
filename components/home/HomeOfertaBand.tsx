@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useSegment } from '@/components/segment/SegmentProvider';
+import { trackEvent } from '@/lib/analytics';
 
 interface Props {
   comercialCount: number;
@@ -26,6 +27,7 @@ export default function HomeOfertaBand({ comercialCount, rezidentialCount }: Pro
         </div>
         <Link
           href="/cere-oferta"
+          onClick={() => trackEvent('cere_oferta_click', { segment, source: 'home_band' })}
           className="shrink-0 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors"
         >
           Cere Ofertă

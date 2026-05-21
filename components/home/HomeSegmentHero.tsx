@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useSegment, type SegmentView } from '@/components/segment/SegmentProvider';
+import { trackEvent } from '@/lib/analytics';
 
 function HouseIcon() {
   return (
@@ -105,6 +106,11 @@ export default function HomeSegmentHero({
   const { segment, setSegment } = useSegment();
   const stats = segment === 'rezidential' ? rezidentialStats : comercialStats;
 
+  function choose(view: SegmentView) {
+    setSegment(view);
+    trackEvent('segment_selected', { segment: view, source: 'home_door' });
+  }
+
   return (
     <>
       <section className="bg-gradient-to-br from-secondary-dark via-secondary to-secondary-light text-white">
@@ -138,7 +144,7 @@ export default function HomeSegmentHero({
           <div className="grid grid-cols-2 gap-3 sm:gap-5 max-w-3xl mx-auto">
             <Door
               view="rezidential"
-              onChoose={setSegment}
+              onChoose={choose}
               icon={<HouseIcon />}
               iconBg="bg-amber-100"
               title="Pentru casa mea"
@@ -153,7 +159,7 @@ export default function HomeSegmentHero({
             />
             <Door
               view="comercial"
-              onChoose={setSegment}
+              onChoose={choose}
               icon={<HallIcon />}
               iconBg="bg-blue-100"
               title="Pentru firma mea"

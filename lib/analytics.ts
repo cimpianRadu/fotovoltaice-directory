@@ -9,14 +9,24 @@ type EventName =
   | 'listing_form_submitted'
   | 'waitlist_signup'
   | 'company_contact_clicked'
-  | 'external_link_clicked';
+  | 'external_link_clicked'
+  | 'segment_selected'
+  | 'cere_oferta_click';
 
 type EventProps = Record<string, string | number | boolean>;
 
 export function trackEvent(name: EventName, props?: EventProps) {
-  // Plausible integration
-  if (typeof window !== 'undefined' && 'plausible' in window) {
-    (window as unknown as { plausible: (name: string, opts?: { props: EventProps }) => void }).plausible(name, props ? { props } : undefined);
+  if (typeof window !== 'undefined') {
+    const w = window as unknown as {
+      umami?: { track?: (name: string, data?: EventProps) => void };
+      plausible?: (name: string, opts?: { props: EventProps }) => void;
+    };
+    // Umami (the analytics the site actually loads — see app/layout.tsx)
+    w.umami?.track?.(name, props);
+    // Plausible (kept in case it's ever added)
+    if (typeof w.plausible === 'function') {
+      w.plausible(name, props ? { props } : undefined);
+    }
   }
 
   // Debug logging in development

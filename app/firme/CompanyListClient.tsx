@@ -125,7 +125,7 @@ export default function CompanyListClient() {
       </p>
       {/* Inline toggle on desktop; on mobile the floating toggle handles switching */}
       <div className="hidden sm:block">
-        <SegmentToggle />
+        <SegmentToggle source="firme_bar" />
       </div>
     </div>
 
