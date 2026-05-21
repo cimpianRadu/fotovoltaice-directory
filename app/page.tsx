@@ -159,7 +159,7 @@ export default function HomePage() {
             {/* Left: text + stats */}
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                De ce instalatori-fotovoltaice.ro
+                De ce instalatori-fotovoltaice.ro?
               </h2>
               <p className="text-gray-600 mb-6">
                 Cauți un <strong>instalator de panouri fotovoltaice</strong> pentru firma ta? Pe platforma noastră găsești <strong>{COMPANY_COUNT} de firme verificate</strong> cu date din registrele oficiale. Fiecare firmă are CUI verificat, certificări ANRE confirmate live din portal.anre.ro și date financiare publice.
