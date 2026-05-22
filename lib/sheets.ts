@@ -26,6 +26,18 @@ async function appendRow(sheetName: string, values: string[]) {
   });
 }
 
+async function readRows(sheetName: string): Promise<string[][]> {
+  const auth = getAuth();
+  const sheets = google.sheets({ version: 'v4', auth });
+
+  const res = await sheets.spreadsheets.values.get({
+    spreadsheetId: SPREADSHEET_ID,
+    range: `${sheetName}!A:Z`,
+  });
+
+  return (res.data.values as string[][] | undefined) ?? [];
+}
+
 export async function saveLeadToSheet(lead: {
   numeCompanie?: string;
   numeContact: string;
@@ -92,6 +104,91 @@ export async function saveListingToSheet(listing: {
     listing.anreCerts || '',
     listing.segment || 'comercial', // coloana Segment (trailing)
   ]);
+}
+
+export interface NewLead {
+  timestamp: string;
+  numeCompanie: string;
+  numeContact: string;
+  email: string;
+  telefon: string;
+  tipProiect: string;
+  judet: string;
+  suprafata: string;
+  putere: string;
+  mesaj: string;
+  sourcePage: string;
+  preselectedCompany: string;
+  status: string;
+  segment: string;
+}
+
+export interface NewListing {
+  timestamp: string;
+  numeFirma: string;
+  cui: string;
+  numeContact: string;
+  functie: string;
+  email: string;
+  telefon: string;
+  judet: string;
+  website: string;
+  specializare: string;
+  descriere: string;
+  status: string;
+  anreStatus: string;
+  anreFirmName: string;
+  anreCerts: string;
+  segment: string;
+}
+
+// A row's first cell holds an ISO timestamp. Header rows / blanks won't parse —
+// that doubles as the "skip the header" filter.
+function isAfter(row: string[], cutoff: Date): boolean {
+  const t = Date.parse(row[0] || '');
+  return Number.isFinite(t) && t >= cutoff.getTime();
+}
+
+export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
+  const rows = await readRows('Leads');
+  return rows.filter((r) => isAfter(r, cutoff)).map((r) => ({
+    timestamp: r[0] || '',
+    numeCompanie: r[1] || '',
+    numeContact: r[2] || '',
+    email: r[3] || '',
+    telefon: r[4] || '',
+    tipProiect: r[5] || '',
+    judet: r[6] || '',
+    suprafata: r[7] || '',
+    putere: r[8] || '',
+    mesaj: r[9] || '',
+    sourcePage: r[10] || '',
+    preselectedCompany: r[11] || '',
+    status: r[12] || '',
+    segment: r[13] || 'comercial',
+  }));
+}
+
+export async function getListingsSince(cutoff: Date): Promise<NewListing[]> {
+  const rows = await readRows('Listări');
+  return rows.filter((r) => isAfter(r, cutoff)).map((r) => ({
+    timestamp: r[0] || '',
+    numeFirma: r[1] || '',
+    cui: r[2] || '',
+    numeContact: r[3] || '',
+    functie: r[4] || '',
+    email: r[5] || '',
+    telefon: r[6] || '',
+    judet: r[7] || '',
+    website: r[8] || '',
+    specializare: r[9] || '',
+    descriere: r[10] || '',
+    status: r[11] || '',
+    anreStatus: r[12] || '',
+    anreFirmName: r[13] || '',
+    anreCerts: r[14] || '',
+    segment: r[15] || 'comercial',
+  }));
 }
 
 export async function saveWaitlistToSheet(email: string) {

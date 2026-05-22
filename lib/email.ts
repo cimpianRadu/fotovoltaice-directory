@@ -72,6 +72,137 @@ interface ListingNotificationData {
   anreStatus?: string;
 }
 
+function segmentBadge(segment: string): string {
+  const rez = segment === 'rezidential';
+  const ambele = segment === 'ambele';
+  const label = rez ? 'Rezidențial' : ambele ? 'Ambele' : 'Comercial';
+  const bg = rez ? '#ecfdf5' : ambele ? '#eff6ff' : '#fffbeb';
+  const fg = rez ? '#047857' : ambele ? '#1d4ed8' : '#92400e';
+  return `<span style="display:inline-block;padding:1px 8px;border-radius:9999px;background:${bg};color:${fg};font-size:11px;font-weight:600">${label}</span>`;
+}
+
+interface DigestLead {
+  timestamp: string;
+  numeCompanie: string;
+  numeContact: string;
+  email: string;
+  telefon: string;
+  tipProiect: string;
+  judet: string;
+  putere: string;
+  segment: string;
+}
+
+interface DigestListing {
+  timestamp: string;
+  numeFirma: string;
+  cui: string;
+  numeContact: string;
+  email: string;
+  telefon: string;
+  judet: string;
+  specializare: string;
+  anreStatus: string;
+  segment: string;
+}
+
+function fmtDate(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleString('ro-RO', {
+    timeZone: 'Europe/Bucharest',
+    day: '2-digit',
+    month: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+function countBySegment(items: { segment: string }[]): string {
+  const rez = items.filter((i) => i.segment === 'rezidential').length;
+  const com = items.filter((i) => i.segment !== 'rezidential').length;
+  return `${rez} rezidențial / ${com} comercial`;
+}
+
+export async function sendSubmissionsDigest(
+  leads: DigestLead[],
+  listings: DigestListing[],
+  lookbackHours: number
+): Promise<{ ok: boolean; reason?: string }> {
+  const to = process.env.LISTING_NOTIFICATION_EMAIL || 'radu.cimpian94@gmail.com';
+  const days = Math.round(lookbackHours / 24);
+
+  const leadCards = leads
+    .map(
+      (l) => `<div style="padding:12px 0;border-bottom:1px solid #f1f5f9">
+        <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">
+          <strong style="font-size:14px;color:#111827">${escapeHtml(l.numeContact)}${l.numeCompanie ? ` · ${escapeHtml(l.numeCompanie)}` : ''}</strong>
+          ${segmentBadge(l.segment)}
+        </div>
+        <div style="font-size:13px;color:#374151;margin-top:3px">${escapeHtml(l.tipProiect)} · ${escapeHtml(l.judet)}${l.putere ? ` · ${escapeHtml(l.putere)} kW` : ''}</div>
+        <div style="font-size:12px;color:#6b7280;margin-top:3px">
+          <a href="mailto:${escapeHtml(l.email)}" style="color:#2563eb">${escapeHtml(l.email)}</a> ·
+          <a href="tel:${escapeHtml(l.telefon.replace(/\s/g, ''))}" style="color:#2563eb">${escapeHtml(l.telefon)}</a> ·
+          ${escapeHtml(fmtDate(l.timestamp))}
+        </div>
+      </div>`
+    )
+    .join('');
+
+  const listingCards = listings
+    .map((c) => {
+      const anre =
+        c.anreStatus === 'verified-pv'
+          ? '<span style="color:#15803d;font-weight:600">✓ ANRE PV</span>'
+          : c.anreStatus === 'found-no-pv-cert'
+            ? '<span style="color:#b45309;font-weight:600">⚠ ANRE fără PV</span>'
+            : '<span style="color:#6b7280">ⓘ Negăsit ANRE</span>';
+      return `<div style="padding:12px 0;border-bottom:1px solid #f1f5f9">
+        <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">
+          <strong style="font-size:14px;color:#111827">${escapeHtml(c.numeFirma)}</strong>
+          ${segmentBadge(c.segment)}
+        </div>
+        <div style="font-size:13px;color:#374151;margin-top:3px">${escapeHtml(c.cui)} · ${escapeHtml(c.judet)} · ${escapeHtml(c.specializare)} · ${anre}</div>
+        <div style="font-size:12px;color:#6b7280;margin-top:3px">
+          ${escapeHtml(c.numeContact)} ·
+          <a href="mailto:${escapeHtml(c.email)}" style="color:#2563eb">${escapeHtml(c.email)}</a> ·
+          <a href="tel:${escapeHtml(c.telefon.replace(/\s/g, ''))}" style="color:#2563eb">${escapeHtml(c.telefon)}</a> ·
+          ${escapeHtml(fmtDate(c.timestamp))}
+        </div>
+      </div>`;
+    })
+    .join('');
+
+  const section = (title: string, count: number, breakdown: string, cards: string) =>
+    `<div style="padding:18px 24px;border-top:1px solid #e5e7eb">
+      <div style="font-size:12px;color:#6b7280;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">${title} · ${count}</div>
+      ${count > 0 ? `<div style="font-size:12px;color:#9ca3af;margin-top:2px">${breakdown}</div>${cards}` : '<div style="font-size:13px;color:#9ca3af;margin-top:6px">Nimic nou.</div>'}
+    </div>`;
+
+  const html = `<!DOCTYPE html>
+<html>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
+  <div style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
+    <div style="padding:20px 24px;background:#fffbeb">
+      <div style="font-size:12px;color:#92400e;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">Rezumat submisii · ultimele ${days} zile</div>
+      <h1 style="margin:6px 0 0;font-size:20px;color:#111827">${leads.length} leads · ${listings.length} listări</h1>
+    </div>
+    ${section('Leads (Cere ofertă)', leads.length, countBySegment(leads), leadCards)}
+    ${section('Listări firme', listings.length, countBySegment(listings), listingCards)}
+    <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280">
+      Sursă: Google Sheets „Leads" + „Listări". Digest automat la 2 zile.
+    </div>
+  </div>
+</body>
+</html>`;
+
+  return sendEmail({
+    to,
+    subject: `Submisii noi: ${leads.length} leads · ${listings.length} listări (ultimele ${days} zile)`,
+    html,
+  });
+}
+
 export async function sendListingNotification(data: ListingNotificationData): Promise<void> {
   const to = process.env.LISTING_NOTIFICATION_EMAIL || 'radu.cimpian94@gmail.com';
 
