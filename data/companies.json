@@ -3341,7 +3341,6 @@
       "slug": "elio-industrial",
       "name": "Elio Industrial S.R.L.",
       "cui": "RO1771720",
-      "logo": "/logos/elio-industrial.png",
       "description": "Firmă din Lancrăm (Sebeș, județul Alba) înființată în 1992, atestată ANRE cu certificări C1A și C2A pentru lucrări la instalații electrice. Activitate principală CAEN 4321 — lucrări de instalații electrice. Cifra de afaceri: 8,46M RON (2024), 14 angajați.",
       "founded": 1992,
       "employees": 14,
@@ -3368,7 +3367,7 @@
       "featured": false,
       "verified": false,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-05-22",
       "anreMatch": {
         "societate": "ELIO INDUSTRIAL",
         "judet": "Alba"
@@ -3422,7 +3421,6 @@
       "slug": "electro-oriel",
       "name": "Electro Oriel S.R.L.",
       "cui": "RO38655105",
-      "logo": "/logos/electro-oriel.png",
       "description": "Firmă din Vințu de Jos (județul Alba) înființată în 2018, atestată ANRE cu certificări C1A și C2A pentru lucrări la instalații electrice. Activitate principală CAEN 4321 — lucrări de instalații electrice. Cifra de afaceri: 533K RON (2024), 3 angajați.",
       "founded": 2018,
       "employees": 3,
@@ -3449,7 +3447,7 @@
       "featured": false,
       "verified": false,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-05-22",
       "anreMatch": {
         "societate": "ELECTRO ORIEL",
         "judet": "Alba"
@@ -3544,7 +3542,6 @@
       "slug": "energo-enci",
       "name": "Energo Enci S.R.L.",
       "cui": "RO40864839",
-      "logo": "/logos/energo-enci.png",
       "description": "Firmă din Daia Română (Sebeș, județul Alba) înființată în 2019, atestată ANRE cu certificare C1A pentru lucrări la instalații electrice. Activitate principală CAEN 7112 — activități de inginerie și consultanță tehnică. Cifra de afaceri: 2,44M RON (2024), 3 angajați.",
       "founded": 2019,
       "employees": 3,
@@ -3571,7 +3568,7 @@
       "featured": false,
       "verified": false,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-05-22",
       "anreMatch": {
         "societate": "ENERGO ENCI",
         "judet": "Alba"
@@ -5529,7 +5526,6 @@
       "slug": "ambra-service",
       "name": "Ambra Service",
       "cui": "RO14452634",
-      "logo": "/logos/ambra-service.png",
       "description": "Firmă fondată în 2002 în Socodor, județul Arad, divizie românească a grupului italian Delta. Oferă servicii integrate de instalații electrice industriale, termice, climatizare, ventilație, sanitare și energie regenerabilă (panouri fotovoltaice). Firmă certificată ISO, cu portofoliu de proiecte industriale derulate în Arad și Timiș.",
       "founded": 2002,
       "employees": 49,
@@ -5570,7 +5566,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-28",
-      "updatedAt": "2026-04-28",
+      "updatedAt": "2026-05-22",
       "anreMatch": {
         "societate": "AMBRA SERVICE",
         "judet": "Arad"
@@ -5582,7 +5578,6 @@
       "slug": "precon-electric",
       "name": "Precon Electric",
       "cui": "RO14870335",
-      "logo": "/logos/precon-electric.png",
       "description": "Firmă fondată în 2002 în Parcul Industrial UTA 1 din Arad, specializată în proiectare și execuție instalații electrice industriale, automatizări, retail/hospitality și sisteme fotovoltaice rezidențiale și industriale. Partener autorizat pentru programul Casa Verde, cu peste 20 de ani de experiență în zona Banatului. Lucrează cu echipamente Schneider Electric, Siemens, ABB, Eaton, Legrand.",
       "founded": 2002,
       "employees": 15,
@@ -5625,7 +5620,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-28",
-      "updatedAt": "2026-04-28",
+      "updatedAt": "2026-05-22",
       "anreMatch": {
         "societate": "PRECON ELECTRIC",
         "judet": "Arad"
@@ -5852,7 +5847,6 @@
       "slug": "domarex-94",
       "name": "Domarex '94 SRL",
       "cui": "RO6363471",
-      "logo": "/logos/domarex-94.png",
       "description": "Firmă fondată în 1994 în Călărași, cu capital 100% românesc și autorizație ANRE din 2001. Oferă proiectare și execuție pentru sisteme fotovoltaice rezidențiale, industriale și parcuri fotovoltaice, stații de încărcare auto electrice, rețele electrice de joasă și medie tensiune (0,4 kV–20 kV) și branșamente electrice. Peste 30 de ani de experiență ca antreprenor electric.",
       "founded": 1994,
       "employees": 63,
@@ -5892,7 +5886,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-04",
-      "updatedAt": "2026-05-04",
+      "updatedAt": "2026-05-22",
       "anreMatch": {
         "societate": "DOMAREX '94",
         "judet": "Calarasi"
@@ -6336,7 +6330,6 @@
       "slug": "electro-metering",
       "name": "Electro Metering SRL",
       "cui": "RO42988183",
-      "logo": "/logos/electro-metering.png",
       "description": "Electro Metering este o firmă din Baia Mare, înființată în 2020, specializată în proiectarea și execuția instalațiilor electrice civile și industriale. Pe lângă instalare și mentenanță panouri fotovoltaice, execută branșamente aeriene și subterane (monofazate și trifazate), linii electrice 0,4–20 kV, posturi de transformare de medie tensiune și rețele de iluminat public. Sediul declarat pe site este pe Strada 8 Martie nr. 9, Baia Mare; sediul social ANRE este în satul Lăpușel, comuna Recea.",
       "founded": 2020,
       "employees": 6,
@@ -6377,7 +6370,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-18",
-      "updatedAt": "2026-05-18",
+      "updatedAt": "2026-05-22",
       "anreMatch": {
         "societate": "ELECTRO METERING",
         "judet": "Maramures"
@@ -6445,7 +6438,6 @@
       "slug": "comp-sgs-electrogrup",
       "name": "Comp SGS Electrogrup SRL",
       "cui": "RO21766168",
-      "logo": "/logos/comp-sgs-electrogrup.png",
       "description": "Comp SGS Electrogrup este o firmă din Baia Mare, înființată în 2007, specializată în lucrări de instalații electrice — proiectare și execuție instalații interioare pentru construcții civile și industriale, branșamente aeriene și subterane, și instalații fotovoltaice pentru producerea de energie electrică. Acoperă pe lângă Baia Mare orașe din Maramureș precum Baia Sprie, Borșa, Cavnic, Sighetu Marmației, Târgu Lăpuș, Tăuții-Măgherăuș și Vișeu de Sus.",
       "founded": 2007,
       "employees": 14,
@@ -6485,7 +6477,7 @@
       "featured": false,
       "verified": false,
       "createdAt": "2026-05-18",
-      "updatedAt": "2026-05-18",
+      "updatedAt": "2026-05-22",
       "anreMatch": {
         "societate": "COMP SGS ELECTROGRUP",
         "judet": "Maramures"
@@ -6751,7 +6743,6 @@
       "slug": "electrogreen-serv",
       "name": "Electrogreen Serv S.R.L.",
       "cui": "RO46131349",
-      "logo": "/logos/electrogreen-serv.png",
       "description": "Instalator local din Cluj-Napoca, acreditat ANRE, axat pe panouri fotovoltaice de calitate pentru clienți rezidențiali. Oferă dimensionare corectă a sistemului, montaj cu echipe proprii, punere în funcțiune, dosar de prosumator inclus și mentenanță.",
       "founded": 0,
       "employees": 0,
@@ -6788,7 +6779,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-21",
-      "updatedAt": "2026-05-21",
+      "updatedAt": "2026-05-22",
       "anreMatch": {
         "societate": "ELECTROGREEN SERV",
         "judet": "Cluj"
@@ -6844,6 +6835,120 @@
         "judet": "Satu Mare"
       },
       "segment": "rezidential"
+    },
+    {
+      "id": "marenco-el",
+      "slug": "marenco-el",
+      "name": "Marenco El S.R.L.",
+      "cui": "RO35850276",
+      "logo": "/logos/marenco-el.png",
+      "description": "Firmă din Constanța înființată în 2016, specializată în instalații electrice, branșamente și sisteme fotovoltaice pentru clienți rezidențiali și comerciali. Execută tablouri electrice de distribuție și oferă consultanță gratuită pentru proiecte, cu peste 10 ani de experiență în domeniul electric.",
+      "founded": 2016,
+      "employees": 16,
+      "location": {
+        "city": "Constanța",
+        "county": "Constanța",
+        "address": "Str. Decebal, Nr. 75, Et. 2, Cam. 3"
+      },
+      "contact": {
+        "phone": "+40752614523",
+        "email": "office@marencoel.ro",
+        "website": "https://marencoel.ro"
+      },
+      "coverage": [
+        "Constanța"
+      ],
+      "specializations": [
+        "hale-industriale",
+        "rezidential"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2023,
+        "revenue": 2253037,
+        "profit": 333800
+      },
+      "tags": [
+        "pv-comercial",
+        "instalatii-electrice",
+        "experienta-10-ani"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-22",
+      "updatedAt": "2026-05-22",
+      "segment": "comercial",
+      "anreMatch": {
+        "societate": "MARENCO EL",
+        "judet": "Constanta"
+      }
+    },
+    {
+      "id": "energofit-impex",
+      "slug": "energofit-impex",
+      "name": "EnergoFit Impex S.R.L.",
+      "cui": "RO46017868",
+      "logo": "/logos/energofit-impex.png",
+      "description": "Firmă din Ciulnița (Slobozia), județul Ialomița, înființată în 2022, specializată în sisteme fotovoltaice pentru locuințe, firme și spații industriale. Oferă suplimentar pompe de căldură, stații de încărcare EV, automatizări și curățarea panourilor, plus suport pentru contractul de prosumator și garanție/post-garanție. Acoperă sudul și sud-estul țării.",
+      "founded": 2022,
+      "employees": 9,
+      "location": {
+        "city": "Ciulnița",
+        "county": "Ialomița",
+        "address": "Str. 1 Mai, Nr. 5, Ciulnița"
+      },
+      "contact": {
+        "phone": "+40722699775",
+        "email": "contact@energofit.ro",
+        "website": "https://energofit.ro"
+      },
+      "coverage": [
+        "Ialomița",
+        "București",
+        "Ilfov",
+        "Dâmbovița",
+        "Giurgiu",
+        "Teleorman",
+        "Constanța",
+        "Tulcea",
+        "Galați",
+        "Brăila"
+      ],
+      "specializations": [
+        "hale-industriale",
+        "rezidential"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 1264974,
+        "profit": 1949
+      },
+      "tags": [
+        "pv-comercial",
+        "pv-rezidential",
+        "pompe-caldura",
+        "statii-incarcare-ev"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-22",
+      "updatedAt": "2026-05-22",
+      "segment": "comercial",
+      "anreMatch": {
+        "societate": "ENERGOFIT IMPEX",
+        "judet": "Ialomita"
+      }
     }
   ]
 }
