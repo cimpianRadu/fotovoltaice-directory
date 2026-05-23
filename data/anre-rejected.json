@@ -369,5 +369,59 @@
     "judet": "Salaj",
     "cui": "13605900",
     "reason": "Site propriu elconstruct.ro listează doar electrice clasice (construcții civile/industriale/agricole, alimentare, instalații curenți slabi, iluminat public) — niciun serviciu fotovoltaic pe site. Apare ca instalator AFM dar fără PV pe homepage/servicii."
+  },
+  {
+    "societate": "INIC SRL",
+    "judet": "Arges",
+    "cui": "150784",
+    "reason": "inicinstal.ro este un magazin online / showroom (webshop) care comercializează componente PV, pompe de căldură, climatizare și articole sanitare — nu instalator turnkey. Model e-commerce, fără serviciu de montaj propriu evidențiat."
+  },
+  {
+    "societate": "ANDU LAU GRUP SRL",
+    "judet": "Gorj",
+    "cui": "35135515",
+    "reason": "anduelectric.ro este magazin de materiale electrice (distribuitor/retailer) care vinde sisteme fotovoltaice complete ca produse — nu oferă serviciu de instalare. Webshop, nu installer."
+  },
+  {
+    "societate": "AXA INDUSTRIES SRL",
+    "judet": "Neamt",
+    "cui": "34115730",
+    "reason": "greenindustries.ro este webshop/distribuitor de pompe de căldură, panouri și echipamente de încălzire/climatizare. Servicii limitate la vânzare + livrare; nu se oferă montaj."
+  },
+  {
+    "societate": "AMPER PROIECT SRL",
+    "judet": "Bihor",
+    "cui": "15526497",
+    "reason": "amperproiect.ro prezintă doar proiectare și execuție instalații electrice (tablouri, rețele) — niciun serviciu fotovoltaic/panouri solare/rezidențial pe site. CAEN 7112 inginerie."
+  },
+  {
+    "societate": "TRI EM SERV SRL",
+    "judet": "Maramures",
+    "cui": "19835401",
+    "reason": "triemserv.ro este focusat pe rețele electrice de joasă/medie/înaltă tensiune (până la 110 kV), stații și posturi de transformare pentru clienți industriali — niciun serviciu fotovoltaic rezidențial pe site."
+  },
+  {
+    "societate": "EUROELECTRIC SRL",
+    "judet": "Hunedoara",
+    "cui": "15193562",
+    "reason": "euroelectric.ro oferă instalații electrice industriale JT/MT, tablouri, automatizări și stații de încărcare EV — nicio mențiune de panouri fotovoltaice/solar/rezidențial. Focus infrastructură electrică industrială."
+  },
+  {
+    "societate": "ELECTRO-CONSULT CARAS SRL",
+    "judet": "Caras-Severin",
+    "cui": "8433921",
+    "reason": "electroconsultcaras.ro prezintă doar branșamente, linii electrice aeriene/subterane, posturi de transformare și consultanță energetică — niciun serviciu fotovoltaic/solar/rezidențial pe site."
+  },
+  {
+    "societate": "ROMANOR SRL",
+    "judet": "Calarasi",
+    "cui": "1917665",
+    "reason": "romanor.eu este firmă HVAC/termică/sanitară; panourile solare apar marginal, iar proiectele listate sunt comerciale/industriale (centrale termice). Fără focus rezidențial PV; activitate principală instalații termo-sanitare."
+  },
+  {
+    "societate": "INSTAL GROUP SRL",
+    "judet": "Arad",
+    "cui": "8898978",
+    "reason": "instalgroup.ro este focusat pe instalații termice, sanitare, electrice, gaze naturale și sisteme de stingere/detecție incendiu — niciun serviciu fotovoltaic/solar pe site."
   }
 ]
