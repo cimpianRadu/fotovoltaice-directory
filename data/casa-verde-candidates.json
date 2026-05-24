@@ -24,7 +24,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/ppc-energie-muntenia-sa-24387371"
   },
   {
-    "name": "ELBI ELECTRIC&amp;LIGHTING SRL",
+    "name": "ELBI ELECTRIC&LIGHTING SRL",
     "cui": "17412685",
     "slug": "elbi-electriclighting-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/elbi-electriclighting-srl-17412685"
@@ -120,7 +120,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-fotonia-shine-retention-srl-41298460"
   },
   {
-    "name": "S.C. AMIRAS C&amp;L IMPEX S.R.L.",
+    "name": "S.C. AMIRAS C&L IMPEX S.R.L.",
     "cui": "917713",
     "slug": "amiras-cl-impex-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/amiras-cl-impex-srl-917713"
@@ -324,19 +324,13 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-public-creation-srl-16957447"
   },
   {
-    "name": "SC FAIR PLAY SERBAN SRL",
-    "cui": "4009886",
-    "slug": "sc-fair-play-serban-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-fair-play-serban-srl-4009886"
-  },
-  {
     "name": "SC PROFIMATIC SRL",
     "cui": "20015464",
     "slug": "sc-profimatic-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-profimatic-srl-20015464"
   },
   {
-    "name": "S.C. ELECTRO&amp;CONSTRUCT S.R.L.",
+    "name": "S.C. ELECTRO&CONSTRUCT S.R.L.",
     "cui": "18186020",
     "slug": "electroconstruct-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/electroconstruct-srl-18186020"
@@ -382,12 +376,6 @@
     "cui": "14740831",
     "slug": "sc-ro-software-house-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-ro-software-house-srl-14740831"
-  },
-  {
-    "name": "ROMANOR SRL",
-    "cui": "1917665",
-    "slug": "romanor-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/romanor-srl-1917665"
   },
   {
     "name": "COENERGIA ALTERNATIVA SRL",
@@ -444,12 +432,6 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-imsatie-drobeta-srl-13473426"
   },
   {
-    "name": "SUN POWER SYSTEMS SRL",
-    "cui": "43751869",
-    "slug": "sun-power-systems-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sun-power-systems-srl-43751869"
-  },
-  {
     "name": "SC ELPROEX SA",
     "cui": "6798220",
     "slug": "sc-elproex-sa",
@@ -498,34 +480,10 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-electrix-braila-srl-35785178"
   },
   {
-    "name": "SC SAMGEC SRL",
-    "cui": "6593861",
-    "slug": "sc-samgec-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-samgec-srl-6593861"
-  },
-  {
-    "name": "ELECTRO-CONSULT CARAS",
-    "cui": "8433921",
-    "slug": "electro-consult-caras",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/electro-consult-caras-8433921"
-  },
-  {
     "name": "S.C. ELESAL S.R.L.",
     "cui": "16376681",
     "slug": "elesal-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/elesal-srl-16376681"
-  },
-  {
-    "name": "SC COSMIC ELECTRIC POWER SRL",
-    "cui": "45813267",
-    "slug": "sc-cosmic-electric-power-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-cosmic-electric-power-srl-45813267"
-  },
-  {
-    "name": "IDNA POWER SRL",
-    "cui": "39361744",
-    "slug": "idna-power-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/idna-power-srl-39361744"
   },
   {
     "name": "SC CMV QUALITY INSTAL SRL",
@@ -540,13 +498,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-uniel-serv-srl-6392442"
   },
   {
-    "name": "SC TRI EM SERV SRL",
-    "cui": "19835401",
-    "slug": "sc-tri-em-serv-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-tri-em-serv-srl-19835401"
-  },
-  {
-    "name": "MWM GAS&amp;ENERGY SRL",
+    "name": "MWM GAS&ENERGY SRL",
     "cui": "16160121",
     "slug": "mwm-gasenergy-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/mwm-gasenergy-srl-16160121"
@@ -558,28 +510,10 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-elcas-systems-2001-srl-14028206"
   },
   {
-    "name": "J.T.S INSTAL CONSTRUCT S.R.L.",
-    "cui": "43112865",
-    "slug": "jts-instal-construct-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/jts-instal-construct-srl-43112865"
-  },
-  {
     "name": "GENWAY VIDEOINTERFOANE S.R.L.",
     "cui": "32399458",
     "slug": "genway-videointerfoane-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/genway-videointerfoane-srl-32399458"
-  },
-  {
-    "name": "S.C. ELECTROPREST S.R.L.",
-    "cui": "8997912",
-    "slug": "electroprest-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/electroprest-srl-8997912"
-  },
-  {
-    "name": "SC INSTAL GROUP SRL",
-    "cui": "8898978",
-    "slug": "sc-instal-group-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-instal-group-srl-8898978"
   },
   {
     "name": "AGO PROIECT ENGINEERING S.R.L.",
@@ -594,12 +528,6 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-darcom-group-srl-6606007"
   },
   {
-    "name": "EUROELECTRIC SRL",
-    "cui": "15193562",
-    "slug": "euroelectric-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/euroelectric-srl-15193562"
-  },
-  {
     "name": "PGV ALERT CONCEPT SRL",
     "cui": "37739925",
     "slug": "pgv-alert-concept-srl",
@@ -612,28 +540,16 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/smart-energy-product-srl-21957931"
   },
   {
-    "name": "PLUS ELECTRIC &amp; LIGHTING SRL",
+    "name": "PLUS ELECTRIC & LIGHTING SRL",
     "cui": "33830310",
     "slug": "plus-electric-lighting-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/plus-electric-lighting-srl-33830310"
   },
   {
-    "name": "SC EN-RG-ETIC SRL",
-    "cui": "25708569",
-    "slug": "sc-en-rg-etic-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-en-rg-etic-srl-25708569"
-  },
-  {
-    "name": "SC C&amp;C VEST FACTORY SRL",
+    "name": "SC C&C VEST FACTORY SRL",
     "cui": "33577022",
     "slug": "sc-cc-vest-factory-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-cc-vest-factory-srl-33577022"
-  },
-  {
-    "name": "SC INIC SRL",
-    "cui": "150784",
-    "slug": "sc-inic-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-inic-srl-150784"
   },
   {
     "name": "SC SUNPROJEKT SYSTEM SRL",
@@ -654,18 +570,6 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/urbanled-srl-31467511"
   },
   {
-    "name": "S.C. SOLARX SMART ENERGY S.R.L.",
-    "cui": "42903799",
-    "slug": "solarx-smart-energy-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/solarx-smart-energy-srl-42903799"
-  },
-  {
-    "name": "GERSOLTECH SRL",
-    "cui": "35935542",
-    "slug": "gersoltech-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/gersoltech-srl-35935542"
-  },
-  {
     "name": "TEHNOINSTAL",
     "cui": "15029340",
     "slug": "tehnoinstal",
@@ -684,16 +588,10 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/electro-instal-materiale-srl-28413970"
   },
   {
-    "name": "SC  PROLUX SRL",
+    "name": "SC PROLUX SRL",
     "cui": "24293048",
     "slug": "sc-prolux-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-prolux-srl-24293048"
-  },
-  {
-    "name": "ANDU LAU GRUP SRL",
-    "cui": "35135515",
-    "slug": "andu-lau-grup-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/andu-lau-grup-srl-35135515"
   },
   {
     "name": "SC AIRMEC INSTAL SRL",
@@ -706,24 +604,6 @@
     "cui": "9320734",
     "slug": "furgon-serv-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/furgon-serv-srl-9320734"
-  },
-  {
-    "name": "SC AXA INDUSTRIES SRL",
-    "cui": "34115730",
-    "slug": "sc-axa-industries-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-axa-industries-srl-34115730"
-  },
-  {
-    "name": "B2B SYNERGY SRL",
-    "cui": "40780380",
-    "slug": "b2b-synergy-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/b2b-synergy-srl-40780380"
-  },
-  {
-    "name": "VILLEX S.R.L.",
-    "cui": "14349915",
-    "slug": "villex-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/villex-srl-14349915"
   },
   {
     "name": "EETIM ECHIPAMENTE DEAUTOMATIZARE SA",
@@ -744,12 +624,6 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/niclam-serv-srl-19225802"
   },
   {
-    "name": "SC CERAMICA STIL SRL",
-    "cui": "29317296",
-    "slug": "sc-ceramica-stil-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-ceramica-stil-srl-29317296"
-  },
-  {
     "name": "SC MAROK ENERGY SRL",
     "cui": "32597650",
     "slug": "sc-marok-energy-srl",
@@ -762,40 +636,22 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/ascorp-retele-electrice-srl-31141670"
   },
   {
-    "name": "KAMI ROOF CONSTRUCT SRL",
-    "cui": "3100462",
-    "slug": "kami-roof-construct-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/kami-roof-construct-srl-3100462"
-  },
-  {
     "name": "OPEN DB SECURITY SRL",
     "cui": "46188400",
     "slug": "open-db-security-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/open-db-security-srl-46188400"
   },
   {
-    "name": "S.C  M.A.R.S.A.T S.A",
+    "name": "S.C M.A.R.S.A.T S.A",
     "cui": "2157460",
     "slug": "sc-marsat-sa",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-marsat-sa-2157460"
-  },
-  {
-    "name": "AMPER PROIECT SRL",
-    "cui": "15526497",
-    "slug": "amper-proiect-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/amper-proiect-srl-15526497"
   },
   {
     "name": "SC ELECTRO VITAL SRL",
     "cui": "24324560",
     "slug": "sc-electro-vital-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-electro-vital-srl-24324560"
-  },
-  {
-    "name": "SC ELDAC GRUP SRL",
-    "cui": "830519",
-    "slug": "sc-eldac-grup-srl",
-    "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-eldac-grup-srl-830519"
   },
   {
     "name": "SC ELECTRO GAVRAU SRL",
@@ -900,7 +756,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-pro-electric-team-srl-37272012"
   },
   {
-    "name": "SC GEN &amp; IUL TRADING SRL",
+    "name": "SC GEN & IUL TRADING SRL",
     "cui": "16910410",
     "slug": "sc-gen-iul-trading-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-gen-iul-trading-srl-16910410"
@@ -990,7 +846,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-diamses-srl-4821343"
   },
   {
-    "name": "SC  SHIMANO  SRL",
+    "name": "SC SHIMANO SRL",
     "cui": "16391525",
     "slug": "sc-shimano-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-shimano-srl-16391525"
@@ -1458,7 +1314,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-velopro-design-srl-36136420"
   },
   {
-    "name": "SC T&amp;M ELECTROSTART 2009 SRL",
+    "name": "SC T&M ELECTROSTART 2009 SRL",
     "cui": "26129956",
     "slug": "sc-tm-electrostart-2009-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-tm-electrostart-2009-srl-26129956"
@@ -1812,7 +1668,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/elektrosmart-electric-srl-42888290"
   },
   {
-    "name": "SC  SELBO GRUP SRL",
+    "name": "SC SELBO GRUP SRL",
     "cui": "18388941",
     "slug": "sc-selbo-grup-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-selbo-grup-srl-18388941"
@@ -1842,7 +1698,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/solarexpres-systems-srl-15647782"
   },
   {
-    "name": "N&amp;A CONSULTING SRL",
+    "name": "N&A CONSULTING SRL",
     "cui": "17021229",
     "slug": "na-consulting-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/na-consulting-srl-17021229"
@@ -2100,7 +1956,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-ovicom-electric-design-srl-37542221"
   },
   {
-    "name": "S.C. SMART DESIGN &amp; SECURITYS.R.L.",
+    "name": "S.C. SMART DESIGN & SECURITYS.R.L.",
     "cui": "30392933",
     "slug": "smart-design-securitysrl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/smart-design-securitysrl-30392933"
@@ -2178,7 +2034,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-giksi-com-srl-2304120"
   },
   {
-    "name": "SC D&amp;D ELECTRIC STAR SRL",
+    "name": "SC D&D ELECTRIC STAR SRL",
     "cui": "20962760",
     "slug": "sc-dd-electric-star-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-dd-electric-star-srl-20962760"
@@ -2250,7 +2106,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-elca-devsys-srl-40537667"
   },
   {
-    "name": "GENERAL ELECTRIC &amp;CONSULTINGSRL",
+    "name": "GENERAL ELECTRIC &CONSULTINGSRL",
     "cui": "46759298",
     "slug": "general-electric-consultingsrl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/general-electric-consultingsrl-46759298"
@@ -2328,7 +2184,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-ianis-fashion-maxstil-srl-30793714"
   },
   {
-    "name": "BMC VISION&amp;ELECTRIC SRL",
+    "name": "BMC VISION&ELECTRIC SRL",
     "cui": "45511650",
     "slug": "bmc-visionelectric-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/bmc-visionelectric-srl-45511650"
@@ -2508,7 +2364,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/mwana-group-srl-43316229"
   },
   {
-    "name": "L&amp;D ELECTROTEAM SRL",
+    "name": "L&D ELECTROTEAM SRL",
     "cui": "43776138",
     "slug": "ld-electroteam-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/ld-electroteam-srl-43776138"
@@ -2652,7 +2508,7 @@
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/sc-m-d-tehnology-srl-49006650"
   },
   {
-    "name": "D&amp;D ELECTRICAL EXPERT SRL",
+    "name": "D&D ELECTRICAL EXPERT SRL",
     "cui": "45502708",
     "slug": "dd-electrical-expert-srl",
     "sourceUrl": "https://fotovoltaiceromania.ro/instalator/dd-electrical-expert-srl-45502708"

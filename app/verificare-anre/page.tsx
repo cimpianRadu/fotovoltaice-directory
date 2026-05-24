@@ -6,18 +6,18 @@ import PromovateSection from '@/components/promo/PromovateSection';
 import { getPlusCompaniesForAnre, PROMO_CAPS } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'Verificare Atestat ANRE — Instalatori Panouri Fotovoltaice',
+  title: 'Verificare Instalator Fotovoltaic — Atestat ANRE + Casa Verde',
   description:
-    'Verifică instant atestatul ANRE al firmelor de panouri fotovoltaice: caută după nume sau CUI și vezi certificările C2A, C1A, B, A3 active sau expirate, live din registrul oficial.',
+    'Verifică instant un instalator de panouri fotovoltaice: atestatele ANRE (C2A, C1A, B, A3 — active sau expirate, live din registrul oficial) și dacă apare pe lista AFM Casa Verde Fotovoltaice. Caută după nume sau CUI.',
   alternates: {
     canonical: '/verificare-anre',
   },
   openGraph: {
     type: 'website',
     url: '/verificare-anre',
-    title: 'Verificare Atestat ANRE Instalator Panouri Fotovoltaice',
+    title: 'Verificare Instalator Fotovoltaic — ANRE + Casa Verde',
     description:
-      'Verifică instant atestatul ANRE al oricărei firme de panouri fotovoltaice. Live din registrul oficial ANRE.',
+      'Verifică instant atestatul ANRE (live) și validarea Casa Verde a oricărei firme de panouri fotovoltaice.',
     images: [
       {
         url: '/og-image.png',
@@ -73,6 +73,14 @@ const faqJsonLd = {
         text: 'Legal, nu. Orice lucrare electrică în România trebuie executată de un operator economic atestat ANRE. Un instalator fără atestat valid riscă să nu obțină racordarea la rețea de la operatorul de distribuție, iar clientul poate pierde garanția echipamentelor.',
       },
     },
+    {
+      '@type': 'Question',
+      name: 'Cum verific dacă un instalator e validat Casa Verde Fotovoltaice?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Caută firma după CUI pe această pagină — îți arătăm dacă apare pe lista AFM de instalatori validați în programul Casa Verde Fotovoltaice (sesiunea 2024), alături de atestatele ANRE. Pentru a obține subvenția Casa Verde, montajul trebuie făcut de un instalator validat de AFM. Lista oficială se actualizează pe sesiuni, deci confirmă starea curentă și pe afm.ro.',
+      },
+    },
   ],
 };
 
@@ -84,10 +92,12 @@ export default function VerificareAnrePage() {
         <Breadcrumbs items={[{ label: 'Verificare ANRE' }]} />
 
         <h1 className="text-3xl font-bold text-secondary-dark mt-4 mb-2">
-          Verificare Atestat ANRE
+          Verificare Instalator Fotovoltaic
         </h1>
         <p className="text-gray-600 mb-8 text-lg">
-          Caută un instalator după nume sau CUI și verifică dacă are atestate ANRE valide.
+          Caută un instalator după nume sau CUI și verifică într-un singur loc dacă are{' '}
+          <strong>atestate ANRE valide</strong> (live din registrul oficial) și dacă apare pe{' '}
+          <strong>lista AFM Casa Verde Fotovoltaice</strong>. Pentru status Casa Verde exact, caută după CUI.
         </p>
 
         <AnreVerificationClient />
@@ -243,6 +253,10 @@ export default function VerificareAnrePage() {
             <details className="bg-surface rounded-xl border border-border p-4 group">
               <summary className="font-medium text-secondary-dark cursor-pointer">Un instalator fără atestat ANRE poate monta panouri fotovoltaice?</summary>
               <p className="mt-2 text-sm text-gray-600">Legal, nu. Orice lucrare electrică în România trebuie executată de un operator economic atestat ANRE. Un instalator fără atestat valid riscă să nu obțină racordarea la rețea de la operatorul de distribuție, iar clientul poate pierde garanția echipamentelor.</p>
+            </details>
+            <details className="bg-surface rounded-xl border border-border p-4 group">
+              <summary className="font-medium text-secondary-dark cursor-pointer">Cum verific dacă un instalator e validat Casa Verde Fotovoltaice?</summary>
+              <p className="mt-2 text-sm text-gray-600">Caută firma după CUI pe această pagină — îți arătăm dacă apare pe lista AFM de instalatori validați în programul Casa Verde Fotovoltaice (sesiunea 2024), alături de atestatele ANRE. Pentru a obține subvenția Casa Verde, montajul trebuie făcut de un instalator validat de AFM. Lista oficială se actualizează pe sesiuni, deci confirmă starea curentă și pe afm.ro.</p>
             </details>
           </div>
         </section>

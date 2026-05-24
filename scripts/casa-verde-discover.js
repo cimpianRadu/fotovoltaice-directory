@@ -35,11 +35,13 @@ async function main() {
   // The display name is the anchor text: ...-<cui>">NAME<img ...
   const titleCase = (slug) =>
     slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()).toUpperCase();
+  const decode = (s) =>
+    s.replace(/&amp;/g, '&').replace(/&#160;/g, ' ').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/\s+/g, ' ').trim();
 
   // name map from anchor text (non-empty)
   const names = new Map();
   for (const m of html.matchAll(/instalator\/[a-z0-9-]+-(\d{6,9})">([^<]{2,})</g)) {
-    if (!names.has(m[1])) names.set(m[1], m[2].trim());
+    if (!names.has(m[1])) names.set(m[1], decode(m[2]));
   }
 
   const byCui = new Map();
@@ -67,6 +69,14 @@ async function main() {
   const all = [...byCui.values()];
   const fresh = all.filter((f) => !existing.has(f.cui) && !rejected.has(f.cui));
 
+  // Full list (NOT deduped) — source for the public Casa Verde verification tool.
+  // Slimmed to {cui, name} since that's all the verification needs.
+  fs.writeFileSync(
+    path.join(ROOT, 'data/casa-verde-installers.json'),
+    JSON.stringify(all.map((f) => ({ cui: f.cui, name: f.name })), null, 2) + '\n'
+  );
+
+  // Fresh candidates (deduped) — for ADDING new firms to the directory.
   fs.writeFileSync(
     path.join(ROOT, 'data/casa-verde-candidates.json'),
     JSON.stringify(fresh, null, 2) + '\n'

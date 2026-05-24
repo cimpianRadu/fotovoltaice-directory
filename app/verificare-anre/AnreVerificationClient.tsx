@@ -2,6 +2,25 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import companiesData from '@/data/companies.json';
+import casaVerdeData from '@/data/casa-verde-installers.json';
+
+// Casa Verde verification source = AFM "instalatori validați" list (2024 snapshot).
+// CUI is the reliable match key; name match is best-effort for the name-search mode.
+const CV_CUIS = new Set(casaVerdeData.map((f) => f.cui));
+function normName(s: string): string {
+  return s
+    .toUpperCase()
+    .normalize('NFD')
+    .replace(/\b(SC|SRL|SA|SNC)\b/g, '')
+    .replace(/[^A-Z0-9]/g, '');
+}
+const CV_BY_NAME = new Map(casaVerdeData.map((f) => [normName(f.name), f] as const));
+
+type CasaVerdeState =
+  | { status: 'validated'; matchedName: string; via: 'cui' | 'name' }
+  | { status: 'not-on-list' }
+  | { status: 'unknown' }
+  | null;
 
 interface AnreAgent {
   IdAgentEconomic: number;
@@ -34,6 +53,7 @@ export default function AnreVerificationClient() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<AnreAgent | null>(null);
   const [results, setResults] = useState<AgentResult[] | null>(null);
+  const [casaVerde, setCasaVerde] = useState<CasaVerdeState>(null);
   const [loading, setLoading] = useState(false);
   const [searchingName, setSearchingName] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -84,6 +104,7 @@ export default function AnreVerificationClient() {
     setQuery(value);
     setSelectedAgent(null);
     setResults(null);
+    setCasaVerde(null);
     setError(null);
 
     if (searchMode === 'name') {
@@ -96,6 +117,9 @@ export default function AnreVerificationClient() {
     setSelectedAgent(agent);
     setQuery(agent.Nume);
     setShowSuggestions(false);
+    // Best-effort Casa Verde match by normalized name (CUI search is definitive).
+    const cv = CV_BY_NAME.get(normName(agent.Nume));
+    setCasaVerde(cv ? { status: 'validated', matchedName: cv.name, via: 'name' } : { status: 'unknown' });
     fetchCertificates(agent.IdAgentEconomic);
   }
 
@@ -106,17 +130,28 @@ export default function AnreVerificationClient() {
       return;
     }
 
-    // Look up company name in our local database
+    // Fresh search — clear any stale suggestions from a previous query
+    setSuggestions([]);
+    setShowSuggestions(false);
+
+    // Casa Verde check by CUI — the reliable key (works even for firms not in our directory)
+    const cvEntry = casaVerdeData.find((f) => f.cui === cui);
+    setCasaVerde(
+      CV_CUIS.has(cui) && cvEntry
+        ? { status: 'validated', matchedName: cvEntry.name, via: 'cui' }
+        : { status: 'not-on-list' }
+    );
+
+    // Resolve a name to query ANRE: directory first, then the Casa Verde list.
     const cuiWithPrefix = `RO${cui}`;
     const company = companiesData.companies.find(
       (c) => c.cui === cuiWithPrefix || c.cui === cui
     );
+    const sourceName = company?.name || cvEntry?.name;
 
-    if (!company) {
-      // Try searching ANRE directly — CUI not in our database,
-      // but we can try the numeric CUI as a search term (won't work for name search)
+    if (!sourceName) {
       setError(
-        `CUI-ul ${cuiWithPrefix} nu a fost găsit în baza noastră de date. Încercați căutarea după nume.`
+        `CUI-ul ${cuiWithPrefix} nu a fost găsit nici în directorul nostru, nici pe lista Casa Verde 2024. Încercați căutarea după nume.`
       );
       return;
     }
@@ -126,8 +161,9 @@ export default function AnreVerificationClient() {
     setError(null);
 
     try {
-      // Extract just the main company name (without S.A., S.R.L., etc.)
-      const searchName = company.name
+      // Extract the core company name (strip leading "SC" and trailing S.A./S.R.L. etc.)
+      const searchName = sourceName
+        .replace(/^\s*S\.?C\.?\s+/i, '')
         .replace(/\s*(S\.?A\.?|S\.?R\.?L\.?|S\.?C\.?S\.?|S\.?N\.?C\.?)\.?\s*$/i, '')
         .trim();
 
@@ -140,7 +176,7 @@ export default function AnreVerificationClient() {
       }
 
       if (data.length === 0) {
-        setError(`Firma "${company.name}" nu a fost găsită în registrul ANRE.`);
+        setError(`Firma "${sourceName}" nu a fost găsită în registrul ANRE.`);
         return;
       }
 
@@ -248,6 +284,7 @@ export default function AnreVerificationClient() {
             setSearchMode('name');
             setQuery('');
             setResults(null);
+            setCasaVerde(null);
             setError(null);
             setSuggestions([]);
           }}
@@ -264,6 +301,7 @@ export default function AnreVerificationClient() {
             setSearchMode('cui');
             setQuery('');
             setResults(null);
+            setCasaVerde(null);
             setError(null);
             setSuggestions([]);
           }}
@@ -345,6 +383,9 @@ export default function AnreVerificationClient() {
         </div>
       )}
 
+      {/* Casa Verde status (resolves instantly; shown above ANRE results) */}
+      {casaVerde && <CasaVerdeCard state={casaVerde} />}
+
       {/* Loading */}
       {loading && (
         <div className="mt-8 flex items-center justify-center gap-3 text-gray-500">
@@ -425,6 +466,75 @@ export default function AnreVerificationClient() {
           <p className="text-gray-500">Nu au fost găsite rezultate pentru această căutare.</p>
         </div>
       )}
+    </div>
+  );
+}
+
+const AFM_URL = 'https://www.afm.ro/sisteme_fotovoltaice_instalatori.php';
+
+function CasaVerdeCard({ state }: { state: NonNullable<CasaVerdeState> }) {
+  if (state.status === 'validated') {
+    return (
+      <div className="mt-4 bg-green-50 border border-green-200 rounded-xl p-4">
+        <div className="flex gap-3">
+          <svg className="w-5 h-5 text-green-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+          <div className="text-sm text-green-800">
+            <p className="font-semibold">Validat Casa Verde Fotovoltaice</p>
+            <p className="mt-0.5">
+              Apare pe lista AFM de instalatori validați (sesiunea 2024) ca{' '}
+              <span className="font-medium">{state.matchedName}</span>.
+              {state.via === 'name' && (
+                <span className="text-green-700"> (potrivire după nume — confirmă după CUI pentru certitudine)</span>
+              )}
+            </p>
+            <p className="mt-2 text-xs text-green-700">
+              Lista AFM se actualizează pe sesiuni — verifică starea curentă pe{' '}
+              <a href={AFM_URL} target="_blank" rel="noopener noreferrer" className="underline hover:text-green-900">site-ul oficial AFM</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (state.status === 'not-on-list') {
+    return (
+      <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-4">
+        <div className="flex gap-3">
+          <svg className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+          </svg>
+          <div className="text-sm text-amber-900">
+            <p className="font-semibold">Nu apare pe lista Casa Verde 2024 pe care o avem</p>
+            <p className="mt-0.5">
+              Asta <span className="font-medium">nu înseamnă neapărat că firma nu e autorizată</span> — lista noastră e un
+              snapshot al sesiunii 2024 (AFM o actualizează pe sesiuni). Verifică lista oficială actualizată pe{' '}
+              <a href={AFM_URL} target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-950">site-ul AFM</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // unknown (name-search mode, no confident match)
+  return (
+    <div className="mt-4 bg-gray-50 border border-gray-200 rounded-xl p-4">
+      <div className="flex gap-3">
+        <svg className="w-5 h-5 text-gray-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div className="text-sm text-gray-700">
+          <p className="font-medium text-gray-800">Status Casa Verde nedeterminat</p>
+          <p className="mt-0.5">
+            Din căutarea după nume nu putem confirma cu certitudine validarea Casa Verde. Pentru verificare exactă,
+            caută <span className="font-medium">după CUI</span> sau consultă lista oficială pe{' '}
+            <a href={AFM_URL} target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-900">site-ul AFM</a>.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
