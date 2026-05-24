@@ -3,6 +3,8 @@ import Image from 'next/image';
 import Badge from '@/components/ui/Badge';
 import { type Company, getSpecializationLabel, formatNumber, formatShortDate } from '@/lib/utils';
 import { getCompanyAnreCerts, getAnreCodeLabel } from '@/lib/anre';
+import { isCasaVerde } from '@/lib/casa-verde';
+import CasaVerdeBadge from '@/components/company/CasaVerdeBadge';
 
 function CompanyLogo({ company, size = 40 }: { company: Company; size?: number }) {
   const initials = company.name
@@ -42,6 +44,7 @@ interface CompanyCardProps {
 
 export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps) {
   const anreCerts = getCompanyAnreCerts(company.anreMatch);
+  const casaVerde = isCasaVerde(company.cui);
 
   if (view === 'list') {
     return (
@@ -59,6 +62,7 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
         </div>
 
         <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500 shrink-0">
+          {casaVerde && <CasaVerdeBadge />}
           {anreCerts.map((cert) => (
             <Badge key={cert.code} variant={cert.code === 'C2A' ? 'success' : 'outline'} size="sm">
               {getAnreCodeLabel(cert.code)}
@@ -110,9 +114,10 @@ export default function CompanyCard({ company, view = 'grid' }: CompanyCardProps
         ))}
       </div>
 
-      {/* Capability signals — ANRE + capacity (what differentiates companies) */}
-      {(anreCerts.length > 0 || company.capacity.maxProjectKw > 0) && (
+      {/* Capability signals — Casa Verde + ANRE + capacity (what differentiates companies) */}
+      {(casaVerde || anreCerts.length > 0 || company.capacity.maxProjectKw > 0) && (
         <div className="flex flex-wrap gap-1.5 mb-4">
+          {casaVerde && <CasaVerdeBadge />}
           {anreCerts.map((cert) => (
             <Badge key={cert.code} variant={cert.code === 'C2A' ? 'success' : 'default'} size="sm">
               {getAnreCodeLabel(cert.code)}

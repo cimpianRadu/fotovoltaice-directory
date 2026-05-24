@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { type Company, formatShortDate, hasPremiumPlacement, hasPlusPlacement } from '@/lib/utils';
 import { TierBadge } from '@/components/promo/PromoBadge';
+import { isCasaVerde } from '@/lib/casa-verde';
+import CasaVerdeBadge from '@/components/company/CasaVerdeBadge';
 
 interface CompanyHeaderProps {
   company: Company;
@@ -70,6 +72,7 @@ export default function CompanyHeader({ company }: CompanyHeaderProps) {
           <div className="flex items-center gap-2 flex-wrap">
             <h1 className="text-2xl font-bold text-gray-900">{company.name}</h1>
             {(isPremium || isPlus) && <TierBadge tier={company.promoTier} />}
+            {isCasaVerde(company.cui) && <CasaVerdeBadge />}
           </div>
           <p className="text-gray-500">
             {company.location.city}, {company.location.county} &middot; CUI: {company.cui}
