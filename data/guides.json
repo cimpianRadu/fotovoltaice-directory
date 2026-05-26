@@ -2182,6 +2182,109 @@
         "retail",
         "agricol"
       ]
+    },
+    {
+      "slug": "verificare-instalator-panouri-fotovoltaice-2026",
+      "published": true,
+      "publishedAt": "2026-05-24",
+      "author": "Radu",
+      "title": "Cum Verifici Dacă Instalatorul de Panouri Fotovoltaice e Autorizat ANRE și Validat Casa Verde (2026)",
+      "metaDescription": "Verifică în 2 minute dacă instalatorul tău fotovoltaic are atestat ANRE valabil și e validat Casa Verde. Pași concreți pe CUI și capcana firmelor-fantomă.",
+      "heroDescription": "Subvenția Casa Verde și garanția instalației depind de un instalator cu acte în regulă. Iată cum verifici atestatul ANRE și validarea AFM pe baza CUI-ului — gratuit, în câteva minute.",
+      "sections": [
+        {
+          "id": "de-ce-conteaza",
+          "title": "De ce verificarea instalatorului nu e opțională",
+          "content": "Toate programele de finanțare nerambursabilă active în România — **Casa Verde Fotovoltaice** (AFM), **Electric Up**, fondurile pentru IMM și PNRR — condiționează plata banilor de execuția lucrării de către o firmă cu **atestat ANRE valabil**. Dacă instalatorul nu e în regulă, riști să pierzi subvenția, nu doar garanția.\n\nDincolo de bani, e vorba de siguranță și de funcționare. O instalație fotovoltaică prost executată înseamnă risc electric și de incendiu, o racordare neconformă pe care distribuitorul nu o acceptă (deci nu poți deveni prosumator și nu poți injecta surplusul în rețea) și echipamente cu garanție pusă sub semnul întrebării.\n\nVestea bună: verificarea durează câteva minute, e gratuită și se face pe baza **CUI-ului** firmei. Acest ghid arată exact ce trebuie verificat și unde. (Pentru criteriile mai largi de alegere — experiență, portofoliu, garanții — vezi ghidul [Cum alegi instalatorul fotovoltaic potrivit](/ghid/cum-alegi-instalator-fotovoltaic); aici ne ocupăm strict de **verificarea autorizării**.)"
+        },
+        {
+          "id": "cele-doua-acte",
+          "title": "Cele două acte care contează: atestat ANRE și validare Casa Verde",
+          "content": "Sunt două lucruri diferite, des confundate. O firmă serioasă le are pe amândouă, iar tu le verifici separat:\n\n- **Atestatul ANRE** — dreptul legal al firmei de a proiecta și executa instalații electrice, inclusiv fotovoltaice. Este emis de Autoritatea Națională de Reglementare în domeniul Energiei. Fără el, lucrarea nu poate fi racordată legal la rețea.\n- **Validarea Casa Verde (AFM)** — firma este înscrisă pe lista instalatorilor validați de Administrația Fondului pentru Mediu pentru programul Casa Verde Fotovoltaice. Doar printr-un instalator validat poți accesa subvenția (program destinat persoanelor fizice).\n\n| | Atestat ANRE | Validare Casa Verde (AFM) |\n|---|---|---|\n| Cine emite | ANRE | AFM |\n| Ce confirmă | Dreptul de a executa instalații electrice/PV | Dreptul de a lucra în programul de subvenție |\n| Obligatoriu pentru | Orice racordare legală la rețea | Accesarea banilor Casa Verde |\n| Unde verifici | Registrul ANRE / [unealta noastră](/verificare-anre) | Lista AFM / badge-ul „Casa Verde\" de pe [paginile firmelor](/firme?segment=rezidential) |\n\nConcluzie practică: o firmă poate fi pe lista Casa Verde și să aibă atestatul ANRE expirat — sau invers. De aceea verifici ambele."
+        },
+        {
+          "id": "capcana-firme-fantoma",
+          "title": "Capcana firmelor-fantomă: verifică pe CUI, nu pe nume",
+          "content": "Cele mai frecvente trucuri pe care le vezi în piață:\n\n1. **Oferta vine de la „Firma X\", contractul îl semnezi cu „Firma Y SRL\".** Materialele de marketing și atestatul afișat aparțin unei firme cu acte, dar contractul efectiv îl semnezi cu o firmă-satelit, fără atestat propriu. Banii și răspunderea ajung la firma fără acte.\n2. **Logo „Autorizat ANRE\" făcut în Photoshop**, lipit pe site, fără să existe vreun atestat real în registrul oficial.\n3. **Confuzie de nume** — firme cu denumiri aproape identice cu ale unor instalatori cunoscuți.\n\nRegula de aur: **verifică întotdeauna pe CUI-ul exact de pe contract sau de pe oferta fermă**, nu pe numele comercial și nu pe logo. CUI-ul apare pe orice ofertă, contract sau factură (formatul e `RO` urmat de cifre, sau doar cifrele). Dacă cineva refuză să-ți dea CUI-ul cu care vei semna, e deja un semnal de alarmă.\n\nCă miza e reală a arătat-o și scandalul din jurul programului Casa Verde, unde s-a ajuns la dispute publice exact pe tema atestatelor ANRE ale instalatorilor. Tu te protejezi simplu: verifici tu însuți, pe CUI."
+        },
+        {
+          "id": "verificare-anre-pas-cu-pas",
+          "title": "Pas cu pas: cum verifici atestatul ANRE în câteva minute",
+          "content": "1. **Ia CUI-ul firmei** de pe ofertă, contract sau factură (ex: `RO12345678`). Asigură-te că e CUI-ul firmei cu care vei semna, nu al unui „brand\".\n2. **Caută firma** în [unealta de verificare a atestatelor ANRE](/verificare-anre), după CUI sau după nume. Noi facem lookup-ul în registrul ANRE și interpretăm automat tipurile de atestat; sursa oficială rămâne portalul ANRE, unde poți verifica și direct.\n3. **Verifică starea atestatului.** Trebuie să fie **activ** („Atestat\"). Dacă apare **„Expirat\"** sau **„Retras\"**, atestatul nu mai e valabil — chiar dacă firma îl afișează încă pe site. Uită-te și la **data de expirare**.\n4. **Verifică tipul atestatului** pentru puterea proiectului tău (vezi tabelul de mai jos).\n\nDacă firma apare cu un atestat activ de tipul potrivit, ai bifat partea de ANRE. Dacă nu apare deloc sau are doar atestate expirate/retrase, cere clarificări în scris înainte de orice avans."
+        },
+        {
+          "id": "tip-atestat",
+          "title": "Ce tip de atestat ANRE îți trebuie, în funcție de putere",
+          "content": "Nu orice atestat permite execuția unei instalații fotovoltaice racordate la rețea. Tipul contează în funcție de puterea sistemului și de tensiunea de racordare:\n\n| Tip de sistem | Putere orientativă | Atestat ANRE relevant |\n|---|---|---|\n| Casă / rezidențial (Casa Verde) | de regulă până la ~27 kWp, joasă tensiune | **B, Bp, C1A sau C2A** |\n| Firmă mică / comercial pe joasă tensiune | până la ~100–200 kW | **C1A, C2A** (sau B/Bp) |\n| Comercial mare / racordare medie tensiune | peste ~400 kW | **A3** (plus C1A/C2A) |\n\nPe scurt: **B și Bp** acoperă instalații pe joasă tensiune; **C1A** adaugă proiectarea pe medie tensiune; **C2A** adaugă execuția de linii și posturi de transformare pe medie tensiune; **A3** vizează lucrările de racordare pe medie tensiune.\n\nPentru o casă în programul Casa Verde, e suficient ca firma să aibă un atestat activ de tip **B, Bp, C1A sau C2A**. Nu te lăsa impresionat de un teanc de atestate — contează să fie **activ** și **potrivit puterii** tale."
+        },
+        {
+          "id": "verificare-casa-verde",
+          "title": "Cum verifici dacă instalatorul e validat Casa Verde",
+          "content": "Pentru subvenția Casa Verde, instalatorul trebuie să fie pe **lista instalatorilor validați de AFM**. Verificarea ANRE confirmă că firma are dreptul tehnic să execute; validarea AFM confirmă că poate lucra în program și că dosarul tău de subvenție va fi acceptat.\n\nLa noi, pe [paginile firmelor pentru locuințe](/firme?segment=rezidential) marcăm cu un **badge verde „Casa Verde\"** firmele care apar pe lista AFM — verificat pe CUI, nu pe nume.\n\n**Onest, ca să nu te inducem în eroare:** lista pe care o folosim este un *snapshot al sesiunii 2024*. AFM actualizează listele periodic, iar programul din 2026 poate veni cu condiții și liste noi. Dacă o firmă **nu apare** marcată la noi, asta **nu** înseamnă automat că nu e validată — verifică și pe sursa oficială, [lista AFM de instalatori](https://www.afm.ro/sisteme_fotovoltaice_instalatori.php). Și invers: confirmă întotdeauna că firma e validată **în sesiunea în care aplici tu**, nu doar într-una anterioară."
+        },
+        {
+          "id": "red-flags",
+          "title": "Semne că instalatorul nu e în regulă (red flags)",
+          "content": "Dacă bifezi mai multe dintre acestea, oprește-te și cere clarificări în scris:\n\n- Refuză să-ți dea CUI-ul sau te amână când întrebi de atestatul ANRE.\n- Numele de pe ofertă/contract diferă de firma care are atestatul.\n- Afișează doar un logo „Autorizat ANRE\", fără un număr de atestat verificabil în registru.\n- Atestatul găsit în registru e **„Expirat\"** sau **„Retras\"**.\n- Promite „subvenția Casa Verde garantată\", dar nu apare pe lista AFM.\n- Preț suspect de mic, presiune să semnezi „azi\" și avans mare cerut cash.\n- Firmă fără sediu, fără istoric și fără bilanț (înființată foarte recent, fără urmă online)."
+        },
+        {
+          "id": "intrebari-inainte-de-contract",
+          "title": "5 întrebări de pus înainte să semnezi",
+          "content": "1. **Care e CUI-ul firmei cu care semnez contractul?** (și verifică-l tu, pe loc)\n2. **Ce tip de atestat ANRE aveți și până când e valabil?**\n3. **Sunteți pe lista AFM de instalatori validați Casa Verde pentru sesiunea curentă?**\n4. **Cine se ocupă de dosarul de prosumator și de racordarea la distribuitor?**\n5. **Ce garanție oferiți (echipamente + manoperă) și pe ce firmă e emisă?**\n\nRăspunsurile clare, în scris, pe CUI-ul corect, separă un instalator serios de o firmă-fantomă."
+        },
+        {
+          "id": "pas-urmator",
+          "title": "Pasul următor",
+          "content": "- **Verifică acum instalatorul:** intră pe [unealta de verificare a atestatelor ANRE](/verificare-anre) și caută firma după CUI.\n- **Caută instalatori pentru locuințe** în zona ta: vezi [firmele pentru rezidențial](/firme?segment=rezidential) și compară-le, inclusiv după cifra de afaceri, în [clasamentul firmelor](/clasament).\n- **Vrei oferte de la firme verificate?** [Cere o ofertă](/cere-oferta) și primești propuneri de la instalatori din director.\n- **Aprofundează:** [ghidul Casa Verde Fotovoltaice 2026](/ghid/casa-verde-fotovoltaice-2026) și [cele 10 criterii pentru a alege instalatorul potrivit](/ghid/cum-alegi-instalator-fotovoltaic)."
+        }
+      ],
+      "faq": [
+        {
+          "question": "Cum verific dacă o firmă are atestat ANRE?",
+          "answer": "Ia CUI-ul firmei de pe ofertă sau contract și caută-l în registrul ANRE — direct pe portalul ANRE sau prin unealta noastră de verificare a atestatelor, care interpretează automat tipurile de atestat. Verifică să apară cu starea activă, nu „Expirat\" sau „Retras\"."
+        },
+        {
+          "question": "Ce atestat ANRE trebuie să aibă instalatorul pentru o casă?",
+          "answer": "Pentru un sistem rezidențial pe joasă tensiune (tipic în Casa Verde, de regulă până la ~27 kWp) e suficient un atestat activ de tip B, Bp, C1A sau C2A. Important e să fie activ și potrivit puterii tale."
+        },
+        {
+          "question": "Pot pierde subvenția Casa Verde dacă instalatorul nu e atestat?",
+          "answer": "Da. Plata finanțării nerambursabile este condiționată de execuția lucrării de către o firmă cu atestat ANRE valabil și, pentru Casa Verde, de un instalator validat de AFM. Un instalator fără acte îți poate bloca decontarea."
+        },
+        {
+          "question": "Ce înseamnă dacă atestatul apare „Retras\" sau „Expirat\"?",
+          "answer": "Înseamnă că nu mai e valabil. Un atestat retras sau expirat nu îți acoperă lucrarea, chiar dacă firma îl afișează încă pe site sau în ofertă. Nu-l accepta ca dovadă de autorizare."
+        },
+        {
+          "question": "Firma de pe ofertă diferă de cea de pe contract — e o problemă?",
+          "answer": "Este capcana clasică a firmelor-satelit. Atestatul și marketingul pot fi ale unei firme, dar contractul îl semnezi cu alta, fără acte. Verifică întotdeauna atestatul pe CUI-ul exact al firmei cu care semnezi contractul."
+        },
+        {
+          "question": "Cum știu dacă instalatorul e validat Casa Verde?",
+          "answer": "Trebuie să apară pe lista de instalatori validați publicată de AFM. În directorul nostru marcăm aceste firme cu un badge „Casa Verde\" (verificat pe CUI); pentru lista curentă oficială, verifică și pe site-ul AFM."
+        },
+        {
+          "question": "Dacă o firmă nu apare pe lista voastră, înseamnă că nu e autorizată?",
+          "answer": "Nu neapărat. Lista pe care o folosim este un snapshot al sesiunii 2024, iar AFM o actualizează periodic. „Negăsit\" la noi nu înseamnă „neautorizat\" — verifică și sursa oficială AFM și confirmă validarea pentru sesiunea în care aplici."
+        },
+        {
+          "question": "Atestatul ANRE și validarea Casa Verde sunt același lucru?",
+          "answer": "Nu. Atestatul ANRE confirmă dreptul tehnic de a executa instalații electrice/fotovoltaice; validarea Casa Verde (AFM) confirmă că firma poate lucra în programul de subvenție. O firmă serioasă le are pe ambele și le verifici separat."
+        },
+        {
+          "question": "Cât costă verificarea instalatorului?",
+          "answer": "Nimic. Verificarea atestatului ANRE și a apariției pe lista AFM se face gratuit, pe baza CUI-ului firmei. Durează câteva minute."
+        },
+        {
+          "question": "Ce tip de atestat trebuie pentru un sistem comercial mare?",
+          "answer": "Pentru comercial pe joasă tensiune (până la ~100–200 kW) sunt relevante C1A și C2A; pentru racordare pe medie tensiune (peste ~400 kW) firma trebuie să aibă și A3. Cere atestatul potrivit puterii și tensiunii proiectului tău."
+        }
+      ],
+      "relatedSpecializations": [
+        "rezidential",
+        "cladiri-birouri",
+        "hale-industriale"
+      ]
     }
   ]
 }
