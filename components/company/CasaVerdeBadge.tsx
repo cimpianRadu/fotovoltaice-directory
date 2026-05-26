@@ -6,8 +6,10 @@ export default function CasaVerdeBadge({ className = '' }: { className?: string 
       title="Apare pe lista AFM de instalatori validați Casa Verde Fotovoltaice (sesiunea 2024)"
       className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-200 ${className}`}
     >
-      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M3.5 11 12 4l8.5 7" />
+        <path d="M6 10v10h12V10" />
+        <path d="m9 14.8 2 2 4-4" />
       </svg>
       Casa Verde
     </span>
