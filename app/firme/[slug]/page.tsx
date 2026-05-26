@@ -236,7 +236,7 @@ export default async function CompanyDetailPage({ params }: Props) {
               {/* CTA */}
               <div className="bg-primary/5 border border-primary/10 rounded-xl p-5 text-center">
                 <p className="text-sm font-medium text-gray-900 mb-2">Vrei ofertă pentru proiectul tău?</p>
-                <Button href="/cere-oferta" size="md" className="w-full">
+                <Button href={`/cere-oferta?company=${encodeURIComponent(company.slug)}`} size="md" className="w-full">
                   Cere Ofertă Gratuită
                 </Button>
               </div>

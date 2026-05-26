@@ -56,7 +56,13 @@ export default function CompanyContact({ company }: CompanyContactProps) {
 
       <div className="space-y-3">
         {company.contact.phone && (
-          <Button href={`tel:${company.contact.phone}`} variant="primary" size="lg" className="w-full">
+          <Button
+            href={`tel:${company.contact.phone}`}
+            variant="primary"
+            size="lg"
+            className="w-full"
+            onClick={() => trackEvent('company_contact_clicked', { company_id: company.id, contact_type: 'phone_cta' })}
+          >
             Sună Acum
           </Button>
         )}

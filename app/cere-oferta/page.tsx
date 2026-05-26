@@ -4,6 +4,7 @@ import JsonLd from '@/components/seo/JsonLd';
 import LeadForm from '@/components/forms/LeadForm';
 import SegmentNotice from './SegmentNotice';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
+import companiesData from '@/data/companies.json';
 
 export const metadata: Metadata = {
   title: 'Cere Ofertă Gratuită - Instalatori Fotovoltaice',
@@ -12,7 +13,16 @@ export const metadata: Metadata = {
   alternates: { canonical: '/cere-oferta' },
 };
 
-export default function CereOfertaPage() {
+export default async function CereOfertaPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ company?: string }>;
+}) {
+  const { company: companySlug } = await searchParams;
+  const preselected = companySlug
+    ? companiesData.companies.find((c) => c.slug === companySlug)
+    : undefined;
+
   return (
     <>
       <JsonLd
@@ -36,8 +46,15 @@ export default function CereOfertaPage() {
 
         <SegmentNotice />
 
+        {preselected && (
+          <div className="mb-4 rounded-lg bg-primary/5 border border-primary/20 px-4 py-3 text-sm text-gray-700">
+            Cerere pentru <span className="font-semibold text-gray-900">{preselected.name}</span>
+            {preselected.location?.county ? ` (${preselected.location.county})` : ''}. Vei putea primi oferte și de la alți instalatori potriviți din zona ta.
+          </div>
+        )}
+
         <div className="bg-white rounded-xl border border-border p-6">
-          <LeadForm />
+          <LeadForm preselectedCompany={preselected?.name} />
         </div>
 
         <div className="mt-6 bg-surface rounded-xl p-5 border border-border">
