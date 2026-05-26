@@ -423,5 +423,83 @@
     "judet": "Arad",
     "cui": "8898978",
     "reason": "instalgroup.ro este focusat pe instalații termice, sanitare, electrice, gaze naturale și sisteme de stingere/detecție incendiu — niciun serviciu fotovoltaic/solar pe site."
+  },
+  {
+    "societate": "TRITECH GROUP SRL",
+    "judet": "Bucuresti",
+    "cui": "16730842",
+    "reason": "Site-ul tritech.ro este al unui importator principal BFT — automatizări porți, uși garaj, bariere și sisteme de parcare/securitate. Nu oferă instalare de sisteme fotovoltaice."
+  },
+  {
+    "societate": "ROMTURINGIA SRL",
+    "judet": "Arges",
+    "cui": "6277265",
+    "reason": "Site-ul romturingia.ro aparține unui producător de caroserii și suprastructuri auto. Nu are nicio legătură cu sisteme fotovoltaice."
+  },
+  {
+    "societate": "ROMETAL DIANIS SRL",
+    "judet": "Mures",
+    "cui": "30502564",
+    "reason": "Site-ul rometaldianis.ro este al unui producător/distribuitor de produse din sârmă și metal (oțel beton, panouri gard, cuie, plase). Fără serviciu fotovoltaic."
+  },
+  {
+    "societate": "CESIVO SRL",
+    "judet": "Dolj",
+    "cui": "6779296",
+    "reason": "Site-ul cesivo.ro este al unui angrosist/distribuitor B2B de materiale electrice (cabluri, conductoare, izolații, corpuri iluminat). Nu instalează panouri fotovoltaice."
+  },
+  {
+    "societate": "DELTANET SRL",
+    "judet": "Cluj",
+    "cui": "16497616",
+    "reason": "Site-ul delta-net.ro este al unei firme de telecomunicații — rețele de fibră optică, sisteme de securitate/CCTV, rețele de date. Fără serviciu fotovoltaic."
+  },
+  {
+    "societate": "PROFIMATIC SRL",
+    "judet": "Cluj",
+    "cui": "20015464",
+    "reason": "Website mismatch — domeniul din registru (instant-pot.ro) este un magazin de electrocasnice, nu firma Profimatic. Nu am găsit un site PV verificabil."
+  },
+  {
+    "societate": "SALIS TERRA SERVICE SRL",
+    "judet": "Bucuresti",
+    "cui": "14974018",
+    "reason": "Site-ul salisterra.ro este al unei firme de soluții de cash management/plăți. Fără serviciu fotovoltaic."
+  },
+  {
+    "societate": "PRIMASERV SRL",
+    "judet": "Dolj",
+    "cui": "17629570",
+    "reason": "Site-ul primaserv.ro este al unei firme de construcții civile/industriale (PSI, branșamente, tâmplărie PVC, structuri metalice). Nu menționează panouri fotovoltaice sau Casa Verde."
+  },
+  {
+    "societate": "EARTHLINK SRL",
+    "judet": "Ilfov",
+    "cui": "22197648",
+    "reason": "Website mismatch — domeniul din registru (tsty.ro) este un site de ulei de măsline, nu firma Earthlink. Nu am găsit un site PV verificabil."
+  },
+  {
+    "societate": "UNIEL SERV SRL",
+    "judet": "Braila",
+    "cui": "6392442",
+    "reason": "Site-ul unielserv.ro este al unui antreprenor de rețele/linii electrice 0,4-110 kV și închiriere utilaje. Nu menționează niciun serviciu fotovoltaic."
+  },
+  {
+    "societate": "TEHNOINSTAL SRL",
+    "judet": "Bucuresti",
+    "cui": "15029340",
+    "reason": "Site-ul tehnoinstal.ro este al unei firme de sisteme de securitate, climatizare și automatizări (bariere/porți). Fără serviciu fotovoltaic sau Casa Verde."
+  },
+  {
+    "societate": "GENERAL PREST SA",
+    "judet": "Arges",
+    "cui": "3244050",
+    "reason": "Site-ul generalprest.ro este al unui antreprenor industrial electric/HVAC/mecanic (petrochimie, auto, automatizări de proces). Nu listează serviciu fotovoltaic."
+  },
+  {
+    "societate": "DELPHI ELECTRIC SRL",
+    "judet": "Alba",
+    "cui": "18142180",
+    "reason": "Site-ul del.ro (brand DELEX) este al unui distribuitor/importator de sisteme de încălzire electrică și produse de energie alternativă (Fenix, REC, SMA). PV apare ca produse în catalog, nu ca serviciu de instalare la cheie."
   }
 ]

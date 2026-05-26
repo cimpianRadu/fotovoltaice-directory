@@ -1,6 +1,6 @@
 # Casa Verde — candidați instalatori rezidențiali
 
-Sursă: AFM Casa Verde Fotovoltaice (mirror cu CUI: fotovoltaiceromania.ro). Generat 2026-05-24.
+Sursă: AFM Casa Verde Fotovoltaice (mirror cu CUI: fotovoltaiceromania.ro). Generat 2026-05-26.
 
 - Total instalatori în listă: **521**
 - Deja în director: **94**

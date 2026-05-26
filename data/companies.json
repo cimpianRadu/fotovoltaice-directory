@@ -7727,6 +7727,801 @@
         "judet": "Mures"
       },
       "logo": "/logos/kami-roof-construct.png"
+    },
+    {
+      "id": "fotonia-shine-retention",
+      "slug": "fotonia-shine-retention",
+      "name": "Fotonia Shine Retention S.R.L.",
+      "cui": "RO41298460",
+      "description": "Fotonia Shine Retention, sub brandul Fotonia, este o firmă din Constanța, înființată în 2019 și specializată în instalarea de sisteme fotovoltaice complete. Oferă sisteme rezidențiale prin programul Casa Verde, soluții comerciale și industriale, carporturi solare, parcuri fotovoltaice, sisteme de stocare și monitorizare, plus finanțare și mentenanță. Este instalator validat în programul Casa Verde Fotovoltaice.",
+      "founded": 2019,
+      "employees": 27,
+      "location": {
+        "city": "Constanța",
+        "county": "Constanța",
+        "address": "Jud. Constanța, Mun. Constanța, Bld. Aurel Vlaicu, Nr.191"
+      },
+      "contact": {
+        "phone": "+40371785207",
+        "email": "ofertare@fotonia.ro",
+        "website": "https://www.fotonia.ro/"
+      },
+      "coverage": [
+        "Constanța"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale",
+        "cladiri-birouri"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 36145268,
+        "profit": 620570
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "parcuri-fotovoltaice",
+        "stocare-baterii"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "FOTONIA SHINE RETENTION",
+        "judet": "Constanta"
+      },
+      "logo": "/logos/fotonia-shine-retention.png"
+    },
+    {
+      "id": "electricom",
+      "slug": "electricom",
+      "name": "Electricom S.A.",
+      "cui": "RO3147317",
+      "description": "Electricom este o firmă din București, înființată în 1993, cu experiență vastă în sectorul energetic. Oferă proiectare, furnizare și instalare de sisteme fotovoltaice on-grid și off-grid pentru clienți rezidențiali și de business, sisteme de stocare a energiei (BESS) și furnizare de energie verde licențiată ANRE. Este instalator validat în programul Casa Verde Fotovoltaice.",
+      "founded": 1993,
+      "employees": 20,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Municipiul București, Sector 1, Str Popa Savu, Nr.79-81, Et.4"
+      },
+      "contact": {
+        "phone": "+40314137444",
+        "email": "office@electricom.ro",
+        "website": "https://electricom.ro/"
+      },
+      "coverage": [
+        "București"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale",
+        "cladiri-birouri"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 49859526,
+        "profit": 2465104
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "on-grid",
+        "off-grid",
+        "stocare-baterii"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "ELECTRICOM",
+        "judet": "Bucuresti"
+      }
+    },
+    {
+      "id": "electrica-arad",
+      "slug": "electrica-arad",
+      "name": "Electrica S.R.L.",
+      "cui": "RO4721638",
+      "description": "Electrica este o firmă din Arad, înființată în 1993, instalator validat în programul Casa Verde 2025. Oferă sisteme fotovoltaice pentru locuințe și clienți comerciali/industriali, linii și cabluri electrice de joasă și medie tensiune, posturi de transformare, tablouri electrice și iluminat public, plus proiectare, consultanță și mentenanță. Are punct de lucru și în Timișoara.",
+      "founded": 1993,
+      "employees": 72,
+      "location": {
+        "city": "Arad",
+        "county": "Arad",
+        "address": "Jud. Arad, Mun. Arad, Cal. Zimandului, Nr.14"
+      },
+      "contact": {
+        "phone": "+40257252020",
+        "email": "office.electrica@gmail.com",
+        "website": "https://electrica-arad.ro/"
+      },
+      "coverage": [
+        "Arad",
+        "Timiș"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale",
+        "cladiri-birouri"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 24968394,
+        "profit": 3335486
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "medie-tensiune"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": null
+    },
+    {
+      "id": "alm-power-group",
+      "slug": "alm-power-group",
+      "name": "ALM Power Group S.R.L.",
+      "cui": "RO32610317",
+      "description": "ALM Power Group este o firmă din Ghercești, județul Dolj (Parcul Industrial Craiova), înființată în 2013, specializată în lucrări de instalații electrice și sisteme fotovoltaice. Oferă montaj panouri fotovoltaice pentru locuințe prin programul Casa Verde, soluții pentru clienți comerciali, stații de încărcare auto electrice, iluminat LED, plus proiectare, execuție și mentenanță. Este instalator validat în programul Casa Verde Fotovoltaice.",
+      "founded": 2013,
+      "employees": 87,
+      "location": {
+        "city": "Ghercești",
+        "county": "Dolj",
+        "address": "Jud. Dolj, Sat Ghercești Com. Ghercești, Str. Aviatorilor, Nr.8r"
+      },
+      "contact": {
+        "phone": "+40371174040",
+        "email": "office@almpower.ro",
+        "website": "https://www.almpower.ro/"
+      },
+      "coverage": [
+        "Dolj"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale",
+        "cladiri-birouri"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 32907788,
+        "profit": 5698338
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "statii-incarcare-ev"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "ALM POWER GROUP",
+        "judet": "Dolj"
+      },
+      "logo": "/logos/alm-power-group.png"
+    },
+    {
+      "id": "silkat-electric-grup",
+      "slug": "silkat-electric-grup",
+      "name": "Silkat Electric Grup S.R.L.",
+      "cui": "RO15774638",
+      "description": "Silkat Electric Grup este o firmă din Chitila, județul Ilfov, înființată în 2003, cu peste 20 de ani de experiență. Instalează și întreține sisteme fotovoltaice pentru locuințe prin programul Casa Verde, precum și parcuri fotovoltaice de mare putere, alături de rețele electrice de joasă și medie tensiune și consultanță tehnică. Este instalator validat în programul Casa Verde Fotovoltaice.",
+      "founded": 2003,
+      "employees": 55,
+      "location": {
+        "city": "Chitila",
+        "county": "Ilfov",
+        "address": "Jud. Ilfov, Sat Chitila Ors. Chitila, Str. Castanilor, Nr.2d"
+      },
+      "contact": {
+        "phone": "+40214363853",
+        "email": "office@silkat.ro",
+        "website": "https://silkat.ro/"
+      },
+      "coverage": [
+        "Ilfov",
+        "București"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 22143245,
+        "profit": 3797255
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "parcuri-fotovoltaice",
+        "medie-tensiune"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "SILKAT ELECTRIC GRUP",
+        "judet": "Ilfov"
+      },
+      "logo": "/logos/silkat-electric-grup.png"
+    },
+    {
+      "id": "electric-serv",
+      "slug": "electric-serv",
+      "name": "Electric Serv S.R.L.",
+      "cui": "RO18173764",
+      "description": "Electric Serv este o firmă din Sibiu, înființată în 2005, specializată într-o gamă largă de servicii în domeniul electric. Oferă proiectare și întocmire dosare pentru instalarea de panouri fotovoltaice, execuție de instalații și rețele electrice, mentenanță, laborator de testare defecte cabluri și consultanță energetică. Este instalator validat în programul Casa Verde Fotovoltaice.",
+      "founded": 2005,
+      "employees": 88,
+      "location": {
+        "city": "Sibiu",
+        "county": "Sibiu",
+        "address": "Jud. Sibiu, Mun. Sibiu, Cal. Surii Mici, Nr.39"
+      },
+      "contact": {
+        "phone": "+40269230985",
+        "email": "office@electricserv.ro",
+        "website": "https://electricserv.ro/"
+      },
+      "coverage": [
+        "Sibiu"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 36637926,
+        "profit": 492272
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "ELECTRIC SERV",
+        "judet": "Sibiu"
+      },
+      "logo": "/logos/electric-serv.png"
+    },
+    {
+      "id": "electro-construct",
+      "slug": "electro-construct",
+      "name": "Electro & Construct S.R.L.",
+      "cui": "RO18186020",
+      "description": "Electro & Construct este o firmă din Vernești, județul Buzău, înființată în 2005, specializată în instalații electrice și sisteme fotovoltaice. Oferă proiectare și montaj panouri fotovoltaice pentru locuințe prin programul Casa Verde și pentru clienți industriali, instalații electrice de joasă și medie tensiune, instalații de curenți slabi și protecție la trăsnet, plus analiză și consultanță pe proiecte solare. Deține certificare ISO 9001.",
+      "founded": 2005,
+      "employees": 24,
+      "location": {
+        "city": "Vernești",
+        "county": "Buzău",
+        "address": "Jud. Buzău, Sat Vernești Com. Vernești, Nr.640"
+      },
+      "contact": {
+        "phone": "+40338401002",
+        "email": "contact.electrocons@gmail.com",
+        "website": "https://www.electro-cons.ro/"
+      },
+      "coverage": [
+        "Buzău"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale"
+      ],
+      "certifications": [
+        "ISO-9001"
+      ],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 27491145,
+        "profit": 4388529
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "medie-tensiune"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "ELECTRO & CONSTRUCT",
+        "judet": "Buzau"
+      },
+      "logo": "/logos/electro-construct.png"
+    },
+    {
+      "id": "nexo-instalconstruct",
+      "slug": "nexo-instalconstruct",
+      "name": "Nexo Instalconstruct S.R.L.",
+      "cui": "RO27901654",
+      "description": "Nexo Instalconstruct, sub brandul NexoInstal, este o firmă din București, înființată în 2011. Oferă montaj kituri de panouri fotovoltaice pentru locuințe prin programul AFM Casa Verde, instalații de gaze naturale, centrale termice, pompe de căldură, climatizare și antrepriză generală. Deține certificările ISO 9001, ISO 14001 și ISO 45001 și este instalator validat în programul Casa Verde Fotovoltaice.",
+      "founded": 2011,
+      "employees": 63,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Municipiul București, Sector 3, Str Fizicienilor, Nr.40, Bl.9, Sc.1, Et.2, Ap.22"
+      },
+      "contact": {
+        "phone": "+40770777000",
+        "email": "",
+        "website": "https://www.nexoinstal.ro/"
+      },
+      "coverage": [
+        "București"
+      ],
+      "specializations": [
+        "rezidential"
+      ],
+      "certifications": [
+        "ISO-9001",
+        "ISO-14001",
+        "ISO-45001"
+      ],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 37335671,
+        "profit": 1805794
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "pompe-caldura"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "NEXO INSTALCONSTRUCT",
+        "judet": "Bucuresti"
+      }
+    },
+    {
+      "id": "real-automatic",
+      "slug": "real-automatic",
+      "name": "Real Automatic S.R.L.",
+      "cui": "RO19023145",
+      "description": "Real Automatic este o firmă din Brașov, înființată în 2006, specializată în instalații electrice și automatizări industriale. Oferă sisteme fotovoltaice la cheie (panouri, invertoare), proiectare și execuție instalații electrice de joasă și medie tensiune, tablouri electrice, stații de încărcare auto electrice și sisteme de securitate. Este instalator validat în programul Casa Verde Fotovoltaice.",
+      "founded": 2006,
+      "employees": 33,
+      "location": {
+        "city": "Brașov",
+        "county": "Brașov",
+        "address": "Jud. Brașov, Mun. Brașov, Str. Zizinului, Nr.113"
+      },
+      "contact": {
+        "phone": "+40774475597",
+        "email": "office@real-automatic.ro",
+        "website": "https://real-automatic.ro/"
+      },
+      "coverage": [
+        "Brașov"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 22233582,
+        "profit": 1989462
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "statii-incarcare-ev",
+        "medie-tensiune"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "REAL AUTOMATIC",
+        "judet": "Brasov"
+      }
+    },
+    {
+      "id": "vividus",
+      "slug": "vividus",
+      "name": "Vividus S.R.L.",
+      "cui": "RO6464980",
+      "description": "Vividus este o firmă din Brașov, înființată în 1994, specializată în instalarea de panouri fotovoltaice. Echipa montează sisteme rezidențiale pentru case, case de vacanță, cabane și agroturism, precum și parcuri solare comerciale, acoperind toate etapele de la consultanță și avize la execuție, predare și mentenanță. Este instalator validat în programul Casa Verde Fotovoltaice.",
+      "founded": 1994,
+      "employees": 64,
+      "location": {
+        "city": "Brașov",
+        "county": "Brașov",
+        "address": "Jud. Brașov, Mun. Brașov, Str. Infratirii, Nr.7"
+      },
+      "contact": {
+        "phone": "+40722396549",
+        "email": "contact@vividus.ro",
+        "website": "https://vividus.ro/"
+      },
+      "coverage": [
+        "Brașov"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 14623415,
+        "profit": 415762
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "parcuri-fotovoltaice"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "VIVIDUS",
+        "judet": "Brasov"
+      },
+      "logo": "/logos/vividus.png"
+    },
+    {
+      "id": "cmv-quality-instal",
+      "slug": "cmv-quality-instal",
+      "name": "CMV Quality Instal S.R.L.",
+      "cui": "RO28881636",
+      "description": "CMV Quality Instal este o firmă din Craiova, județul Dolj, înființată în 2011, cu acoperire în mai multe județe. Instalează sisteme fotovoltaice on-grid și off-grid cu stocare, pentru clienți rezidențiali prin programul Casa Verde, comerciali și instituționali, alături de instalații sanitare, termice, HVAC, gaze naturale și PSI. Este instalator validat în programul Casa Verde Fotovoltaice.",
+      "founded": 2011,
+      "employees": 44,
+      "location": {
+        "city": "Craiova",
+        "county": "Dolj",
+        "address": "Jud. Dolj, Mun. Craiova, Str. Riului, Nr.18a, Constructia C1"
+      },
+      "contact": {
+        "phone": "+40771403369",
+        "email": "office@cmvinstal.ro",
+        "website": "https://cmvinstal.ro/"
+      },
+      "coverage": [
+        "Dolj"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale",
+        "cladiri-birouri"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 18905767,
+        "profit": 4618916
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "on-grid",
+        "off-grid",
+        "stocare-baterii"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "CMV QUALITY INSTAL",
+        "judet": "Dolj"
+      },
+      "logo": "/logos/cmv-quality-instal.png"
+    },
+    {
+      "id": "airmec-instal",
+      "slug": "airmec-instal",
+      "name": "Airmec Instal S.R.L.",
+      "cui": "RO19204818",
+      "description": "Airmec Instal este o firmă din Chișoda, comuna Giroc, județul Timiș, înființată în 2006, specializată în instalații termice, sanitare și de ventilație. Instalează sisteme fotovoltaice pentru clienți rezidențiali și comerciali, pompe de căldură aer-apă, sisteme de climatizare și ventilație, fiind service autorizat Viessmann. Este instalator validat în programul Casa Verde Fotovoltaice.",
+      "founded": 2006,
+      "employees": 19,
+      "location": {
+        "city": "Chișoda",
+        "county": "Timiș",
+        "address": "Jud. Timiș, Sat Chișoda Com. Giroc, Cal. Calea Chișodei, Nr.113"
+      },
+      "contact": {
+        "phone": "+40256293168",
+        "email": "",
+        "website": "https://www.airmecinstal.ro/"
+      },
+      "coverage": [
+        "Timiș"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 8796203,
+        "profit": 188669
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "pompe-caldura"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "AIRMEC INSTAL",
+        "judet": "Timis"
+      },
+      "logo": "/logos/airmec-instal.png"
+    },
+    {
+      "id": "eetim-echipamente-de-automatizare",
+      "slug": "eetim-echipamente-de-automatizare",
+      "name": "E.E.Tim Echipamente de Automatizare S.A.",
+      "cui": "RO5927653",
+      "description": "E.E.Tim Echipamente de Automatizare este o firmă din Timișoara, înființată în 1994, specializată în automatizări industriale și instalații electrice. Instalează sisteme fotovoltaice on-grid și off-grid pentru locuințe prin programul AFM Casa Verde și pentru clienți industriali și parcuri fotovoltaice, alături de tablouri electrice, sisteme smart home și măsurători electrice. Este instalator validat în programul Casa Verde Fotovoltaice.",
+      "founded": 1994,
+      "employees": 24,
+      "location": {
+        "city": "Timișoara",
+        "county": "Timiș",
+        "address": "Jud. Timiș, Mun. Timișoara, B-dul Industriilor, Nr.4"
+      },
+      "contact": {
+        "phone": "",
+        "email": "",
+        "website": "https://eetim.ro/"
+      },
+      "coverage": [
+        "Timiș"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 5379866,
+        "profit": -446323
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "on-grid",
+        "off-grid",
+        "parcuri-fotovoltaice"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": null
+    },
+    {
+      "id": "ascorp-retele-electrice",
+      "slug": "ascorp-retele-electrice",
+      "name": "Ascorp Rețele Electrice S.R.L.",
+      "cui": "RO31141670",
+      "description": "Ascorp Rețele Electrice este o firmă din Snagov, județul Ilfov, înființată în 2013, specializată în sisteme fotovoltaice și rețele electrice. Proiectează și execută sisteme fotovoltaice complete pentru locuințe prin programul Casa Verde și pentru clienți comerciali și instituționali, racorduri la rețeaua de distribuție, modernizări de instalații și soluții de prosumator. Este instalator validat în programul Casa Verde Fotovoltaice.",
+      "founded": 2013,
+      "employees": 32,
+      "location": {
+        "city": "Snagov",
+        "county": "Ilfov",
+        "address": "Jud. Ilfov, Sat Snagov Com. Snagov, Str. Nufarului, Nr.3a"
+      },
+      "contact": {
+        "phone": "+40748140220",
+        "email": "contact@ascorp.ro",
+        "website": "https://www.ascorp.ro/"
+      },
+      "coverage": [
+        "Ilfov",
+        "București"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale",
+        "cladiri-birouri"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 21351653,
+        "profit": 2756638
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "prosumator"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "Ascorp Retele Electrice",
+        "judet": "Ilfov"
+      },
+      "logo": "/logos/ascorp-retele-electrice.png"
+    },
+    {
+      "id": "elproex",
+      "slug": "elproex",
+      "name": "Elproex S.A.",
+      "cui": "RO6798220",
+      "description": "Elproex este o firmă din Botoșani, înființată în 1995, specializată în proiectarea și execuția de instalații electrice de până la 20 kV. Oferă sisteme fotovoltaice și documentații de prosumator, inclusiv finanțare prin programul Casa Verde, alături de branșamente, linii electrice aeriene și cablu 0,4-20 kV, posturi de transformare și iluminat public, acoperind județele Botoșani, Suceava, Iași și Neamț. Este instalator validat în programul Casa Verde Fotovoltaice.",
+      "founded": 1995,
+      "employees": 28,
+      "location": {
+        "city": "Botoșani",
+        "county": "Botoșani",
+        "address": "Jud. Botoșani, Mun. Botoșani, Str. Pacea, Nr.37"
+      },
+      "contact": {
+        "phone": "+40231530313",
+        "email": "office@elproex-bt.ro",
+        "website": "https://www.elproex.ro/"
+      },
+      "coverage": [
+        "Botoșani",
+        "Suceava",
+        "Iași",
+        "Neamț"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2024,
+        "revenue": 12993259,
+        "profit": 1185953
+      },
+      "tags": [
+        "pv-rezidential",
+        "casa-verde",
+        "prosumator",
+        "medie-tensiune"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-05-26",
+      "updatedAt": "2026-05-26",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "ELPROEX Botosani",
+        "judet": "Botosani"
+      },
+      "logo": "/logos/elproex.png"
     }
   ]
 }
