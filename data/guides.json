@@ -780,13 +780,18 @@
       "publishedAt": "2026-04-13",
       "author": "Radu",
       "title": "Casa Verde Fotovoltaice 2026: Înscrieri și Ghid Finanțare AFM",
-      "metaDescription": "Casa Verde Fotovoltaice 2026: înscrieri AFM, dosar complet, sumă finanțare și pași de aplicare. Cum obții subvenția de până la 30.000 lei.",
-      "heroDescription": "Tot ce trebuie să știi despre programul Casa Verde Fotovoltaice 2026: cine e eligibil, ce documente pregătești, câți bani primești și cum aplici pe platforma AFM.",
+      "metaDescription": "Casa Verde Fotovoltaice 2026: ce s-a schimbat (programul de baterii), suma din 2024 (30.000 lei), eligibilitate, documente și pașii de înscriere.",
+      "heroDescription": "Ghid Casa Verde Fotovoltaice: cum a funcționat sesiunea de panouri din 2024, ce aduce ediția 2026 pentru bateriile de stocare, cine e eligibil, ce documente pregătești și cum aplici.",
       "sections": [
         {
           "id": "ce-este-casa-verde",
           "title": "Ce este programul Casa Verde Fotovoltaice?",
-          "content": "**Casa Verde Fotovoltaice** este programul guvernamental prin care persoanele fizice pot primi finanțare nerambursabilă pentru instalarea de sisteme fotovoltaice pe locuințe. Programul este administrat de **Administrația Fondului pentru Mediu (AFM)** și are un buget de **1,5 miliarde lei** alocat pentru 2025-2026.\n\nProgramul acoperă o parte semnificativă din costul unui sistem fotovoltaic rezidențial — până la **90% din valoare** — făcându-l una dintre cele mai accesibile modalități de a trece la energia solară.\n\n### Cifre cheie\n\n| Detaliu | Valoare |\n|---|---|\n| Finanțare maximă | Până la 30.000 lei per beneficiar |\n| Contribuție proprie minimă | 3.000 lei |\n| Buget total | 1,5 miliarde lei (2025-2026) |\n| Administrat de | AFM (afm.ro) |\n| Tip finanțare | Nerambursabilă (nu se returnează) |"
+          "content": "**Casa Verde Fotovoltaice** este programul guvernamental prin care **persoanele fizice** pot primi finanțare nerambursabilă pentru sisteme de energie solară pe locuințe. Este administrat de **Administrația Fondului pentru Mediu (AFM)** și a avut mai multe ediții, cu reguli care s-au schimbat semnificativ de la an la an.\n\n**Important — programul a evoluat (nu confunda anii):**\n\n| Ediție | Finanțare max. | Ce acoperă |\n|---|---|---|\n| 2019–2023 | până la 20.000 lei | panouri fotovoltaice |\n| **2024** | **30.000 lei** | panouri **+ baterie de stocare obligatorie** (sistem min. 3 kW) |\n| 2025 | — | program **suspendat** (constrângeri bugetare) |\n| **2026** | buget ~400 mil. lei | **doar baterii de stocare** (vezi secțiunea următoare) |\n\nCu alte cuvinte, suma de **30.000 lei** des întâlnită online este finanțarea din **sesiunea 2024** (pentru panouri + baterie). Pentru 2026, programul s-a mutat pe **bateriile de stocare**, iar ghidul oficial cu suma exactă **nu era publicat** la data acestui articol — verifică întotdeauna direct pe [afm.ro](https://www.afm.ro/sisteme_fotovoltaice.php)."
+        },
+        {
+          "id": "casa-verde-2026-baterii",
+          "title": "Casa Verde 2026: de la panouri la baterii de stocare",
+          "content": "Un detaliu pe care puține surse îl spun clar: în **2026, finanțarea pentru panouri fotovoltaice noi a fost scoasă din bugetul AFM**, iar fondurile (aproximativ **400 de milioane de lei**) au fost redirecționate către un program dedicat **bateriilor de stocare** — „Casa Verde Baterii\".\n\n### Ce știm despre ediția 2026 (la data acestui articol)\n- **Buget:** ~400 milioane lei, prevăzut în proiectul de buget AFM 2026.\n- **Pentru ce:** sisteme de **stocare a energiei** (baterii), montate pe instalații fotovoltaice **deja existente și racordate**.\n- **Pentru cine:** în principal **prosumatori existenți** — cei care au deja panouri (din surse proprii sau dintr-o ediție anterioară).\n- **Status:** bugetul a intrat în **consultare publică** (din mai 2026). **Ghidul de finanțare NU este încă publicat**, deci **suma exactă per beneficiar, condițiile de eligibilitate și data de start nu sunt confirmate oficial.** Înscrierile sunt estimate după aprobarea finală a bugetului.\n\n### Atenție la cifrele din reclame\nMulte site-uri afișează „30.000 lei pentru 2026\" — aceea este suma din **2024**. Pentru bateriile din 2026, **orice valoare vehiculată înainte de publicarea ghidului este o estimare**, nu o cifră oficială. Singura sursă de încredere este [afm.ro](https://www.afm.ro/sisteme_fotovoltaice.php), secțiunea Casa Verde Fotovoltaice.\n\n### Vrei panouri noi în 2026, nu doar baterii?\nDacă nu ești încă prosumator și vrei un sistem fotovoltaic complet, în 2026 **nu există (deocamdată) o sesiune Casa Verde pentru panouri noi**. Alternativele: aștepți o eventuală relansare a programului de panouri, folosești voucherele REPowerEU (25.000 RON pentru panouri + stocare, pentru persoane fizice) sau finanțezi din surse proprii ori credit verde. Pentru firme, programul echivalent este [Electric Up](/ghid/electric-up-2026-ghid-aplicare)."
         },
         {
           "id": "cine-e-eligibil",
@@ -796,7 +801,7 @@
         {
           "id": "cat-primesti",
           "title": "Câți bani primești și ce acoperă finanțarea?",
-          "content": "### Suma finanțării\n- **Maximum 30.000 lei** per cerere (finanțare nerambursabilă)\n- **Contribuția proprie minimă:** 3.000 lei\n- Acoperă aproximativ **90% din costul** unui sistem fotovoltaic rezidențial tipic\n\n### Exemple practice\n\n| Sistem | Cost estimat | Finanțare Casa Verde | Contribuție proprie |\n|---|---|---|---|\n| 3 kW + baterie 5 kWh | 25.000 – 30.000 RON | ~22.000 – 27.000 RON | ~3.000 RON |\n| 5 kW + baterie 5 kWh | 35.000 – 45.000 RON | ~30.000 RON (max) | ~5.000 – 15.000 RON |\n| 10 kW + baterie 10 kWh | 55.000 – 75.000 RON | ~30.000 RON (max) | ~25.000 – 45.000 RON |\n\n### Ce acoperă finanțarea\n- Panouri fotovoltaice\n- Invertor (on-grid sau hibrid)\n- **Baterie de stocare** (obligatorie din 2024, minim 5 kWh)\n- Structuri de montaj\n- Protecții AC/DC, cabluri și conectori\n- Proiectare, montaj și punere în funcțiune\n\n### Ce NU acoperă\n- Reparații de acoperiș sau refaceri tablou electric\n- Trasee speciale neuzuale\n- Modificări care nu țin direct de sistemul fotovoltaic"
+          "content": "Sumele de mai jos sunt cele din **sesiunea 2024** (ultima ediție pentru panouri). Pentru 2026 (baterii), valoarea se va confirma la publicarea ghidului — vezi secțiunile de mai sus.\n\n### Suma finanțării (sesiunea 2024)\n- **Maximum 30.000 lei** per cerere (finanțare nerambursabilă)\n- **Contribuție proprie:** circa 10% (în jur de 3.000 lei)\n- Sistem minim **3 kW**, cu **baterie de stocare obligatorie**\n\n### Exemple practice (la nivelul sesiunii 2024)\n\n| Sistem | Cost estimat | Finanțare Casa Verde | Contribuție proprie |\n|---|---|---|---|\n| 3 kW + baterie | 25.000 – 30.000 RON | până la 30.000 RON | ~10% + diferența |\n| 5 kW + baterie | 35.000 – 45.000 RON | 30.000 RON (max) | restul |\n| 10 kW + baterie | 55.000 – 75.000 RON | 30.000 RON (max) | restul |\n\n### Ce acoperea finanțarea\n- Panouri fotovoltaice, invertor (on-grid sau hibrid)\n- **Baterie de stocare** (obligatorie)\n- Structuri de montaj, protecții AC/DC, cabluri și conectori\n- Proiectare, montaj și punere în funcțiune\n\n### Ce NU acoperea\n- Reparații de acoperiș sau refacerea tabloului electric\n- Trasee speciale neuzuale ori modificări fără legătură directă cu sistemul fotovoltaic"
         },
         {
           "id": "documente-necesare",
@@ -811,7 +816,7 @@
         {
           "id": "calendar",
           "title": "Calendar estimat 2026",
-          "content": "Conform informațiilor disponibile de la AFM, următoarea sesiune de înscrieri este estimată pentru **vara 2026** (în jurul lunii iulie). Calendarul exact se publică pe [afm.ro](https://afm.ro).\n\n### Timeline orientativ\n\n| Perioadă | Ce faci |\n|---|---|\n| **Acum (martie-mai)** | Analizezi consumul, contactezi instalatori, obții oferte |\n| **Mai-iunie** | Pregătești toate documentele, le scanezi și le organizezi |\n| **Iulie (estimat)** | Se deschide sesiunea pe afm.ro — înscrierea e rapidă, primul venit/primul servit |\n| **După aprobare** | Semnezi acord, instalatorul montează sistemul |\n| **După montaj** | AFM verifică, decontează, devii prosumator |\n\n**Sfat:** Nu aștepta deschiderea sesiunii ca să începi pregătirile. Obținerea ofertei de la instalator, a extrasului CF și a certificatelor fiscale durează zile-săptămâni. Fii pregătit din timp."
+          "content": "Spre deosebire de anii trecuți, în 2026 **nu există (încă) o sesiune anunțată pentru panouri noi**. Iată unde se află programul:\n\n| Moment | Status |\n|---|---|\n| 2024 (27 sept – 8 oct) | Ultima sesiune pentru panouri + baterie (30.000 lei), pe regiuni, fonduri epuizate în câteva minute |\n| 2025 | Program **suspendat** |\n| Mai 2026 | Buget ~400 mil. lei pentru **baterii**, intrat în consultare publică |\n| După aprobarea bugetului (estimat) | Publicarea ghidului „Casa Verde Baterii\" + deschiderea înscrierilor |\n\n**Ce poți face acum:**\n- Dacă ești deja prosumator: pregătește documentele de proprietate și certificatul de racordare — bateriile se montează pe instalații fotovoltaice existente.\n- Urmărește **[afm.ro](https://www.afm.ro/sisteme_fotovoltaice.php)** pentru publicarea ghidului 2026 (acolo apar suma exactă, condițiile și data de start).\n- Cere oferte de la instalatori validați AFM din timp — istoric, sesiunile s-au epuizat în 2-3 minute de la deschidere."
         },
         {
           "id": "greseli-frecvente",
@@ -821,7 +826,17 @@
         {
           "id": "baterie-obligatorie",
           "title": "Bateria de stocare: De ce e obligatorie?",
-          "content": "Din 2024, programul Casa Verde impune **obligatoriu** o baterie de stocare de minimum 5 kWh. Motivul: reducerea presiunii pe rețeaua electrică în orele de vârf de producție solară (prânz).\n\n### Ce trebuie să știi despre baterii\n\n| Detaliu | Valoare |\n|---|---|\n| Capacitate minimă | 5 kWh |\n| Garanție tipică | 10-15 ani |\n| Cost suplimentar | 7.000 – 15.000 RON (în funcție de capacitate) |\n| Tehnologie recomandată | LiFePO4 (lithium iron phosphate) — durabilitate superioară |\n\n### Merită bateria?\nPentru cine are net metering (compensare 1:1 cu rețeaua), bateria nu aduce economie suplimentară semnificativă — rețeaua funcționează deja ca o baterie virtuală gratuită. Dar este **obligatorie** pentru a accesa finanțarea Casa Verde, iar în caz de pană de curent oferă independență energetică."
+          "content": "Din **sesiunea 2024**, sistemul finanțat prin Casa Verde include **obligatoriu** o baterie de stocare. Motivul: reducerea presiunii pe rețeaua electrică în orele de vârf de producție solară (prânz). Pentru **2026**, programul este axat **exclusiv pe baterii** — finanțarea vizează adăugarea de stocare pe instalațiile fotovoltaice existente.\n\n### Ce trebuie să știi despre baterii\n\n| Detaliu | Valoare |\n|---|---|\n| Capacitate | dimensionată în raport cu sistemul (vezi ghidul AFM al sesiunii curente) |\n| Garanție tipică | 10–15 ani |\n| Cost orientativ | 7.000 – 15.000 RON (în funcție de capacitate) |\n| Tehnologie recomandată | LiFePO4 (lithium iron phosphate) — durabilitate superioară |\n\n### Merită bateria?\nPentru cine are net metering (compensare cantitativă cu rețeaua), bateria nu aduce o economie suplimentară mare — rețeaua funcționează deja ca o „baterie virtuală\". Dar oferă **independență la pene de curent** și devine tot mai relevantă pe măsură ce regimul de prosumator trece treptat spre decontare financiară. Verifică condițiile exacte ale ediției curente pe [afm.ro](https://www.afm.ro/sisteme_fotovoltaice.php)."
+        },
+        {
+          "id": "casa-verde-vs-electric-up",
+          "title": "Casa Verde vs Electric Up: care e pentru tine?",
+          "content": "Cele două programe sunt des confundate, dar se adresează unor categorii complet diferite:\n\n| | Casa Verde Fotovoltaice | Electric Up |\n|---|---|---|\n| Pentru cine | Persoane fizice (locuințe) | IMM-uri și HoReCa (firme) |\n| Administrat de | AFM | Ministerul Energiei |\n| Finanțare | 30.000 lei (sesiunea 2024); 2026 = baterii, ghid în lucru | până la 150.000 EUR (75% din costuri) |\n| Tip | Nerambursabilă | Nerambursabilă |\n\nRegula simplă: dacă pui panouri pe **casă**, programul tău este **Casa Verde**. Dacă pui panouri pe **firmă** (sediu, hală, magazin), aplici la **[Electric Up](/ghid/electric-up-2026-ghid-aplicare)** sau la [alte finanțări pentru firme](/ghid/subventii-panouri-fotovoltaice). Nu poți cumula cele două programe pentru același sistem."
+        },
+        {
+          "id": "instalator-validat-afm",
+          "title": "Cum alegi un instalator validat AFM",
+          "content": "La Casa Verde, montajul se face **doar prin instalatori validați de AFM** — firme care au trecut printr-un proces de validare și au constituit garanții la Fondul pentru Mediu. AFM publică lista instalatorilor validați pentru fiecare sesiune pe [afm.ro](https://www.afm.ro/sisteme_fotovoltaice.php).\n\n### Ce să verifici la instalator\n- **Validare AFM** pentru sesiunea curentă (lista oficială AFM).\n- **Atestat ANRE** (C1A/C2A) — confirmă că firma are dreptul legal să execute instalații electrice. Verifică-l live pe [verificare ANRE](/verificare-anre).\n- **Istoric și stabilitate** — ani de activitate, proiecte rezidențiale finalizate, recenzii reale.\n- **Ofertă transparentă** — echipamente (panouri, invertor, baterie), preț defalcat, garanții și termen de execuție.\n\nPe platforma noastră găsești [instalatori pentru locuințe (rezidențial)](/firme?segment=rezidential), fiecare cu atestatul ANRE verificat live și cu datele firmei din registrele publice. Cere oferte de la cel puțin 3 firme înainte de a decide."
         },
         {
           "id": "cat-economisesti",
@@ -832,11 +847,11 @@
       "faq": [
         {
           "question": "Câți bani primesc prin Casa Verde Fotovoltaice 2026?",
-          "answer": "Până la 30.000 lei finanțare nerambursabilă per beneficiar, cu contribuție proprie minimă de 3.000 lei. Suma acoperă aproximativ 90% din costul unui sistem fotovoltaic rezidențial tipic."
+          "answer": "În sesiunea 2024, finanțarea era de până la 30.000 lei și acoperea panouri + baterie de stocare (contribuție proprie ~10%). Pentru 2026, programul s-a mutat pe bateriile de stocare (buget ~400 mil. lei), iar ghidul cu suma exactă per beneficiar nu era publicat la data acestui articol — verifică pe afm.ro."
         },
         {
           "question": "Când se deschid înscrierile Casa Verde 2026?",
-          "answer": "Conform estimărilor, următoarea sesiune de înscrieri este așteptată în jurul lunii iulie 2026. Calendarul exact se publică pe afm.ro. Pregătirea documentelor trebuie făcută din timp."
+          "answer": "La data acestui articol nu exista o dată oficială. Bugetul pentru bateriile din 2026 a intrat în consultare publică în mai 2026; înscrierile sunt așteptate după aprobarea finală a bugetului și publicarea ghidului de finanțare. Urmărește afm.ro."
         },
         {
           "question": "Ce documente am nevoie pentru Casa Verde?",
@@ -844,7 +859,7 @@
         },
         {
           "question": "Este obligatorie bateria de stocare pentru Casa Verde?",
-          "answer": "Da, din 2024 bateria de stocare de minimum 5 kWh este obligatorie pentru a accesa finanțarea Casa Verde. Costul suplimentar este de 7.000-15.000 RON în funcție de capacitate."
+          "answer": "Da. Din sesiunea 2024, sistemul finanțat include obligatoriu o baterie de stocare, iar ediția 2026 este axată chiar pe baterii (stocare adăugată pe instalații existente). Capacitatea se dimensionează în raport cu sistemul — vezi ghidul AFM al sesiunii curente."
         },
         {
           "question": "Pot aplica dacă locuiesc în chirie?",
@@ -853,6 +868,14 @@
         {
           "question": "Cât economisesc pe an cu panouri fotovoltaice pe casă?",
           "answer": "Un sistem de 5 kW (suficient pentru o familie de 3-4 persoane) produce ~6.000-7.000 kWh/an, echivalent cu o economie de 6.600-10.500 RON/an la prețurile actuale ale energiei. Cu Casa Verde, investiția se recuperează în 2-3 ani."
+        },
+        {
+          "question": "Mai există Casa Verde pentru panouri noi în 2026?",
+          "answer": "În 2026, finanțarea pentru panouri fotovoltaice noi a fost scoasă din bugetul AFM, iar fondurile (~400 mil. lei) au mers către bateriile de stocare, destinate prosumatorilor existenți. Pentru panouri noi, alternativele sunt voucherele REPowerEU (persoane fizice), o eventuală relansare a programului de panouri, sau finanțarea din surse proprii / credit verde."
+        },
+        {
+          "question": "Care e diferența dintre Casa Verde și Electric Up?",
+          "answer": "Casa Verde Fotovoltaice (AFM) este pentru persoane fizice, pentru locuințe. Electric Up (Ministerul Energiei) este pentru firme — IMM-uri și HoReCa — cu finanțare de până la 150.000 EUR (75% din costuri). Pentru panouri pe firmă aplici la Electric Up, nu la Casa Verde."
         }
       ],
       "relatedSpecializations": []
