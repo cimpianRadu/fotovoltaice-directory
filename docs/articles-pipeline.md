@@ -42,35 +42,26 @@ Ultima actualizare: 2026-05-27 (**pivot strategic backat de GSC 3 luni: 538 clic
 > Ghiduri care stau pe poz 8-20 cu impresii mari ("striking distance") — extinderea lor (research + secțiuni noi, FĂRĂ rescriere de la zero) aduce mai multe click-uri decât un articol nou. Rutina (PASUL 0.5) ia PRIMA intrare cu status „💡 de extins", prioritate peste scrierea unui articol nou. Ordonat după impresii × intent. **Regula never-invent e strictă**: datele de program (sume, date, condiții) doar din surse oficiale (AFM/ANRE/MO).
 
 ### Casa Verde Fotovoltaice 2026 — extindere
-- **Status:** 💡 de extins
-- **Slug:** `casa-verde-fotovoltaice-2026` (acum ~1.383 cuvinte, 9 secțiuni, 6 FAQ)
-- **GSC (3 luni):** pagina = **3.841 impresii, poz 11.0, CTR 0.65%** — cel mai mare bazin de impresii din tot site-ul. Query „casa verde 2026 inscrieri" = 356 imp poz 11; „casa verde fotovoltaice 2026" = 19 imp poz 19.8; „casa verde 2026" = 89 imp poz 30.
-- **De ce:** ghid prea subțire pentru intentul cald. La poz 11 lasă pe masă majoritatea click-urilor (pentru comparație, ghidurile site-ului la poz 5-7 fac ~3% CTR vs 0.65% aici). Mutarea poz 11→5 ≈ de la ~25 la ~110 click-uri/3 luni dintr-o singură pagină.
-- **Ce lipsește (de adăugat, după research AFM):** (1) secțiune dedicată „Înscrieri Casa Verde 2026 — când se deschid, cum te pregătești, dinamica sold-out pe județe" (țintește query-ul de 356 imp); (2) suma exactă și plafonul actual confirmate din AFM; (3) lista pașilor de înscriere pe platforma AFM cu detaliu; (4) „Casa Verde vs Electric Up — care e pentru tine" (Electric Up = firme, Casa Verde = persoane fizice); (5) „Cum alegi un instalator validat AFM" + link la /firme?segment=rezidential și /verificare-anre. Țintă ~3.000+ cuvinte, +3-4 FAQ.
-- **Linkuri interne:** /firme?segment=rezidential · /verificare-anre · /ghid/electric-up-2026-ghid-aplicare · /ghid/panouri-fotovoltaice-casa-vs-firma (după ce se publică joi) · /calculator-panouri-fotovoltaice?segment=rezidential · /ghid/subventii-panouri-fotovoltaice.
-- **Next step după extindere:** GSC Request Indexing, recheck poziție 14/30 zile.
-
-### Subvenții Panouri Fotovoltaice 2026 — extindere
-- **Status:** 💡 de extins
-- **Slug:** `subventii-panouri-fotovoltaice`
-- **GSC (3 luni):** pagina = **2.991 impresii, poz 11.2, CTR 1.3%**. Cluster: „subventii panouri fotovoltaice 2026" 46 imp poz 11.9; „fonduri panouri fotovoltaice 2026" 94 imp poz 11.9; „fonduri pentru panouri fotovoltaice 2026" 50 imp poz 11.5; „finantare panouri fotovoltaice 2026" 24 imp poz 12.5; „program finantare panouri fotovoltaice 2026" 15 imp; „ajutor panouri fotovoltaice" 15 imp poz 19.3.
-- **De ce:** al doilea cel mai mare bazin de impresii, poz 11. E pagina-umbrelă pentru toate schemele de finanțare — trebuie să fie cea mai completă din RO.
-- **Ce lipsește (de verificat în surse oficiale):** tabel comparativ al tuturor schemelor active 2026 (Casa Verde / Electric Up / fonduri europene IMM / PNRR) cu cine aplică, sumă, status sesiune; secțiune „fonduri europene/nerambursabile 2026" care leagă la ghidul IMM (acolo CTR-ul e bun, poz 7); FAQ pe „când se dau banii", „mai sunt fonduri 2026". Aliniază title/meta la „fonduri/subvenții panouri fotovoltaice 2026".
-- **Linkuri interne:** /ghid/fonduri-nerambursabile-panouri-fotovoltaice-imm-2026 · /ghid/casa-verde-fotovoltaice-2026 · /ghid/electric-up-2026-ghid-aplicare · /calculator-panouri-fotovoltaice · /firme.
-- **Next step după extindere:** GSC Request Indexing, recheck 14/30 zile.
-
-### Instalatori Autorizați ANRE 2026 — extindere
-- **Status:** 💡 de extins
-- **Slug:** `instalatori-autorizati-anre-panouri-fotovoltaice-2026`
-- **GSC (3 luni):** pagina = **1.085 impresii, poz 17.4**. E ghidul național pe clusterul „instalatori/firme autorizate" (zeci de query-uri pe poz 26-55: „instalatori panouri fotovoltaice" 150 imp, „firme acreditate panouri fotovoltaice" 136 imp, „lista instalatori fotovoltaice" 127 imp etc.).
-- **De ce:** clusterul comercial pur (bottom-funnel, monetizabil). Acum cade între ghid (poz 17) și /firme (poz 34). Extinderea ghidului + fix-ul /firme (deja făcut) ar trebui să capteze clusterul. **De coordonat cu /firme** ca să nu canibalizeze — ghidul = editorial/„cum alegi + top firme", /firme = directorul.
-- **Ce lipsește:** secțiune „lista completă pe județe" cu linkuri la paginile /firme/judet/*; criterii de verificare (ANRE C1A/C2A, ISO, financiar) cu mai mult detaliu; tabel top firme cu cifră ANAF; FAQ pe „lista instalatori autorizați", „firme acreditate ANRE". Aliniază H1/title la „instalatori autorizați ANRE panouri fotovoltaice".
-- **Linkuri interne:** /firme · /verificare-anre · /clasament · /firme/judet/bucuresti + alte județe top.
-- **Next step după extindere:** GSC Request Indexing, recheck 14/30 zile. Urmărește dacă /firme SAU ghidul urcă pe „instalatori/firme autorizate".
+- **Status:** ⏸️ BLOCAT (date neconfirmate) — **rutina NU îl ia** (nu are status „💡 de extins").
+- **Slug:** `casa-verde-fotovoltaice-2026` (~1.383 cuvinte, 9 secțiuni)
+- **GSC (3 luni):** pagina = **3.841 impresii, poz 11.0, CTR 0.65%** — cel mai mare bazin de impresii din tot site-ul. „casa verde 2026 inscrieri" = 356 imp poz 11.
+- **De ce e blocat (research 2026-05-27):** ghidul actual afirmă cifre pe care nu le-am putut confirma și care par GREȘITE: „30.000 lei" (sursele indică faptul că 30.000 lei e pentru **Casa Verde Baterii / stocare**, nu pentru panouri PV — care istoric era 20.000 lei); „buget 1,5 miliarde lei" (sursele dau ~400 mil. lei pentru baterii 2025-2026); „sesiune iulie 2026" (nicio dată confirmată de AFM — programul e în tranziție spre stocare). afm.ro era inaccesibil (WAF) la research, deci totul e din surse secundare. **A extinde acum = a amplifica date posibil false** → încalcă regula never-invent.
+- **Ce trebuie întâi:** userul (sau o sesiune cu acces la afm.ro) confirmă suma curentă PV vs baterii, bugetul real și statusul sesiunii 2026. DUPĂ aceea: corectează cifrele existente ȘI adaugă secțiunile (înscrieri dedicat, Casa Verde vs Electric Up, instalatori validați AFM). Abia atunci pune status „💡 de extins".
+- **Linkuri interne (la extindere):** /firme?segment=rezidential · /verificare-anre · /ghid/electric-up-2026-ghid-aplicare · /ghid/panouri-fotovoltaice-casa-vs-firma · /ghid/subventii-panouri-fotovoltaice.
 
 ## ✅ Extinse recent
 
-(nimic încă — prima extindere va fi logată aici de rutină)
+> Recheck poziția în GSC peste 14/30 zile pentru fiecare. Fă Request Indexing manual după push.
+
+### Subvenții Panouri Fotovoltaice 2026 — extins 2026-05-27
+- **Slug:** `subventii-panouri-fotovoltaice` — 7 → **8 secțiuni, 1.824 → 2.065 cuvinte, 4 → 7 FAQ**.
+- **Ce s-a adăugat:** secțiune router „Ce subvenție e pentru tine — persoană fizică sau firmă?" (tabel PF vs IMM vs firmă autoconsum vs facilități fiscale) ca să capteze query-urile generice/rezidențiale; 3 FAQ („subvenții la casă", „mai sunt fonduri 2026", „când se primesc banii"); meta rescris pentru PF + firme (161 car). Fapte verificate: Electric UP 150.000 EUR (confirmat StartupCafe/Min. Energiei mai 2026), voucher REPowerEU 25.000 RON. Casa Verde menționat fără cifra disputată (link la afm.ro + ghidul dedicat).
+- **GSC baseline:** 2.991 imp, poz 11.2, CTR 1.3%. Țintă: poz 11 → 5-7.
+
+### Instalatori Autorizați ANRE 2026 — extins 2026-05-27
+- **Slug:** `instalatori-autorizati-anre-panouri-fotovoltaice-2026` — 7 → **8 secțiuni, 2.536 → 2.852 cuvinte, 7 → 9 FAQ**.
+- **Ce s-a adăugat:** secțiune „Instalatori autorizați ANRE pe județe" cu tabel pe 34 de județe (177 firme), fiecare linkat la /firme/judet/*; 2 FAQ („există listă oficială ANRE", „cum găsesc instalatori în județul meu"). Coordonat cu /firme (fix SSR shipped același timp): ghidul = editorial, /firme = directorul. Date 100% interne (companies.json), zero risc never-invent.
+- **GSC baseline:** 1.085 imp, poz 17.4. Țintă: împreună cu fix-ul /firme, captează clusterul „instalatori/firme autorizate" (poz 26-55, 0 click).
 
 ---
 
