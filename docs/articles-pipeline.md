@@ -4,7 +4,7 @@
 >
 > Când publici un articol, mută-l în secțiunea **Publicat** cu link + data + next-step (GSC Request Indexing, distribuție).
 
-Ultima actualizare: 2026-05-27 (**pivot strategic backat de GSC 3 luni: 538 clicks / 29.6K impresii / poz medie 13**). Analiza arată că ROI-ul nu mai e în articole noi, ci în (a) extinderea ghidurilor "striking distance" (poz 8-20 cu impresii mari) și (b) fix-uri pe paginile de director. Rutina e acum și **expand-aware** (PASUL 0.5): extinde ghiduri existente ÎNAINTE de a scrie articole noi. Vezi secțiunea nouă „🔧 De extins (ghiduri existente)". Template-ul geo (orașe) e PARCAT — Cluj (poz 43, 1 click) și Timișoara (poz 17, 0 click) nu rankează după ~9 zile, deci nu replicăm pe alte orașe încă. Fix `/firme` (lista era client-only → HTML gol) shipped separat în cod.
+Ultima actualizare: 2026-05-27 (**pivot strategic backat de GSC 3 luni: 538 clicks / 29.6K impresii / poz medie 13**). Analiza arată că ROI-ul nu mai e în articole noi, ci în (a) extinderea ghidurilor "striking distance" (poz 8-20 cu impresii mari) și (b) fix-uri pe paginile de director. Rutina e acum și **expand-aware** (PASUL 0.5): extinde ghiduri existente ÎNAINTE de a scrie articole noi. Vezi secțiunea nouă „🔧 De extins (ghiduri existente)". Template-ul geo (orașe) e PARCAT — Cluj (poz 43, 1 click) și Timișoara (poz 17, 0 click) nu rankează după ~9 zile, deci nu replicăm pe alte orașe încă. Fix `/firme` (lista era client-only → HTML gol) shipped separat în cod. **Toate cele 3 extinderi striking-distance (Casa Verde, Subvenții, Instalatori ANRE) au fost făcute manual pe 2026-05-27** — vezi „✅ Extinse recent". Faptele de program verificate sunt în memory (`reference_ro_pv_financing_programs.md`).
 
 > Ordinea rutinei (luni + joi): PASUL 0 publică draft programat → PASUL 0.5 extinde un ghid din „🔧 De extins" → PASUL 1 scrie articol nou din „🎯 Propuneri active". Fiecare pas ocupă slotul zilei (fără stacking).
 
@@ -41,17 +41,18 @@ Ultima actualizare: 2026-05-27 (**pivot strategic backat de GSC 3 luni: 538 clic
 
 > Ghiduri care stau pe poz 8-20 cu impresii mari ("striking distance") — extinderea lor (research + secțiuni noi, FĂRĂ rescriere de la zero) aduce mai multe click-uri decât un articol nou. Rutina (PASUL 0.5) ia PRIMA intrare cu status „💡 de extins", prioritate peste scrierea unui articol nou. Ordonat după impresii × intent. **Regula never-invent e strictă**: datele de program (sume, date, condiții) doar din surse oficiale (AFM/ANRE/MO).
 
-### Casa Verde Fotovoltaice 2026 — extindere
-- **Status:** ⏸️ BLOCAT (date neconfirmate) — **rutina NU îl ia** (nu are status „💡 de extins").
-- **Slug:** `casa-verde-fotovoltaice-2026` (~1.383 cuvinte, 9 secțiuni)
-- **GSC (3 luni):** pagina = **3.841 impresii, poz 11.0, CTR 0.65%** — cel mai mare bazin de impresii din tot site-ul. „casa verde 2026 inscrieri" = 356 imp poz 11.
-- **De ce e blocat (research 2026-05-27):** ghidul actual afirmă cifre pe care nu le-am putut confirma și care par GREȘITE: „30.000 lei" (sursele indică faptul că 30.000 lei e pentru **Casa Verde Baterii / stocare**, nu pentru panouri PV — care istoric era 20.000 lei); „buget 1,5 miliarde lei" (sursele dau ~400 mil. lei pentru baterii 2025-2026); „sesiune iulie 2026" (nicio dată confirmată de AFM — programul e în tranziție spre stocare). afm.ro era inaccesibil (WAF) la research, deci totul e din surse secundare. **A extinde acum = a amplifica date posibil false** → încalcă regula never-invent.
-- **Ce trebuie întâi:** userul (sau o sesiune cu acces la afm.ro) confirmă suma curentă PV vs baterii, bugetul real și statusul sesiunii 2026. DUPĂ aceea: corectează cifrele existente ȘI adaugă secțiunile (înscrieri dedicat, Casa Verde vs Electric Up, instalatori validați AFM). Abia atunci pune status „💡 de extins".
-- **Linkuri interne (la extindere):** /firme?segment=rezidential · /verificare-anre · /ghid/electric-up-2026-ghid-aplicare · /ghid/panouri-fotovoltaice-casa-vs-firma · /ghid/subventii-panouri-fotovoltaice.
+_(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 2026-05-27, vezi mai jos. Adaugă intrări noi `💡 de extins` când apar pagini noi pe poz 8-20 cu impresii mari.)_
 
 ## ✅ Extinse recent
 
 > Recheck poziția în GSC peste 14/30 zile pentru fiecare. Fă Request Indexing manual după push.
+
+### Casa Verde Fotovoltaice 2026 — corectat + extins 2026-05-27
+- **Slug:** `casa-verde-fotovoltaice-2026` — 9 → **12 secțiuni, 1.383 → 2.014 cuvinte, 6 → 8 FAQ**.
+- **Research (firecrawl pe afm.ro + presă):** ghidul prezenta cifrele din 2024 ca fiind 2026. CORECTAT: **30.000 lei = sesiunea 2024** (panouri + baterie obligatorie), nu 2026; 2025 = suspendat; **2026 = doar baterii (~400 mil. lei)** pentru prosumatori existenți, **ghid NEPUBLICAT**, sesiune nedeschisă, sumă neconfirmată oficial. Eliminat „buget 1,5 mld" (nesusținut). Faptele salvate în memory: [reference_ro_pv_financing_programs.md].
+- **Ce s-a adăugat:** tabel evoluție program 2019→2026; secțiunile „Casa Verde 2026: de la panouri la baterii", „Casa Verde vs Electric Up", „Cum alegi un instalator validat AFM" (+ link /firme?segment=rezidential, /verificare-anre); 2 FAQ.
+- **GSC baseline:** 3.841 imp, poz 11.0, CTR 0.65% — **cel mai mare bazin de impresii din site**. Țintă: poz 11 → 5-7. **De urmărit special** (recheck 14/30 zile).
+- **Update viitor obligatoriu:** când AFM publică ghidul „Casa Verde Baterii" 2026 (suma exactă, condiții, dată start) → actualizează secțiunea 2026 + FAQ. Sursă: afm.ro.
 
 ### Subvenții Panouri Fotovoltaice 2026 — extins 2026-05-27
 - **Slug:** `subventii-panouri-fotovoltaice` — 7 → **8 secțiuni, 1.824 → 2.065 cuvinte, 4 → 7 FAQ**.
