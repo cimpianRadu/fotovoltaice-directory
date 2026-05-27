@@ -121,23 +121,18 @@ export default function HomeSegmentHero({
             <span className="text-primary-light"> Panouri Fotovoltaice România</span>
           </h1>
           <p className="text-sm sm:text-lg text-gray-300 mb-5 sm:mb-7 max-w-2xl mx-auto">
-            Te ducem la instalatorul potrivit — alege dacă vrei panouri pentru casă sau pentru firmă.
+            Găsești instalatori de panouri fotovoltaice verificați, cu date reale din registrele oficiale. Alege pentru ce ai nevoie:
           </p>
 
-          {/* Live-data proof — verified, real data (segment-aware so counts never mislead) */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-7 sm:mb-9 text-xs sm:text-sm">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              <strong className="font-semibold">{stats.count}</strong>
-              <span className="text-gray-200">firme verificate</span>
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
-              <strong className="font-semibold">{stats.anre}</strong>
-              <span className="text-gray-200">cu atestat ANRE verificat live</span>
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
-              <strong className="font-semibold">{stats.judete}</strong>
-              <span className="text-gray-200">{stats.judete === 1 ? 'județ' : 'județe'}</span>
+          {/* Live-data proof — single discreet trust line (full proof lives in the „De ce" section) */}
+          <div className="flex justify-center mb-7 sm:mb-9">
+            <span className="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-200">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0" />
+              <span>
+                <strong className="font-semibold text-white">{stats.count}</strong> instalatori verificați
+                {' · '}
+                <strong className="font-semibold text-white">{stats.anre}</strong> cu atestat ANRE confirmat live
+              </span>
             </span>
           </div>
 
@@ -179,9 +174,6 @@ export default function HomeSegmentHero({
       {/* Benefits strip */}
       <section className="bg-surface border-b border-border">
         <div className="max-w-5xl mx-auto px-4 py-6 flex flex-wrap items-center justify-center gap-3 text-center">
-          <span className="text-sm font-semibold text-gray-500 w-full sm:w-auto">
-            După ce alegi, tot ce vezi e doar pentru tine:
-          </span>
           {['Firme din zona ta', 'Calculator potrivit', 'Ghiduri pe înțelesul tău'].map((b) => (
             <span
               key={b}
