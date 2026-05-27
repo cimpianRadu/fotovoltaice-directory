@@ -4,7 +4,9 @@
 >
 > Când publici un articol, mută-l în secțiunea **Publicat** cu link + data + next-step (GSC Request Indexing, distribuție).
 
-Ultima actualizare: 2026-05-21 (#9 Timișoara publicat; lansare secțiune REZIDENȚIAL — articolul „Casă vs Firmă" programat de publicat joi 28 mai prin rutină, vezi secțiunea „📤 De publicat (programate)". Rutina e acum publish-aware: publică draft-uri programate înainte de a scrie articole noi.)
+Ultima actualizare: 2026-05-27 (**pivot strategic backat de GSC 3 luni: 538 clicks / 29.6K impresii / poz medie 13**). Analiza arată că ROI-ul nu mai e în articole noi, ci în (a) extinderea ghidurilor "striking distance" (poz 8-20 cu impresii mari) și (b) fix-uri pe paginile de director. Rutina e acum și **expand-aware** (PASUL 0.5): extinde ghiduri existente ÎNAINTE de a scrie articole noi. Vezi secțiunea nouă „🔧 De extins (ghiduri existente)". Template-ul geo (orașe) e PARCAT — Cluj (poz 43, 1 click) și Timișoara (poz 17, 0 click) nu rankează după ~9 zile, deci nu replicăm pe alte orașe încă. Fix `/firme` (lista era client-only → HTML gol) shipped separat în cod.
+
+> Ordinea rutinei (luni + joi): PASUL 0 publică draft programat → PASUL 0.5 extinde un ghid din „🔧 De extins" → PASUL 1 scrie articol nou din „🎯 Propuneri active". Fiecare pas ocupă slotul zilei (fără stacking).
 
 ## Format intrare
 
@@ -35,6 +37,43 @@ Ultima actualizare: 2026-05-21 (#9 Timișoara publicat; lansare secțiune REZIDE
 
 ---
 
+## 🔧 De extins (ghiduri existente)
+
+> Ghiduri care stau pe poz 8-20 cu impresii mari ("striking distance") — extinderea lor (research + secțiuni noi, FĂRĂ rescriere de la zero) aduce mai multe click-uri decât un articol nou. Rutina (PASUL 0.5) ia PRIMA intrare cu status „💡 de extins", prioritate peste scrierea unui articol nou. Ordonat după impresii × intent. **Regula never-invent e strictă**: datele de program (sume, date, condiții) doar din surse oficiale (AFM/ANRE/MO).
+
+### Casa Verde Fotovoltaice 2026 — extindere
+- **Status:** 💡 de extins
+- **Slug:** `casa-verde-fotovoltaice-2026` (acum ~1.383 cuvinte, 9 secțiuni, 6 FAQ)
+- **GSC (3 luni):** pagina = **3.841 impresii, poz 11.0, CTR 0.65%** — cel mai mare bazin de impresii din tot site-ul. Query „casa verde 2026 inscrieri" = 356 imp poz 11; „casa verde fotovoltaice 2026" = 19 imp poz 19.8; „casa verde 2026" = 89 imp poz 30.
+- **De ce:** ghid prea subțire pentru intentul cald. La poz 11 lasă pe masă majoritatea click-urilor (pentru comparație, ghidurile site-ului la poz 5-7 fac ~3% CTR vs 0.65% aici). Mutarea poz 11→5 ≈ de la ~25 la ~110 click-uri/3 luni dintr-o singură pagină.
+- **Ce lipsește (de adăugat, după research AFM):** (1) secțiune dedicată „Înscrieri Casa Verde 2026 — când se deschid, cum te pregătești, dinamica sold-out pe județe" (țintește query-ul de 356 imp); (2) suma exactă și plafonul actual confirmate din AFM; (3) lista pașilor de înscriere pe platforma AFM cu detaliu; (4) „Casa Verde vs Electric Up — care e pentru tine" (Electric Up = firme, Casa Verde = persoane fizice); (5) „Cum alegi un instalator validat AFM" + link la /firme?segment=rezidential și /verificare-anre. Țintă ~3.000+ cuvinte, +3-4 FAQ.
+- **Linkuri interne:** /firme?segment=rezidential · /verificare-anre · /ghid/electric-up-2026-ghid-aplicare · /ghid/panouri-fotovoltaice-casa-vs-firma (după ce se publică joi) · /calculator-panouri-fotovoltaice?segment=rezidential · /ghid/subventii-panouri-fotovoltaice.
+- **Next step după extindere:** GSC Request Indexing, recheck poziție 14/30 zile.
+
+### Subvenții Panouri Fotovoltaice 2026 — extindere
+- **Status:** 💡 de extins
+- **Slug:** `subventii-panouri-fotovoltaice`
+- **GSC (3 luni):** pagina = **2.991 impresii, poz 11.2, CTR 1.3%**. Cluster: „subventii panouri fotovoltaice 2026" 46 imp poz 11.9; „fonduri panouri fotovoltaice 2026" 94 imp poz 11.9; „fonduri pentru panouri fotovoltaice 2026" 50 imp poz 11.5; „finantare panouri fotovoltaice 2026" 24 imp poz 12.5; „program finantare panouri fotovoltaice 2026" 15 imp; „ajutor panouri fotovoltaice" 15 imp poz 19.3.
+- **De ce:** al doilea cel mai mare bazin de impresii, poz 11. E pagina-umbrelă pentru toate schemele de finanțare — trebuie să fie cea mai completă din RO.
+- **Ce lipsește (de verificat în surse oficiale):** tabel comparativ al tuturor schemelor active 2026 (Casa Verde / Electric Up / fonduri europene IMM / PNRR) cu cine aplică, sumă, status sesiune; secțiune „fonduri europene/nerambursabile 2026" care leagă la ghidul IMM (acolo CTR-ul e bun, poz 7); FAQ pe „când se dau banii", „mai sunt fonduri 2026". Aliniază title/meta la „fonduri/subvenții panouri fotovoltaice 2026".
+- **Linkuri interne:** /ghid/fonduri-nerambursabile-panouri-fotovoltaice-imm-2026 · /ghid/casa-verde-fotovoltaice-2026 · /ghid/electric-up-2026-ghid-aplicare · /calculator-panouri-fotovoltaice · /firme.
+- **Next step după extindere:** GSC Request Indexing, recheck 14/30 zile.
+
+### Instalatori Autorizați ANRE 2026 — extindere
+- **Status:** 💡 de extins
+- **Slug:** `instalatori-autorizati-anre-panouri-fotovoltaice-2026`
+- **GSC (3 luni):** pagina = **1.085 impresii, poz 17.4**. E ghidul național pe clusterul „instalatori/firme autorizate" (zeci de query-uri pe poz 26-55: „instalatori panouri fotovoltaice" 150 imp, „firme acreditate panouri fotovoltaice" 136 imp, „lista instalatori fotovoltaice" 127 imp etc.).
+- **De ce:** clusterul comercial pur (bottom-funnel, monetizabil). Acum cade între ghid (poz 17) și /firme (poz 34). Extinderea ghidului + fix-ul /firme (deja făcut) ar trebui să capteze clusterul. **De coordonat cu /firme** ca să nu canibalizeze — ghidul = editorial/„cum alegi + top firme", /firme = directorul.
+- **Ce lipsește:** secțiune „lista completă pe județe" cu linkuri la paginile /firme/judet/*; criterii de verificare (ANRE C1A/C2A, ISO, financiar) cu mai mult detaliu; tabel top firme cu cifră ANAF; FAQ pe „lista instalatori autorizați", „firme acreditate ANRE". Aliniază H1/title la „instalatori autorizați ANRE panouri fotovoltaice".
+- **Linkuri interne:** /firme · /verificare-anre · /clasament · /firme/judet/bucuresti + alte județe top.
+- **Next step după extindere:** GSC Request Indexing, recheck 14/30 zile. Urmărește dacă /firme SAU ghidul urcă pe „instalatori/firme autorizate".
+
+## ✅ Extinse recent
+
+(nimic încă — prima extindere va fi logată aici de rutină)
+
+---
+
 ## 🎯 Propuneri active
 
 ### 2 — Quick win: update title pe /clasament
@@ -47,8 +86,9 @@ Ultima actualizare: 2026-05-21 (#9 Timișoara publicat; lansare secțiune REZIDE
 - **Status:** 🟡 absorbit parțial în #4 (calculator) — keyword-urile "dimensionare", "câți kw", "kwh vs kwp" sunt acoperite în #4. Rămâne ca propunere separată DOAR dacă după #4 vedem că query-urile de dimensionare pură au volum suficient să justifice un al doilea articol non-calculator-centric. Re-evaluare după 30 zile de la publicarea #4.
 
 ### Pipeline gol de propuneri „idee"
-- **Status:** ⚠️ niciun articol cu status `💡 idee` rămas. Intrările #2 și #3 sunt quick-win-uri done, #7 e absorbit parțial în #4.
-- **Următoarea propunere candidat (de validat în GSC înainte de a deveni `idee`):** continuarea template-ului geo pe capitale regionale — **Iași, Brașov, Constanța, Oradea, Sibiu** (toate au pagină oraș existentă). Declanșează doar dacă #8 Cluj și/sau #9 Timișoara ranchează în GSC (clicks pe queries geo head). Dacă niciuna nu ranchează în 30 zile, regândește template-ul geo înainte de a mai scrie un oraș.
+- **Status:** ⚠️ niciun articol cu status `💡 idee` rămas. Intrările #2 și #3 sunt quick-win-uri done, #7 e absorbit parțial în #4. **Asta e intenționat** — slotul rutinei merge acum pe „🔧 De extins" (ROI mai mare), nu pe articole noi.
+- **Template geo (orașe) — PARCAT (2026-05-27):** Cluj (publicat 18 mai) = **poz 42.9, 1 click, 111 imp** după ~9 zile; Timișoara (publicat 21 mai) = **poz 17.2, 0 click, 45 imp**. Niciuna nu rankează → NU replicăm pe Iași/Brașov/Constanța/Oradea/Sibiu. Re-evaluare după ce trec 30 zile de la publicare (≈18 iunie): dacă tot nu urcă, problema e template-ul (probabil paginile /firme/judet care abia acum au conținut SSR decent — vezi fix /firme), nu lipsa de orașe. **Nu mai scrie un articol-oraș până nu rankează măcar unul.**
+- **Cluster geo cu cerere reală (de monitorizat, NU articol nou încă):** Alba („montaj panouri fotovoltaice alba" 81 imp poz 18.7, „panouri fotovoltaice alba" 67 imp, „montaj panouri solare alba" 73 imp poz 20.4) și Arad („panouri fotovoltaice arad" 56 imp, „sisteme fotovoltaice arad" 25 imp, „firme panouri fotovoltaice arad" 19 imp). Paginile /firme/judet/alba (poz 27) și /firme/judet/arad (poz 14.5) există deja. Întâi vezi dacă urcă după fix-ul /firme; abia apoi decide dacă merită ghid dedicat.
 
 ---
 
