@@ -501,5 +501,47 @@
     "judet": "Alba",
     "cui": "18142180",
     "reason": "Site-ul del.ro (brand DELEX) este al unui distribuitor/importator de sisteme de încălzire electrică și produse de energie alternativă (Fenix, REC, SMA). PV apare ca produse în catalog, nu ca serviciu de instalare la cheie."
+  },
+  {
+    "societate": "KARDYNAL INTSERV OFFICE SRL",
+    "judet": "Prahova",
+    "cui": "31508441",
+    "reason": "Site-ul kindustrial.ro (CUI confirmat în footer) prezintă exclusiv automatizări industriale, instalații electrice, măsurători PRAM și mentenanță predictivă/termografie — niciun serviciu fotovoltaic sau rezidențial."
+  },
+  {
+    "societate": "ELECTROVALI SRL",
+    "judet": "Salaj",
+    "cui": "18752774",
+    "reason": "electrovali.eu este producător de echipamente de automatizare industrială (tablouri electrice, sisteme pneumatice/hidraulice, soluții la cheie PLC) pentru clienți ca Michelin și Tenaris. Deține doar autorizație ANRE tip B, dar nu oferă servicii de instalare fotovoltaice."
+  },
+  {
+    "societate": "NOUVELLES ENERGIES ROUMANIE SRL",
+    "judet": "Prahova",
+    "cui": "40683573",
+    "reason": "ner-energy.ro (CUI confirmat în footer) se prezintă ca distribuitor/furnizor de echipamente fotovoltaice și birou de proiectare, fără servicii de montaj la cheie pentru locuințe și fără mențiune Casa Verde — pattern distribuitor B2B, nu instalator."
+  },
+  {
+    "societate": "ARMINCO BMC SRL",
+    "judet": "Mures",
+    "cui": "28841925",
+    "reason": "armincobmc.ro distribuie sisteme de aer condiționat (Midea, Alizee, Samsung) — comerciant en-gros de climatizare, fără niciun serviciu sau produs fotovoltaic."
+  },
+  {
+    "societate": "LINKIT SOLUTIONS SRL",
+    "judet": "Hunedoara",
+    "cui": "37446240",
+    "reason": "Website-ul din registru (octacore.ro) aparține unei firme de sisteme IT și securitate (supraveghere video, alarme, control acces, detecție incendiu, rețele de date) — niciun serviciu fotovoltaic."
+  },
+  {
+    "societate": "DIAMSES SRL",
+    "judet": "Galati",
+    "cui": "4821343",
+    "reason": "electric-diamses.ro este antreprenor electric industrial (rețele 0,4–20 kV, instalații civile/industriale, iluminat public, branșamente) — niciun serviciu sau mențiune fotovoltaice/panouri solare pe site."
+  },
+  {
+    "societate": "HONEY VOLT SRL",
+    "judet": "Buzau",
+    "cui": "24491134",
+    "reason": "Website-ul din registru (ecoheat.ro) aparține unui furnizor de combustibil solid (peleți și brichete pentru sobe/centrale) — site nepotrivit firmei și fără legătură cu fotovoltaice."
   }
 ]
