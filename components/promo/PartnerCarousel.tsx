@@ -63,13 +63,7 @@ export default function PartnerCarousel() {
     if (ACTIVE_PARTNERS.length <= 1) return;
 
     const interval = setInterval(() => {
-      setIndex((prev) => {
-        const next = (prev + 1) % ACTIVE_PARTNERS.length;
-        window.umami?.track('partner-carousel-rotate', {
-          partner: ACTIVE_PARTNERS[next]?.slug,
-        });
-        return next;
-      });
+      setIndex((prev) => (prev + 1) % ACTIVE_PARTNERS.length);
     }, ROTATION_MS);
 
     return () => clearInterval(interval);
