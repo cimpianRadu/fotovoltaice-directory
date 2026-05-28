@@ -26,14 +26,7 @@ Ultima actualizare: 2026-05-27 (**pivot strategic backat de GSC 3 luni: 538 clic
 
 > Articole **deja scrise** (`published: false` în guides.json), programate pentru o dată. Rutina (PASUL 0, luni + joi) le publică automat când **data țintă <= azi** — flip `published: true`, fără a rescrie. Au prioritate peste scrierea unui articol nou (ocupă slotul zilei, fără stacking). După publicare se mută la "✅ Publicate recent".
 
-### Panouri Fotovoltaice pentru Casă vs Firmă — Diferențe și Costuri 2026
-- **Slug:** `panouri-fotovoltaice-casa-vs-firma` (8 secțiuni + 5 FAQ, deja scris)
-- **Data țintă:** 2026-05-28 (rularea de joi `thursday-seo-articol`)
-- **Acțiune rutină:** flip `published: true`. **NU rescrie, NU invoca /guide** — conținutul există.
-- **De ce:** anunțul de lansare a secțiunii rezidențiale (Casă vs Firmă). Ținut dark până rezidențialul e live în producție.
-- **Linkuri interne deja inserate:** /ghid/casa-verde-fotovoltaice-2026 · /calculator-panouri-fotovoltaice?segment=rezidential · /firme?segment=rezidential · /firme?segment=comercial · /verificare-anre · /cere-oferta · /ghid/legislatie-prosumator-comercial · /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre
-- **Cluster GSC țintă:** "panouri fotovoltaice casa vs firma", "diferenta panouri rezidential comercial", "cat costa panouri fotovoltaice casa", "subventie casa verde vs electric up", "amortizare panouri fotovoltaice casa".
-- **Next step după publicare:** GSC Request Indexing pentru /ghid/panouri-fotovoltaice-casa-vs-firma. Monitorizare 14/30 zile — e prima piesă de conținut rezidențial, urmărește dacă clusterul rezidențial prinde.
+_(coadă goală — următorul draft programat se adaugă aici cu data țintă.)_
 
 ---
 
@@ -85,6 +78,12 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Panouri Fotovoltaice pentru Casă vs Firmă — Diferențe și Costuri 2026
+- **Publicat:** 2026-05-28 → [/ghid/panouri-fotovoltaice-casa-vs-firma](/ghid/panouri-fotovoltaice-casa-vs-firma)
+- **Cluster GSC țintă:** "panouri fotovoltaice casa vs firma", "diferenta panouri rezidential comercial", "cat costa panouri fotovoltaice casa", "subventie casa verde vs electric up", "amortizare panouri fotovoltaice casa".
+- **Strategie:** anunț de lansare a secțiunii rezidențiale. Conținutul exista deja scris în guides.json (`published: false`), rutina de joi (PASUL 0) a făcut flip pe `published: true`. Acoperă 8 secțiuni + 5 FAQ: dimensionare (3/5/10 kW vs 30 kW–1 MW), costuri RON/kW (6.000–7.300 rezidențial vs 3.000–4.600 comercial), subvenții (Casa Verde 30.000 RON vs Electric UP 150.000 EUR), legislație prosumator (net metering vs net billing, prag 200/400 kW), amortizare/ROI, avize și autorizații, rezumat decizional. Linkuri interne: /ghid/casa-verde-fotovoltaice-2026, /calculator-panouri-fotovoltaice?segment=rezidential, /firme?segment=rezidential, /firme?segment=comercial, /verificare-anre, /cere-oferta, /ghid/legislatie-prosumator-comercial, /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre.
+- **Next step:** GSC Request Indexing manual pentru /ghid/panouri-fotovoltaice-casa-vs-firma. Monitorizare 14/30 zile — e prima piesă de conținut rezidențial, urmărește dacă clusterul rezidențial prinde (impresii pe queries "panouri fotovoltaice casa", "casa verde vs electric up"). Dacă urcă, pivot strategic spre mai mult conținut rezidențial (calculator-pe-rezidential ranchează deja, /firme?segment=rezidential are 24 firme).
 
 ### Top Firme Panouri Fotovoltaice Timișoara 2026 — Instalatori Autorizați ANRE
 - **Publicat:** 2026-05-21 → [/ghid/top-firme-panouri-fotovoltaice-timisoara-2026](/ghid/top-firme-panouri-fotovoltaice-timisoara-2026)
