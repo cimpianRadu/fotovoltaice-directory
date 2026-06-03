@@ -59,6 +59,39 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 
 ---
 
+## 🔥 Hot topics watch (de monitorizat → promovează la `💡 idee` când se confirmă)
+
+> Lucruri în derulare care, când se confirmă, devin candidate de top — promovate la `💡 idee` (PASUL 1 al rutinei). Verifică această listă o dată pe săptămână (sau ad-hoc dacă apare ceva în presă).
+
+### Casa Verde Baterii — publicare ghid AFM
+- **Status la 2026-05-27:** buget 400 mil. lei în consultare publică din 9 mai 2026; ghid de finanțare nepublicat; sesiune nedeschisă.
+- **Trigger:** AFM publică ghidul oficial pe [afm.ro](https://www.afm.ro/sisteme_fotovoltaice.php).
+- **Acțiune:** (a) update ghid Casa Verde existent cu suma + datele oficiale; (b) finalizează propunerea #10 (articol dedicat „Casa Verde Baterii — cum aplici") cu pașii reali.
+
+### Normele tehnice ANRE post-Legea Prosumatorilor 2026
+- **Status:** legea promulgată mai 2026 (vezi [/ghid/legea-prosumatorilor-2026...](/ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre)); ANRE are 60 zile să publice normele de aplicare (~vara/toamna 2026).
+- **Trigger:** ANRE publică normele (Monitorul Oficial + anre.ro).
+- **Acțiune:** (a) update obligatoriu ghidul legii cu procedurile reale (compensare multi-locație, calcul dezechilibre); (b) candidat articol nou „Normele ANRE 2026 — Cum se aplică legea prosumatorilor în practică".
+
+### Electric Up Ciclul 3
+- **Status:** Ciclul 2 (2.859 cereri) în evaluare; niciun anunț Ciclul 3.
+- **Trigger:** Ministerul Energiei anunță apel nou pe [energie.gov.ro](https://energie.gov.ro) sau granturi.imm.gov.ro.
+- **Acțiune:** articol „Electric Up Ciclul 3 — Cum aplici" în 24-48h de la anunț (window-ul de aplicare e scurt, traficul vine masiv în primele zile).
+
+### Aniversare 1 an liberalizare piață energie (iulie 2026)
+- **Status:** liberalizare iulie 2025; iulie 2026 = 1 an.
+- **Trigger:** intrăm în iulie 2026.
+- **Acțiune:** articol „1 An de Liberalizare a Pieței Energiei — Cum au Evoluat Prețurile și Cele Mai Bune Oferte 2026 pentru Firme și Persoane Fizice". Cluster „cele mai bune oferte energie 2026", „pret kwh furnizori 2026", „comparativ furnizori energie 2026". Atenție never-invent: prețurile vin din comparator gov sau wall-street/economisi cu data.
+
+### REPowerEU vouchere 25.000 RON (persoane fizice)
+- **Status la 2026-05-27:** schemă cunoscută (sursă gov 2024), dar fără date clare de lansare 2025/2026 confirmate.
+- **Trigger:** lansare oficială pentru aplicare.
+- **Acțiune:** articol „Voucher REPowerEU 25.000 RON — Cum aplici pentru panouri + stocare". Cluster „voucher repowereu", „voucher panouri 25000 lei", „voucher stocare repowereu".
+
+> **Cum se gestionează:** când un trigger se confirmă, mutați intrarea de aici la „🎯 Propuneri active" cu status `💡 idee` (sau direct scrisă, dacă urgent). NU rămân aici după ce s-au scris — mergeți în „Publicate recent".
+
+---
+
 ## 🎯 Propuneri active
 
 ### 2 — Quick win: update title pe /clasament
@@ -70,10 +103,95 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 ### 7 — Dimensionare sistem fotovoltaic comercial
 - **Status:** 🟡 absorbit parțial în #4 (calculator) — keyword-urile "dimensionare", "câți kw", "kwh vs kwp" sunt acoperite în #4. Rămâne ca propunere separată DOAR dacă după #4 vedem că query-urile de dimensionare pură au volum suficient să justifice un al doilea articol non-calculator-centric. Re-evaluare după 30 zile de la publicarea #4.
 
-### Pipeline gol de propuneri „idee"
-- **Status:** ⚠️ niciun articol cu status `💡 idee` rămas. Intrările #2 și #3 sunt quick-win-uri done, #7 e absorbit parțial în #4. **Asta e intenționat** — slotul rutinei merge acum pe „🔧 De extins" (ROI mai mare), nu pe articole noi.
-- **Template geo (orașe) — PARCAT (2026-05-27):** Cluj (publicat 18 mai) = **poz 42.9, 1 click, 111 imp** după ~9 zile; Timișoara (publicat 21 mai) = **poz 17.2, 0 click, 45 imp**. Niciuna nu rankează → NU replicăm pe Iași/Brașov/Constanța/Oradea/Sibiu. Re-evaluare după ce trec 30 zile de la publicare (≈18 iunie): dacă tot nu urcă, problema e template-ul (probabil paginile /firme/judet care abia acum au conținut SSR decent — vezi fix /firme), nu lipsa de orașe. **Nu mai scrie un articol-oraș până nu rankează măcar unul.**
-- **Cluster geo cu cerere reală (de monitorizat, NU articol nou încă):** Alba („montaj panouri fotovoltaice alba" 81 imp poz 18.7, „panouri fotovoltaice alba" 67 imp, „montaj panouri solare alba" 73 imp poz 20.4) și Arad („panouri fotovoltaice arad" 56 imp, „sisteme fotovoltaice arad" 25 imp, „firme panouri fotovoltaice arad" 19 imp). Paginile /firme/judet/alba (poz 27) și /firme/judet/arad (poz 14.5) există deja. Întâi vezi dacă urcă după fix-ul /firme; abia apoi decide dacă merită ghid dedicat.
+### Batch 2026-05-27 — 11 idei validate (10 din GSC gap analysis + 1 hot)
+
+> Ordine de scriere recomandată: #10 (HOT) → Tier A → Tier B → Tier C. Rutina ia PRIMA intrare cu `💡 idee` din ordinea de aici.
+
+---
+
+#### #10 — 🔥 Casa Verde Baterii 2026: Program Stocare AFM (în consultare publică)
+- **Status:** 💡 idee · HOT priority — bazin uriaș de impresii care vine
+- **Cluster GSC:** „casa verde baterii", „casa verde 2026 baterii", „casa verde stocare", „afm baterii fotovoltaice", „casa verde inscriere baterii 2026", „program baterii fotovoltaice 2026" (volum în creștere; competiția stă pe estimări din 2024)
+- **De ce HOT:** AFM are buget 400 mil. lei aprobat 2026 pentru baterii, în consultare publică din 9 mai; ghidul urmează. Cine publică primul cu o pagină corectă captează valul când ghidul iese. Existing /ghid/casa-verde-fotovoltaice-2026 e umbrella (istorie + 2026 menționat); piesa asta e dedicată, slug-targetată (`casa-verde-baterii-2026`).
+- **Framing:** „ce știm la data X" (consultare publică, buget, prosumatori existenți), „ce NU știm încă oficial" (suma, dată start), „cum te pregătești", explicit „update după publicarea ghidului AFM".
+- **Linkuri:** /ghid/casa-verde-fotovoltaice-2026 (parent) · /verificare-anre · /firme?segment=rezidential · /ghid/stocare-energie-baterii-firme · /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre
+- **Update obligatoriu:** când AFM publică ghidul oficial — sumă, condiții, dată. Sursă: [afm.ro](https://www.afm.ro/sisteme_fotovoltaice.php).
+
+---
+
+#### TIER A — Validat în GSC (impresii reale, risc mic)
+
+#### #11 — Certificat de Urbanism + Autorizație de Construire pentru Panouri Fotovoltaice 2026
+- **Status:** 💡 idee
+- **Cluster GSC (3 luni):** „certificat urbanism fotovoltaice" 28imp poz 22 + „autorizatie construire panouri fotovoltaice" 11imp + „certificat urbanism panouri fotovoltaice" 10imp + variante = **~58 imp**, poz 22-43
+- **De ce:** /ghid/avize-autorizatii e pillar generic; aici vrei pagină dedicată cu pași concreți per primărie, taxe, scutiri, când e/când NU e nevoie de autorizație (sub vs peste 27 kW pe acoperiș).
+- **Linkuri:** /ghid/avize-autorizatii-instalare-fotovoltaice-firma · /firme · /verificare-anre
+
+#### #12 — Avize și Aviz de Mediu pentru Parc Fotovoltaic 2026 — Ghid pentru Investitori
+- **Status:** 💡 idee
+- **Cluster GSC:** „avize parc fotovoltaic" 17imp poz 22.8 + „aviz mediu parc fotovoltaic" 12imp poz 18 + „aviz de mediu parc fotovoltaic" 13imp poz 42 + „certificat urbanism parc fotovoltaic" 5imp = **~73 imp**
+- **De ce:** B2B utility-scale (MW+), buget mare, zero competiție serioasă RO. Audiență = investitori parc PV.
+- **Linkuri:** /ghid/avize-autorizatii · /ghid/fonduri-nerambursabile-panouri-fotovoltaice-imm-2026 · /clasament
+
+#### #13 — Aviz Tehnic de Racordare (ATR) — Pași la E-Distribuție, Delgaz, E-ON pentru Prosumator 2026
+- **Status:** 💡 idee
+- **Cluster GSC:** „aviz tehnic de racordare panouri fotovoltaice" 11imp poz 47, „model contract prosumator" 2imp poz 9; cluster mai larg „racordare prosumator", „cum devii prosumator"
+- **De ce:** site-ul deja afișat pe ATR (poz 47 = potențial); piesă post-decizie hi-intent (după ce omul a ales sistem). Tabel comparativ pași E-Distribuție / Delgaz / E-ON.
+- **Linkuri:** /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre · /ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026 · /firme
+
+---
+
+#### TIER B — Logic puternic, fără validare GSC (pariu pe cerere domenială)
+
+#### #14 — Sistem Fotovoltaic 3, 5 și 10 kW pentru Casă 2026 — Preț, Producție, Amortizare
+- **Status:** 💡 idee
+- **Cluster:** „pret sistem fotovoltaic 3 kw casa", „pret panouri fotovoltaice 5 kw casa", „cat costa 5 kw fotovoltaice", „panouri fotovoltaice 10 kw casa producție" (1 query în GSC la 3 imp ÎNCĂ — semnal slab dar cerere domenială mare)
+- **De ce:** parallel REZIDENȚIAL la ghidul comercial 50/100/250 kW (top-performer site). Investiție strategică pe segmentul rezidențial. Aceleași praguri: ~4500/3800/3500 RON/kWp cu degresie (verifică prețuri 2026), yield PVGIS per zonă.
+- **Linkuri:** /ghid/casa-verde-fotovoltaice-2026 · /ghid/panouri-fotovoltaice-casa-vs-firma · /calculator-panouri-fotovoltaice?segment=rezidential · /firme?segment=rezidential
+
+#### #15 — Sisteme Fotovoltaice Comerciale 2026 — De la Hală Mică la MW: Ghid pentru Decident
+- **Status:** 💡 idee
+- **Cluster GSC:** „sisteme fotovoltaice comerciale" 18imp poz 38 (semnal direct) + intent generic „panouri fotovoltaice firma", „sisteme fotovoltaice industriale"
+- **De ce:** pillar nou care leagă toate ghidurile commercial existente (hale, 50/100/250 kW, ROI, prosumator firma, lege, surplus, Electric Up). Trebuie să rankezi top pe „sisteme fotovoltaice comerciale" — e identitatea site-ului.
+- **Linkuri:** toate ghidurile commercial · /firme?segment=comercial · /clasament · /calculator
+
+#### #16 — Întreținere și Curățare Panouri Fotovoltaice — Frecvență, Costuri, Ce Faci Singur
+- **Status:** 💡 idee
+- **Cluster:** „intretinere panouri fotovoltaice", „curatare panouri fotovoltaice", „cat de des cureti panouri solare", „mentenanta sistem fotovoltaic" (0 imp GSC — gap pur)
+- **De ce:** evergreen post-instalare, audiență pre-calificată (au sistem). Foarte puțin conținut serios RO.
+- **Linkuri:** /ghid/asigurare-panouri-fotovoltaice-comerciale · /firme
+
+#### #17 — Sistem Fotovoltaic Hibrid vs On-Grid vs Off-Grid pentru Casă și Firmă
+- **Status:** 💡 idee
+- **Cluster:** „sistem fotovoltaic hibrid", „off grid vs on grid", „panouri fotovoltaice cu baterie sau fara", „fotovoltaic fara baterie" (0 imp GSC; cerere domenială cunoscută)
+- **De ce:** configuration explainer pre-decizie, captează intent de descoperire („cu sau fără baterie?").
+- **Linkuri:** /ghid/stocare-energie-baterii-firme · /ghid/casa-verde-fotovoltaice-2026 · /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre
+
+---
+
+#### TIER C — Vertical / niche (volum mic dar diferențiator)
+
+#### #18 — Durată de Viață Panouri Fotovoltaice — Degradare, Garanție și Ce Schimbi după 10 Ani
+- **Status:** 💡 idee
+- **Cluster:** „cat dureaza panouri fotovoltaice", „durata viata panouri solare", „degradare panouri fotovoltaice", „garantie panouri fotovoltaice" (0 imp GSC)
+- **De ce:** combinație durată + garanție + degradare = high-trust evergreen. Combină 3 query-uri într-o piesă.
+- **Linkuri:** /ghid/asigurare-panouri-fotovoltaice-comerciale · /ghid/tipuri-panouri-fotovoltaice · /ghid/invertoare-fotovoltaice-comerciale
+
+#### #19 — Panouri Fotovoltaice pe Carport / Parcare — Soluție pentru Firme cu Suprafețe Mari
+- **Status:** 💡 idee
+- **Cluster:** „carport solar", „panouri fotovoltaice parcare", „structura carport panouri", „panouri parcare firma cost" (0 imp GSC)
+- **De ce:** nișă emergentă RO (mall, retail, logistică, CT-parks), aproape zero competiție. B2B cu buget.
+- **Linkuri:** /ghid/panouri-fotovoltaice-hale-industriale · /ghid/sistem-fotovoltaic-50-100-250-kw-firma-pret-suprafata-productie · /firme?segment=comercial
+
+#### #20 — Panouri Fotovoltaice pentru Fermă Agricolă 2026 — Subvenții AFIR și Aplicații (Irigații, Hale, Sere)
+- **Status:** 💡 idee
+- **Cluster:** „panouri fotovoltaice ferma agricola", „afir fotovoltaice", „fotovoltaice irigatii", „panouri solare ferma 2026" (1 imp GSC)
+- **De ce:** vertical agro absent pe site, AFIR are scheme dedicate (verifică PNS/intervenții 2026). Diferențiator vs orice altă pagină RO.
+- **Linkuri:** /ghid/subventii-panouri-fotovoltaice · /ghid/fonduri-nerambursabile-panouri-fotovoltaice-imm-2026
+
+---
+
+**Template geo (orașe) — PARCAT (2026-05-27):** Cluj (publicat 18 mai) = **poz 42.9, 1 click, 111 imp** după ~9 zile; Timișoara (publicat 21 mai) = **poz 17.2, 0 click, 45 imp**. Niciuna nu rankează → NU replicăm pe Iași/Brașov/Constanța/Oradea/Sibiu. Re-evaluare după ce trec 30 zile de la publicare (≈18 iunie): dacă tot nu urcă, problema e template-ul (probabil paginile /firme/judet care abia acum au conținut SSR decent — vezi fix /firme), nu lipsa de orașe. **Nu mai scrie un articol-oraș până nu rankează măcar unul.**
 
 ---
 
