@@ -63,10 +63,10 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 
 > Lucruri în derulare care, când se confirmă, devin candidate de top — promovate la `💡 idee` (PASUL 1 al rutinei). Verifică această listă o dată pe săptămână (sau ad-hoc dacă apare ceva în presă).
 
-### Casa Verde Baterii — publicare ghid AFM
-- **Status la 2026-05-27:** buget 400 mil. lei în consultare publică din 9 mai 2026; ghid de finanțare nepublicat; sesiune nedeschisă.
-- **Trigger:** AFM publică ghidul oficial pe [afm.ro](https://www.afm.ro/sisteme_fotovoltaice.php).
-- **Acțiune:** (a) update ghid Casa Verde existent cu suma + datele oficiale; (b) finalizează propunerea #10 (articol dedicat „Casa Verde Baterii — cum aplici") cu pașii reali.
+### Casa Verde Baterii — publicare ghid AFM (UPDATE după publicare)
+- **Status la 2026-06-04:** buget 400 mil. lei **APROBAT OFICIAL 21 mai 2026**; ghid de finanțare încă nepublicat; sesiune nedeschisă. Articol dedicat publicat preventiv pe 4 iunie 2026 (vezi `/ghid/casa-verde-baterii-2026-program-stocare-afm`).
+- **Trigger:** AFM publică ghidul oficial pe [afm.ro](https://www.afm.ro/sisteme_fotovoltaice.php) cu suma per beneficiar + condiții + dată sesiune.
+- **Acțiune:** (a) update ghidul `casa-verde-baterii-2026-program-stocare-afm` cu suma + datele oficiale + lista echipamente eligibile + calendar real; (b) update colateral pe ghidul-umbrelă `casa-verde-fotovoltaice-2026` cu cifrele confirmate; (c) Request Indexing GSC pe ambele după update.
 
 ### Normele tehnice ANRE post-Legea Prosumatorilor 2026
 - **Status:** legea promulgată mai 2026 (vezi [/ghid/legea-prosumatorilor-2026...](/ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre)); ANRE are 60 zile să publice normele de aplicare (~vara/toamna 2026).
@@ -106,16 +106,6 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 ### Batch 2026-05-27 — 11 idei validate (10 din GSC gap analysis + 1 hot)
 
 > Ordine de scriere recomandată: #10 (HOT) → Tier A → Tier B → Tier C. Rutina ia PRIMA intrare cu `💡 idee` din ordinea de aici.
-
----
-
-#### #10 — 🔥 Casa Verde Baterii 2026: Program Stocare AFM (în consultare publică)
-- **Status:** 💡 idee · HOT priority — bazin uriaș de impresii care vine
-- **Cluster GSC:** „casa verde baterii", „casa verde 2026 baterii", „casa verde stocare", „afm baterii fotovoltaice", „casa verde inscriere baterii 2026", „program baterii fotovoltaice 2026" (volum în creștere; competiția stă pe estimări din 2024)
-- **De ce HOT:** AFM are buget 400 mil. lei aprobat 2026 pentru baterii, în consultare publică din 9 mai; ghidul urmează. Cine publică primul cu o pagină corectă captează valul când ghidul iese. Existing /ghid/casa-verde-fotovoltaice-2026 e umbrella (istorie + 2026 menționat); piesa asta e dedicată, slug-targetată (`casa-verde-baterii-2026`).
-- **Framing:** „ce știm la data X" (consultare publică, buget, prosumatori existenți), „ce NU știm încă oficial" (suma, dată start), „cum te pregătești", explicit „update după publicarea ghidului AFM".
-- **Linkuri:** /ghid/casa-verde-fotovoltaice-2026 (parent) · /verificare-anre · /firme?segment=rezidential · /ghid/stocare-energie-baterii-firme · /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre
-- **Update obligatoriu:** când AFM publică ghidul oficial — sumă, condiții, dată. Sursă: [afm.ro](https://www.afm.ro/sisteme_fotovoltaice.php).
 
 ---
 
@@ -196,6 +186,12 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Casa Verde Baterii 2026 — Program Stocare AFM (Status Real)
+- **Publicat:** 2026-06-04 → [/ghid/casa-verde-baterii-2026-program-stocare-afm](/ghid/casa-verde-baterii-2026-program-stocare-afm)
+- **Cluster GSC țintă:** „casa verde baterii", „casa verde 2026 baterii", „casa verde stocare", „afm baterii fotovoltaice", „casa verde inscriere baterii 2026", „program baterii fotovoltaice 2026", „subventie baterii fotovoltaice 2026", „casa verde baterii prosumator", „cat costa o baterie fotovoltaica", „baterie stocare casa verde valoare". Volum în creștere odată cu aprobarea bugetului 21 mai 2026.
+- **Strategie:** articol HOT publicat preventiv (înainte de publicarea ghidului AFM) pentru a capta valul de impresii când iese ghidul. Framing „ce știm OFICIAL\" (buget 400 mil. lei aprobat 21 mai, prosumatori existenți, panourile scoase din buget AFM 2026) + „ce NU s-a confirmat\" (sumă, dată, condiții, plafon kWh) + secțiune dedicată pregătirii dosarului + tabel Casa Verde Baterii vs Casa Verde Fotovoltaice + dimensionare LFP/NMC + cost piață 2026 + 10 greșeli de evitat. Disclaimer obligatoriu la început/sfârșit (regula never-invent). 12 secțiuni, 10 FAQ, ~3.715 cuvinte. Leagă /ghid/casa-verde-fotovoltaice-2026 (parent umbrelă) + /verificare-anre + /firme?segment=rezidential + /ghid/stocare-energie-baterii-firme + /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre + /ghid/subventii-panouri-fotovoltaice + /ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026.
+- **Next step:** GSC Request Indexing manual pentru /ghid/casa-verde-baterii-2026-program-stocare-afm. **Update obligatoriu** când AFM publică ghidul oficial (suma per beneficiar, condiții finale, dată start sesiune, lista echipamente eligibile, lista instalatorilor validați) — vezi „🔥 Hot topics watch\" pentru declanșator. Monitorizare 14/30 zile: clicks pe queries head („casa verde baterii\", „casa verde 2026 baterii\"), impresii pe queries tehnice („cat costa o baterie fotovoltaica\", „dimensionare baterie casa verde\"). Pivot strategic: dacă ghidul prinde repede e dovadă că publicarea preventivă pe topice fierbinți merită replicată (eg. Electric Up Ciclul 3 când se anunță).
 
 ### Panouri Fotovoltaice pentru Casă vs Firmă — Diferențe și Costuri 2026
 - **Publicat:** 2026-05-28 → [/ghid/panouri-fotovoltaice-casa-vs-firma](/ghid/panouri-fotovoltaice-casa-vs-firma)
