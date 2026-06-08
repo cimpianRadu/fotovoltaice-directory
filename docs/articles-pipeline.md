@@ -105,17 +105,11 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 
 ### Batch 2026-05-27 — 11 idei validate (10 din GSC gap analysis + 1 hot)
 
-> Ordine de scriere recomandată: #10 (HOT) → Tier A → Tier B → Tier C. Rutina ia PRIMA intrare cu `💡 idee` din ordinea de aici.
+> Ordine de scriere recomandată: #10 (HOT) → Tier A → Tier B → Tier C. Rutina ia PRIMA intrare cu `💡 idee` din ordinea de aici. (#11 publicat 2026-06-08, vezi „Publicate recent".)
 
 ---
 
 #### TIER A — Validat în GSC (impresii reale, risc mic)
-
-#### #11 — Certificat de Urbanism + Autorizație de Construire pentru Panouri Fotovoltaice 2026
-- **Status:** 💡 idee
-- **Cluster GSC (3 luni):** „certificat urbanism fotovoltaice" 28imp poz 22 + „autorizatie construire panouri fotovoltaice" 11imp + „certificat urbanism panouri fotovoltaice" 10imp + variante = **~58 imp**, poz 22-43
-- **De ce:** /ghid/avize-autorizatii e pillar generic; aici vrei pagină dedicată cu pași concreți per primărie, taxe, scutiri, când e/când NU e nevoie de autorizație (sub vs peste 27 kW pe acoperiș).
-- **Linkuri:** /ghid/avize-autorizatii-instalare-fotovoltaice-firma · /firme · /verificare-anre
 
 #### #12 — Avize și Aviz de Mediu pentru Parc Fotovoltaic 2026 — Ghid pentru Investitori
 - **Status:** 💡 idee
@@ -186,6 +180,12 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Certificat Urbanism Autorizație Construire Fotovoltaice 2026
+- **Publicat:** 2026-06-08 → [/ghid/certificat-urbanism-autorizatie-construire-fotovoltaice-2026](/ghid/certificat-urbanism-autorizatie-construire-fotovoltaice-2026)
+- **Cluster GSC țintă:** „certificat urbanism fotovoltaice" 28 imp poz 22, „autorizatie construire panouri fotovoltaice" 11 imp, „certificat urbanism panouri fotovoltaice" 10 imp + variante = ~58 imp/lună poz 22-43. Tier A validat GSC.
+- **Strategie:** dedicat exclusiv pe CU + AC (separat de pillar-ul `avize-autorizatii-instalare-fotovoltaice-firma`). Acoperă diferența CU vs AC, matrix decizional 10 scenarii (rezidențial/comercial/peste 400 kWp/parc la sol/monument/modificare structurală), textul citat al Legii 50/1991 art. 11 alin. (2) lit. f (modif. Legea 254/2022), procedura completă notificare primărie (4 pași), procedura CU + AC pași, taxe primării cu tabel București Sector 2 (HCGMB 514/2025) + intervale Cod Fiscal, procedură parc fotovoltaic extravilan (PUZ + scoatere agricol MADR + aviz mediu APM + Natura 2000), 10 greșeli frecvente, pas următor concret. 12 secțiuni, 10 FAQ FAQPage. ~3.500 cuvinte. Surse confirmate: Legea 50/1991 (ISC PDF + lege5), Legea 254/2022 (lege5), Codul Fiscal Legea 227/2015 (lege5), HCGMB 514/2025 (ps2.ro), OUG 34/2013 (madr.ro + legislatie.just.ro). NEVER-INVENT: taxele HCL doar București Sector 2 confirmate; restul „verifică pe site primărie\". Leagă /ghid/avize-autorizatii-instalare-fotovoltaice-firma (pillar) + /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre (prag 400 kWp) + /ghid/verificare-instalator-panouri-fotovoltaice-2026 + /firme + /verificare-anre + /cere-oferta.
+- **Next step:** GSC Request Indexing manual pentru /ghid/certificat-urbanism-autorizatie-construire-fotovoltaice-2026. Monitorizare 14/30 zile — KPI: clicks pe queries head („certificat urbanism fotovoltaice", „autorizatie construire panouri fotovoltaice"), impresii rank pe queries dimensionare/scenariu („cand am nevoie de autorizatie panouri fotovoltaice", „certificat urbanism firma fotovoltaic"). Long-tail bonus dacă apar: „parc fotovoltaic teren extravilan", „scoatere circuit agricol panouri" — dovadă că ghidul ranchează granular pe utility-scale.
 
 ### Casa Verde Baterii 2026 — Program Stocare AFM (Status Real)
 - **Publicat:** 2026-06-04 → [/ghid/casa-verde-baterii-2026-program-stocare-afm](/ghid/casa-verde-baterii-2026-program-stocare-afm)
