@@ -112,10 +112,7 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 #### TIER A — Validat în GSC (impresii reale, risc mic)
 
 #### #12 — Avize și Aviz de Mediu pentru Parc Fotovoltaic 2026 — Ghid pentru Investitori
-- **Status:** 💡 idee
-- **Cluster GSC:** „avize parc fotovoltaic" 17imp poz 22.8 + „aviz mediu parc fotovoltaic" 12imp poz 18 + „aviz de mediu parc fotovoltaic" 13imp poz 42 + „certificat urbanism parc fotovoltaic" 5imp = **~73 imp**
-- **De ce:** B2B utility-scale (MW+), buget mare, zero competiție serioasă RO. Audiență = investitori parc PV.
-- **Linkuri:** /ghid/avize-autorizatii · /ghid/fonduri-nerambursabile-panouri-fotovoltaice-imm-2026 · /clasament
+- **Status:** ✅ publicat 2026-06-11 — vezi „Publicate recent".
 
 #### #13 — Aviz Tehnic de Racordare (ATR) — Pași la E-Distribuție, Delgaz, E-ON pentru Prosumator 2026
 - **Status:** 💡 idee
@@ -180,6 +177,12 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Avize Parc Fotovoltaic 2026 — Ghid Investitori Utility-Scale
+- **Publicat:** 2026-06-11 → [/ghid/avize-aviz-mediu-parc-fotovoltaic-2026](/ghid/avize-aviz-mediu-parc-fotovoltaic-2026)
+- **Cluster GSC țintă (Tier A validat):** „avize parc fotovoltaic" 17 imp poz 22.8 + „aviz mediu parc fotovoltaic" 12 imp poz 18 + „aviz de mediu parc fotovoltaic" 13 imp poz 42 + „certificat urbanism parc fotovoltaic" 5 imp = **~73 imp/lună**. Long-tail adițional: „PUZ parc fotovoltaic", „scoatere circuit agricol parc fotovoltaic", „aviz Natura 2000 parc fotovoltaic", „ATR Transelectrica parc fotovoltaic", „autorizatie ANRE infiintare 1 MW", „aviz MApN parc fotovoltaic", „racordare parc fotovoltaic 50 MVA". Audiență: investitori utility-scale (MW+), dezvoltatori energie, fonduri investiții, firme cu portofoliu de teren agricol/industrial. B2B intent comercial maxim, zero competiție serioasă RO.
+- **Strategie:** 13 secțiuni + 10 FAQ FAQPage, ~5.500 cuvinte. Matricea scenariilor (sub 1 MW / 1–5 MW / 5–50 MW / peste 50 MW) cu coloane pentru emitent autorizație, ANRE, racordare, PUZ, scoatere agricol. CU + PUZ (cu nota cadrului dinamic — Legea 254/2022 vs PLx 255/2025 în lucru, deadline 31 aug 2026 PNRR Milestone 509). Aviz de mediu cu Legea 292/2018 Anexa 2 (etapa de încadrare „fără EIM" sau „cu EIM" + Studiu Evaluare Adecvată OUG 57/2007 Natura 2000). Scoatere circuit agricol cu OUG 34/2013, Ord. MADR 83/2018, Legea 254/2022 (clase III–V max 50 ha). ATR cu pragul **50 MVA / 110 kV** (Cod RET — Transelectrica vs operator distribuție). Autorizație de înființare ANRE peste 1 MW (Legea 123/2012 + Regulament ANRE 12.03.2025). Calendar realist 12–36 luni cu defalcare pe faze. 10 greșeli frecvente investitori. NEVER-INVENT strict: taxa scoatere agricol nu are tabel național unic (calcul individualizat OSPA/DAJ); costul PUZ 15.000–70.000 EUR (5–10 MW) cu sursă Simtel; cost 1 MW = 580.000–700.000 EUR cu sursă Genersy 2025; PUZ durata 8–18 luni cu sursă Simtel; 1 MW = 1–1,5 ha cu sursă Energynomics. Linkuri interne: [/ghid/avize-autorizatii-instalare-fotovoltaice-firma](/ghid/avize-autorizatii-instalare-fotovoltaice-firma) pillar firmă + [/ghid/certificat-urbanism-autorizatie-construire-fotovoltaice-2026](/ghid/certificat-urbanism-autorizatie-construire-fotovoltaice-2026) procedural + [/ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre](/ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre) + [/clasament](/clasament) + [/verificare-anre](/verificare-anre) + [/firme?segment=comercial](/firme?segment=comercial) + [/cere-oferta](/cere-oferta).
+- **Next step:** GSC Request Indexing manual pentru /ghid/avize-aviz-mediu-parc-fotovoltaic-2026. Monitorizare 14/30 zile — KPI: clicks pe queries head („avize parc fotovoltaic", „aviz mediu parc fotovoltaic", „certificat urbanism parc fotovoltaic"), impresii rank pe queries tehnice („ATR Transelectrica parc fotovoltaic", „scoatere circuit agricol parc fotovoltaic 50 ha", „autorizatie ANRE infiintare 1 MW"). Long-tail bonus: „PUZ parc fotovoltaic teren extravilan", „aviz Natura 2000 parc fotovoltaic ROSCI" — dovadă ranking granular pe utility-scale. **Update obligatoriu** când PLx 255/2025 e promulgat (eliminare PUZ + dublare 100 ha) → actualizează secțiunile PUZ + matrice scenarii cu noul cadru legal. Sursă tracking: [Capital.ro PLx 255/2025](https://www.capital.ro/autorizatiile-pentru-energie-regenerabila-se-schimba-radical-plx-255-2025-elimina-puz-pug-si-clarifica-regimul-infrastructurii.html).
 
 ### Certificat Urbanism Autorizație Construire Fotovoltaice 2026
 - **Publicat:** 2026-06-08 → [/ghid/certificat-urbanism-autorizatie-construire-fotovoltaice-2026](/ghid/certificat-urbanism-autorizatie-construire-fotovoltaice-2026)
