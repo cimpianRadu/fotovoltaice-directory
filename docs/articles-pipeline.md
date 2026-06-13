@@ -103,72 +103,52 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 ### 7 — Dimensionare sistem fotovoltaic comercial
 - **Status:** 🟡 absorbit parțial în #4 (calculator) — keyword-urile "dimensionare", "câți kw", "kwh vs kwp" sunt acoperite în #4. Rămâne ca propunere separată DOAR dacă după #4 vedem că query-urile de dimensionare pură au volum suficient să justifice un al doilea articol non-calculator-centric. Re-evaluare după 30 zile de la publicarea #4.
 
-### Batch 2026-05-27 — 11 idei validate (10 din GSC gap analysis + 1 hot)
+### Batch 2026-05-27 — coadă activă (re-priorizată 2026-06-13 cu date live)
 
-> Ordine de scriere recomandată: #10 (HOT) → Tier A → Tier B → Tier C. Rutina ia PRIMA intrare cu `💡 idee` din ordinea de aici. (#11 publicat 2026-06-08, vezi „Publicate recent".)
+> **Date live (13 iun, 3 luni):** 1.430 clicks, 59,2K imp, poz 10.8. Casa Verde Baterii (#10) = 229 cl, 42% trafic recent. Confirmă pattern-ul: **hot + news + pillar > niche evergreen**. Ordinea de mai jos prioritizează articolele cu cea mai mare probabilitate de tracțiune. Rutina ia PRIMA intrare cu `💡 idee`. Backlog-ul (jos) NU e luat — promovat la `idee` doar la semnal GSC nou.
+
+**Publicate din batch:** #10 Casa Verde Baterii (4 iun, 229cl pos 6.4), #11 Cert Urbanism (8 iun), #12 Avize Parc (11 iun) — vezi „Publicate recent" pentru detalii.
 
 ---
 
-#### TIER A — Validat în GSC (impresii reale, risc mic)
-
-#### #12 — Avize și Aviz de Mediu pentru Parc Fotovoltaic 2026 — Ghid pentru Investitori
-- **Status:** ✅ publicat 2026-06-11 — vezi „Publicate recent".
-
 #### #13 — Aviz Tehnic de Racordare (ATR) — Pași la E-Distribuție, Delgaz, E-ON pentru Prosumator 2026
-- **Status:** 💡 idee
+- **Status:** 💡 idee · NEXT
 - **Cluster GSC:** „aviz tehnic de racordare panouri fotovoltaice" 11imp poz 47, „model contract prosumator" 2imp poz 9; cluster mai larg „racordare prosumator", „cum devii prosumator"
 - **De ce:** site-ul deja afișat pe ATR (poz 47 = potențial); piesă post-decizie hi-intent (după ce omul a ales sistem). Tabel comparativ pași E-Distribuție / Delgaz / E-ON.
 - **Linkuri:** /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre · /ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026 · /firme
 
----
-
-#### TIER B — Logic puternic, fără validare GSC (pariu pe cerere domenială)
-
 #### #14 — Sistem Fotovoltaic 3, 5 și 10 kW pentru Casă 2026 — Preț, Producție, Amortizare
-- **Status:** 💡 idee
-- **Cluster:** „pret sistem fotovoltaic 3 kw casa", „pret panouri fotovoltaice 5 kw casa", „cat costa 5 kw fotovoltaice", „panouri fotovoltaice 10 kw casa producție" (1 query în GSC la 3 imp ÎNCĂ — semnal slab dar cerere domenială mare)
-- **De ce:** parallel REZIDENȚIAL la ghidul comercial 50/100/250 kW (top-performer site). Investiție strategică pe segmentul rezidențial. Aceleași praguri: ~4500/3800/3500 RON/kWp cu degresie (verifică prețuri 2026), yield PVGIS per zonă.
-- **Linkuri:** /ghid/casa-verde-fotovoltaice-2026 · /ghid/panouri-fotovoltaice-casa-vs-firma · /calculator-panouri-fotovoltaice?segment=rezidential · /firme?segment=rezidential
+- **Status:** 💡 idee — **promovat priority** (Casa Verde Baterii 229cl confirmă cererea rezidențială)
+- **Cluster:** „pret sistem fotovoltaic 3 kw casa", „pret panouri fotovoltaice 5 kw casa", „cat costa 5 kw fotovoltaice", „panouri fotovoltaice 10 kw casa producție"
+- **De ce:** parallel REZIDENȚIAL la ghidul comercial 50/100/250 kW (top-performer site). Casa Verde Baterii dovedește că rezidențialul prinde mare. Praguri ~4500/3800/3500 RON/kWp (verifică prețuri 2026), yield PVGIS per zonă.
+- **Linkuri:** /ghid/casa-verde-fotovoltaice-2026 · /ghid/casa-verde-baterii-2026-program-stocare-afm · /ghid/panouri-fotovoltaice-casa-vs-firma · /calculator-panouri-fotovoltaice?segment=rezidential · /firme?segment=rezidential
 
 #### #15 — Sisteme Fotovoltaice Comerciale 2026 — De la Hală Mică la MW: Ghid pentru Decident
-- **Status:** 💡 idee
+- **Status:** 💡 idee — pillar comercial nou
 - **Cluster GSC:** „sisteme fotovoltaice comerciale" 18imp poz 38 (semnal direct) + intent generic „panouri fotovoltaice firma", „sisteme fotovoltaice industriale"
-- **De ce:** pillar nou care leagă toate ghidurile commercial existente (hale, 50/100/250 kW, ROI, prosumator firma, lege, surplus, Electric Up). Trebuie să rankezi top pe „sisteme fotovoltaice comerciale" — e identitatea site-ului.
+- **De ce:** pillar nou care leagă toate ghidurile commercial existente (hale, 50/100/250 kW, ROI, prosumator firma, lege, surplus, Electric Up). E identitatea site-ului — trebuie să rankezi top pe „sisteme fotovoltaice comerciale".
 - **Linkuri:** toate ghidurile commercial · /firme?segment=comercial · /clasament · /calculator
-
-#### #16 — Întreținere și Curățare Panouri Fotovoltaice — Frecvență, Costuri, Ce Faci Singur
-- **Status:** 💡 idee
-- **Cluster:** „intretinere panouri fotovoltaice", „curatare panouri fotovoltaice", „cat de des cureti panouri solare", „mentenanta sistem fotovoltaic" (0 imp GSC — gap pur)
-- **De ce:** evergreen post-instalare, audiență pre-calificată (au sistem). Foarte puțin conținut serios RO.
-- **Linkuri:** /ghid/asigurare-panouri-fotovoltaice-comerciale · /firme
-
-#### #17 — Sistem Fotovoltaic Hibrid vs On-Grid vs Off-Grid pentru Casă și Firmă
-- **Status:** 💡 idee
-- **Cluster:** „sistem fotovoltaic hibrid", „off grid vs on grid", „panouri fotovoltaice cu baterie sau fara", „fotovoltaic fara baterie" (0 imp GSC; cerere domenială cunoscută)
-- **De ce:** configuration explainer pre-decizie, captează intent de descoperire („cu sau fără baterie?").
-- **Linkuri:** /ghid/stocare-energie-baterii-firme · /ghid/casa-verde-fotovoltaice-2026 · /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre
 
 ---
 
-#### TIER C — Vertical / niche (volum mic dar diferențiator)
+### 🟡 Backlog (NU sunt în coada activă, rutina le SARE)
+
+> Status `🟡 backlog` ≠ `💡 idee`. Toate au 0 impresii GSC. Pattern-ul validat la 13 iun arată că niche evergreen fără validare aduce trafic mic comparativ cu hot/news/pillar. Promovează manual la `💡 idee` doar dacă: (a) apare semnal GSC peste 10 imp pe cluster, (b) coada activă se golește complet, sau (c) leagă natural de un articol hot publicat recent. Păstrate pentru posibilă re-evaluare; NU șterse pentru că pot deveni relevante dacă apare un trigger.
+
+#### #16 — Întreținere și Curățare Panouri Fotovoltaice — Frecvență, Costuri, Ce Faci Singur
+- **Status:** 🟡 backlog · cluster „intretinere/curatare panouri fotovoltaice", 0 imp GSC.
+
+#### #17 — Sistem Fotovoltaic Hibrid vs On-Grid vs Off-Grid pentru Casă și Firmă
+- **Status:** 🟡 backlog · cluster „hibrid/on-grid/off-grid", 0 imp GSC.
 
 #### #18 — Durată de Viață Panouri Fotovoltaice — Degradare, Garanție și Ce Schimbi după 10 Ani
-- **Status:** 💡 idee
-- **Cluster:** „cat dureaza panouri fotovoltaice", „durata viata panouri solare", „degradare panouri fotovoltaice", „garantie panouri fotovoltaice" (0 imp GSC)
-- **De ce:** combinație durată + garanție + degradare = high-trust evergreen. Combină 3 query-uri într-o piesă.
-- **Linkuri:** /ghid/asigurare-panouri-fotovoltaice-comerciale · /ghid/tipuri-panouri-fotovoltaice · /ghid/invertoare-fotovoltaice-comerciale
+- **Status:** 🟡 backlog · cluster „durata viata/degradare/garantie panouri", 0 imp GSC.
 
 #### #19 — Panouri Fotovoltaice pe Carport / Parcare — Soluție pentru Firme cu Suprafețe Mari
-- **Status:** 💡 idee
-- **Cluster:** „carport solar", „panouri fotovoltaice parcare", „structura carport panouri", „panouri parcare firma cost" (0 imp GSC)
-- **De ce:** nișă emergentă RO (mall, retail, logistică, CT-parks), aproape zero competiție. B2B cu buget.
-- **Linkuri:** /ghid/panouri-fotovoltaice-hale-industriale · /ghid/sistem-fotovoltaic-50-100-250-kw-firma-pret-suprafata-productie · /firme?segment=comercial
+- **Status:** 🟡 backlog · cluster „carport solar/panouri parcare", 0 imp GSC; nișă fără competiție dar fără cerere validată.
 
 #### #20 — Panouri Fotovoltaice pentru Fermă Agricolă 2026 — Subvenții AFIR și Aplicații (Irigații, Hale, Sere)
-- **Status:** 💡 idee
-- **Cluster:** „panouri fotovoltaice ferma agricola", „afir fotovoltaice", „fotovoltaice irigatii", „panouri solare ferma 2026" (1 imp GSC)
-- **De ce:** vertical agro absent pe site, AFIR are scheme dedicate (verifică PNS/intervenții 2026). Diferențiator vs orice altă pagină RO.
-- **Linkuri:** /ghid/subventii-panouri-fotovoltaice · /ghid/fonduri-nerambursabile-panouri-fotovoltaice-imm-2026
+- **Status:** 🟡 backlog · cluster „ferma agricola/AFIR fotovoltaice", 1 imp GSC.
 
 ---
 
