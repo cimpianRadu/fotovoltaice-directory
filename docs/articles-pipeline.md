@@ -107,15 +107,9 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 
 > **Date live (13 iun, 3 luni):** 1.430 clicks, 59,2K imp, poz 10.8. Casa Verde Baterii (#10) = 229 cl, 42% trafic recent. Confirmă pattern-ul: **hot + news + pillar > niche evergreen**. Ordinea de mai jos prioritizează articolele cu cea mai mare probabilitate de tracțiune. Rutina ia PRIMA intrare cu `💡 idee`. Backlog-ul (jos) NU e luat — promovat la `idee` doar la semnal GSC nou.
 
-**Publicate din batch:** #10 Casa Verde Baterii (4 iun, 229cl pos 6.4), #11 Cert Urbanism (8 iun), #12 Avize Parc (11 iun), #13 ATR Prosumator (15 iun) — vezi „Publicate recent" pentru detalii.
+**Publicate din batch:** #10 Casa Verde Baterii (4 iun, 229cl pos 6.4), #11 Cert Urbanism (8 iun), #12 Avize Parc (11 iun), #13 ATR Prosumator (15 iun), #14 Sistem 3/5/10 kW Casă (18 iun) — vezi „Publicate recent" pentru detalii.
 
 ---
-
-#### #14 — Sistem Fotovoltaic 3, 5 și 10 kW pentru Casă 2026 — Preț, Producție, Amortizare
-- **Status:** 💡 idee · NEXT — **promovat priority** (Casa Verde Baterii 229cl confirmă cererea rezidențială)
-- **Cluster:** „pret sistem fotovoltaic 3 kw casa", „pret panouri fotovoltaice 5 kw casa", „cat costa 5 kw fotovoltaice", „panouri fotovoltaice 10 kw casa producție"
-- **De ce:** parallel REZIDENȚIAL la ghidul comercial 50/100/250 kW (top-performer site). Casa Verde Baterii dovedește că rezidențialul prinde mare. Praguri ~4500/3800/3500 RON/kWp (verifică prețuri 2026), yield PVGIS per zonă.
-- **Linkuri:** /ghid/casa-verde-fotovoltaice-2026 · /ghid/casa-verde-baterii-2026-program-stocare-afm · /ghid/panouri-fotovoltaice-casa-vs-firma · /calculator-panouri-fotovoltaice?segment=rezidential · /firme?segment=rezidential
 
 #### #15 — Sisteme Fotovoltaice Comerciale 2026 — De la Hală Mică la MW: Ghid pentru Decident
 - **Status:** 💡 idee — pillar comercial nou
@@ -151,6 +145,12 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Sistem Fotovoltaic 3, 5 și 10 kW Casă — Preț 2026
+- **Publicat:** 2026-06-18 → [/ghid/sistem-fotovoltaic-3-5-10-kw-casa-pret-productie-amortizare-2026](/ghid/sistem-fotovoltaic-3-5-10-kw-casa-pret-productie-amortizare-2026)
+- **Cluster GSC țintă:** „pret sistem fotovoltaic 3 kw casa", „pret panouri fotovoltaice 5 kw casa", „cat costa 5 kw fotovoltaice", „panouri fotovoltaice 10 kw casa producție", „sistem fotovoltaic 5 kw pret casa", „sistem fotovoltaic 10 kw casa pret", „cat produce 5 kw panouri solare", „cat produce 10 kw fotovoltaic anual", „cati metri patrati pentru 5 kw panouri", „amortizare panouri fotovoltaice casa 5 kw", „cati kw imi trebuie pentru o casa", „dimensionare panouri fotovoltaice casa". Cluster generic rezidențial volum mare — target Tier A GSC, intent commercial puternic post-decizie.
+- **Strategie:** parallel REZIDENȚIAL la ghidul comercial 50/100/250 kW (top-performer site). Casa Verde Baterii (229cl/10 zile) a confirmat că rezidențialul prinde tracțiune. 13 secțiuni + 10 FAQ FAQPage, ~5.500 cuvinte. Acoperă: praguri preț 2026 cu tabel RON/kWp (~6.300/5.400/5.100), suprafață m²/kWp pe înclinat+terasă (5,3/6,5), producție anuală kWh pe 3 zone PVGIS (București 1.280, Cluj 1.180, Constanța 1.380 — din pvgis-yields.json), breakdown dedicat pentru 3/5/10 kW cu profil utilizator + cifre cheie + când e potrivit, tabel comparativ unic 3 vs 5 vs 10 kW, calcul economie+amortizare cu tarif energie 2026 (PPC Fix Online 1,20 / mediană 1,48 RON/kWh), invertor on-grid vs hibrid (recomandare puternică hibrid din start pentru extensibilitate baterii), capitol baterii (LFP 5-15 kWh, când merită), prosumator Legea 169/2025 pe scurt, 10 greșeli frecvente (supradimensionare, invertor greșit, lipsa branșament trifazat la 10 kW, așteptare pasivă Casa Verde 2026 pentru panouri etc.), pași de la decizie la sistem. NEVER-INVENT strict: prețuri cu surse explicite (NovaSol 25 mar 2026, GreenLead 26 mar 2026, PPC Energy ofertă activă iun 2026); yield-uri PVGIS-SARAH3 (single source pvgis-yields.json); tarife energie inline cu link la engie.ro/ppcenergy.ro/economisi.ro/posf.ro; Casa Verde 2026 framing strict (panouri scoase din buget AFM 2026, doar baterii buget aprobat 21 mai 2026 ghid nepublicat). Leagă /ghid/casa-verde-fotovoltaice-2026 + /ghid/casa-verde-baterii-2026-program-stocare-afm + /ghid/panouri-fotovoltaice-casa-vs-firma + /calculator-panouri-fotovoltaice?segment=rezidential + /firme?segment=rezidential + /verificare-anre + /cere-oferta + /ghid/aviz-tehnic-racordare-atr-prosumator-2026 + /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre + /ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026 + /ghid/subventii-panouri-fotovoltaice.
+- **Next step:** GSC Request Indexing manual pentru /ghid/sistem-fotovoltaic-3-5-10-kw-casa-pret-productie-amortizare-2026. Monitorizare 14/30 zile — KPI: clicks pe queries head („cat costa 5 kw fotovoltaice", „pret sistem fotovoltaic 5 kw casa", „sistem fotovoltaic 10 kw casa pret"), impresii rank pe queries dimensionare („cati metri patrati pentru 5 kw panouri", „cati kw imi trebuie pentru o casa", „cat produce 10 kw fotovoltaic anual"). Long-tail bonus dacă apar: „dimensionare panouri casa cu pompa caldura", „amortizare 5 kw fara subventie", „invertor hibrid vs on-grid casa" — dovadă ranking granular pe scenariu concret. **Update obligatoriu** când AFM publică ghidul Casa Verde Baterii 2026 oficial sau dacă revine subvenție pentru panouri — actualizează secțiunea „Economie anuală și amortizare" + FAQ 8 cu cifrele finale. Pattern în replicare dacă urcă: variante mai înguste „Sistem fotovoltaic monofazat vs trifazat casă" sau „Panouri fotovoltaice casă cu pompă căldură" (cluster de extindere).
 
 ### Aviz Tehnic Racordare (ATR) Prosumator 2026 — Ghid Pași
 - **Publicat:** 2026-06-15 → [/ghid/aviz-tehnic-racordare-atr-prosumator-2026](/ghid/aviz-tehnic-racordare-atr-prosumator-2026)
