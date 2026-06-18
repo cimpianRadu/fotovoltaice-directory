@@ -543,5 +543,11 @@
     "judet": "Buzau",
     "cui": "24491134",
     "reason": "Website-ul din registru (ecoheat.ro) aparține unui furnizor de combustibil solid (peleți și brichete pentru sobe/centrale) — site nepotrivit firmei și fără legătură cu fotovoltaice."
+  },
+  {
+    "societate": "SC A-Z VET BODONEA SRL",
+    "judet": "Satu Mare",
+    "cui": "28169736",
+    "reason": "Lead inbound prin formularul /listeaza-firma, dar firmă de medicină veterinară (obiect secundar activități sanitar-veterinare, contactul declară explicit că este medic veterinar). ANRE not-found, fără niciun serviciu fotovoltaic. Respins."
   }
 ]
