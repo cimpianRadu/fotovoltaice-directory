@@ -21,7 +21,7 @@ import HomeSegmentHero from '@/components/home/HomeSegmentHero';
 import HomeOfertaBand from '@/components/home/HomeOfertaBand';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
-import { getCompanies, getCoveredCounties, getPremiumCompanies, getCompaniesBySegment } from '@/lib/utils';
+import { getCompanies, getCoveredCounties, getPremiumCompanies, getCompaniesBySegment, getCompaniesByCounty, slugifyCounty } from '@/lib/utils';
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { PRICING, BUNDLE } from '@/lib/pricing';
 import guidesData from '@/data/guides.json';
@@ -39,6 +39,15 @@ function segmentStats(view: 'comercial' | 'rezidential') {
 }
 const COMERCIAL_STATS = segmentStats('comercial');
 const REZIDENTIAL_STATS = segmentStats('rezidential');
+
+// Lightweight client search index — firm name → page, county → judet page
+const FIRM_INDEX = getCompanies().map((c) => ({ name: c.name, slug: c.slug }));
+const COUNTY_INDEX = getCoveredCounties().map((name) => ({ name, slug: slugifyCounty(name) }));
+const TOP_COUNTIES = getCoveredCounties()
+  .map((name) => ({ name, slug: slugifyCounty(name), count: getCompaniesByCounty(name).length }))
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 6)
+  .map(({ name, slug }) => ({ name, slug }));
 
 export const metadata: Metadata = {
   alternates: {
@@ -86,8 +95,14 @@ export default function HomePage() {
       <JsonLd data={generateOrganizationJsonLd()} />
       <JsonLd data={generateFAQJsonLd(homeFaqs)} />
 
-      {/* Hero — segment split (Casă vs Firmă) */}
-      <HomeSegmentHero comercialStats={COMERCIAL_STATS} rezidentialStats={REZIDENTIAL_STATS} />
+      {/* Hero — segment split (Casă vs Firmă) + fuzzy firm search */}
+      <HomeSegmentHero
+        comercialStats={COMERCIAL_STATS}
+        rezidentialStats={REZIDENTIAL_STATS}
+        firms={FIRM_INDEX}
+        counties={COUNTY_INDEX}
+        topCounties={TOP_COUNTIES}
+      />
 
       {/* Cere Ofertă — buyer-facing CTA, segment-aware count */}
       <HomeOfertaBand comercialCount={COMERCIAL_STATS.count} rezidentialCount={REZIDENTIAL_STATS.count} />

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useSegment, type SegmentView } from '@/components/segment/SegmentProvider';
 import { trackEvent } from '@/lib/analytics';
+import HomeHeroSearch, { type FirmIndexItem, type CountyIndexItem } from './HomeHeroSearch';
 
 function HouseIcon() {
   return (
@@ -43,46 +44,35 @@ function HallIcon() {
   );
 }
 
-function Check() {
-  return <span className="text-green-600 font-bold shrink-0">&#10003;</span>;
-}
-
 interface DoorProps {
   view: SegmentView;
   onChoose: (v: SegmentView) => void;
   icon: React.ReactNode;
   iconBg: string;
   title: string;
-  description: React.ReactNode;
   features: string[];
   ctaClass: string;
 }
 
-function Door({ view, onChoose, icon, iconBg, title, description, features, ctaClass }: DoorProps) {
+function Door({ view, onChoose, icon, iconBg, title, features, ctaClass }: DoorProps) {
   return (
     <Link
       href="/firme"
       onClick={() => onChoose(view)}
-      className="group flex flex-col text-left bg-white rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-xl border-[3px] border-transparent hover:border-primary/30 hover:-translate-y-1 transition-all"
+      className="group flex flex-col text-left bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 shadow-xl border-[3px] border-transparent hover:border-primary/30 hover:-translate-y-1 transition-all"
     >
-      <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 ${iconBg}`}>
-        {icon}
+      <div className="flex items-center gap-3 mb-2">
+        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shrink-0 ${iconBg}`}>
+          {icon}
+        </div>
+        <h2 className="text-base sm:text-lg font-extrabold text-gray-900 leading-tight">{title}</h2>
       </div>
-      <h2 className="text-base sm:text-2xl font-extrabold text-gray-900 mb-1 sm:mb-2 leading-tight">{title}</h2>
-      <p className="hidden sm:block text-sm text-gray-500 mb-5 flex-1 leading-relaxed">{description}</p>
-      <ul className="hidden sm:block space-y-2.5 mb-6">
-        {features.map((f) => (
-          <li key={f} className="flex items-center gap-2.5 text-sm font-semibold text-gray-700">
-            <Check />
-            {f}
-          </li>
-        ))}
-      </ul>
+      <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4 leading-relaxed">{features.join(' · ')}</p>
       <span
-        className={`mt-auto inline-flex items-center justify-center gap-1.5 font-bold text-sm sm:text-base py-2.5 sm:py-3.5 px-2 rounded-lg sm:rounded-xl text-white w-full transition-colors ${ctaClass}`}
+        className={`mt-auto inline-flex items-center justify-center gap-1.5 font-bold text-sm py-2.5 sm:py-3 px-2 rounded-lg sm:rounded-xl text-white w-full transition-colors ${ctaClass}`}
       >
         Caută instalatori
-        <svg className="hidden sm:block w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
         </svg>
       </span>
@@ -99,9 +89,15 @@ interface SegmentStats {
 export default function HomeSegmentHero({
   comercialStats,
   rezidentialStats,
+  firms,
+  counties,
+  topCounties,
 }: {
   comercialStats: SegmentStats;
   rezidentialStats: SegmentStats;
+  firms: FirmIndexItem[];
+  counties: CountyIndexItem[];
+  topCounties: CountyIndexItem[];
 }) {
   const { segment, setSegment } = useSegment();
   const stats = segment === 'rezidential' ? rezidentialStats : comercialStats;
@@ -114,18 +110,40 @@ export default function HomeSegmentHero({
   return (
     <>
       <section className="bg-gradient-to-br from-secondary-dark via-secondary to-secondary-light text-white">
-        <div className="max-w-5xl mx-auto px-4 py-8 sm:py-16 text-center">
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold mb-3 sm:mb-4 leading-tight">
-            Instalatori Autorizați
-            <br className="hidden sm:block" />
-            <span className="text-primary-light"> Panouri Fotovoltaice România</span>
+        <div className="max-w-5xl mx-auto px-4 py-8 sm:py-12 text-center">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-2 sm:mb-3 leading-tight">
+            Instalatori Panouri Fotovoltaice
+            <span className="text-primary-light"> Autorizați în România</span>
           </h1>
-          <p className="text-sm sm:text-lg text-gray-300 mb-5 sm:mb-7 max-w-2xl mx-auto">
-            Găsești instalatori de panouri fotovoltaice verificați, cu date reale din registrele oficiale. Alege pentru ce ai nevoie:
+          <p className="text-sm sm:text-lg text-gray-300 mb-5 sm:mb-6 max-w-2xl mx-auto">
+            Găsește unul verificat lângă tine — date reale din registrele oficiale.
           </p>
 
+          {/* Fuzzy search — by firm name, with county fallback (routes to indexable pages) */}
+          <HomeHeroSearch firms={firms} counties={counties} />
+
+          {/* County pills — crawlable internal links to /firme/judet/* (UX shortcut + SEO) */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-4 max-w-xl mx-auto">
+            <span className="text-xs text-gray-400 self-center">Caută rapid:</span>
+            {topCounties.map((c) => (
+              <Link
+                key={c.slug}
+                href={`/firme/judet/${c.slug}`}
+                className="text-xs sm:text-sm text-secondary-dark bg-white hover:bg-gray-100 rounded-full px-3 py-1 transition-colors"
+              >
+                {c.name}
+              </Link>
+            ))}
+            <Link
+              href="/firme"
+              className="text-xs sm:text-sm text-primary-light hover:text-primary self-center font-medium transition-colors"
+            >
+              toate firmele &rarr;
+            </Link>
+          </div>
+
           {/* Live-data proof — single discreet trust line (full proof lives in the „De ce" section) */}
-          <div className="flex justify-center mb-7 sm:mb-9">
+          <div className="flex justify-center mt-5 mb-7 sm:mb-9">
             <span className="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-200">
               <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0" />
               <span>
@@ -143,13 +161,7 @@ export default function HomeSegmentHero({
               icon={<HouseIcon />}
               iconBg="bg-amber-100"
               title="Pentru casa mea"
-              description={
-                <>
-                  Panouri pentru locuință și subvenția <strong>Casa Verde</strong>. Instalatori autorizați
-                  aproape de tine.
-                </>
-              }
-              features={['Casa Verde', 'Locuință', 'Prosumator']}
+              features={['Locuință', 'Prosumator', 'Casa Verde']}
               ctaClass="bg-primary group-hover:bg-primary-dark"
             />
             <Door
@@ -158,12 +170,6 @@ export default function HomeSegmentHero({
               icon={<HallIcon />}
               iconBg="bg-blue-100"
               title="Pentru firma mea"
-              description={
-                <>
-                  Hale, fabrici, clădiri comerciale. Instalatori verificați cu atestat <strong>ANRE</strong> și
-                  Electric Up.
-                </>
-              }
               features={['Hală / Fabrică', 'Electric Up', 'ANRE C2A']}
               ctaClass="bg-secondary group-hover:bg-secondary-dark"
             />
