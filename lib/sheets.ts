@@ -19,7 +19,9 @@ async function appendRow(sheetName: string, values: string[]) {
   await sheets.spreadsheets.values.append({
     spreadsheetId: SPREADSHEET_ID,
     range: `${sheetName}!A:A`,
-    valueInputOption: 'USER_ENTERED',
+    // RAW (not USER_ENTERED): keep submitted text verbatim — phone numbers keep
+    // their leading 0, and values starting with '=' can't become spreadsheet formulas.
+    valueInputOption: 'RAW',
     requestBody: {
       values: [values],
     },

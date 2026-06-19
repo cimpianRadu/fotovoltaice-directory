@@ -19,7 +19,7 @@ export default function SearchableSelect({
   name,
   options,
   required = false,
-  value = '',
+  value,
   onValueChange,
   placeholder = 'Selectează...',
   className = '',
@@ -30,13 +30,20 @@ export default function SearchableSelect({
   const containerRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
+  // Support both controlled (parent passes `value`) and uncontrolled usage.
+  // Forms (LeadForm/ListingForm) mount this without wiring state, so without an
+  // internal fallback the hidden input would never update and submits would fail.
+  const isControlled = value !== undefined;
+  const [internalValue, setInternalValue] = useState('');
+  const currentValue = isControlled ? value : internalValue;
+
   const filtered = useMemo(() => {
     if (!search) return options;
     const q = search.toLowerCase();
     return options.filter((opt) => opt.label.toLowerCase().includes(q));
   }, [options, search]);
 
-  const selectedLabel = options.find((opt) => opt.value === value)?.label;
+  const selectedLabel = options.find((opt) => opt.value === currentValue)?.label;
 
   useEffect(() => {
     if (open) {
@@ -63,6 +70,7 @@ export default function SearchableSelect({
   }
 
   function select(val: string) {
+    if (!isControlled) setInternalValue(val);
     onValueChange?.(val);
     setOpen(false);
   }
@@ -77,7 +85,7 @@ export default function SearchableSelect({
       )}
 
       {/* Hidden input for form submission */}
-      <input type="hidden" name={name} value={value} />
+      <input type="hidden" name={name} value={currentValue} />
 
       {/* Trigger button */}
       <button
@@ -126,15 +134,15 @@ export default function SearchableSelect({
                 type="button"
                 onClick={() => select('')}
                 className={`w-full text-left px-3 py-2 text-sm hover:bg-primary/5 transition-colors flex items-center gap-2 ${
-                  !value ? 'text-primary font-medium bg-primary/5' : 'text-gray-600'
+                  !currentValue ? 'text-primary font-medium bg-primary/5' : 'text-gray-600'
                 }`}
               >
-                {!value && (
+                {!currentValue && (
                   <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                   </svg>
                 )}
-                <span className={!value ? '' : 'pl-6'}>{placeholder}</span>
+                <span className={!currentValue ? '' : 'pl-6'}>{placeholder}</span>
               </button>
             </li>
 
@@ -149,15 +157,15 @@ export default function SearchableSelect({
                     type="button"
                     onClick={() => select(opt.value)}
                     className={`w-full text-left px-3 py-2 text-sm hover:bg-primary/5 transition-colors flex items-center gap-2 ${
-                      value === opt.value ? 'text-primary font-medium bg-primary/5' : 'text-gray-700'
+                      currentValue === opt.value ? 'text-primary font-medium bg-primary/5' : 'text-gray-700'
                     }`}
                   >
-                    {value === opt.value && (
+                    {currentValue === opt.value && (
                       <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                       </svg>
                     )}
-                    <span className={value === opt.value ? '' : 'pl-6'}>{opt.label}</span>
+                    <span className={currentValue === opt.value ? '' : 'pl-6'}>{opt.label}</span>
                   </button>
                 </li>
               ))
