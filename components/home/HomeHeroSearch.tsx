@@ -57,7 +57,9 @@ export default function HomeHeroSearch({ firms, counties }: Props) {
   }, []);
 
   function go(href: string, kind: 'firm' | 'county') {
-    trackEvent('hero_search_select', { kind, query: nq });
+    // Only the kind (firm/county) — NOT the raw query, which would be
+    // high-cardinality noise in Umami.
+    trackEvent('hero_search_select', { kind });
     router.push(href);
   }
 

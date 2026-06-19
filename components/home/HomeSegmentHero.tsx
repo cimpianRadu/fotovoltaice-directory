@@ -129,6 +129,7 @@ export default function HomeSegmentHero({
               <Link
                 key={c.slug}
                 href={`/firme/judet/${c.slug}`}
+                onClick={() => trackEvent('hero_pill_click', { county: c.name })}
                 className="text-xs sm:text-sm text-secondary-dark bg-white hover:bg-gray-100 rounded-full px-3 py-1 transition-colors"
               >
                 {c.name}
@@ -136,6 +137,7 @@ export default function HomeSegmentHero({
             ))}
             <Link
               href="/firme"
+              onClick={() => trackEvent('hero_pill_click', { county: 'toate' })}
               className="text-xs sm:text-sm text-primary-light hover:text-primary self-center font-medium transition-colors"
             >
               toate firmele &rarr;

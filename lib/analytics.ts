@@ -12,6 +12,7 @@ type EventName =
   | 'external_link_clicked'
   | 'segment_selected'
   | 'hero_search_select'
+  | 'hero_pill_click'
   | 'cere_oferta_click';
 
 type EventProps = Record<string, string | number | boolean>;
