@@ -86,6 +86,16 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 - **Trigger:** lansare oficială pentru aplicare.
 - **Acțiune:** articol „Voucher REPowerEU 25.000 RON — Cum aplici pentru panouri + stocare". Cluster „voucher repowereu", „voucher panouri 25000 lei", „voucher stocare repowereu".
 
+### Brașov — semnal geo slab (de monitorizat)
+- **Status la 2026-06-29:** „montaj panouri solare brasov" 35 imp poz 32.6 — semnal mic, sub thresholdul de promovare. Brașov are hub industrial (auto + tech) similar Banatului.
+- **Trigger:** dacă Arad rankează după publicare (val. template-ul geo pentru capitale regionale) → Brașov devine candidat #2 după Cluj re-evaluare.
+- **Acțiune:** articol „Top Firme Panouri Fotovoltaice Brașov 2026". Cluster posibil: „panouri fotovoltaice brasov", „instalatori brasov", „montaj panouri solare brasov", „firme panouri fotovoltaice brasov".
+
+### Electrician Autorizat ANRE pentru Fotovoltaice (niche tradesman)
+- **Status la 2026-06-29:** „electrician autorizat anre fotovoltaic" 44 imp poz 32.8 — semnal de tradesman individual (PFA/atestat B), nu firmă. Acum acoperit doar tangențial în ghidul ANRE.
+- **Trigger:** dacă după 30 zile semnalul crește peste 60 imp/lună, promovare la `💡 idee`.
+- **Acțiune posibilă:** articol „Electrician Autorizat ANRE pentru Panouri Fotovoltaice — Atestate B/Bp, Diferență vs Firmă C1A/C2A". Cluster „electrician autorizat anre fotovoltaic", „atestat B panouri fotovoltaice", „PFA panouri fotovoltaice", „atestat electrician fotovoltaice 2026".
+
 > **Cum se gestionează:** când un trigger se confirmă, mutați intrarea de aici la „🎯 Propuneri active" cu status `💡 idee` (sau direct scrisă, dacă urgent). NU rămân aici după ce s-au scris — mergeți în „Publicate recent".
 
 ---
@@ -106,6 +116,32 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 > **Date live (13 iun, 3 luni):** 1.430 clicks, 59,2K imp, poz 10.8. Casa Verde Baterii (#10) = 229 cl, 42% trafic recent. Confirmă pattern-ul: **hot + news + pillar > niche evergreen**. Ordinea de mai jos prioritizează articolele cu cea mai mare probabilitate de tracțiune. Rutina ia PRIMA intrare cu `💡 idee`. Backlog-ul (jos) NU e luat — promovat la `idee` doar la semnal GSC nou.
 
 **Publicate din batch:** #10 Casa Verde Baterii (4 iun, 229cl pos 6.4), #11 Cert Urbanism (8 iun), #12 Avize Parc (11 iun), #13 ATR Prosumator (15 iun), #14 Sistem 3/5/10 kW Casă (18 iun), #15 Pillar Comercial Decident (24 iun) — vezi „Publicate recent" pentru detalii.
+
+### Batch 2026-06-29 — semnale GSC noi (200 query-uri analizate)
+
+> **Context:** analiză GSC pe primele 200 query-uri (29 iun) a identificat 3 cluster-uri prioritare neacoperite. Re-validat pattern: striking-distance pe page 3-4 cu impresii mari = ROI cel mai mare. Ordinea de mai jos prioritizează ce nu duplică un ghid existent.
+
+#### #21 — Top Firme Panouri Fotovoltaice Arad 2026 — Instalatori Autorizați ANRE
+- **Status:** ✅ publicat 2026-06-29 — vezi „Publicate recent".
+
+#### #22 — Amortizare Panouri Fotovoltaice 2026 — Calcul ROI Pas cu Pas (Casă și Firmă)
+- **Status:** 💡 idee · cluster commercial intent high.
+- **Cluster GSC validat (29 iun):** „amortizare sistem fotovoltaic" 21 imp poz 36.5 (page 4) + cluster larg „amortizare panouri fotovoltaice casa", „amortizare panouri fotovoltaice firma", „cat se amortizeaza panourile fotovoltaice", „in cati ani se amortizeaza panourile fotovoltaice 5 kw", „amortizare 5 kw fara subventie", „calcul amortizare panouri", „ROI panouri fotovoltaice". Long-tail validat în ghidurile existente (3/5/10 kW casă, 50/100/250 kW firmă, calculator) dar fără pagină dedicată.
+- **De ce:** termenul „amortizare" apare în 12+ ghiduri dar nu are pillar dedicat. Calculator-ghidul e tool-centric; asta ar fi formula-centric (cum se calculează, ce factori influențează, exemple pe scenarii). Punte între rezidențial (3-10 kW) și comercial (50-500 kW).
+- **Strategie:** 10 secțiuni + 10 FAQ. Formula amortizare = investitie / economie anuală. Variabile: yield PVGIS, autoconsum %, tarif RON/kWh consumat, preț surplus achiziție prosumator, degradare panouri 0,5%/an, costuri mentenanță, dobândă bani împrumutați. Tabel scenarii: 5 kW casă (4-8 ani), 10 kW casă (3,5-6,5 ani), 100 kW firmă (3-5 ani), 250 kW firmă (3-4 ani). Cu vs fără subvenție.
+- **Linkuri interne:** /calculator + ghid 3/5/10 kW casă + ghid 50/100/250 kW firmă + pillar comercial decident + ghid surplus + ghid Electric Up + ghid fonduri IMM + ghid lege prosumator 2026.
+
+#### #23 — Lista Firme Autorizate AFM Casa Verde Fotovoltaice 2026
+- **Status:** 💡 idee · niche dar volume puternic.
+- **Cluster GSC validat (29 iun):** „lista firme panouri fotovoltaice afm" 43 imp poz 9.1 + „firme autorizate afm panouri fotovoltaice" 40 imp poz 28.9 + „lista instalatori afm" 27 imp poz 31.6 + cluster larg „firme casa verde", „instalatori validati afm casa verde", „lista firme afm 2026". Asta e cluster separat de cel ANRE — utilizatori care caută firme PENTRU subvenție.
+- **De ce:** acum acoperit doar tangențial în ghidul ANRE (secțiunea nouă „ANRE vs AFM"). Un ghid dedicat care explică **procesul AFM** (cum o firmă intră pe listă, cum verifici, cum sesiunea schimbă lista) + linkuri către lista oficială afm.ro + criterii practice de selecție.
+- **Strategie:** 8 secțiuni + 10 FAQ. NEVER-INVENT strict: nu copia lista AFM (variază per sesiune), trimite la afm.ro pentru lista live; explică procesul de înscriere AFM și cum verifici denumirea/CUI. Cluster pillar pentru tot conținutul Casa Verde existent.
+- **Linkuri interne:** /ghid/casa-verde-fotovoltaice-2026 + /ghid/casa-verde-baterii-2026-program-stocare-afm + /firme + /verificare-anre + /firme?segment=rezidential.
+
+#### #24 — Sistem Fotovoltaic 50 kW Preț Firmă 2026 (variantă pure)
+- **Status:** 🟡 backlog · semnal GSC dar deja covered.
+- **Cluster GSC (29 iun):** „sistem fotovoltaic 50 kw pret" 10 imp poz 28.2 + variante „cat costa 50 kw fotovoltaice firma".
+- **Observație:** ghidul `sistem-fotovoltaic-50-100-250-kw-firma` există și acoperă acest cluster. Poz 28.2 e anormală — ar trebui top 5 pe query exact. **Acțiune:** verifică snippet-ul + meta + dacă există coincidență cu pillar-ul comercial decident (canibalism intern). NU articol nou — fix pe ghidul existent.
 
 ---
 
@@ -135,6 +171,12 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Top Firme Panouri Fotovoltaice Arad 2026 — 8 Instalatori Autorizați ANRE
+- **Publicat:** 2026-06-29 → [/ghid/top-firme-panouri-fotovoltaice-arad-2026](/ghid/top-firme-panouri-fotovoltaice-arad-2026)
+- **Cluster GSC țintă (validat 29 iun):** „panouri fotovoltaice arad" 154 imp poz 14.6 (head) + „instalatori autorizati panouri fotovoltaice arad" 22 imp poz **4.0** (long-tail deja top 5 FĂRĂ ghid dedicat — validare critică, distinct vs Cluj poz 43 / Timișoara poz 17) + cluster larg „firme panouri fotovoltaice arad", „instalator arad fotovoltaice", „montaj panouri solare arad", „firme autorizate ANRE arad", „panouri solare arad firma", „instalatori autorizati panouri fotovoltaice arad", „lista firme fotovoltaice arad". Pattern-ul geo parcat (Cluj/Timișoara) se re-validează aici punctual datorită semnalului GSC clar pe varianta lungă.
+- **Strategie:** replică template București/Cluj/Timișoara la regiunea V (Banat-Crișana). 8 secțiuni + 10 FAQ FAQPage, **3.538 cuvinte**. Diferențiator local: angle B2B industrial (Leoni Wiring Systems ~6.000 angajați, Astra Vagoane Călători, Yazaki, Pirelli, parcuri industriale UTA 1 + Vest + Curtici Zonă Liberă) + poziție logistică (autostrada A1, granița Nădlac, gara Curtici). Acoperă: context regional Crișana + yield PVGIS Arad 1.240 kWh/kWp/an (single source `pvgis-yields.json`), criterii selecție (ANRE C1A/C2A + bilanț ANAF + profil instalator electric), **top 8 firme cu sediul Arad ordonate după CA 2024** (Astra Electric 38,2M / Smart House Color Smart Sun 34,5M marjă 35% / Electrica 25M validată Casa Verde / Electro-Construct Pecica 22,5M ISO dublu / Ambra Service 20,4M grup italian Delta / Fair Play Șerban 14,2M / Wiren Romania 13,7M EPC+BESS / Precon Electric 5,1M UTA 1 retail), tabel praguri preț 2026 RON/kWp + producție Arad pe 3 capacități rezidențiale (3/5/10 kWp) și 4 comerciale (50/100/250/1MWp), exemplu amortizare 100 kWp Arad = **3,7 ani fără subvenție**, verificare ANRE pași concreți + capcane („autorizat AFM" fără ANRE, „atestat în curs", subcontractare), finanțare 2026 (fără program local Arad confirmat — onest), avantaj logistic Arad (import direct echipamente PV via Nădlac/Koper), 5 greșeli frecvente, pas următor concret. NEVER-INVENT strict: NU am inventat program local Arad (Cluj are 50% impozit clădiri PV, Arad nu — confirmat), prețuri RON/kWp din ghidurile validate, yield PVGIS din single source, CIF firme verificate ANAF, atestatele ANRE marcate „verificare live pe /verificare-anre" (nu hardcodate să nu rotim cu retraging). Leagă /firme/judet/arad + /verificare-anre + /clasament + /calculator + /cere-oferta + ghidul instalatori ANRE (cu noua secțiune ANRE vs AFM) + ghid 3/5/10 kW casă + ghid 50/100/250 kW firmă + pillar comercial decident + Electric Up + fonduri IMM + Casa Verde Fotovoltaice + Casa Verde Baterii + ATR prosumator + subvenții + cum alegi instalator.
+- **Next step:** GSC Request Indexing manual pentru /ghid/top-firme-panouri-fotovoltaice-arad-2026. Monitorizare 14/30 zile — **KPI cheie:** dacă „panouri fotovoltaice arad" (154 imp poz 14.6) urcă top 10 = pattern-ul geo se validează pe capitale regionale și replicăm pe Brașov (35 imp poz 32.6, în Hot topics watch). Dacă rămâne sub poz 10 = problema e cu Cluj/Timișoara, nu cu Arad. KPI secundar: ranking pe „firme panouri fotovoltaice arad" + „instalatori arad fotovoltaice" + „montaj panouri solare arad". Long-tail bonus dacă apar: „firma instalare panouri fotovoltaice arad", „casa verde panouri arad", „panouri fotovoltaice pecica" — dovadă că ranchează granular pe sub-localitate. **Update obligatoriu** dacă o firmă din top intră în insolvență/își pierde atestatul → scoate-o din listă + verifică firmele cu match ANRE prin script. Pattern în replicare dacă urcă: Brașov 2026 (semnal Hot topics watch).
 
 ### 1 An Liberalizare Energie 2026 — Prețuri și Oferte Furnizori
 - **Publicat:** 2026-06-26 → [/ghid/1-an-liberalizare-energie-iulie-2026-oferte-pret-kwh-furnizori](/ghid/1-an-liberalizare-energie-iulie-2026-oferte-pret-kwh-furnizori)
