@@ -24,6 +24,12 @@ const SEND = process.argv.includes('--send');
 // Marks every currently-unprocessed row as done WITHOUT sending. Run this once
 // after go-live so the backlog you already handled by hand is not re-emailed.
 const BASELINE = process.argv.includes('--baseline');
+// Process only one lead row (targeted one-off send); skips listings.
+const onlyLeadArg = process.argv.find((a) => a.startsWith('--only-lead='));
+const ONLY_LEAD = onlyLeadArg ? Number(onlyLeadArg.split('=')[1]) : null;
+// Clear the "Email trimis" marker on a lead row (correction after a bad run).
+const unmarkArg = process.argv.find((a) => a.startsWith('--unmark-lead='));
+const UNMARK_LEAD = unmarkArg ? Number(unmarkArg.split('=')[1]) : null;
 const MAX_EMAILS = Number(process.env.OUTREACH_MAX_EMAILS) || 30;
 const FIRMS_PER_LEAD = 5;
 
@@ -235,6 +241,11 @@ async function send(to, subject, html) {
 
 // ── main ─────────────────────────────────────────────────────────────────
 async function main() {
+  if (UNMARK_LEAD) {
+    await markCell('Leads', `${LEAD_EMAILED_COL}${UNMARK_LEAD}`, '');
+    console.log(`Rând ${UNMARK_LEAD}: marcaj golit (Leads!${LEAD_EMAILED_COL}${UNMARK_LEAD}). Redevine neprocesat.`);
+    return;
+  }
   if (!process.env.RESEND_API_KEY) { console.error('RESEND_API_KEY lipsește din .env.local'); process.exit(2); }
   console.log(SEND ? '=== OUTREACH — MOD TRIMITERE ===\n' : '=== OUTREACH — DRY RUN (fără trimitere; adaugă --send ca să trimită) ===\n');
 
@@ -258,6 +269,7 @@ async function main() {
 
   for (const { row, lead } of leads) {
     if (sent >= MAX_EMAILS) { console.log('(cap atins, mă opresc)'); break; }
+    if (ONLY_LEAD && row !== ONLY_LEAD) continue;
     if (!lead.email) { stats.skipped++; continue; }
     const firms = pickFirms(lead.judet, lead.segment, lastContacted);
     if (!firms.length) { stats.noFirms++; console.log(`LEAD rând ${row} (${lead.judet}/${lead.segment}): 0 firme potrivite → LAS pentru manual`); continue; }
@@ -271,12 +283,23 @@ async function main() {
       if (SEND) await sleep(500);
     }
     const clientMsg = leadClientEmail(lead);
-    const ok = await send(lead.email, clientMsg.subject, clientMsg.html);
-    if (ok) { sent++; stats.leadsA++; } else { stats.failed++; }
-    if (SEND) { if (contacted.length) await appendLog(contacted); await markCell('Leads', `${LEAD_EMAILED_COL}${row}`, new Date().toISOString()); await sleep(500); }
+    const clientOk = await send(lead.email, clientMsg.subject, clientMsg.html);
+    if (clientOk) { sent++; stats.leadsA++; } else { stats.failed++; }
+    if (SEND) {
+      // Mark processed only if something actually went out. If everything failed
+      // (e.g. domain/config error), leave the row for a retry next run.
+      if (contacted.length || clientOk) {
+        if (contacted.length) await appendLog(contacted);
+        await markCell('Leads', `${LEAD_EMAILED_COL}${row}`, new Date().toISOString());
+      } else {
+        console.log(`   (nimic trimis pentru rândul ${row}, îl las neprocesat)`);
+      }
+      await sleep(500);
+    }
   }
 
   for (const { row, listing } of listings) {
+    if (ONLY_LEAD) break; // targeted lead send: skip listings
     if (sent >= MAX_EMAILS) { console.log('(cap atins, mă opresc)'); break; }
     const slug = publishedByCui.get(normCui(listing.cui));
     if (!slug || listing.anreStatus !== 'verified-pv' || !listing.email) {
