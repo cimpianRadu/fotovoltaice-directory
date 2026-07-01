@@ -225,3 +225,129 @@ export async function saveAdInquiryToSheet(inquiry: {
     'Nou',
   ]);
 }
+
+// ── Outreach routine support ───────────────────────────────────────────────
+// A trailing "Email trimis" marker column, added after the existing columns so
+// nothing shifts. Leads: column O (index 14). Listări: column Q (index 16).
+// The routine writes an ISO timestamp there once a row is processed, and skips
+// any row that already has it (idempotent, no duplicate emails).
+const LEAD_EMAILED_COL = 'O';
+const LEAD_EMAILED_IDX = 14;
+const LISTING_EMAILED_COL = 'Q';
+const LISTING_EMAILED_IDX = 16;
+
+async function updateCell(sheetName: string, cell: string, value: string) {
+  const auth = getAuth();
+  const sheets = google.sheets({ version: 'v4', auth });
+  await sheets.spreadsheets.values.update({
+    spreadsheetId: SPREADSHEET_ID,
+    range: `${sheetName}!${cell}`,
+    valueInputOption: 'RAW',
+    requestBody: { values: [[value]] },
+  });
+}
+
+// Row index note: readRows returns values starting at the header (sheet row 1),
+// so array index i maps to sheet row i + 1.
+function isDateRow(row: string[]): boolean {
+  return Number.isFinite(Date.parse(row[0] || ''));
+}
+
+export async function getUnprocessedLeads(): Promise<{ row: number; lead: NewLead }[]> {
+  const rows = await readRows('Leads');
+  const out: { row: number; lead: NewLead }[] = [];
+  rows.forEach((r, i) => {
+    if (!isDateRow(r)) return; // skip header + blanks
+    if ((r[LEAD_EMAILED_IDX] || '').trim()) return; // already emailed
+    out.push({
+      row: i + 1,
+      lead: {
+        timestamp: r[0] || '', numeCompanie: r[1] || '', numeContact: r[2] || '',
+        email: r[3] || '', telefon: r[4] || '', tipProiect: r[5] || '',
+        judet: r[6] || '', suprafata: r[7] || '', putere: r[8] || '',
+        mesaj: r[9] || '', sourcePage: r[10] || '', preselectedCompany: r[11] || '',
+        status: r[12] || '', segment: r[13] || 'comercial',
+      },
+    });
+  });
+  return out;
+}
+
+export async function getUnprocessedListings(): Promise<{ row: number; listing: NewListing }[]> {
+  const rows = await readRows('Listări');
+  const out: { row: number; listing: NewListing }[] = [];
+  rows.forEach((r, i) => {
+    if (!isDateRow(r)) return;
+    if ((r[LISTING_EMAILED_IDX] || '').trim()) return;
+    out.push({
+      row: i + 1,
+      listing: {
+        timestamp: r[0] || '', numeFirma: r[1] || '', cui: r[2] || '', numeContact: r[3] || '',
+        functie: r[4] || '', email: r[5] || '', telefon: r[6] || '', judet: r[7] || '',
+        website: r[8] || '', specializare: r[9] || '', descriere: r[10] || '',
+        status: r[11] || '', anreStatus: r[12] || '', anreFirmName: r[13] || '',
+        anreCerts: r[14] || '', segment: r[15] || 'comercial',
+      },
+    });
+  });
+  return out;
+}
+
+export async function markLeadEmailed(row: number): Promise<void> {
+  await updateCell('Leads', `${LEAD_EMAILED_COL}${row}`, new Date().toISOString());
+}
+
+export async function markListingEmailed(row: number): Promise<void> {
+  await updateCell('Listări', `${LISTING_EMAILED_COL}${row}`, new Date().toISOString());
+}
+
+// Append-only log of which firm received which lead, used to rotate fairly:
+// next time we pick the firms contacted longest ago first.
+async function ensureSheet(name: string): Promise<void> {
+  const auth = getAuth();
+  const sheets = google.sheets({ version: 'v4', auth });
+  const meta = await sheets.spreadsheets.get({ spreadsheetId: SPREADSHEET_ID });
+  const exists = (meta.data.sheets || []).some((s) => s.properties?.title === name);
+  if (!exists) {
+    await sheets.spreadsheets.batchUpdate({
+      spreadsheetId: SPREADSHEET_ID,
+      requestBody: { requests: [{ addSheet: { properties: { title: name } } }] },
+    });
+  }
+}
+
+export async function logOutreach(
+  entries: { leadRow: number; firmId: string; firmEmail: string }[]
+): Promise<void> {
+  if (entries.length === 0) return;
+  await ensureSheet('LogOutreach');
+  const auth = getAuth();
+  const sheets = google.sheets({ version: 'v4', auth });
+  const now = new Date().toISOString();
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: SPREADSHEET_ID,
+    range: 'LogOutreach!A:A',
+    valueInputOption: 'RAW',
+    requestBody: {
+      values: entries.map((e) => [now, String(e.leadRow), e.firmId, e.firmEmail]),
+    },
+  });
+}
+
+export async function getFirmLastContacted(): Promise<Map<string, number>> {
+  const map = new Map<string, number>();
+  let rows: string[][] = [];
+  try {
+    rows = await readRows('LogOutreach');
+  } catch {
+    return map; // tab not created yet
+  }
+  rows.forEach((r) => {
+    const t = Date.parse(r[0] || '');
+    const firmId = r[2] || '';
+    if (!firmId || !Number.isFinite(t)) return;
+    const prev = map.get(firmId) || 0;
+    if (t > prev) map.set(firmId, t);
+  });
+  return map;
+}
