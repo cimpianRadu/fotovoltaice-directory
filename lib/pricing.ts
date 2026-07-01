@@ -4,18 +4,23 @@
  * Anywhere prices appear on the site (homepage banner, /publicitate page,
  * AdInquiryForm tier options, metadata, etc.) must import from here.
  * NEVER hardcode prices inline — schimbi într-un singur loc, se propagă peste tot.
+ *
+ * Model simplificat (iunie 2026): Free (instalatori) + 3 opțiuni plătite —
+ * Slot Popup (intrare), Premium (vizibilitate peste tot), Studiu de caz (la cerere).
  */
 
-export type TierId = 'free' | 'basic' | 'plus' | 'premium' | 'bundle';
+export type TierId = 'free' | 'popup' | 'premium' | 'casestudy';
 
 export interface Tier {
   id: TierId;
   label: string;
-  /** Monthly price in EUR. 0 for free tier. */
+  /** Monthly price in EUR. 0 for free tier. Ignored when `custom` is true. */
   monthly: number;
   /** Annual price in EUR (typically monthly × 10 — 2 luni gratis). */
   annual: number;
-  /** Short audience label (e.g. "Furnizori, distribuitori"). */
+  /** True for offers quoted individually — no fixed price shown ("la cerere"). */
+  custom?: boolean;
+  /** Short audience label (e.g. "Instalatori"). */
   audience: string;
   /** One-line tagline shown under tier name. */
   tagline: string;
@@ -27,75 +32,45 @@ export const PRICING: Record<TierId, Tier> = {
     label: 'Free',
     monthly: 0,
     annual: 0,
-    audience: 'Doar instalatori',
-    tagline: 'Baza pe care e construit directorul',
+    audience: 'Instalatori',
+    tagline: 'Baza pe care e construit site-ul',
   },
-  basic: {
-    id: 'basic',
-    label: 'Basic',
+  popup: {
+    id: 'popup',
+    label: 'Slot Popup',
     monthly: 19,
     annual: 190,
-    audience: 'Furnizori, distribuitori, materiale',
-    tagline: 'Slot în popup carousel — vizibil pe toate paginile site-ului',
-  },
-  plus: {
-    id: 'plus',
-    label: 'Plus',
-    monthly: 39,
-    annual: 390,
-    audience: 'Doar instalatori',
-    tagline: 'Vizibilitate prioritară pe județul tău + verificare ANRE',
+    audience: 'Instalatori, furnizori, distribuitori',
+    tagline: 'Slot în bannerul promo (colț dreapta-jos) — vizibil pe toate paginile',
   },
   premium: {
     id: 'premium',
     label: 'Premium',
     monthly: 79,
     annual: 790,
-    audience: 'Doar instalatori',
-    tagline: 'Expunere națională + profil complet',
+    audience: 'Instalatori',
+    tagline: 'Prezență premium — vizibilitate maximă — profil complet al firmei',
   },
-  bundle: {
-    id: 'bundle',
-    label: 'Național Plus',
-    monthly: 99,
-    annual: 990,
-    audience: 'Pentru instalatori cu ambiție regională / națională',
-    tagline: 'Plus + Premium simultan — județul tău + paginile globale',
+  casestudy: {
+    id: 'casestudy',
+    label: 'Studiu de caz',
+    monthly: 0,
+    annual: 0,
+    custom: true,
+    audience: 'Instalatori',
+    tagline: 'Articol colaborativ despre un proiect de-al tău, publicat pe site',
   },
 };
 
-/** Bundle math derived from constants — never hardcode these. */
-export const BUNDLE = {
-  /** Sum of Plus + Premium if bought separately. */
-  separateSum: PRICING.plus.monthly + PRICING.premium.monthly,
-  /** Bundle price minus separate sum = euro saved per month. */
-  monthlySavings: PRICING.plus.monthly + PRICING.premium.monthly - PRICING.bundle.monthly,
-  /** Annual savings (× 12). */
-  annualSavings:
-    (PRICING.plus.monthly + PRICING.premium.monthly - PRICING.bundle.monthly) * 12,
-  /** Discount percentage rounded to nearest integer. */
-  discountPct: Math.round(
-    ((PRICING.plus.monthly + PRICING.premium.monthly - PRICING.bundle.monthly) /
-      (PRICING.plus.monthly + PRICING.premium.monthly)) *
-      100,
-  ),
-};
-
-/** Pool caps & SOV math per tier. Matches the actual placement infrastructure on site. */
+/** Pool caps & SOV math per placement. Matches the actual placement infrastructure on site. */
 export const SOV = {
-  basic: {
+  popup: {
     cap: 8, // max parteneri activi simultan în popup carousel
     rotationSeconds: 15,
     sovPct: Math.round(100 / 8), // ~12.5% when full
   },
-  plus: {
-    cap: 3, // max firme/județ
-    capScope: 'județ' as const,
-    sovPct: Math.round(100 / 3), // ~33% when full
-  },
   premium: {
-    cap: 5, // max firme național
-    capScope: 'național' as const,
+    cap: 5, // max firme în pool-ul rotativ național
     sovPct: Math.round(100 / 5), // 20% when full
   },
 };
@@ -104,12 +79,14 @@ export const SOV = {
 export const TVA_PCT = 21;
 
 /** Helper — formatat preț pentru afișare. */
-export function fmtPrice(monthly: number): string {
-  return monthly === 0 ? '0 €' : `${monthly} €`;
+export function fmtPrice(tier: Tier): string {
+  if (tier.custom) return 'La cerere';
+  return tier.monthly === 0 ? '0 €' : `${tier.monthly} €`;
 }
 
 /** Helper — sumar tier pentru form select (label cu preț). */
 export function tierSelectLabel(tier: Tier): string {
+  if (tier.custom) return `${tier.label} — preț la cerere (${tier.audience.toLowerCase()})`;
   if (tier.monthly === 0) return `${tier.label} — gratuit (${tier.audience.toLowerCase()})`;
   return `${tier.label} — ${tier.monthly}€/lună (${tier.audience.toLowerCase()})`;
 }

@@ -14,7 +14,7 @@ declare global {
   }
 }
 
-const PAID_TIERS: TierId[] = ['basic', 'plus', 'premium', 'bundle'];
+const PAID_TIERS: TierId[] = ['premium', 'popup', 'casestudy'];
 
 const TIER_OPTIONS = PAID_TIERS.map((id) => ({
   value: id,
@@ -22,7 +22,10 @@ const TIER_OPTIONS = PAID_TIERS.map((id) => ({
 }));
 
 const TIER_LABEL: Record<string, string> = Object.fromEntries(
-  PAID_TIERS.map((id) => [id, `${PRICING[id].label} ${PRICING[id].monthly}€`]),
+  PAID_TIERS.map((id) => [
+    id,
+    PRICING[id].custom ? `${PRICING[id].label} — la cerere` : `${PRICING[id].label} ${PRICING[id].monthly}€`,
+  ]),
 );
 
 function readTierFromHash(): string | null {
@@ -34,7 +37,7 @@ function readTierFromHash(): string | null {
 }
 
 export default function AdInquiryForm() {
-  const [tier, setTier] = useState<string>('plus');
+  const [tier, setTier] = useState<string>('premium');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const counties = getCounties();
@@ -86,7 +89,7 @@ export default function AdInquiryForm() {
     }
   }
 
-  const showJudet = tier === 'plus' || tier === 'bundle';
+  const showJudet = tier === 'premium';
 
   return (
     <>
@@ -125,7 +128,7 @@ export default function AdInquiryForm() {
 
           {showJudet && (
             <Select
-              label="Județ țintit (pentru Plus)"
+              label="Județ principal (pentru Premium)"
               name="judet"
               options={counties.map((c) => ({ value: c, label: c }))}
               required

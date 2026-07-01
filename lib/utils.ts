@@ -3,7 +3,11 @@ import specializationsData from '@/data/specializations.json';
 import countiesData from '@/data/counties.json';
 import { hasActiveAnreCert } from './anre';
 
-export type PromoTier = 'free' | 'basic' | 'plus' | 'premium' | 'bundle';
+// Model simplificat (iunie 2026): listare Free + Slot Popup (carousel, infra separată
+// în PartnerCarousel) + Premium. Premium = vizibilitate "peste tot" — acoperă atât
+// plasarea pe județ/ANRE cât și pool-ul global. „Studiu de caz" e o ofertă de conținut,
+// nu un promoTier de card.
+export type PromoTier = 'free' | 'popup' | 'premium';
 
 // Market segment a company serves. Drives the "Casă vs Firmă" split across the site.
 // 'ambele' = serves both residential and commercial.
@@ -59,18 +63,21 @@ export function companyMatchesSegment(c: Company, view: Segment | null | undefin
 }
 
 export const PROMO_CAPS = {
-  basic: 8,
-  plusPerCounty: 3,
-  plusOnAnre: 5,
-  premiumPool: 5,
+  popup: 8, // max parteneri în popup carousel (infra PartnerCarousel)
+  plusPerCounty: 3, // max firme Premium în „Promovate" pe pagina județului
+  plusOnAnre: 5, // max firme Premium featured pe /verificare-anre
+  premiumPool: 5, // max firme Premium în pool-ul global
 } as const;
 
+// Premium acoperă „peste tot": atât plasarea pe județ/ANRE (fostul Plus) cât și
+// pool-ul global. Ambele helper-e întorc true pentru 'premium' — păstrate separat
+// pentru claritate la punctele de plasare diferite.
 export function hasPlusPlacement(c: Company): boolean {
-  return c.promoTier === 'plus' || c.promoTier === 'bundle';
+  return c.promoTier === 'premium';
 }
 
 export function hasPremiumPlacement(c: Company): boolean {
-  return c.promoTier === 'premium' || c.promoTier === 'bundle';
+  return c.promoTier === 'premium';
 }
 
 export function getPlusCompaniesForCounty(county: string): Company[] {

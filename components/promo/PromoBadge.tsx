@@ -17,7 +17,6 @@ export function PremiumBadge() {
 }
 
 export function TierBadge({ tier }: { tier: PromoTier | undefined }) {
-  if (tier === 'premium' || tier === 'bundle') return <PremiumBadge />;
-  if (tier === 'plus') return <PromovatBadge />;
+  if (tier === 'premium') return <PremiumBadge />;
   return null;
 }

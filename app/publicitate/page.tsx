@@ -6,12 +6,12 @@ import AdInquiryForm from '@/components/forms/AdInquiryForm';
 import TrafficWidget from '@/components/publicitate/TrafficWidget';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 import { getCompanies, getCoveredCounties } from '@/lib/utils';
-import { PRICING, BUNDLE, SOV, TVA_PCT } from '@/lib/pricing';
+import { PRICING, SOV, TVA_PCT } from '@/lib/pricing';
 import guidesData from '@/data/guides.json';
 
 export const metadata: Metadata = {
   title: 'Publicitate - Promovează-ți Firma pe Instalatori Fotovoltaice',
-  description: `Pachete de promovare pe Instalatori Fotovoltaice România: Basic ${PRICING.basic.monthly}€ (furnizori), Plus ${PRICING.plus.monthly}€ și Premium ${PRICING.premium.monthly}€/lună + TVA. Bundle ${PRICING.bundle.label} ${PRICING.bundle.monthly}€ (Plus+Premium, ~${BUNDLE.discountPct}% reducere). Free pentru instalatori. Fiecare pachet are placement-uri proprii — nu se suprapun.`,
+  description: `Promovare pe Instalatori Fotovoltaice România: listare Free pentru instalatori, Slot Popup ${PRICING.popup.monthly}€/lună (vizibil pe toate paginile), Premium ${PRICING.premium.monthly}€/lună (vizibilitate peste tot + profil complet) și Studiu de caz colaborativ (preț la cerere). Audiență 100% nișată B2B fotovoltaic, preponderent din căutări Google.`,
   alternates: { canonical: '/publicitate' },
 };
 
@@ -59,8 +59,8 @@ function PreviewFree() {
   );
 }
 
-/** Basic preview — popup carousel slot */
-function PreviewBasic() {
+/** Popup preview — popup carousel slot */
+function PreviewPopup() {
   return (
     <MockBrowser url="instalatori-fotovoltaice.ro (orice pagină)">
       <p className="text-[10px] text-gray-400 mb-2 uppercase tracking-wider font-semibold">Popup carousel — colț dreapta-jos</p>
@@ -95,44 +95,11 @@ function PreviewBasic() {
   );
 }
 
-/** Plus preview — top promovate per județ */
-function PreviewPlus() {
-  return (
-    <MockBrowser url="instalatori-fotovoltaice.ro/firme/judet/cluj">
-      <p className="text-[10px] text-gray-400 mb-2 uppercase tracking-wider font-semibold">Top „Promovate&quot; pe pagina județului</p>
-      <div className="rounded-md bg-amber-50/50 border border-amber-200/60 p-1.5 mb-2">
-        <p className="text-[8px] font-semibold uppercase tracking-wider text-amber-700 mb-1">Promovate · max 3 / județ</p>
-        <div className="space-y-1.5">
-          <div className="p-2 rounded border-2 border-primary/40 bg-white">
-            <div className="flex items-center justify-between">
-              <p className="text-xs font-semibold text-gray-900">Firma Ta Plus S.R.L.</p>
-              <span className="text-[7px] bg-primary/10 text-primary-dark px-1.5 py-0.5 rounded-full font-medium">Promovat</span>
-            </div>
-            <p className="text-[10px] text-gray-500">Cluj-Napoca</p>
-          </div>
-          <div className="p-2 rounded border border-gray-200 bg-white opacity-80">
-            <p className="text-[10px] font-semibold text-gray-700">Altă Firmă Promovată</p>
-          </div>
-          <div className="p-2 rounded border border-gray-200 bg-white opacity-60">
-            <p className="text-[10px] font-semibold text-gray-700">A Treia Firmă Promovată</p>
-          </div>
-        </div>
-      </div>
-      <p className="text-[9px] text-gray-400 mb-1">Restul firmelor din județ</p>
-      <div className="space-y-1">
-        <div className="h-3 bg-gray-50 rounded" />
-        <div className="h-3 bg-gray-50 rounded" />
-      </div>
-      <p className="mt-2 text-[8px] text-gray-400 italic">+ apariție pe /verificare-anre + badge „Promovat&quot;</p>
-    </MockBrowser>
-  );
-}
-
-/** Premium preview — pool rotativ pe pagini globale */
+/** Premium preview — vizibilitate peste tot (județ + pagini naționale) */
 function PreviewPremium() {
   return (
-    <MockBrowser url="instalatori-fotovoltaice.ro (homepage, ghiduri, calculator, clasament)">
-      <p className="text-[10px] text-gray-400 mb-2 uppercase tracking-wider font-semibold">Pool rotativ pe paginile globale</p>
+    <MockBrowser url="instalatori-fotovoltaice.ro (homepage, ghiduri, județ, clasament)">
+      <p className="text-[10px] text-gray-400 mb-2 uppercase tracking-wider font-semibold">Vizibilitate peste tot pe site</p>
       <div className="rounded-lg border border-secondary/30 bg-linear-to-r from-secondary/10 to-primary/5 p-2.5 mb-2.5 flex items-center gap-3">
         <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
           <svg className="w-5 h-5 text-primary-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -141,10 +108,10 @@ function PreviewPremium() {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5 mb-0.5">
-            <p className="text-[10px] font-semibold text-gray-900 truncate">Firma Ta Premium — Top Național</p>
+            <p className="text-[10px] font-semibold text-gray-900 truncate">Firma Ta Premium</p>
             <span className="text-[7px] bg-secondary/15 text-secondary-dark px-1 py-0.5 rounded-full font-medium shrink-0">Premium</span>
           </div>
-          <p className="text-[9px] text-gray-500">Logo + descriere lungă + social links</p>
+          <p className="text-[9px] text-gray-500">Logo + descriere lungă + social links + badge ANRE</p>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-1.5 mb-2">
@@ -153,11 +120,11 @@ function PreviewPremium() {
           <div className="h-2 bg-gray-100 rounded mt-1" />
         </div>
         <div className="p-1.5 rounded border border-gray-100 bg-gray-50">
-          <p className="text-[7px] text-gray-400 uppercase tracking-wider">Ghiduri</p>
+          <p className="text-[7px] text-gray-400 uppercase tracking-wider">Top pe județul tău</p>
           <div className="h-2 bg-gray-100 rounded mt-1" />
         </div>
         <div className="p-1.5 rounded border border-gray-100 bg-gray-50">
-          <p className="text-[7px] text-gray-400 uppercase tracking-wider">/calculator</p>
+          <p className="text-[7px] text-gray-400 uppercase tracking-wider">Ghiduri</p>
           <div className="h-2 bg-gray-100 rounded mt-1" />
         </div>
         <div className="p-1.5 rounded border border-gray-100 bg-gray-50">
@@ -165,7 +132,34 @@ function PreviewPremium() {
           <div className="h-2 bg-gray-100 rounded mt-1" />
         </div>
       </div>
-      <p className="text-[8px] text-gray-400 italic">Pool max 5 firme · 20% share-of-voice fiecare · rotație random la reload</p>
+      <p className="text-[8px] text-gray-400 italic">Pool rotativ · share echitabil · rotație random la reload</p>
+    </MockBrowser>
+  );
+}
+
+/** Case study preview — articol colaborativ publicat pe site */
+function PreviewCaseStudy() {
+  return (
+    <MockBrowser url="instalatori-fotovoltaice.ro/ghid/studiu-de-caz-firma-ta">
+      <p className="text-[10px] text-gray-400 mb-2 uppercase tracking-wider font-semibold">Articol / studiu de caz publicat</p>
+      <div className="space-y-2">
+        <div className="h-3 bg-gray-200 rounded w-5/6" />
+        <div className="flex items-center gap-1.5">
+          <div className="w-4 h-4 rounded bg-primary/15" />
+          <div className="h-2 bg-gray-100 rounded w-1/3" />
+        </div>
+        <div className="h-16 rounded-lg bg-linear-to-br from-primary/10 to-secondary/10 border border-gray-100" />
+        <div className="space-y-1">
+          <div className="h-2 bg-gray-50 rounded w-full" />
+          <div className="h-2 bg-gray-50 rounded w-11/12" />
+          <div className="h-2 bg-gray-50 rounded w-full" />
+          <div className="h-2 bg-gray-50 rounded w-3/4" />
+        </div>
+        <div className="rounded-md bg-amber-50/60 border border-amber-200/60 p-1.5">
+          <p className="text-[8px] text-amber-800">„Proiect realizat de <strong>Firma Ta S.R.L.</strong> → vezi profil"</p>
+        </div>
+      </div>
+      <p className="mt-2 text-[8px] text-gray-400 italic">Conținut indexat Google + citabil de asistenți AI</p>
     </MockBrowser>
   );
 }
@@ -184,7 +178,6 @@ function Feature({ children, strong = false }: { children: React.ReactNode; stro
     </li>
   );
 }
-
 
 /* ── Page ─────────────────────────────────────────────────────── */
 
@@ -210,10 +203,12 @@ export default function AdvertisePage() {
             Publicitate pe Instalatori Fotovoltaice
           </h1>
           <p className="text-gray-600 mt-2 max-w-2xl leading-relaxed">
-            Pachete cu placement-uri proprii — <strong>nu se suprapun</strong>. Free pentru instalatori (baza directorului), Basic pentru furnizori și distribuitori, Plus + Premium pentru instalatori care vor expunere prioritară. Bundle <strong>Național Plus</strong> combină Plus + Premium cu ~14% reducere. Prețuri în EUR, facturare în RON la cursul BNR din ziua emiterii facturii.
+            Listarea în site e <strong>gratuită</strong> pentru instalatori. Dacă vrei vizibilitate
+            mai mare, am simplificat la <strong>3 opțiuni</strong>: un slot în bannerul promo (intrare),
+            Premium (vizibilitate peste tot pe site) și un studiu de caz colaborativ. Prețuri în EUR,
+            facturare în RON la cursul BNR din ziua emiterii facturii.
           </p>
-          <p className="mt-5 text-[11px] font-semibold uppercase tracking-wider text-gray-500">Pentru instalatori</p>
-          <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+          <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
             <a
               href="#free"
               className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-primary/5 border border-primary/20 text-sm font-medium text-primary-dark hover:bg-primary/10 transition-colors"
@@ -221,31 +216,22 @@ export default function AdvertisePage() {
               Free <span className="text-xs text-gray-500">0€</span>
             </a>
             <a
-              href="#plus"
+              href="#popup"
               className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-primary/5 border border-primary/20 text-sm font-medium text-primary-dark hover:bg-primary/10 transition-colors"
             >
-              Plus <span className="text-xs text-gray-500">{PRICING.plus.monthly}€</span>
+              Slot Popup <span className="text-xs text-gray-500">{PRICING.popup.monthly}€</span>
             </a>
             <a
               href="#premium"
-              className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-primary/5 border border-primary/20 text-sm font-medium text-primary-dark hover:bg-primary/10 transition-colors"
+              className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-secondary/10 border border-secondary/30 text-sm font-medium text-secondary-dark hover:bg-secondary/15 transition-colors"
             >
               Premium <span className="text-xs text-gray-500">{PRICING.premium.monthly}€</span>
             </a>
             <a
-              href="#bundle"
-              className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-secondary/10 border border-secondary/30 text-sm font-medium text-secondary-dark hover:bg-secondary/15 transition-colors"
+              href="#studiu-de-caz"
+              className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-primary/5 border border-primary/20 text-sm font-medium text-primary-dark hover:bg-primary/10 transition-colors"
             >
-              {PRICING.bundle.label} <span className="text-xs text-gray-500">{PRICING.bundle.monthly}€ <span className="text-secondary-dark">-{BUNDLE.discountPct}%</span></span>
-            </a>
-          </div>
-          <p className="mt-4 text-[11px] font-semibold uppercase tracking-wider text-gray-500">Pentru furnizori / distribuitori</p>
-          <div className="mt-2 grid grid-cols-1 sm:grid-cols-4 gap-2 sm:gap-3">
-            <a
-              href="#basic"
-              className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg bg-gray-50 border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors sm:col-span-1"
-            >
-              Basic <span className="text-xs text-gray-500">{PRICING.basic.monthly}€</span>
+              Studiu de caz <span className="text-xs text-gray-500">la cerere</span>
             </a>
           </div>
         </div>
@@ -274,39 +260,26 @@ export default function AdvertisePage() {
           <p className="text-sm text-gray-600 leading-relaxed">
             Vizitatorii noștri sunt <strong>manageri de facilități, directori tehnici, antreprenori
             și consultanți energetici</strong> care caută activ instalatori fotovoltaici și
-            informații despre investiții în energie solară pentru companii. Audiență 100% nișată pe
-            fotovoltaice comerciale și industriale din România.
+            informații despre investiții în energie solară. Trafic preponderent din{' '}
+            <strong>căutări Google</strong> (intenție mare) — plus oameni care ajung la noi din
+            răspunsurile asistenților AI (ChatGPT, Claude, Gemini).
           </p>
         </div>
 
         {/* Live traffic widget */}
         <TrafficWidget />
 
-        {/* ═══════════════════════════════════════════════════════════
-             Tier-uri NU sunt cumulative — fiecare are placement-urile lui
-           ═══════════════════════════════════════════════════════════ */}
-
-        <div className="mb-4 rounded-xl border border-secondary/20 bg-secondary/5 p-4 flex items-start gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-secondary-dark flex-shrink-0 mt-0.5" aria-hidden="true">
-            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clipRule="evenodd" />
-          </svg>
-          <div className="flex-1 text-sm">
-            <p className="font-semibold text-gray-900 mb-1">Pachetele NU sunt cumulative</p>
-            <p className="text-gray-700 leading-relaxed">
-              Fiecare pachet are placement-uri proprii — nu se suprapun. Plus și Premium sunt complementare (județ vs național) — instalatorii care vor ambele iau <a href="#bundle" className="text-secondary-dark hover:underline font-medium">{PRICING.bundle.label} ({PRICING.bundle.monthly}€/lună, ~{BUNDLE.discountPct}% reducere)</a>. Basic e dedicat furnizorilor și distribuitorilor.
-            </p>
-          </div>
-        </div>
-
         {/* No-risk guarantee */}
-        <div className="mb-8 rounded-xl border border-green-200 bg-green-50/60 p-4 flex items-start gap-3">
+        <div className="my-8 rounded-xl border border-green-200 bg-green-50/60 p-4 flex items-start gap-3">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" aria-hidden="true">
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
           </svg>
           <div className="flex-1 text-sm">
             <p className="font-semibold text-gray-900 mb-1">Anulare gratuită în primele 7 zile</p>
             <p className="text-gray-700 leading-relaxed">
-              Activezi orice pachet plătit, îl încerci 7 zile cu date Umami reale, iar dacă nu te convinge anulăm fără întrebări — refund 100% pe luna în curs. <strong>Fără contract minim</strong>, fără cost ascuns, fără ca tu să riști ceva în primele 7 zile.
+              Activezi Slot Popup sau Premium, îl încerci 7 zile cu date Umami reale, iar dacă nu te
+              convinge anulăm fără întrebări — refund 100% pe luna în curs. <strong>Fără contract
+              minim</strong>, fără cost ascuns.
             </p>
           </div>
         </div>
@@ -317,16 +290,16 @@ export default function AdvertisePage() {
             <div className="rounded-xl border border-border p-6">
               <div className="flex items-center gap-2 mb-1">
                 <h3 className="font-bold text-gray-900 text-lg">Free</h3>
-                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Doar instalatori</span>
+                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Instalatori</span>
               </div>
-              <p className="text-sm text-gray-500 mb-4">Baza pe care e construit directorul</p>
+              <p className="text-sm text-gray-500 mb-4">Baza pe care e construit site-ul</p>
               <p className="text-3xl font-bold text-gray-900 mb-1">
                 0 <span className="text-base font-normal text-gray-500">EUR/lună</span>
               </p>
               <p className="text-xs text-gray-500 mb-5">fără costuri ascunse</p>
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ce primești</p>
               <ul className="space-y-2 text-sm text-gray-600">
-                <Feature>Profil în director cu date contact, certificări, localizare</Feature>
+                <Feature>Profil în listă cu date contact, certificări, localizare</Feature>
                 <Feature>Pagină proprie <code className="text-xs bg-gray-100 px-1 rounded">/firme/firma-ta</code> indexată Google</Feature>
                 <Feature>Verificare ANRE live din registru oficial</Feature>
                 <Feature>Afișare în filtrele după județ, specializare și atestate</Feature>
@@ -347,77 +320,38 @@ export default function AdvertisePage() {
           </div>
         </section>
 
-        {/* Tier 2: Plus */}
-        <section id="plus" className="mb-10 scroll-mt-20">
-          <div className="grid gap-6 sm:grid-cols-2 items-start">
-            <div className="rounded-xl border-2 border-primary p-6 relative bg-white">
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap shadow-sm">
-                Cel mai popular
-              </span>
-              <div className="flex items-center gap-2 mb-1 mt-1 flex-wrap">
-                <h3 className="font-bold text-gray-900 text-lg">Plus</h3>
-                <span className="text-xs bg-primary/10 text-primary-dark px-2 py-0.5 rounded-full">Doar instalatori</span>
-              </div>
-              <p className="text-sm text-gray-500 mb-4">Vizibilitate prioritară pe județul tău + verificare ANRE</p>
-              <p className="text-3xl font-bold text-gray-900 mb-1">
-                {PRICING.plus.monthly} <span className="text-base font-normal text-gray-500">EUR/lună</span>
-              </p>
-              <p className="text-sm text-gray-600 mb-5">+ TVA ({TVA_PCT}%) · Anual {PRICING.plus.annual}€ (2 luni gratis)</p>
-
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ce primești</p>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <Feature strong>Top &quot;Promovate&quot; pe pagina județului tău (max 3 firme/județ, rotație random egală)</Feature>
-                <Feature strong>Featured pe <code className="text-xs bg-gray-100 px-1 rounded">/verificare-anre</code> (max 5 firme, rotație random)</Feature>
-                <Feature strong>Badge „Promovat&quot; vizibil pe profil și în liste</Feature>
-                <Feature>Share-of-voice comunicat: ~33% din vizualizările paginii județului</Feature>
-                <Feature>Raport lunar: impresii pagină, click-uri pe profil, click-uri telefon/site</Feature>
-              </ul>
-              <div className="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
-                <strong>Cap pe județ — first come, first served:</strong> max 3 firme Plus simultan per județ. Dacă județul tău e plin, intri pe lista de așteptare.
-              </div>
-              <Button href="#ad-inquiry?tier=plus" variant="primary" size="md" className="w-full mt-5">
-                Activează Plus
-              </Button>
-            </div>
-            <div className="hidden sm:block">
-              <PreviewPlus />
-            </div>
-          </div>
-        </section>
-
-        {/* Tier 3: Premium */}
+        {/* Tier 2: Premium — vizibilitate peste tot */}
         <section id="premium" className="mb-10 scroll-mt-20">
           <div className="grid gap-6 sm:grid-cols-2 items-start">
-            <div className="rounded-xl border border-secondary/30 bg-linear-to-br from-secondary/5 via-white to-primary/5 p-6 relative">
-              <div className="flex items-center gap-2 mb-1 flex-wrap">
+            <div className="rounded-xl border-2 border-secondary/50 bg-linear-to-br from-secondary/5 via-white to-primary/5 p-6 relative">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap shadow-sm">
+                Cel mai vizibil
+              </span>
+              <div className="flex items-center gap-2 mb-1 mt-1 flex-wrap">
                 <h3 className="font-bold text-gray-900 text-lg">Premium</h3>
-                <span className="text-xs bg-secondary/10 text-secondary-dark px-2 py-0.5 rounded-full">Doar instalatori</span>
+                <span className="text-xs bg-secondary/10 text-secondary-dark px-2 py-0.5 rounded-full">Instalatori</span>
               </div>
-              <p className="text-sm text-gray-500 mb-4">Expunere națională + profil complet</p>
+              <p className="text-sm text-gray-500 mb-4">Vizibilitate peste tot pe site + profil complet</p>
               <p className="text-3xl font-bold text-gray-900 mb-1">
                 {PRICING.premium.monthly} <span className="text-base font-normal text-gray-500">EUR/lună</span>
               </p>
               <p className="text-sm text-gray-600 mb-5">+ TVA ({TVA_PCT}%) · Anual {PRICING.premium.annual}€ (2 luni gratis)</p>
 
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Placement-uri (pool rotativ pe paginile globale)</p>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Apari peste tot</p>
               <ul className="space-y-2 text-sm text-gray-600">
-                <Feature strong>Apariție pe homepage, secțiune „Recomandați&quot;</Feature>
-                <Feature strong>Banner pe ghidurile relevante pentru nișa ta</Feature>
-                <Feature strong>Featured pe <code className="text-xs bg-gray-100 px-1 rounded">/calculator-panouri-fotovoltaice</code></Feature>
-                <Feature strong>Secțiune Partener pe <code className="text-xs bg-gray-100 px-1 rounded">/clasament</code></Feature>
-                <Feature>Pool max 5 firme · share-of-voice 20% per pagină · rotație random la reload</Feature>
+                <Feature strong>Top „Promovate&quot; pe pagina județului tău</Feature>
+                <Feature strong>Pool rotativ pe homepage, ghiduri, <code className="text-xs bg-gray-100 px-1 rounded">/calculator</code> și <code className="text-xs bg-gray-100 px-1 rounded">/clasament</code></Feature>
+                <Feature strong>Featured pe <code className="text-xs bg-gray-100 px-1 rounded">/verificare-anre</code> + badge „Promovat&quot;</Feature>
+                <Feature>Pool max {SOV.premium.cap} firme · share echitabil · rotație random la reload</Feature>
               </ul>
 
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mt-4 mb-2">Profil complet</p>
               <ul className="space-y-2 text-sm text-gray-600">
-                <Feature strong>Logo proeminent pe profil</Feature>
-                <Feature strong>Descriere lungă (~250-300 cuvinte)</Feature>
-                <Feature strong>Social media links (Facebook, LinkedIn, Instagram, YouTube)</Feature>
-                <Feature>Badge „Premium&quot; vizibil</Feature>
-                <Feature>Raport lunar extins: impresii, timp citire, conversii</Feature>
+                <Feature strong>Logo proeminent + descriere lungă + social media links</Feature>
+                <Feature>Raport lunar: impresii, click-uri profil, click-uri telefon/site</Feature>
               </ul>
               <div className="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
-                <strong>Cap național — first come, first served:</strong> max 5 firme Premium în pool-ul global. Dacă pool-ul e plin, intri pe lista de așteptare.
+                <strong>Cap — first come, first served:</strong> pool de max {SOV.premium.cap} firme Premium. Dacă e plin, intri pe lista de așteptare.
               </div>
               <Button href="#ad-inquiry?tier=premium" variant="secondary" size="md" className="w-full mt-5">
                 Activează Premium
@@ -425,6 +359,81 @@ export default function AdvertisePage() {
             </div>
             <div className="hidden sm:block">
               <PreviewPremium />
+            </div>
+          </div>
+        </section>
+
+        {/* Tier 3: Slot Popup */}
+        <section id="popup" className="mb-10 scroll-mt-20">
+          <div className="grid gap-6 sm:grid-cols-2 items-start">
+            <div className="rounded-xl border border-border p-6">
+              <div className="flex items-center gap-2 mb-1 flex-wrap">
+                <h3 className="font-bold text-gray-900 text-lg">Slot Popup</h3>
+                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Opțiunea de intrare</span>
+              </div>
+              <p className="text-sm text-gray-500 mb-4">Slot în bannerul promo (colț dreapta-jos) — vizibil pe toate paginile</p>
+              <p className="text-3xl font-bold text-gray-900 mb-1">
+                {PRICING.popup.monthly} <span className="text-base font-normal text-gray-500">EUR/lună</span>
+              </p>
+              <p className="text-sm text-gray-600 mb-5">+ TVA ({TVA_PCT}%) · Anual {PRICING.popup.annual}€ (2 luni gratis)</p>
+              <div className="mb-4 p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-xs text-blue-900 leading-relaxed">
+                <strong>Pentru cine:</strong> instalatori care vor expunere ieftină de awareness, plus furnizori și distribuitori (panouri, invertoare, structuri, materiale electrice, echipamente, SaaS pentru industrie).
+              </div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ce primești</p>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <Feature strong>Slot în popup carousel — apare {SOV.popup.rotationSeconds} secunde, apoi rotește la următorul</Feature>
+                <Feature>Maxim {SOV.popup.cap} parteneri activi simultan — fără diluare</Feature>
+                <Feature>Vizibil pe toate paginile site-ului (homepage, ghiduri, firme, etc.)</Feature>
+                <Feature>UTM tracking pe linkuri + eveniment Umami dedicat</Feature>
+                <Feature>Raport lunar: impresii popup, click-uri, rata dismiss</Feature>
+              </ul>
+              <div className="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
+                <strong>Cum funcționează popup-ul:</strong> apare după câteva secunde pe toate paginile. Fiecare partener primește {SOV.popup.rotationSeconds} secunde de vizibilitate, apoi se rotește la următorul. Dismissible — userul îl poate închide în sesiune.
+              </div>
+              <Button href="#ad-inquiry?tier=popup" variant="primary" size="md" className="w-full mt-3">
+                Activează Slot Popup
+              </Button>
+            </div>
+            <div className="hidden sm:block">
+              <PreviewPopup />
+            </div>
+          </div>
+        </section>
+
+        {/* Tier 4: Studiu de caz */}
+        <section id="studiu-de-caz" className="mb-10 scroll-mt-20">
+          <div className="grid gap-6 sm:grid-cols-2 items-start">
+            <div className="rounded-xl border-2 border-primary/40 bg-linear-to-br from-primary/5 via-white to-secondary/5 p-6 relative">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap shadow-sm">
+                Cel mai bun pentru SEO + AI
+              </span>
+              <div className="flex items-center gap-2 mb-1 mt-1 flex-wrap">
+                <h3 className="font-bold text-gray-900 text-lg">Studiu de caz</h3>
+                <span className="text-xs bg-primary/10 text-primary-dark px-2 py-0.5 rounded-full">Articol colaborativ</span>
+              </div>
+              <p className="text-sm text-gray-500 mb-4">Scriem împreună un articol despre un proiect de-al tău, publicat pe site</p>
+              <p className="text-3xl font-bold text-gray-900 mb-1">
+                La cerere
+              </p>
+              <p className="text-sm text-gray-600 mb-5">preț personalizat în funcție de proiect</p>
+
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ce primești</p>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <Feature strong>Articol / studiu de caz despre un proiect realizat de tine, scris împreună</Feature>
+                <Feature strong>Conținut indexat Google — aduce trafic organic pe termen lung</Feature>
+                <Feature strong>Citabil de asistenți AI (ChatGPT, Claude, Gemini)</Feature>
+                <Feature>Link către profilul firmei tale din articol</Feature>
+                <Feature>Rămâne publicat pe site — nu e o reclamă care expiră</Feature>
+              </ul>
+              <div className="mt-3 p-2.5 rounded-lg bg-primary/5 border border-primary/20 text-xs text-gray-700 leading-relaxed">
+                <strong>De ce merită:</strong> 73% din traficul nostru vine din căutări Google. Un studiu de caz e singura formă de promovare care <em>crește</em> vizibilitatea în loc s-o închirieze — rankează, e citat de AI și te prezintă concret.
+              </div>
+              <Button href="#ad-inquiry?tier=casestudy" variant="primary" size="md" className="w-full mt-5">
+                Cere ofertă studiu de caz
+              </Button>
+            </div>
+            <div className="hidden sm:block">
+              <PreviewCaseStudy />
             </div>
           </div>
         </section>
@@ -439,41 +448,27 @@ export default function AdvertisePage() {
               <h2 className="text-lg font-bold text-gray-900">Cum funcționează rotația — transparență totală</h2>
             </div>
             <p className="text-sm text-gray-600 leading-relaxed mb-5">
-              Pe Basic, Plus și Premium avem mai multe firme plătitoare per slot. Ca să fie corect față de toți, folosim <strong>rotație random egală</strong> — fiecare firmă apare pentru o parte din vizitatori, comunicat explicit. Niciun pachet NU promite „mereu primul&quot; (e fizic imposibil când ai 2+ plătitori), ci <strong>share echitabil garantat prin cap pe slot</strong>.
+              Când avem mai multe firme plătitoare pe același placement, folosim <strong>rotație random
+              egală</strong> — fiecare firmă apare pentru o parte din vizitatori. Niciun pachet NU
+              promite „mereu primul&quot; (e imposibil când ai 2+ plătitori), ci <strong>share echitabil
+              garantat prin cap pe slot</strong>.
             </p>
 
-            <div className="grid gap-4 sm:grid-cols-3">
-              {/* Basic rotation */}
+            <div className="grid gap-4 sm:grid-cols-2">
+              {/* Popup rotation */}
               <div className="rounded-lg border border-border bg-white p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">Basic</span>
-                  <span className="text-[10px] bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded-full font-mono">{PRICING.basic.monthly}€</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">Slot Popup</span>
+                  <span className="text-[10px] bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded-full font-mono">{PRICING.popup.monthly}€</span>
                 </div>
                 <p className="text-sm font-semibold text-gray-900 mb-1">Popup carousel</p>
                 <p className="text-xs text-gray-600 leading-relaxed mb-3">
-                  Popup-ul din colț dreapta-jos rotește la fiecare <strong>15 secunde</strong> între parteneri. Maxim 8 activi simultan. Un ciclu complet = 2 minute.
+                  Popup-ul din colț dreapta-jos rotește la fiecare <strong>{SOV.popup.rotationSeconds} secunde</strong> între parteneri. Maxim {SOV.popup.cap} activi simultan.
                 </p>
                 <div className="text-[11px] text-gray-500 space-y-0.5">
-                  <p>• Cap: <strong>max 8 parteneri</strong></p>
-                  <p>• Share: <strong>1/8 din timp (~12.5%)</strong> per partener</p>
-                  <p>• Rotație: <strong>timp-based, 15s</strong></p>
-                </div>
-              </div>
-
-              {/* Plus rotation */}
-              <div className="rounded-lg border-2 border-primary/30 bg-primary/5 p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-primary-dark">Plus</span>
-                  <span className="text-[10px] bg-primary/15 text-primary-dark px-1.5 py-0.5 rounded-full font-mono">{PRICING.plus.monthly}€</span>
-                </div>
-                <p className="text-sm font-semibold text-gray-900 mb-1">Top „Promovate&quot; pe județ</p>
-                <p className="text-xs text-gray-600 leading-relaxed mb-3">
-                  Pe pagina județului, secțiunea „Promovate&quot; afișează firmele plătite. La fiecare reload, ordinea e <strong>random</strong> între cele 3 sloturi. Featured pe <code className="text-[10px] bg-white px-1 rounded">/verificare-anre</code> funcționează la fel (pool 5).
-                </p>
-                <div className="text-[11px] text-gray-500 space-y-0.5">
-                  <p>• Cap: <strong>max 3 firme/județ</strong></p>
-                  <p>• Share: <strong>~33% vizualizări fiecare</strong></p>
-                  <p>• Rotație: <strong>random la reload</strong></p>
+                  <p>• Cap: <strong>max {SOV.popup.cap} parteneri</strong></p>
+                  <p>• Share: <strong>~{SOV.popup.sovPct}% din timp</strong> per partener</p>
+                  <p>• Rotație: <strong>timp-based, {SOV.popup.rotationSeconds}s</strong></p>
                 </div>
               </div>
 
@@ -483,138 +478,21 @@ export default function AdvertisePage() {
                   <span className="text-xs font-semibold uppercase tracking-wider text-secondary-dark">Premium</span>
                   <span className="text-[10px] bg-secondary/15 text-secondary-dark px-1.5 py-0.5 rounded-full font-mono">{PRICING.premium.monthly}€</span>
                 </div>
-                <p className="text-sm font-semibold text-gray-900 mb-1">Pool global rotativ</p>
+                <p className="text-sm font-semibold text-gray-900 mb-1">Pool rotativ + top pe județ</p>
                 <p className="text-xs text-gray-600 leading-relaxed mb-3">
-                  Pe homepage, ghiduri, <code className="text-[10px] bg-white px-1 rounded">/calculator</code> și <code className="text-[10px] bg-white px-1 rounded">/clasament</code> avem un pool unic de max 5 firme. La fiecare reload, ordinea e <strong>random</strong>.
+                  Pe homepage, ghiduri, <code className="text-[10px] bg-white px-1 rounded">/calculator</code>, <code className="text-[10px] bg-white px-1 rounded">/clasament</code> și pe pagina județului tău. La fiecare reload, ordinea e <strong>random</strong>.
                 </p>
                 <div className="text-[11px] text-gray-500 space-y-0.5">
-                  <p>• Cap: <strong>max 5 firme național</strong></p>
-                  <p>• Share: <strong>20% vizualizări fiecare</strong></p>
+                  <p>• Cap: <strong>max {SOV.premium.cap} firme</strong></p>
+                  <p>• Share: <strong>~{SOV.premium.sovPct}% vizualizări</strong> fiecare</p>
                   <p>• Rotație: <strong>random la reload</strong></p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-5 p-4 rounded-lg bg-white border border-gray-200">
-              <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Exemplu concret pentru Plus</p>
-              <p className="text-sm text-gray-700 leading-relaxed">
-                Dacă pagina <code className="text-xs bg-gray-100 px-1 rounded">/firme/judet/cluj</code> are <strong>~3.000 vizualizări/lună</strong> și avem 3 firme Plus active în Cluj, fiecare primește în medie <strong>~1.000 impresii/lună</strong> în secțiunea „Promovate&quot;. Datele exacte le primești în raportul lunar Umami.
-              </p>
-            </div>
-
             <p className="text-xs text-gray-500 mt-4 leading-relaxed">
-              <strong>De ce nu garantăm „mereu primul&quot;:</strong> când 3 firme plătesc același pachet pentru același placement, e matematic imposibil ca toate să fie „primele&quot;. Rotația random egală e singura soluție corectă — toți primesc share comparabil, transparent comunicat. Modelul e folosit de directoare ca G2.com, Houzz Pro, Clutch.co.
+              <strong>De ce nu garantăm „mereu primul&quot;:</strong> când mai multe firme plătesc același pachet pentru același placement, e matematic imposibil ca toate să fie „primele&quot;. Rotația random egală e singura soluție corectă — toți primesc share comparabil, transparent comunicat. Modelul e folosit de directoare ca G2.com, Houzz Pro, Clutch.co.
             </p>
-          </div>
-        </section>
-
-        {/* Bundle: Național Plus (Plus + Premium) */}
-        <section id="bundle" className="mb-12 scroll-mt-20">
-          <div className="rounded-xl border-2 border-secondary/40 bg-linear-to-br from-secondary/10 via-white to-primary/10 p-6 sm:p-8 relative">
-            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap shadow-sm">
-              Economisești ~{BUNDLE.discountPct}%
-            </span>
-            <div className="grid gap-6 sm:grid-cols-2 items-center">
-              <div>
-                <div className="flex items-center gap-2 mb-1 flex-wrap">
-                  <h3 className="font-bold text-gray-900 text-xl">Național Plus</h3>
-                  <span className="text-xs bg-secondary/15 text-secondary-dark px-2 py-0.5 rounded-full font-medium">Pentru instalatori cu ambiție regională / națională</span>
-                </div>
-                <p className="text-sm text-gray-600 mb-4">Plus + Premium simultan — județul tău + paginile globale</p>
-                <div className="flex items-baseline gap-3 mb-1">
-                  <p className="text-4xl font-bold text-gray-900">
-                    {PRICING.bundle.monthly} <span className="text-base font-normal text-gray-500">EUR/lună</span>
-                  </p>
-                  <p className="text-sm text-gray-400 line-through">{BUNDLE.separateSum}€</p>
-                </div>
-                <p className="text-sm text-secondary-dark font-medium mb-1">Economisești {BUNDLE.monthlySavings}€/lună · {BUNDLE.annualSavings}€/an</p>
-                <p className="text-sm text-gray-600 mb-5">+ TVA ({TVA_PCT}%) · Anual {PRICING.bundle.annual}€ (2 luni gratis)</p>
-
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Include simultan</p>
-                <ul className="space-y-2 text-sm text-gray-600 mb-5">
-                  <Feature strong>Tot din Plus — top „Promovate&quot; pe județul tău + featured /verificare-anre + badge</Feature>
-                  <Feature strong>Tot din Premium — pool global pe homepage, ghiduri, /calculator, /clasament + profil complet</Feature>
-                  <Feature>Câte 1 slot în fiecare cap (Plus, Premium) — fără cap mărit</Feature>
-                </ul>
-                <Button href="#ad-inquiry?tier=bundle" variant="secondary" size="lg" className="w-full">
-                  Activează Național Plus
-                </Button>
-              </div>
-              <div className="rounded-xl border border-secondary/20 bg-white/60 p-5">
-                <p className="text-xs font-semibold text-secondary-dark uppercase tracking-wider mb-3">Defalcare reducere</p>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-                    <span className="text-gray-600">Plus</span>
-                    <span className="font-mono text-gray-900">{PRICING.plus.monthly}€</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-                    <span className="text-gray-600">Premium</span>
-                    <span className="font-mono text-gray-900">{PRICING.premium.monthly}€</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-                    <span className="text-gray-700 font-medium">Total separat</span>
-                    <span className="font-mono font-semibold text-gray-900">{BUNDLE.separateSum}€</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-                    <span className="text-secondary-dark font-medium">Reducere Bundle</span>
-                    <span className="font-mono font-semibold text-secondary-dark">−{BUNDLE.monthlySavings}€</span>
-                  </div>
-                  <div className="flex justify-between items-center pt-1">
-                    <span className="text-gray-900 font-bold">{PRICING.bundle.label}</span>
-                    <span className="font-mono font-bold text-gray-900 text-lg">{PRICING.bundle.monthly}€</span>
-                  </div>
-                </div>
-                <p className="text-[10px] text-gray-400 mt-3 leading-relaxed">
-                  Reducere ~{BUNDLE.discountPct}% aplicată la suma celor 2 pachete. La plata anuală, încă 2 luni gratis ({PRICING.bundle.monthly}€×10 = {PRICING.bundle.annual}€/an). Bundle e dedicat instalatorilor — Basic se cumpără separat de furnizori/distribuitori.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ─── Section break: pentru furnizori / distribuitori ─── */}
-        <div className="my-12 flex items-center gap-4">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
-          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 whitespace-nowrap">
-            Pentru furnizori și distribuitori
-          </p>
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
-        </div>
-
-        {/* Tier 4: Basic (moved to end — furnizori only) */}
-        <section id="basic" className="mb-10 scroll-mt-20">
-          <div className="grid gap-6 sm:grid-cols-2 items-start">
-            <div className="rounded-xl border border-border p-6">
-              <div className="flex items-center gap-2 mb-1">
-                <h3 className="font-bold text-gray-900 text-lg">Basic</h3>
-                <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Furnizori, distribuitori, materiale</span>
-              </div>
-              <p className="text-sm text-gray-500 mb-4">Slot în popup carousel — vizibil pe toate paginile site-ului</p>
-              <p className="text-3xl font-bold text-gray-900 mb-1">
-                {PRICING.basic.monthly} <span className="text-base font-normal text-gray-500">EUR/lună</span>
-              </p>
-              <p className="text-sm text-gray-600 mb-5">+ TVA ({TVA_PCT}%) · Anual {PRICING.basic.annual}€ (2 luni gratis)</p>
-              <div className="mb-4 p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-xs text-blue-900 leading-relaxed">
-                <strong>Pentru cine:</strong> distribuitori panouri/invertoare/structuri, furnizori materiale electrice, echipamente specializate (batatoare stâlpi, structuri, baterii), SaaS și tools pentru industrie. <em>Instalatorii folosesc Plus sau Premium — placement-urile lor sunt mai relevante.</em>
-              </div>
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ce primești</p>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <Feature strong>Slot în popup carousel — apare 15 secunde, apoi rotește la următorul</Feature>
-                <Feature>Maxim 8 parteneri activi simultan în carousel — fără diluare</Feature>
-                <Feature>Vizibil pe toate paginile site-ului (homepage, ghiduri, firme, etc.)</Feature>
-                <Feature>UTM tracking pe linkuri + eveniment Umami dedicat</Feature>
-                <Feature>Raport lunar: impresii popup, click-uri, rata dismiss</Feature>
-              </ul>
-              <div className="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
-                <strong>Cum funcționează popup-ul:</strong> apare după câteva secunde pe toate paginile site-ului. Fiecare partener primește 15 secunde de vizibilitate, apoi se rotește la următorul. Când ciclul ajunge la capăt, începe iar de la primul. Dismissible — userul îl poate închide în sesiune.
-              </div>
-              <Button href="#ad-inquiry?tier=basic" variant="primary" size="md" className="w-full mt-3">
-                Activează Basic
-              </Button>
-            </div>
-            <div className="hidden sm:block">
-              <PreviewBasic />
-            </div>
           </div>
         </section>
 
@@ -626,8 +504,8 @@ export default function AdvertisePage() {
           <div className="flex-1 text-sm">
             <p className="font-semibold text-gray-900">Popup-ul din colțul dreapta-jos pe care-l vezi acum?</p>
             <p className="text-gray-700 mt-1 leading-relaxed">
-              E slotul popup carousel inclus în <strong>Basic — {PRICING.basic.monthly} EUR/lună + TVA</strong>, dedicat furnizorilor și distribuitorilor. Fiecare partener primește 15 secunde de vizibilitate, apoi se rotește la următorul. Maxim 8 parteneri activi simultan, pe tot site-ul, pe toate paginile.{' '}
-              <a href="#basic" className="text-primary-dark hover:underline font-medium">
+              E slotul <strong>Slot Popup — {PRICING.popup.monthly} EUR/lună + TVA</strong>. Fiecare partener primește {SOV.popup.rotationSeconds} secunde de vizibilitate, apoi se rotește la următorul. Maxim {SOV.popup.cap} parteneri activi simultan, pe tot site-ul.{' '}
+              <a href="#popup" className="text-primary-dark hover:underline font-medium">
                 Vezi detaliile →
               </a>
             </p>
@@ -645,42 +523,33 @@ export default function AdvertisePage() {
                 <tr className="bg-surface border-b border-border text-left">
                   <th className="px-4 py-3 font-semibold text-gray-700">Pachet</th>
                   <th className="px-4 py-3 font-semibold text-gray-700 text-right">Preț (+ TVA 21%)</th>
-                  <th className="px-4 py-3 font-semibold text-gray-700">Placement-uri proprii</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700">Ce primești</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
                 <tr>
                   <td className="px-4 py-3 font-medium text-gray-900">Free</td>
                   <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">0 €</td>
-                  <td className="px-4 py-3 text-gray-600">Profil în director + verificare ANRE live</td>
+                  <td className="px-4 py-3 text-gray-600">Profil în listă + verificare ANRE live</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 font-medium text-gray-900">Basic <span className="text-[10px] text-gray-500 ml-1">furnizori</span></td>
-                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">{PRICING.basic.monthly} €</td>
-                  <td className="px-4 py-3 text-gray-600">Popup carousel pe toate paginile (max {SOV.basic.cap} parteneri, {SOV.basic.rotationSeconds}s) — pentru furnizori și distribuitori</td>
-                </tr>
-                <tr className="bg-primary/5">
-                  <td className="px-4 py-3 font-medium text-gray-900">
-                    Plus <span className="text-[10px] bg-primary text-white px-1.5 py-0.5 rounded-full ml-1">★</span>
-                  </td>
-                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">{PRICING.plus.monthly} €</td>
-                  <td className="px-4 py-3 text-gray-600">Top &quot;Promovate&quot; pe județ (max {SOV.plus.cap}) + featured /verificare-anre + badge</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 font-medium text-gray-900">Premium</td>
-                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">{PRICING.premium.monthly} €</td>
-                  <td className="px-4 py-3 text-gray-600">
-                    Pool global rotativ (homepage, ghiduri, calculator, clasament — max {SOV.premium.cap}) + profil complet (logo, descriere lungă, SM links)
-                  </td>
+                  <td className="px-4 py-3 font-medium text-gray-900">Slot Popup</td>
+                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">{PRICING.popup.monthly} €</td>
+                  <td className="px-4 py-3 text-gray-600">Popup carousel pe toate paginile (max {SOV.popup.cap} parteneri, {SOV.popup.rotationSeconds}s)</td>
                 </tr>
                 <tr className="bg-secondary/5">
                   <td className="px-4 py-3 font-medium text-gray-900">
-                    {PRICING.bundle.label} <span className="text-[10px] bg-secondary text-white px-1.5 py-0.5 rounded-full ml-1">−{BUNDLE.discountPct}%</span>
+                    Premium <span className="text-[10px] bg-secondary text-white px-1.5 py-0.5 rounded-full ml-1">★</span>
                   </td>
-                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">{PRICING.bundle.monthly} €</td>
+                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">{PRICING.premium.monthly} €</td>
                   <td className="px-4 py-3 text-gray-600">
-                    Plus + Premium simultan pentru instalatori (economisești {BUNDLE.monthlySavings}€/lună)
+                    Vizibilitate peste tot — top pe județ + pool global (homepage, ghiduri, calculator, clasament, max {SOV.premium.cap}) + profil complet
                   </td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-gray-900">Studiu de caz</td>
+                  <td className="px-4 py-3 text-right font-mono font-semibold text-gray-900">La cerere</td>
+                  <td className="px-4 py-3 text-gray-600">Articol colaborativ publicat pe site — trafic organic + citări AI</td>
                 </tr>
               </tbody>
             </table>
@@ -689,11 +558,10 @@ export default function AdvertisePage() {
           {/* Mobile: stacked cards */}
           <div className="sm:hidden space-y-3">
             {[
-              { name: 'Free', price: '0 €', desc: 'Profil în director + verificare ANRE live (instalatori)', highlight: false },
-              { name: 'Basic (furnizori)', price: `${PRICING.basic.monthly} € + TVA`, desc: `Popup carousel pe toate paginile (max ${SOV.basic.cap}, ${SOV.basic.rotationSeconds}s) — pentru furnizori, distribuitori`, highlight: false },
-              { name: 'Plus ★', price: `${PRICING.plus.monthly} € + TVA`, desc: `Top "Promovate" pe județ (max ${SOV.plus.cap}) + featured /verificare-anre + badge`, highlight: true },
-              { name: 'Premium', price: `${PRICING.premium.monthly} € + TVA`, desc: `Pool global rotativ (homepage, ghiduri, calculator, clasament — max ${SOV.premium.cap}) + profil complet`, highlight: false },
-              { name: `${PRICING.bundle.label} −${BUNDLE.discountPct}%`, price: `${PRICING.bundle.monthly} € + TVA`, desc: 'Plus + Premium simultan pentru instalatori', highlight: false, secondary: true },
+              { name: 'Free', price: '0 €', desc: 'Profil în listă + verificare ANRE live (instalatori)', highlight: false },
+              { name: 'Slot Popup', price: `${PRICING.popup.monthly} € + TVA`, desc: `Popup carousel pe toate paginile (max ${SOV.popup.cap}, ${SOV.popup.rotationSeconds}s)`, highlight: false },
+              { name: 'Premium ★', price: `${PRICING.premium.monthly} € + TVA`, desc: `Vizibilitate peste tot — top pe județ + pool global (max ${SOV.premium.cap}) + profil complet`, highlight: false, secondary: true },
+              { name: 'Studiu de caz', price: 'La cerere', desc: 'Articol colaborativ publicat pe site — trafic organic + citări AI', highlight: true },
             ].map((row) => (
               <div
                 key={row.name}
@@ -721,11 +589,11 @@ export default function AdvertisePage() {
           <div className="space-y-3">
             <details className="bg-white border border-border rounded-xl p-4 group">
               <summary className="font-semibold text-gray-900 text-sm cursor-pointer list-none flex justify-between items-start gap-3">
-                <span>Pachetele sunt cumulative?</span>
+                <span>Care e diferența dintre Slot Popup și Premium?</span>
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Nu. Fiecare pachet are placement-uri proprii — Basic e popup carousel pentru furnizori, Plus e top pe județul tău + ANRE, Premium e pool pe paginile globale. Pentru instalatori, dacă vrei Plus + Premium simultan, ia <strong>{PRICING.bundle.label} ({PRICING.bundle.monthly}€/lună, ~{BUNDLE.discountPct}% reducere)</strong>. Modelul ăsta evită blocaje de capacitate — nu există situația în care „Plus a umplut sloturile pentru Premium&quot;.
+                Slot Popup ({PRICING.popup.monthly}€) e expunere de awareness — un slot în bannerul promo din colț, vizibil pe toate paginile, rotativ. Premium ({PRICING.premium.monthly}€) e vizibilitate prioritară peste tot: apari în top pe pagina județului tău, în pool-ul rotativ de pe homepage/ghiduri/calculator/clasament, pe /verificare-anre, plus profil complet (logo, descriere lungă, social links).
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
@@ -734,43 +602,25 @@ export default function AdvertisePage() {
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Pe Plus și Premium avem cap-uri pe nr. de firme afișate simultan (max 3 per județ pentru Plus, max 5 pe pool global pentru Premium). La fiecare reload de pagină, ordinea e randomizată — fiecare firmă plătită apare în top pentru ~1/N din vizitatori, unde N = nr. firme active în pool-ul respectiv. Comunicăm transparent share-ul (~33% pe Plus, 20% pe Premium când pool-ul e plin) — nu promitem „mereu primul&quot;, ci share echitabil.
+                Pe Premium avem un cap pe nr. de firme afișate simultan (max {SOV.premium.cap} în pool). La fiecare reload de pagină, ordinea e randomizată — fiecare firmă plătită apare în top pentru ~1/N din vizitatori, unde N = nr. firme active. Comunicăm transparent share-ul (~{SOV.premium.sovPct}% când pool-ul e plin) — nu promitem „mereu primul&quot;, ci share echitabil.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
               <summary className="font-semibold text-gray-900 text-sm cursor-pointer list-none flex justify-between items-start gap-3">
-                <span>Ce se întâmplă dacă județul/pool-ul Plus sau Premium e plin?</span>
+                <span>Cât costă un studiu de caz?</span>
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Plus = max 3 firme/județ. Premium = max 5 firme național. Dacă slot-urile sunt ocupate, intri pe lista de așteptare și te anunțăm când se eliberează un loc — first come, first served. Național Plus (Bundle) are prioritate pe waitlist atât pentru Plus cât și pentru Premium.
+                Prețul e personalizat, în funcție de complexitatea proiectului și de cât material (poze, date, interviu) putem folosi. Trimite-ne o cerere prin formular și revenim cu o ofertă. Articolul rămâne publicat pe site — nu e o reclamă care expiră, ci conținut care aduce trafic organic pe termen lung.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
               <summary className="font-semibold text-gray-900 text-sm cursor-pointer list-none flex justify-between items-start gap-3">
-                <span>Cine se poate înscrie la Basic?</span>
+                <span>Cine se poate înscrie la Slot Popup?</span>
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Basic e dedicat <strong>furnizorilor și distribuitorilor</strong> care nu sunt firme de instalare — distribuitori panouri/invertoare/structuri, furnizori materiale electrice, echipamente specializate (batatoare stâlpi, structuri, baterii), SaaS și tools pentru industrie, cursuri/certificări. Instalatorii folosesc <strong>Free</strong> (profil de bază) sau <strong>Plus / Premium / Național Plus</strong> (placement-uri prioritare). Logica: instalatorii apar în liste filtrabile, furnizorii apar în popup-ul de awareness.
-              </p>
-            </details>
-            <details className="bg-white border border-border rounded-xl p-4 group">
-              <summary className="font-semibold text-gray-900 text-sm cursor-pointer list-none flex justify-between items-start gap-3">
-                <span>Ce se întâmplă dacă slotul Basic e plin?</span>
-                <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
-              </summary>
-              <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Avem maxim 8 parteneri activi simultan în carousel. Dacă slot-urile sunt ocupate, intri pe lista de așteptare și te anunțăm când se eliberează un loc.
-              </p>
-            </details>
-            <details className="bg-white border border-border rounded-xl p-4 group">
-              <summary className="font-semibold text-gray-900 text-sm cursor-pointer list-none flex justify-between items-start gap-3">
-                <span>Cine primește rapoartele de trafic?</span>
-                <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
-              </summary>
-              <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Toate pachetele plătite primesc raport lunar. Basic — impresii popup, click-uri, dismiss rate. Plus — adaugă vizualizări profil, click-uri telefon/site, sursa traficului. Premium — extins cu impresii pool global, timp citire profil, conversii. Free nu primește rapoarte.
+                Oricine — instalatori care vor expunere ieftină de awareness, dar și <strong>furnizori și distribuitori</strong> care nu sunt firme de instalare (distribuitori panouri/invertoare/structuri, furnizori materiale electrice, echipamente, SaaS și tools pentru industrie, cursuri/certificări).
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
@@ -779,7 +629,7 @@ export default function AdvertisePage() {
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Activezi pachetul, primești prima factură. În primele 7 zile calendaristice de la activare ai dreptul să anulezi din orice motiv (sau fără motiv) — printr-un email simplu. Returnăm 100% din suma facturată pe luna curentă, iar placement-urile se opresc imediat. Datele Umami pe care le primești în primele zile rămân la tine ca să-ți confirmi singur dacă merită. Garanția se aplică doar la prima activare, nu și la reînnoiri ulterioare.
+                Activezi Slot Popup sau Premium, primești prima factură. În primele 7 zile calendaristice ai dreptul să anulezi din orice motiv — printr-un email simplu. Returnăm 100% din suma facturată pe luna curentă, iar placement-urile se opresc imediat. Garanția se aplică doar la prima activare, nu și la reînnoiri. (Studiul de caz, fiind muncă de producție, se contractează separat.)
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
