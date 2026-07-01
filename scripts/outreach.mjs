@@ -35,6 +35,9 @@ const UNMARK_LEAD = unmarkArg ? Number(unmarkArg.split('=')[1]) : null;
 const RESET_BASELINE = process.argv.includes('--reset-baseline');
 // Write a human header on the marker columns (run once).
 const INIT_HEADERS = process.argv.includes('--init-headers');
+// Also send the reject + promo email (C) to listings explicitly marked "Respins"
+// (non-PV). Off by default so the daily routine never auto-rejects a real firm.
+const SEND_REJECTS = process.argv.includes('--send-rejects');
 const MAX_EMAILS = Number(process.env.OUTREACH_MAX_EMAILS) || 30;
 const FIRMS_PER_LEAD = 5;
 
@@ -157,6 +160,23 @@ function listingConfirmEmail(listing, slug) {
   };
 }
 
+function listingRejectEmail(listing) {
+  const nume = listing.numeContact ? `, ${esc(listing.numeContact)}` : '';
+  return {
+    subject: 'Despre cererea de listare a firmei dvs.',
+    html: wrap(`<p>Bună ziua${nume},</p>
+<p>Vă mulțumim pentru solicitarea de listare trimisă prin instalatori-fotovoltaice.ro.</p>
+<p>Platforma listează exclusiv firme de instalare panouri fotovoltaice (atestate ANRE), ca să rămână relevantă pentru cei care caută instalatori. Din ce am verificat, activitatea principală a firmei nu se încadrează în acest profil, așa că nu o putem adăuga în lista de instalatori.</p>
+<p>Dacă totuși desfășurați și instalare de sisteme fotovoltaice cu atestat ANRE, spuneți-ne și revenim cu pașii de listare.</p>
+<p>Iar dacă vreți vizibilitate în fața publicului nostru (firme și clienți interesați de energie solară), putem colabora prin:</p>
+<p style="margin:6px 0">
+<strong>1. Slot în bannerul promo</strong> (19 €/lună), vizibil pe toate paginile.<br>
+<strong>2. Prezență premium</strong> (79 €/lună) pe toată platforma.<br>
+<strong>3. Studiu de caz / articol colaborativ</strong> (preț la cerere).</p>
+<p>Zi bună,</p>`),
+  };
+}
+
 // ── firm matching (coverage + segment + email, fair rotation) ──────────────
 function normCounty(s) {
   return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
@@ -169,12 +189,16 @@ function segmentFits(firmSeg, leadSeg) {
 function pickFirms(judet, leadSeg, lastContacted, limit = FIRMS_PER_LEAD) {
   const target = normCounty(judet);
   if (!target) return [];
-  const cands = companies.filter((c) => {
-    if (!c.contact?.email) return false;
-    if (!segmentFits(c.segment, leadSeg)) return false;
-    return (c.coverage || []).some((cov) => normCounty(cov) === target) ||
-      (c.location?.county ? normCounty(c.location.county) === target : false);
-  });
+  const coversCounty = (c) =>
+    (c.coverage || []).some((cov) => normCounty(cov) === target) ||
+    (c.location?.county ? normCounty(c.location.county) === target : false);
+  const inCounty = companies.filter((c) => c.contact?.email && coversCounty(c));
+  // Prefer firms whose segment matches. If none do, fall back to any firm in the
+  // county: segment tags in companies.json are imperfect (e.g. firms that also do
+  // residential are sometimes tagged only "comercial"), and a covered lead beats
+  // a dead end. The firm can ignore what does not fit (reply-to model).
+  let cands = inCounty.filter((c) => segmentFits(c.segment, leadSeg));
+  if (cands.length === 0) cands = inCounty;
   cands.sort((a, b) => (lastContacted.get(a.id) || 0) - (lastContacted.get(b.id) || 0));
   return cands.slice(0, limit).map((c) => ({ id: c.id, name: c.name, email: c.contact.email }));
 }
@@ -235,7 +259,7 @@ async function getUnprocessedListings() {
   const out = [];
   rows.forEach((r, i) => {
     if (!isDateRow(r) || (r[LISTING_EMAILED_IDX] || '').trim()) return;
-    out.push({ row: i + 1, listing: { timestamp: r[0], numeFirma: r[1] || '', cui: r[2] || '', numeContact: r[3] || '', email: r[5] || '', judet: r[7] || '', anreStatus: r[12] || '', segment: r[15] || 'comercial' } });
+    out.push({ row: i + 1, listing: { timestamp: r[0], numeFirma: r[1] || '', cui: r[2] || '', numeContact: r[3] || '', email: r[5] || '', judet: r[7] || '', status: r[11] || '', anreStatus: r[12] || '', segment: r[15] || 'comercial' } });
   });
   return out;
 }
@@ -297,7 +321,7 @@ async function main() {
   }
 
   let sent = 0;
-  const stats = { leadsA: 0, leadsB: 0, listingsD: 0, noFirms: 0, skipped: 0, failed: 0 };
+  const stats = { leadsA: 0, leadsB: 0, listingsD: 0, listingsC: 0, noFirms: 0, skipped: 0, failed: 0 };
 
   for (const { row, lead } of leads) {
     if (sent >= MAX_EMAILS) { console.log('(cap atins, mă opresc)'); break; }
@@ -334,16 +358,30 @@ async function main() {
     if (ONLY_LEAD) break; // targeted lead send: skip listings
     if (sent >= MAX_EMAILS) { console.log('(cap atins, mă opresc)'); break; }
     const slug = publishedByCui.get(normCui(listing.cui));
-    if (!slug || listing.anreStatus !== 'verified-pv' || !listing.email) {
-      stats.skipped++;
-      console.log(`LISTARE rând ${row} (${listing.numeFirma}): ${!slug ? 'nepublicată în companies.json' : listing.anreStatus !== 'verified-pv' ? 'nu e verified-pv' : 'fără email'} → skip`);
+    const rejected = /respins/i.test(listing.status || '');
+
+    // Published + PV-verified → confirmation D
+    if (slug && listing.anreStatus === 'verified-pv' && listing.email) {
+      console.log(`LISTARE rând ${row} (${listing.numeFirma}) → confirmare D`);
+      const msg = listingConfirmEmail(listing, slug);
+      const ok = await send(listing.email, msg.subject, msg.html);
+      if (ok) { sent++; stats.listingsD++; if (SEND) await markCell('Listări', `${LISTING_EMAILED_COL}${row}`, SENT_MARK()); } else { stats.failed++; }
+      if (SEND) await sleep(500);
       continue;
     }
-    console.log(`LISTARE rând ${row} (${listing.numeFirma}) → confirmare D`);
-    const msg = listingConfirmEmail(listing, slug);
-    const ok = await send(listing.email, msg.subject, msg.html);
-    if (ok) { sent++; stats.listingsD++; if (SEND) await markCell('Listări', `${LISTING_EMAILED_COL}${row}`, SENT_MARK()); } else { stats.failed++; }
-    if (SEND) await sleep(500);
+
+    // Explicitly rejected (non-PV) → reject + promo (C), only with --send-rejects
+    if (rejected && SEND_REJECTS && listing.email) {
+      console.log(`LISTARE rând ${row} (${listing.numeFirma}) → respingere + promo C`);
+      const msg = listingRejectEmail(listing);
+      const ok = await send(listing.email, msg.subject, msg.html);
+      if (ok) { sent++; stats.listingsC++; if (SEND) await markCell('Listări', `${LISTING_EMAILED_COL}${row}`, SENT_MARK()); } else { stats.failed++; }
+      if (SEND) await sleep(500);
+      continue;
+    }
+
+    stats.skipped++;
+    console.log(`LISTARE rând ${row} (${listing.numeFirma}): ${!slug ? 'nepublicată' : listing.anreStatus !== 'verified-pv' ? 'nu e verified-pv' : 'fără email'} → skip`);
   }
 
   console.log(`\n=== ${SEND ? 'TRIMIS' : 'DRY RUN'}: ${sent} emailuri ===`);
