@@ -19,13 +19,6 @@ const sponsors = [
     baseUrl: 'https://diodor.ro',
     location: 'Cluj-Napoca',
   },
-  {
-    name: 'Sopia',
-    description: 'Digitalizare proceduri și asistență AI la execuție',
-    logo: '/images/partners/sopia.svg',
-    baseUrl: 'https://sopia.xyz',
-    location: 'EU',
-  },
 ];
 
 function buildUrl(baseUrl: string, position: SponsorPosition) {

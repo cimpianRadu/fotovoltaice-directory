@@ -16,7 +16,7 @@ type Partner = {
 
 const PARTNERS = (partnersData.partners as Partner[]).filter((p) => p.active);
 
-const SPONSOR_BANNER_NAMES: string[] = ['diodor', 'sopia'];
+const SPONSOR_BANNER_NAMES: string[] = ['diodor'];
 
 const POSITION_LABELS: Record<string, string> = {
   homepage: 'Homepage',

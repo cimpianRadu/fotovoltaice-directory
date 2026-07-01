@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
@@ -9,7 +8,6 @@ import { getCompanyAnreCerts, PV_RELEVANT_CODES } from '@/lib/anre';
 import CorrectionForm from '@/components/forms/CorrectionForm';
 import ClasamentTable from '@/components/clasament/ClasamentTable';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
-import SponsorImpression from '@/components/sponsor/SponsorImpression';
 
 export const metadata: Metadata = {
   title: 'Clasament Firme Panouri Fotovoltaice România 2026 — Sortare după Cifră, Angajați, Atestate ANRE',
@@ -151,55 +149,6 @@ export default function ClasamentPage() {
             </a>
           </div>
         </div>
-
-        {/* Featured partner — house slot until firms book it */}
-        <section className="mb-8">
-          <div className="flex items-center justify-between gap-2 mb-3">
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">
-                ★ Partener Featured
-              </span>
-              <span className="text-xs text-gray-400">Pentru echipele de instalare</span>
-            </div>
-            <Link href="/publicitate" className="text-xs text-gray-400 hover:text-amber-700 transition-colors">
-              Vrei locul ăsta? →
-            </Link>
-          </div>
-          <SponsorImpression sponsor="sopia" position="clasament-featured">
-          <a
-            href="https://sopia.xyz?utm_source=instalatori-fotovoltaice&utm_medium=featured-banner&utm_campaign=clasament-top&utm_content=clasament"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-umami-event="sponsor-click"
-            data-umami-event-sponsor="sopia"
-            data-umami-event-position="clasament-featured"
-            className="group block p-6 bg-gradient-to-br from-white via-amber-50/30 to-white border border-amber-200 rounded-xl hover:border-amber-400 hover:shadow-md transition-all"
-          >
-            <div className="flex items-center gap-5 flex-wrap">
-              <div className="w-14 h-14 rounded-lg bg-white border border-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
-                <Image
-                  src="/images/partners/sopia.svg"
-                  alt="Sopia"
-                  width={40}
-                  height={40}
-                  className="w-10 h-10 object-contain"
-                />
-              </div>
-              <div className="flex-1 min-w-[240px]">
-                <div className="font-semibold text-gray-900 text-base mb-0.5">
-                  Sopia — proceduri digitalizate cu asistență AI
-                </div>
-                <div className="text-sm text-gray-600 leading-relaxed">
-                  Echipa de instalare urmează pașii corect, de fiecare dată. Seniorii nu mai repetă aceleași explicații — AI-ul ghidează tehnicianul prin procedură.
-                </div>
-              </div>
-              <span className="text-sm font-semibold text-amber-700 group-hover:text-amber-800 whitespace-nowrap">
-                Vezi cum funcționează →
-              </span>
-            </div>
-          </a>
-          </SponsorImpression>
-        </section>
 
         <PremiumPoolSection
           title="Parteneri Verificați"
