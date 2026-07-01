@@ -30,6 +30,11 @@ const ONLY_LEAD = onlyLeadArg ? Number(onlyLeadArg.split('=')[1]) : null;
 // Clear the "Email trimis" marker on a lead row (correction after a bad run).
 const unmarkArg = process.argv.find((a) => a.startsWith('--unmark-lead='));
 const UNMARK_LEAD = unmarkArg ? Number(unmarkArg.split('=')[1]) : null;
+// Clear ONLY markers written by --baseline (correction if baseline was wrong).
+// Leaves real-send timestamps untouched.
+const RESET_BASELINE = process.argv.includes('--reset-baseline');
+// Write a human header on the marker columns (run once).
+const INIT_HEADERS = process.argv.includes('--init-headers');
 const MAX_EMAILS = Number(process.env.OUTREACH_MAX_EMAILS) || 30;
 const FIRMS_PER_LEAD = 5;
 
@@ -49,6 +54,14 @@ const LISTING_EMAILED_COL = 'Q', LISTING_EMAILED_IDX = 16;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const companies = JSON.parse(readFileSync(new URL('../data/companies.json', import.meta.url), 'utf8')).companies;
+
+// Human-readable timestamp for the sheet marker, e.g. "01.07.2026 14:32".
+function stamp() {
+  return new Date().toLocaleString('ro-RO', { timeZone: 'Europe/Bucharest', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+const SENT_MARK = () => `✓ Trimis ${stamp()}`;
+const BASELINE_MARK = () => `Baseline, deja tratat ${stamp()}`;
+const HEADER = 'Email trimis';
 
 // ── email templates (branded shell shared by all) ──────────────────────────
 function esc(s) {
@@ -246,6 +259,25 @@ async function main() {
     console.log(`Rând ${UNMARK_LEAD}: marcaj golit (Leads!${LEAD_EMAILED_COL}${UNMARK_LEAD}). Redevine neprocesat.`);
     return;
   }
+  if (RESET_BASELINE) {
+    let n = 0;
+    const leadRows = await readRows('Leads');
+    for (let i = 0; i < leadRows.length; i++) {
+      if ((leadRows[i][LEAD_EMAILED_IDX] || '').toLowerCase().startsWith('baseline')) { await markCell('Leads', `${LEAD_EMAILED_COL}${i + 1}`, ''); n++; }
+    }
+    const listRows = await readRows('Listări');
+    for (let i = 0; i < listRows.length; i++) {
+      if ((listRows[i][LISTING_EMAILED_IDX] || '').toLowerCase().startsWith('baseline')) { await markCell('Listări', `${LISTING_EMAILED_COL}${i + 1}`, ''); n++; }
+    }
+    console.log(`Reset baseline: golit ${n} marcaje. Rândurile redevin neprocesate.`);
+    return;
+  }
+  if (INIT_HEADERS) {
+    await markCell('Leads', `${LEAD_EMAILED_COL}1`, HEADER);
+    await markCell('Listări', `${LISTING_EMAILED_COL}1`, HEADER);
+    console.log(`Header „${HEADER}" scris în Leads!${LEAD_EMAILED_COL}1 și Listări!${LISTING_EMAILED_COL}1.`);
+    return;
+  }
   if (!process.env.RESEND_API_KEY) { console.error('RESEND_API_KEY lipsește din .env.local'); process.exit(2); }
   console.log(SEND ? '=== OUTREACH — MOD TRIMITERE ===\n' : '=== OUTREACH — DRY RUN (fără trimitere; adaugă --send ca să trimită) ===\n');
 
@@ -256,9 +288,9 @@ async function main() {
   console.log(`Neprocesate: ${leads.length} leaduri, ${listings.length} listări. Cap: ${MAX_EMAILS} emailuri/rulare.\n`);
 
   if (BASELINE) {
-    const stamp = `baseline ${new Date().toISOString()}`;
-    for (const { row } of leads) await markCell('Leads', `${LEAD_EMAILED_COL}${row}`, stamp);
-    for (const { row } of listings) await markCell('Listări', `${LISTING_EMAILED_COL}${row}`, stamp);
+    const mark = BASELINE_MARK();
+    for (const { row } of leads) await markCell('Leads', `${LEAD_EMAILED_COL}${row}`, mark);
+    for (const { row } of listings) await markCell('Listări', `${LISTING_EMAILED_COL}${row}`, mark);
     console.log(`Baseline: marcat ${leads.length} leaduri + ${listings.length} listări ca procesate.`);
     console.log('De acum rutina tratează doar submisiile NOI. Nimic nu se retrimite.');
     return;
@@ -290,7 +322,7 @@ async function main() {
       // (e.g. domain/config error), leave the row for a retry next run.
       if (contacted.length || clientOk) {
         if (contacted.length) await appendLog(contacted);
-        await markCell('Leads', `${LEAD_EMAILED_COL}${row}`, new Date().toISOString());
+        await markCell('Leads', `${LEAD_EMAILED_COL}${row}`, SENT_MARK());
       } else {
         console.log(`   (nimic trimis pentru rândul ${row}, îl las neprocesat)`);
       }
@@ -310,7 +342,7 @@ async function main() {
     console.log(`LISTARE rând ${row} (${listing.numeFirma}) → confirmare D`);
     const msg = listingConfirmEmail(listing, slug);
     const ok = await send(listing.email, msg.subject, msg.html);
-    if (ok) { sent++; stats.listingsD++; if (SEND) await markCell('Listări', `${LISTING_EMAILED_COL}${row}`, new Date().toISOString()); } else { stats.failed++; }
+    if (ok) { sent++; stats.listingsD++; if (SEND) await markCell('Listări', `${LISTING_EMAILED_COL}${row}`, SENT_MARK()); } else { stats.failed++; }
     if (SEND) await sleep(500);
   }
 
