@@ -120,6 +120,7 @@ export default function PartnerCarousel() {
         onClick={() => handleClick(partner)}
         className="block p-4 pr-8 animate-[fadeIn_400ms_ease-out]"
       >
+        <p className="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Publicitate</p>
         <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
           Partener {total > 1 && <span className="text-gray-300 font-normal normal-case tracking-normal">· {index + 1}/{total}</span>}
         </p>

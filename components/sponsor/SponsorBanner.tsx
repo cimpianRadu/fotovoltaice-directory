@@ -65,6 +65,7 @@ export default function SponsorBanner({ position }: { position: SponsorPosition 
 
   return (
     <div ref={ref} className="rounded-xl border border-primary/15 bg-primary/5 p-5">
+      <p className="text-[10px] uppercase tracking-wider text-gray-400 mb-1">Publicitate</p>
       <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider mb-3">
         Parteneri Recomandați
       </p>

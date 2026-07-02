@@ -25,9 +25,12 @@ export default function PremiumPoolSection({
     return (
       <div className="rounded-xl border border-secondary/20 bg-secondary/5 p-4">
         <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
-          <p className="text-xs font-semibold uppercase tracking-wider text-secondary-dark">
-            ★ {title}
-          </p>
+          <div>
+            <p className="text-[10px] uppercase tracking-wider text-gray-400">Publicitate</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-secondary-dark">
+              ★ {title}
+            </p>
+          </div>
           <p className="text-[10px] text-gray-500">
             ~{sharePct}% share · rotație random
           </p>
@@ -49,6 +52,7 @@ export default function PremiumPoolSection({
       <div className="rounded-xl border border-secondary/20 bg-linear-to-br from-secondary/5 via-white to-primary/5 p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
           <div>
+            <p className="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Publicitate</p>
             <p className="text-xs font-semibold uppercase tracking-wider text-secondary-dark">
               ★ {title}
             </p>

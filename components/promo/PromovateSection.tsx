@@ -26,6 +26,7 @@ export default function PromovateSection({
       <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 sm:p-5">
         <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
           <div>
+            <p className="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Publicitate</p>
             <p className="text-xs font-semibold uppercase tracking-wider text-primary-dark">
               ★ {title}
             </p>
