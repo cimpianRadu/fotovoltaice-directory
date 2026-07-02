@@ -119,7 +119,7 @@ function leadClientEmail(lead) {
     html: wrap(`<p>Bună ziua${nume},</p>
 <p>Vă mulțumim pentru cererea trimisă prin instalatori-fotovoltaice.ro. Am înregistrat solicitarea: <strong>${esc(describeLead(lead))}</strong>.</p>
 <p>Am transmis cererea către câțiva instalatori atestați ANRE din zona dvs. Cei interesați vă vor contacta în curând cu oferte.</p>
-<p>Zi bună,</p>`),
+<p>Zi bună,<br>Radu - instalatori-fotovoltaice.ro</p>`),
   };
 }
 
@@ -133,7 +133,7 @@ function leadFirmEmail(lead) {
 <ul style="padding-left:18px"><li><strong>Lucrare:</strong> ${esc(describeLead(lead))}</li><li><strong>Tip client:</strong> ${esc(tip)}</li></ul>
 ${extra}
 <p>Dacă vă interesează, <strong>răspundeți la acest email</strong> și vă punem în legătură directă cu clientul pentru ofertă.</p>
-<p>Zi bună,</p>`),
+<p>Zi bună,<br>Radu - instalatori-fotovoltaice.ro</p>`),
   };
 }
 
@@ -156,7 +156,7 @@ function listingConfirmEmail(listing, slug) {
 <strong>2. Slot în bannerul promo</strong> (19 €/lună): în colțul din dreapta-jos, pe toate paginile.<br>
 <strong>3. Studiu de caz</strong> (preț la cerere): scriem împreună un articol despre un proiect de-al vostru, publicat pe site.</p>
 <p>Lucrăm și la o funcție prin care firmele primesc direct cererile de ofertă din zona lor.</p>
-<p>Zi bună,</p>`),
+<p>Zi bună,<br>Radu - instalatori-fotovoltaice.ro</p>`),
   };
 }
 
@@ -173,7 +173,7 @@ function listingRejectEmail(listing) {
 <strong>1. Slot în bannerul promo</strong> (19 €/lună), vizibil pe toate paginile.<br>
 <strong>2. Prezență premium</strong> (79 €/lună) pe toată platforma.<br>
 <strong>3. Studiu de caz / articol colaborativ</strong> (preț la cerere).</p>
-<p>Zi bună,</p>`),
+<p>Zi bună,<br>Radu - instalatori-fotovoltaice.ro</p>`),
   };
 }
 
