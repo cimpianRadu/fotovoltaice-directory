@@ -8,6 +8,7 @@ import { getCompanyAnreCerts, PV_RELEVANT_CODES } from '@/lib/anre';
 import CorrectionForm from '@/components/forms/CorrectionForm';
 import ClasamentTable from '@/components/clasament/ClasamentTable';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
+import InstallerCta from '@/components/InstallerCta';
 
 export const metadata: Metadata = {
   title: 'Clasament Firme Panouri Fotovoltaice România 2026 — Sortare după Cifră, Angajați, Atestate ANRE',
@@ -214,6 +215,8 @@ export default function ClasamentPage() {
             ))}
           </div>
         </section>
+
+        <InstallerCta />
 
         {/* Correction Form */}
         <section className="mb-12 bg-white rounded-xl border-2 border-primary/20 p-6" id="corectie">

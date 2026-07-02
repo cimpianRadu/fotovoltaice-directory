@@ -3,6 +3,7 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import AnreVerificationClient from './AnreVerificationClient';
 import PromovateSection from '@/components/promo/PromovateSection';
+import InstallerCta from '@/components/InstallerCta';
 import { getPlusCompaniesForAnre, PROMO_CAPS } from '@/lib/utils';
 
 export const metadata: Metadata = {
@@ -218,14 +219,7 @@ export default function VerificareAnrePage() {
             <li>Verifică și <strong>certificările ISO</strong> (9001, 14001, 45001) pentru un indicator suplimentar de profesionalism</li>
           </ul>
 
-          <div className="bg-primary/5 border border-primary/10 rounded-xl p-5 mt-6">
-            <p className="text-sm text-gray-800">
-              <strong>Cauți un instalator fotovoltaic verificat?</strong> În{' '}
-              <a href="/firme" className="text-primary-dark font-medium hover:underline">platforma noastră</a>{' '}
-              găsești doar firme cu date verificate din surse publice oficiale, inclusiv certificări ANRE confirmate.
-              Poți filtra după tip de atestat, județ și specializare.
-            </p>
-          </div>
+          <InstallerCta />
         </section>
 
         {/* FAQ section visible */}

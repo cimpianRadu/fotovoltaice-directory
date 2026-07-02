@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import FAQ from '@/components/seo/FAQ';
-import Button from '@/components/ui/Button';
+import InstallerCta from '@/components/InstallerCta';
 import Markdown from '@/components/ui/Markdown';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
@@ -67,27 +67,7 @@ export default async function GuidePage({ params }: Props) {
 
   const heroImage = getHeroImage(guide.slug);
 
-  const ctaBlock = (
-    <div className="bg-primary/5 rounded-xl border border-primary/10 p-6 my-10 text-center">
-      <h3 className="font-bold text-gray-900 mb-2">
-        Cauți un instalator pentru proiectul tău?
-      </h3>
-      <p className="text-sm text-gray-600 mb-4">
-        Spune-ne ce ai nevoie și primești oferte gratuite de la mai mulți instalatori atestați, sau vezi direct firmele specializate.
-      </p>
-      <div className="flex flex-col sm:flex-row justify-center gap-3">
-        <Button href="/cere-oferta" variant="primary">
-          Primește oferte gratuite
-        </Button>
-        <Button
-          href={`/firme${guide.relatedSpecializations[0] ? `?specializare=${guide.relatedSpecializations[0]}` : ''}`}
-          variant="outline"
-        >
-          Vezi Firme Specializate
-        </Button>
-      </div>
-    </div>
-  );
+  const ctaBlock = <InstallerCta specializare={guide.relatedSpecializations[0]} />;
 
   return (
     <>

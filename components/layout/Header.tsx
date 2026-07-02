@@ -151,10 +151,14 @@ export default function Header() {
         {/* Mobile hamburger */}
         <div className="flex items-center gap-2 md:hidden">
           <Link
-            href="/listeaza-firma"
-            className="inline-flex items-center justify-center bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-3 min-h-[44px] rounded-lg transition-colors"
+            href="/cere-oferta"
+            onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_mobile' })}
+            className="inline-flex items-center gap-1.5 justify-center bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-3 min-h-[44px] rounded-lg transition-colors"
           >
-            Listează Firma
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Cere ofertă
           </Link>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -199,6 +203,13 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          <Link
+            href="/listeaza-firma"
+            onClick={() => setMobileOpen(false)}
+            className="mt-2 text-base font-medium rounded-lg px-3 py-2.5 border border-primary/30 text-primary-dark text-center hover:bg-primary/5 transition-colors"
+          >
+            Listează-ți firma
+          </Link>
         </nav>
       </div>
     </header>

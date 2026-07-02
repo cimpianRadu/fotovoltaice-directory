@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer';
 import PartnerCarousel from '@/components/promo/PartnerCarousel';
 import { SegmentProvider } from '@/components/segment/SegmentProvider';
 import FloatingSegmentToggle from '@/components/segment/FloatingSegmentToggle';
+import CtaPopup from '@/components/CtaPopup';
 import { getCompanies, getCoveredCounties } from '@/lib/utils';
 import './globals.css';
 
@@ -79,6 +80,7 @@ export default function RootLayout({
           <Footer />
           <PartnerCarousel />
           <FloatingSegmentToggle />
+          <CtaPopup />
         </SegmentProvider>
       </body>
     </html>

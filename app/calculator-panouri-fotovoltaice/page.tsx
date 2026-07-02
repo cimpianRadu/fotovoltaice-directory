@@ -3,6 +3,7 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import CalculatorClient from './CalculatorClient';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
+import InstallerCta from '@/components/InstallerCta';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 
 export const metadata: Metadata = {
@@ -90,6 +91,8 @@ export default function CalculatorPage() {
         </p>
 
         <CalculatorClient />
+
+        <InstallerCta />
 
         <PremiumPoolSection
           title="Instalatori Recomandați"
