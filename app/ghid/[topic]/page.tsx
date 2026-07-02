@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -65,6 +66,28 @@ export default async function GuidePage({ params }: Props) {
   if (!guide) notFound();
 
   const heroImage = getHeroImage(guide.slug);
+
+  const ctaBlock = (
+    <div className="bg-primary/5 rounded-xl border border-primary/10 p-6 my-10 text-center">
+      <h3 className="font-bold text-gray-900 mb-2">
+        Cauți un instalator pentru proiectul tău?
+      </h3>
+      <p className="text-sm text-gray-600 mb-4">
+        Spune-ne ce ai nevoie și primești oferte gratuite de la mai mulți instalatori atestați, sau vezi direct firmele specializate.
+      </p>
+      <div className="flex flex-col sm:flex-row justify-center gap-3">
+        <Button href="/cere-oferta" variant="primary">
+          Primește oferte gratuite
+        </Button>
+        <Button
+          href={`/firme${guide.relatedSpecializations[0] ? `?specializare=${guide.relatedSpecializations[0]}` : ''}`}
+          variant="outline"
+        >
+          Vezi Firme Specializate
+        </Button>
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -165,11 +188,15 @@ export default async function GuidePage({ params }: Props) {
 
         {/* Content sections */}
         <div className="max-w-none">
-          {guide.sections.map((section) => (
-            <section key={section.id} id={section.id} className="mb-12 scroll-mt-20">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">{section.title}</h2>
-              <Markdown content={section.content} />
-            </section>
+          {guide.sections.map((section, i) => (
+            <Fragment key={section.id}>
+              <section id={section.id} className="mb-12 scroll-mt-20">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">{section.title}</h2>
+                <Markdown content={section.content} />
+              </section>
+              {/* CTA după prima secțiune — puțini ajung la finalul articolului */}
+              {i === 0 && ctaBlock}
+            </Fragment>
           ))}
         </div>
 
@@ -178,26 +205,8 @@ export default async function GuidePage({ params }: Props) {
           subtitle="Firme partenere care fac proiecte ca cel din ghid"
         />
 
-        {/* CTA */}
-        <div className="bg-primary/5 rounded-xl border border-primary/10 p-6 my-10 text-center">
-          <h3 className="font-bold text-gray-900 mb-2">
-            Cauți un instalator pentru proiectul tău?
-          </h3>
-          <p className="text-sm text-gray-600 mb-4">
-            Vezi firmele specializate de pe platforma noastră sau cere o ofertă gratuită.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-3">
-            <Button
-              href={`/firme${guide.relatedSpecializations[0] ? `?specializare=${guide.relatedSpecializations[0]}` : ''}`}
-              variant="primary"
-            >
-              Vezi Firme Specializate
-            </Button>
-            <Button href="/cere-oferta" variant="outline">
-              Cere Ofertă Gratuită
-            </Button>
-          </div>
-        </div>
+        {/* CTA (repetat la final pentru cine ajunge aici) */}
+        {ctaBlock}
 
         {/* FAQ */}
         <section id="faq" className="scroll-mt-20 mb-10">
