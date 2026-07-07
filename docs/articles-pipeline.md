@@ -8,6 +8,8 @@ Ultima actualizare: 2026-05-27 (**pivot strategic backat de GSC 3 luni: 538 clic
 
 > Ordinea rutinei (luni + joi): PASUL 0 publică draft programat → PASUL 0.5 extinde un ghid din „🔧 De extins" → PASUL 1 scrie articol nou din „🎯 Propuneri active". Fiecare pas ocupă slotul zilei (fără stacking).
 
+> **News+trend scan 2026-07-06:** promovat **#25 AFIR Schema de Energie** (apel PV agro/alimentar deschis 15 iun–14 aug 2026, 265 mil. EUR, sursă primară AFIR/MADR) la coada activă = următorul articol pentru rutina de luni. Casa Verde Baterii ghid tot nepublicat (afm.ro inaccesibil). Idei trend noi în backlog: #26 baterie backup casă (candidat de promovat), #27 PV + AC caniculă (sezonier).
+
 ## Format intrare
 
 ```
@@ -65,6 +67,7 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 
 ### Casa Verde Baterii — publicare ghid AFM (UPDATE după publicare)
 - **Status la 2026-06-04:** buget 400 mil. lei **APROBAT OFICIAL 21 mai 2026**; ghid de finanțare încă nepublicat; sesiune nedeschisă. Articol dedicat publicat preventiv pe 4 iunie 2026 (vezi `/ghid/casa-verde-baterii-2026-program-stocare-afm`).
+- **Recheck 2026-07-06 (news scan):** ghid AFM tot **NEPUBLICAT** — confirmare primară pending. afm.ro **inaccesibil** din scan (WAF 503 chiar și cu proxy stealth). Presa/instalatorii repetă doar bugetul 400 mil. lei stocare + pre-înscrieri comerciale (nu sursă oficială). NU promova încă. Următorul recheck: la scan-ul de duminică viitoare sau ad-hoc dacă apare anunț AFM.
 - **Trigger:** AFM publică ghidul oficial pe [afm.ro](https://www.afm.ro/sisteme_fotovoltaice.php) cu suma per beneficiar + condiții + dată sesiune.
 - **Acțiune:** (a) update ghidul `casa-verde-baterii-2026-program-stocare-afm` cu suma + datele oficiale + lista echipamente eligibile + calendar real; (b) update colateral pe ghidul-umbrelă `casa-verde-fotovoltaice-2026` cu cifrele confirmate; (c) Request Indexing GSC pe ambele după update.
 
@@ -121,6 +124,15 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 
 > **Context:** analiză GSC pe primele 200 query-uri (29 iun) a identificat 3 cluster-uri prioritare neacoperite. Re-validat pattern: striking-distance pe page 3-4 cu impresii mari = ROI cel mai mare. Ordinea de mai jos prioritizează ce nu duplică un ghid existent.
 
+#### #25 — Fonduri AFIR 2026 Panouri Fotovoltaice Fermă și Industrie Alimentară — Schema de Energie (15 iun–14 aug) 🔝 TOP
+- **Status:** 💡 idee — **HOT, apel deschis cu deadline apropiat** (promovat din 🔥 Hot topics watch + backlog #20 pe 6 iul 2026, trigger confirmat din sursă primară).
+- **Cluster GSC intuit:** „fonduri AFIR panouri fotovoltaice", „schema de energie AFIR 2026", „finantare panouri fotovoltaice ferma", „panouri fotovoltaice fermier fonduri europene", „AFIR energie regenerabila autoconsum", „fonduri nerambursabile panouri fotovoltaice agricultura", „subventie panouri solare industrie alimentara", „AFIR fotovoltaice 2026 depunere". Intent B2B agro-industrial, commercial maxim, zero competiție editorială serioasă în RO.
+- **De ce HOT:** apel **DESCHIS acum** — depunere online pe afir.ro **15 iunie – 14 august 2026** (window scurt → trafic masiv de căutare în perioada de aplicare, exact pattern-ul validat „hot/news > evergreen"). Suntem la 6 iul, mai sunt ~5,5 săptămâni. On-brand 100% (fotovoltaice comercial/industrial pentru ferme + procesatori alimentari). Backlog #20 anticipa deja tema — acum are trigger real.
+- **Fapte verificate (never-invent, din sursă primară):** buget **265 mil. EUR** (145 mil. € pentru capacități ≤1 MW, 120 mil. € pentru >1 MW); finanțare **100% nerambursabilă**, plafon **650.000 €/MW** (≤1 MW) și **550.000 €/MW** (>1 MW); beneficiari = întreprinderi/cooperative/societăți din sectorul agricol, întreprinderi din industria alimentară, organizații de îmbunătățiri funciare; **componenta eoliană eliminată** (doar PV ± stocare pentru autoconsum); bani europeni prin **Fondul pentru Modernizare** (Min. Energiei), administrator schemă = **MADR prin AFIR**; excepție evaluare impact mediu pentru instalații >400 kW. Ghid consolidat (v7) publicat de AFIR pe **9 iunie 2026**.
+- **Surse primare:** [afir.ro — Detalii și Anexe Schema Energie](https://www.afir.ro/domenii-de-interventie/detalii-si-anexe-schema-energie/) + [afir.ro Schema de Energie](https://www.afir.ro/finantare/finantare-in-agricultura/schema-de-energie/) + [legislatie.just.ro GHID 09/06/2026](https://legislatie.just.ro/Public/DetaliiDocument/311326) + comunicat MADR (madr.ro, 265 mil. EUR) + confirmare presă startupcafe.ro (11 iun 2026). **NU inventa** criterii de punctaj, praguri kWp exacte sau documente pe care nu le confirmă ghidul — trimite la ghidul solicitantului v7 pentru detalii live.
+- **Linkuri interne:** /ghid/fonduri-nerambursabile-panouri-fotovoltaice-imm-2026 + /ghid/sisteme-fotovoltaice-comerciale-2026-pillar-decident-firma + /ghid/electric-up-2026-ghid-aplicare + /ghid/sistem-fotovoltaic-50-100-250-kw-firma-pret-suprafata-productie + /ghid/amortizare-panouri-fotovoltaice-2026 + /ghid/avize-aviz-mediu-parc-fotovoltaic-2026 (prag >400 kW evaluare mediu) + /ghid/aviz-tehnic-racordare-atr-prosumator-2026 + /calculator-panouri-fotovoltaice?segment=comercial + /firme?segment=comercial + /verificare-anre + /clasament + /cere-oferta.
+- **Next step dacă publicat:** GSC Request Indexing manual. **Fereastra de tracțiune: iul–14 aug 2026** (perioada de aplicare). Update obligatoriu dacă AFIR prelungește/închide sesiunea sau modifică alocarea. Pattern replicare dacă urcă: ghid „Fond Modernizare autoconsum firmă 2026" ca umbrelă (AFIR = ruta agro a aceluiași Fond).
+
 #### #21 — Top Firme Panouri Fotovoltaice Arad 2026 — Instalatori Autorizați ANRE
 - **Status:** ✅ publicat 2026-06-29 — vezi „Publicate recent".
 
@@ -154,7 +166,15 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 - **Status:** 🟡 backlog · cluster „carport solar/panouri parcare", 0 imp GSC; nișă fără competiție dar fără cerere validată.
 
 #### #20 — Panouri Fotovoltaice pentru Fermă Agricolă 2026 — Subvenții AFIR și Aplicații (Irigații, Hale, Sere)
-- **Status:** 🟡 backlog · cluster „ferma agricola/AFIR fotovoltaice", 1 imp GSC.
+- **Status:** ⤴️ promovat 2026-07-06 — trigger AFIR Schema de Energie confirmat (apel deschis 15 iun–14 aug 2026). Vezi **#25** în coada activă. Rămâne aici doar ca referință de cluster (irigații/hale/sere = unghiuri de aplicație pentru articolul #25 dacă e nevoie de secțiuni).
+
+#### #26 — Baterie de Stocare pentru Casă 2026 — Backup la Pană de Curent, Dimensionare și Independență Energetică · candidat de promovat
+- **Status:** 🟡 backlog (candidat de promovat) · cluster „baterie stocare casa", „backup pana de curent panouri", „independenta energetica sistem fotovoltaic", „dimensionare baterie dupa consum", „LFP vs NMC casa" · sursă: trend scan 2026-07-06.
+- **De ce:** bateriile/stocarea = **clusterul #1 dovedit** (Casa Verde Baterii = 229 clicks, 42% din trafic recent). Cererea e susținută activ în piață chiar acum (E.ON Solar Home nJoy Bastion, Siana kit 10kW cu baterie, GTA Energy „independență energetică 2026") ȘI e împinsă de DOUĂ programe live (Casa Verde Baterii 400 mil. + AFIR stocare pentru autoconsum). Avem ghid pe *program* (Casa Verde Baterii) și pe *stocare firme*, dar NU un evergreen rezidențial pe „backup + dimensionare baterie după consum". Unghi nou, nu duplicat. Promovare efectivă = decizia user / semnal GSC ≥10 imp.
+
+#### #27 — Panouri Fotovoltaice și Aerul Condiționat Vara — Randament la Caniculă și Cum Îți Acoperi Vârful de Consum · sezonier
+- **Status:** 🟡 backlog · cluster „panouri fotovoltaice canicula randament", „aer conditionat panouri solare", „cat produc panourile vara", „consum aer conditionat panouri fotovoltaice" · sursă: trend scan 2026-07-06.
+- **De ce:** semnal sezonier puternic în săptămâna curentă (val de conținut RO despre caniculă → vârf de consum mutat pe AC vara; genway a scris deja „cum afectează canicula randamentul"). Adiacent clusterului rezidențial preț/dimensionare (performer). Paradox util de explicat (panourile produc mult vara dar randamentul/celulă scade la temperatură mare, iar AC-ul mută vârful) → intent informațional clar. Fereastra bună: iul–aug. NU e acoperit de niciun ghid existent.
 
 ---
 
