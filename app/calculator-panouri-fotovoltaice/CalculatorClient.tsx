@@ -4,7 +4,7 @@ import { useMemo, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 import { useSegment } from '@/components/segment/SegmentProvider';
-import { formatCurrency, formatNumber, slugifyCounty } from '@/lib/utils';
+import { formatCurrency, formatNumber, slugifyCounty } from '@/lib/utils-shared';
 import pvgisData from '@/data/pvgis-yields.json';
 import countiesData from '@/data/counties.json';
 

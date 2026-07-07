@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/generate-company-anre-certs.js",
     "dev": "next dev",
+    "prebuild": "node scripts/generate-company-anre-certs.js",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -15,7 +17,8 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

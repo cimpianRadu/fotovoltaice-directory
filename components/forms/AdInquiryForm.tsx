@@ -5,7 +5,7 @@ import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
 import Toast from '@/components/ui/Toast';
-import { getCounties } from '@/lib/utils';
+import { getCounties } from '@/lib/utils-shared';
 import { PRICING, tierSelectLabel, type TierId } from '@/lib/pricing';
 
 declare global {

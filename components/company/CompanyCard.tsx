@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import Badge from '@/components/ui/Badge';
-import { type Company, getSpecializationLabel, formatNumber, formatShortDate } from '@/lib/utils';
-import { getCompanyAnreCerts, getAnreCodeLabel } from '@/lib/anre';
+import { type Company, getSpecializationLabel, formatNumber, formatShortDate } from '@/lib/utils-shared';
+import { getCompanyAnreCerts } from '@/lib/anre-certs';
+import { getAnreCodeLabel } from '@/lib/anre-shared';
 import { isCasaVerde } from '@/lib/casa-verde';
 import CasaVerdeBadge from '@/components/company/CasaVerdeBadge';
 

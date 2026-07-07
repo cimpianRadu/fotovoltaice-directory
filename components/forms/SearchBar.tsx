@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getCounties, getSpecializations } from '@/lib/utils';
+import { getCounties, getSpecializations } from '@/lib/utils-shared';
 import { trackEvent } from '@/lib/analytics';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 

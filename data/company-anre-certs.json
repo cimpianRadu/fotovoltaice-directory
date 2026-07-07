@@ -1,0 +1,2837 @@
+{
+ "SIMTEL TEAM|Bucuresti": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12431",
+   "dataEmitere": "13/03/2017",
+   "dataExpirare": "22/02/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  }
+ ],
+ "ENERGOBIT Cluj Napoca|Cluj": [],
+ "ENERGOMONTAJ|Bucuresti": [],
+ "ROMSIR-IMPEX|Olt": [
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "20050",
+   "dataEmitere": "30/08/2023",
+   "dataExpirare": "30/08/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "RENOVATIO SOLAR|Ilfov": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19961",
+   "dataEmitere": "22/08/2023",
+   "dataExpirare": "22/08/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19960",
+   "dataEmitere": "22/08/2023",
+   "dataExpirare": "22/08/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "MRB ELECTRIC|Cluj": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "23376",
+   "dataEmitere": "23/06/2025",
+   "dataExpirare": "23/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "23375",
+   "dataEmitere": "23/06/2025",
+   "dataExpirare": "23/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ALFA ENERGETIC ESCO|Ilfov": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19628",
+   "dataEmitere": "17/05/2023",
+   "dataExpirare": "17/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19627",
+   "dataEmitere": "17/05/2023",
+   "dataExpirare": "17/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "STRATOSPARK|Bucuresti": [],
+ "East European Business Center (E.E.B.C.)|Sibiu": [
+  {
+   "code": "BE",
+   "variant": null,
+   "nrAtestat": "19014",
+   "dataEmitere": "07/02/2023",
+   "dataExpirare": "07/02/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif Be"
+  }
+ ],
+ "ELECTRO-SERVICE DISTRIBUTIE|Bucuresti": [],
+ "PHOTON ENERGY ENGINEERING ROMANIA|Bucuresti": [
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "21622",
+   "dataEmitere": "01/04/2024",
+   "dataExpirare": "01/04/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "FISE ELECTRICA SERV|Bucuresti": [],
+ "EXPERT ENERGY|Sibiu": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19417",
+   "dataEmitere": "08/05/2023",
+   "dataExpirare": "08/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19416",
+   "dataEmitere": "08/05/2023",
+   "dataExpirare": "08/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "SINPUR ENERGY|Iasi": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "14522",
+   "dataEmitere": "13/05/2019",
+   "dataExpirare": "30/04/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "EUROTEHNICA IT&C|Dolj": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "15153",
+   "dataEmitere": "23/09/2019",
+   "dataExpirare": "29/08/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "FOMCO SOLAR SYSTEMS|Mures": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "12750",
+   "dataEmitere": "08/08/2017",
+   "dataExpirare": "08/08/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "ELECTRO-ALFA INTERNATIONAL|Botosani": [],
+ "ENSYS RENEWABLE SOLUTIONS|Bihor": [],
+ "VELTOL HOLDING|Mures": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19945",
+   "dataEmitere": "21/08/2023",
+   "dataExpirare": "21/08/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19944",
+   "dataEmitere": "21/08/2023",
+   "dataExpirare": "21/08/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "WIREN ROMANIA|Arad": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "21863",
+   "dataEmitere": "17/06/2024",
+   "dataExpirare": "17/06/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "21862",
+   "dataEmitere": "17/06/2024",
+   "dataExpirare": "17/06/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "VOLTA X SOLAR SYSTEMS|Neamt": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "20045",
+   "dataEmitere": "30/08/2023",
+   "dataExpirare": "30/08/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "20044",
+   "dataEmitere": "30/08/2023",
+   "dataExpirare": "30/08/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELSACO SOLUTIONS|Botosani": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "24138",
+   "dataEmitere": "29/01/2026",
+   "dataExpirare": "29/01/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "24137",
+   "dataEmitere": "29/01/2026",
+   "dataExpirare": "29/01/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ENEVO GROUP|Bucuresti": [],
+ "SUN POWER CENTER|Iasi": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "14351",
+   "dataEmitere": "12/03/2024",
+   "dataExpirare": "12/03/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "WALDEVAR ENERGY|Tulcea": [],
+ "VISUAL FAN|Brasov": [],
+ "INOCOM BIZ |Ilfov": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "23813",
+   "dataEmitere": "03/10/2025",
+   "dataExpirare": "03/10/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "23812",
+   "dataEmitere": "03/10/2025",
+   "dataExpirare": "03/10/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "RESTART ENERGY ONE|Timis": [],
+ "GREENTECH PROFESSIONALS|Bucuresti": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "23904",
+   "dataEmitere": "12/11/2025",
+   "dataExpirare": "12/11/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "23903",
+   "dataEmitere": "12/11/2025",
+   "dataExpirare": "12/11/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "FLEXIK AUTOMATION|Timis": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "24068",
+   "dataEmitere": "19/01/2026",
+   "dataExpirare": "19/01/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "24067",
+   "dataEmitere": "19/01/2026",
+   "dataExpirare": "19/01/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "CARPAT ENERGY|Cluj": [],
+ "ALTIGE IMPEX |Valcea": [
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "21010",
+   "dataEmitere": "27/09/2023",
+   "dataExpirare": "27/09/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "P PLUS 2002|Bucuresti": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "13891",
+   "dataEmitere": "19/11/2018",
+   "dataExpirare": "02/11/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "ECOSOLARIS SERVICES |Ilfov": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18816",
+   "dataEmitere": "25/11/2022",
+   "dataExpirare": "25/11/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "ROMINSTAL SOLAR|Bucuresti": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "21403",
+   "dataEmitere": "12/02/2024",
+   "dataExpirare": "12/02/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "EXE GREEN HOLDING|Ilfov": [
+  {
+   "code": "B",
+   "variant": "vizare periodica",
+   "nrAtestat": "15114",
+   "dataEmitere": "09/09/2019",
+   "dataExpirare": "05/08/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B*-vizare periodica"
+  }
+ ],
+ "MAPA ROM INVEST|Iasi": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18774",
+   "dataEmitere": "21/11/2022",
+   "dataExpirare": "21/11/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "PRIMA ELECTRO CONSTRUCT|Bucuresti": [],
+ "EAST SOLAR ELECTRIC|Constanta": [
+  {
+   "code": "B",
+   "variant": "vizare periodica",
+   "nrAtestat": "14247",
+   "dataEmitere": "25/02/2019",
+   "dataExpirare": "05/02/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B*-vizare periodica"
+  }
+ ],
+ "ASTRA ELECTRIC|Arad": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "23628",
+   "dataEmitere": "18/08/2025",
+   "dataExpirare": "18/08/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "23627",
+   "dataEmitere": "18/08/2025",
+   "dataExpirare": "18/08/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "DARCOM ENERGY SOLUTIONS|Bucuresti": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "21530",
+   "dataEmitere": "12/03/2024",
+   "dataExpirare": "12/03/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "21529",
+   "dataEmitere": "12/03/2024",
+   "dataExpirare": "12/03/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "VOLT EVSE DISTRIBUTION|Bucuresti": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19649",
+   "dataEmitere": "24/05/2023",
+   "dataExpirare": "24/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19648",
+   "dataEmitere": "24/05/2023",
+   "dataExpirare": "24/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "2K SOLUTION |Brasov": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18973",
+   "dataEmitere": "13/01/2023",
+   "dataExpirare": "13/01/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "ELECTRO - CONSTRUCT|Arad": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12475",
+   "dataEmitere": "27/03/2017",
+   "dataExpirare": "07/03/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "15475",
+   "dataEmitere": "17/01/2020",
+   "dataExpirare": "09/01/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "BIO GREEN POWER SOLUTIONS|Hunedoara": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "22091",
+   "dataEmitere": "23/07/2024",
+   "dataExpirare": "23/07/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "22090",
+   "dataEmitere": "23/07/2024",
+   "dataExpirare": "23/07/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ECO DIMOS ENERGY|Hunedoara": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "23799",
+   "dataEmitere": "29/09/2025",
+   "dataExpirare": "29/09/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "23798",
+   "dataEmitere": "29/09/2025",
+   "dataExpirare": "29/09/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "DAGESIM FOTOVOLTAIC|Dolj": [
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "23218",
+   "dataEmitere": "30/05/2025",
+   "dataExpirare": "30/05/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  },
+  {
+   "code": "BE",
+   "variant": null,
+   "nrAtestat": "23217",
+   "dataEmitere": "30/05/2025",
+   "dataExpirare": "30/05/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif Be"
+  }
+ ],
+ "DUZOC GREEN ENERGY|Bacau": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "22046",
+   "dataEmitere": "15/07/2024",
+   "dataExpirare": "15/07/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "22045",
+   "dataEmitere": "15/07/2024",
+   "dataExpirare": "15/07/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ALLSYS ENERGY|Bucuresti": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "15247",
+   "dataEmitere": "04/11/2019",
+   "dataExpirare": "17/10/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "15246",
+   "dataEmitere": "04/11/2019",
+   "dataExpirare": "17/10/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "AMIRAS GREEN PROIECT|Bucuresti": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "23062",
+   "dataEmitere": "14/04/2025",
+   "dataExpirare": "14/04/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "23061",
+   "dataEmitere": "14/04/2025",
+   "dataExpirare": "14/04/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ALTER MAN ENGINEERING|Bucuresti": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14287",
+   "dataEmitere": "11/03/2019",
+   "dataExpirare": "18/01/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "21312",
+   "dataEmitere": "18/01/2024",
+   "dataExpirare": "18/01/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "CLEAN ENERGY REVOLUTION|Bucuresti": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "18006",
+   "dataEmitere": "22/02/2022",
+   "dataExpirare": "22/02/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "18005",
+   "dataEmitere": "22/02/2022",
+   "dataExpirare": "22/02/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "PROSOLAR GREEN EVOLUTION|Bucuresti": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19584",
+   "dataEmitere": "16/05/2023",
+   "dataExpirare": "16/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19583",
+   "dataEmitere": "16/05/2023",
+   "dataExpirare": "16/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "SOLAR PROD ECOINVENT|Alba": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19237",
+   "dataEmitere": "24/03/2023",
+   "dataExpirare": "24/03/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19236",
+   "dataEmitere": "24/03/2023",
+   "dataExpirare": "24/03/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ENER ROM INSTAL|Alba": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12243",
+   "dataEmitere": "05/12/2016",
+   "dataExpirare": "22/11/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12242",
+   "dataEmitere": "05/12/2016",
+   "dataExpirare": "22/11/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "NECTARIA PROIECT|Alba": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "18564",
+   "dataEmitere": "26/08/2022",
+   "dataExpirare": "26/08/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "23600",
+   "dataEmitere": "07/08/2025",
+   "dataExpirare": "07/08/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELIO INDUSTRIAL|Alba": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "15861",
+   "dataEmitere": "11/05/2020",
+   "dataExpirare": "05/05/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "15860",
+   "dataEmitere": "11/05/2020",
+   "dataExpirare": "05/05/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "TED ELECTRO|Alba": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19977",
+   "dataEmitere": "23/08/2023",
+   "dataExpirare": "23/08/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19976",
+   "dataEmitere": "23/08/2023",
+   "dataExpirare": "23/08/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELECTRO ORIEL|Alba": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19532",
+   "dataEmitere": "11/05/2023",
+   "dataExpirare": "11/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19531",
+   "dataEmitere": "11/05/2023",
+   "dataExpirare": "11/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELECTROALBA ELECTRIS|Alba": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "22402",
+   "dataEmitere": "30/09/2024",
+   "dataExpirare": "30/09/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "22401",
+   "dataEmitere": "30/09/2024",
+   "dataExpirare": "30/09/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELECTROTIMEIA|Alba": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12730",
+   "dataEmitere": "08/08/2017",
+   "dataExpirare": "29/06/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "BP",
+   "variant": "vizare periodica",
+   "nrAtestat": "14386",
+   "dataEmitere": "04/04/2019",
+   "dataExpirare": "19/03/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif Bp*-vizare periodica"
+  }
+ ],
+ "ENERGO ENCI|Alba": [
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "15097",
+   "dataEmitere": "09/09/2019",
+   "dataExpirare": "02/09/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "TOBIMAR GROUP|Alba": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "18961",
+   "dataEmitere": "10/01/2023",
+   "dataExpirare": "10/01/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "BP",
+   "variant": null,
+   "nrAtestat": "18960",
+   "dataEmitere": "10/01/2023",
+   "dataExpirare": "10/01/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif Bp"
+  }
+ ],
+ "DMA ECO BUILDINGS|Cluj": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19345",
+   "dataEmitere": "02/05/2023",
+   "dataExpirare": "02/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19344",
+   "dataEmitere": "02/05/2023",
+   "dataExpirare": "02/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELECTRIC LINE|Cluj": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "15149",
+   "dataEmitere": "23/09/2019",
+   "dataExpirare": "23/08/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "15148",
+   "dataEmitere": "23/09/2019",
+   "dataExpirare": "23/08/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "IMSAT SERVICE CLUJ|Cluj": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16837",
+   "dataEmitere": "25/01/2021",
+   "dataExpirare": "22/01/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16836",
+   "dataEmitere": "25/01/2021",
+   "dataExpirare": "22/01/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "ENERA SWITCH|Cluj": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "23221",
+   "dataEmitere": "30/05/2025",
+   "dataExpirare": "30/05/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "23220",
+   "dataEmitere": "30/05/2025",
+   "dataExpirare": "30/05/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "DELCOM IMPORT EXPORT|Cluj": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16203",
+   "dataEmitere": "06/08/2020",
+   "dataExpirare": "14/07/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16202",
+   "dataEmitere": "06/08/2020",
+   "dataExpirare": "14/07/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "ELECTROMEDIA INSTAL|Cluj": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16985",
+   "dataEmitere": "15/03/2021",
+   "dataExpirare": "06/03/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16984",
+   "dataEmitere": "15/03/2021",
+   "dataExpirare": "06/03/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "ELECTRIS INSTAL|Cluj": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14176",
+   "dataEmitere": "11/02/2019",
+   "dataExpirare": "18/01/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "21310",
+   "dataEmitere": "18/01/2024",
+   "dataExpirare": "18/01/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELECTROBILD|Cluj": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14407",
+   "dataEmitere": "08/04/2019",
+   "dataExpirare": "02/04/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12773",
+   "dataEmitere": "23/08/2017",
+   "dataExpirare": "08/07/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "FLM TEO ELECTRIC|Cluj": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "23024",
+   "dataEmitere": "01/04/2025",
+   "dataExpirare": "01/04/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "23023",
+   "dataEmitere": "01/04/2025",
+   "dataExpirare": "01/04/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELECTROSTRAT|Cluj": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "21065",
+   "dataEmitere": "10/10/2023",
+   "dataExpirare": "10/10/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "21064",
+   "dataEmitere": "10/10/2023",
+   "dataExpirare": "10/10/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "CBM ELPRO INSTAL|Timis": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16275",
+   "dataEmitere": "24/08/2020",
+   "dataExpirare": "30/07/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16274",
+   "dataEmitere": "25/08/2020",
+   "dataExpirare": "30/07/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "ELTAL GROUP|Timis": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12850",
+   "dataEmitere": "09/10/2017",
+   "dataExpirare": "20/06/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16000",
+   "dataEmitere": "22/06/2020",
+   "dataExpirare": "05/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "MELBO INSTAL|Timis": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16482",
+   "dataEmitere": "12/10/2020",
+   "dataExpirare": "03/10/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16481",
+   "dataEmitere": "12/10/2020",
+   "dataExpirare": "03/10/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "ABAC PROIECT ENERGIE|Ilfov": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12290",
+   "dataEmitere": "16/01/2017",
+   "dataExpirare": "21/01/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12289",
+   "dataEmitere": "16/01/2017",
+   "dataExpirare": "21/01/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "GREEN COSTAL|Ilfov": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "24258",
+   "dataEmitere": "23/02/2026",
+   "dataExpirare": "23/02/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "24257",
+   "dataEmitere": "23/02/2026",
+   "dataExpirare": "23/02/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "SOLARI ELECTRIC ENERGY|Constanta": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "24313",
+   "dataEmitere": "09/03/2026",
+   "dataExpirare": "09/03/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "24314",
+   "dataEmitere": "09/03/2026",
+   "dataExpirare": "09/03/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "SOLAR - SERVICE |Timis": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "24306",
+   "dataEmitere": "03/03/2026",
+   "dataExpirare": "03/03/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "24305",
+   "dataEmitere": "03/03/2026",
+   "dataExpirare": "03/03/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELECTROGAL SOLUTIONS|Bihor": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "20099",
+   "dataEmitere": "21/09/2023",
+   "dataExpirare": "21/09/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "20098",
+   "dataEmitere": "21/09/2023",
+   "dataExpirare": "21/09/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ENERGETIC MONTREL|Bihor": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14493",
+   "dataEmitere": "22/04/2019",
+   "dataExpirare": "15/04/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14492",
+   "dataEmitere": "22/04/2019",
+   "dataExpirare": "15/04/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "ENERGOTEH PROIECT|Bihor": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12762",
+   "dataEmitere": "08/07/2022",
+   "dataExpirare": "08/07/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "17202",
+   "dataEmitere": "23/04/2021",
+   "dataExpirare": "23/04/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "OVINSTAL ELECTRIC|Bihor": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12219",
+   "dataEmitere": "06/12/2021",
+   "dataExpirare": "06/12/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "21905",
+   "dataEmitere": "20/06/2024",
+   "dataExpirare": "20/06/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "HIQUAL ELECTRO|Bihor": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "16129",
+   "dataEmitere": "06/07/2020",
+   "dataExpirare": "27/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  }
+ ],
+ "VIVARO SOLAR ENERGY|Arges": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "21728",
+   "dataEmitere": "22/05/2024",
+   "dataExpirare": "22/05/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "21727",
+   "dataEmitere": "22/05/2024",
+   "dataExpirare": "22/05/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "NETWORK CONNECTIONS PROJECT|Arges": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "17331",
+   "dataEmitere": "24/05/2021",
+   "dataExpirare": "24/05/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "13919",
+   "dataEmitere": "03/12/2018",
+   "dataExpirare": "16/11/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "INBATESA ELECTRIC|Prahova": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "22557",
+   "dataEmitere": "11/11/2024",
+   "dataExpirare": "11/11/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "22556",
+   "dataEmitere": "11/11/2024",
+   "dataExpirare": "11/11/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELECTRIC INSTAL|Iasi": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "12810",
+   "dataEmitere": "25/09/2017",
+   "dataExpirare": "23/08/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "17273",
+   "dataEmitere": "10/05/2021",
+   "dataExpirare": "10/05/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "LINCAS|Iasi": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "15559",
+   "dataEmitere": "24/02/2025",
+   "dataExpirare": "17/02/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "15558",
+   "dataEmitere": "24/02/2020",
+   "dataExpirare": "17/02/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "RETELE IASI|Iasi": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "17602",
+   "dataEmitere": "09/08/2021",
+   "dataExpirare": "09/08/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "17601",
+   "dataEmitere": "09/08/2021",
+   "dataExpirare": "09/08/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "SKY ENERGY SYSTEM|Iasi": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "18762",
+   "dataEmitere": "17/11/2022",
+   "dataExpirare": "17/11/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "18761",
+   "dataEmitere": "17/11/2022",
+   "dataExpirare": "17/11/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ANDALEX GENERSY|Brasov": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19179",
+   "dataEmitere": "09/03/2023",
+   "dataExpirare": "09/03/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19178",
+   "dataEmitere": "09/03/2023",
+   "dataExpirare": "09/03/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "DG SOLAR|Brasov": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "12523",
+   "dataEmitere": "21/04/2017",
+   "dataExpirare": "25/05/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "12522",
+   "dataEmitere": "21/04/2017",
+   "dataExpirare": "25/05/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELECTRICAL STANDARD|Sibiu": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14205",
+   "dataEmitere": "25/02/2019",
+   "dataExpirare": "05/02/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14204",
+   "dataEmitere": "25/02/2019",
+   "dataExpirare": "05/02/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "ATT TECHNOLOGY|Dolj": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19122",
+   "dataEmitere": "27/02/2023",
+   "dataExpirare": "27/02/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19121",
+   "dataEmitere": "27/02/2023",
+   "dataExpirare": "27/02/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ATRIA CONCEPT|Galati": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12609",
+   "dataEmitere": "29/05/2017",
+   "dataExpirare": "02/06/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12608",
+   "dataEmitere": "29/05/2017",
+   "dataExpirare": "02/06/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "DOCEROM SISTEM|Galati": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12829",
+   "dataEmitere": "25/09/2017",
+   "dataExpirare": "23/09/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "18632",
+   "dataEmitere": "26/09/2022",
+   "dataExpirare": "26/09/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "DANDIS NUTA|Galati": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "18640",
+   "dataEmitere": "03/10/2022",
+   "dataExpirare": "03/10/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "18639",
+   "dataEmitere": "03/10/2022",
+   "dataExpirare": "03/10/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "GEX ELECTRIC|Galati": [
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "17993",
+   "dataEmitere": "16/02/2022",
+   "dataExpirare": "16/02/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  },
+  {
+   "code": "BE",
+   "variant": null,
+   "nrAtestat": "17992",
+   "dataEmitere": "16/02/2022",
+   "dataExpirare": "16/02/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif Be"
+  }
+ ],
+ "BEST TEAM FOTOVOLTAICE|Bacau": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "18891",
+   "dataEmitere": "21/12/2022",
+   "dataExpirare": "21/12/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "18890",
+   "dataEmitere": "21/12/2022",
+   "dataExpirare": "21/12/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "AMBRA SERVICE|Arad": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "14993",
+   "dataEmitere": "05/08/2019",
+   "dataExpirare": "16/07/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "14992",
+   "dataEmitere": "05/08/2019",
+   "dataExpirare": "16/07/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "PRECON ELECTRIC|Arad": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "14902",
+   "dataEmitere": "24/07/2019",
+   "dataExpirare": "23/07/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "14901",
+   "dataEmitere": "24/07/2019",
+   "dataExpirare": "23/07/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "VOLTER|Suceava": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "23715",
+   "dataEmitere": "08/09/2025",
+   "dataExpirare": "08/09/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "23714",
+   "dataEmitere": "08/09/2025",
+   "dataExpirare": "08/09/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELECTRO ANA LUIZA|Buzau": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "16036",
+   "dataEmitere": "22/06/2020",
+   "dataExpirare": "12/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "16035",
+   "dataEmitere": "22/06/2020",
+   "dataExpirare": "12/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELBORAR SERV|Neamt": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "13418",
+   "dataEmitere": "26/06/2018",
+   "dataExpirare": "07/06/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "13417",
+   "dataEmitere": "25/06/2018",
+   "dataExpirare": "07/06/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "LUCRIS SERV|Neamt": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16210",
+   "dataEmitere": "06/08/2020",
+   "dataExpirare": "04/08/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16209",
+   "dataEmitere": "06/08/2020",
+   "dataExpirare": "04/08/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "DOMAREX '94|Calarasi": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "16472",
+   "dataEmitere": "12/10/2020",
+   "dataExpirare": "09/10/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  }
+ ],
+ "ELECTRICA RACORD INSTAL|Bucuresti": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14125",
+   "dataEmitere": "28/01/2019",
+   "dataExpirare": "10/01/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14124",
+   "dataEmitere": "28/01/2019",
+   "dataExpirare": "10/01/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "ENESCO SERVICES|Bucuresti": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "21679",
+   "dataEmitere": "29/04/2024",
+   "dataExpirare": "29/04/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "21678",
+   "dataEmitere": "29/04/2024",
+   "dataExpirare": "29/04/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ENERGY HOUSE CONSTRUCT|Valcea": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "18146",
+   "dataEmitere": "12/04/2022",
+   "dataExpirare": "12/04/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "18145",
+   "dataEmitere": "12/04/2022",
+   "dataExpirare": "12/04/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ALINADI ELECTRIC|Valcea": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14925",
+   "dataEmitere": "24/07/2019",
+   "dataExpirare": "15/07/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "BP",
+   "variant": "vizare periodica",
+   "nrAtestat": "14924",
+   "dataEmitere": "24/07/2019",
+   "dataExpirare": "15/07/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif Bp*-vizare periodica"
+  }
+ ],
+ "ELECTROMEN|Satu Mare": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16299",
+   "dataEmitere": "24/08/2020",
+   "dataExpirare": "31/07/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "17678",
+   "dataEmitere": "20/09/2021",
+   "dataExpirare": "20/09/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "SMART ELECTRICAL SOLUTIONS|Satu Mare": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12864",
+   "dataEmitere": "19/10/2022",
+   "dataExpirare": "19/10/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12863",
+   "dataEmitere": "19/10/2022",
+   "dataExpirare": "19/10/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "DATACOR|Bistrita-Nasaud": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "21114",
+   "dataEmitere": "31/10/2023",
+   "dataExpirare": "31/10/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "21113",
+   "dataEmitere": "31/10/2023",
+   "dataExpirare": "31/10/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELECTRO CLIP MAP|Maramures": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "17799",
+   "dataEmitere": "22/11/2021",
+   "dataExpirare": "22/11/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "17798",
+   "dataEmitere": "22/11/2021",
+   "dataExpirare": "22/11/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELECTRO METERING|Maramures": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19218",
+   "dataEmitere": "24/03/2023",
+   "dataExpirare": "24/03/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19217",
+   "dataEmitere": "24/03/2023",
+   "dataExpirare": "24/03/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "DIACOM PRESTCOM|Hunedoara": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14068",
+   "dataEmitere": "28/01/2019",
+   "dataExpirare": "15/01/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14067",
+   "dataEmitere": "28/01/2019",
+   "dataExpirare": "15/01/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "COMP SGS ELECTROGRUP|Maramures": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "15888",
+   "dataEmitere": "25/05/2020",
+   "dataExpirare": "22/05/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "15887",
+   "dataEmitere": "25/05/2020",
+   "dataExpirare": "22/05/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "STARTCON CG|Olt": [
+  {
+   "code": "B",
+   "variant": "vizare periodica",
+   "nrAtestat": "13686",
+   "dataEmitere": "28/09/2018",
+   "dataExpirare": "25/08/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B*-vizare periodica"
+  }
+ ],
+ "GREEN SEIRO MONTAGE|Sibiu": [],
+ "KLUNER|Bihor": [
+  {
+   "code": "B",
+   "variant": "vizare periodica",
+   "nrAtestat": "17071",
+   "dataEmitere": "29/03/2021",
+   "dataExpirare": "25/03/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B*-vizare periodica"
+  }
+ ],
+ "ENESA SOLAR TEHNOLOGY|Mures": [
+  {
+   "code": "B",
+   "variant": "vizare periodica",
+   "nrAtestat": "13786",
+   "dataEmitere": "22/10/2018",
+   "dataExpirare": "18/09/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B*-vizare periodica"
+  }
+ ],
+ "VOLTECH ENERGY|Bucuresti": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "13656",
+   "dataEmitere": "17/09/2018",
+   "dataExpirare": "15/09/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "ELECTROGREEN SERV|Cluj": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18357",
+   "dataEmitere": "22/06/2022",
+   "dataExpirare": "22/06/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "DENDIAROM MANAGEMENT|Satu Mare": [],
+ "MARENCO EL|Constanta": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "18142",
+   "dataEmitere": "11/04/2022",
+   "dataExpirare": "11/04/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "18141",
+   "dataEmitere": "11/04/2022",
+   "dataExpirare": "11/04/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ENERGOFIT IMPEX|Ialomita": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "19886",
+   "dataEmitere": "02/08/2023",
+   "dataExpirare": "02/08/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "GERSOLTECH|Harghita": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "21454",
+   "dataEmitere": "19/02/2024",
+   "dataExpirare": "19/02/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "22950",
+   "dataEmitere": "10/03/2025",
+   "dataExpirare": "10/03/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "SOLARX SMART ENERGY|Gorj": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "17436",
+   "dataEmitere": "28/06/2021",
+   "dataExpirare": "28/06/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "COSMIC ELECTRIC POWER|Gorj": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18389",
+   "dataEmitere": "30/06/2022",
+   "dataExpirare": "30/06/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "IDNA POWER|Vrancea": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "23331",
+   "dataEmitere": "23/06/2025",
+   "dataExpirare": "23/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "23330",
+   "dataEmitere": "23/06/2025",
+   "dataExpirare": "23/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "SUN POWER SYSTEMS |Alba": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18916",
+   "dataEmitere": "23/12/2022",
+   "dataExpirare": "23/12/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "VILLEX|Covasna": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "17441",
+   "dataEmitere": "28/06/2021",
+   "dataExpirare": "28/06/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "CERAMICA STIL|Suceava": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18311",
+   "dataEmitere": "20/06/2022",
+   "dataExpirare": "20/06/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "FAIR PLAY SERBAN|Arad": [],
+ "EN-RG-ETIC|Mures": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "17288",
+   "dataEmitere": "10/05/2021",
+   "dataExpirare": "10/05/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "17287",
+   "dataEmitere": "10/05/2021",
+   "dataExpirare": "10/05/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "B2B SYNERGY|Mures": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18467",
+   "dataEmitere": "28/07/2022",
+   "dataExpirare": "28/07/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "SAMGEC|Satu Mare": [
+  {
+   "code": "B",
+   "variant": "vizare periodica",
+   "nrAtestat": "15460",
+   "dataEmitere": "17/01/2020",
+   "dataExpirare": "11/12/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B*-vizare periodica"
+  }
+ ],
+ "ELDAC GRUP|Vaslui": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12729",
+   "dataEmitere": "08/08/2017",
+   "dataExpirare": "28/03/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12728",
+   "dataEmitere": "08/08/2017",
+   "dataExpirare": "28/03/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "ELECTROPREST|Bacau": [
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "15093",
+   "dataEmitere": "09/09/2019",
+   "dataExpirare": "29/08/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "KAMI ROOF CONSTRUCT|Mures": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18667",
+   "dataEmitere": "06/10/2022",
+   "dataExpirare": "06/10/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "FOTONIA SHINE RETENTION|Constanta": [
+  {
+   "code": "B",
+   "variant": "vizare periodica",
+   "nrAtestat": "16562",
+   "dataEmitere": "26/10/2020",
+   "dataExpirare": "16/10/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B*-vizare periodica"
+  }
+ ],
+ "ELECTRICOM|Bucuresti": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "20070",
+   "dataEmitere": "11/09/2023",
+   "dataExpirare": "11/09/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "BP",
+   "variant": null,
+   "nrAtestat": "20069",
+   "dataEmitere": "11/09/2023",
+   "dataExpirare": "11/09/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif Bp"
+  }
+ ],
+ "ALM POWER GROUP|Dolj": [
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "18410",
+   "dataEmitere": "13/07/2022",
+   "dataExpirare": "13/07/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "SILKAT ELECTRIC GRUP|Ilfov": [],
+ "ELECTRIC SERV|Sibiu": [],
+ "ELECTRO & CONSTRUCT|Buzau": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "17342",
+   "dataEmitere": "24/05/2021",
+   "dataExpirare": "24/05/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "17341",
+   "dataEmitere": "24/05/2021",
+   "dataExpirare": "24/05/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "NEXO INSTALCONSTRUCT|Bucuresti": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "14222",
+   "dataEmitere": "25/02/2019",
+   "dataExpirare": "05/02/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "REAL AUTOMATIC|Brasov": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "17025",
+   "dataEmitere": "15/03/2021",
+   "dataExpirare": "06/03/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "14291",
+   "dataEmitere": "11/03/2019",
+   "dataExpirare": "01/03/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "VIVIDUS|Brasov": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18322",
+   "dataEmitere": "20/06/2022",
+   "dataExpirare": "20/06/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  },
+  {
+   "code": "BP",
+   "variant": null,
+   "nrAtestat": "18322",
+   "dataEmitere": "20/06/2022",
+   "dataExpirare": "20/06/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif Bp"
+  }
+ ],
+ "CMV QUALITY INSTAL|Dolj": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18468",
+   "dataEmitere": "28/07/2022",
+   "dataExpirare": "28/07/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "AIRMEC INSTAL|Timis": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "21244",
+   "dataEmitere": "12/12/2023",
+   "dataExpirare": "12/12/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "Ascorp Retele Electrice|Ilfov": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "14402",
+   "dataEmitere": "04/04/2019",
+   "dataExpirare": "20/03/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  }
+ ],
+ "ELPROEX Botosani|Botosani": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16012",
+   "dataEmitere": "22/06/2020",
+   "dataExpirare": "16/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "16011",
+   "dataEmitere": "22/06/2020",
+   "dataExpirare": "16/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "FREELUX ELECTRIC|Neamt": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18473",
+   "dataEmitere": "28/07/2022",
+   "dataExpirare": "28/07/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "MEDIA RINGER|Sibiu": [],
+ "SOLARDOKTOR|Harghita": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "14301",
+   "dataEmitere": "11/03/2019",
+   "dataExpirare": "11/03/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "CONTROL POINT|Brasov": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "14258",
+   "dataEmitere": "11/03/2019",
+   "dataExpirare": "06/03/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "STROMLINE PROFESSIONALS|Brasov": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "17862",
+   "dataEmitere": "15/12/2021",
+   "dataExpirare": "15/12/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "ELECTRO TERM INSTAL|Maramures": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "17667",
+   "dataEmitere": "08/09/2021",
+   "dataExpirare": "08/09/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "17666",
+   "dataEmitere": "08/09/2021",
+   "dataExpirare": "08/09/2026",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "HOIURA ELECTRO CONSTRUCT|Bucuresti": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "16966",
+   "dataEmitere": "15/03/2021",
+   "dataExpirare": "13/03/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "16965",
+   "dataEmitere": "15/03/2021",
+   "dataExpirare": "13/03/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "MLM INSTAL 2006|Mures": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "19343",
+   "dataEmitere": "02/05/2023",
+   "dataExpirare": "02/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "ROSOLAR TERMO ENERGY|Arges": [],
+ "POTCONTROL INSTAL|Brasov": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "19966",
+   "dataEmitere": "23/08/2023",
+   "dataExpirare": "23/08/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "PAMASA CONSTRUCT|Timis": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "19375",
+   "dataEmitere": "03/05/2023",
+   "dataExpirare": "03/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "FOTOPAN|Bihor": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "19856",
+   "dataEmitere": "28/07/2023",
+   "dataExpirare": "28/07/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "DRAGOS INSTAL TRUST|Hunedoara": [
+  {
+   "code": "B",
+   "variant": "vizare periodica",
+   "nrAtestat": "14023",
+   "dataEmitere": "14/01/2020",
+   "dataExpirare": "12/01/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B*-vizare periodica"
+  }
+ ],
+ "SPECTRUM ENERGY SOLUTION|Olt": [
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19822",
+   "dataEmitere": "14/07/2023",
+   "dataExpirare": "14/07/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "NET CONF|Mures": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "14917",
+   "dataEmitere": "24/07/2019",
+   "dataExpirare": "17/07/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "SMART HOUSE COLOR|Arad": [],
+ "ELECTROBRUM ENERGY AUTOMATION|Bacau": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18666",
+   "dataEmitere": "06/10/2022",
+   "dataExpirare": "06/10/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "SOLAR STATION|Ilfov": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "19341",
+   "dataEmitere": "02/05/2023",
+   "dataExpirare": "02/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ]
+}

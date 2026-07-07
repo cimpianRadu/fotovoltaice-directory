@@ -5,9 +5,9 @@ import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
 import Toast from '@/components/ui/Toast';
-import { getCounties } from '@/lib/utils';
+import { getCounties } from '@/lib/utils-shared';
 import { trackEvent } from '@/lib/analytics';
-import { getAnreCodeLabel, formatAnreDate, type ResolvedCert } from '@/lib/anre';
+import { getAnreCodeLabel, formatAnreDate, type ResolvedCert } from '@/lib/anre-shared';
 
 const specializationOptions = [
   { value: 'hale-industriale', label: 'Hale industriale' },

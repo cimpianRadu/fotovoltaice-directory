@@ -34,6 +34,7 @@ scripts/        # company-tools, anre-* pipeline, targetare-contacts
 - Dropdown-uri: `SearchableSelect` (custom, cu search), NU native `<select>`
 - Markdown: `<Markdown content={...} />` (react-markdown + remark-gfm)
 - Certificări ANRE: **nu** hardcodate în `certifications[]` — live lookup via `anreMatch` din `anre-atestate.json`
+- Bundle client: componentele `'use client'` NU importă `lib/anre` (registru 8,3 MB, `server-only`) sau `lib/utils` (trage `companies.json`) — folosesc `lib/anre-shared`, `lib/anre-certs` (map derivat, regenerat la prebuild de `scripts/generate-company-anre-certs.js`) și `lib/utils-shared`
 
 ## Referințe
 - Roadmap, monetizare, calendar editorial, faze: [docs/roadmap.md](docs/roadmap.md)

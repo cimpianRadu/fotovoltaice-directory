@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import CompanyCard from '@/components/company/CompanyCard';
-import { type Company, fuzzyMatchCompanyName } from '@/lib/utils';
+import { type Company, fuzzyMatchCompanyName } from '@/lib/utils-shared';
 
 interface Props {
   companies: Company[];

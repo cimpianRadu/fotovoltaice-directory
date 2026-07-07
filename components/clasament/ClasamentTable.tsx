@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { Company } from '@/lib/utils';
 import { useSegment } from '@/components/segment/SegmentProvider';
-import { PV_RELEVANT_CODES, type PvRelevantCode } from '@/lib/anre';
+import { PV_RELEVANT_CODES, type PvRelevantCode } from '@/lib/anre-shared';
 
 interface Row {
   slug: string;
