@@ -9503,6 +9503,106 @@
         "societate": "SOLAR STATION",
         "judet": "Ilfov"
       }
+    },
+    {
+      "id": "gmm-electrosolutions",
+      "slug": "gmm-electrosolutions",
+      "name": "GMM Electrosolutions S.R.L.",
+      "cui": "RO46508490",
+      "logo": "/logos/gmm-electrosolutions.png",
+      "description": "GMM Electrosolutions este o firmă din Mangalia, județul Constanța, înființată în 2022, specializată în instalații electrice și sisteme fotovoltaice pentru case, hale și afaceri. Oferă instalații electrice noi, service și intervenții, montaj de sisteme fotovoltaice cu electricieni autorizați ANRE, plus supervizare de calitate în industria navală. Deține certificare ISO pentru managementul calității și oferă posibilitatea plății în rate prin parteneri financiari.",
+      "founded": 2022,
+      "employees": 6,
+      "location": {
+        "city": "Mangalia",
+        "county": "Constanța",
+        "address": "Mun. Mangalia, Str. George Murnu, Nr. 21, Bl. A21, Sc. B, Ap. 18"
+      },
+      "contact": {
+        "phone": "+40799523658",
+        "email": "gmmelectrosolutions@outlook.com",
+        "website": "https://www.gmmelectrosolutions.ro/"
+      },
+      "coverage": [
+        "Constanța"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale",
+        "retail"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 1296834,
+        "profit": 114143
+      },
+      "tags": [
+        "pv-rezidential",
+        "pv-comercial",
+        "mentenanta-pv",
+        "finantare-disponibila"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-07-14",
+      "updatedAt": "2026-07-14",
+      "segment": "ambele",
+      "anreMatch": {
+        "societate": "GMM ELECTROSOLUTIONS",
+        "judet": "Constanta"
+      }
+    },
+    {
+      "id": "vtl-energy",
+      "slug": "vtl-energy",
+      "name": "VTL Energy S.R.L.",
+      "cui": "RO50660801",
+      "description": "VTL Energy este o firmă din Bălcăuți, județul Suceava, înființată în 2024, activă în lucrări de instalații electrice (CAEN 4321) și specializată în montajul și service-ul sistemelor fotovoltaice pentru clienți rezidențiali din zona Suceava.",
+      "founded": 2024,
+      "employees": 0,
+      "location": {
+        "city": "Bălcăuți",
+        "county": "Suceava",
+        "address": "Sat Bălcăuți, Com. Bălcăuți, Nr. 343"
+      },
+      "contact": {
+        "phone": "+40752808121",
+        "email": "office.vtl.energy@gmail.com",
+        "website": ""
+      },
+      "coverage": [
+        "Suceava"
+      ],
+      "specializations": [
+        "rezidential"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 0,
+        "profit": 0
+      },
+      "tags": [
+        "pv-rezidential",
+        "mentenanta-pv"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-07-14",
+      "updatedAt": "2026-07-14",
+      "segment": "rezidential",
+      "anreMatch": null
     }
   ]
 }
