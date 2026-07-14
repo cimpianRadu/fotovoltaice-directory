@@ -50,7 +50,7 @@ const PHONE_TEL = '+40751547174';
 const SPREADSHEET_ID = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
 
 // Reach stats for the listing email (D). From Umami/GSC, confirm before campaigns.
-const STATS = { vizite: '~2.470', vizualizari: '~4.700', googlePct: '73%', aiVizite: '~65', firme: 179, judete: 34 };
+const STATS = { vizite: '~2.470', vizualizari: '~4.700', googlePct: '73%', aiVizite: '~65', firme: 181, judete: 34 };
 
 const LEAD_EMAILED_COL = 'O', LEAD_EMAILED_IDX = 14;
 const LISTING_EMAILED_COL = 'Q', LISTING_EMAILED_IDX = 16;
