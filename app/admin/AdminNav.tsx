@@ -7,6 +7,7 @@ const TABS = [
   { href: '/admin/analytics', label: 'Overview' },
   { href: '/admin/analytics/ghiduri', label: 'Ghiduri' },
   { href: '/admin/analytics/sponsori', label: 'Sponsori' },
+  { href: '/admin/social', label: 'Social' },
 ];
 
 export default function AdminNav() {

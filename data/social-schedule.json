@@ -1,0 +1,91 @@
+{
+  "updated": "2026-07-20",
+  "posts": [
+    {
+      "id": 1,
+      "tema": "Cere ofertă gratuit",
+      "folder": "2026-07-06-cere-oferta ✅",
+      "format": "carousel + reel",
+      "postat": "2026-07-06",
+      "nota": "Carousel 6 iul, reel 8 iul. Distribuit în 3 grupuri PV.",
+      "cta": "/cere-oferta"
+    },
+    {
+      "id": 3,
+      "tema": "Casa Verde: panouri NU, baterii DA",
+      "folder": "2026-07-08-casa-verde-baterii ✅",
+      "format": "reel",
+      "postat": "2026-07-08",
+      "nota": "Trigger update: când AFM publică ghidul → postare nouă de news.",
+      "cta": "/ghid/casa-verde-baterii-2026-program-stocare-afm"
+    },
+    {
+      "id": 8,
+      "tema": "Paradoxul caniculei: soare maxim, randament mai mic",
+      "folder": "2026-07-16-canicula",
+      "format": "reel 25s",
+      "programat": "2026-07-21",
+      "nota": "Fereastră sezonieră iul-aug.",
+      "cta": "/ghid/panouri-fotovoltaice-aer-conditionat-vara-canicula-2026"
+    },
+    {
+      "id": 9,
+      "tema": "AFIR: fereastra se închide pe 14 august",
+      "folder": "2026-07-16-afir-deadline",
+      "format": "reel 20,5s",
+      "programat": "2026-07-27",
+      "nota": "De postat până la ~28 iul. Distribuie și în grupuri de fermieri.",
+      "cta": "/ghid/fonduri-afir-panouri-fotovoltaice-ferma-industrie-alimentara-2026"
+    },
+    {
+      "id": 2,
+      "tema": "Cum verifici un instalator în 3 pași",
+      "folder": "2026-07-16-verificare-instalator ✅",
+      "format": "reel 20,5s",
+      "postat": "2026-07-16",
+      "nota": "Postat direct pe 16 iul, 12:42 (slideshow FB cu muzică).",
+      "cta": "/verificare-anre"
+    },
+    {
+      "id": 10,
+      "tema": "Cât produce 1 kWp în județul tău?",
+      "folder": "2026-07-16-productie-judete",
+      "format": "reel 16s",
+      "programat": "2026-08-04",
+      "nota": "Răspundem în comentarii cu cifra PVGIS pe județ (pvgis-yields.json).",
+      "cta": "/calculator-panouri-fotovoltaice"
+    },
+    {
+      "id": 4,
+      "tema": "În câți ani se amortizează panourile?",
+      "format": "reel",
+      "status": "idee",
+      "nota": "Sursa: ghid #37 Amortizare, receipt-slide cu formula.",
+      "cta": "/calculator-panouri-fotovoltaice"
+    },
+    {
+      "id": 5,
+      "tema": "8 capcane când alegi firma pentru Casa Verde",
+      "format": "reel",
+      "status": "idee",
+      "nota": "Sursa: ghid #38, secțiunea capcane.",
+      "cta": "/ghid/lista-firme-autorizate-afm-casa-verde-fotovoltaice-2026"
+    },
+    {
+      "id": 6,
+      "tema": "Câte firme verificate are județul tău?",
+      "format": "reel",
+      "status": "idee",
+      "nota": "Recalculează cifrele din companies.json înainte de generare.",
+      "cta": "/firme"
+    },
+    {
+      "id": 7,
+      "tema": "Top firme după cifră de afaceri (date ANAF)",
+      "format": "reel",
+      "status": "idee",
+      "nota": "Screenshot /clasament ca background.",
+      "cta": "/clasament"
+    }
+  ]
+}
