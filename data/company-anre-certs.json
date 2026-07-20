@@ -2833,5 +2833,51 @@
    "isActive": true,
    "tipTarifRaw": "Tarif B"
   }
+ ],
+ "GMM ELECTROSOLUTIONS|Constanta": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "19554",
+   "dataEmitere": "11/05/2023",
+   "dataExpirare": "11/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "VELIS AG|Iasi": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "22822",
+   "dataEmitere": "31/01/2025",
+   "dataExpirare": "31/01/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "22821",
+   "dataEmitere": "31/01/2025",
+   "dataExpirare": "31/01/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "POWERSENSE |Valcea": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "22833",
+   "dataEmitere": "03/02/2025",
+   "dataExpirare": "03/02/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
  ]
 }
