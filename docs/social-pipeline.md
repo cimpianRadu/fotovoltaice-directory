@@ -23,12 +23,7 @@
 
 ## 📋 Coadă activă
 
-> **Calendar stabilit 2026-07-20, revizuit după ce #2 s-a dovedit deja postat pe 16 iul** (MP4-urile generate cu `social/make_mp4.py`, `reel.mp4` în fiecare folder; durate: hook 3s / conținut 4,5s / CTA 4s): #8 canicula → 21-22 iul, #9 AFIR → 27-28 iul, #10 producție județe → ~4 aug. Userul postează manual din folder (reel.mp4 + caption-reel.txt + comentariu-fixat.txt).
-
-### #8 — Paradoxul caniculei: soare maxim, randament mai mic
-- **Status:** ✅ generat 2026-07-16, **de programat ~22 iul (fereastră sezonieră iul-aug)** — `social/2026-07-16-canicula/`
-- 6 slide-uri native 9:16, hook „-14%". Fapte verificate în ghidul #40: 10-14% pierdere la 65°C, 400 Wp → 350-360 Wp, gap 12-15 cm, briza -5-8°C, autoconsum vară 70-80% vs 30-40% iarna.
-- **CTA:** comentariu fixat cu /ghid/panouri-fotovoltaice-aer-conditionat-vara-canicula-2026 + /cere-oferta
+> **Calendar (revizuit 2026-07-20, seara: #2 postat 16 iul, #8 postat 20 iul)** (MP4-urile generate cu `social/make_mp4.py`, `reel.mp4` în fiecare folder; durate: hook 3s / conținut 4,5s / CTA 4s): #9 AFIR → 27-28 iul, #10 producție județe → ~4 aug. Userul postează manual din folder (reel.mp4 + caption-reel.txt + comentariu-fixat.txt).
 
 ### #9 — AFIR: fereastra se închide pe 14 august
 - **Status:** ✅ generat 2026-07-16, **de programat până la ~28 iul (deadline 14 aug)** — `social/2026-07-16-afir-deadline/`
@@ -73,6 +68,9 @@
 - **Testimonial / caz real** — abia după ce avem lead-uri convertite documentabile; NU inventăm.
 
 ## ✅ Postate
+
+### #8 — Paradoxul caniculei: soare maxim, randament mai mic (postat 2026-07-20)
+- Reel 25s, 6 slide-uri native 9:16, hook „-14%", `social/2026-07-16-canicula ✅/`. Fapte verificate în ghidul #40: 10-14% pierdere la 65°C, 400 Wp → 350-360 Wp, gap 12-15 cm, briza -5-8°C, autoconsum vară 70-80% vs 30-40% iarna. Postat în plin sezon de caniculă.
 
 ### #2 — Cum verifici un instalator fotovoltaic în 3 pași (postat 2026-07-16, 12:42)
 - 5 slide-uri NATIVE 1080×1920 (primul reel nativ), hook B („3 PAȘI"), postat ca slideshow FB cu muzică, `social/2026-07-16-verificare-instalator ✅/`. Screenshot-uri /verificare-anre + /clasament ca background cu overlay navy ~90%. Cifra 181 verificată în /clasament live. Context: dezinformare activă „Casa Verde Baterii deschis" în piață (verificat afm.ro 16 iul: nimic publicat).
