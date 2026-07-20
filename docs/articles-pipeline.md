@@ -8,6 +8,8 @@ Ultima actualizare: 2026-07-17 (publicat **#29 Grindină/Furtuni** ~3.100 cuvint
 
 > Ordinea rutinei (luni + joi): PASUL 0 publică draft programat → PASUL 0.5 extinde un ghid din „🔧 De extins" → PASUL 1 scrie articol nou din „🎯 Propuneri active". Fiecare pas ocupă slotul zilei (fără stacking).
 
+> **News+trend scan 2026-07-19:** **niciun trigger legislativ confirmat** — Casa Verde Baterii ghid tot nepublicat (afm.ro 503 WAF; doar marketing de instalatori cu cifre contradictorii 15k/20k/24k lei, neoficiale), Electric Up Ciclul 3 neanunțat, norme ANRE prosumator nepublicate. Coada activă **neschimbată** (#26 Baterie Backup Casă rămâne următorul). Idei noi în backlog din trend scan: **#31 PV + Pompă de Căldură (candidat de promovat, fereastră sept–nov)**, #32 Retrofit baterie on-grid, #33 Monofazat vs trifazat.
+>
 > **News+trend scan 2026-07-06:** promovat **#25 AFIR Schema de Energie** (apel PV agro/alimentar deschis 15 iun–14 aug 2026, 265 mil. EUR, sursă primară AFIR/MADR) la coada activă = următorul articol pentru rutina de luni. Casa Verde Baterii ghid tot nepublicat (afm.ro inaccesibil). Idei trend noi în backlog: #26 baterie backup casă (candidat de promovat), #27 PV + AC caniculă (sezonier).
 
 ## Format intrare
@@ -68,6 +70,7 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 ### Casa Verde Baterii — publicare ghid AFM (UPDATE după publicare)
 - **Status la 2026-06-04:** buget 400 mil. lei **APROBAT OFICIAL 21 mai 2026**; ghid de finanțare încă nepublicat; sesiune nedeschisă. Articol dedicat publicat preventiv pe 4 iunie 2026 (vezi `/ghid/casa-verde-baterii-2026-program-stocare-afm`).
 - **Recheck 2026-07-06 (news scan):** ghid AFM tot **NEPUBLICAT** — confirmare primară pending. afm.ro **inaccesibil** din scan (WAF 503 chiar și cu proxy stealth). Presa/instalatorii repetă doar bugetul 400 mil. lei stocare + pre-înscrieri comerciale (nu sursă oficială). NU promova încă. Următorul recheck: la scan-ul de duminică viitoare sau ad-hoc dacă apare anunț AFM.
+- **Recheck 2026-07-19 (news scan):** tot **NEPUBLICAT**, confirmare primară pending. afm.ro din nou **503 WAF** cu proxy stealth. Scanarea a găsit doar marketing de instalatori (E.ON Solar, IG/TikTok) care circulă cifre **contradictorii și neoficiale** — „până la 15.000 lei" / „20.000 lei" / „24.000 lei" + „pre-înscrieri iulie-august 2026" — clar NU din ghid oficial (sumele nu coincid între ele). Confirmă doar că cererea e caldă (bateriile = topul de marketing al sezonului). NU promova; nu prelua niciuna dintre cifre. Următorul recheck: scan-ul de duminică viitoare.
 - **Trigger:** AFM publică ghidul oficial pe [afm.ro](https://www.afm.ro/sisteme_fotovoltaice.php) cu suma per beneficiar + condiții + dată sesiune.
 - **Acțiune:** (a) update ghidul `casa-verde-baterii-2026-program-stocare-afm` cu suma + datele oficiale + lista echipamente eligibile + calendar real; (b) update colateral pe ghidul-umbrelă `casa-verde-fotovoltaice-2026` cu cifrele confirmate; (c) Request Indexing GSC pe ambele după update.
 
@@ -193,6 +196,25 @@ _(coadă goală — toate cele 3 ținte striking-distance au fost extinse pe 202
 
 #### #27 — Panouri Fotovoltaice și Aerul Condiționat Vara — Randament la Caniculă
 - **Status:** ✅ publicat 2026-07-13 — vezi „Publicate recent".
+
+#### #31 — Panouri Fotovoltaice + Pompă de Căldură: Câți kW Îți Trebuie, Cost Total, Cât Acoperi din Încălzire
+- **Status:** 🟡 backlog · **candidat de promovat** (cel mai puternic semnal al scanării) · sursă: trend scan 2026-07-19
+- **Cluster intuit:** „panouri fotovoltaice pompa de caldura", „cati kw panouri pentru pompa de caldura", „pompa de caldura cu panouri solare cost", „cat consuma o pompa de caldura pe luna", „incalzire cu panouri fotovoltaice", „COP pompa de caldura iarna", „panouri fotovoltaice iarna productie"
+- **De ce:** exact replica formulei validate #27 (match consum/producție cu un consumator mare), dar pe sezonul opus — era deja notată ca „contrapartida sezonieră" în nota de replicare a lui #27. Semnal de cerere observat în scan: perechea PV + pompă de căldură apare recurent în marketingul instalatorilor cu preț combinat, iar articolele concurente de dimensionare rezidențială („câte panouri pentru o casă" — einvest, moneyline, micportal) citează explicit pompa de căldură ca factor care urcă necesarul. Ancorat pe performer dovedit: #14 Sistem 3/5/10 kW Casă (cluster rezidențial preț/dimensionare) + #22 Amortizare. Neacoperit pe site.
+- **Atenție never-invent:** COP/SCOP din datasheet-uri producători (Daikin/NIBE/Mitsubishi/Bosch) cu link, necesar termic din metodologie transparentă, producție lunară din PVGIS. Punctul cheie onest = decalajul sezonier (consumul de încălzire e iarna, vârful PV e vara) — nu vinde „independență totală".
+- **Timing:** fereastra e **sept–nov 2026** (pre-sezon încălzire + facturi). Vara e prea devreme; de promovat la coada activă în septembrie sau mai devreme dacă apare semnal GSC.
+- **Linkuri interne:** /ghid/panouri-fotovoltaice-aer-conditionat-vara-canicula-2026, /ghid/sistem-fotovoltaic-3-5-10-kw-casa-pret-productie-amortizare-2026, /ghid/amortizare-panouri-fotovoltaice-2026, /calculator-panouri-fotovoltaice?segment=rezidential
+
+#### #32 — Retrofit Baterie la un Sistem Fotovoltaic On-Grid Existent: Ce Schimbi, Ce Costă, Ce Invertor Îți Trebuie
+- **Status:** 🟡 backlog · sursă: trend scan 2026-07-19
+- **Cluster intuit:** „adaugare baterie la sistem fotovoltaic existent", „retrofit baterie panouri solare", „invertor hibrid vs on-grid upgrade", „baterie AC coupled vs DC coupled", „pot adauga baterie la panourile existente"
+- **De ce:** e exact populația-țintă a programului Casa Verde Baterii (prosumatori **existenți** care adaugă stocare), iar bateriile sunt clusterul #1 dovedit al site-ului (Casa Verde Baterii 229 clicks). Întrebarea tehnică „pot adăuga o baterie la ce am deja?" e blocantul practic înaintea oricărei înscrieri.
+- **Caveat canibalizare:** #26 (activ în coadă) acoperă bateria rezidențială pe backup + dimensionare. Acest unghi e strict tehnic-retrofit. **De scris doar după #26** și doar dacă #26 rankează; altfel merge absorbit ca secțiune în #26.
+
+#### #33 — Sistem Fotovoltaic Monofazat vs Trifazat pentru Casă: Ce Alegi și De Ce Contează la Racordare
+- **Status:** 🟡 backlog · sursă: trend scan 2026-07-19
+- **Cluster intuit:** „monofazat vs trifazat panouri fotovoltaice", „invertor monofazat sau trifazat casa", „racordare trifazata prosumator", „cati kw pot pune pe monofazat"
+- **De ce:** sub-temă de dimensionare adiacentă performer-ului #14, era deja notată ca variantă de extindere în nota lui #14. Semnal mai slab decât #31 — listat pentru completitudine, nu prioritar.
 
 ---
 
