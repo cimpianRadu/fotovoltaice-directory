@@ -146,8 +146,17 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
             className="mt-1 w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
           />
           <label htmlFor="gdpr" className="text-xs text-gray-600 leading-relaxed">
-            Sunt de acord cu prelucrarea datelor personale în conformitate cu GDPR. Datele vor fi folosite
-            exclusiv pentru a vă pune în legătură cu instalatori de sisteme fotovoltaice. *
+            Sunt de acord cu prelucrarea datelor personale conform{' '}
+            <a
+              href="/politica-confidentialitate"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-gray-900"
+            >
+              Politicii de Confidențialitate
+            </a>
+            . Datele vor fi transmise exclusiv firmelor de instalare care acoperă zona mea, pentru a mă
+            contacta cu oferte. *
           </label>
         </div>
 

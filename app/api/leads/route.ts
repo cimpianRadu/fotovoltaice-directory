@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { saveLeadToSheet } from '@/lib/sheets';
 
+const CONSENT_VERSION = 'v2-2026-07-20';
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -22,7 +24,8 @@ export async function POST(request: Request) {
       );
     }
 
-    await saveLeadToSheet(body);
+    // Versiunea textului de consimțământ acceptat — dovadă GDPR per lead.
+    await saveLeadToSheet({ ...body, gdprConsent: `da (${CONSENT_VERSION})` });
 
     return NextResponse.json({ success: true });
   } catch (err) {

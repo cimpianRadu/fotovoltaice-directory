@@ -53,6 +53,7 @@ export async function saveLeadToSheet(lead: {
   sourcePage?: string;
   preselectedCompany?: string;
   segment?: string;
+  gdprConsent?: string;
 }) {
   await appendRow('Leads', [
     new Date().toISOString(),
@@ -69,6 +70,7 @@ export async function saveLeadToSheet(lead: {
     lead.preselectedCompany || '',
     'Nou', // coloana Status
     lead.segment || 'comercial', // coloana Segment (trailing — nu mută coloanele existente)
+    lead.gdprConsent || '', // coloana Consimțământ (trailing)
   ]);
 }
 
