@@ -11,6 +11,7 @@ import { trackEvent } from '@/lib/analytics';
 const primaryLinks = [
   { href: '/firme', label: 'Firme' },
   { href: '/cere-oferta', label: 'Cere Ofertă' },
+  { href: '/cereri', label: 'Cereri Clienți' },
   { href: '/clasament', label: 'Clasament' },
   { href: '/calculator-panouri-fotovoltaice', label: 'Calculator' },
   { href: '/verificare-anre', label: 'Verificare ANRE' },
@@ -65,13 +66,15 @@ export default function Header() {
   return (
     <header ref={headerRef} className="sticky top-0 z-50 bg-white border-b border-border">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-bold text-lg text-secondary-dark">
+        <Link href="/" className="flex items-center gap-2 font-bold text-lg text-secondary-dark shrink-0">
           <Image src="/logo.svg" alt="Instalatori Fotovoltaice" width={32} height={32} className="w-8 h-8" />
-          <span className="hidden sm:inline">Instalatori Fotovoltaice</span>
+          {/* Între lg și xl textul logo-ului dispare — nav-ul cu 7 linkuri are prioritate */}
+          <span className="hidden sm:inline lg:hidden xl:inline whitespace-nowrap">Instalatori Fotovoltaice</span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6">
+        {/* Desktop nav de la lg în sus — 7 linkuri + toggle + CTA nu încap sub 1024px */}
+        <nav className="hidden lg:flex items-center gap-2.5 xl:gap-3 min-[1440px]:gap-5">
           <SegmentToggle source="nav" />
           {primaryLinks.map((link) => (
             <Link
@@ -82,7 +85,7 @@ export default function Header() {
                   ? () => trackEvent('cere_oferta_click', { segment, source: 'nav' })
                   : undefined
               }
-              className={`text-sm font-medium transition-colors ${
+              className={`text-sm font-medium whitespace-nowrap transition-colors ${
                 isActive(link.href)
                   ? 'text-primary-dark border-b-2 border-primary pb-0.5'
                   : 'text-gray-600 hover:text-secondary-dark'
@@ -96,7 +99,7 @@ export default function Header() {
           <div ref={moreRef} className="relative">
             <button
               onClick={() => setMoreOpen(!moreOpen)}
-              className={`inline-flex items-center gap-1 text-sm font-medium transition-colors ${
+              className={`inline-flex items-center gap-1 text-sm font-medium whitespace-nowrap transition-colors ${
                 isMoreActive
                   ? 'text-primary-dark border-b-2 border-primary pb-0.5'
                   : 'text-gray-600 hover:text-secondary-dark'
@@ -142,14 +145,14 @@ export default function Header() {
 
           <Link
             href="/listeaza-firma"
-            className="bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
+            className="bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-4 py-2 rounded-lg whitespace-nowrap transition-colors"
           >
             Listează-ți Firma
           </Link>
         </nav>
 
         {/* Mobile hamburger */}
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
           <Link
             href="/cere-oferta"
             onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_mobile' })}
@@ -178,7 +181,7 @@ export default function Header() {
       </div>
 
       {/* Mobile nav overlay — always in DOM for SEO, toggled with CSS */}
-      <div className={`md:hidden border-t border-border bg-white ${mobileOpen ? 'block' : 'hidden'}`}>
+      <div className={`lg:hidden border-t border-border bg-white ${mobileOpen ? 'block' : 'hidden'}`}>
         <nav className="flex flex-col p-4 gap-1">
           <div className="px-1 pb-3 mb-2 border-b border-border">
             <p className="text-xs font-semibold text-gray-400 mb-2">Caut panouri pentru:</p>

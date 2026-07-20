@@ -98,6 +98,26 @@ export function getCounties(): string[] {
   return countiesData.counties;
 }
 
+// Slugurile tipProiect din LeadForm (comercial + rezidențial) → etichete de afișat.
+// Folosit pe /cereri și în notificările de revendicare.
+export function getProjectTypeLabel(slug: string): string {
+  const labels: Record<string, string> = {
+    'hala-industriala': 'Hală industrială',
+    'cladire-birouri': 'Clădire de birouri',
+    'parc-logistic': 'Parc logistic',
+    'agricol': 'Agricol (fermă, seră, depozit)',
+    'retail': 'Retail (magazin, centru comercial)',
+    'hotel': 'Hotel / Pensiune',
+    'institutie': 'Instituție publică',
+    'casa-individuala': 'Casă individuală',
+    'vila': 'Vilă',
+    'casa-vacanta': 'Casă de vacanță',
+    'apartament': 'Apartament / bloc',
+    'altele': 'Alt tip de proiect',
+  };
+  return labels[slug] ?? slug;
+}
+
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('ro-RO', {
     style: 'currency',

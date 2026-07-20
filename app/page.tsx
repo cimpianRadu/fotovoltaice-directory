@@ -22,9 +22,21 @@ import HomeOfertaBand from '@/components/home/HomeOfertaBand';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
 import { getCompanies, getCoveredCounties, getPremiumCompanies, getCompaniesBySegment, getCompaniesByCounty, slugifyCounty } from '@/lib/utils';
+import { getProjectTypeLabel } from '@/lib/utils-shared';
+import { getPublicLeads, type PublicLead } from '@/lib/sheets';
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { PRICING } from '@/lib/pricing';
 import guidesData from '@/data/guides.json';
+
+// Teaser-ul de cereri vine din Google Sheets — regenerare la 5 minute, ca /cereri.
+export const revalidate = 300;
+
+function cerereAgeLabel(iso: string): string {
+  const days = Math.floor((Date.now() - Date.parse(iso)) / 86_400_000);
+  if (days <= 0) return 'azi';
+  if (days === 1) return 'ieri';
+  return `acum ${days} zile`;
+}
 
 const COMPANY_COUNT = getCompanies().length;
 const COUNTY_COUNT = getCoveredCounties().length;
@@ -87,8 +99,19 @@ const homeFaqs = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
   const hasPremium = getPremiumCompanies().length > 0;
+
+  // Fail-open: fără credențiale Sheets (build local) secțiunea de cereri dispare.
+  let cereri: PublicLead[] = [];
+  let cereriTotal = 0;
+  try {
+    const leads = await getPublicLeads();
+    cereriTotal = leads.length;
+    cereri = leads.slice(0, 3);
+  } catch (err) {
+    console.error('[home] failed to load cereri teaser:', err);
+  }
 
   return (
     <>
@@ -159,6 +182,66 @@ export default function HomePage() {
           </>
         )}
       </section>
+
+      {/* Cereri active — teaser live pentru instalatori, social proof pentru clienți */}
+      {cereri.length > 0 && (
+        <section className="bg-secondary">
+          <div className="max-w-7xl mx-auto px-4 py-14">
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+              <div>
+                <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
+                  Pentru firme de instalare
+                </p>
+                <h2 className="text-2xl font-bold text-white">
+                  {cereriTotal} cereri de ofertă în așteptare
+                </h2>
+                <p className="text-white/70 mt-1 text-sm">
+                  Clienți reali care caută instalator acum. Revendici cererea, te sunăm, primești
+                  datele complete. Maxim 3 firme per cerere.
+                </p>
+              </div>
+              <Link
+                href="/cereri"
+                className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors"
+              >
+                Vezi toate cererile
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              {cereri.map((c) => (
+                <Link
+                  key={c.id}
+                  href="/cereri"
+                  className="rounded-xl bg-white/5 border border-white/10 hover:border-primary/50 hover:bg-white/10 transition-all p-4"
+                >
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span
+                      className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold ${
+                        c.segment === 'rezidential'
+                          ? 'bg-emerald-400/15 text-emerald-300'
+                          : 'bg-primary/20 text-primary'
+                      }`}
+                    >
+                      {c.segment === 'rezidential' ? 'Rezidențial' : 'Comercial'}
+                    </span>
+                    <span className="text-xs text-white/50">{cerereAgeLabel(c.id)}</span>
+                  </div>
+                  <p className="font-semibold text-white text-sm">{getProjectTypeLabel(c.tipProiect)}</p>
+                  <p className="text-white/60 text-sm mt-0.5">
+                    {[c.judet, c.putere ? `${c.putere} kW` : null, c.suprafata ? `${c.suprafata} mp` : null]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Why trust us + ANRE Verification */}
       <section className="bg-surface border-y border-border">

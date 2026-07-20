@@ -203,6 +203,77 @@ export async function sendSubmissionsDigest(
   });
 }
 
+interface ClaimNotificationData {
+  claim: { numeFirma: string; numeContact: string; telefon: string };
+  lead: {
+    numeCompanie: string;
+    numeContact: string;
+    email: string;
+    telefon: string;
+    tipProiectLabel: string;
+    judet: string;
+    putere: string;
+    suprafata: string;
+    segment: string;
+    timestamp: string;
+  };
+  claimCount: number; // inclusiv revendicarea curentă
+  maxClaims: number;
+}
+
+// Notificare imediată (nu în digest) — o revendicare e time-sensitive: firma
+// așteaptă telefonul de confirmare cât interesul e cald.
+export async function sendClaimNotification(data: ClaimNotificationData): Promise<void> {
+  const to = process.env.LISTING_NOTIFICATION_EMAIL || 'radu.cimpian94@gmail.com';
+  const { claim, lead, claimCount, maxClaims } = data;
+  const full = claimCount >= maxClaims;
+
+  const row = (label: string, value: string) =>
+    `<tr><td style="padding:5px 12px 5px 0;color:#6b7280;font-size:13px;vertical-align:top;white-space:nowrap">${label}</td><td style="padding:5px 0;font-size:14px;color:#111827">${value}</td></tr>`;
+
+  const html = `<!DOCTYPE html>
+<html>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
+  <div style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
+    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#fffbeb">
+      <div style="font-size:12px;color:#92400e;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">Lead revendicat · ${claimCount}/${maxClaims}${full ? ' · COMPLET' : ''}</div>
+      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${escapeHtml(lead.tipProiectLabel)} · ${escapeHtml(lead.judet)}</h1>
+    </div>
+    <div style="padding:20px 24px">
+      <div style="font-size:12px;color:#6b7280;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px">Firma care revendică</div>
+      <table style="border-collapse:collapse;width:100%">
+        ${row('Firmă', escapeHtml(claim.numeFirma))}
+        ${row('Contact', escapeHtml(claim.numeContact))}
+        ${row('Telefon', `<a href="tel:${escapeHtml(claim.telefon.replace(/\s/g, ''))}" style="color:#2563eb">${escapeHtml(claim.telefon)}</a>`)}
+      </table>
+      <div style="font-size:12px;color:#6b7280;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin:18px 0 6px">Lead-ul (datele clientului)</div>
+      <table style="border-collapse:collapse;width:100%">
+        ${row('Client', escapeHtml(lead.numeContact) + (lead.numeCompanie ? ` · ${escapeHtml(lead.numeCompanie)}` : ''))}
+        ${row('Email', `<a href="mailto:${escapeHtml(lead.email)}" style="color:#2563eb">${escapeHtml(lead.email)}</a>`)}
+        ${row('Telefon', `<a href="tel:${escapeHtml(lead.telefon.replace(/\s/g, ''))}" style="color:#2563eb">${escapeHtml(lead.telefon)}</a>`)}
+        ${row('Proiect', `${escapeHtml(lead.tipProiectLabel)} · ${escapeHtml(lead.judet)}${lead.putere ? ` · ${escapeHtml(lead.putere)} kW` : ''}${lead.suprafata ? ` · ${escapeHtml(lead.suprafata)} mp` : ''}`)}
+        ${row('Segment', escapeHtml(lead.segment))}
+        ${row('Depus', escapeHtml(fmtDate(lead.timestamp)))}
+      </table>
+    </div>
+    <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280">
+      Sună firma pentru confirmare, apoi decide livrarea. Salvat în tabul „Revendicări".${full ? ' Cererea e acum marcată Complet pe /cereri.' : ''}
+    </div>
+  </div>
+</body>
+</html>`;
+
+  const result = await sendEmail({
+    to,
+    subject: `Lead revendicat (${claimCount}/${maxClaims}): ${lead.tipProiectLabel} · ${lead.judet} — ${claim.numeFirma}`,
+    html,
+  });
+
+  if (!result.ok) {
+    console.warn('[email] Claim notification not sent:', result.reason);
+  }
+}
+
 export async function sendListingNotification(data: ListingNotificationData): Promise<void> {
   const to = process.env.LISTING_NOTIFICATION_EMAIL || 'radu.cimpian94@gmail.com';
 

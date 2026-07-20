@@ -195,6 +195,113 @@ export async function getListingsSince(cutoff: Date): Promise<NewListing[]> {
   }));
 }
 
+// --- Cereri publice (/cereri) + revendicări ---
+
+export const MAX_CLAIMS_PER_LEAD = 3;
+
+// Anonimizat prin construcție: tipul nu conține nume, email, telefon, companie
+// sau mesaj — doar câmpurile sigure de afișat public pe /cereri.
+export interface PublicLead {
+  id: string; // ISO timestamp al rândului — unic, folosit ca referință la revendicare
+  tipProiect: string;
+  judet: string;
+  suprafata: string;
+  putere: string;
+  segment: string;
+}
+
+function isPubliclyVisible(l: NewLead): boolean {
+  // Status „Ascuns" în sheet = scos manual din feedul public (lead vândut
+  // exclusiv, spam, test). Orice alt status rămâne vizibil.
+  return l.status !== 'Ascuns';
+}
+
+// Toate cererile, indiferent de vechime — la volumul actual feedul afișează
+// istoricul complet, cu filtru de vechime în UI. De restrâns când crește volumul.
+export async function getPublicLeads(): Promise<PublicLead[]> {
+  const leads = await getLeadsSince(new Date(0));
+  return leads
+    .filter(isPubliclyVisible)
+    .map((l) => ({
+      id: l.timestamp,
+      tipProiect: l.tipProiect,
+      judet: l.judet,
+      suprafata: l.suprafata,
+      putere: l.putere,
+      segment: l.segment,
+    }))
+    .reverse(); // cele mai noi primele
+}
+
+// Lead-ul complet (cu date de contact) pentru un id din feedul public — folosit
+// DOAR server-side, pentru notificarea de revendicare. Nu ajunge în client.
+export async function getFullLeadById(id: string): Promise<NewLead | undefined> {
+  const leads = await getLeadsSince(new Date(0));
+  return leads.find((l) => l.timestamp === id && isPubliclyVisible(l));
+}
+
+const CLAIMS_SHEET = 'Revendicări';
+
+export interface LeadClaim {
+  timestamp: string;
+  leadId: string;
+  numeFirma: string;
+  numeContact: string;
+  telefon: string;
+}
+
+export async function getClaims(): Promise<LeadClaim[]> {
+  let rows: string[][];
+  try {
+    rows = await readRows(CLAIMS_SHEET);
+  } catch {
+    // Tabul nu există încă (prima revendicare îl creează) — nicio revendicare.
+    return [];
+  }
+  return rows
+    .filter((r) => Number.isFinite(Date.parse(r[0] || '')))
+    .map((r) => ({
+      timestamp: r[0] || '',
+      leadId: r[1] || '',
+      numeFirma: r[2] || '',
+      numeContact: r[3] || '',
+      telefon: r[4] || '',
+    }));
+}
+
+async function createSheetTab(title: string) {
+  const auth = getAuth();
+  const sheets = google.sheets({ version: 'v4', auth });
+  await sheets.spreadsheets.batchUpdate({
+    spreadsheetId: SPREADSHEET_ID,
+    requestBody: { requests: [{ addSheet: { properties: { title } } }] },
+  });
+}
+
+export async function saveClaimToSheet(claim: {
+  leadId: string;
+  numeFirma: string;
+  numeContact: string;
+  telefon: string;
+}) {
+  const values = [
+    new Date().toISOString(),
+    claim.leadId,
+    claim.numeFirma,
+    claim.numeContact,
+    claim.telefon,
+    'Nou', // coloana Status
+  ];
+  try {
+    await appendRow(CLAIMS_SHEET, values);
+  } catch {
+    // Tabul „Revendicări" nu există încă — îl creăm cu header și reîncercăm o dată.
+    await createSheetTab(CLAIMS_SHEET);
+    await appendRow(CLAIMS_SHEET, ['Timestamp', 'Lead ID', 'Firmă', 'Contact', 'Telefon', 'Status']);
+    await appendRow(CLAIMS_SHEET, values);
+  }
+}
+
 export async function saveWaitlistToSheet(email: string) {
   await appendRow('Waitlist', [
     new Date().toISOString(),
