@@ -5,6 +5,10 @@
 > **Convenție foldere:** după publicare, folderul primește sufixul „ ✅" în nume (ex. `2026-07-06-cere-oferta ✅`). Dashboard de status pe site: **/admin/social** (Basic Auth via `ADMIN_PASSWORD`, ca analytics), sursă date: `data/social-schedule.json` — de actualizat la fiecare postare/programare. Adevărul despre programări: Meta Business Suite Planner.
 > **De la postarea #2:** include pe 1-2 slide-uri screenshot-uri reale din site ca background cu opacity redus (feedback user 2026-07-06).
 
+## 🎯 Focus strategic (decizie user 2026-07-20)
+
+**Promovăm prioritar `/cere-oferta`, obiectivul e colectarea de lead-uri** (pe care userul vrea apoi să le vândă firmelor). Implicații: CTA primar al fiecărei postări noi = /cere-oferta (nu doar în comentariul fixat, ci ca destinație a unghiului); temele se triază după „aduce cereri de ofertă sau doar views?"; succes = submissions în digest, nu reach. Ideile cele mai aliniate din coadă: #4 (amortizare → calculator → cere-oferta) și #6 (câte firme în județul tău → cere-oferta).
+
 ## Cadență
 
 **Decizie 2026-07-08: doar REELS pentru o perioadă** (fără carousel foto). 1 reel/săptămână. Implicații pe producție: slide-urile se compun NATIV la 1080×1920 (nu extinse din pătrate cu make_reel.py — arată rău pe desktop), durată per slide controlată prin MP4 generat local (ffmpeg) dacă slideshow-ul FB rămâne blocat la 2s/cadru, distribuire în cele 3 grupuri mari de PV cu text per grup + comentariu cu link pe fiecare share. Motorul de teme rămâne: **fiecare ghid nou publicat → un reel derivat**; între ghiduri: tool-uri (calculator, verificare ANRE, clasament) și status-uri de program.
