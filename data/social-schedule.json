@@ -80,6 +80,14 @@
       "cta": "/firme"
     },
     {
+      "id": 11,
+      "tema": "Studiu de caz: 3 sloturi gratuite pentru firme (B2B)",
+      "format": "postare + email outreach",
+      "status": "idee",
+      "nota": "Proof cu cifre Umami reale (extrase la zi) + 181 firme. Canal principal: email către firmele listate, nu doar FB.",
+      "cta": "/listeaza-firma"
+    },
+    {
       "id": 7,
       "tema": "Top firme după cifră de afaceri (date ANAF)",
       "format": "reel",

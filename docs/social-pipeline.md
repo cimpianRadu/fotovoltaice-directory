@@ -57,6 +57,12 @@
 - **Unghi:** personalizare geografică, invită comentarii („București?", „Cluj?") la care răspundem cu linkul județului
 - **CTA:** /firme
 
+### #11 — Studiu de caz: 3 sloturi gratuite pentru firme (B2B)
+- **Status:** 💡 idee (propusă de user 2026-07-20)
+- **Sursa datelor:** Umami real (2-3 cifre selectate: vizitatori/lună, afișări pagini județ/firme, cereri ofertă) + 181 firme + 42 ghiduri. NIMIC umflat; cifrele se extrag la zi înainte de generare (necesită UMAMI_API_KEY local sau cifre de la user din /admin/analytics).
+- **Unghi:** invităm firmele de instalații electrice să publicăm împreună un studiu de caz al unui proiect real al lor; primele 3 sloturi gratuite (limită reală, apoi devine serviciu plătit legat de /publicitate). Firma dă proiectul + cifrele ei, noi dăm expunerea + pagina pe site.
+- **CTA:** contact direct / /listeaza-firma. Distribuție: postare pe pagină + email direct către cele 181 firme listate (outreach.mjs) + grupuri de instalatori; pagina FB e audiență de clienți finali, emailul e canalul principal pentru asta.
+
 ### #7 — Top firme după cifră de afaceri (date ANAF reale)
 - **Status:** 💡 idee
 - **Sursa datelor:** /clasament (sortare CA, date ANAF)
