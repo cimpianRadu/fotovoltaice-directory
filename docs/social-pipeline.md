@@ -79,6 +79,9 @@
 
 ## ✅ Postate
 
+### #12 — Lansare /cereri: cererile clienților, publice pentru instalatori (postat 2026-07-21)
+- Reel 6 slide-uri, B2B (audiență: firme de instalare), `social/2026-07-21-cereri-lansare ✅/`. Angle: „cel mai greu nu e montajul, e să găsești clientul" vs Publi24/OLX/reclame; screenshot-uri reale din /cereri (feed + navbar). Comentariu fixat cu /cereri + /cere-oferta. Prima postare după lansarea feature-ului (PR #5, 21 iul) și prima pe focusul lead-gen.
+
 ### #8 — Paradoxul caniculei: soare maxim, randament mai mic (postat 2026-07-20)
 - Reel 25s, 6 slide-uri native 9:16, hook „-14%", `social/2026-07-16-canicula ✅/`. Fapte verificate în ghidul #40: 10-14% pierdere la 65°C, 400 Wp → 350-360 Wp, gap 12-15 cm, briza -5-8°C, autoconsum vară 70-80% vs 30-40% iarna. Postat în plin sezon de caniculă.
 
