@@ -55,6 +55,7 @@ export default async function CereriPage() {
       segment: l.segment,
       postedLabel: postedLabel(ageDays),
       ageDays,
+      mesaj: l.mesaj,
     };
   });
 

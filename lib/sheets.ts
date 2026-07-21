@@ -125,6 +125,10 @@ export interface NewLead {
   preselectedCompany: string;
   status: string;
   segment: string;
+  // Coloana P din sheet: orice valoare non-goală scoate mesajul din feedul
+  // public /cereri (fără să ascundă cererea) — override manual pentru mesaje
+  // cu date personale pe care redactarea automată nu le prinde.
+  mesajAscuns: string;
 }
 
 export interface NewListing {
@@ -170,6 +174,8 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     preselectedCompany: r[11] || '',
     status: r[12] || '',
     segment: r[13] || 'comercial',
+    // r[14] = consimțământ GDPR (nefolosit la citire)
+    mesajAscuns: r[15] || '',
   }));
 }
 
@@ -199,8 +205,9 @@ export async function getListingsSince(cutoff: Date): Promise<NewListing[]> {
 
 export const MAX_CLAIMS_PER_LEAD = 3;
 
-// Anonimizat prin construcție: tipul nu conține nume, email, telefon, companie
-// sau mesaj — doar câmpurile sigure de afișat public pe /cereri.
+// Anonimizat prin construcție: tipul nu conține nume, email, telefon sau
+// companie. Mesajul apare DOAR trecut prin sanitizeMesajPublic (redactare +
+// trunchiere) și poate fi retras per lead prin coloana MesajAscuns.
 export interface PublicLead {
   id: string; // ISO timestamp al rândului — unic, folosit ca referință la revendicare
   tipProiect: string;
@@ -208,6 +215,27 @@ export interface PublicLead {
   suprafata: string;
   putere: string;
   segment: string;
+  mesaj: string;
+}
+
+// Redactare pentru afișarea publică a mesajului: emailuri, URL-uri și șiruri
+// de 8+ cifre (telefoane, CNP) sunt eliminate; numele/adresele scrise în text
+// liber NU pot fi prinse aici — pentru ele există coloana MesajAscuns.
+const REDACT_PATTERNS: RegExp[] = [
+  /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g,
+  /(?:https?:\/\/|www\.)\S+/gi,
+  /\+?\d(?:[\s.\-()]*\d){7,}/g,
+];
+const MESAJ_PUBLIC_MAX = 200;
+
+export function sanitizeMesajPublic(mesaj: string): string {
+  let out = mesaj;
+  for (const p of REDACT_PATTERNS) out = out.replace(p, '[eliminat]');
+  out = out.replace(/\s+/g, ' ').trim();
+  if (out.length > MESAJ_PUBLIC_MAX) {
+    out = `${out.slice(0, MESAJ_PUBLIC_MAX).replace(/\s+\S*$/, '')}…`;
+  }
+  return out;
 }
 
 function isPubliclyVisible(l: NewLead): boolean {
@@ -229,6 +257,7 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       suprafata: l.suprafata,
       putere: l.putere,
       segment: l.segment,
+      mesaj: l.mesajAscuns ? '' : sanitizeMesajPublic(l.mesaj),
     }))
     .reverse(); // cele mai noi primele
 }

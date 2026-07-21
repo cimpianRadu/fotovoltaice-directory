@@ -126,16 +126,21 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
           />
         </div>
 
-        <Input
-          label="Mesaj (opțional)"
-          name="mesaj"
-          type="textarea"
-          placeholder={
-            isRezidential
-              ? 'Descrieți pe scurt ce vă doriți (ex: vreau panouri prin Casa Verde)...'
-              : 'Descrieți pe scurt proiectul...'
-          }
-        />
+        <div>
+          <Input
+            label="Mesaj (opțional)"
+            name="mesaj"
+            type="textarea"
+            placeholder={
+              isRezidential
+                ? 'Descrieți pe scurt ce vă doriți (ex: vreau panouri prin Casa Verde)...'
+                : 'Descrieți pe scurt proiectul...'
+            }
+          />
+          <p className="mt-1 text-[11px] text-gray-400">
+            Nu includeți date de contact în mesaj, le colectăm separat în câmpurile de mai sus.
+          </p>
+        </div>
 
         <div className="flex items-start gap-2">
           <input

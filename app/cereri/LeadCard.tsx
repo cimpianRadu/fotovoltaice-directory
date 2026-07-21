@@ -14,6 +14,7 @@ export interface LeadCardData {
   segment: string;
   postedLabel: string;
   ageDays: number;
+  mesaj: string;
 }
 
 interface LeadCardProps {
@@ -111,6 +112,9 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
 
       <h3 className="mt-3 font-semibold text-gray-900">{lead.tipLabel}</h3>
       <p className="mt-1 text-sm text-gray-600">{details.join(' · ')}</p>
+      {lead.mesaj && (
+        <p className="mt-2 text-sm text-gray-500 italic leading-relaxed">„{lead.mesaj}”</p>
+      )}
 
       {/* Counter: sloturi vizuale + text. Afișat doar când există revendicări reale. */}
       <div className="mt-4 flex items-center gap-2">
