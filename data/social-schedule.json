@@ -50,8 +50,8 @@
       "id": 10,
       "tema": "Cât produce 1 kWp în județul tău?",
       "folder": "2026-07-16-productie-judete",
-      "format": "reel 16s",
-      "programat": "2026-08-04",
+      "format": "reel 16s (static) / 18,5s (remotion)",
+      "programat": "2026-07-23",
       "nota": "Răspundem în comentarii cu cifra PVGIS pe județ (pvgis-yields.json).",
       "cta": "/calculator-panouri-fotovoltaice"
     },

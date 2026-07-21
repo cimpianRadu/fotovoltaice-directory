@@ -27,7 +27,7 @@
 
 ## 📋 Coadă activă
 
-> **Calendar (revizuit 2026-07-20, seara: #2 postat 16 iul, #8 postat 20 iul)** (MP4-urile generate cu `social/make_mp4.py`, `reel.mp4` în fiecare folder; durate: hook 3s / conținut 4,5s / CTA 4s): #9 AFIR → 27-28 iul, #10 producție județe → ~4 aug. Userul postează manual din folder (reel.mp4 + caption-reel.txt + comentariu-fixat.txt).
+> **Calendar (revizuit 2026-07-20, seara: #2 postat 16 iul, #8 postat 20 iul)** (MP4-urile generate cu `social/make_mp4.py`, `reel.mp4` în fiecare folder; durate: hook 3s / conținut 4,5s / CTA 4s): #10 producție județe → programat joi 23 iul (decizie user, devansat; de ales static `reel.mp4` vs pilot `reel-remotion.mp4`), #9 AFIR → 27-28 iul. Userul postează manual din folder (reel.mp4 + caption-reel.txt + comentariu-fixat.txt + etichete.txt).
 
 ### #9 — AFIR: fereastra se închide pe 14 august
 - **Status:** ✅ generat 2026-07-16, **de programat până la ~28 iul (deadline 14 aug)** — `social/2026-07-16-afir-deadline/`
