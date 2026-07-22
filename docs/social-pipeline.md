@@ -79,6 +79,9 @@
 
 ## ✅ Postate
 
+### #13 — News: 2 cereri noi din Ilfov, revendică primul (postat 2026-07-22)
+- Reel narat 23s (news, B2B), `social/2026-07-22-cereri-ilfov ✅/`. Primul reel produs cu skill-ul `narrated-video` (sub o oră cap-coadă): alertă → screenshot live /cereri cu cele 2 carduri Ilfov → urgență (nicio revendicare, max 3 firme) → CTA revendicare. Postat în aceeași zi cu intrarea cererilor. Pattern repetabil: la fiecare val de cereri fresh dintr-un județ, reel de news din același template (schimb screenshotul + scriptul).
+
 ### #12 — Lansare /cereri: cererile clienților, publice pentru instalatori (postat 2026-07-21)
 - Reel 6 slide-uri, B2B (audiență: firme de instalare), `social/2026-07-21-cereri-lansare ✅/`. Angle: „cel mai greu nu e montajul, e să găsești clientul" vs Publi24/OLX/reclame; screenshot-uri reale din /cereri (feed + navbar). Comentariu fixat cu /cereri + /cere-oferta. Prima postare după lansarea feature-ului (PR #5, 21 iul) și prima pe focusul lead-gen.
 
