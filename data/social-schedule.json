@@ -1,6 +1,15 @@
 {
-  "updated": "2026-07-20",
+  "updated": "2026-07-22",
   "posts": [
+    {
+      "id": 13,
+      "tema": "News: 2 cereri noi din Ilfov (revendică primul)",
+      "folder": "2026-07-22-cereri-ilfov",
+      "format": "reel narat 23s (news)",
+      "programat": "2026-07-22",
+      "nota": "TIME-SENSITIVE: reelul zice „intrate chiar azi\", de postat AZI. B2B, urgență pe revendicare. Primul reel făcut cu skill-ul narrated-video.",
+      "cta": "/cereri"
+    },
     {
       "id": 1,
       "tema": "Cere ofertă gratuit",
