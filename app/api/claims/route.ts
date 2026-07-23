@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import {
   MAX_CLAIMS_PER_LEAD,
   getClaims,
@@ -64,6 +65,10 @@ export async function POST(request: Request) {
     await saveClaimToSheet(claim);
 
     const claimCount = claimsForLead.length + 1;
+
+    // Fără asta, feedul rămâne pe ISR-ul de 5 minute și o altă firmă vede
+    // cererea ca nerevendicată imediat după ce a fost luată.
+    revalidatePath('/cereri');
 
     // Fail-open: revendicarea e salvată chiar dacă emailul pică (fără RESEND_API_KEY etc.)
     await sendClaimNotification({
