@@ -69,8 +69,12 @@ export async function saveLeadToSheet(lead: {
     lead.sourcePage || 'cere-oferta',
     lead.preselectedCompany || '',
     'Nou', // coloana Status
-    lead.segment || 'comercial', // coloana Segment (trailing — nu mută coloanele existente)
-    lead.gdprConsent || '', // coloana Consimțământ (trailing)
+    lead.segment || 'comercial', // N — Segment (trailing — nu mută coloanele existente)
+    '', // O — „Email trimis", marcaj rezervat scripts/outreach.mjs. NU scrie aici:
+    //     orice text non-gol face scriptul să creadă că leadul e deja procesat.
+    '', // P — Mesaj ascuns (completat separat, vezi getLeadsSince)
+    '', // Q — liber
+    lead.gdprConsent || '', // R — Consimțământ GDPR
   ]);
 }
 
@@ -174,7 +178,7 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     preselectedCompany: r[11] || '',
     status: r[12] || '',
     segment: r[13] || 'comercial',
-    // r[14] = consimțământ GDPR (nefolosit la citire)
+    // r[14] = marcaj „Email trimis" (scripts/outreach.mjs), r[17] = consimțământ GDPR
     mesajAscuns: r[15] || '',
   }));
 }

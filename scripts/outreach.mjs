@@ -244,12 +244,21 @@ async function firmLastContacted() {
   return map;
 }
 const isDateRow = (r) => Number.isFinite(Date.parse(r[0] || ''));
+// Între 20 și 23 iulie 2026, saveLeadToSheet scria consimțământul GDPR („da (v2-...)")
+// exact în coloana de marcaj, așa că fiecare lead nou se năștea „deja trimis" și
+// rutina raporta 0 neprocesate. Sursa e reparată; garda rămâne ca plasă de siguranță.
+const isConsentArtifact = (v) => /^da\s*\(v\d/i.test(v);
+let consentWarned = false;
 
 async function getUnprocessedLeads() {
   const rows = await readRows('Leads');
   const out = [];
   rows.forEach((r, i) => {
-    if (!isDateRow(r) || (r[LEAD_EMAILED_IDX] || '').trim()) return;
+    if (!isDateRow(r)) return;
+    const mark = (r[LEAD_EMAILED_IDX] || '').trim();
+    if (isConsentArtifact(mark)) {
+      if (!consentWarned) { console.warn(`⚠️  Coloana ${LEAD_EMAILED_COL} conține consimțământ GDPR, nu marcaj de trimitere (rând ${i + 1}). Tratez rândul ca NEPROCESAT.`); consentWarned = true; }
+    } else if (mark) return;
     out.push({ row: i + 1, lead: { timestamp: r[0], numeCompanie: r[1] || '', numeContact: r[2] || '', email: r[3] || '', telefon: r[4] || '', tipProiect: r[5] || '', judet: r[6] || '', suprafata: r[7] || '', putere: r[8] || '', mesaj: r[9] || '', segment: r[13] || 'comercial' } });
   });
   return out;
