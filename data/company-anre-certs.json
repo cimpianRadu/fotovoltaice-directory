@@ -2284,6 +2284,18 @@
    "tipTarifRaw": "Tarif B"
   }
  ],
+ "J.T.S. INSTAL CONTRUCT|Arges": [
+  {
+   "code": "BP",
+   "variant": null,
+   "nrAtestat": "18534",
+   "dataEmitere": "17/08/2022",
+   "dataExpirare": "17/08/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif Bp"
+  }
+ ],
  "COSMIC ELECTRIC POWER|Gorj": [
   {
    "code": "B",
@@ -2481,6 +2493,7 @@
    "tipTarifRaw": "Tarif Bp"
   }
  ],
+ "ELECTRICA [AR]|Arad": [],
  "ALM POWER GROUP|Dolj": [
   {
    "code": "C1A",
@@ -2595,6 +2608,28 @@
    "stare": "Atestat",
    "isActive": true,
    "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "EETIM ECHIPAMENTE DE AUTOMATIZARE|Timis": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14151",
+   "dataEmitere": "11/02/2019",
+   "dataExpirare": "08/02/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "14150",
+   "dataEmitere": "11/02/2019",
+   "dataExpirare": "08/02/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
   }
  ],
  "Ascorp Retele Electrice|Ilfov": [

@@ -6,7 +6,9 @@
  *   1. Match via CUI (strip RO prefix) against anre-with-cui.json
  *   2. Match via normalized name + same judet against anre-atestate.json
  *   3. Match via phone digits (last 7 chars)
- *   4. Fallback: report ambiguous/missing
+ *   4. Fuzzy name (edit distance ≤ 2) within the same judet — registrul ANRE
+ *      conține typo-uri de tastare ("INSTAL CONTRUCT") care rup egalitatea exactă
+ *   5. Fallback: report ambiguous/missing
  *
  * Output: writes data/anre-match-proposal.json and prints summary.
  */
@@ -24,6 +26,9 @@ function normalizeName(name) {
   let n = name
     .toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    // Sufix de dezambiguizare din registrul ANRE: "ELECTRICA [AR]" \u2192 "ELECTRICA".
+    // Se scoate cu tot cu con\u021binut, altfel r\u0103m\u00e2ne un token "ar" care rupe egalitatea.
+    .replace(/\[[^\]]*\]/g, ' ')
     .replace(/[\.\-_&,'`"\[\]\(\)]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
@@ -49,6 +54,28 @@ function phoneDigits(p) {
   return (p.match(/\d{7,}/g) || []).map((d) => d.slice(-9));
 }
 
+// Distanța maximă acceptată la potrivirea fuzzy pe nume. La 3 apar deja
+// fals-pozitive reale în registru ("VTL ENERGY" → "NAF ENERGY"), deci 2 e plafonul.
+const FUZZY_MAX_DISTANCE = 2;
+// Sub această lungime o distanță de 2 înseamnă altă firmă, nu un typo.
+const FUZZY_MIN_LENGTH = 8;
+
+function editDistance(a, b, max) {
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i];
+    let rowMin = i;
+    for (let j = 1; j <= b.length; j++) {
+      cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      if (cur[j] < rowMin) rowMin = cur[j];
+    }
+    if (rowMin > max) return max + 1; // niciun rezultat sub prag mai poate ieși
+    prev = cur;
+  }
+  return prev[b.length];
+}
+
 function main() {
   const companies = JSON.parse(fs.readFileSync(COMPANIES_PATH, 'utf8')).companies;
   const anre = JSON.parse(fs.readFileSync(ANRE_PATH, 'utf8'));
@@ -57,6 +84,7 @@ function main() {
   // Build indexes
   const anreByNameJudet = new Map(); // key: `${normName}|${normJudet}` → anre entry
   const anreByName = new Map();      // key: normName → [entries]
+  const anreByJudet = new Map();     // key: normJudet → [{ entry, normName }] (pentru fuzzy)
   for (const f of anre) {
     const n = normalizeName(f.societate);
     const j = normalizeJudet(f.judet);
@@ -65,6 +93,8 @@ function main() {
       if (!anreByNameJudet.has(key)) anreByNameJudet.set(key, f);
       if (!anreByName.has(n)) anreByName.set(n, []);
       anreByName.get(n).push(f);
+      if (!anreByJudet.has(j)) anreByJudet.set(j, []);
+      anreByJudet.get(j).push({ entry: f, normName: n });
     }
   }
 
@@ -114,7 +144,27 @@ function main() {
       }
     }
 
-    // 5. Name collision with multiple candidates, no judet resolution
+    // 5. Fuzzy name within the same judet — prinde typo-urile din registru.
+    //    Se acceptă doar dacă există un singur candidat la distanța minimă:
+    //    o egalitate între doi candidați înseamnă că nu putem decide.
+    if (!match && nk.length >= FUZZY_MIN_LENGTH && jk) {
+      const pool = anreByJudet.get(jk) || [];
+      let best = null;
+      let bestCount = 0;
+      for (const cand of pool) {
+        const d = editDistance(nk, cand.normName, FUZZY_MAX_DISTANCE);
+        if (d > FUZZY_MAX_DISTANCE) continue;
+        if (!best || d < best.d) { best = { d, entry: cand.entry }; bestCount = 1; }
+        else if (d === best.d) bestCount++;
+      }
+      if (best && bestCount === 1) {
+        match = best.entry;
+        method = `fuzzy-name+judet(d=${best.d})`;
+        confidence = 'medium';
+      }
+    }
+
+    // 6. Name collision with multiple candidates, no judet resolution
     const nameHits = anreByName.get(nk) || [];
     const ambiguous = !match && nameHits.length > 1;
 

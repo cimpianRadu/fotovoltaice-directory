@@ -7059,14 +7059,14 @@
       "cui": "RO43112865",
       "description": "J.T.S Instal Construct, sub brandul JTS Solar, este o firmă din comuna Merișani, județul Argeș, înființată în 2020. Comercializează și asigură montajul de panouri fotovoltaice, invertoare și baterii de stocare pentru clienți rezidențiali, oferind sisteme on-grid, off-grid și hibride, precum și sisteme de monitorizare. Participă la programul Casa Verde cu pachete dedicate locuințelor și declară pe site peste 25.000 de panouri montate și peste 1.100 de clienți.",
       "founded": 2020,
-      "employees": 22,
+      "employees": 32,
       "location": {
         "city": "Borlești",
         "county": "Argeș",
         "address": "Sat Borlești Com. Merișani, Nr.167"
       },
       "contact": {
-        "phone": "+40215551775",
+        "phone": "+40771504694",
         "email": "contact@jtssolar.ro",
         "website": "https://www.jtssolar.ro/"
       },
@@ -7083,9 +7083,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 11105532,
-        "profit": 502737
+        "year": 2025,
+        "revenue": 40927122,
+        "profit": 5856045
       },
       "tags": [
         "pv-rezidential",
@@ -7097,9 +7097,12 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-23",
-      "updatedAt": "2026-05-23",
+      "updatedAt": "2026-07-24",
       "segment": "rezidential",
-      "anreMatch": null,
+      "anreMatch": {
+        "societate": "J.T.S. INSTAL CONTRUCT",
+        "judet": "Arges"
+      },
       "logo": "/logos/jts-instal-construct.png"
     },
     {
@@ -7886,7 +7889,10 @@
       "createdAt": "2026-05-26",
       "updatedAt": "2026-05-26",
       "segment": "rezidential",
-      "anreMatch": null
+      "anreMatch": {
+        "societate": "ELECTRICA [AR]",
+        "judet": "Arad"
+      }
     },
     {
       "id": "alm-power-group",
@@ -8413,7 +8419,10 @@
       "createdAt": "2026-05-26",
       "updatedAt": "2026-05-26",
       "segment": "rezidential",
-      "anreMatch": null
+      "anreMatch": {
+        "societate": "EETIM ECHIPAMENTE DE AUTOMATIZARE",
+        "judet": "Timis"
+      }
     },
     {
       "id": "ascorp-retele-electrice",
