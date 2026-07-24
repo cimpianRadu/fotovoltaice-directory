@@ -216,6 +216,9 @@ interface ClaimNotificationData {
     suprafata: string;
     segment: string;
     timestamp: string;
+    acoperisLabel: string;
+    fazareLabel: string;
+    consumLunar: string;
   };
   claimCount: number; // inclusiv revendicarea curentă
   maxClaims: number;
@@ -252,6 +255,9 @@ export async function sendClaimNotification(data: ClaimNotificationData): Promis
         ${row('Email', `<a href="mailto:${escapeHtml(lead.email)}" style="color:#2563eb">${escapeHtml(lead.email)}</a>`)}
         ${row('Telefon', `<a href="tel:${escapeHtml(lead.telefon.replace(/\s/g, ''))}" style="color:#2563eb">${escapeHtml(lead.telefon)}</a>`)}
         ${row('Proiect', `${escapeHtml(lead.tipProiectLabel)} · ${escapeHtml(lead.judet)}${lead.putere ? ` · ${escapeHtml(lead.putere)} kW` : ''}${lead.suprafata ? ` · ${escapeHtml(lead.suprafata)} mp` : ''}`)}
+        ${lead.acoperisLabel ? row('Acoperiș', escapeHtml(lead.acoperisLabel)) : ''}
+        ${lead.fazareLabel ? row('Alimentare', escapeHtml(lead.fazareLabel)) : ''}
+        ${lead.consumLunar ? row('Consum lunar', escapeHtml(lead.consumLunar)) : ''}
         ${row('Segment', escapeHtml(lead.segment))}
         ${row('Depus', escapeHtml(fmtDate(lead.timestamp)))}
       </table>

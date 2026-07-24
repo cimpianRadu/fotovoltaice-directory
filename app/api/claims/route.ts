@@ -7,7 +7,7 @@ import {
   saveClaimToSheet,
 } from '@/lib/sheets';
 import { sendClaimNotification } from '@/lib/email';
-import { getProjectTypeLabel } from '@/lib/utils-shared';
+import { getProjectTypeLabel, getRoofTypeLabel, getPhaseLabel } from '@/lib/utils-shared';
 
 function normalizePhone(s: string): string {
   return s.replace(/[\s.\-()]/g, '');
@@ -84,6 +84,9 @@ export async function POST(request: Request) {
         suprafata: lead.suprafata,
         segment: lead.segment,
         timestamp: lead.timestamp,
+        acoperisLabel: lead.tipAcoperis ? getRoofTypeLabel(lead.tipAcoperis) : '',
+        fazareLabel: lead.fazare ? getPhaseLabel(lead.fazare) : '',
+        consumLunar: lead.consumLunar,
       },
       claimCount,
       maxClaims: MAX_CLAIMS_PER_LEAD,

@@ -26,7 +26,7 @@ const FORMS = [
     api: '/api/leads', formKey: 'tipProiect', sheet: 'Leads', emailCol: 3,
     // numeCompanie only exists in the "Firmă"/commercial segment (required there); harmless if absent in residential
     text: { numeCompanie: `ROUTINE TEST ${TOKEN}`, numeContact: 'ROUTINE TEST', email: `${TEST_EMAIL_PREFIX}${TOKEN}-lead@example.com`, telefon: '0712345678', mesaj: `E2E routine ${TOKEN} — auto, ștergeți` },
-    selects: [{ name: 'tipProiect' }, { name: 'judet' }],
+    selects: [{ name: 'tipProiect' }, { name: 'judet' }, { name: 'tipAcoperis' }],
   },
   {
     id: 'listing', label: 'Listare firmă (/listeaza-firma)', path: '/listeaza-firma',

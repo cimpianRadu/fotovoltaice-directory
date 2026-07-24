@@ -106,6 +106,26 @@ function projectPhrase(tip) {
   return l ? `sistem fotovoltaic pentru ${l}` : 'sistem fotovoltaic';
 }
 
+// Duplicat față de ROOF_TYPES_* / PHASE_TYPES din lib/utils-shared.ts (script .mjs,
+// nu poate importa TS) — la fel ca PROJECT_LABELS de mai sus. Ține-le sincronizate.
+const ROOF_LABELS = {
+  'tigla-ceramica': 'țiglă ceramică sau din beton',
+  'tabla': 'tablă (fălțuită sau trapezoidală)',
+  'tabla-cutata': 'tablă cutată / trapezoidală',
+  'panouri-sandwich': 'panouri sandwich',
+  'terasa': 'terasă / acoperiș plat cu membrană',
+  'beton': 'planșeu de beton',
+  'sindrila': 'șindrilă bituminoasă',
+  'azbociment': 'azbociment / eternit',
+  'la-sol': 'la sol (curte sau teren)',
+  'nu-stiu': 'nespecificat',
+};
+const PHASE_LABELS = {
+  monofazat: 'monofazat',
+  trifazat: 'trifazat',
+  'nu-stiu': 'nu știe',
+};
+
 function describeLead(lead) {
   const base = projectPhrase(lead.tipProiect);
   const power = lead.putere ? `, ${lead.putere} kW` : '';
@@ -126,11 +146,17 @@ function leadClientEmail(lead) {
 function leadFirmEmail(lead) {
   const tip = lead.segment === 'rezidential' ? 'client rezidențial (casă)' : 'client comercial (firmă)';
   const extra = lead.mesaj ? `<p style="color:#6b7280">Detalii de la client: „${esc(lead.mesaj)}"</p>` : '';
+  // Detalii de ofertare (coloanele S/T/U), goale pe cererile de dinainte de iulie 2026.
+  const specs = [
+    lead.tipAcoperis ? `<li><strong>Acoperiș:</strong> ${esc(ROOF_LABELS[lead.tipAcoperis] || lead.tipAcoperis)}</li>` : '',
+    lead.fazare ? `<li><strong>Alimentare:</strong> ${esc(PHASE_LABELS[lead.fazare] || lead.fazare)}</li>` : '',
+    lead.consumLunar ? `<li><strong>Consum lunar:</strong> ${esc(lead.consumLunar)}</li>` : '',
+  ].join('');
   return {
     subject: `Cerere de ofertă potrivită${lead.judet ? ` (${esc(lead.judet)})` : ''}`,
     html: wrap(`<p>Bună ziua,</p>
 <p>Am primit prin platforma instalatori-fotovoltaice.ro o cerere care se potrivește cu tipul de lucrări pe care le faceți:</p>
-<ul style="padding-left:18px"><li><strong>Lucrare:</strong> ${esc(describeLead(lead))}</li><li><strong>Tip client:</strong> ${esc(tip)}</li></ul>
+<ul style="padding-left:18px"><li><strong>Lucrare:</strong> ${esc(describeLead(lead))}</li><li><strong>Tip client:</strong> ${esc(tip)}</li>${specs}</ul>
 ${extra}
 <p>Dacă vă interesează, <strong>răspundeți la acest email</strong> și vă punem în legătură directă cu clientul pentru ofertă.</p>
 <p>Zi bună,<br>Radu - instalatori-fotovoltaice.ro</p>`),
@@ -259,7 +285,7 @@ async function getUnprocessedLeads() {
     if (isConsentArtifact(mark)) {
       if (!consentWarned) { console.warn(`⚠️  Coloana ${LEAD_EMAILED_COL} conține consimțământ GDPR, nu marcaj de trimitere (rând ${i + 1}). Tratez rândul ca NEPROCESAT.`); consentWarned = true; }
     } else if (mark) return;
-    out.push({ row: i + 1, lead: { timestamp: r[0], numeCompanie: r[1] || '', numeContact: r[2] || '', email: r[3] || '', telefon: r[4] || '', tipProiect: r[5] || '', judet: r[6] || '', suprafata: r[7] || '', putere: r[8] || '', mesaj: r[9] || '', segment: r[13] || 'comercial' } });
+    out.push({ row: i + 1, lead: { timestamp: r[0], numeCompanie: r[1] || '', numeContact: r[2] || '', email: r[3] || '', telefon: r[4] || '', tipProiect: r[5] || '', judet: r[6] || '', suprafata: r[7] || '', putere: r[8] || '', mesaj: r[9] || '', segment: r[13] || 'comercial', tipAcoperis: r[18] || '', fazare: r[19] || '', consumLunar: r[20] || '' } });
   });
   return out;
 }

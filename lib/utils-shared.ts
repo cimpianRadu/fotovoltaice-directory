@@ -118,6 +118,52 @@ export function getProjectTypeLabel(slug: string): string {
   return labels[slug] ?? slug;
 }
 
+// Tip acoperiș + fazare: cerute de instalatori ca să poată oferta fără un tur
+// telefonic prealabil (feedback JTS Instal Construct, iulie 2026). Listele diferă
+// pe segment — un hale industriale n-are șindrilă, o casă n-are panouri sandwich.
+export const ROOF_TYPES_REZIDENTIAL = [
+  { value: 'tigla-ceramica', label: 'Țiglă ceramică sau din beton' },
+  { value: 'tabla', label: 'Tablă (fălțuită sau trapezoidală)' },
+  { value: 'terasa', label: 'Terasă / acoperiș plat cu membrană' },
+  { value: 'sindrila', label: 'Șindrilă bituminoasă' },
+  { value: 'azbociment', label: 'Azbociment / eternit' },
+  { value: 'la-sol', label: 'La sol (curte sau teren)' },
+  { value: 'nu-stiu', label: 'Altul / nu știu' },
+] as const;
+
+// Valorile comune celor două liste folosesc aceeași etichetă intenționat:
+// ROOF_LABELS le indexează după slug, iar etichete divergente ar face afișajul
+// de pe /cereri să depindă de ordinea de construire a mapei.
+
+export const ROOF_TYPES_COMERCIAL = [
+  { value: 'tabla-cutata', label: 'Tablă cutată / trapezoidală' },
+  { value: 'panouri-sandwich', label: 'Panouri sandwich' },
+  { value: 'terasa', label: 'Terasă / acoperiș plat cu membrană' },
+  { value: 'beton', label: 'Planșeu de beton' },
+  { value: 'tigla-ceramica', label: 'Țiglă ceramică sau din beton' },
+  { value: 'azbociment', label: 'Azbociment / eternit' },
+  { value: 'la-sol', label: 'La sol (curte sau teren)' },
+  { value: 'nu-stiu', label: 'Altul / nu știu' },
+] as const;
+
+export const PHASE_TYPES = [
+  { value: 'monofazat', label: 'Monofazat (o fază)' },
+  { value: 'trifazat', label: 'Trifazat (trei faze)' },
+  { value: 'nu-stiu', label: 'Nu știu' },
+] as const;
+
+const ROOF_LABELS: Record<string, string> = Object.fromEntries(
+  [...ROOF_TYPES_REZIDENTIAL, ...ROOF_TYPES_COMERCIAL].map((o) => [o.value, o.label]),
+);
+
+export function getRoofTypeLabel(slug: string): string {
+  return ROOF_LABELS[slug] ?? slug;
+}
+
+export function getPhaseLabel(slug: string): string {
+  return PHASE_TYPES.find((o) => o.value === slug)?.label ?? slug;
+}
+
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('ro-RO', {
     style: 'currency',

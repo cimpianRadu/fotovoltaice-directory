@@ -5,7 +5,12 @@ import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
 import Toast from '@/components/ui/Toast';
-import { getCounties } from '@/lib/utils-shared';
+import {
+  getCounties,
+  ROOF_TYPES_REZIDENTIAL,
+  ROOF_TYPES_COMERCIAL,
+  PHASE_TYPES,
+} from '@/lib/utils-shared';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import { trackEvent } from '@/lib/analytics';
 
@@ -33,13 +38,17 @@ interface LeadFormProps {
   sourcePage?: string;
 }
 
+const PHOTO_INBOX = 'contact@instalatori-fotovoltaice.ro';
+
 export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta' }: LeadFormProps) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [leadRef, setLeadRef] = useState<string | null>(null);
   const counties = getCounties();
   const { segment } = useSegment();
   const isRezidential = segment === 'rezidential';
   const projectTypes = isRezidential ? residentialProjectTypes : commercialProjectTypes;
+  const roofTypes = isRezidential ? ROOF_TYPES_REZIDENTIAL : ROOF_TYPES_COMERCIAL;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -57,20 +66,59 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
       });
 
       if (!res.ok) throw new Error('Eroare la trimitere');
+      const json = await res.json().catch(() => ({}));
 
       trackEvent('lead_form_submitted', {
         project_type: String(body.tipProiect),
         county: String(body.judet),
         segment,
+        roof_type: String(body.tipAcoperis || ''),
+        phase: String(body.fazare || ''),
       });
 
+      setLeadRef(typeof json.id === 'string' ? json.id : null);
       setStatus('success');
-      setToast({ message: 'Cererea a fost trimisă cu succes! Veți fi contactat în curând.', type: 'success' });
       form.reset();
     } catch {
       setStatus('error');
       setToast({ message: 'A apărut o eroare. Vă rugăm încercați din nou.', type: 'error' });
     }
+  }
+
+  // Uploadul de poze vine DUPĂ trimitere, intenționat: pe mobil un câmp de fișier
+  // înainte de submit pierde cereri, iar o cerere fără poze e tot o cerere.
+  if (status === 'success') {
+    const subject = `Poze pentru cererea mea${leadRef ? ` (ref. ${leadRef})` : ''}`;
+    const mailto = `mailto:${PHOTO_INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+      'Atașez pozele cu acoperișul și cu tabloul electric.\n\n(Nu ștergeți referința din subiect, după ea legăm pozele de cererea dumneavoastră.)',
+    )}`;
+
+    return (
+      <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-6">
+        <h3 className="font-bold text-emerald-900">Cererea a fost trimisă ✓</h3>
+        <p className="mt-1 text-sm text-emerald-800">
+          Vă contactăm în cel mai scurt timp cu oferte de la firme care acoperă zona dumneavoastră.
+        </p>
+
+        <div className="mt-5 pt-5 border-t border-emerald-200">
+          <p className="font-semibold text-gray-900 text-sm">Vreți oferte mai exacte?</p>
+          <p className="mt-1 text-sm text-gray-700 leading-relaxed">
+            Trimiteți 2-3 poze: una cu acoperișul văzut din exterior, una cu tabloul electric și
+            contorul. Cu ele, instalatorii pot calcula montajul fără să mai vină întâi în vizită,
+            iar oferta pe care o primiți e mult mai aproape de prețul final.
+          </p>
+          <a
+            href={mailto}
+            className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
+          >
+            Trimite pozele pe email
+          </a>
+          <p className="mt-3 text-xs text-gray-500">
+            Opțional. Cererea este deja înregistrată, pozele doar o completează.
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -124,6 +172,36 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
             type="number"
             placeholder={isRezidential ? 'ex: 5' : 'ex: 200'}
           />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Select
+            label="Tip acoperiș"
+            name="tipAcoperis"
+            options={roofTypes.map((o) => ({ value: o.value, label: o.label }))}
+            required
+          />
+          <div>
+            <Select
+              label="Alimentare electrică (opțional)"
+              name="fazare"
+              options={PHASE_TYPES.map((o) => ({ value: o.value, label: o.label }))}
+            />
+            <p className="mt-1 text-[11px] text-gray-400">
+              Scrie pe contor sau pe siguranța generală. Dacă nu găsiți, alegeți „Nu știu".
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <Input
+            label="Consum lunar mediu (opțional)"
+            name="consumLunar"
+            placeholder="ex: 350 lei sau 250 kWh"
+          />
+          <p className="mt-1 text-[11px] text-gray-400">
+            De pe ultima factură. Ajută instalatorul să dimensioneze sistemul corect, nu din estimare.
+          </p>
         </div>
 
         <div>

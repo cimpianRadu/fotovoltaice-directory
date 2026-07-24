@@ -15,6 +15,9 @@ export interface LeadCardData {
   postedLabel: string;
   ageDays: number;
   mesaj: string;
+  acoperisLabel: string;
+  fazareLabel: string;
+  consumLunar: string;
 }
 
 interface LeadCardProps {
@@ -103,6 +106,14 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
     lead.suprafata ? `${lead.suprafata} mp` : null,
   ].filter(Boolean);
 
+  // Detalii de ofertare, adăugate în formular în iulie 2026 — cererile mai vechi
+  // nu le au, așa că rândul dispare complet când niciunul nu e completat.
+  const specs = [
+    lead.acoperisLabel ? { label: 'Acoperiș', value: lead.acoperisLabel } : null,
+    lead.fazareLabel ? { label: 'Alimentare', value: lead.fazareLabel } : null,
+    lead.consumLunar ? { label: 'Consum', value: lead.consumLunar } : null,
+  ].filter(Boolean) as { label: string; value: string }[];
+
   return (
     <div className={`bg-white rounded-xl border border-border p-5 flex flex-col ${full && !claimedByMe ? 'opacity-75' : ''}`}>
       <div className="flex items-center justify-between gap-2">
@@ -112,6 +123,18 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
 
       <h3 className="mt-3 font-semibold text-gray-900">{lead.tipLabel}</h3>
       <p className="mt-1 text-sm text-gray-600">{details.join(' · ')}</p>
+      {specs.length > 0 && (
+        <ul className="mt-2 flex flex-wrap gap-1.5">
+          {specs.map((s) => (
+            <li
+              key={s.label}
+              className="rounded-md bg-surface border border-border px-2 py-0.5 text-[11px] text-gray-600"
+            >
+              <span className="text-gray-400">{s.label}:</span> {s.value}
+            </li>
+          ))}
+        </ul>
+      )}
       {lead.mesaj && (
         <p className="mt-2 text-sm text-gray-500 italic leading-relaxed">„{lead.mesaj}”</p>
       )}

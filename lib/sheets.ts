@@ -54,9 +54,13 @@ export async function saveLeadToSheet(lead: {
   preselectedCompany?: string;
   segment?: string;
   gdprConsent?: string;
-}) {
+  tipAcoperis?: string;
+  fazare?: string;
+  consumLunar?: string;
+}): Promise<string> {
+  const timestamp = new Date().toISOString();
   await appendRow('Leads', [
-    new Date().toISOString(),
+    timestamp,
     lead.numeCompanie || '',
     lead.numeContact,
     lead.email,
@@ -75,7 +79,11 @@ export async function saveLeadToSheet(lead: {
     '', // P — Mesaj ascuns (completat separat, vezi getLeadsSince)
     '', // Q — liber
     lead.gdprConsent || '', // R — Consimțământ GDPR
+    lead.tipAcoperis || '',  // S — Tip acoperiș
+    lead.fazare || '',       // T — Alimentare (mono/trifazat)
+    lead.consumLunar || '',  // U — Consum lunar declarat
   ]);
+  return timestamp;
 }
 
 export async function saveListingToSheet(listing: {
@@ -133,6 +141,11 @@ export interface NewLead {
   // public /cereri (fără să ascundă cererea) — override manual pentru mesaje
   // cu date personale pe care redactarea automată nu le prinde.
   mesajAscuns: string;
+  // S/T/U — detalii de ofertare cerute de instalatori (iulie 2026). Goale pe
+  // toate cererile de dinainte de adăugarea câmpurilor în formular.
+  tipAcoperis: string;
+  fazare: string;
+  consumLunar: string;
 }
 
 export interface NewListing {
@@ -180,6 +193,9 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     segment: r[13] || 'comercial',
     // r[14] = marcaj „Email trimis" (scripts/outreach.mjs), r[17] = consimțământ GDPR
     mesajAscuns: r[15] || '',
+    tipAcoperis: r[18] || '',
+    fazare: r[19] || '',
+    consumLunar: r[20] || '',
   }));
 }
 
@@ -220,6 +236,11 @@ export interface PublicLead {
   putere: string;
   segment: string;
   mesaj: string;
+  // Detalii de ofertare. Publice intenționat: nu identifică persoana, dar sunt
+  // exact ce decide o firmă dacă merită să revendice. Contactul rămâne privat.
+  tipAcoperis: string;
+  fazare: string;
+  consumLunar: string;
 }
 
 // Redactare pentru afișarea publică a mesajului: emailuri, URL-uri și șiruri
@@ -262,6 +283,9 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       putere: l.putere,
       segment: l.segment,
       mesaj: l.mesajAscuns ? '' : sanitizeMesajPublic(l.mesaj),
+      tipAcoperis: l.tipAcoperis,
+      fazare: l.fazare,
+      consumLunar: l.consumLunar,
     }))
     .reverse(); // cele mai noi primele
 }

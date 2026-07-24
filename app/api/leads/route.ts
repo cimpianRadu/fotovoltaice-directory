@@ -25,9 +25,11 @@ export async function POST(request: Request) {
     }
 
     // Versiunea textului de consimțământ acceptat — dovadă GDPR per lead.
-    await saveLeadToSheet({ ...body, gdprConsent: `da (${CONSENT_VERSION})` });
+    const id = await saveLeadToSheet({ ...body, gdprConsent: `da (${CONSENT_VERSION})` });
 
-    return NextResponse.json({ success: true });
+    // `id` = timestamp-ul rândului, aceeași cheie folosită de /cereri și de
+    // revendicări. Se întoarce ca să putem lega de cerere pozele trimise ulterior.
+    return NextResponse.json({ success: true, id });
   } catch (err) {
     console.error('Lead API error:', err);
     return NextResponse.json(
