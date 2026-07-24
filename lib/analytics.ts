@@ -12,6 +12,7 @@ type EventName =
   | 'waitlist_signup'
   | 'company_contact_clicked'
   | 'external_link_clicked'
+  | 'case_study_installer_clicked'
   | 'segment_selected'
   | 'hero_search_select'
   | 'hero_pill_click'

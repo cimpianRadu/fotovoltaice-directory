@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import companiesData from '@/data/companies.json';
 import guidesData from '@/data/guides.json';
+import { getCaseStudies } from '@/lib/case-studies';
 import { getCoveredCounties, slugifyCounty, slugifyCity, MAJOR_CITIES } from '@/lib/utils';
 
 const BASE_URL = 'https://instalatori-fotovoltaice.ro';
@@ -11,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/firme`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.9 },
     { url: `${BASE_URL}/clasament`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
     { url: `${BASE_URL}/ghid`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.8 },
+    { url: `${BASE_URL}/studii-de-caz`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.7 },
     { url: `${BASE_URL}/listeaza-firma`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
     { url: `${BASE_URL}/cere-oferta`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
     { url: `${BASE_URL}/cereri`, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 0.6 },
@@ -38,6 +40,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const caseStudyPages = getCaseStudies().map((study) => ({
+    url: `${BASE_URL}/studii-de-caz/${study.slug}`,
+    lastModified: new Date(study.publishedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
   const countyPages = getCoveredCounties().map((county) => ({
     url: `${BASE_URL}/firme/judet/${slugifyCounty(county)}`,
     lastModified: new Date(),
@@ -52,5 +61,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...companyPages, ...guidePages, ...countyPages, ...cityPages];
+  return [
+    ...staticPages,
+    ...companyPages,
+    ...guidePages,
+    ...caseStudyPages,
+    ...countyPages,
+    ...cityPages,
+  ];
 }
