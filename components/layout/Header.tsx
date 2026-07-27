@@ -8,23 +8,26 @@ import SegmentToggle from '@/components/segment/SegmentToggle';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import { trackEvent } from '@/lib/analytics';
 
+// În bara principală rămân doar destinațiile de conținut și de conversie. Uneltele
+// (verificare ANRE, calculator, clasament) trec sub „Mai multe": sunt căutate punctual,
+// nu răsfoite, iar locul eliberat îl ia secțiunea /studii-de-caz.
 const primaryLinks = [
   { href: '/firme', label: 'Firme' },
   { href: '/cere-oferta', label: 'Cere Ofertă' },
   { href: '/cereri', label: 'Cereri Clienți' },
-  { href: '/clasament', label: 'Clasament' },
-  { href: '/calculator-panouri-fotovoltaice', label: 'Calculator' },
-  { href: '/verificare-anre', label: 'Verificare ANRE' },
+  { href: '/studii-de-caz', label: 'Studii de Caz' },
   { href: '/ghid', label: 'Ghiduri' },
 ];
 
+// Uneltele primele, paginile despre site la urmă.
 const moreLinks = [
+  { href: '/verificare-anre', label: 'Verificare ANRE' },
+  { href: '/calculator-panouri-fotovoltaice', label: 'Calculator' },
+  { href: '/clasament', label: 'Clasament' },
   { href: '/publicitate', label: 'Publicitate' },
   { href: '/intrebari-frecvente', label: 'Întrebări frecvente' },
   { href: '/despre', label: 'Despre noi' },
 ];
-
-const allMobileLinks = [...primaryLinks, ...moreLinks];
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -68,12 +71,12 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-bold text-lg text-secondary-dark shrink-0">
           <Image src="/logo.svg" alt="Instalatori Fotovoltaice" width={32} height={32} className="w-8 h-8" />
-          {/* Între lg și xl textul logo-ului dispare — nav-ul cu 7 linkuri are prioritate */}
+          {/* Între lg și xl textul logo-ului dispare — nav-ul are prioritate */}
           <span className="hidden sm:inline lg:hidden xl:inline whitespace-nowrap">Instalatori Fotovoltaice</span>
         </Link>
 
         {/* Desktop nav */}
-        {/* Desktop nav de la lg în sus — 7 linkuri + toggle + CTA nu încap sub 1024px */}
+        {/* Desktop nav de la lg în sus — linkuri + toggle + CTA nu încap sub 1024px */}
         <nav className="hidden lg:flex items-center gap-2.5 xl:gap-3 min-[1440px]:gap-5">
           <SegmentToggle source="nav" />
           {primaryLinks.map((link) => (
@@ -187,7 +190,7 @@ export default function Header() {
             <p className="text-xs font-semibold text-gray-400 mb-2">Caut panouri pentru:</p>
             <SegmentToggle source="nav_mobile" />
           </div>
-          {allMobileLinks.map((link) => (
+          {primaryLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -197,6 +200,26 @@ export default function Header() {
                   trackEvent('cere_oferta_click', { segment, source: 'nav_mobile' });
                 }
               }}
+              className={`text-base font-medium rounded-lg px-3 py-2.5 transition-colors ${
+                isActive(link.href)
+                  ? 'text-primary-dark bg-primary/5'
+                  : 'text-gray-700 hover:text-secondary-dark hover:bg-surface'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+
+          {/* Aceeași grupare ca pe desktop: pe mobil nu e dropdown, ci o secțiune
+              separată cu etichetă, ca ordinea linkurilor să fie identică pe ambele. */}
+          <p className="text-xs font-semibold text-gray-400 px-3 pt-4 pb-1 border-t border-border mt-2">
+            Mai multe
+          </p>
+          {moreLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMobileOpen(false)}
               className={`text-base font-medium rounded-lg px-3 py-2.5 transition-colors ${
                 isActive(link.href)
                   ? 'text-primary-dark bg-primary/5'
