@@ -26,6 +26,13 @@ export interface CaseStudyPhoto {
   caption: string;
 }
 
+// Cum a ajuns articolul să existe. Diferența nu e cosmetică: un articol plătit e
+// comunicare comercială și trebuie să fie identificabilă ca atare de la prima
+// vedere (Legea 148/2000, Legea 363/2007), iar linkurile către firmă trebuie
+// marcate `sponsored` pentru Google. `colaborare` = firma a dat poze și date, nu
+// bani. Lipsa câmpului înseamnă `colaborare`, varianta care nu promite nimic.
+export type CaseStudyDisclosure = 'colaborare' | 'platit';
+
 export interface CaseStudy {
   slug: string;
   published: boolean;
@@ -34,6 +41,7 @@ export interface CaseStudy {
   title: string;
   metaDescription: string;
   heroDescription: string;
+  disclosure?: CaseStudyDisclosure;
   installer: Installer;
   project: CaseStudyProject;
   gallery: CaseStudyPhoto[];

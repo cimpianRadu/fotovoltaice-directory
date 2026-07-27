@@ -181,7 +181,13 @@ export default async function CaseStudyPage({ params }: Props) {
                 <h2 className="text-xl font-bold text-gray-900 mb-4">{section.title}</h2>
                 <Markdown content={section.content} />
               </section>
-              {i === 0 && <InstallerCard installer={study.installer} slug={study.slug} />}
+              {i === 0 && (
+                <InstallerCard
+                  installer={study.installer}
+                  slug={study.slug}
+                  disclosure={study.disclosure}
+                />
+              )}
             </Fragment>
           ))}
         </div>
