@@ -23,6 +23,27 @@ export interface CompanySocials {
   youtube?: string;
 }
 
+// Recenzie publicată pe pagina firmei. Provenance contează: o recenzie ajunsă la noi
+// prin platformă (clientul a venit din /cere-oferta) nu e același lucru cu una
+// transmisă de firmă. `source` e obligatoriu ca să putem eticheta onest fiecare
+// recenzie în UI, iar textul se publică doar cu acordul clientului.
+export type TestimonialSource = 'platforma' | 'firma';
+
+export interface Testimonial {
+  // Numele afișat, așa cum a aprobat clientul: „Maria P." sau numele firmei client.
+  author: string;
+  text: string;
+  // ISO date (YYYY-MM-DD) — când a fost dată recenzia, nu când am publicat-o.
+  date: string;
+  // Nota 1-5. Opțională: multe recenzii vin ca text liber, fără notă.
+  rating?: number;
+  // Oraș sau județ al proiectului.
+  location?: string;
+  // Capacitatea instalată, când clientul o confirmă.
+  projectKw?: number;
+  source: TestimonialSource;
+}
+
 export interface Company {
   id: string;
   slug: string;
@@ -50,6 +71,9 @@ export interface Company {
   anreMatch: { societate: string; judet: string } | null;
   // Market segment served. Defaults to 'comercial' when absent (legacy entries).
   segment?: Segment;
+  // Recenzii de la clienți, publicate manual după acordul clientului. Absent pe
+  // majoritatea firmelor.
+  testimonials?: Testimonial[];
 }
 
 // Normalize a company's segment, treating legacy entries (no field) as commercial.

@@ -13,6 +13,47 @@ export function generateOrganizationJsonLd() {
   };
 }
 
+// Recenziile intră în JSON-LD ca `review`. `aggregateRating` doar de la 2 note în
+// sus: cu o singură notă media nu spune nimic, iar Google tratează agregatele
+// subțiri ca semnal de spam. Markup-ul e legitim aici pentru că publicăm recenzii
+// despre firme terțe, nu despre noi (self-serving reviews sunt interzise).
+const MIN_RATINGS_FOR_AGGREGATE = 2;
+
+function buildReviewJsonLd(company: Company) {
+  const testimonials = company.testimonials ?? [];
+  if (testimonials.length === 0) return {};
+
+  const review = testimonials.map((t) => ({
+    '@type': 'Review',
+    author: { '@type': 'Person', name: t.author },
+    datePublished: t.date,
+    reviewBody: t.text,
+    ...(t.rating !== undefined && {
+      reviewRating: {
+        '@type': 'Rating',
+        ratingValue: t.rating,
+        bestRating: 5,
+        worstRating: 1,
+      },
+    }),
+  }));
+
+  const rated = testimonials.filter((t) => t.rating !== undefined);
+  if (rated.length < MIN_RATINGS_FOR_AGGREGATE) return { review };
+
+  const sum = rated.reduce((acc, t) => acc + (t.rating ?? 0), 0);
+  return {
+    review,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: Math.round((sum / rated.length) * 10) / 10,
+      reviewCount: rated.length,
+      bestRating: 5,
+      worstRating: 1,
+    },
+  };
+}
+
 export function generateLocalBusinessJsonLd(company: Company) {
   return {
     '@context': 'https://schema.org',
@@ -39,6 +80,7 @@ export function generateLocalBusinessJsonLd(company: Company) {
       '@type': 'AdministrativeArea',
       name: county,
     })),
+    ...buildReviewJsonLd(company),
   };
 }
 

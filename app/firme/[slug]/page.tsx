@@ -6,6 +6,7 @@ import CompanyHeader from '@/components/company/CompanyHeader';
 import CompanyStats from '@/components/company/CompanyStats';
 import CompanyContact from '@/components/company/CompanyContact';
 import FinancialStability from '@/components/company/FinancialStability';
+import CompanyTestimonials from '@/components/company/CompanyTestimonials';
 import Badge from '@/components/ui/Badge';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
@@ -207,6 +208,9 @@ export default async function CompanyDetailPage({ params }: Props) {
                 </div>
               </div>
             )}
+
+            {/* Testimonials */}
+            <CompanyTestimonials company={company} />
 
             {/* Data correction notice */}
             <div className="rounded-lg bg-blue-50 border border-blue-100 px-4 py-3 flex items-start gap-3">
