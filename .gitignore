@@ -49,3 +49,22 @@ next-env.d.ts
 
 # nano-banana generated images (copies go to public/images/*)
 /generated_imgs/
+
+# registru leaduri partajat cu firme partenere (mapare locală, nu se comite)
+/data/partner-sheets.local.json
+
+# social/ — 700+ MB de PNG/MP4/node_modules, rămâne local.
+# Excepție: sursa Remotion (compozițiile .tsx + config), ~250 KB, merită în istoric.
+# Starea reală a postărilor e în data/social-schedule.json, nu în folderul ăsta.
+/social/*
+!/social/remotion/
+/social/remotion/*
+!/social/remotion/src/
+!/social/remotion/package.json
+!/social/remotion/package-lock.json
+!/social/remotion/remotion.config.ts
+!/social/remotion/tsconfig.json
+
+# python bytecode (scripturile de reel din social/)
+__pycache__/
+*.pyc
