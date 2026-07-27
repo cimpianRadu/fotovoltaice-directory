@@ -1,6 +1,15 @@
 {
-  "updated": "2026-07-22",
+  "updated": "2026-07-23",
   "posts": [
+    {
+      "id": 14,
+      "tema": "Cereri noi în fiecare zi (screenshot feed /cereri)",
+      "folder": "2026-07-23-cereri-zilnice ✅",
+      "format": "poză simplă (screenshot feed) + caption",
+      "nota": "Postare B2B simplă, fără producție: screenshot-ul feed-ului /cereri cu cererile active. Caption cu hashtags la cererea userului (excepție de la regula fără hashtags pe FB). De urmărit: revendicări noi în tab Revendicări vs postarea #13.",
+      "cta": "/cereri",
+      "postat": "2026-07-23"
+    },
     {
       "id": 13,
       "tema": "News: 2 cereri noi din Ilfov (revendică primul)",
@@ -58,9 +67,9 @@
     {
       "id": 10,
       "tema": "Cât produce 1 kWp în județul tău?",
-      "folder": "2026-07-16-productie-judete",
+      "folder": "2026-07-16-productie-judete ✅",
       "format": "reel: static 16s / remotion 18,5s / narat 25s",
-      "programat": "2026-07-23",
+      "postat": "2026-07-23",
       "nota": "ALES: reel-remotion-voce.mp4 (narat, 22,5s). Se postează cu sunetul lui, fără muzică FB. Etichete în etichete.txt. Răspundem în comentarii cu cifra PVGIS pe județ.",
       "cta": "/calculator-panouri-fotovoltaice"
     },
