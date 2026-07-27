@@ -29,9 +29,10 @@
         "duration": "circa 3 ore"
       },
       "gallery": [
-        { "file": "acoperis-1.jpg", "caption": "Cele 24 de panouri montate pe acoperișul casei, în două rânduri pe coamă." },
-        { "file": "acoperis-2.jpg", "caption": "Șinele și prinderile pe tabla metalică tip țiglă, cu distanța față de coamă." },
-        { "file": "acoperis-3.jpg", "caption": "Prinderile în prim-plan și banda de etanșare de pe marginea acoperișului." },
+        { "file": "acoperis-1.jpg", "caption": "Montajul văzut lateral: șinele și prinderile pe tabla metalică tip țiglă, plus banda de etanșare de pe margine." },
+        { "file": "acoperis-2.jpg", "caption": "Cele două rânduri de panouri, pe toată lungimea coamei." },
+        { "file": "acoperis-3.jpg", "caption": "Prinderile și șinele în prim-plan, la baza celor două rânduri." },
+        { "file": "acoperis-4.jpg", "caption": "Ambele rânduri văzute din capătul de jos al acoperișului." },
         { "file": "baterii.jpg", "caption": "Cele două baterii Bluesun de 16 kWh fiecare, montate în interior." },
         { "file": "invertor.jpg", "caption": "Invertorul hibrid Deye de 12 kW monofazat." }
       ],
