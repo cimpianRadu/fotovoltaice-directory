@@ -33,8 +33,8 @@
         { "file": "acoperis-2.jpg", "caption": "Cele două rânduri de panouri, pe toată lungimea coamei." },
         { "file": "acoperis-3.jpg", "caption": "Prinderile și șinele în prim-plan, la baza celor două rânduri." },
         { "file": "acoperis-4.jpg", "caption": "Ambele rânduri văzute din capătul de jos al acoperișului." },
-        { "file": "baterii.jpg", "caption": "Cele două baterii Bluesun de 16 kWh fiecare, montate în interior." },
-        { "file": "invertor.jpg", "caption": "Invertorul hibrid Deye de 12 kW monofazat." }
+        { "file": "invertor.jpg", "caption": "Invertorul hibrid Deye de 12 kW monofazat. Pe ecran, la 23 iulie 2026 ora 11:23: 10,15 kW din panouri, bateria la 100%, consumul casei 2,98 kW." },
+        { "file": "baterii.jpg", "caption": "Cele două baterii Bluesun de 16 kWh fiecare, montate în interior, cu separatoarele de curent continuu deasupra." }
       ],
       "sections": [
         {
