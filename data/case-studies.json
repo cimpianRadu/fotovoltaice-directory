@@ -30,7 +30,8 @@
       },
       "gallery": [
         { "file": "acoperis-1.jpg", "caption": "Cele 24 de panouri montate pe acoperișul casei, în două rânduri pe coamă." },
-        { "file": "acoperis-2.jpg", "caption": "Sistemul de prindere pe țiglă și distanța față de coamă." },
+        { "file": "acoperis-2.jpg", "caption": "Șinele și prinderile pe tabla metalică tip țiglă, cu distanța față de coamă." },
+        { "file": "acoperis-3.jpg", "caption": "Prinderile în prim-plan și banda de etanșare de pe marginea acoperișului." },
         { "file": "baterii.jpg", "caption": "Cele două baterii Bluesun de 16 kWh fiecare, montate în interior." },
         { "file": "invertor.jpg", "caption": "Invertorul hibrid Deye de 12 kW monofazat." }
       ],
@@ -38,7 +39,7 @@
         {
           "id": "ce-s-a-montat",
           "title": "Ce s-a montat, pe scurt",
-          "content": "Un sistem fotovoltaic cu baterii, montat în iulie 2026 la o casă individuală din județul Constanța: 24 de panouri pe acoperiș și 32 kWh de stocare în interior. Particularitatea proiectului: **clientul cumpărase deja panourile și bateriile**, iar firma a venit cu invertorul și a executat tot montajul. Nu e deci un sistem \"la cheie\" cu materialele furnizate de instalator, ci o situație pe care o întâlnesc destul de des oamenii care își iau echipamentele separat și caută apoi pe cineva care să le pună în operă.\n\n| Componentă | Ce s-a montat |\n|---|---|\n| Panouri | 24 bucăți × 580 W |\n| Putere instalată | 13,92 kWp |\n| Configurație | 3 stringuri × 8 panouri |\n| Invertor | Deye 12 kW monofazat, hibrid |\n| Stocare | 2 × Bluesun 16 kWh, total 32 kWh |\n| Durata montajului | circa 3 ore |\n| Amplasare | acoperiș înclinat, țiglă |\n\nToate cifrele de mai sus vin direct de la firma care a executat lucrarea. Nu am adăugat estimări proprii peste ele, iar acolo unde calculăm ceva mai jos, spunem clar că e un calcul și din ce rezultă."
+          "content": "Un sistem fotovoltaic cu baterii, montat în iulie 2026 la o casă individuală din județul Constanța: 24 de panouri pe acoperiș și 32 kWh de stocare în interior. Particularitatea proiectului: **clientul cumpărase deja panourile și bateriile**, iar firma a venit cu invertorul și a executat tot montajul. Nu e deci un sistem \"la cheie\" cu materialele furnizate de instalator, ci o situație pe care o întâlnesc destul de des oamenii care își iau echipamentele separat și caută apoi pe cineva care să le pună în operă.\n\n| Componentă | Ce s-a montat |\n|---|---|\n| Panouri | 24 bucăți × 580 W |\n| Putere instalată | 13,92 kWp |\n| Configurație | 3 stringuri × 8 panouri |\n| Invertor | Deye 12 kW monofazat, hibrid |\n| Stocare | 2 × Bluesun 16 kWh, total 32 kWh |\n| Durata montajului | circa 3 ore |\n| Amplasare | acoperiș înclinat, tablă metalică tip țiglă |\n\nToate cifrele de mai sus vin direct de la firma care a executat lucrarea. Nu am adăugat estimări proprii peste ele, iar acolo unde calculăm ceva mai jos, spunem clar că e un calcul și din ce rezultă."
         },
         {
           "id": "cifre",
