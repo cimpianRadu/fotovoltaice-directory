@@ -18,6 +18,9 @@ export default function AdminNav() {
   const range = searchParams.get('range');
   const qs = range ? `?range=${range}` : '';
 
+  // Pe pagina de login nu există unde naviga și nici de unde ieși.
+  if (pathname === '/admin/login') return null;
+
   return (
     <nav className="flex items-center gap-4 text-sm text-slate-600">
       {TABS.map((t) => {
@@ -36,6 +39,11 @@ export default function AdminNav() {
           </Link>
         );
       })}
+      <form method="POST" action="/api/admin/logout">
+        <button type="submit" className="pb-1 text-slate-400 transition hover:text-slate-900">
+          Ieși
+        </button>
+      </form>
     </nav>
   );
 }
