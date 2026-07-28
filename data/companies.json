@@ -8,7 +8,7 @@
       "logo": "/logos/simtel-team.png",
       "description": "Companie românească de inginerie și tehnologie, listată la Bursa de Valori București (BVB: SMTL), lider național în instalarea de sisteme fotovoltaice comerciale și industriale. 1 din 3 panouri fotovoltaice ale prosumatorilor persoane juridice din România sunt instalate de Simtel. Activă în energie regenerabilă, telecomunicații și automatizări industriale, cu operațiuni în România, Moldova, Germania și Suedia.",
       "founded": 2010,
-      "employees": 124,
+      "employees": 130,
       "location": {
         "city": "București",
         "county": "București",
@@ -47,9 +47,9 @@
         "projectsCompleted": 550
       },
       "financials": {
-        "year": 2024,
-        "revenue": 273878513,
-        "profit": 32277126
+        "year": 2025,
+        "revenue": 314982227,
+        "profit": 10053111
       },
       "tags": [
         "experienta-10-ani",
@@ -60,7 +60,7 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "SIMTEL TEAM",
         "judet": "Bucuresti"
@@ -115,7 +115,7 @@
       "financials": {
         "year": 2024,
         "revenue": 406828898,
-        "profit": 43524497
+        "profit": 36158759
       },
       "tags": [
         "experienta-10-ani",
@@ -126,7 +126,7 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ENERGOBIT Cluj Napoca",
         "judet": "Cluj"
@@ -141,7 +141,7 @@
       "logo": "/logos/energomontaj.png",
       "description": "Companie emblematică în sectorul energetic din România, cu o istorie care datează din 1962 în montajul centralelor electrice clasice. În ultimele două decenii, Energomontaj și-a extins expertiza în energia regenerabilă, devenind unul dintre cei mai mari și experimentați instalatori de panouri fotovoltaice de pe piața locală, cu peste 10.000 de sisteme instalate. Portofoliu divers de la panouri pentru clădiri rezidențiale și comerciale până la parcuri fotovoltaice de câțiva MW.",
       "founded": 1991,
-      "employees": 762,
+      "employees": 667,
       "location": {
         "city": "București",
         "county": "București",
@@ -179,9 +179,9 @@
         "projectsCompleted": 10000
       },
       "financials": {
-        "year": 2024,
-        "revenue": 274666727,
-        "profit": 4372191
+        "year": 2025,
+        "revenue": 248513046,
+        "profit": 4898662
       },
       "tags": [
         "experienta-10-ani",
@@ -192,7 +192,7 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ENERGOMONTAJ",
         "judet": "Bucuresti"
@@ -207,7 +207,7 @@
       "logo": "/logos/romsir-impex.png",
       "description": "Afacere de familie fondată în 1994 în domeniul electronicii și electrotehnicii, Romsir este unul dintre pionierii energiei verzi din România, instalând primul sistem fotovoltaic în 2007. Cu peste 14.500 de sisteme fotovoltaice instalate totalizând peste 43.000 kW și peste 300 de sisteme comerciale și industriale, deservește sectoare de la retail la producție industrială, agricultură, industria auto și HoReCa. Peste 50 de echipe proprii de instalare.",
       "founded": 1994,
-      "employees": 39,
+      "employees": 13,
       "location": {
         "city": "Balș",
         "county": "Olt",
@@ -244,9 +244,9 @@
         "projectsCompleted": 14500
       },
       "financials": {
-        "year": 2024,
-        "revenue": 117790364,
-        "profit": 21703587
+        "year": 2025,
+        "revenue": 111597309,
+        "profit": 11095461
       },
       "tags": [
         "experienta-10-ani",
@@ -258,7 +258,7 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ROMSIR-IMPEX",
         "judet": "Olt"
@@ -273,7 +273,7 @@
       "logo": "/logos/renovatio-solar.png",
       "description": "Pionier al energiei solare în România, Renovatio Solar a dezvoltat primul parc fotovoltaic de 1 MWp din țară în 2010, iar în același an a deschis prima fabrică de panouri fotovoltaice la scară industrială cu o capacitate anuală de 50 MWp. Cu peste 15 ani de experiență, a dezvoltat și construit peste 350 MWp în proiecte fotovoltaice la nivel internațional, oferind servicii complete EPC și soluții de energie regenerabilă.",
       "founded": 2008,
-      "employees": 24,
+      "employees": 26,
       "location": {
         "city": "Popești-Leordeni",
         "county": "Ilfov",
@@ -308,9 +308,9 @@
         "projectsCompleted": 80
       },
       "financials": {
-        "year": 2024,
-        "revenue": 37387977,
-        "profit": 12204312
+        "year": 2025,
+        "revenue": 59840322,
+        "profit": 4001812
       },
       "tags": [
         "experienta-10-ani",
@@ -320,7 +320,7 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "RENOVATIO SOLAR",
         "judet": "Ilfov"
@@ -335,7 +335,7 @@
       "logo": "/logos/mrb-electric.png",
       "description": "Companie din Cluj-Napoca cu 15 ani de experiență în domeniul energiei solare, specializată în sisteme fotovoltaice, stații de încărcare pentru vehicule electrice, instalații electrice și structuri metalice. Cu peste 3.000 de proiecte finalizate în România și Germania, MRB Electric este partener tehnologic activ pentru companii din sectoarele industrial, logistic, retail și agribusiness, oferind soluții complete de la analiza energetică la execuție și mentenanță.",
       "founded": 2010,
-      "employees": 40,
+      "employees": 58,
       "location": {
         "city": "Cluj-Napoca",
         "county": "Cluj",
@@ -369,9 +369,9 @@
         "projectsCompleted": 3000
       },
       "financials": {
-        "year": 2024,
-        "revenue": 24510663,
-        "profit": 583875
+        "year": 2025,
+        "revenue": 38130843,
+        "profit": 737471
       },
       "tags": [
         "experienta-10-ani",
@@ -381,7 +381,7 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "MRB ELECTRIC",
         "judet": "Cluj"
@@ -396,7 +396,7 @@
       "logo": "/logos/alfa-energetic.png",
       "description": "Companie specializată în sisteme fotovoltaice industriale și comerciale (50kW - 24MW), parcuri fotovoltaice, investiții fotovoltaice și distribuție de panouri, invertoare și soluții de stocare a energiei. Oferă soluții complete la cheie: evaluare, proiectare, instalare, formalități prosumator, mentenanță, suport tehnic de afaceri și expansiune viitoare. Centru de formare a instalatorilor autorizat.",
       "founded": 2019,
-      "employees": 15,
+      "employees": 18,
       "location": {
         "city": "Brănești",
         "county": "Ilfov",
@@ -431,9 +431,9 @@
         "projectsCompleted": 50
       },
       "financials": {
-        "year": 2024,
-        "revenue": 22971,
-        "profit": -31006
+        "year": 2025,
+        "revenue": 11407551,
+        "profit": 871260
       },
       "tags": [
         "finantare-disponibila",
@@ -442,7 +442,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ALFA ENERGETIC ESCO",
         "judet": "Ilfov"
@@ -457,7 +457,7 @@
       "logo": "/logos/stratospark.png",
       "description": "Firmă autorizată de instalare panouri fotovoltaice din București, activă din 2007, specializată în soluții eficiente și sustenabile pentru sectoarele rezidențial, comercial și industrial. Cu peste 20 de echipe regionale de instalare și acoperire națională, implementează sisteme pentru hale industriale, clădiri de birouri, centre comerciale, sectoare agricole, telecomunicații și instituții publice. Partener autorizat AFM.",
       "founded": 2007,
-      "employees": 23,
+      "employees": 47,
       "location": {
         "city": "București",
         "county": "București",
@@ -495,9 +495,9 @@
         "projectsCompleted": 200
       },
       "financials": {
-        "year": 2024,
-        "revenue": 9102370,
-        "profit": 616547
+        "year": 2025,
+        "revenue": 25429273,
+        "profit": 585390
       },
       "tags": [
         "experienta-10-ani",
@@ -508,7 +508,7 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "STRATOSPARK",
         "judet": "Bucuresti"
@@ -523,7 +523,7 @@
       "logo": "/logos/eebc.png",
       "description": "Companie cu sediul în Sibiu, fondată în 2009, specializată în servicii integrate de instalații civile și industriale, inclusiv proiectarea, construcția și mentenanța parcurilor fotovoltaice comerciale și industriale. Oferă soluții complete pentru centrale electrice fotovoltaice (CEF) cu puteri de la 30 kWp până la 1.000 MWp, cu acoperire națională și birouri în București și Sibiu.",
       "founded": 2009,
-      "employees": 62,
+      "employees": 61,
       "location": {
         "city": "Sibiu",
         "county": "Sibiu",
@@ -563,9 +563,9 @@
         "projectsCompleted": 100
       },
       "financials": {
-        "year": 2024,
-        "revenue": 15225817,
-        "profit": 499629
+        "year": 2025,
+        "revenue": 14016893,
+        "profit": 571201
       },
       "tags": [
         "experienta-10-ani",
@@ -576,7 +576,7 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-02-20",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "East European Business Center (E.E.B.C.)",
         "judet": "Sibiu"
@@ -591,7 +591,7 @@
       "logo": "/logos/genway.png",
       "description": "Companie cu peste 34 de ani de experiență în domeniul electric, operând sub brandul Genway, cu peste 11.500 de proiecte fotovoltaice instalate cu echipe proprii. Distribuitor și partener oficial Fronius, Huawei FusionSolar și BYD Battery Box în România. Firmă validată AFM în cadrul programelor Casa Verde Fotovoltaice și acreditată ANRE pentru proiectare și instalare în programul ElectricUp.",
       "founded": 2007,
-      "employees": 115,
+      "employees": 107,
       "location": {
         "city": "București",
         "county": "București",
@@ -624,9 +624,9 @@
         "projectsCompleted": 11500
       },
       "financials": {
-        "year": 2024,
-        "revenue": 88962018,
-        "profit": 20715830
+        "year": 2025,
+        "revenue": 150756601,
+        "profit": 21686309
       },
       "tags": [
         "experienta-10-ani",
@@ -637,7 +637,7 @@
       "featured": true,
       "verified": true,
       "createdAt": "2025-01-15",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTRO-SERVICE DISTRIBUTIE",
         "judet": "Bucuresti"
@@ -716,7 +716,7 @@
       "logo": "/logos/electrica-serv.png",
       "description": "Filiala de instalații și servicii energetice a grupului Electrica, cu echipă de peste 400 de specialiști și acoperire națională. Oferă soluții complete de sisteme fotovoltaice ON-GRID și OFF-GRID pentru clienți comerciali, industriali și instituții publice: de la proiectare și instalare pe acoperișuri sau la sol, până la carport-uri solare.",
       "founded": 2005,
-      "employees": 458,
+      "employees": 423,
       "location": {
         "city": "București",
         "county": "București",
@@ -759,9 +759,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 29207613,
-        "profit": -2788805
+        "year": 2025,
+        "revenue": 160326146,
+        "profit": -20220801
       },
       "tags": [
         "experienta-10-ani",
@@ -771,7 +771,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "FISE ELECTRICA SERV",
         "judet": "Bucuresti"
@@ -786,7 +786,7 @@
       "logo": "/logos/expert-energy.png",
       "description": "Companie din Sibiu cu peste 15 ani de experiență în instalații electrice și sisteme fotovoltaice, acoperind regiunea centrală a României. Oferă servicii de proiectare și execuție pentru instalații fotovoltaice comerciale și industriale, alături de consultanță tehnică în domeniul energiei.",
       "founded": 2008,
-      "employees": 33,
+      "employees": 40,
       "location": {
         "city": "Sibiu",
         "county": "Sibiu",
@@ -816,9 +816,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 12115616,
-        "profit": 191549
+        "year": 2025,
+        "revenue": 14674657,
+        "profit": 544013
       },
       "tags": [
         "experienta-10-ani"
@@ -826,7 +826,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "EXPERT ENERGY",
         "judet": "Sibiu"
@@ -894,7 +894,7 @@
       "logo": "/logos/eurotehnica-itc.png",
       "description": "Companie din Craiova cu peste 14 ani de experiență, specializată în sisteme fotovoltaice turnkey și infrastructură de încărcare vehicule electrice. Partener SKE Huawei, cu parteneriate Sungrow, Fronius și Canadian Solar. Peste 6.200 de instalații realizate la nivel național.",
       "founded": 2010,
-      "employees": 32,
+      "employees": 33,
       "location": {
         "city": "Craiova",
         "county": "Dolj",
@@ -924,9 +924,9 @@
         "projectsCompleted": 6200
       },
       "financials": {
-        "year": 2024,
-        "revenue": 15506737,
-        "profit": 2927704
+        "year": 2025,
+        "revenue": 30025865,
+        "profit": 2003188
       },
       "tags": [
         "experienta-10-ani",
@@ -936,7 +936,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "EUROTEHNICA IT&C",
         "judet": "Dolj"
@@ -951,7 +951,7 @@
       "logo": "/logos/fomco-solar.png",
       "description": "Companie din Mureș cu peste 20 de ani de experiență, specializată în proiectarea și construcția de parcuri fotovoltaice și sisteme industriale. Autorizare ANRE din 2012, certificări ISO 9001 și ISO 14001. Stoc permanent de peste 30.000 de panouri solare. Parte din grupul FomCo.",
       "founded": 2004,
-      "employees": 27,
+      "employees": 14,
       "location": {
         "city": "Cristești",
         "county": "Mureș",
@@ -986,9 +986,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 74357072,
-        "profit": 12402708
+        "year": 2025,
+        "revenue": 58565881,
+        "profit": 12260271
       },
       "tags": [
         "experienta-10-ani",
@@ -998,7 +998,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "FOMCO SOLAR SYSTEMS",
         "judet": "Mures"
@@ -1013,7 +1013,7 @@
       "logo": "/logos/electro-alfa.png",
       "description": "Companie din Botoșani fondată în 1991, listată la Bursa de Valori București (simbol EAI) din februarie 2026. Producător de echipamente electrice de medie și joasă tensiune și contractor EPC pentru parcuri fotovoltaice. Peste 280 de angajați și 5 fabrici. Contract de 24,41 milioane RON cu Hidroelectrica pentru un parc fotovoltaic de 8,9 MWp.",
       "founded": 1994,
-      "employees": 282,
+      "employees": 377,
       "location": {
         "city": "Botoșani",
         "county": "Botoșani",
@@ -1047,9 +1047,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 130577776,
-        "profit": 0
+        "year": 2025,
+        "revenue": 831426660,
+        "profit": 98276144
       },
       "tags": [
         "experienta-10-ani",
@@ -1060,7 +1060,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTRO-ALFA INTERNATIONAL",
         "judet": "Botosani"
@@ -1075,7 +1075,7 @@
       "logo": "/logos/ensys.png",
       "description": "Companie din Oradea fondată în 2006, cu 198 de angajați și 5 centre regionale (Oradea, București, Iași). Furnizor de soluții fotovoltaice pentru rezidențial, comercial și industrial. Fabrică proprie de baterii litiu în Oradea, cu capacitate de 4-5 MWh/lună.",
       "founded": 2006,
-      "employees": 198,
+      "employees": 95,
       "location": {
         "city": "Oradea",
         "county": "Bihor",
@@ -1109,9 +1109,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 64188599,
-        "profit": 243389
+        "year": 2025,
+        "revenue": 64303883,
+        "profit": 76282
       },
       "tags": [
         "experienta-10-ani",
@@ -1121,7 +1121,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ENSYS RENEWABLE SOLUTIONS",
         "judet": "Bihor"
@@ -1136,7 +1136,7 @@
       "logo": "/logos/veltol-energy.png",
       "description": "Companie din Târgu Mureș specializată în sisteme fotovoltaice comerciale și industriale, parcuri fotovoltaice și sisteme de stocare energie (BESS). Autorizare ANRE C1A și C2A, certificare ISO 14001. A dezvoltat un controller EMS (Energy Management System) propriu, primul de acest tip din România.",
       "founded": 2015,
-      "employees": 40,
+      "employees": 48,
       "location": {
         "city": "Târgu Mureș",
         "county": "Mureș",
@@ -1170,9 +1170,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 24968062,
-        "profit": 1424138
+        "year": 2025,
+        "revenue": 59369225,
+        "profit": 3770023
       },
       "tags": [
         "mentenanta-inclusa",
@@ -1182,7 +1182,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "VELTOL HOLDING",
         "judet": "Mures"
@@ -1229,8 +1229,8 @@
       },
       "financials": {
         "year": 2024,
-        "revenue": 13657292,
-        "profit": 363621
+        "revenue": 67932736,
+        "profit": 1808685
       },
       "tags": [
         "EPC",
@@ -1241,7 +1241,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-02-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "WIREN ROMANIA",
         "judet": "Arad"
@@ -1256,7 +1256,7 @@
       "logo": "/logos/volta-x-solar.png",
       "description": "Companie 100% românească din Piatra-Neamț, fondată în 2003, cu peste 80 de angajați, oferind soluții integrate pentru sisteme fotovoltaice, stocare energie și stații de încărcare vehicule electrice. Certificări ANRE C1A și C2A, ISO 9001 și ISO 14001. Acoperă întregul ciclu: dezvoltare, implementare, operare și mentenanță. Parte din grupul VOLTA.",
       "founded": 2003,
-      "employees": 83,
+      "employees": 94,
       "location": {
         "city": "Piatra-Neamț",
         "county": "Neamț",
@@ -1287,9 +1287,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 48476688,
-        "profit": 2719411
+        "year": 2025,
+        "revenue": 57256923,
+        "profit": 547671
       },
       "tags": [
         "experienta-10-ani",
@@ -1299,7 +1299,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-26",
-      "updatedAt": "2026-02-26",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "VOLTA X SOLAR SYSTEMS",
         "judet": "Neamt"
@@ -1314,7 +1314,7 @@
       "logo": "/logos/elsaco-solutions.png",
       "description": "Parte din grupul Elsaco, companie din Botoșani cu peste 20 de ani de experiență în dezvoltarea și implementarea centralelor fotovoltaice comerciale și industriale. Peste 50.000 kW de sisteme fotovoltaice proiectate și instalate. Autorizare ANRE, cu expertiză suplimentară în soluții software și IoT pentru monitorizare energetică.",
       "founded": 2001,
-      "employees": 54,
+      "employees": 55,
       "location": {
         "city": "Cătămărești-Deal",
         "county": "Botoșani",
@@ -1343,9 +1343,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 110653163,
-        "profit": 9827896
+        "year": 2025,
+        "revenue": 66694299,
+        "profit": 3591947
       },
       "tags": [
         "experienta-10-ani",
@@ -1355,7 +1355,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-26",
-      "updatedAt": "2026-02-26",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELSACO SOLUTIONS",
         "judet": "Botosani"
@@ -1370,7 +1370,7 @@
       "logo": "/logos/enevo-group.png",
       "description": "Cel mai mare contractor EPC românesc pentru energie regenerabilă, cu sediul în București. Peste 1,5 GW în construcție, incluzând proiectul de 761 MWp de la Ogrezeni — una dintre cele mai mari centrale fotovoltaice din Europa. Oferă servicii complete EPC: inginerie, procurement, construcție și integrare în rețea.",
       "founded": 2014,
-      "employees": 44,
+      "employees": 194,
       "location": {
         "city": "București",
         "county": "București",
@@ -1397,9 +1397,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 416261591,
-        "profit": 39090544
+        "year": 2025,
+        "revenue": 699074799,
+        "profit": 58909053
       },
       "tags": [
         "proiecte-mari",
@@ -1409,7 +1409,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-26",
-      "updatedAt": "2026-02-26",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ENEVO GROUP",
         "judet": "Bucuresti"
@@ -1424,7 +1424,7 @@
       "logo": "/logos/sun-power-center.png",
       "description": "Companie din Iași specializată în dezvoltarea, implementarea și mentenanța sistemelor de energie solară pentru sectoarele comercial și industrial din regiunea Moldova. Fondată în 2012, cu o creștere a cifrei de afaceri de 77% în 2024 și marjă de profit solidă de ~13%. Acoperă zona de est a României.",
       "founded": 2012,
-      "employees": 36,
+      "employees": 38,
       "location": {
         "city": "Valea Lupului",
         "county": "Iași",
@@ -1455,9 +1455,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 24662460,
-        "profit": 3203661
+        "year": 2025,
+        "revenue": 26304904,
+        "profit": 1005510
       },
       "tags": [
         "mentenanta-inclusa"
@@ -1465,7 +1465,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-26",
-      "updatedAt": "2026-02-26",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "SUN POWER CENTER",
         "judet": "Iasi"
@@ -1480,7 +1480,7 @@
       "logo": "/logos/waldevar-energy.png",
       "description": "Contractor EPC european pentru parcuri fotovoltaice la scară mare, cu sediul operațional în Voluntari și birouri în Austria, SUA și Tunisia. Peste 1.300 de profesioniști și un portofoliu de 2,5 GW în proiecte contractate. Partener EPC pentru Doral Energy. Cifra de afaceri a crescut cu 136% în 2024.",
       "founded": 2011,
-      "employees": 504,
+      "employees": 1071,
       "location": {
         "city": "Voluntari",
         "county": "Ilfov",
@@ -1513,9 +1513,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 190067130,
-        "profit": 20064953
+        "year": 2025,
+        "revenue": 436027100,
+        "profit": 50402132
       },
       "tags": [
         "proiecte-mari",
@@ -1526,7 +1526,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-26",
-      "updatedAt": "2026-02-26",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "WALDEVAR ENERGY",
         "judet": "Tulcea"
@@ -1570,9 +1570,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 95671921,
-        "profit": 0
+        "year": 2025,
+        "revenue": 200991802,
+        "profit": 12779924
       },
       "tags": [
         "proiecte-mari",
@@ -1583,7 +1583,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-27",
-      "updatedAt": "2026-02-27",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "VISUAL FAN",
         "judet": "Brasov"
@@ -1598,7 +1598,7 @@
       "logo": "/logos/inosolar.png",
       "description": "Companie cu 6 sedii naționale și peste 3.500 de instalări realizate, cu o creștere de 443% year-over-year. Oferă servicii complete de instalare panouri fotovoltaice pentru segmentul comercial, industrial și rezidențial. Validată AFM, partener Longi, Canadian Solar, Jinko, Huawei și Sungrow.",
       "founded": 2015,
-      "employees": 7,
+      "employees": 36,
       "location": {
         "city": "Voluntari",
         "county": "Ilfov",
@@ -1629,9 +1629,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 54016263,
-        "profit": 0
+        "year": 2025,
+        "revenue": 106223343,
+        "profit": 5608544
       },
       "tags": [
         "retea-nationala",
@@ -1641,7 +1641,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-27",
-      "updatedAt": "2026-02-27",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "INOCOM BIZ ",
         "judet": "Ilfov"
@@ -1656,7 +1656,7 @@
       "logo": "/logos/restart-energy.png",
       "description": "Furnizor de energie regenerabilă și contractor EPC listat pe piața AeRO a BVB (REO). Dual business: furnizare energie electrică și instalare sisteme fotovoltaice. Peste 120 de proiecte EPC realizate, inclusiv pentru Cotnari (400 kWp). Parteneriat cu Transelectrica pentru proiecte agrovoltaice.",
       "founded": 2015,
-      "employees": 65,
+      "employees": 34,
       "location": {
         "city": "Timișoara",
         "county": "Timiș",
@@ -1686,9 +1686,9 @@
         "projectsCompleted": 120
       },
       "financials": {
-        "year": 2024,
-        "revenue": 92717390,
-        "profit": -20400000
+        "year": 2025,
+        "revenue": 20457917,
+        "profit": -6334351
       },
       "tags": [
         "furnizor-energie",
@@ -1699,7 +1699,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-27",
-      "updatedAt": "2026-02-27",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "RESTART ENERGY ONE",
         "judet": "Timis"
@@ -1714,7 +1714,7 @@
       "logo": "/logos/greentech-professionals.png",
       "description": "Companie de construcții electrice și mecanice specializată în domeniul fotovoltaic, cu experiență în parcuri solare și eoliene, centre de date și construcții civile și industriale. Creștere de 157% year-over-year în 2024. Oferă și servicii de mentenanță și laborator mobil PRAM.",
       "founded": 2022,
-      "employees": 71,
+      "employees": 98,
       "location": {
         "city": "București",
         "county": "București",
@@ -1740,9 +1740,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 43229753,
-        "profit": 0
+        "year": 2025,
+        "revenue": 64443368,
+        "profit": 8574676
       },
       "tags": [
         "parcuri-solare",
@@ -1753,7 +1753,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-27",
-      "updatedAt": "2026-02-27",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "GREENTECH PROFESSIONALS",
         "judet": "Bucuresti"
@@ -1768,7 +1768,7 @@
       "logo": "/logos/flexik-automation.png",
       "description": "Companie de instalații industriale cu 234 de angajați și una dintre cele mai mari cifre de afaceri din sector (186M RON în 2024). Servicii integrate: sisteme fotovoltaice, protecție la incendiu, BMS, automatizări industriale și integrare linii robotizate. Partener Daikin România pentru instalații fotovoltaice. Validată AFM.",
       "founded": 1994,
-      "employees": 234,
+      "employees": 228,
       "location": {
         "city": "Timișoara",
         "county": "Timiș",
@@ -1797,9 +1797,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 185982727,
-        "profit": 0
+        "year": 2025,
+        "revenue": 126758248,
+        "profit": 10713795
       },
       "tags": [
         "proiecte-mari",
@@ -1810,7 +1810,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-27",
-      "updatedAt": "2026-02-27",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "FLEXIK AUTOMATION",
         "judet": "Timis"
@@ -1825,7 +1825,7 @@
       "logo": "/logos/carpat-energy.png",
       "description": "Distribuitor și instalator de sisteme fotovoltaice din Cluj-Napoca, activ din 2007. Importator oficial Victron Energy, Fronius și Swiss Solar, oferă soluții on-grid, off-grid și hibride pentru segmentul rezidențial și comercial, cu proiecte documentate în peste 15 județe din România.",
       "founded": 2007,
-      "employees": 16,
+      "employees": 15,
       "location": {
         "city": "Cluj-Napoca",
         "county": "Cluj",
@@ -1865,9 +1865,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 15357083,
-        "profit": 0
+        "year": 2025,
+        "revenue": 22867601,
+        "profit": 1395879
       },
       "tags": [
         "experienta-15-ani",
@@ -1878,7 +1878,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-02",
-      "updatedAt": "2026-03-02",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "CARPAT ENERGY",
         "judet": "Cluj"
@@ -1893,7 +1893,7 @@
       "logo": "/logos/kilowat.png",
       "description": "Brand de instalare sisteme fotovoltaice activ din 2004, cu certificare ANRE C2A și autorizare Huawei. Oferă soluții turnkey pentru segmentul rezidențial și comercial (27-150 kWp), cu prezență națională și internațională (Germania, Spania). Partener JinkoSolar, Trina Solar și Growatt.",
       "founded": 2004,
-      "employees": 40,
+      "employees": 57,
       "location": {
         "city": "Păușești-Măglași",
         "county": "Vâlcea",
@@ -1927,9 +1927,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 46992721,
-        "profit": 9215299
+        "year": 2025,
+        "revenue": 47681390,
+        "profit": 6695293
       },
       "tags": [
         "experienta-20-ani",
@@ -1940,7 +1940,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-02",
-      "updatedAt": "2026-03-02",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ALTIGE IMPEX ",
         "judet": "Valcea"
@@ -1955,7 +1955,7 @@
       "logo": "/logos/e-acumulatori.png",
       "description": "Companie din București fondată în 2002, cu focus semnificativ pe segmentul industrial fotovoltaic. Distribuitor și instalator de echipamente fotovoltaice sub brandul E-Acumulatori, cu servicii EPCM prin brandul 4Envigo. Importator Victron Energy cu suport tehnic dedicat.",
       "founded": 2002,
-      "employees": 15,
+      "employees": 17,
       "location": {
         "city": "București",
         "county": "București",
@@ -1983,9 +1983,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 29932413,
-        "profit": 0
+        "year": 2025,
+        "revenue": 40063296,
+        "profit": -2078507
       },
       "tags": [
         "experienta-20-ani",
@@ -1996,7 +1996,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-02",
-      "updatedAt": "2026-03-02",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "P PLUS 2002",
         "judet": "Bucuresti"
@@ -2038,9 +2038,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 4757329,
-        "profit": 525023
+        "year": 2025,
+        "revenue": 4225477,
+        "profit": 138176
       },
       "tags": [
         "experienta-15-ani",
@@ -2051,7 +2051,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-02",
-      "updatedAt": "2026-03-02",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ECOSOLARIS SERVICES ",
         "judet": "Ilfov"
@@ -2066,7 +2066,7 @@
       "logo": "/logos/rominstal-solar.png",
       "description": "Companie din București fondată în 2009, specializată în sisteme fotovoltaice comerciale și stații de încărcare vehicule electrice. Proiecte documentate pentru Avia Motors (570 kWp total), Coresi Brașov (153 kW) și Universitatea Româno-Americană (200 kW). Instalator validat AFM din 2019.",
       "founded": 2009,
-      "employees": 13,
+      "employees": 10,
       "location": {
         "city": "București",
         "county": "București",
@@ -2096,9 +2096,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 11492372,
-        "profit": 1675107
+        "year": 2025,
+        "revenue": 12578149,
+        "profit": 1978240
       },
       "tags": [
         "experienta-15-ani",
@@ -2108,7 +2108,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-02",
-      "updatedAt": "2026-03-02",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ROMINSTAL SOLAR",
         "judet": "Bucuresti"
@@ -2160,8 +2160,8 @@
       },
       "financials": {
         "year": 2024,
-        "revenue": 51600000,
-        "profit": 0
+        "revenue": 51636828,
+        "profit": 3271679
       },
       "tags": [
         "experienta-10-ani",
@@ -2172,7 +2172,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "EXE GREEN HOLDING",
         "judet": "Ilfov"
@@ -2187,7 +2187,7 @@
       "logo": "/logos/lumio-energy.png",
       "description": "Companie din Iasi cu peste 30 de ani de experienta, operand sub brandul Lumio Energy in segmentul fotovoltaic. Ofera solutii complete de proiectare, instalare si mentenanta sisteme fotovoltaice pentru segmentul rezidential si comercial. Instalator certificat ANRE si acreditat AFM.",
       "founded": 1993,
-      "employees": 29,
+      "employees": 31,
       "location": {
         "city": "Iași",
         "county": "Iași",
@@ -2220,9 +2220,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 18900000,
-        "profit": 0
+        "year": 2025,
+        "revenue": 23613704,
+        "profit": 728595
       },
       "tags": [
         "experienta-30-ani",
@@ -2233,7 +2233,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "MAPA ROM INVEST",
         "judet": "Iasi"
@@ -2248,7 +2248,7 @@
       "logo": "/logos/energis.png",
       "description": "Companie cu peste 10 ani de experienta in instalarea sistemelor fotovoltaice sub brandul Energis.ro. A implementat sisteme fotovoltaice in toate judetele tarii, de la solutii rezidentiale la alimentarea integrala a consumului de energie electrica pentru agenti economici. Servicii complete: consultanta, proiectare, autorizare, instalare si mentenanta.",
       "founded": 2003,
-      "employees": 15,
+      "employees": 17,
       "location": {
         "city": "București",
         "county": "București",
@@ -2281,9 +2281,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 9700000,
-        "profit": 0
+        "year": 2025,
+        "revenue": 16645348,
+        "profit": 516791
       },
       "tags": [
         "experienta-20-ani",
@@ -2293,7 +2293,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "PRIMA ELECTRO CONSTRUCT",
         "judet": "Bucuresti"
@@ -2308,7 +2308,7 @@
       "logo": "/logos/east-solar-electric.png",
       "description": "Companie din Bucuresti specializata in instalarea de sisteme fotovoltaice si statii de incarcare vehicule electrice. Experienta de peste 1500 de sisteme fotovoltaice instalate, cu solutii complete pentru segmentul rezidential, comercial si industrial. Ofera suport pentru accesarea fondurilor europene.",
       "founded": 2018,
-      "employees": 15,
+      "employees": 6,
       "location": {
         "city": "București",
         "county": "București",
@@ -2339,9 +2339,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 8500000,
-        "profit": 0
+        "year": 2025,
+        "revenue": 4654404,
+        "profit": 17023
       },
       "tags": [
         "statii-incarcare-ev",
@@ -2351,7 +2351,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "EAST SOLAR ELECTRIC",
         "judet": "Constanta"
@@ -2366,7 +2366,7 @@
       "logo": "/logos/solargroup-energy.png",
       "description": "Importator si distribuitor de echipamente fotovoltaice din Salonta (Bihor), cu servicii de instalare, proiectare si dimensionare sisteme fotovoltaice. Ofera traininguri de specialitate si solutii de stocare si management al energiei. Cifra de afaceri semnificativa in domeniul energiei solare.",
       "founded": 2013,
-      "employees": 12,
+      "employees": 13,
       "location": {
         "city": "Salonta",
         "county": "Bihor",
@@ -2395,9 +2395,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 63900000,
-        "profit": 0
+        "year": 2025,
+        "revenue": 89359870,
+        "profit": 1714106
       },
       "tags": [
         "experienta-10-ani",
@@ -2408,7 +2408,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08",
+      "updatedAt": "2026-07-28",
       "anreMatch": null,
       "segment": "comercial"
     },
@@ -2420,7 +2420,7 @@
       "logo": "/logos/astra-electric.png",
       "description": "Companie din Arad specializata in tehnologii solare de varf, oferind solutii complete all-in-one: consultanta, proiectare, autorizatii, montaj, mentenanta si suport 24/7. Proiecte documentate in vestul si sudul Romaniei pe hale industriale si cladiri comerciale.",
       "founded": 2018,
-      "employees": 31,
+      "employees": 39,
       "location": {
         "city": "Arad",
         "county": "Arad",
@@ -2452,9 +2452,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 38200000,
-        "profit": 0
+        "year": 2025,
+        "revenue": 44000516,
+        "profit": 5683737
       },
       "tags": [
         "mentenanta-inclusa",
@@ -2464,7 +2464,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ASTRA ELECTRIC",
         "judet": "Arad"
@@ -2479,7 +2479,7 @@
       "logo": "/logos/darcom-energy.png",
       "description": "Companie din Bucuresti specializata in proiectarea, instalarea si mentenanta sistemelor fotovoltaice comerciale si industriale. Ofera servicii complete incluzand monitorizare, spalare panouri, suport tehnic si instruire. Cifra de afaceri semnificativa si echipa de peste 40 de angajati.",
       "founded": 2014,
-      "employees": 41,
+      "employees": 56,
       "location": {
         "city": "București",
         "county": "București",
@@ -2510,9 +2510,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 67300000,
-        "profit": 0
+        "year": 2025,
+        "revenue": 115034645,
+        "profit": 5119946
       },
       "tags": [
         "experienta-10-ani",
@@ -2523,7 +2523,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-08",
-      "updatedAt": "2026-03-08",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "DARCOM ENERGY SOLUTIONS",
         "judet": "Bucuresti"
@@ -2601,7 +2601,7 @@
       "logo": "/logos/volt-energy.png",
       "description": "Companie EPC din Voluntari fondată în 2016, specializată în sisteme fotovoltaice comerciale și industriale cu proiecte documentate până la 5,5 MWp (cel mai mare sistem rooftop din România). Activă în programul Electric UP, oferă servicii complete de instalare, monitorizare și mentenanță. Prezență națională cu proiecte în multiple județe.",
       "founded": 2016,
-      "employees": 26,
+      "employees": 22,
       "location": {
         "city": "Voluntari",
         "county": "Ilfov",
@@ -2635,9 +2635,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 31165291,
-        "profit": 772308
+        "year": 2025,
+        "revenue": 18494971,
+        "profit": 838611
       },
       "tags": [
         "proiecte-mari",
@@ -2647,7 +2647,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-27",
-      "updatedAt": "2026-03-27",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "VOLT EVSE DISTRIBUTION",
         "judet": "Bucuresti"
@@ -2662,7 +2662,7 @@
       "logo": "/logos/2k-solution.png",
       "description": "Companie din Brașov fondată în 2020, specializată în instalări EPC rooftop pentru segmentul comercial și industrial. Portofoliu documentat cu peste 150 de proiecte, inclusiv Best Foods București (432 kWp), Exclusiv Auto Constanța (358 kWp) și Cheile Grădiștei Resort (264 kWp). Experiență și ca subcontractor pe proiecte mari (Kronospan 5.9 MWp). Echipă de 30 de angajați cu creștere accelerată.",
       "founded": 2020,
-      "employees": 30,
+      "employees": 18,
       "location": {
         "city": "Brașov",
         "county": "Brașov",
@@ -2697,9 +2697,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 4567504,
-        "profit": 417557
+        "year": 2025,
+        "revenue": 6358935,
+        "profit": 571254
       },
       "tags": [
         "crestere-rapida",
@@ -2708,7 +2708,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-03-27",
-      "updatedAt": "2026-03-27",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "2K SOLUTION ",
         "judet": "Brasov"
@@ -2723,7 +2723,7 @@
       "logo": "/logos/electro-construct-pecica.png",
       "description": "Firmă din Pecica (Arad) înființată în 1997, cu activitate principală lucrări de instalații electrice (CAEN 4321). Specializată în proiectare și executare instalații electrice interioare pentru construcții civile și industriale, linii electrice aeriene și subterane (0.4 kV - 20 kV) și servicii de iluminat public. Deține atestat ANRE C2A cu mențiunea «Relevant fotovoltaice», certificare pentru proiectare-execuție sisteme fotovoltaice racordate la rețea.",
       "founded": 1997,
-      "employees": 34,
+      "employees": 36,
       "location": {
         "city": "Pecica",
         "county": "Arad",
@@ -2751,9 +2751,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 22477552,
-        "profit": 3727726
+        "year": 2025,
+        "revenue": 19951469,
+        "profit": 3185617
       },
       "tags": [
         "experienta-peste-20-ani",
@@ -2762,7 +2762,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-17",
-      "updatedAt": "2026-04-17",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTRO - CONSTRUCT",
         "judet": "Arad"
@@ -2777,7 +2777,7 @@
       "logo": "/logos/black-solar.png",
       "description": "Integrator fotovoltaic din Hunedoara, cunoscut sub brandul Black Solar, cu peste 10 MW instalați în proiecte comerciale și industriale la cheie. Execută sisteme on-grid de mare capacitate și parcuri fotovoltaice pentru clienți business la nivel național.",
       "founded": 2022,
-      "employees": 0,
+      "employees": 18,
       "location": {
         "city": "Luncoiu de Jos",
         "county": "Hunedoara",
@@ -2809,9 +2809,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 10800000,
-        "profit": 0
+        "year": 2025,
+        "revenue": 10865631,
+        "profit": 1553891
       },
       "tags": [
         "proiecte-mari",
@@ -2820,7 +2820,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-17",
-      "updatedAt": "2026-04-17",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "BIO GREEN POWER SOLUTIONS",
         "judet": "Hunedoara"
@@ -2863,9 +2863,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 4600000,
-        "profit": 0
+        "year": 2025,
+        "revenue": 4623618,
+        "profit": 670175
       },
       "tags": [
         "experienta-peste-10-ani",
@@ -2874,7 +2874,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-17",
-      "updatedAt": "2026-04-17",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ECO DIMOS ENERGY",
         "judet": "Hunedoara"
@@ -2889,7 +2889,7 @@
       "logo": "/logos/dagesim-fotovoltaic.png",
       "description": "Firmă din Craiova specializată în sisteme fotovoltaice comerciale și industriale, cu peste 7 ani de experiență. Instalează sisteme on-grid și off-grid de la 5 kW până la 900+ kW pentru clienți business din Oltenia și la nivel național.",
       "founded": 2018,
-      "employees": 26,
+      "employees": 19,
       "location": {
         "city": "Craiova",
         "county": "Dolj",
@@ -2919,9 +2919,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 3580000,
-        "profit": 0
+        "year": 2025,
+        "revenue": 4172912,
+        "profit": -1275162
       },
       "tags": [
         "on-grid",
@@ -2930,7 +2930,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-17",
-      "updatedAt": "2026-04-17",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "DAGESIM FOTOVOLTAIC",
         "judet": "Dolj"
@@ -2945,7 +2945,7 @@
       "logo": "/logos/duzoc-green-energy.png",
       "description": "Firmă din Bacău care execută instalații fotovoltaice on-grid pentru clienți comerciali și industriali din regiunea Moldova. Validată AFM pentru programele de finanțare, cu acoperire în Bacău, Neamț, Iași și Vaslui.",
       "founded": 2022,
-      "employees": 9,
+      "employees": 4,
       "location": {
         "city": "Bacău",
         "county": "Bacău",
@@ -2973,9 +2973,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 1180000,
-        "profit": 0
+        "year": 2025,
+        "revenue": 621230,
+        "profit": -244974
       },
       "tags": [
         "afm-validat"
@@ -2983,7 +2983,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-17",
-      "updatedAt": "2026-04-17",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "DUZOC GREEN ENERGY",
         "judet": "Bacau"
@@ -2998,7 +2998,7 @@
       "logo": "/logos/allsys-energy.png",
       "description": "Allsys Energy este o companie bucureșteană înființată în 2002, parte a grupului ALLSYS, specializată în soluții de energie regenerabilă și servicii conexe pentru industria energetică. Activitatea include proiectarea și execuția de sisteme fotovoltaice comerciale și industriale, măsurare și monitorizare energetică, întreținere infrastructură electrică. A realizat proiecte precum sistemul de 1.409 kW la Shopping City Piatra Neamț și 450 kW la Selgros Craiova. Vizează proiecte industriale între 400 și 5.000 kW, precum și parcuri fotovoltaice.",
       "founded": 2002,
-      "employees": 435,
+      "employees": 287,
       "location": {
         "city": "București",
         "county": "București",
@@ -3020,9 +3020,9 @@
         "maxProjectKw": 5000
       },
       "financials": {
-        "year": 2024,
-        "revenue": 31943736,
-        "profit": 1789730
+        "year": 2025,
+        "revenue": 33784161,
+        "profit": 336738
       },
       "tags": [
         "proiecte-mari"
@@ -3030,7 +3030,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-21",
-      "updatedAt": "2026-04-21",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ALLSYS ENERGY",
         "judet": "Bucuresti"
@@ -3068,15 +3068,15 @@
       ],
       "capacity": {},
       "financials": {
-        "year": 2024,
-        "revenue": 5045858,
-        "profit": 207406
+        "year": 2025,
+        "revenue": 7430415,
+        "profit": 3437086
       },
       "tags": [],
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-21",
-      "updatedAt": "2026-04-21",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "AMIRAS GREEN PROIECT",
         "judet": "Bucuresti"
@@ -3091,7 +3091,7 @@
       "logo": "/logos/alter-man-engineering.png",
       "description": "Alter Man Engineering (brand Alterman Group) este o companie din București activă în energie regenerabilă, dezvoltare imobiliară și instalații electrice. Dezvoltă și execută parcuri fotovoltaice comerciale și industriale, cu proiecte precum parcul fotovoltaic Videle (5 MW), instalația pe hala de producție Mogoșoaia (500 kW) și Cartierul Solar din București.",
       "founded": 2010,
-      "employees": 11,
+      "employees": 13,
       "location": {
         "city": "București",
         "county": "București",
@@ -3109,9 +3109,9 @@
       "certifications": [],
       "capacity": {},
       "financials": {
-        "year": 2024,
-        "revenue": 4933766,
-        "profit": -329868
+        "year": 2025,
+        "revenue": 19711949,
+        "profit": 2411560
       },
       "tags": [
         "experienta-10-ani"
@@ -3119,7 +3119,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-21",
-      "updatedAt": "2026-04-21",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ALTER MAN ENGINEERING",
         "judet": "Bucuresti"
@@ -3134,7 +3134,7 @@
       "logo": "/logos/clean-energy-revolution.png",
       "description": "Integrator de sisteme fotovoltaice din București care oferă soluții end-to-end pentru clienți rezidențiali și comerciali — audit energetic, proiectare, instalare, obținere statut prosumator, mentenanță și consultanță pentru finanțare (PNRR, facilități bancare). Firmă activă din 2021 cu atestate ANRE C2A și C1A.",
       "founded": 2021,
-      "employees": 2,
+      "employees": 1,
       "location": {
         "city": "București",
         "county": "București",
@@ -3153,15 +3153,15 @@
       "certifications": [],
       "capacity": {},
       "financials": {
-        "year": 2024,
-        "revenue": 309970,
-        "profit": -236687
+        "year": 2025,
+        "revenue": 66014,
+        "profit": -28347
       },
       "tags": [],
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-21",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "CLEAN ENERGY REVOLUTION",
         "judet": "Bucuresti"
@@ -3176,7 +3176,7 @@
       "logo": "",
       "description": "Firmă din Popești-Leordeni (Ilfov) cu sediu ANRE București, activă din 2005, specializată în proiectare, instalare și mentenanță sisteme fotovoltaice. Deține atestate ANRE C2A și C1A active.",
       "founded": 2005,
-      "employees": 8,
+      "employees": 5,
       "location": {
         "city": "Popești-Leordeni",
         "county": "Ilfov",
@@ -3192,15 +3192,15 @@
       "certifications": [],
       "capacity": {},
       "financials": {
-        "year": 2024,
-        "revenue": 13313116,
-        "profit": 816429
+        "year": 2025,
+        "revenue": 3573100,
+        "profit": 81569
       },
       "tags": [],
       "featured": false,
       "verified": false,
       "createdAt": "2026-04-21",
-      "updatedAt": "2026-04-21",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "PROSOLAR GREEN EVOLUTION",
         "judet": "Bucuresti"
@@ -3215,7 +3215,7 @@
       "logo": "/logos/solar-prod-ecoinvent.png",
       "description": "Firmă din comuna Horea (județul Alba) înființată în 2022, atestată ANRE cu certificări C1A și C2A. Oferă consultanță, proiectare și execuție sisteme fotovoltaice pentru clienți rezidențiali și industriali, precum și lucrări de instalații electrice. Cifra de afaceri: 5,11M RON (2024), 9 angajați.",
       "founded": 2022,
-      "employees": 9,
+      "employees": 12,
       "location": {
         "city": "Horea",
         "county": "Alba",
@@ -3233,15 +3233,15 @@
       "certifications": [],
       "capacity": {},
       "financials": {
-        "year": 2024,
-        "revenue": 5114768,
-        "profit": 1597826
+        "year": 2025,
+        "revenue": 5704609,
+        "profit": 488586
       },
       "tags": [],
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "SOLAR PROD ECOINVENT",
         "judet": "Alba"
@@ -3280,9 +3280,9 @@
         "maxProjectKw": 1000
       },
       "financials": {
-        "year": 2024,
-        "revenue": 9212374,
-        "profit": 2866094
+        "year": 2025,
+        "revenue": 10026016,
+        "profit": 1396539
       },
       "tags": [
         "proiecte-mari"
@@ -3290,7 +3290,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ENER ROM INSTAL",
         "judet": "Alba"
@@ -3321,7 +3321,7 @@
       "certifications": [],
       "capacity": {},
       "financials": {
-        "year": 2024,
+        "year": 2025,
         "revenue": 12233921,
         "profit": 780026
       },
@@ -3329,7 +3329,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "NECTARIA PROIECT",
         "judet": "Alba"
@@ -3343,7 +3343,7 @@
       "cui": "RO1771720",
       "description": "Firmă din Lancrăm (Sebeș, județul Alba) înființată în 1992, atestată ANRE cu certificări C1A și C2A pentru lucrări la instalații electrice. Activitate principală CAEN 4321 — lucrări de instalații electrice. Cifra de afaceri: 8,46M RON (2024), 14 angajați.",
       "founded": 1992,
-      "employees": 14,
+      "employees": 16,
       "location": {
         "city": "Sebeș",
         "county": "Alba",
@@ -3359,15 +3359,15 @@
       "certifications": [],
       "capacity": {},
       "financials": {
-        "year": 2024,
-        "revenue": 8463190,
-        "profit": 2278727
+        "year": 2025,
+        "revenue": 9567444,
+        "profit": 2705578
       },
       "tags": [],
       "featured": false,
       "verified": false,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-05-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELIO INDUSTRIAL",
         "judet": "Alba"
@@ -3401,7 +3401,7 @@
       "certifications": [],
       "capacity": {},
       "financials": {
-        "year": 2024,
+        "year": 2025,
         "revenue": 2596137,
         "profit": 104256
       },
@@ -3409,7 +3409,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "TED ELECTRO",
         "judet": "Alba"
@@ -3423,7 +3423,7 @@
       "cui": "RO38655105",
       "description": "Firmă din Vințu de Jos (județul Alba) înființată în 2018, atestată ANRE cu certificări C1A și C2A pentru lucrări la instalații electrice. Activitate principală CAEN 4321 — lucrări de instalații electrice. Cifra de afaceri: 533K RON (2024), 3 angajați.",
       "founded": 2018,
-      "employees": 3,
+      "employees": 2,
       "location": {
         "city": "Vințu de Jos",
         "county": "Alba",
@@ -3439,15 +3439,15 @@
       "certifications": [],
       "capacity": {},
       "financials": {
-        "year": 2024,
-        "revenue": 533057,
-        "profit": -245227
+        "year": 2025,
+        "revenue": 703786,
+        "profit": 148936
       },
       "tags": [],
       "featured": false,
       "verified": false,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-05-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTRO ORIEL",
         "judet": "Alba"
@@ -3481,15 +3481,15 @@
       "certifications": [],
       "capacity": {},
       "financials": {
-        "year": 2024,
-        "revenue": 1353204,
-        "profit": 107860
+        "year": 2025,
+        "revenue": 3309028,
+        "profit": 760427
       },
       "tags": [],
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTROALBA ELECTRIS",
         "judet": "Alba"
@@ -3504,7 +3504,7 @@
       "logo": "/logos/electrotimeia.png",
       "description": "Firmă din Sebeș (județul Alba) înființată în 2005, atestată ANRE cu certificare C2A. Execută lucrări de instalații electrice și branșamente la rețeaua de distribuție. Cifra de afaceri: 7,48M RON (2024), 18 angajați.",
       "founded": 2005,
-      "employees": 18,
+      "employees": 20,
       "location": {
         "city": "Sebeș",
         "county": "Alba",
@@ -3522,15 +3522,15 @@
       "certifications": [],
       "capacity": {},
       "financials": {
-        "year": 2024,
-        "revenue": 7478737,
-        "profit": 1229418
+        "year": 2025,
+        "revenue": 11003363,
+        "profit": 796795
       },
       "tags": [],
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTROTIMEIA",
         "judet": "Alba"
@@ -3544,7 +3544,7 @@
       "cui": "RO40864839",
       "description": "Firmă din Daia Română (Sebeș, județul Alba) înființată în 2019, atestată ANRE cu certificare C1A pentru lucrări la instalații electrice. Activitate principală CAEN 7112 — activități de inginerie și consultanță tehnică. Cifra de afaceri: 2,44M RON (2024), 3 angajați.",
       "founded": 2019,
-      "employees": 3,
+      "employees": 4,
       "location": {
         "city": "Sebeș",
         "county": "Alba",
@@ -3560,15 +3560,15 @@
       "certifications": [],
       "capacity": {},
       "financials": {
-        "year": 2024,
-        "revenue": 2438383,
-        "profit": 1870537
+        "year": 2025,
+        "revenue": 4831895,
+        "profit": 2467072
       },
       "tags": [],
       "featured": false,
       "verified": false,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-05-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ENERGO ENCI",
         "judet": "Alba"
@@ -3583,7 +3583,7 @@
       "logo": "/logos/tobimar-group.png",
       "description": "Firmă din Vințu de Jos (județul Alba) înființată în 2007, atestată ANRE cu certificare C2A. Distribuitor național de materiale electrice, corpuri de iluminat (arhitectural, industrial, stradal), panouri fotovoltaice, stații de încărcare EV și soluții smart building. Fabrică de tablouri electrice în Parcul Industrial Drâmbar. Cifra de afaceri: 20,55M RON (2024), 17 angajați.",
       "founded": 2007,
-      "employees": 17,
+      "employees": 31,
       "location": {
         "city": "Vințu de Jos",
         "county": "Alba",
@@ -3603,15 +3603,15 @@
       "certifications": [],
       "capacity": {},
       "financials": {
-        "year": 2024,
-        "revenue": 20553265,
-        "profit": 3077076
+        "year": 2025,
+        "revenue": 25427167,
+        "profit": 6453102
       },
       "tags": [],
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "TOBIMAR GROUP",
         "judet": "Alba"
@@ -3626,7 +3626,7 @@
       "logo": "/logos/dma-eco-buildings.svg",
       "description": "Firmă din Cluj-Napoca fondată în 2017, specializată în sisteme fotovoltaice on-grid și off-grid și instalații electrice. Activă în programul Casa Verde 2024 și RePowerEU, cu echipe proprii de instalare.",
       "founded": 2017,
-      "employees": 7,
+      "employees": 14,
       "location": {
         "city": "Cluj-Napoca",
         "county": "Cluj",
@@ -3648,15 +3648,15 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 4388289,
-        "profit": 690527
+        "year": 2025,
+        "revenue": 9438593,
+        "profit": 3508898
       },
       "tags": [],
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "DMA ECO BUILDINGS",
         "judet": "Cluj"
@@ -3671,7 +3671,7 @@
       "logo": "/logos/electric-line.gif",
       "description": "Firmă din Huedin (Cluj) fondată în 2006, cu activitate în proiectare și execuție de instalații electrice pentru construcții civile și industriale. Oferă rețele de distribuție aeriene și subterane (0.4-20 kV), iluminat public, sisteme de protecție și automatizări, plus mentenanță post-garanție.",
       "founded": 2006,
-      "employees": 11,
+      "employees": 12,
       "location": {
         "city": "Huedin",
         "county": "Cluj",
@@ -3693,15 +3693,15 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 4662861,
-        "profit": 33384
+        "year": 2025,
+        "revenue": 4355771,
+        "profit": 17347
       },
       "tags": [],
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTRIC LINE",
         "judet": "Cluj"
@@ -3716,7 +3716,7 @@
       "logo": "/logos/imsat-service-cluj.png",
       "description": "Antreprenor cu sediul în Cluj-Napoca, fondat în 1994, activ în proiectarea, implementarea și întreținerea instalațiilor electrice de medie și joasă tensiune pentru clădiri civile și industriale. Portofoliu cu clienți precum Robert Bosch, Bosch Rexroth, Emerson, Kaufland și Polaris Medical. Activ și în rețele voce-date, BMS și sisteme de securitate.",
       "founded": 1994,
-      "employees": 63,
+      "employees": 61,
       "location": {
         "city": "Cluj-Napoca",
         "county": "Cluj",
@@ -3746,9 +3746,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 86045921,
-        "profit": 7766032
+        "year": 2025,
+        "revenue": 50913015,
+        "profit": 3283465
       },
       "tags": [
         "experienta-10-ani"
@@ -3756,7 +3756,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "IMSAT SERVICE CLUJ",
         "judet": "Cluj"
@@ -3798,7 +3798,7 @@
         "projectsCompleted": 300
       },
       "financials": {
-        "year": 2024,
+        "year": 2025,
         "revenue": 4296843,
         "profit": 500283
       },
@@ -3809,7 +3809,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ENERA SWITCH",
         "judet": "Cluj"
@@ -3846,7 +3846,7 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
+        "year": 2025,
         "revenue": 1679127,
         "profit": 216750
       },
@@ -3856,7 +3856,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "DELCOM IMPORT EXPORT",
         "judet": "Cluj"
@@ -3871,7 +3871,7 @@
       "logo": "",
       "description": "Firmă din Cluj-Napoca fondată în 2019, cu 9 angajați, activă în lucrări de instalații electrice (CAEN 4321). Certificată ANRE C1A și C2A pentru proiectarea și execuția instalațiilor electrice de joasă și medie tensiune.",
       "founded": 2019,
-      "employees": 9,
+      "employees": 12,
       "location": {
         "city": "Cluj-Napoca",
         "county": "Cluj",
@@ -3893,15 +3893,15 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 2908731,
-        "profit": 280004
+        "year": 2025,
+        "revenue": 4593029,
+        "profit": 645021
       },
       "tags": [],
       "featured": false,
       "verified": false,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTROMEDIA INSTAL",
         "judet": "Cluj"
@@ -3938,9 +3938,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 1729270,
-        "profit": 205604
+        "year": 2025,
+        "revenue": 2406722,
+        "profit": 281091
       },
       "tags": [
         "experienta-10-ani"
@@ -3948,7 +3948,7 @@
       "featured": false,
       "verified": false,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTRIS INSTAL",
         "judet": "Cluj"
@@ -3963,7 +3963,7 @@
       "logo": "",
       "description": "Firmă de lucrări de instalații electrice (CAEN 4321) din Gherla, Cluj. Certificată ANRE C1A și C2A — autorizată pentru proiectare și execuție instalații electrice joasă și medie tensiune.",
       "founded": 2006,
-      "employees": 5,
+      "employees": 6,
       "location": {
         "city": "Gherla",
         "county": "Cluj",
@@ -3985,9 +3985,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "revenue2024": 915195,
-        "profit2024": 1823,
-        "currency": "RON"
+        "year": 2025,
+        "revenue": 872330,
+        "profit": -42809
       },
       "services": [
         "proiectare",
@@ -3996,7 +3996,7 @@
       "verified": false,
       "featured": false,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTROBILD",
         "judet": "Cluj"
@@ -4034,9 +4034,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "revenue2024": 1209166,
-        "profit2024": 346873,
-        "currency": "RON"
+        "year": 2025,
+        "revenue": 1209166,
+        "profit": 346873
       },
       "services": [
         "proiectare",
@@ -4045,7 +4045,7 @@
       "verified": false,
       "featured": false,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "FLM TEO ELECTRIC",
         "judet": "Cluj"
@@ -4061,7 +4061,7 @@
       "logo": "",
       "description": "Firmă de lucrări de instalații electrice (CAEN 4321) din Cluj-Napoca. Certificată ANRE C1A și C2A — autorizată pentru proiectare și execuție instalații electrice joasă și medie tensiune.",
       "founded": 2023,
-      "employees": 3,
+      "employees": 5,
       "location": {
         "city": "Cluj-Napoca",
         "county": "Cluj",
@@ -4083,9 +4083,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "revenue2024": 555118,
-        "profit2024": 225710,
-        "currency": "RON"
+        "year": 2025,
+        "revenue": 2259264,
+        "profit": 821772
       },
       "services": [
         "proiectare",
@@ -4094,7 +4094,7 @@
       "verified": false,
       "featured": false,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTROSTRAT",
         "judet": "Cluj"
@@ -4110,7 +4110,7 @@
       "logo": "",
       "description": "Firmă de instalații electrice din Dumbrăvița (Timiș), înființată în 2020. Proiectează și execută sisteme fotovoltaice pentru clienți industriali și municipali — printre referințe se numără centrale PV de 1 MWp și 0,67 MWp pentru stațiile de tratare a apei Aquatim (Stan Vidrighin și Urseni) și o centrală de 0,4 MW pentru SC Telco SA.",
       "founded": 2020,
-      "employees": 2,
+      "employees": 3,
       "location": {
         "city": "Dumbrăvița",
         "county": "Timiș",
@@ -4136,9 +4136,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 3977304,
-        "profit": 497173
+        "year": 2025,
+        "revenue": 2963275,
+        "profit": 5135
       },
       "tags": [
         "on-grid",
@@ -4150,7 +4150,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "CBM ELPRO INSTAL",
         "judet": "Timis"
@@ -4187,7 +4187,7 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
+        "year": 2025,
         "revenue": 14159609,
         "profit": 5179849
       },
@@ -4198,7 +4198,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELTAL GROUP",
         "judet": "Timis"
@@ -4213,7 +4213,7 @@
       "logo": "",
       "description": "Firmă de instalații electrice și automatizări din Giarmata (Timiș), înființată în 2009, cu peste 450 de proiecte finalizate și clienți precum IKEA Timișoara, Coca-Cola, Leroy Merlin și The Office Timișoara. Oferă soluții complete de instalații electrice de joasă și medie tensiune, sisteme fotovoltaice la cheie (panouri, invertoare, stocare) și sisteme de securitate, pentru spații industriale, retail și comerciale.",
       "founded": 2009,
-      "employees": 43,
+      "employees": 37,
       "location": {
         "city": "Giarmata",
         "county": "Timiș",
@@ -4241,9 +4241,9 @@
         "projectsCompleted": 450
       },
       "financials": {
-        "year": 2024,
-        "revenue": 8956827,
-        "profit": -683823
+        "year": 2025,
+        "revenue": 10246554,
+        "profit": -569012
       },
       "tags": [
         "on-grid",
@@ -4255,7 +4255,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "MELBO INSTAL",
         "judet": "Timis"
@@ -4270,7 +4270,7 @@
       "logo": "/logos/abac-proiect-energie.png",
       "description": "Firmă de instalații electrice fondată în 2004 în Buftea (Ilfov), cu peste 30 de ani de experiență cumulată a echipei în proiectare și execuție rețele de distribuție joasă și medie tensiune. Proiectează și instalează sisteme fotovoltaice între 3 și 200 kWp, cu peste 700 kWp instalați pentru clienți persoane fizice și juridice. Oferă și stații de încărcare pentru vehicule electrice.",
       "founded": 2004,
-      "employees": 37,
+      "employees": 38,
       "location": {
         "city": "Buftea",
         "county": "Ilfov",
@@ -4296,9 +4296,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 19855722,
-        "profit": 1594323
+        "year": 2025,
+        "revenue": 20082661,
+        "profit": 1592596
       },
       "tags": [
         "on-grid",
@@ -4309,7 +4309,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ABAC PROIECT ENERGIE",
         "judet": "Ilfov"
@@ -4346,7 +4346,7 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
+        "year": 2025,
         "revenue": 4571197,
         "profit": 57460
       },
@@ -4361,7 +4361,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-04-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "GREEN COSTAL",
         "judet": "Ilfov"
@@ -4398,9 +4398,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 142530,
-        "profit": 36626
+        "year": 2025,
+        "revenue": 124187,
+        "profit": 12094
       },
       "tags": [
         "on-grid",
@@ -4410,7 +4410,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-23",
-      "updatedAt": "2026-04-23",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "SOLARI ELECTRIC ENERGY",
         "judet": "Constanta"
@@ -4425,7 +4425,7 @@
       "logo": "/logos/solar-service.png",
       "description": "Firmă din Timișoara fondată în 2010, specializată în proiectare, montaj și mentenanță de sisteme fotovoltaice on-grid și off-grid, panouri solare termice, sisteme hibride (solar + eolian) și aplicații agricole (irigații, ferme). Portofoliu cu proiecte documentate în județele Timiș, Bihor, Prahova, Olt, Bacău, Satu Mare, Vâlcea și Vrancea.",
       "founded": 2010,
-      "employees": 0,
+      "employees": 1,
       "location": {
         "city": "Timișoara",
         "county": "Timiș",
@@ -4456,9 +4456,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 0,
-        "profit": 0
+        "year": 2025,
+        "revenue": 16450,
+        "profit": -42180
       },
       "tags": [
         "on-grid",
@@ -4469,7 +4469,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-23",
-      "updatedAt": "2026-04-23",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "SOLAR - SERVICE ",
         "judet": "Timis"
@@ -4484,7 +4484,7 @@
       "logo": "/logos/electrogal-solutions.png",
       "description": "Firmă din Oradea fondată în 2021, autorizată ANRE, activă în branșamente electrice, instalații rezidențiale și industriale, montaj panouri fotovoltaice, iluminat public și sisteme de securitate. Deservește Bihor — Oradea, Aleșd, Marghita, Beiuș.",
       "founded": 2021,
-      "employees": 14,
+      "employees": 17,
       "location": {
         "city": "Oradea",
         "county": "Bihor",
@@ -4506,15 +4506,15 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 2295593,
-        "profit": 505364
+        "year": 2025,
+        "revenue": 3368783,
+        "profit": -684795
       },
       "tags": [],
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-23",
-      "updatedAt": "2026-04-23",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTROGAL SOLUTIONS",
         "judet": "Bihor"
@@ -4529,7 +4529,7 @@
       "logo": "/logos/energetic-montrel.png",
       "description": "Firmă din Nojorid (Bihor) fondată în 2009, specializată în proiectarea și montajul panourilor fotovoltaice, instalații electrice pentru clădiri rezidențiale și industriale, termografie și soluții de stocare cu baterii (RePower EU). Deservește întreg județul Bihor.",
       "founded": 2009,
-      "employees": 13,
+      "employees": 10,
       "location": {
         "city": "Nojorid",
         "county": "Bihor",
@@ -4551,9 +4551,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 6757812,
-        "profit": 780970
+        "year": 2025,
+        "revenue": 23482039,
+        "profit": 1264678
       },
       "tags": [
         "stocare",
@@ -4562,7 +4562,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-23",
-      "updatedAt": "2026-04-23",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ENERGETIC MONTREL",
         "judet": "Bihor"
@@ -4599,9 +4599,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 4919037,
-        "profit": 465188
+        "year": 2025,
+        "revenue": 8286372,
+        "profit": 999226
       },
       "tags": [
         "monitorizare-inclusa",
@@ -4610,7 +4610,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-23",
-      "updatedAt": "2026-04-23",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ENERGOTEH PROIECT",
         "judet": "Bihor"
@@ -4675,7 +4675,7 @@
       "logo": "/logos/hiqual-electro.png",
       "description": "Firmă din Oradea fondată în 2015, atestată ANRE pentru lucrări electrice de joasă și medie tensiune, cu proiecte majore în hale industriale (8.000–44.000 mp), parcuri logistice, retail (Carrefour, Profi, FedEx) și un parc fotovoltaic de 3 MW (9.600 panouri) la Lotus Center Oradea. Certificată ISO 9001.",
       "founded": 2015,
-      "employees": 16,
+      "employees": 15,
       "location": {
         "city": "Oradea",
         "county": "Bihor",
@@ -4706,9 +4706,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 9017701,
-        "profit": 2357757
+        "year": 2025,
+        "revenue": 4369469,
+        "profit": 772716
       },
       "tags": [
         "on-grid",
@@ -4717,7 +4717,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-23",
-      "updatedAt": "2026-04-23",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "HIQUAL ELECTRO",
         "judet": "Bihor"
@@ -4757,9 +4757,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 4247558,
-        "profit": 79751
+        "year": 2025,
+        "revenue": 833022,
+        "profit": -226121
       },
       "tags": [
         "on-grid",
@@ -4769,7 +4769,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-24",
-      "updatedAt": "2026-04-24",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "VIVARO SOLAR ENERGY",
         "judet": "Arges"
@@ -4806,9 +4806,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 3414995,
-        "profit": 581142
+        "year": 2025,
+        "revenue": 4990174,
+        "profit": 755916
       },
       "tags": [
         "on-grid",
@@ -4817,7 +4817,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-24",
-      "updatedAt": "2026-04-24",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "NETWORK CONNECTIONS PROJECT",
         "judet": "Arges"
@@ -4832,7 +4832,7 @@
       "logo": "/logos/inbatesa-electric.png",
       "description": "Firmă fondată în 2009 în Bucov, județul Prahova, activă în instalații electrice, curenți slabi și panouri fotovoltaice. Portofoliul de servicii acoperă și instalații sanitare, termice, ventilație și verificări PRAM.",
       "founded": 2009,
-      "employees": 7,
+      "employees": 8,
       "location": {
         "city": "Bucov",
         "county": "Prahova",
@@ -4854,9 +4854,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 1291876,
-        "profit": 203612
+        "year": 2025,
+        "revenue": 1384711,
+        "profit": 34309
       },
       "tags": [
         "on-grid"
@@ -4864,7 +4864,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-24",
-      "updatedAt": "2026-04-24",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "INBATESA ELECTRIC",
         "judet": "Prahova"
@@ -4879,7 +4879,7 @@
       "logo": "",
       "description": "Firmă din Iași fondată în 2000, specializată în instalații electrice și sisteme fotovoltaice. Oferă evaluare, proiectare, montaj și mentenanță panouri fotovoltaice, plus asistență pentru documentația de prosumator.",
       "founded": 2000,
-      "employees": 34,
+      "employees": 35,
       "location": {
         "city": "Iași",
         "county": "Iași",
@@ -4901,9 +4901,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 10343736,
-        "profit": 1085345
+        "year": 2025,
+        "revenue": 6229752,
+        "profit": 18979
       },
       "tags": [
         "on-grid",
@@ -4913,7 +4913,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-24",
-      "updatedAt": "2026-04-24",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTRIC INSTAL",
         "judet": "Iasi"
@@ -4928,7 +4928,7 @@
       "logo": "",
       "description": "Firmă din Pașcani, județul Iași, fondată în 1994, activă în instalații electrice pentru construcții civile și industriale. Montează panouri fotovoltaice și sisteme solare on-grid și off-grid, inclusiv structuri de susținere, tablouri de distribuție și punere în funcțiune.",
       "founded": 1994,
-      "employees": 40,
+      "employees": 38,
       "location": {
         "city": "Pașcani",
         "county": "Iași",
@@ -4950,9 +4950,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 7276055,
-        "profit": 500484
+        "year": 2025,
+        "revenue": 8591592,
+        "profit": 1961815
       },
       "tags": [
         "on-grid",
@@ -4962,7 +4962,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-24",
-      "updatedAt": "2026-04-24",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "LINCAS",
         "judet": "Iasi"
@@ -4977,7 +4977,7 @@
       "logo": "",
       "description": "Firmă fondată în 2016 în Valea Lupului, județul Iași. Oferă instalare panouri fotovoltaice, instalații electrice, audit energetic, verificări PRAM și sisteme de paratrăsnet.",
       "founded": 2016,
-      "employees": 7,
+      "employees": 6,
       "location": {
         "city": "Valea Lupului",
         "county": "Iași",
@@ -4999,9 +4999,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 2528542,
-        "profit": 553986
+        "year": 2025,
+        "revenue": 2356611,
+        "profit": 526691
       },
       "tags": [
         "on-grid"
@@ -5009,7 +5009,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-24",
-      "updatedAt": "2026-04-24",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "RETELE IASI",
         "judet": "Iasi"
@@ -5046,9 +5046,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 412949,
-        "profit": -19600
+        "year": 2025,
+        "revenue": 928107,
+        "profit": -111193
       },
       "tags": [
         "on-grid",
@@ -5061,7 +5061,7 @@
       "featured": false,
       "verified": false,
       "createdAt": "2026-04-24",
-      "updatedAt": "2026-04-24",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "SKY ENERGY SYSTEM",
         "judet": "Iasi"
@@ -5076,7 +5076,7 @@
       "logo": "/logos/andalex-genersy.svg",
       "description": "Firmă fondată în 2022 în Zărnești, județul Brașov, specializată în proiectarea, dimensionarea, montajul și mentenanța sistemelor fotovoltaice. Oferă asistență pentru documentația de prosumator și execută branșamente electrice și studii de coexistență, predominant în zona Brașov.",
       "founded": 2022,
-      "employees": 3,
+      "employees": 7,
       "location": {
         "city": "Zărnești",
         "county": "Brașov",
@@ -5098,9 +5098,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 3214809,
-        "profit": 1227117
+        "year": 2025,
+        "revenue": 3950765,
+        "profit": 934098
       },
       "tags": [
         "on-grid",
@@ -5109,7 +5109,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-25",
-      "updatedAt": "2026-04-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ANDALEX GENERSY",
         "judet": "Brasov"
@@ -5200,9 +5200,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 3033198,
-        "profit": -602725
+        "year": 2025,
+        "revenue": 3814168,
+        "profit": -2913
       },
       "tags": [
         "on-grid",
@@ -5213,7 +5213,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-25",
-      "updatedAt": "2026-04-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTRICAL STANDARD",
         "judet": "Sibiu"
@@ -5250,9 +5250,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 498921,
-        "profit": 199838
+        "year": 2025,
+        "revenue": 330343,
+        "profit": 4983
       },
       "tags": [
         "on-grid",
@@ -5261,7 +5261,7 @@
       "featured": false,
       "verified": false,
       "createdAt": "2026-04-25",
-      "updatedAt": "2026-04-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ATT TECHNOLOGY",
         "judet": "Dolj"
@@ -5301,7 +5301,7 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
+        "year": 2025,
         "revenue": 32052219,
         "profit": 2109999
       },
@@ -5311,7 +5311,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-25",
-      "updatedAt": "2026-04-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ATRIA CONCEPT",
         "judet": "Galati"
@@ -5326,7 +5326,7 @@
       "logo": "",
       "description": "Firmă fondată în 2013 în Movileni, județul Galați, cu punct de lucru în Galați. Oferă soluții integrate de energie verde — proiectare, montaj la nivel național, mentenanță și monitorizare sisteme fotovoltaice rezidențiale și comerciale, plus instalații electrice industriale, stații de transformare și iluminat public.",
       "founded": 2013,
-      "employees": 14,
+      "employees": 18,
       "location": {
         "city": "Movileni",
         "county": "Galați",
@@ -5348,9 +5348,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 10883980,
-        "profit": 1994680
+        "year": 2025,
+        "revenue": 17636274,
+        "profit": 2364600
       },
       "tags": [
         "on-grid",
@@ -5361,7 +5361,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-25",
-      "updatedAt": "2026-04-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "DOCEROM SISTEM",
         "judet": "Galati"
@@ -5376,7 +5376,7 @@
       "logo": "",
       "description": "Firmă fondată în 1994 în Vânători, județul Galați, care operează sub brandul InstallHouse — magazin online și instalator autorizat ANRE/AFM pentru sisteme fotovoltaice, încălzire și climatizare. Acoperă cu echipe de montaj sud-estul țării (Galați, Brăila, Tulcea, Vaslui, Bacău, Vrancea, Buzău, Constanța, Ialomița).",
       "founded": 1994,
-      "employees": 33,
+      "employees": 36,
       "location": {
         "city": "Vânători",
         "county": "Galați",
@@ -5406,9 +5406,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 33428361,
-        "profit": 3137701
+        "year": 2025,
+        "revenue": 82854823,
+        "profit": 6605989
       },
       "tags": [
         "on-grid",
@@ -5418,7 +5418,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-25",
-      "updatedAt": "2026-04-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "DANDIS NUTA",
         "judet": "Galati"
@@ -5455,9 +5455,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 1868946,
-        "profit": 1082949
+        "year": 2025,
+        "revenue": 1381435,
+        "profit": 407559
       },
       "tags": [
         "on-grid",
@@ -5466,7 +5466,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-25",
-      "updatedAt": "2026-04-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "GEX ELECTRIC",
         "judet": "Galati"
@@ -5503,7 +5503,7 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
+        "year": 2025,
         "revenue": 450781,
         "profit": 29068
       },
@@ -5514,7 +5514,7 @@
       "featured": false,
       "verified": false,
       "createdAt": "2026-04-25",
-      "updatedAt": "2026-04-25",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "BEST TEAM FOTOVOLTAICE",
         "judet": "Bacau"
@@ -5528,7 +5528,7 @@
       "cui": "RO14452634",
       "description": "Firmă fondată în 2002 în Socodor, județul Arad, divizie românească a grupului italian Delta. Oferă servicii integrate de instalații electrice industriale, termice, climatizare, ventilație, sanitare și energie regenerabilă (panouri fotovoltaice). Firmă certificată ISO, cu portofoliu de proiecte industriale derulate în Arad și Timiș.",
       "founded": 2002,
-      "employees": 49,
+      "employees": 45,
       "location": {
         "city": "Socodor",
         "county": "Arad",
@@ -5555,9 +5555,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 20398360,
-        "profit": 3272557
+        "year": 2025,
+        "revenue": 21664989,
+        "profit": 245984
       },
       "tags": [
         "on-grid",
@@ -5566,7 +5566,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-28",
-      "updatedAt": "2026-05-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "AMBRA SERVICE",
         "judet": "Arad"
@@ -5580,7 +5580,7 @@
       "cui": "RO14870335",
       "description": "Firmă fondată în 2002 în Parcul Industrial UTA 1 din Arad, specializată în proiectare și execuție instalații electrice industriale, automatizări, retail/hospitality și sisteme fotovoltaice rezidențiale și industriale. Partener autorizat pentru programul Casa Verde, cu peste 20 de ani de experiență în zona Banatului. Lucrează cu echipamente Schneider Electric, Siemens, ABB, Eaton, Legrand.",
       "founded": 2002,
-      "employees": 15,
+      "employees": 16,
       "location": {
         "city": "Arad",
         "county": "Arad",
@@ -5607,9 +5607,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 5098540,
-        "profit": 389809
+        "year": 2025,
+        "revenue": 7257046,
+        "profit": 451048
       },
       "tags": [
         "on-grid",
@@ -5620,7 +5620,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-28",
-      "updatedAt": "2026-05-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "PRECON ELECTRIC",
         "judet": "Arad"
@@ -5635,7 +5635,7 @@
       "logo": "/logos/volter.png",
       "description": "Firmă fondată în 2007 în Gura Humorului, Suceava, cu activitate dublă: proiectare și producție de tablouri electrice industriale și instalare sisteme fotovoltaice. Echipa execută soluții complete pentru proiecte de energie regenerabilă, de la consultanță și documentație până la instalare și punere în funcțiune. Distribuitor autorizat Schneider, Siemens, Phoenix Contact, Eaton, cu exporturi în Spania, Franța, Belgia, Germania și Polonia.",
       "founded": 2007,
-      "employees": 35,
+      "employees": 42,
       "location": {
         "city": "Gura Humorului",
         "county": "Suceava",
@@ -5662,9 +5662,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 21925295,
-        "profit": 1554677
+        "year": 2025,
+        "revenue": 22122518,
+        "profit": 1669153
       },
       "tags": [
         "on-grid",
@@ -5673,7 +5673,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-01",
-      "updatedAt": "2026-05-01",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "VOLTER",
         "judet": "Suceava"
@@ -5714,7 +5714,7 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
+        "year": 2025,
         "revenue": 9169711,
         "profit": 902005
       },
@@ -5725,7 +5725,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-01",
-      "updatedAt": "2026-05-01",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTRO ANA LUIZA",
         "judet": "Buzau"
@@ -5740,7 +5740,7 @@
       "logo": "/logos/elborar-serv.png",
       "description": "Firmă fondată în 2005 în Bodești, județul Neamț, cu peste 19 ani de experiență în instalații electrice și sisteme fotovoltaice. Acoperă o gamă variată de servicii: branșamente electrice, rețele de joasă și medie tensiune, instalații rezidențiale și industriale, smart home, panouri fotovoltaice, verificări PRAM și automatizări porți. Portofoliu cu peste 2.900 de proiecte finalizate.",
       "founded": 2005,
-      "employees": 14,
+      "employees": 13,
       "location": {
         "city": "Bodești",
         "county": "Neamț",
@@ -5766,9 +5766,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 3551380,
-        "profit": 262262
+        "year": 2025,
+        "revenue": 5495229,
+        "profit": 1081216
       },
       "tags": [
         "on-grid",
@@ -5777,7 +5777,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-01",
-      "updatedAt": "2026-05-01",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELBORAR SERV",
         "judet": "Neamt"
@@ -5792,7 +5792,7 @@
       "logo": "/logos/lucris-serv.png",
       "description": "Firmă fondată în 1997 în Negrești, județul Neamț, cu peste 25 de ani de experiență ca antreprenor electric. Oferă proiectare, execuție și mentenanță pentru instalații electrice, rețele de joasă și medie tensiune, iluminat public/arhitectural, branșamente, sisteme de împământare, automatizări KNX și panouri fotovoltaice. Partener Casa Verde cu linie dedicată pentru sisteme fotovoltaice rezidențiale și comerciale.",
       "founded": 1997,
-      "employees": 16,
+      "employees": 19,
       "location": {
         "city": "Negrești",
         "county": "Neamț",
@@ -5823,9 +5823,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 8821693,
-        "profit": 1609787
+        "year": 2025,
+        "revenue": 7602516,
+        "profit": 269000
       },
       "tags": [
         "on-grid",
@@ -5835,7 +5835,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-01",
-      "updatedAt": "2026-05-01",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "LUCRIS SERV",
         "judet": "Neamt"
@@ -5849,7 +5849,7 @@
       "cui": "RO6363471",
       "description": "Firmă fondată în 1994 în Călărași, cu capital 100% românesc și autorizație ANRE din 2001. Oferă proiectare și execuție pentru sisteme fotovoltaice rezidențiale, industriale și parcuri fotovoltaice, stații de încărcare auto electrice, rețele electrice de joasă și medie tensiune (0,4 kV–20 kV) și branșamente electrice. Peste 30 de ani de experiență ca antreprenor electric.",
       "founded": 1994,
-      "employees": 63,
+      "employees": 57,
       "location": {
         "city": "Cuza Vodă",
         "county": "Călărași",
@@ -5873,9 +5873,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 30046246,
-        "profit": 5109913
+        "year": 2025,
+        "revenue": 32165415,
+        "profit": 3642840
       },
       "tags": [
         "pv-comercial",
@@ -5886,7 +5886,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-04",
-      "updatedAt": "2026-05-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "DOMAREX '94",
         "judet": "Calarasi"
@@ -5901,7 +5901,7 @@
       "logo": "/logos/electrica-racord-instal.png",
       "description": "Firmă fondată în 2013 în București, specializată în lucrări electrice complexe și sisteme fotovoltaice. Oferă consultanță tehnică, dimensionare, proiectare și autorizare, instalare, punere în funcțiune și mentenanță pentru sisteme fotovoltaice, inclusiv consiliere prosumator. Portofoliu cu proiecte în Constanța, Ilfov și Giurgiu pentru clienți din sectoare diverse: portuar, minier, sportiv, hotelier, telecomunicații și administrație publică. Oferă și stații de încărcare auto electrice.",
       "founded": 2013,
-      "employees": 34,
+      "employees": 36,
       "location": {
         "city": "București",
         "county": "București",
@@ -5933,9 +5933,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 26593189,
-        "profit": 3133726
+        "year": 2025,
+        "revenue": 28968339,
+        "profit": 5599566
       },
       "tags": [
         "pv-comercial",
@@ -5947,7 +5947,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-04",
-      "updatedAt": "2026-05-04",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTRICA RACORD INSTAL",
         "judet": "Bucuresti"
@@ -5988,7 +5988,7 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
+        "year": 2025,
         "revenue": 1715488,
         "profit": -715880
       },
@@ -6002,7 +6002,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-04",
-      "updatedAt": "2026-05-04",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ENESCO SERVICES",
         "judet": "Bucuresti"
@@ -6017,7 +6017,7 @@
       "logo": "/logos/energy-house-construct.png",
       "description": "Firmă fondată în 2022 în satul Vulpuești (com. Mihăești), Vâlcea, specializată în instalații electrice de joasă și medie tensiune și sisteme fotovoltaice. Oferă proiectare, dimensionare, furnizare și instalare pentru sisteme PV, branșamente electrice monofazate și trifazate (aeriene și subterane), precum și posturi de transformare. Lucrările sunt executate de electricieni autorizați ANRE, cu acoperire în regiunea Oltenia.",
       "founded": 2022,
-      "employees": 12,
+      "employees": 13,
       "location": {
         "city": "Vulpuești, com. Mihăești",
         "county": "Vâlcea",
@@ -6039,9 +6039,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 3511051,
-        "profit": 537637
+        "year": 2025,
+        "revenue": 5753716,
+        "profit": 302403
       },
       "tags": [
         "pv-comercial",
@@ -6052,7 +6052,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-08",
-      "updatedAt": "2026-05-08",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ENERGY HOUSE CONSTRUCT",
         "judet": "Valcea"
@@ -6095,9 +6095,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 5980383,
-        "profit": 1513437
+        "year": 2025,
+        "revenue": 5956868,
+        "profit": 1373247
       },
       "tags": [
         "pv-comercial",
@@ -6109,7 +6109,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-08",
-      "updatedAt": "2026-05-08",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ALINADI ELECTRIC",
         "judet": "Valcea"
@@ -6149,9 +6149,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 29725674,
-        "profit": 6978981
+        "year": 2025,
+        "revenue": 17436194,
+        "profit": 2404925
       },
       "tags": [
         "pv-comercial",
@@ -6162,7 +6162,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-08",
-      "updatedAt": "2026-05-08",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTROMEN",
         "judet": "Satu Mare"
@@ -6177,7 +6177,7 @@
       "logo": "/logos/smart-electrical-solutions.png",
       "description": "Firmă fondată în 2004 în Satu Mare, specializată în instalarea de sisteme fotovoltaice, pompe de căldură și aparate de aer condiționat. Operează cu acoperire națională prin echipe interne și parteneri autorizați, cu o capacitate declarată de montaj de până la 7 sisteme fotovoltaice pe zi. Participă la programul Casa Verde din 2019 și oferă suport complet pentru documentație și avizare, atât pentru clienți rezidențiali, cât și comerciali.",
       "founded": 2004,
-      "employees": 40,
+      "employees": 29,
       "location": {
         "city": "Satu Mare",
         "county": "Satu Mare",
@@ -6199,9 +6199,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 11802286,
-        "profit": 0
+        "year": 2025,
+        "revenue": 11575390,
+        "profit": 250994
       },
       "tags": [
         "pv-comercial",
@@ -6213,7 +6213,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-08",
-      "updatedAt": "2026-05-08",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "SMART ELECTRICAL SOLUTIONS",
         "judet": "Satu Mare"
@@ -6228,7 +6228,7 @@
       "logo": "/logos/datacor.png",
       "description": "Datacor este un integrator de soluții fondat în 2002 la Bistrița, organizat pe trei divizii: Datacor Green Energy (energie regenerabilă, instalare sisteme fotovoltaice și stocare), Datacor Connectivity (producție internă de conectică fibră optică în parcul industrial Bistrița-Sud) și Datacor Smart Homes. Pe partea electrică acoperă instalații de joasă și medie tensiune, datacenter, cablare structurată și sisteme de securitate, lucrând cu parteneri precum Honeywell, Vertiv, Corning și Datwyler. Compania a comunicat în decembrie 2025 livrarea unor proiecte de instalare sisteme fotovoltaice și stocare.",
       "founded": 2002,
-      "employees": 134,
+      "employees": 165,
       "location": {
         "city": "Bistrița",
         "county": "Bistrița-Năsăud",
@@ -6253,9 +6253,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 74361564,
-        "profit": 10987417
+        "year": 2025,
+        "revenue": 85461185,
+        "profit": 8554527
       },
       "tags": [
         "pv-comercial",
@@ -6268,7 +6268,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-18",
-      "updatedAt": "2026-05-18",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "DATACOR",
         "judet": "Bistrita-Nasaud"
@@ -6283,7 +6283,7 @@
       "logo": "/logos/electro-clip-map.png",
       "description": "Electro Clip Map este o firmă din Văleni-Lăpuș, județul Maramureș, înființată în 2016 și specializată în sisteme fotovoltaice — consultanță, proiectare și execuție pentru locuințe și afaceri. Oferă atât sisteme clasice pe acoperiș, cât și acoperișuri fotovoltaice integrate (panouri care înlocuiesc elementele de învelitoare). Pe pagina de prezentare comunică un total de aproximativ 2,3 MW instalați.",
       "founded": 2016,
-      "employees": 20,
+      "employees": 14,
       "location": {
         "city": "Văleni-Lăpuș",
         "county": "Maramureș",
@@ -6305,9 +6305,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 8681283,
-        "profit": 1256512
+        "year": 2025,
+        "revenue": 8355266,
+        "profit": 157661
       },
       "tags": [
         "pv-comercial",
@@ -6318,7 +6318,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-18",
-      "updatedAt": "2026-07-14",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTRO CLIP MAP",
         "judet": "Maramures"
@@ -6332,7 +6332,7 @@
       "cui": "RO42988183",
       "description": "Electro Metering este o firmă din Baia Mare, înființată în 2020, specializată în proiectarea și execuția instalațiilor electrice civile și industriale. Pe lângă instalare și mentenanță panouri fotovoltaice, execută branșamente aeriene și subterane (monofazate și trifazate), linii electrice 0,4–20 kV, posturi de transformare de medie tensiune și rețele de iluminat public. Sediul declarat pe site este pe Strada 8 Martie nr. 9, Baia Mare; sediul social ANRE este în satul Lăpușel, comuna Recea.",
       "founded": 2020,
-      "employees": 6,
+      "employees": 8,
       "location": {
         "city": "Lăpușel",
         "county": "Maramureș",
@@ -6356,9 +6356,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 1443915,
-        "profit": 266496
+        "year": 2025,
+        "revenue": 3488666,
+        "profit": 438858
       },
       "tags": [
         "pv-comercial",
@@ -6370,7 +6370,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-18",
-      "updatedAt": "2026-05-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTRO METERING",
         "judet": "Maramures"
@@ -6385,7 +6385,7 @@
       "logo": "/logos/diacom-prestcom.png",
       "description": "Diacom Prestcom este o firmă din Lupeni, județul Hunedoara, fondată în 1996 de Constantin Dicu. Oferă sisteme fotovoltaice off-grid și on-grid pentru consum propriu sau injectare în rețea a surplusului, execuție și mentenanță parcuri fotovoltaice, tablouri electrice și automatizări, instalații electrice interioare și exterioare, branșamente 0,23–0,4 kV, instalații 0,4–20 kV, prize de pământ și paratrăsnete, măsurători PRAM. Compania este listată ca instalator aprobat AFM în programul de sisteme fotovoltaice și activează în Valea Jiului de peste 30 de ani.",
       "founded": 1996,
-      "employees": 47,
+      "employees": 36,
       "location": {
         "city": "Lupeni",
         "county": "Hunedoara",
@@ -6410,9 +6410,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 12012596,
-        "profit": 1640571
+        "year": 2025,
+        "revenue": 14991243,
+        "profit": 3593968
       },
       "tags": [
         "pv-comercial",
@@ -6426,7 +6426,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-18",
-      "updatedAt": "2026-05-18",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "DIACOM PRESTCOM",
         "judet": "Hunedoara"
@@ -6440,7 +6440,7 @@
       "cui": "RO21766168",
       "description": "Comp SGS Electrogrup este o firmă din Baia Mare, înființată în 2007, specializată în lucrări de instalații electrice — proiectare și execuție instalații interioare pentru construcții civile și industriale, branșamente aeriene și subterane, și instalații fotovoltaice pentru producerea de energie electrică. Acoperă pe lângă Baia Mare orașe din Maramureș precum Baia Sprie, Borșa, Cavnic, Sighetu Marmației, Târgu Lăpuș, Tăuții-Măgherăuș și Vișeu de Sus.",
       "founded": 2007,
-      "employees": 14,
+      "employees": 16,
       "location": {
         "city": "Baia Mare",
         "county": "Maramureș",
@@ -6464,9 +6464,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 5693967,
-        "profit": 873475
+        "year": 2025,
+        "revenue": 8144276,
+        "profit": 898001
       },
       "tags": [
         "pv-comercial",
@@ -6477,7 +6477,7 @@
       "featured": false,
       "verified": false,
       "createdAt": "2026-05-18",
-      "updatedAt": "2026-05-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "COMP SGS ELECTROGRUP",
         "judet": "Maramures"
@@ -6492,7 +6492,7 @@
       "logo": "/logos/startcon-cg.png",
       "description": "Instalator de sisteme fotovoltaice cu acumulare înființat în 2005, cu hub operațional în Craiova (sediu social înregistrat în Caracal, Olt). Autorizat AFM, montează sisteme rezidențiale prin programul Casa Verde Fotovoltaice și Electric Up, dar și pe piața liberă. Firma se prezintă cu un portofoliu de peste 8000 de sisteme fotovoltaice montate.",
       "founded": 2005,
-      "employees": 14,
+      "employees": 15,
       "location": {
         "city": "Craiova",
         "county": "Dolj",
@@ -6517,9 +6517,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 17451819,
-        "profit": 4456786
+        "year": 2025,
+        "revenue": 7636932,
+        "profit": 1255251
       },
       "tags": [
         "pv-rezidential",
@@ -6529,7 +6529,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-21",
-      "updatedAt": "2026-05-21",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "STARTCON CG",
         "judet": "Olt"
@@ -6544,7 +6544,7 @@
       "logo": "/logos/green-seiro-montage.png",
       "description": "Firmă specializată din Sibiu pentru furnizarea și montajul de panouri fotovoltaice, validată ca instalator AFM în programul Casa Verde Fotovoltaice. Se ocupă de birocrația dosarului și de instalarea sistemului, vizând în special segmentul rezidențial. Activă și pe programele Electric Up și RePower.",
       "founded": 0,
-      "employees": 0,
+      "employees": 25,
       "location": {
         "city": "Sibiu",
         "county": "Sibiu",
@@ -6568,9 +6568,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2023,
-        "revenue": 1094978,
-        "profit": 0
+        "year": 2025,
+        "revenue": 9748294,
+        "profit": 385931
       },
       "tags": [
         "pv-rezidential",
@@ -6579,7 +6579,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-21",
-      "updatedAt": "2026-05-21",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "GREEN SEIRO MONTAGE",
         "judet": "Sibiu"
@@ -6594,7 +6594,7 @@
       "logo": "/logos/kluner.png",
       "description": "Companie cu capital românesc înființată în 2011 în Oradea, cu activitate principală instalații (gaze naturale, sanitare, încălzire, climatizare) și o divizie dedicată sistemelor fotovoltaice. Oferă consultanță și montaj pentru sisteme fotovoltaice rezidențiale, inclusiv înscriere în programul Casa Verde. Are punct de lucru și la Brașov.",
       "founded": 2011,
-      "employees": 27,
+      "employees": 28,
       "location": {
         "city": "Oradea",
         "county": "Bihor",
@@ -6619,9 +6619,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 8867013,
-        "profit": 1133389
+        "year": 2025,
+        "revenue": 18796769,
+        "profit": 2424658
       },
       "tags": [
         "pv-rezidential",
@@ -6630,7 +6630,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-21",
-      "updatedAt": "2026-05-21",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "KLUNER",
         "judet": "Bihor"
@@ -6645,7 +6645,7 @@
       "logo": "/logos/enesa-solar-tehnology.png",
       "description": "Instalator autorizat AFM din județul Mureș (Cristești), activ în programul Casa Verde Fotovoltaice din 2019. Oferă soluții fotovoltaice complete la cheie pentru clienți rezidențiali, de la consultanță și accesarea finanțării până la montaj și punere în funcțiune.",
       "founded": 2017,
-      "employees": 10,
+      "employees": 14,
       "location": {
         "city": "Cristești",
         "county": "Mureș",
@@ -6669,9 +6669,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 13885412,
-        "profit": 3890230
+        "year": 2025,
+        "revenue": 14063309,
+        "profit": 2619054
       },
       "tags": [
         "pv-rezidential",
@@ -6680,7 +6680,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-21",
-      "updatedAt": "2026-05-21",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ENESA SOLAR TEHNOLOGY",
         "judet": "Mures"
@@ -6720,9 +6720,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 12724127,
-        "profit": 2744354
+        "year": 2025,
+        "revenue": 12268848,
+        "profit": 3187995
       },
       "tags": [
         "pv-rezidential",
@@ -6731,7 +6731,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-21",
-      "updatedAt": "2026-05-21",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "VOLTECH ENERGY",
         "judet": "Bucuresti"
@@ -6745,7 +6745,7 @@
       "cui": "RO46131349",
       "description": "Instalator local din Cluj-Napoca, acreditat ANRE, axat pe panouri fotovoltaice de calitate pentru clienți rezidențiali. Oferă dimensionare corectă a sistemului, montaj cu echipe proprii, punere în funcțiune, dosar de prosumator inclus și mentenanță.",
       "founded": 0,
-      "employees": 0,
+      "employees": 2,
       "location": {
         "city": "Cluj-Napoca",
         "county": "Cluj",
@@ -6769,9 +6769,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 1003916,
-        "profit": 33629
+        "year": 2025,
+        "revenue": 2041466,
+        "profit": 79618
       },
       "tags": [
         "pv-rezidential"
@@ -6779,7 +6779,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-21",
-      "updatedAt": "2026-05-22",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "ELECTROGREEN SERV",
         "judet": "Cluj"
@@ -6794,7 +6794,7 @@
       "logo": "/logos/dendiarom-management.png",
       "description": "Firmă din județul Satu Mare (Corod, comuna Culciu) înființată în 2021, autorizată ANRE (E1/E2), specializată în montajul de sisteme fotovoltaice și pompe de căldură pentru clienți rezidențiali. Oferă suport complet pentru obținerea subvenției prin programul Casa Verde.",
       "founded": 2021,
-      "employees": 0,
+      "employees": 15,
       "location": {
         "city": "Corod",
         "county": "Satu Mare",
@@ -6818,9 +6818,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2023,
-        "revenue": 6178068,
-        "profit": 722119
+        "year": 2025,
+        "revenue": 3901657,
+        "profit": 81253
       },
       "tags": [
         "pv-rezidential",
@@ -6829,7 +6829,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-21",
-      "updatedAt": "2026-05-21",
+      "updatedAt": "2026-07-28",
       "anreMatch": {
         "societate": "DENDIAROM MANAGEMENT",
         "judet": "Satu Mare"
@@ -6844,7 +6844,7 @@
       "logo": "/logos/marenco-el.png",
       "description": "Firmă din Constanța înființată în 2016, specializată în instalații electrice, branșamente și sisteme fotovoltaice pentru clienți rezidențiali și comerciali. Execută tablouri electrice de distribuție și oferă consultanță gratuită pentru proiecte, cu peste 10 ani de experiență în domeniul electric.",
       "founded": 2016,
-      "employees": 16,
+      "employees": 13,
       "location": {
         "city": "Constanța",
         "county": "Constanța",
@@ -6869,9 +6869,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2023,
-        "revenue": 2253037,
-        "profit": 333800
+        "year": 2025,
+        "revenue": 2359056,
+        "profit": 160433
       },
       "tags": [
         "pv-comercial",
@@ -6881,7 +6881,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-22",
-      "updatedAt": "2026-05-22",
+      "updatedAt": "2026-07-28",
       "segment": "comercial",
       "anreMatch": {
         "societate": "MARENCO EL",
@@ -6896,7 +6896,7 @@
       "logo": "/logos/energofit-impex.png",
       "description": "Firmă din Ciulnița (Slobozia), județul Ialomița, înființată în 2022, specializată în sisteme fotovoltaice pentru locuințe, firme și spații industriale. Oferă suplimentar pompe de căldură, stații de încărcare EV, automatizări și curățarea panourilor, plus suport pentru contractul de prosumator și garanție/post-garanție. Acoperă sudul și sud-estul țării.",
       "founded": 2022,
-      "employees": 9,
+      "employees": 6,
       "location": {
         "city": "Ciulnița",
         "county": "Ialomița",
@@ -6930,9 +6930,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 1264974,
-        "profit": 1949
+        "year": 2025,
+        "revenue": 3947709,
+        "profit": 182387
       },
       "tags": [
         "pv-comercial",
@@ -6943,7 +6943,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-22",
-      "updatedAt": "2026-05-22",
+      "updatedAt": "2026-07-28",
       "segment": "comercial",
       "anreMatch": {
         "societate": "ENERGOFIT IMPEX",
@@ -6957,7 +6957,7 @@
       "cui": "RO35935542",
       "description": "Gersoltech, sub brandul Electro Solar Expert, este o firmă din Tomești, județul Harghita, înființată în 2016 și specializată în instalarea de panouri fotovoltaice. Oferă sisteme rezidențiale (montaj panouri fotovoltaice pentru case), soluții comerciale și industriale, mentenanță și consultanță energetică. Compania declară pe site peste 500 de instalații realizate în 8 ani și este instalator validat în programul Casa Verde Fotovoltaice.",
       "founded": 2016,
-      "employees": 11,
+      "employees": 15,
       "location": {
         "city": "Tomești",
         "county": "Harghita",
@@ -6982,9 +6982,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 6052186,
-        "profit": 673904
+        "year": 2025,
+        "revenue": 14562158,
+        "profit": 3114493
       },
       "tags": [
         "pv-rezidential",
@@ -6994,7 +6994,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-23",
-      "updatedAt": "2026-05-23",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "GERSOLTECH",
@@ -7009,7 +7009,7 @@
       "cui": "RO42903799",
       "description": "Solarx Smart Energy este o firmă din Târgu Jiu, județul Gorj, înființată în 2020, specializată în sisteme fotovoltaice și soluții energetice complete pentru clienți rezidențiali și comerciali. Oferă proiectare, montaj și soluții complete de producere a energiei din surse solare.",
       "founded": 2020,
-      "employees": 25,
+      "employees": 23,
       "location": {
         "city": "Târgu Jiu",
         "county": "Gorj",
@@ -7033,9 +7033,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 10414395,
-        "profit": 145588
+        "year": 2025,
+        "revenue": 12041595,
+        "profit": 345366
       },
       "tags": [
         "pv-rezidential",
@@ -7044,7 +7044,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-23",
-      "updatedAt": "2026-05-23",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "SOLARX SMART ENERGY",
@@ -7208,7 +7208,7 @@
       "cui": "RO39361744",
       "description": "Idna Power, sub brandul iDNA Solar Power, este o firmă din comuna Gologanu, județul Vrancea, înființată în 2018, specializată în sisteme fotovoltaice și instalații electrice. Oferă montaj panouri fotovoltaice pentru locuințe și firme, instalații electrice civile și industriale, audituri energetice și automatizări.",
       "founded": 2018,
-      "employees": 13,
+      "employees": 15,
       "location": {
         "city": "Gologanu",
         "county": "Vrancea",
@@ -7233,9 +7233,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 11798045,
-        "profit": 2004754
+        "year": 2025,
+        "revenue": 14309317,
+        "profit": 1781760
       },
       "tags": [
         "pv-rezidential",
@@ -7245,7 +7245,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-23",
-      "updatedAt": "2026-05-23",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "IDNA POWER",
@@ -7284,9 +7284,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 14025180,
-        "profit": 644958
+        "year": 2025,
+        "revenue": 27899013,
+        "profit": 1240901
       },
       "tags": [
         "pv-rezidential",
@@ -7298,7 +7298,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-23",
-      "updatedAt": "2026-05-23",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "SUN POWER SYSTEMS ",
@@ -7366,7 +7366,7 @@
       "logo": "/logos/ceramica-stil.png",
       "description": "Ceramica Stil, sub brandul Domotec, este o firmă din comuna Marginea, județul Suceava, înființată în 2011, care realizează instalații fotovoltaice complete. Pe lângă sisteme fotovoltaice oferă pompe de căldură (MAXA) și instalații electrice de joasă tensiune (0,4 kV). Participă la programul Casa Verde Fotovoltaice.",
       "founded": 2011,
-      "employees": 7,
+      "employees": 6,
       "location": {
         "city": "Marginea",
         "county": "Suceava",
@@ -7390,9 +7390,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 5863711,
-        "profit": 375522
+        "year": 2025,
+        "revenue": 7059035,
+        "profit": 427322
       },
       "tags": [
         "pv-rezidential",
@@ -7402,7 +7402,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-23",
-      "updatedAt": "2026-05-23",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "CERAMICA STIL",
@@ -7416,7 +7416,7 @@
       "cui": "RO4009886",
       "description": "Fair Play Șerban este o firmă din Arad, înființată în 1993, specializată în instalații electrice și fotovoltaice. Oferă instalații electrice rezidențiale și industriale, branșamente monofazate și trifazate, linii de joasă și medie tensiune, automatizări, posturi de transformare și sisteme fotovoltaice. Participă la programul Casa Verde cu soluții pentru locuințe.",
       "founded": 1993,
-      "employees": 36,
+      "employees": 34,
       "location": {
         "city": "Arad",
         "county": "Arad",
@@ -7441,9 +7441,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 14192246,
-        "profit": 1259935
+        "year": 2025,
+        "revenue": 14334755,
+        "profit": -530132
       },
       "tags": [
         "pv-rezidential",
@@ -7454,7 +7454,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-23",
-      "updatedAt": "2026-05-23",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "FAIR PLAY SERBAN",
@@ -7469,7 +7469,7 @@
       "cui": "RO25708569",
       "description": "En-RG-etic, sub brandul RGE, este o firmă din Târgu Mureș, înființată în 2009, specializată în soluții fotovoltaice pentru clienți rezidențiali și comerciali. Realizează sisteme fotovoltaice rezidențiale prin programul Casa Verde (AFM), parcuri solare, stații de încărcare pentru vehicule electrice, sisteme alternative de încălzire electrică, lucrări de construcții și rețele electrice, iluminat public și instalații de împământare.",
       "founded": 2009,
-      "employees": 20,
+      "employees": 21,
       "location": {
         "city": "Târgu Mureș",
         "county": "Mureș",
@@ -7494,9 +7494,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 8394315,
-        "profit": 682908
+        "year": 2025,
+        "revenue": 15992296,
+        "profit": 1512511
       },
       "tags": [
         "pv-rezidential",
@@ -7507,7 +7507,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-23",
-      "updatedAt": "2026-05-23",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "EN-RG-ETIC",
@@ -7598,9 +7598,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 11815511,
-        "profit": 3329644
+        "year": 2025,
+        "revenue": 18788651,
+        "profit": 5782462
       },
       "tags": [
         "pv-rezidential",
@@ -7610,7 +7610,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-23",
-      "updatedAt": "2026-05-23",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "SAMGEC",
@@ -7703,9 +7703,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 11690676,
-        "profit": 1675945
+        "year": 2025,
+        "revenue": 18017124,
+        "profit": 2139447
       },
       "tags": [
         "pv-rezidential",
@@ -7715,7 +7715,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-23",
-      "updatedAt": "2026-05-23",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "ELECTROPREST",
@@ -7729,7 +7729,7 @@
       "cui": "RO3100462",
       "description": "Kami Roof Construct, sub brandul Kamiroof, este o firmă din Târnăveni, județul Mureș, înființată în 1993, producător de învelitori metalice și instalator fotovoltaic. Prin divizia Kami Green Energy oferă soluții fotovoltaice complete pentru locuințe și spații comerciale — proiectare, instalare, punere în funcțiune și întocmirea documentației de prosumator. Realizează și sisteme de acoperiș (țiglă metalică, tablă cutată, jgheaburi) și garduri metalice.",
       "founded": 1993,
-      "employees": 15,
+      "employees": 18,
       "location": {
         "city": "Târnăveni",
         "county": "Mureș",
@@ -7753,9 +7753,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 8816517,
-        "profit": 654195
+        "year": 2025,
+        "revenue": 14227537,
+        "profit": 1802492
       },
       "tags": [
         "pv-rezidential",
@@ -7765,7 +7765,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-23",
-      "updatedAt": "2026-05-23",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "KAMI ROOF CONSTRUCT",
@@ -7806,9 +7806,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 36145268,
-        "profit": 620570
+        "year": 2025,
+        "revenue": 60467855,
+        "profit": 1578071
       },
       "tags": [
         "pv-rezidential",
@@ -7819,7 +7819,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "FOTONIA SHINE RETENTION",
@@ -7835,7 +7835,7 @@
       "logo": "/logos/electricom.png",
       "description": "Electricom este o firmă din București, înființată în 1993, cu experiență vastă în sectorul energetic. Oferă proiectare, furnizare și instalare de sisteme fotovoltaice on-grid și off-grid pentru clienți rezidențiali și de business, sisteme de stocare a energiei (BESS) și furnizare de energie verde licențiată ANRE. Este instalator validat în programul Casa Verde Fotovoltaice.",
       "founded": 1993,
-      "employees": 20,
+      "employees": 17,
       "location": {
         "city": "București",
         "county": "București",
@@ -7861,9 +7861,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 49859526,
-        "profit": 2465104
+        "year": 2025,
+        "revenue": 43516775,
+        "profit": 2494991
       },
       "tags": [
         "pv-rezidential",
@@ -7875,7 +7875,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "ELECTRICOM",
@@ -7889,7 +7889,7 @@
       "cui": "RO4721638",
       "description": "Electrica este o firmă din Arad, înființată în 1993, instalator validat în programul Casa Verde 2025. Oferă sisteme fotovoltaice pentru locuințe și clienți comerciali/industriali, linii și cabluri electrice de joasă și medie tensiune, posturi de transformare, tablouri electrice și iluminat public, plus proiectare, consultanță și mentenanță. Are punct de lucru și în Timișoara.",
       "founded": 1993,
-      "employees": 72,
+      "employees": 73,
       "location": {
         "city": "Arad",
         "county": "Arad",
@@ -7916,9 +7916,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 24968394,
-        "profit": 3335486
+        "year": 2025,
+        "revenue": 31096126,
+        "profit": 3744551
       },
       "tags": [
         "pv-rezidential",
@@ -7928,7 +7928,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "ELECTRICA [AR]",
@@ -7942,7 +7942,7 @@
       "cui": "RO32610317",
       "description": "ALM Power Group este o firmă din Ghercești, județul Dolj (Parcul Industrial Craiova), înființată în 2013, specializată în lucrări de instalații electrice și sisteme fotovoltaice. Oferă montaj panouri fotovoltaice pentru locuințe prin programul Casa Verde, soluții pentru clienți comerciali, stații de încărcare auto electrice, iluminat LED, plus proiectare, execuție și mentenanță. Este instalator validat în programul Casa Verde Fotovoltaice.",
       "founded": 2013,
-      "employees": 87,
+      "employees": 85,
       "location": {
         "city": "Ghercești",
         "county": "Dolj",
@@ -7968,9 +7968,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 32907788,
-        "profit": 5698338
+        "year": 2025,
+        "revenue": 38919807,
+        "profit": 6836936
       },
       "tags": [
         "pv-rezidential",
@@ -7980,7 +7980,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "ALM POWER GROUP",
@@ -7995,7 +7995,7 @@
       "cui": "RO15774638",
       "description": "Silkat Electric Grup este o firmă din Chitila, județul Ilfov, înființată în 2003, cu peste 20 de ani de experiență. Instalează și întreține sisteme fotovoltaice pentru locuințe prin programul Casa Verde, precum și parcuri fotovoltaice de mare putere, alături de rețele electrice de joasă și medie tensiune și consultanță tehnică. Este instalator validat în programul Casa Verde Fotovoltaice.",
       "founded": 2003,
-      "employees": 55,
+      "employees": 63,
       "location": {
         "city": "Chitila",
         "county": "Ilfov",
@@ -8021,9 +8021,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 22143245,
-        "profit": 3797255
+        "year": 2025,
+        "revenue": 26612062,
+        "profit": 6771563
       },
       "tags": [
         "pv-rezidential",
@@ -8034,7 +8034,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "SILKAT ELECTRIC GRUP",
@@ -8208,7 +8208,7 @@
       "cui": "RO19023145",
       "description": "Real Automatic este o firmă din Brașov, înființată în 2006, specializată în instalații electrice și automatizări industriale. Oferă sisteme fotovoltaice la cheie (panouri, invertoare), proiectare și execuție instalații electrice de joasă și medie tensiune, tablouri electrice, stații de încărcare auto electrice și sisteme de securitate. Este instalator validat în programul Casa Verde Fotovoltaice.",
       "founded": 2006,
-      "employees": 33,
+      "employees": 30,
       "location": {
         "city": "Brașov",
         "county": "Brașov",
@@ -8233,9 +8233,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 22233582,
-        "profit": 1989462
+        "year": 2025,
+        "revenue": 26892966,
+        "profit": 1701843
       },
       "tags": [
         "pv-rezidential",
@@ -8246,7 +8246,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "REAL AUTOMATIC",
@@ -8260,7 +8260,7 @@
       "cui": "RO6464980",
       "description": "Vividus este o firmă din Brașov, înființată în 1994, specializată în instalarea de panouri fotovoltaice. Echipa montează sisteme rezidențiale pentru case, case de vacanță, cabane și agroturism, precum și parcuri solare comerciale, acoperind toate etapele de la consultanță și avize la execuție, predare și mentenanță. Este instalator validat în programul Casa Verde Fotovoltaice.",
       "founded": 1994,
-      "employees": 64,
+      "employees": 42,
       "location": {
         "city": "Brașov",
         "county": "Brașov",
@@ -8285,9 +8285,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 14623415,
-        "profit": 415762
+        "year": 2025,
+        "revenue": 11153573,
+        "profit": 354256
       },
       "tags": [
         "pv-rezidential",
@@ -8297,7 +8297,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "VIVIDUS",
@@ -8312,7 +8312,7 @@
       "cui": "RO28881636",
       "description": "CMV Quality Instal este o firmă din Craiova, județul Dolj, înființată în 2011, cu acoperire în mai multe județe. Instalează sisteme fotovoltaice on-grid și off-grid cu stocare, pentru clienți rezidențiali prin programul Casa Verde, comerciali și instituționali, alături de instalații sanitare, termice, HVAC, gaze naturale și PSI. Este instalator validat în programul Casa Verde Fotovoltaice.",
       "founded": 2011,
-      "employees": 44,
+      "employees": 43,
       "location": {
         "city": "Craiova",
         "county": "Dolj",
@@ -8338,9 +8338,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 18905767,
-        "profit": 4618916
+        "year": 2025,
+        "revenue": 22667896,
+        "profit": 1749040
       },
       "tags": [
         "pv-rezidential",
@@ -8352,7 +8352,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "CMV QUALITY INSTAL",
@@ -8367,7 +8367,7 @@
       "cui": "RO19204818",
       "description": "Airmec Instal este o firmă din Chișoda, comuna Giroc, județul Timiș, înființată în 2006, specializată în instalații termice, sanitare și de ventilație. Instalează sisteme fotovoltaice pentru clienți rezidențiali și comerciali, pompe de căldură aer-apă, sisteme de climatizare și ventilație, fiind service autorizat Viessmann. Este instalator validat în programul Casa Verde Fotovoltaice.",
       "founded": 2006,
-      "employees": 19,
+      "employees": 16,
       "location": {
         "city": "Chișoda",
         "county": "Timiș",
@@ -8392,9 +8392,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 8796203,
-        "profit": 188669
+        "year": 2025,
+        "revenue": 13546830,
+        "profit": 681196
       },
       "tags": [
         "pv-rezidential",
@@ -8404,7 +8404,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "AIRMEC INSTAL",
@@ -8419,7 +8419,7 @@
       "cui": "RO5927653",
       "description": "E.E.Tim Echipamente de Automatizare este o firmă din Timișoara, înființată în 1994, specializată în automatizări industriale și instalații electrice. Instalează sisteme fotovoltaice on-grid și off-grid pentru locuințe prin programul AFM Casa Verde și pentru clienți industriali și parcuri fotovoltaice, alături de tablouri electrice, sisteme smart home și măsurători electrice. Este instalator validat în programul Casa Verde Fotovoltaice.",
       "founded": 1994,
-      "employees": 24,
+      "employees": 22,
       "location": {
         "city": "Timișoara",
         "county": "Timiș",
@@ -8444,9 +8444,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 5379866,
-        "profit": -446323
+        "year": 2025,
+        "revenue": 6587118,
+        "profit": -141382
       },
       "tags": [
         "pv-rezidential",
@@ -8458,7 +8458,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "EETIM ECHIPAMENTE DE AUTOMATIZARE",
@@ -8526,7 +8526,7 @@
       "cui": "RO6798220",
       "description": "Elproex este o firmă din Botoșani, înființată în 1995, specializată în proiectarea și execuția de instalații electrice de până la 20 kV. Oferă sisteme fotovoltaice și documentații de prosumator, inclusiv finanțare prin programul Casa Verde, alături de branșamente, linii electrice aeriene și cablu 0,4-20 kV, posturi de transformare și iluminat public, acoperind județele Botoșani, Suceava, Iași și Neamț. Este instalator validat în programul Casa Verde Fotovoltaice.",
       "founded": 1995,
-      "employees": 28,
+      "employees": 23,
       "location": {
         "city": "Botoșani",
         "county": "Botoșani",
@@ -8554,9 +8554,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 12993259,
-        "profit": 1185953
+        "year": 2025,
+        "revenue": 15224436,
+        "profit": 2094924
       },
       "tags": [
         "pv-rezidential",
@@ -8567,7 +8567,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "ELPROEX Botosani",
@@ -8582,7 +8582,7 @@
       "cui": "RO28171329",
       "description": "Freelux Electric (brand LuxElectric) este o firmă din Cârligi, comuna Ștefan cel Mare, județul Neamț, înființată în 2011 și specializată în soluții și echipamente electrice. Oferă instalare de sisteme fotovoltaice (inclusiv off-grid) pentru clienți rezidențiali, alături de automatizări industriale și tablouri electrice de comandă. Sediul comercial este în Piatra Neamț.",
       "founded": 2011,
-      "employees": 5,
+      "employees": 6,
       "location": {
         "city": "Cârligi",
         "county": "Neamț",
@@ -8606,9 +8606,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 1929604,
-        "profit": 172115
+        "year": 2025,
+        "revenue": 3499463,
+        "profit": 715570
       },
       "tags": [
         "pv-rezidential",
@@ -8618,7 +8618,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "FREELUX ELECTRIC",
@@ -8633,7 +8633,7 @@
       "cui": "RO10668237",
       "description": "Media Ringer (brand Centrale Sibiu) este o firmă din Sibiu, înființată în 1998, specializată în instalații termice și de climatizare. Oferă sisteme fotovoltaice pentru locuințe în cadrul programului Casa Verde Fotovoltaice, alături de pompe de căldură, centrale termice (gaz și electrice), boilere și sisteme de aer condiționat. Se adresează în principal clienților rezidențiali.",
       "founded": 1998,
-      "employees": 9,
+      "employees": 8,
       "location": {
         "city": "Sibiu",
         "county": "Sibiu",
@@ -8657,9 +8657,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 2722391,
-        "profit": 230050
+        "year": 2025,
+        "revenue": 2866006,
+        "profit": 51087
       },
       "tags": [
         "pv-rezidential",
@@ -8669,7 +8669,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "MEDIA RINGER",
@@ -8841,7 +8841,7 @@
       "cui": "RO35881639",
       "description": "Electro Term Instal este o firmă din Călinești, județul Maramureș, înființată în 2016, specializată în sisteme fotovoltaice on-grid și hibride pentru clienți rezidențiali și comerciali. Oferă dimensionare, proiectare și instalare de sisteme fotovoltaice, asistență la dosarul de prosumator, instalații electrice civile și industriale, precum și suport tehnic și service.",
       "founded": 2016,
-      "employees": 6,
+      "employees": 7,
       "location": {
         "city": "Călinești",
         "county": "Maramureș",
@@ -8865,9 +8865,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 3794823,
-        "profit": 254414
+        "year": 2025,
+        "revenue": 6631142,
+        "profit": 337238
       },
       "tags": [
         "pv-rezidential",
@@ -8877,7 +8877,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "ELECTRO TERM INSTAL",
@@ -8919,9 +8919,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 4363256,
-        "profit": 458635
+        "year": 2025,
+        "revenue": 4530398,
+        "profit": 726315
       },
       "tags": [
         "pv-rezidential",
@@ -8933,7 +8933,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "HOIURA ELECTRO CONSTRUCT",
@@ -8948,7 +8948,7 @@
       "cui": "RO19060704",
       "description": "MLM Instal 2006 este o firmă din Târnăveni, județul Mureș, înființată în 2006, specializată în instalații termice, sanitare și de gaz, cu o linie dedicată de sisteme fotovoltaice pentru clienți rezidențiali. Oferă proiectare, execuție și service pentru sisteme fotovoltaice, instalații de încălzire, climatizare și irigații, deținând autorizare ANRE tip B.",
       "founded": 2006,
-      "employees": 19,
+      "employees": 17,
       "location": {
         "city": "Târnăveni",
         "county": "Mureș",
@@ -8972,9 +8972,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 4626606,
-        "profit": 282291
+        "year": 2025,
+        "revenue": 7356439,
+        "profit": 800437
       },
       "tags": [
         "pv-rezidential",
@@ -8983,7 +8983,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "MLM INSTAL 2006",
@@ -9049,7 +9049,7 @@
       "cui": "RO26478140",
       "description": "Potcontrol Instal este o firmă din Făgăraș, județul Brașov, înființată în 2010, specializată în instalații de climatizare, încălzire și energie regenerabilă. Oferă sisteme fotovoltaice pentru clienți rezidențiali, fiind instalator validat Casa Verde 2024, alături de pompe de căldură, panouri solar-termice, centrale termice și sisteme de aer condiționat.",
       "founded": 2010,
-      "employees": 8,
+      "employees": 7,
       "location": {
         "city": "Făgăraș",
         "county": "Brașov",
@@ -9073,9 +9073,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 4811474,
-        "profit": 418427
+        "year": 2025,
+        "revenue": 5752426,
+        "profit": 476973
       },
       "tags": [
         "pv-rezidential",
@@ -9085,7 +9085,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "POTCONTROL INSTAL",
@@ -9125,9 +9125,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 4869312,
-        "profit": 318099
+        "year": 2025,
+        "revenue": 4741574,
+        "profit": 116003
       },
       "tags": [
         "pv-rezidential",
@@ -9138,7 +9138,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "PAMASA CONSTRUCT",
@@ -9254,7 +9254,7 @@
       "cui": "RO45863796",
       "description": "Spectrum Energy Solution este o firmă din Slatina, județul Olt, înființată în 2022, specializată în sisteme fotovoltaice pentru clienți rezidențiali, comerciali și industriali. Oferă instalare și mentenanță sisteme fotovoltaice, instalații electrice, automatizări industriale, sisteme de medie tensiune și iluminat eficient. Comunică peste 500 de sisteme fotovoltaice realizate.",
       "founded": 2022,
-      "employees": 19,
+      "employees": 26,
       "location": {
         "city": "Slatina",
         "county": "Olt",
@@ -9279,9 +9279,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 5908983,
-        "profit": 569641
+        "year": 2025,
+        "revenue": 10546506,
+        "profit": 1525973
       },
       "tags": [
         "pv-rezidential",
@@ -9292,7 +9292,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "SPECTRUM ENERGY SOLUTION",
@@ -9306,7 +9306,7 @@
       "cui": "RO17347730",
       "description": "Net Conf este o firmă din Târgu Mureș, înființată în 2005, cu peste 18 ani de activitate în domeniul electric. Are ca obiect proiectarea, execuția și întreținerea instalațiilor electrice și a sistemelor fotovoltaice pentru clienți rezidențiali, alături de sisteme de supraveghere video, control acces, antiefracție, detecție incendiu, rețele de date și instalații de paratrăsnet.",
       "founded": 2005,
-      "employees": 15,
+      "employees": 16,
       "location": {
         "city": "Târgu Mureș",
         "county": "Mureș",
@@ -9330,9 +9330,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 6378354,
-        "profit": 1226234
+        "year": 2025,
+        "revenue": 6079068,
+        "profit": 722817
       },
       "tags": [
         "pv-rezidential",
@@ -9341,7 +9341,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": {
         "societate": "NET CONF",
@@ -9356,7 +9356,7 @@
       "cui": "RO6834960",
       "description": "General Electric este o firmă din Bacău, înființată în 1995, instalator autorizat de panouri fotovoltaice. Realizează sisteme fotovoltaice pentru clienți rezidențiali în cadrul programului Casa Verde Fotovoltaice, alături de lucrări de proiectare și construcții de instalații electrice.",
       "founded": 1995,
-      "employees": 39,
+      "employees": 37,
       "location": {
         "city": "Bacău",
         "county": "Bacău",
@@ -9380,9 +9380,9 @@
         "projectsCompleted": 0
       },
       "financials": {
-        "year": 2024,
-        "revenue": 7154132,
-        "profit": 313130
+        "year": 2025,
+        "revenue": 11142397,
+        "profit": 388100
       },
       "tags": [
         "pv-rezidential",
@@ -9391,7 +9391,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-26",
-      "updatedAt": "2026-05-26",
+      "updatedAt": "2026-07-28",
       "segment": "rezidential",
       "anreMatch": null,
       "logo": "/logos/general-electric-bacau.png"
