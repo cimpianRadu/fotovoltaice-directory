@@ -12,7 +12,17 @@ type Post = {
   status?: string;
   nota?: string;
   cta?: string;
+  // Status per canal. Valoare = dată ISO (postat) / 'programat' / 'sarit'.
+  // Cheie absentă = nedistribuit pe canalul ăla (de obicei cont încă nesetat).
+  platforme?: Record<string, string>;
 };
+
+const PLATFORME = [
+  { key: 'facebook', label: 'FB' },
+  { key: 'instagram', label: 'IG' },
+  { key: 'youtube', label: 'YT' },
+  { key: 'tiktok', label: 'TT' },
+];
 
 function todayBucharest(): string {
   return new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/Bucharest' });
@@ -44,6 +54,32 @@ function badge(p: Post, today: string): { cls: string; label: string } {
   return { cls: 'bg-amber-50 text-amber-700', label: '🕒 De programat' };
 }
 
+function platformCls(v?: string): string {
+  if (!v) return 'bg-slate-50 text-slate-300 ring-1 ring-inset ring-slate-200';
+  if (v === 'sarit') return 'bg-slate-100 text-slate-400 line-through';
+  if (v === 'programat') return 'bg-amber-100 text-amber-800';
+  return 'bg-emerald-100 text-emerald-800';
+}
+
+function PlatformBadges({ p }: { p: Post }) {
+  return (
+    <div className="flex gap-1">
+      {PLATFORME.map(({ key, label }) => {
+        const v = p.platforme?.[key];
+        return (
+          <span
+            key={key}
+            title={`${key}: ${v || 'nedistribuit'}`}
+            className={`inline-flex h-6 w-8 items-center justify-center rounded text-[11px] font-semibold ${platformCls(v)}`}
+          >
+            {label}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
 function PostRow({ p, dateCol, today }: { p: Post; dateCol: string; today: string }) {
   const b = badge(p, today);
   return (
@@ -59,6 +95,9 @@ function PostRow({ p, dateCol, today }: { p: Post; dateCol: string; today: strin
         <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap ${b.cls}`}>
           {b.label}
         </span>
+      </td>
+      <td className="px-4 py-3">
+        <PlatformBadges p={p} />
       </td>
       <td className="hidden md:table-cell px-4 py-3 text-xs font-mono text-slate-500">
         {p.folder ? `social/${p.folder}/` : p.cta || ''}
@@ -79,6 +118,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
               <th className="px-4 py-2.5 font-medium">Data</th>
               <th className="px-4 py-2.5 font-medium">Temă</th>
               <th className="px-4 py-2.5 font-medium">Status</th>
+              <th className="px-4 py-2.5 font-medium">Platforme</th>
               <th className="hidden md:table-cell px-4 py-2.5 font-medium">Fișiere / CTA</th>
               <th className="hidden lg:table-cell px-4 py-2.5 font-medium">Notă</th>
             </tr>
@@ -112,9 +152,12 @@ export default function SocialDashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Social · Facebook</h1>
+        <h1 className="text-2xl font-semibold text-slate-900">Social</h1>
         <p className="text-sm text-slate-500 mt-1">
           Pipeline postări · schedule actualizat {fmtDate(schedule.updated)} · sursa: data/social-schedule.json
+        </p>
+        <p className="text-xs text-slate-400 mt-1">
+          Badge-uri platforme: verde = postat · galben = programat · gri = nedistribuit
         </p>
       </div>
 
@@ -149,7 +192,7 @@ export default function SocialDashboardPage() {
           ))
         ) : (
           <tr>
-            <td colSpan={5} className="px-4 py-3 text-sm text-slate-500">
+            <td colSpan={6} className="px-4 py-3 text-sm text-slate-500">
               Nimic în coadă.
             </td>
           </tr>

@@ -1,13 +1,45 @@
-# Social Media Pipeline — Facebook
+# Social Media Pipeline
 
-> Coadă de postări pentru pagina FB „Instalatori Fotovoltaice". Workflow: skill `pil-slide-composer` (pas 0 = hook brainstorm obligatoriu, 3-5 variante, userul alege). Output: `social/<data>-<tema>/` (compose.py + slide-uri 1:1 + reel/ 9:16 + caption.txt + caption-reel.txt).
-> Reguli: cifre DOAR reale (never-invent), fără hashtag-uri, fără em dashes, link în descriere + comentariu fixat. Reel-ul se postează la 1-2 zile după carousel, nu simultan.
+> Coadă de postări pentru pagina FB „Instalatori Fotovoltaice" și canalele derivate (Instagram, YouTube Shorts, TikTok). Workflow: skill `pil-slide-composer` (pas 0 = hook brainstorm obligatoriu, 3-5 variante, userul alege). Output: `social/<data>-<tema>/` (compose.py + slide-uri 1:1 + reel/ 9:16 + fișiere de caption per platformă).
+> Reguli: cifre DOAR reale (never-invent), fără hashtag-uri pe Facebook, fără em dashes. Reel-ul se postează la 1-2 zile după carousel, nu simultan.
 > **Convenție foldere:** după publicare, folderul primește sufixul „ ✅" în nume (ex. `2026-07-06-cere-oferta ✅`). Dashboard de status pe site: **/admin/social** (Basic Auth via `ADMIN_PASSWORD`, ca analytics), sursă date: `data/social-schedule.json` — de actualizat la fiecare postare/programare. Adevărul despre programări: Meta Business Suite Planner.
 > **De la postarea #2:** include pe 1-2 slide-uri screenshot-uri reale din site ca background cu opacity redus (feedback user 2026-07-06).
 
 ## 🎯 Focus strategic (decizie user 2026-07-20)
 
 **Promovăm prioritar `/cere-oferta`, obiectivul e colectarea de lead-uri** (pe care userul vrea apoi să le vândă firmelor). Implicații: CTA primar al fiecărei postări noi = /cere-oferta (nu doar în comentariul fixat, ci ca destinație a unghiului); temele se triază după „aduce cereri de ofertă sau doar views?"; succes = submissions în digest, nu reach. Ideile cele mai aliniate din coadă: #4 (amortizare → calculator → cere-oferta) și #6 (câte firme în județul tău → cere-oferta).
+
+## 📡 Distribuție multi-platformă (decizie user 2026-07-28)
+
+Același master 9:16 se postează pe **Facebook, Instagram, YouTube Shorts și TikTok**. Ordinea de prioritate stabilită: Instagram (cel mai ieftin de activat, cross-post din Meta Business Suite), YouTube Shorts (pariul real: link clicabil în descriere + coadă lungă pe căutare), TikTok (test cu criteriu de oprire: dacă la 8 săptămâni nu bate baseline-ul de pe Facebook și nu vezi click-uri pe linkul din bio în Umami, se închide).
+
+**Regula de aur: video-ul și vocea rămân neutre față de platformă.** Tot ce e specific unui canal trăiește în stratul de text.
+
+- În pixeli se pune doar wordmark-ul sau URL-ul scurt (`instalatori-fotovoltaice.ro/cere-oferta`), niciodată „linkul e în comentariul fixat" (scos din toate compozițiile pe 2026-07-28). Pe IG și TikTok comentariile nu au linkuri clicabile, pe YouTube linkul stă în descriere.
+- În script (voce) CTA-ul e neutru: „lasă o cerere", nu „link în comentariu". Vezi și skill-ul global `narrated-video`.
+- Consecința: **un singur render, patru platforme.** Extinderea pe un canal nou costă un fișier de text, nu un re-render.
+
+**Fișiere per reel** (șablon gol în `social/_template-reel/`; la serii se prefixează cu numărul reel-ului, ex. `caption2-instagram.txt`):
+
+| Fișier | Conținut |
+|---|---|
+| `caption-facebook.txt` | caption lung, fără hashtags, link în primul comentariu |
+| `comentariu-facebook.txt` | comentariul fixat, cu linkuri UTM |
+| `caption-instagram.txt` | corp scurtat, CTA „link în bio", cu hashtags |
+| `titlu-youtube.txt` | titlu în formă de căutare (vezi `keywords.md` al postării), nu hook de social |
+| `caption-youtube.txt` | descriere cu linkuri clicabile UTM |
+| `caption-tiktok.txt` | o frază + hashtags + „link în bio" |
+| `bio-link.txt` | linkurile de pus în bio pe IG și TikTok înainte de postare |
+
+**UTM obligatoriu pe orice link** (Umami le citește automat), altfel extinderea pe patru canale nu se poate măsura:
+
+```
+?utm_source=facebook|instagram|youtube|tiktok&utm_medium=reel|shorts|bio&utm_campaign=<slug-postare>
+```
+
+Linkul din bio (IG, TikTok) se schimbă la fiecare reel, cu `utm_campaign`-ul postării curente. Altfel nu se poate atribui nicio cerere unei postări anume pe canalele fără linkuri clicabile.
+
+**Evidența per canal:** în `data/social-schedule.json`, câmpul `platforme` per postare, cu valori `<dată ISO>` (postat), `programat` sau `sarit`. Cheie lipsă = nedistribuit pe canalul ăla. Se vede ca badge-uri FB/IG/YT/TT în /admin/social.
 
 ## Cadență
 
