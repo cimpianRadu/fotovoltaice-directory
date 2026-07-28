@@ -57,6 +57,8 @@ next-env.d.ts
 # Excepție: sursa Remotion (compozițiile .tsx + config), ~250 KB, merită în istoric.
 # Starea reală a postărilor e în data/social-schedule.json, nu în folderul ăsta.
 /social/*
+!/social/make_mp4.py
+!/social/reel_kit.py
 !/social/remotion/
 /social/remotion/*
 !/social/remotion/src/

@@ -1,6 +1,33 @@
 {
-  "updated": "2026-07-23",
+  "updated": "2026-07-27",
   "posts": [
+    {
+      "id": 17,
+      "tema": "Legea 160/2026 pentru firme: praguri, PZU, termen ANRE",
+      "folder": "2026-07-27-legea-160-prosumatori",
+      "format": "reel narat 38s (news, partea 3/3)",
+      "programat": "2026-07-31",
+      "nota": "Partea 3 din seria Legea 160/2026, segment B2B. Compensare ≤200 kW până la 31.12.2030, 200-400 kW regularizare financiară la preț mediu ponderat PZU, metodologie ANRE cu termen 24 sept. Fișiere: reel3-firme-pzu-anre.mp4 + caption3.txt. Comentariul fixat + keywords: comentarii-fixate.md.",
+      "cta": "/cere-oferta"
+    },
+    {
+      "id": 16,
+      "tema": "Plătești factura de gaz din surplusul fotovoltaic (PF ≤27 kW)",
+      "folder": "2026-07-27-legea-160-prosumatori",
+      "format": "reel narat 30s (news, partea 2/3)",
+      "programat": "2026-07-29",
+      "nota": "Partea 2 din seria Legea 160/2026, unghi rezidențial. Drept nou pentru PF ≤27 kW, condiție același furnizor pentru curent și gaz, opțiune contractuală minimum 12 luni. Fișiere: reel2-gaz-din-surplus.mp4 + caption2.txt. Comentariul fixat + keywords: comentarii-fixate.md.",
+      "cta": "/cere-oferta"
+    },
+    {
+      "id": 15,
+      "tema": "Legea 160/2026 a intrat în vigoare (compensare lunară)",
+      "folder": "2026-07-27-legea-160-prosumatori",
+      "format": "reel narat 31s (news, partea 1/3)",
+      "programat": "2026-07-27",
+      "nota": "Partea 1 din seria Legea 160/2026 (hot news pe articolul #44). MO 603/23 iul, în vigoare 26 iul, compensare lunară ≤200 kW, se aplică automat contractelor în derulare. Serie de 3 reels în loc de unul lung de 53s. Fișiere: reel1-lege-in-vigoare.mp4 + caption1.txt. Link ghid în primul comentariu (necesită deploy). Comentariul fixat + keywords: comentarii-fixate.md.",
+      "cta": "/cere-oferta"
+    },
     {
       "id": 14,
       "tema": "Cereri noi în fiecare zi (screenshot feed /cereri)",
