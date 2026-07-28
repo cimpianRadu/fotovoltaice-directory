@@ -1,0 +1,59 @@
+{
+ "sentences": [
+  {
+   "file": "s1.wav",
+   "text": "Legea prosumatorilor a fost promulgată și a intrat în vigoare pe douăzeci și șase iulie.",
+   "start": 0.5,
+   "duration": 4.271
+  },
+  {
+   "file": "s2.wav",
+   "text": "Se numește Legea o sută șaizeci din două mii douăzeci și șase și schimbă modul în care îți încasezi surplusul de energie.",
+   "start": 5.051,
+   "duration": 6.054
+  },
+  {
+   "file": "s3.wav",
+   "text": "Prima schimbare: compensarea devine lunară pentru sistemele de până în două sute de kilowați, nu la douăzeci și patru de luni ca până acum.",
+   "start": 11.385,
+   "duration": 7.059
+  },
+  {
+   "file": "s4.wav",
+   "text": "A doua: persoanele fizice cu sisteme sub douăzeci și șapte de kilowați pot plăti factura de gaz din surplusul fotovoltaic, la același furnizor.",
+   "start": 18.724,
+   "duration": 7.623
+  },
+  {
+   "file": "s5.wav",
+   "text": "Pentru sistemele între două sute și patru sute de kilowați, energia livrată se plătește la prețul mediu al pieței pentru ziua următoare.",
+   "start": 26.627,
+   "duration": 6.622
+  },
+  {
+   "file": "s6.wav",
+   "text": "Regulile se aplică automat și contractelor de prosumator aflate deja în derulare.",
+   "start": 33.529,
+   "duration": 3.981
+  },
+  {
+   "file": "s7.wav",
+   "text": "Mai lipsește un singur lucru: metodologia ANRE, așteptată până la finalul lui septembrie.",
+   "start": 37.79,
+   "duration": 4.971
+  },
+  {
+   "file": "s8.wav",
+   "text": "Am pus tot ce contează, cu citate din lege, în ghidul de pe site.",
+   "start": 43.041,
+   "duration": 3.647
+  },
+  {
+   "file": "s9.wav",
+   "text": "Iar dacă ai un proiect fotovoltaic în plan, lasă o cerere și o trimitem instalatorilor verificați din baza noastră.",
+   "start": 46.968,
+   "duration": 5.498
+  }
+ ],
+ "total": 53.466
+}

@@ -1,0 +1,35 @@
+{
+ "sentences": [
+  {
+   "file": "s1.wav",
+   "text": "Alertă pentru firmele de instalare: două cereri noi din Ilfov, intrate chiar azi.",
+   "start": 0.5,
+   "duration": 5.237
+  },
+  {
+   "file": "s2.wav",
+   "text": "Ambele case individuale, sisteme de șase kilowați, iar una cere și stocare de doisprezece kilowați oră.",
+   "start": 6.017,
+   "duration": 5.8
+  },
+  {
+   "file": "s3.wav",
+   "text": "Nicio revendicare până acum, și fiecare cerere merge la maxim trei firme.",
+   "start": 12.097,
+   "duration": 4.58
+  },
+  {
+   "file": "s4.wav",
+   "text": "Fii primul care ia legătura cu clientul.",
+   "start": 16.957,
+   "duration": 1.806
+  },
+  {
+   "file": "s5.wav",
+   "text": "Intră acum pe cereri și revendică. Linkul e în comentariul fixat.",
+   "start": 19.043,
+   "duration": 3.249
+  }
+ ],
+ "total": 23.292
+}

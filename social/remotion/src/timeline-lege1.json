@@ -1,0 +1,35 @@
+{
+ "sentences": [
+  {
+   "file": "s1.wav",
+   "text": "Legea prosumatorilor a intrat în vigoare pe douăzeci și șase iulie.",
+   "start": 0.5,
+   "duration": 3.389
+  },
+  {
+   "file": "s2.wav",
+   "text": "Legea o sută șaizeci din două mii douăzeci și șase a fost publicată în Monitorul Oficial pe douăzeci și trei iulie.",
+   "start": 4.169,
+   "duration": 6.263
+  },
+  {
+   "file": "s3.wav",
+   "text": "Cea mai mare schimbare: compensarea devine lunară pentru sistemele de până în două sute de kilowați, în loc de douăzeci și patru de luni.",
+   "start": 10.712,
+   "duration": 6.523
+  },
+  {
+   "file": "s4.wav",
+   "text": "Regulile se aplică automat și contractelor de prosumator aflate deja în derulare.",
+   "start": 17.515,
+   "duration": 4.873
+  },
+  {
+   "file": "s5.wav",
+   "text": "Ai tot ce contează în ghidul de pe site, iar dacă ai un proiect fotovoltaic, lasă o cerere și o trimitem instalatorilor verificați din baza noastră.",
+   "start": 22.668,
+   "duration": 7.17
+  }
+ ],
+ "total": 30.838
+}
