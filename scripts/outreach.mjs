@@ -41,6 +41,14 @@ const SEND_REJECTS = process.argv.includes('--send-rejects');
 const MAX_EMAILS = Number(process.env.OUTREACH_MAX_EMAILS) || 30;
 const FIRMS_PER_LEAD = 5;
 
+// Notificarea firmelor prin email e OPRITĂ din 2026-07-28. În iulie au plecat 81
+// de emailuri către 50 de firme, 75 livrate, zero răspunsuri: canalul nu
+// distribuie cererile și nu produce nicio informație, iar trimiterile constante
+// către adrese care nu deschid niciodată strică reputația domeniului.
+// Cererile se distribuie telefonic, un apel per cerere. Confirmarea către client
+// (emailul A) rămâne activă. Pune pe true ca să reactivezi blastul.
+const NOTIFY_FIRMS = false;
+
 const SITE = 'https://instalatori-fotovoltaice.ro';
 const REPLY_TO = 'contact@instalatori-fotovoltaice.ro';
 const FROM = process.env.RESEND_FROM || 'Instalatori Fotovoltaice <onboarding@resend.dev>';
@@ -362,10 +370,16 @@ async function main() {
     if (sent >= MAX_EMAILS) { console.log('(cap atins, mă opresc)'); break; }
     if (ONLY_LEAD && row !== ONLY_LEAD) continue;
     if (!lead.email) { stats.skipped++; continue; }
-    const firms = pickFirms(lead.judet, lead.segment, lastContacted);
-    if (!firms.length) { stats.noFirms++; console.log(`LEAD rând ${row} (${lead.judet}/${lead.segment}): 0 firme potrivite → LAS pentru manual`); continue; }
+    const firms = NOTIFY_FIRMS ? pickFirms(lead.judet, lead.segment, lastContacted) : [];
+    // Cu NOTIFY_FIRMS oprit lista e goală prin construcție, deci nu mai sărim
+    // rândul: clientul trebuie să primească oricum confirmarea.
+    if (NOTIFY_FIRMS && !firms.length) { stats.noFirms++; console.log(`LEAD rând ${row} (${lead.judet}/${lead.segment}): 0 firme potrivite → LAS pentru manual`); continue; }
 
-    console.log(`LEAD rând ${row} (${lead.judet}/${lead.segment}) → ${firms.length} firme: ${firms.map((f) => f.id).join(', ')}`);
+    console.log(
+      firms.length
+        ? `LEAD rând ${row} (${lead.judet}/${lead.segment}) → ${firms.length} firme: ${firms.map((f) => f.id).join(', ')}`
+        : `LEAD rând ${row} (${lead.judet}/${lead.segment}) → doar confirmare client; cererea se distribuie telefonic`,
+    );
     const firmMsg = leadFirmEmail(lead);
     const contacted = [];
     for (const f of firms) {

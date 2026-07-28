@@ -167,13 +167,13 @@
     {
       "id": 18,
       "tema": "Cerere comercială 150 kW Prahova, nerevendicată (Electric Up)",
-      "folder": "2026-07-28-cerere-comerciala-prahova",
+      "folder": "2026-07-28-cerere-comerciala-prahova ✅",
       "format": "poză simplă (screenshot card /cereri) + caption",
-      "programat": "2026-07-28",
-      "nota": "B2B, format low-effort ca #14. Unghi: raritatea comercialului (5 din 23 cereri) + zero revendicări după 3 zile + cap 3 firme. NU se folosește cifra agregată de revendicări (21 din 25 sunt JTS, ar induce în eroare). Doar Facebook, nu Instagram: audiența IG e de beneficiari. Screenshot din pagina publică /cereri, nu din admin.",
+      "postat": "2026-07-28",
+      "nota": "B2B, format low-effort ca #14. Unghi: raritatea comercialului (5 din 23 cereri) + zero revendicări după 4 zile + cap 3 firme. NU se folosește cifra agregată de revendicări (21 din 25 sunt JTS, ar induce în eroare). Doar Facebook, nu Instagram: audiența IG e de beneficiari. Screenshot din pagina publică /cereri, nu din admin. Screenshot: screenshot-cereri.png, generat cu Playwright din pagina publică, filtrul Comercial (5) activ. Caption și screenshot trebuie să arate aceeași vechime a cererii.",
       "cta": "/cereri",
       "platforme": {
-        "facebook": "programat"
+        "facebook": "2026-07-28"
       }
     }
   ]
