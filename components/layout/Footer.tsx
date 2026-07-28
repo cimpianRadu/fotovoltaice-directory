@@ -4,7 +4,8 @@ import { getCoveredCounties, slugifyCounty, getCompaniesByCounty, getCompanies }
 import FooterAccordion from './FooterAccordion';
 
 export default function Footer() {
-  const latestGuides = [...guidesData.guides]
+  const latestGuides = guidesData.guides
+    .filter((g) => g.published !== false)
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
     .slice(0, 5);
 

@@ -57,7 +57,8 @@ export function getCaseStudies(): CaseStudy[] {
 }
 
 export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
-  return CASE_STUDIES.find((c) => c.slug === slug);
+  const study = CASE_STUDIES.find((c) => c.slug === slug);
+  return study && study.published !== false ? study : undefined;
 }
 
 /**

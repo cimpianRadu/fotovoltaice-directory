@@ -35,9 +35,17 @@ export async function generateStaticParams() {
   return guidesData.guides.filter((g) => g.published !== false).map((g) => ({ topic: g.slug }));
 }
 
+// Un ghid depublicat rămâne în guides.json, deci căutarea după slug l-ar servi
+// cu 200 pe o rută pe care Google o poate avea deja în index. Filtrăm la lookup,
+// nu doar la generateStaticParams.
+function getPublishedGuide(slug: string) {
+  const guide = guidesData.guides.find((g) => g.slug === slug);
+  return guide && guide.published !== false ? guide : undefined;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { topic } = await params;
-  const guide = guidesData.guides.find((g) => g.slug === topic);
+  const guide = getPublishedGuide(topic);
   if (!guide) return {};
 
   const heroImage = getHeroImage(guide.slug);
@@ -62,7 +70,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GuidePage({ params }: Props) {
   const { topic } = await params;
-  const guide = guidesData.guides.find((g) => g.slug === topic);
+  const guide = getPublishedGuide(topic);
   if (!guide) notFound();
 
   const heroImage = getHeroImage(guide.slug);
