@@ -53,19 +53,10 @@ next-env.d.ts
 # registru leaduri partajat cu firme partenere (mapare locală, nu se comite)
 /data/partner-sheets.local.json
 
-# social/ — 700+ MB de PNG/MP4/node_modules, rămâne local.
-# Excepție: sursa Remotion (compozițiile .tsx + config), ~250 KB, merită în istoric.
+# social/ — materialul de postat (PNG/MP4/node_modules, 700+ MB) plus sursa care
+# îl generează. Rămâne integral local, fără excepții: decizia userului, 28 iul 2026.
 # Starea reală a postărilor e în data/social-schedule.json, nu în folderul ăsta.
-/social/*
-!/social/make_mp4.py
-!/social/reel_kit.py
-!/social/remotion/
-/social/remotion/*
-!/social/remotion/src/
-!/social/remotion/package.json
-!/social/remotion/package-lock.json
-!/social/remotion/remotion.config.ts
-!/social/remotion/tsconfig.json
+/social/
 
 # python bytecode (scripturile de reel din social/)
 __pycache__/
