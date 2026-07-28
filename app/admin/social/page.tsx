@@ -1,28 +1,9 @@
-import schedule from '@/data/social-schedule.json';
+import { getSocialPosts, type SocialPost } from '@/lib/sheets';
+import PlatformToggles from './PlatformToggles';
 
 export const dynamic = 'force-dynamic';
 
-type Post = {
-  id: number;
-  tema: string;
-  folder?: string;
-  format?: string;
-  postat?: string;
-  programat?: string;
-  status?: string;
-  nota?: string;
-  cta?: string;
-  // Status per canal. Valoare = dată ISO (postat) / 'programat' / 'sarit'.
-  // Cheie absentă = nedistribuit pe canalul ăla (de obicei cont încă nesetat).
-  platforme?: Record<string, string>;
-};
-
-const PLATFORME = [
-  { key: 'facebook', label: 'FB' },
-  { key: 'instagram', label: 'IG' },
-  { key: 'youtube', label: 'YT' },
-  { key: 'tiktok', label: 'TT' },
-];
+type Post = SocialPost;
 
 function todayBucharest(): string {
   return new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/Bucharest' });
@@ -54,32 +35,6 @@ function badge(p: Post, today: string): { cls: string; label: string } {
   return { cls: 'bg-amber-50 text-amber-700', label: '🕒 De programat' };
 }
 
-function platformCls(v?: string): string {
-  if (!v) return 'bg-slate-50 text-slate-300 ring-1 ring-inset ring-slate-200';
-  if (v === 'sarit') return 'bg-slate-100 text-slate-400 line-through';
-  if (v === 'programat') return 'bg-amber-100 text-amber-800';
-  return 'bg-emerald-100 text-emerald-800';
-}
-
-function PlatformBadges({ p }: { p: Post }) {
-  return (
-    <div className="flex gap-1">
-      {PLATFORME.map(({ key, label }) => {
-        const v = p.platforme?.[key];
-        return (
-          <span
-            key={key}
-            title={`${key}: ${v || 'nedistribuit'}`}
-            className={`inline-flex h-6 w-8 items-center justify-center rounded text-[11px] font-semibold ${platformCls(v)}`}
-          >
-            {label}
-          </span>
-        );
-      })}
-    </div>
-  );
-}
-
 function PostRow({ p, dateCol, today }: { p: Post; dateCol: string; today: string }) {
   const b = badge(p, today);
   return (
@@ -97,7 +52,7 @@ function PostRow({ p, dateCol, today }: { p: Post; dateCol: string; today: strin
         </span>
       </td>
       <td className="px-4 py-3">
-        <PlatformBadges p={p} />
+        <PlatformToggles id={p.id} platforme={p.platforme} />
       </td>
       <td className="hidden md:table-cell px-4 py-3 text-xs font-mono text-slate-500">
         {p.folder ? `social/${p.folder}/` : p.cta || ''}
@@ -130,9 +85,16 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-export default function SocialDashboardPage() {
+export default async function SocialDashboardPage() {
   const today = todayBucharest();
-  const posts = schedule.posts as Post[];
+
+  let posts: Post[] = [];
+  let error: string | null = null;
+  try {
+    posts = await getSocialPosts();
+  } catch (e) {
+    error = e instanceof Error ? e.message : 'Nu am putut citi tabul „Social".';
+  }
 
   const coada = posts
     .filter((p) => !p.postat && p.status !== 'idee')
@@ -154,12 +116,19 @@ export default function SocialDashboardPage() {
       <div>
         <h1 className="text-2xl font-semibold text-slate-900">Social</h1>
         <p className="text-sm text-slate-500 mt-1">
-          Pipeline postări · schedule actualizat {fmtDate(schedule.updated)} · sursa: data/social-schedule.json
+          Pipeline postări · sursa: tabul „Social" din Google Sheets, editabil direct
         </p>
         <p className="text-xs text-slate-400 mt-1">
-          Badge-uri platforme: verde = postat · galben = programat · gri = nedistribuit
+          Badge-uri platforme: verde = postat · galben = programat · gri = nedistribuit. Click pe
+          badge ca să marchezi postarea pe canalul ăla, cu data de azi.
         </p>
       </div>
+
+      {error && (
+        <div className="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
+        </div>
+      )}
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {tiles.map((t) => (

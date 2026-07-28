@@ -391,3 +391,109 @@ export async function saveAdInquiryToSheet(inquiry: {
     'Nou',
   ]);
 }
+
+// ── Social: pipeline de postări ────────────────────────────────────────────
+// Sursa a fost `data/social-schedule.json`, mutată în Sheets pe 2026-07-28 ca
+// să poată fi editată fără deploy (fișierele din repo sunt read-only pe Vercel).
+
+const SOCIAL_SHEET = 'Social';
+
+/** Ordinea coloanelor din tab. Indexul = poziția în rând. */
+const SOCIAL_COLS = [
+  'id', 'tema', 'folder', 'format', 'status', 'programat', 'postat', 'cta', 'nota',
+  'facebook', 'instagram', 'youtube', 'tiktok',
+] as const;
+
+export const SOCIAL_PLATFORMS = ['facebook', 'instagram', 'youtube', 'tiktok'] as const;
+export type SocialPlatform = (typeof SOCIAL_PLATFORMS)[number];
+
+export interface SocialPost {
+  id: number;
+  tema: string;
+  folder?: string;
+  format?: string;
+  status?: string;
+  programat?: string;
+  postat?: string;
+  cta?: string;
+  nota?: string;
+  /** Valoare = dată ISO (postat) / 'programat' / 'sarit'. Absent = nedistribuit. */
+  platforme: Partial<Record<SocialPlatform, string>>;
+}
+
+function colLetter(index: number): string {
+  return String.fromCharCode(65 + index);
+}
+
+export async function getSocialPosts(): Promise<SocialPost[]> {
+  const rows = await readRows(SOCIAL_SHEET);
+  return rows
+    .slice(1)
+    .filter((r) => Number.isFinite(Number(r[0])))
+    .map((r) => {
+      const get = (name: (typeof SOCIAL_COLS)[number]) => r[SOCIAL_COLS.indexOf(name)]?.trim() || '';
+      const platforme: SocialPost['platforme'] = {};
+      for (const p of SOCIAL_PLATFORMS) {
+        const v = get(p);
+        if (v) platforme[p] = v;
+      }
+      return {
+        id: Number(r[0]),
+        tema: get('tema'),
+        folder: get('folder'),
+        format: get('format'),
+        status: get('status'),
+        programat: get('programat'),
+        postat: get('postat'),
+        cta: get('cta'),
+        nota: get('nota'),
+        platforme,
+      };
+    });
+}
+
+/** O valoare de platformă e „postat" doar dacă e o dată, nu 'programat'/'sarit'. */
+function isPostedValue(v: string | undefined): boolean {
+  return !!v && /^\d{4}-\d{2}-\d{2}$/.test(v);
+}
+
+/**
+ * Comută o platformă între „postat azi" și „nedistribuit".
+ * `postat` la nivel de postare urmează platformele: se setează la prima
+ * platformă marcată și se golește când nu mai rămâne niciuna.
+ */
+export async function toggleSocialPlatform(
+  id: number,
+  platform: SocialPlatform,
+  today: string,
+): Promise<SocialPost[]> {
+  const rows = await readRows(SOCIAL_SHEET);
+  const rowIndex = rows.findIndex((r, i) => i > 0 && Number(r[0]) === id);
+  if (rowIndex === -1) throw new Error(`Postarea #${id} nu există în tabul ${SOCIAL_SHEET}.`);
+
+  const row = rows[rowIndex];
+  const platformIdx = SOCIAL_COLS.indexOf(platform);
+  const nextValue = isPostedValue(row[platformIdx]) ? '' : today;
+
+  const remaining = SOCIAL_PLATFORMS.some((p) =>
+    p === platform ? !!nextValue : isPostedValue(row[SOCIAL_COLS.indexOf(p)]),
+  );
+
+  const sheetRow = rowIndex + 1; // A1 e 1-indexat
+  const updates = [
+    { range: `${SOCIAL_SHEET}!${colLetter(platformIdx)}${sheetRow}`, values: [[nextValue]] },
+    {
+      range: `${SOCIAL_SHEET}!${colLetter(SOCIAL_COLS.indexOf('postat'))}${sheetRow}`,
+      values: [[remaining ? row[SOCIAL_COLS.indexOf('postat')] || today : '']],
+    },
+  ];
+
+  const auth = getAuth();
+  const sheets = google.sheets({ version: 'v4', auth });
+  await sheets.spreadsheets.values.batchUpdate({
+    spreadsheetId: SPREADSHEET_ID,
+    requestBody: { valueInputOption: 'RAW', data: updates },
+  });
+
+  return getSocialPosts();
+}

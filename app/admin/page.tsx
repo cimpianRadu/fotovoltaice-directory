@@ -9,7 +9,7 @@ const SECTIONS = [
   {
     href: '/admin/social',
     label: 'Social',
-    desc: 'Pipeline postări: coadă, întârziate, postate, idei. Sursa: data/social-schedule.json.',
+    desc: 'Pipeline postări: coadă, întârziate, postate, idei. Marchezi postările direct de aici.',
   },
   {
     href: '/admin/analytics',
