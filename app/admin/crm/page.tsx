@@ -4,6 +4,7 @@ import {
   getClaims,
   getListingsSince,
   LEAD_STATUSES,
+  LEAD_STATUS_LABELS,
   MAX_CLAIMS_PER_LEAD,
   type NewLead,
   type NewListing,
@@ -28,7 +29,13 @@ const SEGMENTS = ['rezidential', 'comercial'] as const;
 const LISTINGS_WINDOW_DAYS = 30;
 
 interface Props {
-  searchParams: Promise<{ filtru?: string; judet?: string; segment?: string; status?: string }>;
+  searchParams: Promise<{
+    filtru?: string;
+    judet?: string;
+    segment?: string;
+    status?: string;
+    contact?: string;
+  }>;
 }
 
 function fmtDateTime(iso: string): string {
@@ -86,74 +93,87 @@ function ClaimList({ claims }: { claims: LeadClaim[] }) {
   );
 }
 
-function LeadRow({ lead, claims }: { lead: NewLead; claims: LeadClaim[] }) {
+function LeadCard({ lead, claims }: { lead: NewLead; claims: LeadClaim[] }) {
   // Formularul cere putere în kW și suprafață în mp, dar salvează cifra goală.
-  const specs = [
-    lead.putere && `${lead.putere} kW`,
-    lead.suprafata && `${lead.suprafata} mp`,
-  ]
+  const specs = [lead.putere && `${lead.putere} kW`, lead.suprafata && `${lead.suprafata} mp`]
     .filter(Boolean)
     .join(' · ');
   const full = claims.length >= MAX_CLAIMS_PER_LEAD;
 
   return (
-    <tr className="border-b border-slate-100 align-top last:border-0">
-      <td className="px-4 py-3 whitespace-nowrap text-xs text-slate-500 tabular-nums">
-        {fmtDateTime(lead.timestamp)}
-      </td>
-      <td className="px-4 py-3">
-        <div className="font-medium text-slate-900">{lead.tipProiect || '(fără tip)'}</div>
-        <div className="text-xs text-slate-500">
-          {lead.judet}
-          {specs && ` · ${specs}`}
+    <article className="flex flex-col rounded-xl border border-slate-200 bg-white">
+      <header className="flex items-start justify-between gap-3 border-b border-slate-100 px-4 py-3">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2">
+            <h3 className="truncate font-medium text-slate-900">
+              {lead.tipProiect || '(fără tip)'}
+            </h3>
+            <span
+              className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium ${
+                lead.segment === 'rezidential'
+                  ? 'bg-sky-50 text-sky-700'
+                  : 'bg-slate-100 text-slate-600'
+              }`}
+            >
+              {lead.segment || 'comercial'}
+            </span>
+          </div>
+          <p className="mt-0.5 text-xs text-slate-500">
+            {lead.judet}
+            {specs && ` · ${specs}`}
+          </p>
         </div>
-        {lead.mesaj && <MessagePreview text={lead.mesaj} />}
-      </td>
-      <td className="px-4 py-3 text-xs">
-        <div className="font-medium text-slate-800">{lead.numeContact || '—'}</div>
-        {lead.numeCompanie && <div className="text-slate-500">{lead.numeCompanie}</div>}
-        {lead.email && (
-          <a href={`mailto:${lead.email}`} className="block text-slate-500 hover:text-slate-900">
-            {lead.email}
-          </a>
-        )}
-        {lead.telefon && (
-          <a href={`tel:${lead.telefon}`} className="block text-slate-500 hover:text-slate-900">
-            {lead.telefon}
-          </a>
-        )}
-        {lead.preselectedCompany && (
-          <div className="mt-1 text-slate-400">a cerut: {lead.preselectedCompany}</div>
-        )}
-      </td>
-      <td className="px-4 py-3 whitespace-nowrap">
-        <span
-          className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${
-            lead.segment === 'rezidential'
-              ? 'bg-sky-50 text-sky-700'
-              : 'bg-slate-100 text-slate-600'
-          }`}
-        >
-          {lead.segment || 'comercial'}
+        <span className="shrink-0 text-xs text-slate-400 tabular-nums">
+          {fmtDateTime(lead.timestamp)}
         </span>
-        {lead.status && (
-          <div className="mt-1 text-xs text-slate-500">{lead.status}</div>
-        )}
-      </td>
-      <td className="px-4 py-3">
-        <div
-          className={`mb-1 text-xs font-semibold tabular-nums ${
-            full ? 'text-emerald-600' : claims.length > 0 ? 'text-slate-700' : 'text-slate-400'
-          }`}
-        >
-          {claims.length}/{MAX_CLAIMS_PER_LEAD}
+      </header>
+
+      <div className="grid gap-4 px-4 py-3 sm:grid-cols-2">
+        <div className="text-xs">
+          <div className="font-medium text-slate-800">{lead.numeContact || '—'}</div>
+          {lead.numeCompanie && <div className="text-slate-500">{lead.numeCompanie}</div>}
+          {lead.email && (
+            <a href={`mailto:${lead.email}`} className="block text-slate-500 hover:text-slate-900">
+              {lead.email}
+            </a>
+          )}
+          {lead.telefon && (
+            <a href={`tel:${lead.telefon}`} className="block text-slate-500 hover:text-slate-900">
+              {lead.telefon}
+            </a>
+          )}
+          {lead.preselectedCompany && (
+            <div className="mt-1 text-slate-400">a cerut: {lead.preselectedCompany}</div>
+          )}
+          {/* Coloana M, veche: „Nou" e valoarea implicită și nu spune nimic.
+              Se afișează doar când conține text scris manual. */}
+          {lead.status && lead.status !== 'Nou' && (
+            <div className="mt-1 text-slate-400">{lead.status}</div>
+          )}
+          {lead.mesaj && <MessagePreview text={lead.mesaj} />}
         </div>
-        <ClaimList claims={claims} />
-      </td>
-      <td className="px-4 py-3">
-        <LeadCrm id={lead.timestamp} status={lead.crmStatus} notes={lead.notes} />
-      </td>
-    </tr>
+
+        <div className="text-xs">
+          <div
+            className={`mb-1 font-semibold tabular-nums ${
+              full ? 'text-emerald-600' : claims.length > 0 ? 'text-slate-700' : 'text-slate-400'
+            }`}
+          >
+            Revendicări {claims.length}/{MAX_CLAIMS_PER_LEAD}
+          </div>
+          <ClaimList claims={claims} />
+        </div>
+      </div>
+
+      <div className="mt-auto border-t border-slate-100 bg-slate-50/60 px-4 py-3">
+        <LeadCrm
+          id={lead.timestamp}
+          status={lead.crmStatus}
+          contacted={lead.contactedByFirm}
+          notes={lead.notes}
+        />
+      </div>
+    </article>
   );
 }
 
@@ -240,7 +260,7 @@ function Pill({ href, active, children }: { href: string; active: boolean; child
 }
 
 export default async function CrmPage({ searchParams }: Props) {
-  const { filtru, judet, segment, status } = await searchParams;
+  const { filtru, judet, segment, status, contact } = await searchParams;
   const activeFilter: Filter =
     FILTERS.find((f) => f.key === filtru)?.key ?? 'toate';
 
@@ -279,6 +299,9 @@ export default async function CrmPage({ searchParams }: Props) {
     if (judet && l.judet !== judet) return false;
     if (segment && (l.segment || 'comercial') !== segment) return false;
     if (status && l.crmStatus !== status) return false;
+    // `neverificat` = celula e goală, adică n-am întrebat încă clientul.
+    if (contact === 'neverificat' && l.contactedByFirm !== '') return false;
+    if ((contact === 'da' || contact === 'nu') && l.contactedByFirm !== contact) return false;
     const n = claimsByLead.get(l.timestamp)?.length ?? 0;
     if (activeFilter === 'nerevendicate') return n === 0;
     if (activeFilter === 'revendicate') return n > 0;
@@ -287,17 +310,30 @@ export default async function CrmPage({ searchParams }: Props) {
   });
 
   const unclaimed = leads.filter((l) => !claimsByLead.has(l.timestamp)).length;
+  // Clientul a vrut panouri, s-a rezolvat în altă parte, și nu l-a sunat nimeni.
+  // Asta nu e concurență pierdută, e livrare ruptă.
+  const lostUncontacted = leads.filter(
+    (l) => l.crmStatus === 'altundeva' && l.contactedByFirm === 'nu',
+  ).length;
 
-  const qs = (next: { filtru?: Filter; judet?: string; segment?: string; status?: string }) => {
+  const qs = (next: {
+    filtru?: Filter;
+    judet?: string;
+    segment?: string;
+    status?: string;
+    contact?: string;
+  }) => {
     const p = new URLSearchParams();
     const f = next.filtru ?? activeFilter;
     const j = next.judet ?? judet;
     const sg = next.segment ?? segment;
     const st = next.status ?? status;
+    const ct = next.contact ?? contact;
     if (f !== 'toate') p.set('filtru', f);
     if (j) p.set('judet', j);
     if (sg) p.set('segment', sg);
     if (st) p.set('status', st);
+    if (ct) p.set('contact', ct);
     const s = p.toString();
     return s ? `/admin/crm?${s}` : '/admin/crm';
   };
@@ -311,9 +347,12 @@ export default async function CrmPage({ searchParams }: Props) {
         </Link>
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-5">
         <Stat label="Cereri total" value={leads.length} />
         <Stat label="Fără nicio revendicare" value={unclaimed} tone="alert" />
+        {/* Combinația care decide dacă problema e prețul sau livrarea: clientul
+            a vrut panouri, s-a rezolvat în altă parte, și nu l-a sunat nimeni. */}
+        <Stat label="Pierdute fără niciun apel" value={lostUncontacted} tone="alert" />
         <Stat label="Revendicări total" value={claims.length} />
         <Stat label={`Listări (${LISTINGS_WINDOW_DAYS}z)`} value={listings.length} />
       </div>
@@ -338,15 +377,30 @@ export default async function CrmPage({ searchParams }: Props) {
           ))}
         </FilterRow>
 
-        <FilterRow label="Status">
+        <FilterRow label="Stare">
           <Pill href={qs({ status: '' })} active={!status}>
             Toate
           </Pill>
           {LEAD_STATUSES.map((s) => (
             <Pill key={s} href={qs({ status: s })} active={status === s}>
-              {s}
+              {LEAD_STATUS_LABELS[s]}
             </Pill>
           ))}
+        </FilterRow>
+
+        <FilterRow label="Contactat">
+          <Pill href={qs({ contact: '' })} active={!contact}>
+            Toate
+          </Pill>
+          <Pill href={qs({ contact: 'da' })} active={contact === 'da'}>
+            De o firmă
+          </Pill>
+          <Pill href={qs({ contact: 'nu' })} active={contact === 'nu'}>
+            De nimeni
+          </Pill>
+          <Pill href={qs({ contact: 'neverificat' })} active={contact === 'neverificat'}>
+            Neverificat
+          </Pill>
         </FilterRow>
 
         <FilterRow label="Județ">
@@ -365,34 +419,20 @@ export default async function CrmPage({ searchParams }: Props) {
         {visible.length} {visible.length === 1 ? 'cerere afișată' : 'cereri afișate'}
       </p>
 
-      <div className="mt-2 overflow-x-auto rounded-xl border border-slate-200 bg-white">
-        <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
-            <tr>
-              <th className="px-4 py-2 font-medium">Data</th>
-              <th className="px-4 py-2 font-medium">Cerere</th>
-              <th className="px-4 py-2 font-medium">Client</th>
-              <th className="px-4 py-2 font-medium">Segment</th>
-              <th className="px-4 py-2 font-medium">Revendicări</th>
-              <th className="px-4 py-2 font-medium">Status și note</th>
-            </tr>
-          </thead>
-          <tbody>
-            {visible.map((lead) => (
-              <LeadRow
-                key={lead.timestamp}
-                lead={lead}
-                claims={claimsByLead.get(lead.timestamp) ?? []}
-              />
-            ))}
-          </tbody>
-        </table>
-        {visible.length === 0 && (
-          <p className="px-4 py-8 text-center text-sm text-slate-500">
-            Nicio cerere pentru filtrele alese.
-          </p>
-        )}
+      <div className="mt-2 grid items-start gap-3 xl:grid-cols-2">
+        {visible.map((lead) => (
+          <LeadCard
+            key={lead.timestamp}
+            lead={lead}
+            claims={claimsByLead.get(lead.timestamp) ?? []}
+          />
+        ))}
       </div>
+      {visible.length === 0 && (
+        <p className="mt-2 rounded-xl border border-slate-200 bg-white px-4 py-8 text-center text-sm text-slate-500">
+          Nicio cerere pentru filtrele alese.
+        </p>
+      )}
 
       <ListingsSection listings={listings} />
     </div>

@@ -1,5 +1,11 @@
 import { NextResponse } from 'next/server';
-import { LEAD_STATUSES, updateLeadCrm, type LeadStatus } from '@/lib/sheets';
+import {
+  CONTACT_STATES,
+  LEAD_STATUSES,
+  updateLeadCrm,
+  type ContactState,
+  type LeadStatus,
+} from '@/lib/sheets';
 
 function todayBucharest(): string {
   return new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/Bucharest' });
@@ -7,9 +13,10 @@ function todayBucharest(): string {
 
 export async function POST(request: Request) {
   try {
-    const { id, status, note } = (await request.json()) as {
+    const { id, status, contacted, note } = (await request.json()) as {
       id?: string;
       status?: string;
+      contacted?: string;
       note?: string;
     };
 
@@ -17,12 +24,17 @@ export async function POST(request: Request) {
     if (status && !(LEAD_STATUSES as readonly string[]).includes(status)) {
       return NextResponse.json({ error: 'status necunoscut' }, { status: 400 });
     }
-    if (!status && !note?.trim()) {
+    // Șirul gol e valid: înseamnă „încă neverificat".
+    if (contacted !== undefined && contacted !== '' && !(CONTACT_STATES as readonly string[]).includes(contacted)) {
+      return NextResponse.json({ error: 'valoare necunoscută pentru contactare' }, { status: 400 });
+    }
+    if (!status && contacted === undefined && !note?.trim()) {
       return NextResponse.json({ error: 'nimic de salvat' }, { status: 400 });
     }
 
     const fields = await updateLeadCrm(id, {
       status: status as LeadStatus | undefined,
+      contacted: contacted as ContactState | undefined,
       note,
       today: todayBucharest(),
     });

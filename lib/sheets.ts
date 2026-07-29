@@ -1,4 +1,4 @@
-import { LEAD_STATUSES, type LeadStatus, type LeadNote } from './sheets-shared';
+import { LEAD_STATUSES, CONTACT_STATES, type LeadStatus, type ContactState, type LeadNote } from './sheets-shared';
 import { google } from 'googleapis';
 
 function getAuth() {
@@ -147,9 +147,10 @@ export interface NewLead {
   tipAcoperis: string;
   fazare: string;
   consumLunar: string;
-  // V/W — pipeline-ul de CRM, scrise doar din /admin/crm. Vezi updateLeadCrm.
+  // V/W/X — pipeline-ul de CRM, scrise doar din /admin/crm. Vezi updateLeadCrm.
   crmStatus: LeadStatus;
   notes: LeadNote[];
+  contactedByFirm: ContactState;
 }
 
 export interface NewListing {
@@ -511,8 +512,17 @@ export async function toggleSocialPlatform(
 
 const LEAD_CRM_STATUS_COL = 21; // V
 const LEAD_NOTES_COL = 22; // W
+const LEAD_CONTACTED_COL = 23; // X
 
-export { LEAD_STATUSES, type LeadStatus, type LeadNote } from './sheets-shared';
+export {
+  LEAD_STATUSES,
+  LEAD_STATUS_LABELS,
+  LEAD_STATUS_HINTS,
+  CONTACT_STATES,
+  type LeadStatus,
+  type ContactState,
+  type LeadNote,
+} from './sheets-shared';
 
 /** Jurnalul e text simplu în celulă: fiecare intrare începe cu `[YYYY-MM-DD] `. */
 export function parseNotes(raw: string): LeadNote[] {
@@ -541,23 +551,31 @@ async function findLeadRow(timestamp: string): Promise<{ row: string[]; sheetRow
 export interface LeadCrmFields {
   crmStatus: LeadStatus;
   notes: LeadNote[];
+  /** A contactat-o vreo firmă? Gol = încă neverificat cu clientul. */
+  contactedByFirm: ContactState;
 }
 
 export function readCrmFields(row: string[]): LeadCrmFields {
   const status = (row[LEAD_CRM_STATUS_COL] || '').trim().toLowerCase();
+  const contacted = (row[LEAD_CONTACTED_COL] || '').trim().toLowerCase();
   return {
-    crmStatus: (LEAD_STATUSES as readonly string[]).includes(status) ? (status as LeadStatus) : 'nou',
+    crmStatus: (LEAD_STATUSES as readonly string[]).includes(status)
+      ? (status as LeadStatus)
+      : 'noua',
     notes: parseNotes(row[LEAD_NOTES_COL] || ''),
+    contactedByFirm: (CONTACT_STATES as readonly string[]).includes(contacted)
+      ? (contacted as ContactState)
+      : '',
   };
 }
 
 /**
- * Setează statusul și/sau adaugă o notă datată. Notele sunt append-only, cele
- * noi primele, ca să se citească fără scroll în celulă.
+ * Setează statusul, marcajul de contactare și/sau adaugă o notă datată. Notele
+ * sunt append-only, cele noi primele, ca să se citească fără scroll în celulă.
  */
 export async function updateLeadCrm(
   timestamp: string,
-  changes: { status?: LeadStatus; note?: string; today?: string },
+  changes: { status?: LeadStatus; contacted?: ContactState; note?: string; today?: string },
 ): Promise<LeadCrmFields> {
   const { row, sheetRow } = await findLeadRow(timestamp);
   const data: { range: string; values: string[][] }[] = [];
@@ -565,6 +583,11 @@ export async function updateLeadCrm(
   if (changes.status) {
     data.push({ range: `Leads!V${sheetRow}`, values: [[changes.status]] });
     row[LEAD_CRM_STATUS_COL] = changes.status;
+  }
+
+  if (changes.contacted !== undefined) {
+    data.push({ range: `Leads!X${sheetRow}`, values: [[changes.contacted]] });
+    row[LEAD_CONTACTED_COL] = changes.contacted;
   }
 
   const note = changes.note?.trim();
