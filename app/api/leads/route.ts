@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
 import { saveLeadToSheet } from '@/lib/sheets';
 
-const CONSENT_VERSION = 'v2-2026-07-20';
+// v3 lărgește destinatarii la partenerii de finanțare, DOAR pentru cererile care
+// declară o rută de finanțare printr-un program (coloana Y). Cererile pe fonduri
+// proprii și cele strânse sub v2 nu sunt acoperite: pe alea nu le trimite nimănui
+// în afara firmelor de instalare. Vezi textul din components/forms/LeadForm.tsx.
+const CONSENT_VERSION = 'v3-2026-07-29';
 
 export async function POST(request: Request) {
   try {

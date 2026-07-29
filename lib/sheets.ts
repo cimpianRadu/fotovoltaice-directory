@@ -13,11 +13,34 @@ function getAuth() {
 
 const SPREADSHEET_ID = process.env.GOOGLE_SHEETS_SPREADSHEET_ID!;
 
+/**
+ * Sheets limitează cererile la 60 de citiri pe minut per utilizator, iar noi
+ * consumăm 3 la fiecare încărcare de /admin/crm (care e force-dynamic, deci
+ * fiecare click pe un filtru e o încărcare nouă). Peste limită, API-ul răspunde
+ * 429 și pagina rămânea cu o bandă roșie în loc de date. Un 429 nu e o eroare
+ * de aplicație, e „mai încearcă", deci îl tratăm ca atare în loc să-l arătăm.
+ */
+async function withRetry<T>(op: () => Promise<T>, label: string): Promise<T> {
+  const DELAYS_MS = [400, 1200, 3000];
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await op();
+    } catch (err) {
+      const status = (err as { code?: number; status?: number }).code
+        ?? (err as { status?: number }).status;
+      const retriable = status === 429 || status === 503;
+      if (!retriable || attempt >= DELAYS_MS.length) throw err;
+      console.warn(`[sheets] ${label}: ${status}, reîncerc în ${DELAYS_MS[attempt]}ms`);
+      await new Promise((r) => setTimeout(r, DELAYS_MS[attempt]));
+    }
+  }
+}
+
 async function appendRow(sheetName: string, values: string[]) {
   const auth = getAuth();
   const sheets = google.sheets({ version: 'v4', auth });
 
-  await sheets.spreadsheets.values.append({
+  await withRetry(() => sheets.spreadsheets.values.append({
     spreadsheetId: SPREADSHEET_ID,
     range: `${sheetName}!A:A`,
     // RAW (not USER_ENTERED): keep submitted text verbatim — phone numbers keep
@@ -26,17 +49,21 @@ async function appendRow(sheetName: string, values: string[]) {
     requestBody: {
       values: [values],
     },
-  });
+  }), `append ${sheetName}`);
 }
 
 async function readRows(sheetName: string): Promise<string[][]> {
   const auth = getAuth();
   const sheets = google.sheets({ version: 'v4', auth });
 
-  const res = await sheets.spreadsheets.values.get({
-    spreadsheetId: SPREADSHEET_ID,
-    range: `${sheetName}!A:Z`,
-  });
+  const res = await withRetry(
+    () =>
+      sheets.spreadsheets.values.get({
+        spreadsheetId: SPREADSHEET_ID,
+        range: `${sheetName}!A:Z`,
+      }),
+    `read ${sheetName}`,
+  );
 
   return (res.data.values as string[][] | undefined) ?? [];
 }
@@ -58,6 +85,7 @@ export async function saveLeadToSheet(lead: {
   tipAcoperis?: string;
   fazare?: string;
   consumLunar?: string;
+  finantare?: string;
 }): Promise<string> {
   const timestamp = new Date().toISOString();
   await appendRow('Leads', [
@@ -83,6 +111,10 @@ export async function saveLeadToSheet(lead: {
     lead.tipAcoperis || '',  // S — Tip acoperiș
     lead.fazare || '',       // T — Alimentare (mono/trifazat)
     lead.consumLunar || '',  // U — Consum lunar declarat
+    '', // V — Status CRM: gol = „Nouă" (vezi readCrmFields). Se scrie din /admin/crm.
+    '', // W — Note CRM
+    '', // X — Contactat de o firmă
+    lead.finantare || '',    // Y — Ruta de finanțare declarată de client
   ]);
   return timestamp;
 }
@@ -151,6 +183,9 @@ export interface NewLead {
   crmStatus: LeadStatus;
   notes: LeadNote[];
   contactedByFirm: ContactState;
+  // Y — ruta de finanțare, adăugată în formular pe 29 iulie 2026. Goală pe
+  // cererile anterioare. Vezi FINANCING_* din lib/utils-shared.
+  finantare: string;
 }
 
 export interface NewListing {
@@ -201,6 +236,7 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     tipAcoperis: r[18] || '',
     fazare: r[19] || '',
     consumLunar: r[20] || '',
+    finantare: r[24] || '',
     ...readCrmFields(r),
   }));
 }
@@ -247,6 +283,8 @@ export interface PublicLead {
   tipAcoperis: string;
   fazare: string;
   consumLunar: string;
+  // Public intenționat: e câmpul care decide dacă o firmă sună azi sau nu.
+  finantare: string;
 }
 
 // Redactare pentru afișarea publică a mesajului: emailuri, URL-uri și șiruri
@@ -292,6 +330,7 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       tipAcoperis: l.tipAcoperis,
       fazare: l.fazare,
       consumLunar: l.consumLunar,
+      finantare: l.finantare,
     }))
     .reverse(); // cele mai noi primele
 }
@@ -311,6 +350,8 @@ export interface LeadClaim {
   numeFirma: string;
   numeContact: string;
   telefon: string;
+  /** Coloana G: data la care s-a confirmat că firma a sunat clientul. Gol = slot ocupat. */
+  contactedAt: string;
 }
 
 export async function getClaims(): Promise<LeadClaim[]> {
@@ -329,6 +370,7 @@ export async function getClaims(): Promise<LeadClaim[]> {
       numeFirma: r[2] || '',
       numeContact: r[3] || '',
       telefon: r[4] || '',
+      contactedAt: r[6] || '',
     }));
 }
 
@@ -354,15 +396,63 @@ export async function saveClaimToSheet(claim: {
     claim.numeContact,
     claim.telefon,
     'Nou', // coloana Status
+    '',    // G — Contactat la: se completează din /admin/crm, eliberează slotul firmei
   ];
   try {
     await appendRow(CLAIMS_SHEET, values);
   } catch {
     // Tabul „Revendicări" nu există încă — îl creăm cu header și reîncercăm o dată.
     await createSheetTab(CLAIMS_SHEET);
-    await appendRow(CLAIMS_SHEET, ['Timestamp', 'Lead ID', 'Firmă', 'Contact', 'Telefon', 'Status']);
+    await appendRow(CLAIMS_SHEET, CLAIMS_HEADER);
     await appendRow(CLAIMS_SHEET, values);
   }
+}
+
+const CLAIMS_HEADER = [
+  'Timestamp',
+  'Lead ID',
+  'Firmă',
+  'Contact',
+  'Telefon',
+  'Status',
+  'Contactat la',
+];
+
+/**
+ * Marchează (sau demarchează) apelul confirmat pe o revendicare. Cheia e perechea
+ * timestamp + lead: un timestamp singur nu e unic, cele 20 de revendicări din
+ * 24 iulie 2026 au fost scrise direct în sheet și au toate aceeași valoare.
+ */
+export async function markClaimContacted(
+  claimTimestamp: string,
+  leadId: string,
+  contactedAt: string,
+): Promise<LeadClaim> {
+  const rows = await readRows(CLAIMS_SHEET);
+  const index = rows.findIndex((r) => r[0] === claimTimestamp && r[1] === leadId);
+  if (index === -1) throw new Error('Revendicarea nu există în tabul Revendicări.');
+
+  const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+  await withRetry(
+    () =>
+      sheets.spreadsheets.values.update({
+        spreadsheetId: SPREADSHEET_ID,
+        range: `${CLAIMS_SHEET}!G${index + 1}`,
+        valueInputOption: 'RAW',
+        requestBody: { values: [[contactedAt]] },
+      }),
+    'update revendicare',
+  );
+
+  const row = rows[index];
+  return {
+    timestamp: row[0] || '',
+    leadId: row[1] || '',
+    numeFirma: row[2] || '',
+    numeContact: row[3] || '',
+    telefon: row[4] || '',
+    contactedAt,
+  };
 }
 
 export async function saveWaitlistToSheet(email: string) {
@@ -496,10 +586,14 @@ export async function toggleSocialPlatform(
 
   const auth = getAuth();
   const sheets = google.sheets({ version: 'v4', auth });
-  await sheets.spreadsheets.values.batchUpdate({
-    spreadsheetId: SPREADSHEET_ID,
-    requestBody: { valueInputOption: 'RAW', data: updates },
-  });
+  await withRetry(
+    () =>
+      sheets.spreadsheets.values.batchUpdate({
+        spreadsheetId: SPREADSHEET_ID,
+        requestBody: { valueInputOption: 'RAW', data: updates },
+      }),
+    'update social',
+  );
 
   return getSocialPosts();
 }
@@ -519,6 +613,10 @@ export {
   LEAD_STATUS_LABELS,
   LEAD_STATUS_HINTS,
   CONTACT_STATES,
+  MAX_ACTIVE_CLAIMS_PER_FIRM,
+  countActiveClaimsForFirm,
+  isSameFirm,
+  normalizePhone,
   type LeadStatus,
   type ContactState,
   type LeadNote,
@@ -600,10 +698,14 @@ export async function updateLeadCrm(
 
   if (data.length) {
     const sheets = google.sheets({ version: 'v4', auth: getAuth() });
-    await sheets.spreadsheets.values.batchUpdate({
-      spreadsheetId: SPREADSHEET_ID,
-      requestBody: { valueInputOption: 'RAW', data },
-    });
+    await withRetry(
+      () =>
+        sheets.spreadsheets.values.batchUpdate({
+          spreadsheetId: SPREADSHEET_ID,
+          requestBody: { valueInputOption: 'RAW', data },
+        }),
+      'update CRM',
+    );
   }
 
   return readCrmFields(row);

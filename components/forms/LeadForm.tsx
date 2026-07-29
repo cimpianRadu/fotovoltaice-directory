@@ -10,6 +10,8 @@ import {
   ROOF_TYPES_REZIDENTIAL,
   ROOF_TYPES_COMERCIAL,
   PHASE_TYPES,
+  FINANCING_REZIDENTIAL,
+  FINANCING_COMERCIAL,
 } from '@/lib/utils-shared';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import { trackEvent } from '@/lib/analytics';
@@ -49,6 +51,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
   const isRezidential = segment === 'rezidential';
   const projectTypes = isRezidential ? residentialProjectTypes : commercialProjectTypes;
   const roofTypes = isRezidential ? ROOF_TYPES_REZIDENTIAL : ROOF_TYPES_COMERCIAL;
+  const financingTypes = isRezidential ? FINANCING_REZIDENTIAL : FINANCING_COMERCIAL;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -74,6 +77,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         segment,
         roof_type: String(body.tipAcoperis || ''),
         phase: String(body.fazare || ''),
+        financing: String(body.finantare || ''),
       });
 
       setLeadRef(typeof json.id === 'string' ? json.id : null);
@@ -193,15 +197,30 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
           </div>
         </div>
 
-        <div>
-          <Input
-            label="Consum lunar mediu (opțional)"
-            name="consumLunar"
-            placeholder="ex: 350 lei sau 250 kWh"
-          />
-          <p className="mt-1 text-[11px] text-gray-400">
-            De pe ultima factură. Ajută instalatorul să dimensioneze sistemul corect, nu din estimare.
-          </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Select
+              label="Cum finanțați investiția"
+              name="finantare"
+              options={financingTypes.map((o) => ({ value: o.value, label: o.label }))}
+              required
+            />
+            <p className="mt-1 text-[11px] text-gray-400">
+              Instalatorii întreabă asta la primul telefon. Răspunsul aici vă scutește de un apel
+              și vă aduce oferte potrivite situației.
+            </p>
+          </div>
+          <div>
+            <Input
+              label="Consum lunar mediu (opțional)"
+              name="consumLunar"
+              placeholder="ex: 350 lei sau 250 kWh"
+            />
+            <p className="mt-1 text-[11px] text-gray-400">
+              De pe ultima factură. Ajută instalatorul să dimensioneze sistemul corect, nu din
+              estimare.
+            </p>
+          </div>
         </div>
 
         <div>
@@ -211,7 +230,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
             type="textarea"
             placeholder={
               isRezidential
-                ? 'Descrieți pe scurt ce vă doriți (ex: vreau panouri prin Casa Verde)...'
+                ? 'Descrieți pe scurt ce vă doriți (ex: vreau și baterie de stocare)...'
                 : 'Descrieți pe scurt proiectul...'
             }
           />
@@ -238,8 +257,8 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
             >
               Politicii de Confidențialitate
             </a>
-            . Datele vor fi transmise exclusiv firmelor de instalare care acoperă zona mea, pentru a mă
-            contacta cu oferte. *
+            . Datele vor fi transmise firmelor de instalare care acoperă zona mea și, dacă am cerut
+            finanțare printr-un program, unui partener de finanțare, pentru a mă contacta cu oferte. *
           </label>
         </div>
 

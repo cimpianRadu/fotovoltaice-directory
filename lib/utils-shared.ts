@@ -188,6 +188,59 @@ export function getPhaseLabel(slug: string): string {
   return PHASE_TYPES.find((o) => o.value === slug)?.label ?? slug;
 }
 
+// Ruta de finanțare (iulie 2026). Separă clientul care cumpără acum de cel care
+// așteaptă un program, iar diferența e mare: Casa Verde Fotovoltaice nu are
+// sesiune deschisă în 2026, iar ghidul pentru baterii nu era publicat la 27 iul.
+// Fără câmpul ăsta, instalatorul sună la nimereală, dă peste clienți care
+// așteaptă, și încetează să mai sune. Listele diferă pe segment: Casa Verde e
+// pentru persoane fizice, Electric Up pentru IMM.
+export const FINANCING_REZIDENTIAL = [
+  { value: 'fonduri-proprii', label: 'Fonduri proprii sau credit' },
+  { value: 'casa-verde', label: 'Aștept Casa Verde (AFM)' },
+  { value: 'afm-baterii', label: 'Baterii prin AFM (am deja panouri)' },
+  { value: 'nu-stiu', label: 'Nu știu încă, vreau să aflu' },
+] as const;
+
+export const FINANCING_COMERCIAL = [
+  { value: 'fonduri-proprii', label: 'Fonduri proprii sau credit' },
+  { value: 'electric-up', label: 'Electric Up' },
+  { value: 'alt-program', label: 'Alt program (Fond Modernizare, SME Eco-Tech, AFIR)' },
+  { value: 'nu-stiu', label: 'Nu știu încă, vreau să aflu' },
+] as const;
+
+// Ca la ROOF_*: valorile comune celor două liste au aceeași etichetă, altfel
+// afișajul ar depinde de ordinea de construire a mapei.
+const FINANCING_LABELS: Record<string, string> = Object.fromEntries(
+  [...FINANCING_REZIDENTIAL, ...FINANCING_COMERCIAL].map((o) => [o.value, o.label]),
+);
+
+// Etichete scurte pentru chip-uri (card /cereri, card CRM).
+const FINANCING_SHORT: Record<string, string> = {
+  'fonduri-proprii': 'Fonduri proprii',
+  'casa-verde': 'Așteaptă Casa Verde',
+  'afm-baterii': 'Baterii prin AFM',
+  'electric-up': 'Electric Up',
+  'alt-program': 'Alt program',
+  'nu-stiu': 'Nu știe încă',
+};
+
+/** `ready` = cumpără pe banii lui, `program` = depinde de o sesiune de finanțare. */
+export type FinancingTone = 'ready' | 'program' | 'unknown';
+
+export function getFinancingLabel(slug: string): string {
+  return FINANCING_LABELS[slug] ?? slug;
+}
+
+export function getFinancingShort(slug: string): string {
+  return FINANCING_SHORT[slug] ?? slug;
+}
+
+export function getFinancingTone(slug: string): FinancingTone {
+  if (slug === 'fonduri-proprii') return 'ready';
+  if (!slug || slug === 'nu-stiu') return 'unknown';
+  return 'program';
+}
+
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('ro-RO', {
     style: 'currency',
