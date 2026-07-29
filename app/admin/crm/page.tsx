@@ -3,6 +3,7 @@ import {
   getLeadsSince,
   getClaims,
   getListingsSince,
+  countActiveClaimsForFirm,
   LEAD_STATUSES,
   LEAD_STATUS_LABELS,
   MAX_CLAIMS_PER_LEAD,
@@ -10,6 +11,8 @@ import {
   type NewListing,
   type LeadClaim,
 } from '@/lib/sheets';
+import { getFinancingShort, getFinancingTone, type FinancingTone } from '@/lib/utils-shared';
+import ClaimList, { type ClaimRow } from './ClaimList';
 import LeadCrm from './LeadCrm';
 import MessagePreview from './MessagePreview';
 
@@ -26,6 +29,20 @@ const FILTERS: { key: Filter; label: string }[] = [
 
 const SEGMENTS = ['rezidential', 'comercial'] as const;
 
+// Rutele concrete diferă pe segment (Casa Verde vs Electric Up), dar la filtrare
+// contează doar întrebarea „cumpără acum sau așteaptă un program?".
+const FINANCING_FILTERS: { key: FinancingTone; label: string }[] = [
+  { key: 'ready', label: 'Fonduri proprii' },
+  { key: 'program', label: 'Așteaptă program' },
+  { key: 'unknown', label: 'Nu știe / necompletat' },
+];
+
+const FINANCING_TONE_CLASS: Record<FinancingTone, string> = {
+  ready: 'bg-emerald-50 text-emerald-700',
+  program: 'bg-amber-50 text-amber-700',
+  unknown: 'bg-slate-100 text-slate-500',
+};
+
 const LISTINGS_WINDOW_DAYS = 30;
 
 interface Props {
@@ -35,6 +52,7 @@ interface Props {
     segment?: string;
     status?: string;
     contact?: string;
+    finantare?: string;
   }>;
 }
 
@@ -74,37 +92,7 @@ function Caption({ children }: { children: React.ReactNode }) {
   );
 }
 
-function ClaimList({ claims }: { claims: LeadClaim[] }) {
-  if (claims.length === 0) {
-    return <p className="text-xs text-slate-400">Nerevendicat</p>;
-  }
-  return (
-    <div className="space-y-1.5">
-      {claims.map((c) => (
-        <div
-          key={`${c.leadId}-${c.timestamp}`}
-          className="rounded-md border border-slate-100 bg-slate-50/70 px-2 py-1.5 text-xs"
-        >
-          <div className="font-medium text-slate-800">{c.numeFirma}</div>
-          <div className="text-slate-500">
-            {c.numeContact}
-            {c.telefon && (
-              <>
-                {' · '}
-                <a href={`tel:${c.telefon}`} className="hover:text-slate-900">
-                  {c.telefon}
-                </a>
-              </>
-            )}
-          </div>
-          <div className="text-slate-400">{fmtDateTime(c.timestamp)}</div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function LeadCard({ lead, claims }: { lead: NewLead; claims: LeadClaim[] }) {
+function LeadCard({ lead, claims }: { lead: NewLead; claims: ClaimRow[] }) {
   // Formularul cere putere în kW și suprafață în mp, dar salvează cifra goală.
   const specs = [lead.putere && `${lead.putere} kW`, lead.suprafata && `${lead.suprafata} mp`]
     .filter(Boolean)
@@ -133,6 +121,16 @@ function LeadCard({ lead, claims }: { lead: NewLead; claims: LeadClaim[] }) {
             {lead.judet}
             {specs && ` · ${specs}`}
           </p>
+          {/* Goală pe cererile de dinainte de 29 iul 2026. */}
+          {lead.finantare && (
+            <span
+              className={`mt-1.5 inline-block rounded px-1.5 py-0.5 text-[11px] font-medium ${
+                FINANCING_TONE_CLASS[getFinancingTone(lead.finantare)]
+              }`}
+            >
+              {getFinancingShort(lead.finantare)}
+            </span>
+          )}
         </div>
         <span className="shrink-0 text-xs text-slate-400 tabular-nums">
           {fmtDateTime(lead.timestamp)}
@@ -277,7 +275,7 @@ function Pill({ href, active, children }: { href: string; active: boolean; child
 }
 
 export default async function CrmPage({ searchParams }: Props) {
-  const { filtru, judet, segment, status, contact } = await searchParams;
+  const { filtru, judet, segment, status, contact, finantare } = await searchParams;
   const activeFilter: Filter =
     FILTERS.find((f) => f.key === filtru)?.key ?? 'toate';
 
@@ -300,11 +298,14 @@ export default async function CrmPage({ searchParams }: Props) {
   }
 
   // Revendicările sunt legate de lead prin timestamp-ul rândului (vezi getFullLeadById).
-  const claimsByLead = new Map<string, LeadClaim[]>();
+  // Fiecare primește și câte cereri ține firma ei fără apel confirmat, ca să se
+  // vadă pe card cine a strâns sloturi fără să sune.
+  const claimsByLead = new Map<string, ClaimRow[]>();
   for (const c of claims) {
+    const row: ClaimRow = { ...c, firmActive: countActiveClaimsForFirm(claims, c) };
     const list = claimsByLead.get(c.leadId);
-    if (list) list.push(c);
-    else claimsByLead.set(c.leadId, [c]);
+    if (list) list.push(row);
+    else claimsByLead.set(c.leadId, [row]);
   }
 
   const counties = [...new Set(leads.map((l) => l.judet).filter(Boolean))].sort((a, b) =>
@@ -319,6 +320,7 @@ export default async function CrmPage({ searchParams }: Props) {
     // `neverificat` = celula e goală, adică n-am întrebat încă clientul.
     if (contact === 'neverificat' && l.contactedByFirm !== '') return false;
     if ((contact === 'da' || contact === 'nu') && l.contactedByFirm !== contact) return false;
+    if (finantare && getFinancingTone(l.finantare) !== finantare) return false;
     const n = claimsByLead.get(l.timestamp)?.length ?? 0;
     if (activeFilter === 'nerevendicate') return n === 0;
     if (activeFilter === 'revendicate') return n > 0;
@@ -327,6 +329,9 @@ export default async function CrmPage({ searchParams }: Props) {
   });
 
   const unclaimed = leads.filter((l) => !claimsByLead.has(l.timestamp)).length;
+  // Revendicări pe care nicio firmă nu le-a confirmat cu un apel. Astea sunt
+  // sloturile ocupate degeaba, și tot ele sunt ce blochează firma să ia altele.
+  const claimsWithoutCall = claims.filter((c) => !c.contactedAt).length;
   // Clientul a vrut panouri, s-a rezolvat în altă parte, și nu l-a sunat nimeni.
   // Asta nu e concurență pierdută, e livrare ruptă.
   const lostUncontacted = leads.filter(
@@ -339,6 +344,7 @@ export default async function CrmPage({ searchParams }: Props) {
     segment?: string;
     status?: string;
     contact?: string;
+    finantare?: string;
   }) => {
     const p = new URLSearchParams();
     const f = next.filtru ?? activeFilter;
@@ -346,11 +352,13 @@ export default async function CrmPage({ searchParams }: Props) {
     const sg = next.segment ?? segment;
     const st = next.status ?? status;
     const ct = next.contact ?? contact;
+    const fn = next.finantare ?? finantare;
     if (f !== 'toate') p.set('filtru', f);
     if (j) p.set('judet', j);
     if (sg) p.set('segment', sg);
     if (st) p.set('status', st);
     if (ct) p.set('contact', ct);
+    if (fn) p.set('finantare', fn);
     const s = p.toString();
     return s ? `/admin/crm?${s}` : '/admin/crm';
   };
@@ -364,13 +372,14 @@ export default async function CrmPage({ searchParams }: Props) {
         </Link>
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-5">
+      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         <Stat label="Cereri total" value={leads.length} />
         <Stat label="Fără nicio revendicare" value={unclaimed} tone="alert" />
         {/* Combinația care decide dacă problema e prețul sau livrarea: clientul
             a vrut panouri, s-a rezolvat în altă parte, și nu l-a sunat nimeni. */}
         <Stat label="Pierdute fără niciun apel" value={lostUncontacted} tone="alert" />
         <Stat label="Revendicări total" value={claims.length} />
+        <Stat label="Revendicări fără apel" value={claimsWithoutCall} tone="alert" />
         <Stat label={`Listări (${LISTINGS_WINDOW_DAYS}z)`} value={listings.length} />
       </div>
 
@@ -418,6 +427,17 @@ export default async function CrmPage({ searchParams }: Props) {
           <Pill href={qs({ contact: 'neverificat' })} active={contact === 'neverificat'}>
             Neverificat
           </Pill>
+        </FilterRow>
+
+        <FilterRow label="Finanțare">
+          <Pill href={qs({ finantare: '' })} active={!finantare}>
+            Toate
+          </Pill>
+          {FINANCING_FILTERS.map((f) => (
+            <Pill key={f.key} href={qs({ finantare: f.key })} active={finantare === f.key}>
+              {f.label}
+            </Pill>
+          ))}
         </FilterRow>
 
         <FilterRow label="Județ">

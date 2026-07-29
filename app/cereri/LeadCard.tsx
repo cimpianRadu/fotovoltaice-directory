@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import { trackEvent } from '@/lib/analytics';
+import { MAX_ACTIVE_CLAIMS_PER_FIRM } from '@/lib/sheets-shared';
+import type { FinancingTone } from '@/lib/utils-shared';
 
 export interface LeadCardData {
   id: string;
@@ -18,12 +20,32 @@ export interface LeadCardData {
   acoperisLabel: string;
   fazareLabel: string;
   consumLunar: string;
+  finantareLabel: string;
+  finantareTone: FinancingTone;
 }
 
 interface LeadCardProps {
   lead: LeadCardData;
   initialClaims: number;
   maxClaims: number;
+}
+
+// Punct colorat, nu pastilă: pastilele sunt deja luate de segment, iar asta
+// trebuie să se citească dintr-o privire ca semnal separat, nu ca încă o etichetă.
+const FINANCING_TONE_STYLES: Record<FinancingTone, { dot: string; text: string }> = {
+  ready: { dot: 'bg-emerald-500', text: 'text-emerald-700' },
+  program: { dot: 'bg-amber-500', text: 'text-amber-700' },
+  unknown: { dot: 'bg-gray-300', text: 'text-gray-500' },
+};
+
+function FinancingLine({ label, tone }: { label: string; tone: FinancingTone }) {
+  const style = FINANCING_TONE_STYLES[tone];
+  return (
+    <p className={`mt-2 flex items-center gap-1.5 text-xs font-medium ${style.text}`}>
+      <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} aria-hidden />
+      {label}
+    </p>
+  );
 }
 
 function SegmentBadge({ segment }: { segment: string }) {
@@ -123,6 +145,10 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
 
       <h3 className="mt-3 font-semibold text-gray-900">{lead.tipLabel}</h3>
       <p className="mt-1 text-sm text-gray-600">{details.join(' · ')}</p>
+      {/* Cererile de dinainte de 29 iul 2026 n-au câmpul — rândul dispare de tot. */}
+      {lead.finantareLabel && (
+        <FinancingLine label={lead.finantareLabel} tone={lead.finantareTone} />
+      )}
       {specs.length > 0 && (
         <ul className="mt-2 flex flex-wrap gap-1.5">
           {specs.map((s) => (
@@ -208,6 +234,7 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
 
             <p className="text-sm text-gray-600 mb-4">
               {lead.tipLabel} · {details.join(' · ')} · {lead.postedLabel}
+              {lead.finantareLabel && ` · ${lead.finantareLabel}`}
             </p>
 
             {claimedByMe ? (
@@ -233,7 +260,9 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
                 <p className="text-[11px] text-gray-500 leading-relaxed">
                   Revendicarea este rezervată firmelor de instalare fotovoltaice. Te contactăm
                   telefonic pentru confirmare, apoi primești datele complete ale clientului. Datele
-                  firmei tale sunt folosite doar pentru alocarea acestei cereri.
+                  firmei tale sunt folosite doar pentru alocarea acestei cereri. Poți ține{' '}
+                  {MAX_ACTIVE_CLAIMS_PER_FIRM} cereri odată: locurile se eliberează pe măsură ce
+                  clienții confirmă că i-ai sunat.
                 </p>
               </form>
             )}

@@ -41,3 +41,64 @@ export interface LeadNote {
   date: string; // YYYY-MM-DD
   text: string;
 }
+
+/**
+ * Câte cereri poate ține o firmă în același timp fără să confirme că a sunat
+ * clientul. Plafonul per cerere (MAX_CLAIMS_PER_LEAD) nu rezolvă nimic singur:
+ * pe 24 iulie 2026 o singură firmă avea 22 din cele 25 de revendicări, iar
+ * niciunul dintre cei 4 clienți verificați telefonic nu fusese sunat. O
+ * revendicare fără apel e mai rea decât nicio revendicare, pentru că îi spune
+ * clientului că se ocupă cineva. Slotul se eliberează când apelul e confirmat.
+ */
+export const MAX_ACTIVE_CLAIMS_PER_FIRM = 3;
+
+/**
+ * Aceleași cifre, scrise diferit, sunt același telefon: „+40 771 504 694",
+ * „0040771504694" și „0771504694" ajung toate la aceeași formă. Fără pasul cu
+ * prefixul, o firmă trece de plafon doar schimbând formatul în care își scrie
+ * numărul, ceea ce ar face regula decorativă.
+ */
+export function normalizePhone(s: string): string {
+  const digits = s.replace(/[\s.\-()]/g, '');
+  return digits.replace(/^(?:\+40|0040)/, '0');
+}
+
+/**
+ * Numele firmei, redus la ce rămâne constant între două completări de formular.
+ * În registrul real aceeași firmă apare și ca „JTS Instal Construct", și ca
+ * „JTS Instal Construct SRL" — forma juridică și punctuația nu identifică pe
+ * nimeni, deci pică.
+ */
+export function normalizeFirmName(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/[.,]/g, ' ')
+    .replace(/\b(s\s*r\s*l\s*-?\s*d|s\s*r\s*l|s\s*a|p\s*f\s*a|s\s*c)\b/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Firmele se re-identifică între revendicări după telefon SAU după nume: unele
+ * lasă alt telefon de la o cerere la alta, altele scriu numele altfel. Oricare
+ * dintre cele două potriviri e destul — plafonul trebuie să fie greu de ocolit
+ * din neatenție. Cine vrea neapărat să-l ocolească schimbă și numele, și
+ * telefonul, dar atunci apare ca firmă nouă la apelul de confirmare.
+ */
+export function isSameFirm(
+  a: { numeFirma: string; telefon: string },
+  b: { numeFirma: string; telefon: string },
+): boolean {
+  const phoneA = normalizePhone(a.telefon);
+  const phoneB = normalizePhone(b.telefon);
+  if (phoneA && phoneA === phoneB) return true;
+  const nameA = normalizeFirmName(a.numeFirma);
+  return nameA !== '' && nameA === normalizeFirmName(b.numeFirma);
+}
+
+/** Revendicările fără apel confirmat — alea ocupă sloturile firmei. */
+export function countActiveClaimsForFirm<
+  T extends { numeFirma: string; telefon: string; contactedAt: string },
+>(claims: T[], firm: { numeFirma: string; telefon: string }): number {
+  return claims.filter((c) => !c.contactedAt && isSameFirm(c, firm)).length;
+}

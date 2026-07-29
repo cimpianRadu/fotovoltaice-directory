@@ -4,7 +4,13 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 import { MAX_CLAIMS_PER_LEAD, getClaims, getPublicLeads, type PublicLead } from '@/lib/sheets';
-import { getProjectTypeLabel, getRoofTypeLabel, getPhaseLabel } from '@/lib/utils-shared';
+import {
+  getProjectTypeLabel,
+  getRoofTypeLabel,
+  getPhaseLabel,
+  getFinancingShort,
+  getFinancingTone,
+} from '@/lib/utils-shared';
 import { type LeadCardData } from './LeadCard';
 import LeadFeed from './LeadFeed';
 
@@ -59,6 +65,8 @@ export default async function CereriPage() {
       acoperisLabel: l.tipAcoperis ? getRoofTypeLabel(l.tipAcoperis) : '',
       fazareLabel: l.fazare ? getPhaseLabel(l.fazare) : '',
       consumLunar: l.consumLunar,
+      finantareLabel: l.finantare ? getFinancingShort(l.finantare) : '',
+      finantareTone: getFinancingTone(l.finantare),
     };
   });
 

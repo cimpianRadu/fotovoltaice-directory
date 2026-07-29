@@ -15,7 +15,7 @@ export default function PoliticaConfidentialitate() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Politica de Confidențialitate</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 20 iulie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 29 iulie 2026</p>
 
         <p>
           Instalatori Fotovoltaice România (&quot;noi&quot;, &quot;site-ul&quot;) operează site-ul{' '}
@@ -52,6 +52,10 @@ export default function PoliticaConfidentialitate() {
             Transmiterea cererilor de ofertă către firmele de instalare relevante, pentru ca acestea să
             vă contacteze cu oferte
           </li>
+          <li>
+            Transmiterea cererilor care menționează finanțare printr-un program către un partener de
+            finanțare, pentru ca acesta să vă contacteze cu opțiuni
+          </li>
           <li>Procesarea cererilor de listare a firmelor pe platformă</li>
           <li>Trimiterea de comunicări solicitate (newsletter)</li>
           <li>Îmbunătățirea funcționalității site-ului</li>
@@ -78,9 +82,23 @@ export default function PoliticaConfidentialitate() {
         </p>
         <p>
           După primirea cererii, fiecare firmă de instalare prelucrează datele dumneavoastră în calitate de
-          operator independent, exclusiv pentru a vă contacta în legătură cu cererea de ofertă. Nu
-          transmitem datele dumneavoastră către alte categorii de destinatari (agenții de marketing,
-          brokeri de date) și nu le folosim în alte scopuri decât cele descrise în această politică.
+          operator independent, exclusiv pentru a vă contacta în legătură cu cererea de ofertă.
+        </p>
+
+        <h3>Parteneri de finanțare</h3>
+        <p>
+          Dacă în formular ați indicat că investiția s-ar face printr-un program de finanțare (Casa
+          Verde, AFM, Electric Up sau altul) ori că nu ați decis încă modul de finanțare, cererea
+          poate fi transmisă și unui partener de finanțare sau asigurare cu care colaborăm, în
+          același scop: să vă contacteze cu opțiuni pentru proiectul dumneavoastră. Partenerul
+          prelucrează datele tot ca operator independent.
+        </p>
+        <p>
+          Cererile în care ați indicat că investiția se face din fonduri proprii{' '}
+          <strong>nu se transmit</strong> acestor parteneri. În afara firmelor de instalare și a
+          partenerilor de finanțare descriși mai sus, nu transmitem datele dumneavoastră către alte
+          categorii de destinatari (agenții de marketing, brokeri de date) și nu le folosim în alte
+          scopuri decât cele descrise în această politică.
         </p>
 
         <h2>5. Furnizori de servicii (persoane împuternicite)</h2>

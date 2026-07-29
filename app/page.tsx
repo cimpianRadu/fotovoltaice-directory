@@ -22,7 +22,12 @@ import HomeOfertaBand from '@/components/home/HomeOfertaBand';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
 import { getCompanies, getCoveredCounties, getPremiumCompanies, getCompaniesBySegment, getCompaniesByCounty, slugifyCounty } from '@/lib/utils';
-import { getProjectTypeLabel } from '@/lib/utils-shared';
+import {
+  getProjectTypeLabel,
+  getFinancingShort,
+  getFinancingTone,
+  type FinancingTone,
+} from '@/lib/utils-shared';
 import { getPublicLeads, type PublicLead } from '@/lib/sheets';
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { PRICING } from '@/lib/pricing';
@@ -98,6 +103,20 @@ const homeFaqs = [
       'Ca prosumator comercial, produceți energie pentru consum propriu și vindeți surplusul la prețul pieței. Capacitatea maximă este de 400 kWp fără licență ANRE. Un instalator autorizat vă ajută cu dosarul de prosumator.',
   },
 ];
+
+// Banda de cereri stă pe navy, deci tonurile de finanțare au nevoie de variante
+// deschise. Perechea de mai jos ține aceleași trei stări ca pe /cereri.
+const HOME_FINANCING_TEXT: Record<FinancingTone, string> = {
+  ready: 'text-emerald-300',
+  program: 'text-amber-300',
+  unknown: 'text-white/50',
+};
+
+const HOME_FINANCING_DOT: Record<FinancingTone, string> = {
+  ready: 'bg-emerald-400',
+  program: 'bg-amber-400',
+  unknown: 'bg-white/30',
+};
 
 export default async function HomePage() {
   const hasPremium = getPremiumCompanies().length > 0;
@@ -236,6 +255,23 @@ export default async function HomePage() {
                       .filter(Boolean)
                       .join(' · ')}
                   </p>
+                  {/* Aceeași informație ca pe /cereri, dar pe fundal navy: tonurile
+                      din LeadCard sunt pentru fundal alb și n-ar avea contrast aici. */}
+                  {c.finantare && (
+                    <p
+                      className={`mt-1.5 flex items-center gap-1.5 text-xs font-medium ${
+                        HOME_FINANCING_TEXT[getFinancingTone(c.finantare)]
+                      }`}
+                    >
+                      <span
+                        aria-hidden
+                        className={`h-1.5 w-1.5 rounded-full ${
+                          HOME_FINANCING_DOT[getFinancingTone(c.finantare)]
+                        }`}
+                      />
+                      {getFinancingShort(c.finantare)}
+                    </p>
+                  )}
                 </Link>
               ))}
             </div>

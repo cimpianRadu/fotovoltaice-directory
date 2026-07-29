@@ -3,7 +3,16 @@
 // becomes a no-op so form submissions still succeed in environments where
 // email isn't configured (local dev, preview deploys without secrets).
 
+import { getFinancingShort, getFinancingTone, type FinancingTone } from './utils-shared';
+
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
+
+// Clienții de email ignoră clasele CSS, deci tonurile de finanțare se scriu inline.
+const FINANCING_EMAIL_COLOR: Record<FinancingTone, string> = {
+  ready: '#047857',
+  program: '#b45309',
+  unknown: '#6b7280',
+};
 
 export interface SendEmailOptions {
   to: string | string[];
@@ -91,6 +100,8 @@ interface DigestLead {
   judet: string;
   putere: string;
   segment: string;
+  /** Slug-ul rutei de finanțare; gol pe cererile dinainte de 29 iul 2026. */
+  finantare: string;
 }
 
 interface DigestListing {
@@ -140,6 +151,7 @@ export async function sendSubmissionsDigest(
           ${segmentBadge(l.segment)}
         </div>
         <div style="font-size:13px;color:#374151;margin-top:3px">${escapeHtml(l.tipProiect)} · ${escapeHtml(l.judet)}${l.putere ? ` · ${escapeHtml(l.putere)} kW` : ''}</div>
+        ${l.finantare ? `<div style="font-size:12px;margin-top:3px;color:${FINANCING_EMAIL_COLOR[getFinancingTone(l.finantare)]}">${escapeHtml(getFinancingShort(l.finantare))}</div>` : ''}
         <div style="font-size:12px;color:#6b7280;margin-top:3px">
           <a href="mailto:${escapeHtml(l.email)}" style="color:#2563eb">${escapeHtml(l.email)}</a> ·
           <a href="tel:${escapeHtml(l.telefon.replace(/\s/g, ''))}" style="color:#2563eb">${escapeHtml(l.telefon)}</a> ·
@@ -219,6 +231,7 @@ interface ClaimNotificationData {
     acoperisLabel: string;
     fazareLabel: string;
     consumLunar: string;
+    finantareLabel: string;
   };
   claimCount: number; // inclusiv revendicarea curentă
   maxClaims: number;
@@ -258,6 +271,7 @@ export async function sendClaimNotification(data: ClaimNotificationData): Promis
         ${lead.acoperisLabel ? row('Acoperiș', escapeHtml(lead.acoperisLabel)) : ''}
         ${lead.fazareLabel ? row('Alimentare', escapeHtml(lead.fazareLabel)) : ''}
         ${lead.consumLunar ? row('Consum lunar', escapeHtml(lead.consumLunar)) : ''}
+        ${lead.finantareLabel ? row('Finanțare', `<strong>${escapeHtml(lead.finantareLabel)}</strong>`) : ''}
         ${row('Segment', escapeHtml(lead.segment))}
         ${row('Depus', escapeHtml(fmtDate(lead.timestamp)))}
       </table>
