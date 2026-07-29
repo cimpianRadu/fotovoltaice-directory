@@ -1,0 +1,17 @@
+{
+  "sponsors": [
+    {
+      "slug": "diodor",
+      "name": "Diodor",
+      "location": "Cluj-Napoca",
+      "logo": "/logos/diodor.png",
+      "baseUrl": "https://diodor.ro",
+      "active": true,
+      "positions": ["homepage", "ghid-index", "ghid-topic", "calculator", "clasament", "firme"],
+      "messages": {
+        "client": "Materiale electrice și echipamente fotovoltaice",
+        "instalator": "Materiale electrice și echipamente fotovoltaice, distribuitor Cluj-Napoca"
+      }
+    }
+  ]
+}

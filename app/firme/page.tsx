@@ -7,6 +7,7 @@ import FAQ from '@/components/seo/FAQ';
 import { generateBreadcrumbJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { getCompanies, getCoveredCounties, slugifyCounty, getCompaniesByCounty } from '@/lib/utils';
 import CompanyListClient from './CompanyListClient';
+import SponsorBanner from '@/components/sponsor/SponsorBanner';
 
 const COMPANY_COUNT = getCompanies().length;
 const COUNTY_COUNT = getCoveredCounties().length;
@@ -116,6 +117,12 @@ export default function FirmePage() {
                 );
               })}
           </div>
+        </div>
+
+        {/* Partenerii apar separat de listă, ca să fie clar că nu sunt firme din
+            director și că nu influențează ordinea. */}
+        <div className="mt-12 max-w-sm">
+          <SponsorBanner position="firme" />
         </div>
 
         {/* FAQ — national "firme autorizate ANRE" cluster */}

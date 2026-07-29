@@ -8,6 +8,7 @@ import { getCompanyAnreCerts, PV_RELEVANT_CODES } from '@/lib/anre';
 import CorrectionForm from '@/components/forms/CorrectionForm';
 import ClasamentTable from '@/components/clasament/ClasamentTable';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
+import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import InstallerCta from '@/components/InstallerCta';
 
 export const metadata: Metadata = {
@@ -155,6 +156,10 @@ export default function ClasamentPage() {
           title="Parteneri Verificați"
           subtitle="Firme partenere ale platformei — apar separat, nu influențează ordinea din tabel"
         />
+
+        <div className="mb-10 max-w-sm">
+          <SponsorBanner position="clasament" />
+        </div>
 
         {/* Table — top 10 by revenue */}
         <section id="clasament" className="mb-12 scroll-mt-20">

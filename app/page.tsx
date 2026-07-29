@@ -149,6 +149,16 @@ export default async function HomePage() {
       {/* Cere Ofertă — buyer-facing CTA, segment-aware count */}
       <HomeOfertaBand comercialCount={COMERCIAL_STATS.count} rezidentialCount={REZIDENTIAL_STATS.count} />
 
+      {/* Sponsor. Stătea la 71% din pagină, adică 5,8 ecrane în jos pe mobil, unde
+          practic nu ajungea nimeni. Urcat imediat după banda de ofertă: rămâne sub
+          CTA-ul principal, dar intră în primele ecrane. */}
+      <section className="max-w-7xl mx-auto px-4 pt-10">
+        <div className="max-w-sm mx-auto">
+          <SponsorBanner position="homepage" />
+        </div>
+      </section>
+
+
       {/* Featured Companies — Premium pool when available, else promote ad packages */}
       <section className="max-w-7xl mx-auto px-4 py-16">
         {hasPremium ? (
@@ -398,13 +408,6 @@ export default async function HomePage() {
               Toate ghidurile &rarr;
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* Sponsor */}
-      <section className="max-w-7xl mx-auto px-4 py-10">
-        <div className="max-w-sm mx-auto">
-          <SponsorBanner position="homepage" />
         </div>
       </section>
 

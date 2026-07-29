@@ -13,6 +13,7 @@ import {
 } from '@/lib/utils-shared';
 import { type LeadCardData } from './LeadCard';
 import LeadFeed from './LeadFeed';
+import SponsorBanner from '@/components/sponsor/SponsorBanner';
 
 // Feedul se regenerează la cel mult 5 minute — destul de proaspăt pentru
 // revendicări, fără să lovim Google Sheets la fiecare vizită.
@@ -158,6 +159,11 @@ export default async function CereriPage() {
           </>
         )}
 
+        {/* Singura pagină cu audiență de instalatori, deci partenerii apar aici cu
+            mesajul lor B2B. Pusă după feed, ca să nu concureze cu revendicarea. */}
+        <div className="mt-10 max-w-sm mx-auto">
+          <SponsorBanner position="cereri" title="Parteneri pentru instalatori" />
+        </div>
       </div>
     </>
   );

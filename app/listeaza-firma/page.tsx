@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import ListingForm from '@/components/forms/ListingForm';
+import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
@@ -53,6 +54,11 @@ export default function ListeazaFirmaPage() {
               <span><strong>Contact direct</strong> — Clienții te pot contacta direct prin telefon, email sau site</span>
             </li>
           </ul>
+
+          {/* Pagină citită de instalatori, deci partenerii apar cu mesajul B2B. */}
+          <div className="mt-8">
+            <SponsorBanner position="listeaza-firma" title="Parteneri pentru instalatori" />
+          </div>
         </div>
       </div>
     </>

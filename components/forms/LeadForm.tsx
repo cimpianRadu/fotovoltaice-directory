@@ -14,6 +14,7 @@ import {
   FINANCING_COMERCIAL,
 } from '@/lib/utils-shared';
 import { useSegment } from '@/components/segment/SegmentProvider';
+import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { trackEvent } from '@/lib/analytics';
 
 const commercialProjectTypes = [
@@ -98,6 +99,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
     )}`;
 
     return (
+      <div className="space-y-6">
       <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-6">
         <h3 className="font-bold text-emerald-900">Cererea a fost trimisă ✓</h3>
         <p className="mt-1 text-sm text-emerald-800">
@@ -120,6 +122,14 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
           <p className="mt-3 text-xs text-gray-500">
             Opțional. Cererea este deja înregistrată, pozele doar o completează.
           </p>
+        </div>
+      </div>
+
+        {/* Nimic promoțional nu stă lângă formular: pagina are o singură treabă,
+            să producă cererea, iar un click pe altceva e o cerere pierdută. După
+            trimitere situația se inversează, omul a convertit deja și așteaptă. */}
+        <div className="max-w-sm">
+          <SponsorBanner position="cere-oferta-confirmare" />
         </div>
       </div>
     );

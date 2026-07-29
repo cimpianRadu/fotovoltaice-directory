@@ -16,14 +16,31 @@ type Partner = {
 
 const PARTNERS = (partnersData.partners as Partner[]).filter((p) => p.active);
 
-const SPONSOR_BANNER_NAMES: string[] = ['diodor'];
+import sponsorsData from '@/data/sponsors.json';
 
+const SPONSOR_BANNER_NAMES: string[] = (
+  sponsorsData.sponsors as { slug: string; active: boolean }[]
+)
+  .filter((s) => s.active)
+  .map((s) => s.slug);
+
+// Perechea poziție → audiență e ținută în SponsorBanner; aici e doar eticheta.
 const POSITION_LABELS: Record<string, string> = {
   homepage: 'Homepage',
   'ghid-index': '/ghid (index)',
   'ghid-topic': '/ghid/[topic]',
   calculator: '/calculator',
+  clasament: '/clasament',
   'clasament-featured': '/clasament (featured)',
+  firme: '/firme',
+  'cere-oferta-confirmare': '/cere-oferta (după trimitere) · doar Premium',
+  cereri: '/cereri (instalatori) · doar Premium',
+  'listeaza-firma': '/listeaza-firma (instalatori)',
+};
+
+const AUDIENCE_LABELS: Record<string, string> = {
+  client: 'Clienți (caută instalator)',
+  instalator: 'Instalatori (caută de lucru)',
 };
 
 async function safe<T>(fn: () => Promise<T>): Promise<{ data: T | null; error: string | null }> {
@@ -40,11 +57,13 @@ export default async function SponsoriPage({ searchParams }: { searchParams: Sea
   const { startAt, endAt, label } = resolveRange(preset);
 
   // Sponsor banner: impressions and clicks broken down by sponsor + position
-  const [impSponsor, impPos, clickSponsor, clickPos] = await Promise.all([
+  const [impSponsor, impPos, clickSponsor, clickPos, impAud, clickAud] = await Promise.all([
     safe(() => getEventValues(startAt, endAt, 'sponsor-impression', 'sponsor')),
     safe(() => getEventValues(startAt, endAt, 'sponsor-impression', 'position')),
     safe(() => getEventValues(startAt, endAt, 'sponsor-click', 'sponsor')),
     safe(() => getEventValues(startAt, endAt, 'sponsor-click', 'position')),
+    safe(() => getEventValues(startAt, endAt, 'sponsor-impression', 'audience')),
+    safe(() => getEventValues(startAt, endAt, 'sponsor-click', 'audience')),
   ]);
 
   // Carousel: views and clicks broken down by partner
@@ -60,6 +79,8 @@ export default async function SponsoriPage({ searchParams }: { searchParams: Sea
     impPos.error,
     clickSponsor.error,
     clickPos.error,
+    impAud.error,
+    clickAud.error,
     carView.error,
     carClick.error,
     carRotate.error,
@@ -76,6 +97,8 @@ export default async function SponsoriPage({ searchParams }: { searchParams: Sea
   const sponsorClicks = toMap(clickSponsor.data);
   const positionImps = toMap(impPos.data);
   const positionClicks = toMap(clickPos.data);
+  const audienceImps = toMap(impAud.data);
+  const audienceClicks = toMap(clickAud.data);
 
   const carouselViews = toMap(carView.data);
   const carouselClicks = toMap(carClick.data);
@@ -147,6 +170,47 @@ export default async function SponsoriPage({ searchParams }: { searchParams: Sea
                 </tbody>
               </table>
             )}
+          </div>
+
+          {/* Per audiență: cine a văzut, nu unde. Un partener relevant pentru
+              ambele părți (finanțare pentru clienți, asigurări pentru firme) are
+              mesaje diferite, iar asta spune care dintre ele prinde. */}
+          <div className="bg-white border border-slate-200 rounded-lg p-4">
+            <div className="text-sm font-semibold text-slate-900 mb-3">Per audiență</div>
+            <table className="w-full text-sm">
+              <thead className="text-xs uppercase text-slate-500 border-b border-slate-200">
+                <tr>
+                  <th className="text-left py-2 font-medium">Audiență</th>
+                  <th className="text-right py-2 font-medium">Impressions</th>
+                  <th className="text-right py-2 font-medium">Clicks</th>
+                  <th className="text-right py-2 font-medium">CTR</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {Object.keys(AUDIENCE_LABELS).map((aud) => {
+                  const imp = audienceImps.get(aud) ?? 0;
+                  const clk = audienceClicks.get(aud) ?? 0;
+                  const ctr = imp > 0 ? (clk / imp) * 100 : 0;
+                  return (
+                    <tr key={aud}>
+                      <td className="py-2">{AUDIENCE_LABELS[aud]}</td>
+                      <td className="py-2 text-right tabular-nums">
+                        {imp.toLocaleString('ro-RO')}
+                      </td>
+                      <td className="py-2 text-right tabular-nums">
+                        {clk.toLocaleString('ro-RO')}
+                      </td>
+                      <td className="py-2 text-right tabular-nums font-medium">
+                        {imp > 0 ? `${ctr.toFixed(2)}%` : '—'}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <p className="mt-2 text-[11px] text-slate-400">
+              Datele pe audiență există doar de la 29 iulie 2026 încoace.
+            </p>
           </div>
 
           {/* Per locație */}
