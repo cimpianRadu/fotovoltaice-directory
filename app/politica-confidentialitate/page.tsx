@@ -87,11 +87,11 @@ export default function PoliticaConfidentialitate() {
 
         <h3>Parteneri de finanțare</h3>
         <p>
-          Dacă în formular ați indicat că investiția s-ar face printr-un program de finanțare (Casa
-          Verde, AFM, Electric Up sau altul) ori că nu ați decis încă modul de finanțare, cererea
-          poate fi transmisă și unui partener de finanțare sau asigurare cu care colaborăm, în
-          același scop: să vă contacteze cu opțiuni pentru proiectul dumneavoastră. Partenerul
-          prelucrează datele tot ca operator independent.
+          Dacă în formular ați indicat că doriți finanțare sau credit, că investiția s-ar face
+          printr-un program (Casa Verde, AFM, Electric Up sau altul) ori că nu ați decis încă modul
+          de finanțare, cererea poate fi transmisă și unui partener de finanțare sau asigurare cu
+          care colaborăm, în același scop: să vă contacteze cu opțiuni pentru proiectul
+          dumneavoastră. Partenerul prelucrează datele tot ca operator independent.
         </p>
         <p>
           Cererile în care ați indicat că investiția se face din fonduri proprii{' '}

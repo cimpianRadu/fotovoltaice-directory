@@ -33,12 +33,14 @@ const SEGMENTS = ['rezidential', 'comercial'] as const;
 // contează doar întrebarea „cumpără acum sau așteaptă un program?".
 const FINANCING_FILTERS: { key: FinancingTone; label: string }[] = [
   { key: 'ready', label: 'Fonduri proprii' },
+  { key: 'credit', label: 'Caută finanțare' },
   { key: 'program', label: 'Așteaptă program' },
   { key: 'unknown', label: 'Nu știe / necompletat' },
 ];
 
 const FINANCING_TONE_CLASS: Record<FinancingTone, string> = {
   ready: 'bg-emerald-50 text-emerald-700',
+  credit: 'bg-sky-50 text-sky-700',
   program: 'bg-amber-50 text-amber-700',
   unknown: 'bg-slate-100 text-slate-500',
 };

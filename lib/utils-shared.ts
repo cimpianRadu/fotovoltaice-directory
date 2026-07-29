@@ -194,15 +194,21 @@ export function getPhaseLabel(slug: string): string {
 // Fără câmpul ăsta, instalatorul sună la nimereală, dă peste clienți care
 // așteaptă, și încetează să mai sune. Listele diferă pe segment: Casa Verde e
 // pentru persoane fizice, Electric Up pentru IMM.
+// „Fonduri proprii" și „caută finanțare" sunt intenționat separate: sunt doi
+// clienți diferiți. Unul cumpără acum, celălalt cumpără dacă îi iese creditul,
+// iar amestecate într-o singură opțiune semnalul se pierde exact acolo unde
+// contează, la trimiterea cererii mai departe.
 export const FINANCING_REZIDENTIAL = [
-  { value: 'fonduri-proprii', label: 'Fonduri proprii sau credit' },
+  { value: 'fonduri-proprii', label: 'Fonduri proprii' },
+  { value: 'credit', label: 'Vreau finanțare sau credit' },
   { value: 'casa-verde', label: 'Aștept Casa Verde (AFM)' },
   { value: 'afm-baterii', label: 'Baterii prin AFM (am deja panouri)' },
   { value: 'nu-stiu', label: 'Nu știu încă, vreau să aflu' },
 ] as const;
 
 export const FINANCING_COMERCIAL = [
-  { value: 'fonduri-proprii', label: 'Fonduri proprii sau credit' },
+  { value: 'fonduri-proprii', label: 'Fonduri proprii' },
+  { value: 'credit', label: 'Vreau finanțare sau credit' },
   { value: 'electric-up', label: 'Electric Up' },
   { value: 'alt-program', label: 'Alt program (Fond Modernizare, SME Eco-Tech, AFIR)' },
   { value: 'nu-stiu', label: 'Nu știu încă, vreau să aflu' },
@@ -217,6 +223,7 @@ const FINANCING_LABELS: Record<string, string> = Object.fromEntries(
 // Etichete scurte pentru chip-uri (card /cereri, card CRM).
 const FINANCING_SHORT: Record<string, string> = {
   'fonduri-proprii': 'Fonduri proprii',
+  credit: 'Caută finanțare',
   'casa-verde': 'Așteaptă Casa Verde',
   'afm-baterii': 'Baterii prin AFM',
   'electric-up': 'Electric Up',
@@ -224,8 +231,12 @@ const FINANCING_SHORT: Record<string, string> = {
   'nu-stiu': 'Nu știe încă',
 };
 
-/** `ready` = cumpără pe banii lui, `program` = depinde de o sesiune de finanțare. */
-export type FinancingTone = 'ready' | 'program' | 'unknown';
+/**
+ * `ready` = cumpără pe banii lui, `credit` = cumpără dacă îi iese finanțarea,
+ * `program` = depinde de o sesiune care poate să nu fie deschisă, `unknown` = nu
+ * s-a lămurit. Sunt patru pentru că fiecare cere alt următor pas din partea ta.
+ */
+export type FinancingTone = 'ready' | 'credit' | 'program' | 'unknown';
 
 export function getFinancingLabel(slug: string): string {
   return FINANCING_LABELS[slug] ?? slug;
@@ -237,6 +248,7 @@ export function getFinancingShort(slug: string): string {
 
 export function getFinancingTone(slug: string): FinancingTone {
   if (slug === 'fonduri-proprii') return 'ready';
+  if (slug === 'credit') return 'credit';
   if (!slug || slug === 'nu-stiu') return 'unknown';
   return 'program';
 }

@@ -108,12 +108,14 @@ const homeFaqs = [
 // deschise. Perechea de mai jos ține aceleași trei stări ca pe /cereri.
 const HOME_FINANCING_TEXT: Record<FinancingTone, string> = {
   ready: 'text-emerald-300',
+  credit: 'text-sky-300',
   program: 'text-amber-300',
   unknown: 'text-white/50',
 };
 
 const HOME_FINANCING_DOT: Record<FinancingTone, string> = {
   ready: 'bg-emerald-400',
+  credit: 'bg-sky-400',
   program: 'bg-amber-400',
   unknown: 'bg-white/30',
 };

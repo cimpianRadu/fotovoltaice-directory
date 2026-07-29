@@ -10,6 +10,7 @@ const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 // Clienții de email ignoră clasele CSS, deci tonurile de finanțare se scriu inline.
 const FINANCING_EMAIL_COLOR: Record<FinancingTone, string> = {
   ready: '#047857',
+  credit: '#0369a1',
   program: '#b45309',
   unknown: '#6b7280',
 };

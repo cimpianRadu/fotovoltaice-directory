@@ -216,8 +216,9 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
               required
             />
             <p className="mt-1 text-[11px] text-gray-400">
-              Instalatorii întreabă asta la primul telefon. Răspunsul aici vă scutește de un apel
-              și vă aduce oferte potrivite situației.
+              Pentru programele AFM, montajul trebuie făcut de un instalator validat, iar
+              instalatorii întreabă oricum asta la primul telefon. Răspunsul aici ne ajută să
+              trimitem cererea firmelor potrivite situației dumneavoastră.
             </p>
           </div>
           <div>

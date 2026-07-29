@@ -34,6 +34,7 @@ interface LeadCardProps {
 // trebuie să se citească dintr-o privire ca semnal separat, nu ca încă o etichetă.
 const FINANCING_TONE_STYLES: Record<FinancingTone, { dot: string; text: string }> = {
   ready: { dot: 'bg-emerald-500', text: 'text-emerald-700' },
+  credit: { dot: 'bg-sky-500', text: 'text-sky-700' },
   program: { dot: 'bg-amber-500', text: 'text-amber-700' },
   unknown: { dot: 'bg-gray-300', text: 'text-gray-500' },
 };
