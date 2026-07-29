@@ -31,3 +31,22 @@ html {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+
+/* Rând de chip-uri scrollabil orizontal (filtre pe mobil) — fără bară vizibilă */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Bottom sheet (filtre pe mobil) */
+@keyframes sheetUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
