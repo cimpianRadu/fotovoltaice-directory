@@ -1,3 +1,4 @@
+import { LEAD_STATUSES, type LeadStatus, type LeadNote } from './sheets-shared';
 import { google } from 'googleapis';
 
 function getAuth() {
@@ -146,6 +147,9 @@ export interface NewLead {
   tipAcoperis: string;
   fazare: string;
   consumLunar: string;
+  // V/W — pipeline-ul de CRM, scrise doar din /admin/crm. Vezi updateLeadCrm.
+  crmStatus: LeadStatus;
+  notes: LeadNote[];
 }
 
 export interface NewListing {
@@ -196,6 +200,7 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     tipAcoperis: r[18] || '',
     fazare: r[19] || '',
     consumLunar: r[20] || '',
+    ...readCrmFields(r),
   }));
 }
 
@@ -496,4 +501,87 @@ export async function toggleSocialPlatform(
   });
 
   return getSocialPosts();
+}
+
+// ── CRM: status de pipeline + jurnal de note pe cerere ─────────────────────
+// Coloana M („Status") NU se atinge: ține vizibilitatea în feedul public
+// ('Ascuns') și text liber scris manual de-a lungul timpului. Statusul de
+// pipeline și notele primesc coloane proprii, la finalul rândului.
+// Vezi contractul de coloane din memorie înainte să muți ceva aici.
+
+const LEAD_CRM_STATUS_COL = 21; // V
+const LEAD_NOTES_COL = 22; // W
+
+export { LEAD_STATUSES, type LeadStatus, type LeadNote } from './sheets-shared';
+
+/** Jurnalul e text simplu în celulă: fiecare intrare începe cu `[YYYY-MM-DD] `. */
+export function parseNotes(raw: string): LeadNote[] {
+  if (!raw.trim()) return [];
+  const notes: LeadNote[] = [];
+  for (const line of raw.split('\n')) {
+    const m = line.match(/^\[(\d{4}-\d{2}-\d{2})\]\s?(.*)$/);
+    if (m) notes.push({ date: m[1], text: m[2] });
+    else if (notes.length) notes[notes.length - 1].text += `\n${line}`;
+    else if (line.trim()) notes.push({ date: '', text: line });
+  }
+  return notes.map((n) => ({ ...n, text: n.text.trim() }));
+}
+
+function serializeNotes(notes: LeadNote[]): string {
+  return notes.map((n) => `[${n.date}] ${n.text}`).join('\n');
+}
+
+async function findLeadRow(timestamp: string): Promise<{ row: string[]; sheetRow: number }> {
+  const rows = await readRows('Leads');
+  const index = rows.findIndex((r, i) => i > 0 && r[0] === timestamp);
+  if (index === -1) throw new Error('Cererea nu există în tabul Leads.');
+  return { row: rows[index], sheetRow: index + 1 };
+}
+
+export interface LeadCrmFields {
+  crmStatus: LeadStatus;
+  notes: LeadNote[];
+}
+
+export function readCrmFields(row: string[]): LeadCrmFields {
+  const status = (row[LEAD_CRM_STATUS_COL] || '').trim().toLowerCase();
+  return {
+    crmStatus: (LEAD_STATUSES as readonly string[]).includes(status) ? (status as LeadStatus) : 'nou',
+    notes: parseNotes(row[LEAD_NOTES_COL] || ''),
+  };
+}
+
+/**
+ * Setează statusul și/sau adaugă o notă datată. Notele sunt append-only, cele
+ * noi primele, ca să se citească fără scroll în celulă.
+ */
+export async function updateLeadCrm(
+  timestamp: string,
+  changes: { status?: LeadStatus; note?: string; today?: string },
+): Promise<LeadCrmFields> {
+  const { row, sheetRow } = await findLeadRow(timestamp);
+  const data: { range: string; values: string[][] }[] = [];
+
+  if (changes.status) {
+    data.push({ range: `Leads!V${sheetRow}`, values: [[changes.status]] });
+    row[LEAD_CRM_STATUS_COL] = changes.status;
+  }
+
+  const note = changes.note?.trim();
+  if (note) {
+    const date = changes.today || new Date().toISOString().slice(0, 10);
+    const next = serializeNotes([{ date, text: note }, ...parseNotes(row[LEAD_NOTES_COL] || '')]);
+    data.push({ range: `Leads!W${sheetRow}`, values: [[next]] });
+    row[LEAD_NOTES_COL] = next;
+  }
+
+  if (data.length) {
+    const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+    await sheets.spreadsheets.values.batchUpdate({
+      spreadsheetId: SPREADSHEET_ID,
+      requestBody: { valueInputOption: 'RAW', data },
+    });
+  }
+
+  return readCrmFields(row);
 }

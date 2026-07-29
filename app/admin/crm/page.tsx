@@ -3,11 +3,14 @@ import {
   getLeadsSince,
   getClaims,
   getListingsSince,
+  LEAD_STATUSES,
   MAX_CLAIMS_PER_LEAD,
   type NewLead,
   type NewListing,
   type LeadClaim,
 } from '@/lib/sheets';
+import LeadCrm from './LeadCrm';
+import MessagePreview from './MessagePreview';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,10 +23,12 @@ const FILTERS: { key: Filter; label: string }[] = [
   { key: 'pline', label: `Pline (${MAX_CLAIMS_PER_LEAD}/${MAX_CLAIMS_PER_LEAD})` },
 ];
 
+const SEGMENTS = ['rezidential', 'comercial'] as const;
+
 const LISTINGS_WINDOW_DAYS = 30;
 
 interface Props {
-  searchParams: Promise<{ filtru?: string; judet?: string }>;
+  searchParams: Promise<{ filtru?: string; judet?: string; segment?: string; status?: string }>;
 }
 
 function fmtDateTime(iso: string): string {
@@ -102,9 +107,7 @@ function LeadRow({ lead, claims }: { lead: NewLead; claims: LeadClaim[] }) {
           {lead.judet}
           {specs && ` · ${specs}`}
         </div>
-        {lead.mesaj && (
-          <p className="mt-1 text-xs text-slate-500 line-clamp-2 max-w-xs">{lead.mesaj}</p>
-        )}
+        {lead.mesaj && <MessagePreview text={lead.mesaj} />}
       </td>
       <td className="px-4 py-3 text-xs">
         <div className="font-medium text-slate-800">{lead.numeContact || '—'}</div>
@@ -146,6 +149,9 @@ function LeadRow({ lead, claims }: { lead: NewLead; claims: LeadClaim[] }) {
           {claims.length}/{MAX_CLAIMS_PER_LEAD}
         </div>
         <ClaimList claims={claims} />
+      </td>
+      <td className="px-4 py-3">
+        <LeadCrm id={lead.timestamp} status={lead.crmStatus} notes={lead.notes} />
       </td>
     </tr>
   );
@@ -207,8 +213,34 @@ function ListingsSection({ listings }: { listings: NewListing[] }) {
   );
 }
 
+function FilterRow({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-wrap items-center gap-1.5">
+      <span className="w-20 shrink-0 text-[11px] font-medium uppercase tracking-wide text-slate-400">
+        {label}
+      </span>
+      {children}
+    </div>
+  );
+}
+
+function Pill({ href, active, children }: { href: string; active: boolean; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+        active
+          ? 'bg-slate-900 text-white'
+          : 'border border-slate-200 bg-white text-slate-600 hover:text-slate-900'
+      }`}
+    >
+      {children}
+    </Link>
+  );
+}
+
 export default async function CrmPage({ searchParams }: Props) {
-  const { filtru, judet } = await searchParams;
+  const { filtru, judet, segment, status } = await searchParams;
   const activeFilter: Filter =
     FILTERS.find((f) => f.key === filtru)?.key ?? 'toate';
 
@@ -245,6 +277,8 @@ export default async function CrmPage({ searchParams }: Props) {
   const newestFirst = [...leads].reverse();
   const visible = newestFirst.filter((l) => {
     if (judet && l.judet !== judet) return false;
+    if (segment && (l.segment || 'comercial') !== segment) return false;
+    if (status && l.crmStatus !== status) return false;
     const n = claimsByLead.get(l.timestamp)?.length ?? 0;
     if (activeFilter === 'nerevendicate') return n === 0;
     if (activeFilter === 'revendicate') return n > 0;
@@ -254,12 +288,16 @@ export default async function CrmPage({ searchParams }: Props) {
 
   const unclaimed = leads.filter((l) => !claimsByLead.has(l.timestamp)).length;
 
-  const qs = (next: { filtru?: Filter; judet?: string }) => {
+  const qs = (next: { filtru?: Filter; judet?: string; segment?: string; status?: string }) => {
     const p = new URLSearchParams();
     const f = next.filtru ?? activeFilter;
     const j = next.judet ?? judet;
+    const sg = next.segment ?? segment;
+    const st = next.status ?? status;
     if (f !== 'toate') p.set('filtru', f);
     if (j) p.set('judet', j);
+    if (sg) p.set('segment', sg);
+    if (st) p.set('status', st);
     const s = p.toString();
     return s ? `/admin/crm?${s}` : '/admin/crm';
   };
@@ -280,44 +318,47 @@ export default async function CrmPage({ searchParams }: Props) {
         <Stat label={`Listări (${LISTINGS_WINDOW_DAYS}z)`} value={listings.length} />
       </div>
 
-      <div className="mt-6 flex flex-wrap items-center gap-2">
-        {FILTERS.map((f) => (
-          <Link
-            key={f.key}
-            href={qs({ filtru: f.key })}
-            className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-              activeFilter === f.key
-                ? 'bg-slate-900 text-white'
-                : 'bg-white text-slate-600 border border-slate-200 hover:text-slate-900'
-            }`}
-          >
-            {f.label}
-          </Link>
-        ))}
-        <span className="mx-1 h-4 w-px bg-slate-200" />
-        <Link
-          href={qs({ judet: '' })}
-          className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-            !judet
-              ? 'bg-slate-900 text-white'
-              : 'bg-white text-slate-600 border border-slate-200 hover:text-slate-900'
-          }`}
-        >
-          Toate județele
-        </Link>
-        {counties.map((c) => (
-          <Link
-            key={c}
-            href={qs({ judet: c })}
-            className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-              judet === c
-                ? 'bg-slate-900 text-white'
-                : 'bg-white text-slate-600 border border-slate-200 hover:text-slate-900'
-            }`}
-          >
-            {c}
-          </Link>
-        ))}
+      <div className="mt-6 space-y-2 rounded-xl border border-slate-200 bg-white px-4 py-3">
+        <FilterRow label="Revendicări">
+          {FILTERS.map((f) => (
+            <Pill key={f.key} href={qs({ filtru: f.key })} active={activeFilter === f.key}>
+              {f.label}
+            </Pill>
+          ))}
+        </FilterRow>
+
+        <FilterRow label="Segment">
+          <Pill href={qs({ segment: '' })} active={!segment}>
+            Toate
+          </Pill>
+          {SEGMENTS.map((s) => (
+            <Pill key={s} href={qs({ segment: s })} active={segment === s}>
+              {s === 'rezidential' ? 'Rezidențial' : 'Comercial'}
+            </Pill>
+          ))}
+        </FilterRow>
+
+        <FilterRow label="Status">
+          <Pill href={qs({ status: '' })} active={!status}>
+            Toate
+          </Pill>
+          {LEAD_STATUSES.map((s) => (
+            <Pill key={s} href={qs({ status: s })} active={status === s}>
+              {s}
+            </Pill>
+          ))}
+        </FilterRow>
+
+        <FilterRow label="Județ">
+          <Pill href={qs({ judet: '' })} active={!judet}>
+            Toate
+          </Pill>
+          {counties.map((c) => (
+            <Pill key={c} href={qs({ judet: c })} active={judet === c}>
+              {c}
+            </Pill>
+          ))}
+        </FilterRow>
       </div>
 
       <p className="mt-4 text-xs text-slate-500">
@@ -333,6 +374,7 @@ export default async function CrmPage({ searchParams }: Props) {
               <th className="px-4 py-2 font-medium">Client</th>
               <th className="px-4 py-2 font-medium">Segment</th>
               <th className="px-4 py-2 font-medium">Revendicări</th>
+              <th className="px-4 py-2 font-medium">Status și note</th>
             </tr>
           </thead>
           <tbody>

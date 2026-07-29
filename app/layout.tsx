@@ -7,6 +7,7 @@ import PartnerCarousel from '@/components/promo/PartnerCarousel';
 import { SegmentProvider } from '@/components/segment/SegmentProvider';
 import FloatingSegmentToggle from '@/components/segment/FloatingSegmentToggle';
 import CtaPopup from '@/components/CtaPopup';
+import PublicChrome from '@/components/layout/PublicChrome';
 import { getCompanies, getCoveredCounties } from '@/lib/utils';
 import './globals.css';
 
@@ -75,12 +76,16 @@ export default function RootLayout({
       </head>
       <body className={`${geistSans.variable} antialiased`}>
         <SegmentProvider>
-          <Header />
+          <PublicChrome>
+            <Header />
+          </PublicChrome>
           <main className="min-h-screen">{children}</main>
-          <Footer />
-          <PartnerCarousel />
-          <FloatingSegmentToggle />
-          <CtaPopup />
+          <PublicChrome>
+            <Footer />
+            <PartnerCarousel />
+            <FloatingSegmentToggle />
+            <CtaPopup />
+          </PublicChrome>
         </SegmentProvider>
       </body>
     </html>
