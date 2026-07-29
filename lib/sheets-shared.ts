@@ -15,12 +15,12 @@ export const LEAD_STATUSES = [
 export type LeadStatus = (typeof LEAD_STATUSES)[number];
 
 export const LEAD_STATUS_LABELS: Record<LeadStatus, string> = {
-  noua: 'nouă',
-  valida: 'validă',
-  ofertare: 'în ofertare',
-  castigata: 'câștigată',
-  altundeva: 'altundeva',
-  renuntat: 'renunțat',
+  noua: 'Nouă',
+  valida: 'Validă',
+  ofertare: 'În ofertare',
+  castigata: 'Câștigată',
+  altundeva: 'Altundeva',
+  renuntat: 'Renunțat',
 };
 
 export const LEAD_STATUS_HINTS: Record<LeadStatus, string> = {

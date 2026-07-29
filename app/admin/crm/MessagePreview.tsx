@@ -49,7 +49,7 @@ export default function MessagePreview({ text }: { text: string }) {
       <p
         onMouseEnter={open}
         onMouseLeave={scheduleClose}
-        className="mt-1 line-clamp-2 cursor-help text-xs text-slate-500 underline decoration-slate-200 decoration-dotted underline-offset-2"
+        className="mt-1 line-clamp-2 cursor-help rounded-md border border-slate-100 bg-slate-50/70 px-2 py-1.5 text-xs leading-relaxed text-slate-600 transition hover:border-slate-200 hover:bg-slate-50"
       >
         {text}
       </p>

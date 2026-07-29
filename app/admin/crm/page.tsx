@@ -66,15 +66,26 @@ function Stat({ label, value, tone }: { label: string; value: number; tone?: 'al
   );
 }
 
+function Caption({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+      {children}
+    </span>
+  );
+}
+
 function ClaimList({ claims }: { claims: LeadClaim[] }) {
   if (claims.length === 0) {
-    return <span className="text-xs text-slate-400">nerevendicat</span>;
+    return <p className="text-xs text-slate-400">Nerevendicat</p>;
   }
   return (
     <div className="space-y-1.5">
       {claims.map((c) => (
-        <div key={`${c.leadId}-${c.timestamp}`} className="text-xs">
-          <span className="font-medium text-slate-800">{c.numeFirma}</span>
+        <div
+          key={`${c.leadId}-${c.timestamp}`}
+          className="rounded-md border border-slate-100 bg-slate-50/70 px-2 py-1.5 text-xs"
+        >
+          <div className="font-medium text-slate-800">{c.numeFirma}</div>
           <div className="text-slate-500">
             {c.numeContact}
             {c.telefon && (
@@ -101,18 +112,18 @@ function LeadCard({ lead, claims }: { lead: NewLead; claims: LeadClaim[] }) {
   const full = claims.length >= MAX_CLAIMS_PER_LEAD;
 
   return (
-    <article className="flex flex-col rounded-xl border border-slate-200 bg-white">
+    <article className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
       <header className="flex items-start justify-between gap-3 border-b border-slate-100 px-4 py-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <h3 className="truncate font-medium text-slate-900">
+            <h3 className="truncate font-semibold text-slate-900">
               {lead.tipProiect || '(fără tip)'}
             </h3>
             <span
-              className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium ${
+              className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase ${
                 lead.segment === 'rezidential'
                   ? 'bg-sky-50 text-sky-700'
-                  : 'bg-slate-100 text-slate-600'
+                  : 'bg-amber-50 text-amber-700'
               }`}
             >
               {lead.segment || 'comercial'}
@@ -129,43 +140,49 @@ function LeadCard({ lead, claims }: { lead: NewLead; claims: LeadClaim[] }) {
       </header>
 
       <div className="grid gap-4 px-4 py-3 sm:grid-cols-2">
-        <div className="text-xs">
-          <div className="font-medium text-slate-800">{lead.numeContact || '—'}</div>
-          {lead.numeCompanie && <div className="text-slate-500">{lead.numeCompanie}</div>}
-          {lead.email && (
-            <a href={`mailto:${lead.email}`} className="block text-slate-500 hover:text-slate-900">
-              {lead.email}
-            </a>
-          )}
-          {lead.telefon && (
-            <a href={`tel:${lead.telefon}`} className="block text-slate-500 hover:text-slate-900">
-              {lead.telefon}
-            </a>
-          )}
+        <div className="space-y-1 text-xs">
+          <Caption>Client</Caption>
+          <div>
+            <div className="font-medium text-slate-800">{lead.numeContact || '—'}</div>
+            {lead.numeCompanie && <div className="text-slate-500">{lead.numeCompanie}</div>}
+            {lead.email && (
+              <a href={`mailto:${lead.email}`} className="block text-slate-500 hover:text-slate-900">
+                {lead.email}
+              </a>
+            )}
+            {lead.telefon && (
+              <a href={`tel:${lead.telefon}`} className="block text-slate-500 hover:text-slate-900">
+                {lead.telefon}
+              </a>
+            )}
+          </div>
           {lead.preselectedCompany && (
-            <div className="mt-1 text-slate-400">a cerut: {lead.preselectedCompany}</div>
+            <div className="text-slate-400">a cerut: {lead.preselectedCompany}</div>
           )}
           {/* Coloana M, veche: „Nou" e valoarea implicită și nu spune nimic.
               Se afișează doar când conține text scris manual. */}
           {lead.status && lead.status !== 'Nou' && (
-            <div className="mt-1 text-slate-400">{lead.status}</div>
+            <div className="text-slate-400">{lead.status}</div>
           )}
           {lead.mesaj && <MessagePreview text={lead.mesaj} />}
         </div>
 
-        <div className="text-xs">
-          <div
-            className={`mb-1 font-semibold tabular-nums ${
-              full ? 'text-emerald-600' : claims.length > 0 ? 'text-slate-700' : 'text-slate-400'
-            }`}
-          >
-            Revendicări {claims.length}/{MAX_CLAIMS_PER_LEAD}
+        <div className="space-y-1 text-xs">
+          <div className="flex items-baseline gap-1.5">
+            <Caption>Revendicări</Caption>
+            <span
+              className={`text-[11px] font-semibold tabular-nums ${
+                full ? 'text-emerald-600' : claims.length > 0 ? 'text-slate-700' : 'text-slate-400'
+              }`}
+            >
+              {claims.length}/{MAX_CLAIMS_PER_LEAD}
+            </span>
           </div>
           <ClaimList claims={claims} />
         </div>
       </div>
 
-      <div className="mt-auto border-t border-slate-100 bg-slate-50/60 px-4 py-3">
+      <div className="mt-auto border-t border-slate-100 bg-slate-50 px-4 py-3">
         <LeadCrm
           id={lead.timestamp}
           status={lead.crmStatus}

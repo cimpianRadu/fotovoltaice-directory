@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import {
-  CONTACT_STATES,
   LEAD_STATUSES,
   LEAD_STATUS_HINTS,
   LEAD_STATUS_LABELS,
@@ -11,21 +10,104 @@ import {
   type LeadStatus,
 } from '@/lib/sheets-shared';
 
-const TONE: Record<LeadStatus, string> = {
-  noua: 'bg-slate-200 text-slate-700',
-  valida: 'bg-sky-100 text-sky-800',
-  ofertare: 'bg-amber-100 text-amber-800',
-  castigata: 'bg-emerald-100 text-emerald-800',
-  altundeva: 'bg-orange-100 text-orange-800',
-  renuntat: 'bg-slate-200 text-slate-500',
+const STATUS_TONE: Record<LeadStatus, string> = {
+  noua: 'bg-slate-500',
+  valida: 'bg-sky-600',
+  ofertare: 'bg-amber-500',
+  castigata: 'bg-emerald-600',
+  altundeva: 'bg-orange-600',
+  renuntat: 'bg-slate-400',
 };
 
+const CONTACT_TONE: Record<string, string> = {
+  da: 'bg-emerald-600',
+  nu: 'bg-red-500',
+  '': 'bg-slate-400',
+};
+
+const CONTACT_OPTIONS: { value: ContactState; label: string; hint: string }[] = [
+  { value: '', label: 'Neverificat', hint: 'încă nu l-am întrebat pe client' },
+  { value: 'da', label: 'Da', hint: 'l-a sunat cel puțin o firmă' },
+  { value: 'nu', label: 'Nu', hint: 'nu l-a căutat nimeni' },
+];
+
 function fmtDay(iso: string): string {
-  if (!iso) return '';
+  if (!iso) return 'fără dată';
   return new Date(`${iso}T00:00:00`).toLocaleDateString('ro-RO', {
     day: 'numeric',
     month: 'short',
   });
+}
+
+function Caption({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="shrink-0 text-[10px] font-semibold tracking-wider whitespace-nowrap text-slate-400 uppercase">
+      {children}
+    </span>
+  );
+}
+
+/**
+ * Bandă de selecție cu un cursor care alunecă între poziții, ca acul unui radio.
+ * Segmentele sunt egale ca lățime (grid), ca poziția cursorului să fie o simplă
+ * regulă de trei și tranziția să nu depindă de lungimea etichetelor.
+ */
+function Band<T extends string>({
+  options,
+  value,
+  tone,
+  disabled,
+  onPick,
+}: {
+  options: { value: T; label: string; hint?: string }[];
+  value: T;
+  tone: Record<string, string>;
+  disabled?: boolean;
+  onPick: (v: T) => void;
+}) {
+  const idx = options.findIndex((o) => o.value === value);
+  const pct = 100 / options.length;
+
+  return (
+    <div
+      className="relative grid rounded-full border border-slate-200 bg-slate-100 p-0.5"
+      style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}
+    >
+      {/* Gradațiile dintre segmente, ca reperele de pe scala unui radio. */}
+      <div aria-hidden className="pointer-events-none absolute inset-y-2 left-0 w-full">
+        {options.slice(1).map((o, i) => (
+          <span
+            key={o.value}
+            className="absolute inset-y-0 w-px bg-slate-300/70"
+            style={{ left: `${(i + 1) * pct}%` }}
+          />
+        ))}
+      </div>
+
+      {idx >= 0 && (
+        <span
+          aria-hidden
+          className={`absolute top-0.5 bottom-0.5 rounded-full shadow-sm transition-[left,background-color] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${tone[value] ?? 'bg-slate-400'}`}
+          style={{ left: `calc(${idx * pct}% + 2px)`, width: `calc(${pct}% - 4px)` }}
+        />
+      )}
+
+      {options.map((o) => (
+        <button
+          key={o.value}
+          type="button"
+          title={o.hint}
+          disabled={disabled}
+          onClick={() => onPick(o.value)}
+          className={`relative z-10 truncate rounded-full px-1 py-1 text-[11px] font-medium transition-colors duration-200 disabled:cursor-wait ${
+            o.value === value ? 'text-white' : 'text-slate-500 hover:text-slate-900'
+          }`}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
 }
 
 export default function LeadCrm({
@@ -43,13 +125,16 @@ export default function LeadCrm({
   const [contacted, setContacted] = useState(initialContacted);
   const [notes, setNotes] = useState(initialNotes);
   const [draft, setDraft] = useState('');
-  const [expanded, setExpanded] = useState(false);
   const [state, setState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [message, setMessage] = useState<string | null>(null);
 
   async function save(payload: { status?: LeadStatus; contacted?: ContactState; note?: string }) {
     setState('saving');
     setMessage(null);
+    // Optimist pe selecții: cursorul trebuie să plece în clipa clickului, nu
+    // după ce răspunde Sheets. Răspunsul rescrie oricum valoarea la final.
+    if (payload.status) setStatus(payload.status);
+    if (payload.contacted !== undefined) setContacted(payload.contacted);
     try {
       const res = await fetch('/api/admin/leads', {
         method: 'POST',
@@ -80,98 +165,98 @@ export default function LeadCrm({
     save({ note });
   }
 
+  // Grupate pe zi, cu ziua cea mai recentă prima: panoul are înălțime fixă și
+  // derulează, deci un card nu crește la infinit oricâte note ar aduna.
   const grouped: { date: string; texts: string[] }[] = [];
   for (const n of notes) {
     const last = grouped[grouped.length - 1];
     if (last && last.date === n.date) last.texts.push(n.text);
     else grouped.push({ date: n.date, texts: [n.text] });
   }
+  grouped.reverse();
 
   const busy = state === 'saving';
 
   return (
-    <div className="space-y-2">
-      <div className="flex flex-wrap gap-1">
-        {LEAD_STATUSES.map((s) => (
-          <button
-            key={s}
-            type="button"
-            onClick={() => save({ status: s })}
-            disabled={busy}
-            title={LEAD_STATUS_HINTS[s]}
-            className={`rounded-full px-2 py-0.5 text-[11px] font-medium transition disabled:cursor-wait ${
-              status === s ? TONE[s] : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'
-            }`}
-          >
-            {LEAD_STATUS_LABELS[s]}
-          </button>
-        ))}
+    <div className="space-y-3">
+      {/* Banda de stare ține toată lățimea: cu șase trepte, orice coloană
+          alăturată i-ar tăia etichetele („În ofertare" e cea mai lungă). */}
+      <div className="space-y-1">
+        <Caption>Stare</Caption>
+        <Band
+          options={LEAD_STATUSES.map((s) => ({
+            value: s,
+            label: LEAD_STATUS_LABELS[s],
+            hint: LEAD_STATUS_HINTS[s],
+          }))}
+          value={status}
+          tone={STATUS_TONE}
+          disabled={busy}
+          onPick={(s) => save({ status: s })}
+        />
       </div>
 
-      <div className="flex items-center gap-1">
-        <span className="text-[11px] text-slate-400">contactat de firmă:</span>
-        {CONTACT_STATES.map((c) => (
-          <button
-            key={c}
-            type="button"
-            // Click pe valoarea activă o scoate: revine la „încă neverificat".
-            onClick={() => save({ contacted: contacted === c ? '' : c })}
+      <div className="flex items-center gap-3">
+        <Caption>Contactat de firmă</Caption>
+        <div className="w-full max-w-60">
+          <Band
+            options={CONTACT_OPTIONS}
+            value={contacted}
+            tone={CONTACT_TONE}
             disabled={busy}
-            className={`rounded px-1.5 py-0.5 text-[11px] font-semibold transition disabled:cursor-wait ${
-              contacted === c
-                ? c === 'da'
-                  ? 'bg-emerald-100 text-emerald-800'
-                  : 'bg-red-100 text-red-800'
-                : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'
-            }`}
-          >
-            {c}
-          </button>
-        ))}
-        {!contacted && <span className="text-[11px] text-slate-300">neverificat</span>}
+            onPick={(c) => save({ contacted: c })}
+          />
+        </div>
       </div>
 
-      <textarea
-        value={draft}
-        onChange={(e) => setDraft(e.target.value)}
-        onBlur={(e) => commitDraft(e.currentTarget.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) e.currentTarget.blur();
-        }}
-        rows={2}
-        placeholder="Notă… (se salvează când ieși din câmp)"
-        className="w-full rounded border border-slate-200 px-2 py-1 text-xs text-slate-700 outline-none focus:border-slate-400"
-      />
+      <div className="rounded-lg border border-slate-200 bg-white">
+        <div className="flex items-center justify-between border-b border-slate-100 px-3 py-1.5">
+          <Caption>Note</Caption>
+          <span className="text-[10px] text-slate-400">
+            {state === 'saving' && 'se salvează…'}
+            {state === 'saved' && <span className="text-emerald-600">salvat</span>}
+            {state === 'error' && <span className="text-red-600">{message}</span>}
+            {state === 'idle' &&
+              notes.length > 0 &&
+              `${notes.length} ${notes.length === 1 ? 'notă' : 'note'} · ${grouped.length} ${
+                grouped.length === 1 ? 'zi' : 'zile'
+              }`}
+          </span>
+        </div>
 
-      {state === 'saving' && <p className="text-[11px] text-slate-400">se salvează…</p>}
-      {state === 'saved' && <p className="text-[11px] text-emerald-600">salvat</p>}
-      {state === 'error' && <p className="text-[11px] text-red-600">{message}</p>}
-
-      {grouped.length > 0 && (
-        <div className="rounded-md bg-slate-50 px-2 py-1.5">
-          <ul className="space-y-1.5">
-            {(expanded ? grouped : grouped.slice(0, 1)).map((g, i) => (
-              <li key={`${g.date}-${i}`} className="text-[11px]">
-                <div className="font-medium text-slate-400">{fmtDay(g.date) || 'fără dată'}</div>
-                {g.texts.map((t, j) => (
-                  <p key={j} className="whitespace-pre-wrap text-slate-600">
-                    {t}
-                  </p>
-                ))}
+        {grouped.length > 0 && (
+          <ul className="max-h-44 divide-y divide-slate-100 overflow-y-auto">
+            {grouped.map((g, i) => (
+              <li key={`${g.date}-${i}`} className="flex gap-3 px-3 py-2">
+                <span className="w-14 shrink-0 pt-px text-[10px] font-semibold tracking-wide text-slate-400 uppercase">
+                  {fmtDay(g.date)}
+                </span>
+                <div className="min-w-0 flex-1 space-y-1">
+                  {g.texts.map((t, j) => (
+                    <p key={j} className="text-xs leading-relaxed whitespace-pre-wrap text-slate-700">
+                      {t}
+                    </p>
+                  ))}
+                </div>
               </li>
             ))}
           </ul>
-          {grouped.length > 1 && (
-            <button
-              type="button"
-              onClick={() => setExpanded((v) => !v)}
-              className="mt-1 text-[11px] font-medium text-slate-400 hover:text-slate-700"
-            >
-              {expanded ? 'ascunde' : `încă ${grouped.length - 1} ${grouped.length - 1 === 1 ? 'zi' : 'zile'}`}
-            </button>
-          )}
+        )}
+
+        <div className="border-t border-slate-100 p-2">
+          <textarea
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            onBlur={(e) => commitDraft(e.currentTarget.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) e.currentTarget.blur();
+            }}
+            rows={2}
+            placeholder="Scrie o notă… se salvează pe ziua de azi când ieși din câmp"
+            className="w-full resize-y rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs leading-relaxed text-slate-700 transition outline-none placeholder:text-slate-400 focus:border-slate-400 focus:bg-white focus:ring-2 focus:ring-slate-900/5"
+          />
         </div>
-      )}
+      </div>
     </div>
   );
 }
