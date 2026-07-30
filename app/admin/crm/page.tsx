@@ -11,7 +11,7 @@ import {
   type NewListing,
   type LeadClaim,
 } from '@/lib/sheets';
-import { getCompaniesBySegment } from '@/lib/utils';
+import { getCompanies } from '@/lib/utils';
 import { getFinancingShort, getFinancingTone, type FinancingTone } from '@/lib/utils-shared';
 import ClaimList, { type ClaimRow } from './ClaimList';
 import LeadCrm from './LeadCrm';
@@ -335,25 +335,21 @@ export default async function CrmPage({ searchParams }: Props) {
     a.localeCompare(b, 'ro')
   );
 
-  // Lista de firme pentru revendicarea manuală, pre-filtrată pe segment.
-  // O firmă cu segment='ambele' apare în ambele liste (asta face
-  // getCompaniesBySegment). Trecem doar câmpurile de care are nevoie formul,
-  // nu toată structura Company (companies.json e ~300 KB, dar {id,name,phone,city}
-  // × ~180 firme e ~10 KB serializat).
-  function toFirmOptions(segment: 'rezidential' | 'comercial'): FirmOption[] {
-    return getCompaniesBySegment(segment)
-      .map((c) => ({
-        id: c.id,
-        name: c.name,
-        phone: c.contact.phone,
-        city: c.location.city,
-      }))
-      .sort((a, b) => a.name.localeCompare(b.name, 'ro'));
-  }
-  const firmsBySegment = {
-    rezidential: toFirmOptions('rezidential'),
-    comercial: toFirmOptions('comercial'),
-  };
+  // Lista de firme pentru revendicarea manuală — TOATE, indiferent de segment.
+  // Filtrarea pe segment (rezidential vs comercial) suna ordonat pe hârtie dar
+  // în practică ascunde firme relevante: o firmă „comercial" poate accepta un
+  // lead rezidențial mic dacă îi convine. Ești admin, ai judecata ta; searchul
+  // rapid din SearchableSelect face lungimea listei irelevantă. Trecem doar
+  // câmpurile de care are nevoie formul, nu toată structura Company
+  // (~180 firme × {id,name,phone,city} ≈ 10 KB serializat).
+  const firms: FirmOption[] = getCompanies()
+    .map((c) => ({
+      id: c.id,
+      name: c.name,
+      phone: c.contact.phone,
+      city: c.location.city,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'ro'));
 
   const newestFirst = [...leads].reverse();
   const visible = newestFirst.filter((l) => {
@@ -505,7 +501,7 @@ export default async function CrmPage({ searchParams }: Props) {
             key={lead.timestamp}
             lead={lead}
             claims={claimsByLead.get(lead.timestamp) ?? []}
-            firms={firmsBySegment[lead.segment === 'rezidential' ? 'rezidential' : 'comercial']}
+            firms={firms}
           />
         ))}
       </div>
