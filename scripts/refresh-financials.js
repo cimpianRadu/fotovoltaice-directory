@@ -40,6 +40,7 @@ const cachePath = (args.find((a) => a.startsWith('--cache=')) || '=').split('=')
 const limit = Number((args.find((a) => a.startsWith('--limit=')) || '=0').split('=')[1]) || 0;
 
 const TODAY = new Date().toISOString().slice(0, 10);
+const HISTORY_YEARS = 5;
 const BASE = 'https://api.targetare.ro/v1';
 const HEADERS = { Authorization: `Bearer ${API_KEY}` };
 
@@ -61,6 +62,7 @@ const fmt = (n) => (n || 0).toLocaleString('ro-RO');
     process.stdout.write(`  [${String(i + 1).padStart(3)}/${firms.length}] ${c.slug.padEnd(38)}`);
 
     let latest;
+    let history = [];
     try {
       const res = await fetch(`${BASE}/companies/${cui}/financial`, { headers: HEADERS });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -69,6 +71,18 @@ const fmt = (n) => (n || 0).toLocaleString('ro-RO');
       raw[c.slug] = { cui, data: json.data || {} };
       const rows = Array.isArray(json.data?.financialData) ? json.data.financialData : [];
       latest = rows.slice().sort((a, b) => b.year - a.year)[0];
+      // Istoric pe ultimii ani, exact cum vine de la ANAF prin API. Fără ani
+      // fabricați: rândurile fără cifră de afaceri nu intră.
+      history = rows
+        .filter((r) => r.year != null && r.turnover != null)
+        .sort((a, b) => a.year - b.year)
+        .slice(-HISTORY_YEARS)
+        .map((r) => ({
+          year: r.year,
+          revenue: r.turnover,
+          profit: r.netProfit ?? 0,
+          ...(r.employee > 0 ? { employees: r.employee } : {}),
+        }));
     } catch (err) {
       console.log(`ERR ${err.message}`);
       errors.push({ slug: c.slug, error: err.message });
@@ -101,14 +115,27 @@ const fmt = (n) => (n || 0).toLocaleString('ro-RO');
       continue;
     }
 
+    const historyChanged =
+      JSON.stringify(c.financials?.history || []) !== JSON.stringify(history);
+
     const same =
       before.year === after.year &&
       before.revenue === after.revenue &&
       before.profit === after.profit &&
       before.employees === after.employees;
 
-    if (same) {
+    if (same && !historyChanged) {
       console.log(`neschimbat (${after.year})`);
+      continue;
+    }
+
+    // Cifrele de bază sunt aceleași, doar istoricul e nou (prima rulare după
+    // adăugarea câmpului). Scriem istoricul, nu atingem updatedAt.
+    if (same && historyChanged) {
+      if (!dryRun) {
+        c.financials = { ...c.financials, history };
+      }
+      console.log(`istoric adăugat (${history.map((h) => h.year).join(', ')})`);
       continue;
     }
 
@@ -116,7 +143,7 @@ const fmt = (n) => (n || 0).toLocaleString('ro-RO');
       before.revenue > 0 ? ((after.revenue - before.revenue) / before.revenue) * 100 : null;
 
     if (!dryRun) {
-      c.financials = { year: after.year, revenue: after.revenue, profit: after.profit };
+      c.financials = { year: after.year, revenue: after.revenue, profit: after.profit, history };
       if (after.employees > 0) c.employees = after.employees;
       c.updatedAt = TODAY;
     }

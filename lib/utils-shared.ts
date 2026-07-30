@@ -44,6 +44,13 @@ export interface Testimonial {
   source: TestimonialSource;
 }
 
+export interface FinancialYear {
+  year: number;
+  revenue: number;
+  profit: number;
+  employees?: number;
+}
+
 export interface Company {
   id: string;
   slug: string;
@@ -61,7 +68,14 @@ export interface Company {
   specializations: string[];
   certifications: string[];
   capacity: { minProjectKw: number; maxProjectKw: number; projectsCompleted: number };
-  financials: { year: number; revenue: number; profit: number };
+  financials: {
+    year: number;
+    revenue: number;
+    profit: number;
+    // Bilanțurile ANAF pe ultimii ani, cel mai vechi primul. Scris de
+    // scripts/refresh-financials.js; absent pe firmele fără date în API.
+    history?: FinancialYear[];
+  };
   tags: string[];
   featured: boolean;
   verified: boolean;

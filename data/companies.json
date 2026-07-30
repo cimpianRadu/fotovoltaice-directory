@@ -49,7 +49,39 @@
       "financials": {
         "year": 2025,
         "revenue": 314982227,
-        "profit": 10053111
+        "profit": 10053111,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 58591516,
+            "profit": 6144448,
+            "employees": 46
+          },
+          {
+            "year": 2022,
+            "revenue": 137029958,
+            "profit": 11569481,
+            "employees": 74
+          },
+          {
+            "year": 2023,
+            "revenue": 290589731,
+            "profit": 27653615,
+            "employees": 98
+          },
+          {
+            "year": 2024,
+            "revenue": 273878513,
+            "profit": 32277126,
+            "employees": 124
+          },
+          {
+            "year": 2025,
+            "revenue": 314982227,
+            "profit": 10053111,
+            "employees": 130
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -115,7 +147,39 @@
       "financials": {
         "year": 2024,
         "revenue": 406828898,
-        "profit": 36158759
+        "profit": 36158759,
+        "history": [
+          {
+            "year": 2020,
+            "revenue": 216454700,
+            "profit": 8676378,
+            "employees": 473
+          },
+          {
+            "year": 2021,
+            "revenue": 209706456,
+            "profit": 5672218,
+            "employees": 454
+          },
+          {
+            "year": 2022,
+            "revenue": 197093448,
+            "profit": 1710132,
+            "employees": 434
+          },
+          {
+            "year": 2023,
+            "revenue": 402650389,
+            "profit": 43524497,
+            "employees": 467
+          },
+          {
+            "year": 2024,
+            "revenue": 406828898,
+            "profit": 36158759,
+            "employees": 494
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -181,7 +245,39 @@
       "financials": {
         "year": 2025,
         "revenue": 248513046,
-        "profit": 4898662
+        "profit": 4898662,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 157678704,
+            "profit": 261695,
+            "employees": 850
+          },
+          {
+            "year": 2022,
+            "revenue": 186072982,
+            "profit": 2691349,
+            "employees": 784
+          },
+          {
+            "year": 2023,
+            "revenue": 279382401,
+            "profit": 20843556,
+            "employees": 778
+          },
+          {
+            "year": 2024,
+            "revenue": 274666727,
+            "profit": 4372191,
+            "employees": 762
+          },
+          {
+            "year": 2025,
+            "revenue": 248513046,
+            "profit": 4898662,
+            "employees": 667
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -246,7 +342,39 @@
       "financials": {
         "year": 2025,
         "revenue": 111597309,
-        "profit": 11095461
+        "profit": 11095461,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 45132977,
+            "profit": 15677205,
+            "employees": 50
+          },
+          {
+            "year": 2022,
+            "revenue": 104238906,
+            "profit": 26826358,
+            "employees": 123
+          },
+          {
+            "year": 2023,
+            "revenue": 109277569,
+            "profit": 15907598,
+            "employees": 33
+          },
+          {
+            "year": 2024,
+            "revenue": 117790364,
+            "profit": 21703587,
+            "employees": 39
+          },
+          {
+            "year": 2025,
+            "revenue": 111597309,
+            "profit": 11095461,
+            "employees": 13
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -310,7 +438,39 @@
       "financials": {
         "year": 2025,
         "revenue": 59840322,
-        "profit": 4001812
+        "profit": 4001812,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 193640,
+            "profit": 234004,
+            "employees": 3
+          },
+          {
+            "year": 2022,
+            "revenue": 26460579,
+            "profit": 4473023,
+            "employees": 15
+          },
+          {
+            "year": 2023,
+            "revenue": 38855799,
+            "profit": 3409446,
+            "employees": 24
+          },
+          {
+            "year": 2024,
+            "revenue": 37387977,
+            "profit": 12204312,
+            "employees": 24
+          },
+          {
+            "year": 2025,
+            "revenue": 59840322,
+            "profit": 4001812,
+            "employees": 26
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -371,7 +531,39 @@
       "financials": {
         "year": 2025,
         "revenue": 38130843,
-        "profit": 737471
+        "profit": 737471,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 15280751,
+            "profit": 419606,
+            "employees": 42
+          },
+          {
+            "year": 2022,
+            "revenue": 27162588,
+            "profit": 513122,
+            "employees": 40
+          },
+          {
+            "year": 2023,
+            "revenue": 37986469,
+            "profit": 3899219,
+            "employees": 40
+          },
+          {
+            "year": 2024,
+            "revenue": 24510663,
+            "profit": 583875,
+            "employees": 32
+          },
+          {
+            "year": 2025,
+            "revenue": 38130843,
+            "profit": 737471,
+            "employees": 58
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -433,7 +625,39 @@
       "financials": {
         "year": 2025,
         "revenue": 11407551,
-        "profit": 871260
+        "profit": 871260,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2516070,
+            "profit": 1397179,
+            "employees": 3
+          },
+          {
+            "year": 2022,
+            "revenue": 11197029,
+            "profit": 2414624,
+            "employees": 8
+          },
+          {
+            "year": 2023,
+            "revenue": 9705355,
+            "profit": 769270,
+            "employees": 15
+          },
+          {
+            "year": 2024,
+            "revenue": 12041643,
+            "profit": 220392,
+            "employees": 16
+          },
+          {
+            "year": 2025,
+            "revenue": 11407551,
+            "profit": 871260,
+            "employees": 18
+          }
+        ]
       },
       "tags": [
         "finantare-disponibila",
@@ -497,7 +721,39 @@
       "financials": {
         "year": 2025,
         "revenue": 25429273,
-        "profit": 585390
+        "profit": 585390,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 0,
+            "profit": 1715491,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 0,
+            "profit": 800601,
+            "employees": 1
+          },
+          {
+            "year": 2023,
+            "revenue": 269321,
+            "profit": -30884,
+            "employees": 1
+          },
+          {
+            "year": 2024,
+            "revenue": 9102370,
+            "profit": 616547,
+            "employees": 23
+          },
+          {
+            "year": 2025,
+            "revenue": 25429273,
+            "profit": 585390,
+            "employees": 47
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -565,7 +821,39 @@
       "financials": {
         "year": 2025,
         "revenue": 14016893,
-        "profit": 571201
+        "profit": 571201,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 8018342,
+            "profit": 258718,
+            "employees": 44
+          },
+          {
+            "year": 2022,
+            "revenue": 8183217,
+            "profit": 638503,
+            "employees": 39
+          },
+          {
+            "year": 2023,
+            "revenue": 7323096,
+            "profit": 748738,
+            "employees": 35
+          },
+          {
+            "year": 2024,
+            "revenue": 15225817,
+            "profit": 499629,
+            "employees": 62
+          },
+          {
+            "year": 2025,
+            "revenue": 14016893,
+            "profit": 571201,
+            "employees": 61
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -626,7 +914,39 @@
       "financials": {
         "year": 2025,
         "revenue": 150756601,
-        "profit": 21686309
+        "profit": 21686309,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 18232187,
+            "profit": 1291210,
+            "employees": 24
+          },
+          {
+            "year": 2022,
+            "revenue": 30788599,
+            "profit": 1874982,
+            "employees": 32
+          },
+          {
+            "year": 2023,
+            "revenue": 77603028,
+            "profit": 7909794,
+            "employees": 90
+          },
+          {
+            "year": 2024,
+            "revenue": 88962018,
+            "profit": 20715830,
+            "employees": 115
+          },
+          {
+            "year": 2025,
+            "revenue": 150756601,
+            "profit": 21686309,
+            "employees": 107
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -690,7 +1010,21 @@
       "financials": {
         "year": 2023,
         "revenue": 54680883,
-        "profit": 33835395
+        "profit": 33835395,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 26811554,
+            "profit": 15252090,
+            "employees": 2
+          },
+          {
+            "year": 2023,
+            "revenue": 54680883,
+            "profit": 33835395,
+            "employees": 5
+          }
+        ]
       },
       "tags": [
         "proiecte-mari",
@@ -761,7 +1095,39 @@
       "financials": {
         "year": 2025,
         "revenue": 160326146,
-        "profit": -20220801
+        "profit": -20220801,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 162792614,
+            "profit": -9042288,
+            "employees": 621
+          },
+          {
+            "year": 2022,
+            "revenue": 142756099,
+            "profit": 1475159,
+            "employees": 544
+          },
+          {
+            "year": 2023,
+            "revenue": 183484201,
+            "profit": 2627543,
+            "employees": 472
+          },
+          {
+            "year": 2024,
+            "revenue": 145281587,
+            "profit": -13871793,
+            "employees": 458
+          },
+          {
+            "year": 2025,
+            "revenue": 160326146,
+            "profit": -20220801,
+            "employees": 423
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -818,7 +1184,39 @@
       "financials": {
         "year": 2025,
         "revenue": 14674657,
-        "profit": 544013
+        "profit": 544013,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2666007,
+            "profit": 79917,
+            "employees": 20
+          },
+          {
+            "year": 2022,
+            "revenue": 7336647,
+            "profit": 1744293,
+            "employees": 22
+          },
+          {
+            "year": 2023,
+            "revenue": 12365203,
+            "profit": 285853,
+            "employees": 29
+          },
+          {
+            "year": 2024,
+            "revenue": 12115616,
+            "profit": 191549,
+            "employees": 33
+          },
+          {
+            "year": 2025,
+            "revenue": 14674657,
+            "profit": 544013,
+            "employees": 40
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani"
@@ -870,7 +1268,39 @@
       "financials": {
         "year": 2025,
         "revenue": 6232189,
-        "profit": 514529
+        "profit": 514529,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3047586,
+            "profit": 420940,
+            "employees": 3
+          },
+          {
+            "year": 2022,
+            "revenue": 14441326,
+            "profit": 2214605,
+            "employees": 7
+          },
+          {
+            "year": 2023,
+            "revenue": 9909820,
+            "profit": 1181436,
+            "employees": 10
+          },
+          {
+            "year": 2024,
+            "revenue": 5283705,
+            "profit": 35075,
+            "employees": 6
+          },
+          {
+            "year": 2025,
+            "revenue": 6232189,
+            "profit": 514529,
+            "employees": 5
+          }
+        ]
       },
       "tags": [
         "partener-fronius",
@@ -926,7 +1356,39 @@
       "financials": {
         "year": 2025,
         "revenue": 30025865,
-        "profit": 2003188
+        "profit": 2003188,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3646336,
+            "profit": 1089251,
+            "employees": 21
+          },
+          {
+            "year": 2022,
+            "revenue": 4893148,
+            "profit": 1229139,
+            "employees": 21
+          },
+          {
+            "year": 2023,
+            "revenue": 6969414,
+            "profit": 1568732,
+            "employees": 27
+          },
+          {
+            "year": 2024,
+            "revenue": 15506737,
+            "profit": 2927704,
+            "employees": 32
+          },
+          {
+            "year": 2025,
+            "revenue": 30025865,
+            "profit": 2003188,
+            "employees": 33
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -988,7 +1450,39 @@
       "financials": {
         "year": 2025,
         "revenue": 58565881,
-        "profit": 12260271
+        "profit": 12260271,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 11236678,
+            "profit": 3580584,
+            "employees": 12
+          },
+          {
+            "year": 2022,
+            "revenue": 39091950,
+            "profit": 9633905,
+            "employees": 13
+          },
+          {
+            "year": 2023,
+            "revenue": 60898343,
+            "profit": 9073747,
+            "employees": 46
+          },
+          {
+            "year": 2024,
+            "revenue": 74357072,
+            "profit": 12402708,
+            "employees": 27
+          },
+          {
+            "year": 2025,
+            "revenue": 58565881,
+            "profit": 12260271,
+            "employees": 14
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -1049,7 +1543,39 @@
       "financials": {
         "year": 2025,
         "revenue": 831426660,
-        "profit": 98276144
+        "profit": 98276144,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 154132757,
+            "profit": 1264669,
+            "employees": 199
+          },
+          {
+            "year": 2022,
+            "revenue": 261516976,
+            "profit": 19508803,
+            "employees": 207
+          },
+          {
+            "year": 2023,
+            "revenue": 432988904,
+            "profit": 36136908,
+            "employees": 232
+          },
+          {
+            "year": 2024,
+            "revenue": 649506917,
+            "profit": 55439015,
+            "employees": 282
+          },
+          {
+            "year": 2025,
+            "revenue": 831426660,
+            "profit": 98276144,
+            "employees": 377
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -1111,7 +1637,39 @@
       "financials": {
         "year": 2025,
         "revenue": 64303883,
-        "profit": 76282
+        "profit": 76282,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 13813043,
+            "profit": 1036382,
+            "employees": 27
+          },
+          {
+            "year": 2022,
+            "revenue": 31752990,
+            "profit": 3483900,
+            "employees": 63
+          },
+          {
+            "year": 2023,
+            "revenue": 137236909,
+            "profit": 15074354,
+            "employees": 171
+          },
+          {
+            "year": 2024,
+            "revenue": 64188599,
+            "profit": 243389,
+            "employees": 198
+          },
+          {
+            "year": 2025,
+            "revenue": 64303883,
+            "profit": 76282,
+            "employees": 95
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -1172,7 +1730,39 @@
       "financials": {
         "year": 2025,
         "revenue": 59369225,
-        "profit": 3770023
+        "profit": 3770023,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3097815,
+            "profit": 659524,
+            "employees": 8
+          },
+          {
+            "year": 2022,
+            "revenue": 14909732,
+            "profit": 1512848,
+            "employees": 19
+          },
+          {
+            "year": 2023,
+            "revenue": 41826084,
+            "profit": 5918413,
+            "employees": 36
+          },
+          {
+            "year": 2024,
+            "revenue": 24968062,
+            "profit": 1424138,
+            "employees": 40
+          },
+          {
+            "year": 2025,
+            "revenue": 59369225,
+            "profit": 3770023,
+            "employees": 48
+          }
+        ]
       },
       "tags": [
         "mentenanta-inclusa",
@@ -1230,7 +1820,39 @@
       "financials": {
         "year": 2024,
         "revenue": 67932736,
-        "profit": 1808685
+        "profit": 1808685,
+        "history": [
+          {
+            "year": 2020,
+            "revenue": 2563703,
+            "profit": 214469,
+            "employees": 1
+          },
+          {
+            "year": 2021,
+            "revenue": 7552480,
+            "profit": 387861,
+            "employees": 2
+          },
+          {
+            "year": 2022,
+            "revenue": 29305791,
+            "profit": 1404572,
+            "employees": 10
+          },
+          {
+            "year": 2023,
+            "revenue": 39184172,
+            "profit": 746460,
+            "employees": 23
+          },
+          {
+            "year": 2024,
+            "revenue": 67932736,
+            "profit": 1808685,
+            "employees": 57
+          }
+        ]
       },
       "tags": [
         "EPC",
@@ -1289,7 +1911,39 @@
       "financials": {
         "year": 2025,
         "revenue": 57256923,
-        "profit": 547671
+        "profit": 547671,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 5201959,
+            "profit": 411035,
+            "employees": 21
+          },
+          {
+            "year": 2022,
+            "revenue": 30800706,
+            "profit": 4000638,
+            "employees": 53
+          },
+          {
+            "year": 2023,
+            "revenue": 55353199,
+            "profit": 3638301,
+            "employees": 79
+          },
+          {
+            "year": 2024,
+            "revenue": 48476688,
+            "profit": 2719411,
+            "employees": 83
+          },
+          {
+            "year": 2025,
+            "revenue": 57256923,
+            "profit": 547671,
+            "employees": 94
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -1345,7 +1999,39 @@
       "financials": {
         "year": 2025,
         "revenue": 66694299,
-        "profit": 3591947
+        "profit": 3591947,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 48571105,
+            "profit": 3437803,
+            "employees": 36
+          },
+          {
+            "year": 2022,
+            "revenue": 84383145,
+            "profit": 9038977,
+            "employees": 48
+          },
+          {
+            "year": 2023,
+            "revenue": 107792518,
+            "profit": 19772203,
+            "employees": 51
+          },
+          {
+            "year": 2024,
+            "revenue": 110653163,
+            "profit": 9827896,
+            "employees": 54
+          },
+          {
+            "year": 2025,
+            "revenue": 66694299,
+            "profit": 3591947,
+            "employees": 55
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -1399,7 +2085,38 @@
       "financials": {
         "year": 2025,
         "revenue": 699074799,
-        "profit": 58909053
+        "profit": 58909053,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 42526123,
+            "profit": 1178148,
+            "employees": 36
+          },
+          {
+            "year": 2022,
+            "revenue": 62170310,
+            "profit": 2306062
+          },
+          {
+            "year": 2023,
+            "revenue": 157772747,
+            "profit": 12888262,
+            "employees": 42
+          },
+          {
+            "year": 2024,
+            "revenue": 416261591,
+            "profit": 39090544,
+            "employees": 44
+          },
+          {
+            "year": 2025,
+            "revenue": 699074799,
+            "profit": 58909053,
+            "employees": 194
+          }
+        ]
       },
       "tags": [
         "proiecte-mari",
@@ -1457,7 +2174,39 @@
       "financials": {
         "year": 2025,
         "revenue": 26304904,
-        "profit": 1005510
+        "profit": 1005510,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3143788,
+            "profit": 457403,
+            "employees": 7
+          },
+          {
+            "year": 2022,
+            "revenue": 14957670,
+            "profit": 3281687,
+            "employees": 21
+          },
+          {
+            "year": 2023,
+            "revenue": 13907787,
+            "profit": 740660,
+            "employees": 37
+          },
+          {
+            "year": 2024,
+            "revenue": 24662460,
+            "profit": 3203661,
+            "employees": 36
+          },
+          {
+            "year": 2025,
+            "revenue": 26304904,
+            "profit": 1005510,
+            "employees": 38
+          }
+        ]
       },
       "tags": [
         "mentenanta-inclusa"
@@ -1515,7 +2264,39 @@
       "financials": {
         "year": 2025,
         "revenue": 436027100,
-        "profit": 50402132
+        "profit": 50402132,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3389958,
+            "profit": 1078827,
+            "employees": 11
+          },
+          {
+            "year": 2022,
+            "revenue": 31087391,
+            "profit": 7328842,
+            "employees": 128
+          },
+          {
+            "year": 2023,
+            "revenue": 80470803,
+            "profit": 15277546,
+            "employees": 268
+          },
+          {
+            "year": 2024,
+            "revenue": 190067130,
+            "profit": 20064953,
+            "employees": 504
+          },
+          {
+            "year": 2025,
+            "revenue": 436027100,
+            "profit": 50402132,
+            "employees": 1071
+          }
+        ]
       },
       "tags": [
         "proiecte-mari",
@@ -1572,7 +2353,39 @@
       "financials": {
         "year": 2025,
         "revenue": 200991802,
-        "profit": 12779924
+        "profit": 12779924,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 121274083,
+            "profit": 8410939,
+            "employees": 67
+          },
+          {
+            "year": 2022,
+            "revenue": 85738421,
+            "profit": 62765,
+            "employees": 60
+          },
+          {
+            "year": 2023,
+            "revenue": 107902533,
+            "profit": 4544384,
+            "employees": 60
+          },
+          {
+            "year": 2024,
+            "revenue": 95671921,
+            "profit": 5666451,
+            "employees": 60
+          },
+          {
+            "year": 2025,
+            "revenue": 200991802,
+            "profit": 12779924,
+            "employees": 60
+          }
+        ]
       },
       "tags": [
         "proiecte-mari",
@@ -1631,7 +2444,38 @@
       "financials": {
         "year": 2025,
         "revenue": 106223343,
-        "profit": 5608544
+        "profit": 5608544,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 5621,
+            "profit": -10209
+          },
+          {
+            "year": 2022,
+            "revenue": 197317,
+            "profit": 37831,
+            "employees": 4
+          },
+          {
+            "year": 2023,
+            "revenue": 9933829,
+            "profit": 1178992,
+            "employees": 5
+          },
+          {
+            "year": 2024,
+            "revenue": 54016263,
+            "profit": 6323706,
+            "employees": 7
+          },
+          {
+            "year": 2025,
+            "revenue": 106223343,
+            "profit": 5608544,
+            "employees": 36
+          }
+        ]
       },
       "tags": [
         "retea-nationala",
@@ -1688,7 +2532,39 @@
       "financials": {
         "year": 2025,
         "revenue": 20457917,
-        "profit": -6334351
+        "profit": -6334351,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 193623534,
+            "profit": -1968018,
+            "employees": 91
+          },
+          {
+            "year": 2022,
+            "revenue": 314478403,
+            "profit": 15673585,
+            "employees": 76
+          },
+          {
+            "year": 2023,
+            "revenue": 129579191,
+            "profit": 4993100,
+            "employees": 79
+          },
+          {
+            "year": 2024,
+            "revenue": 92717390,
+            "profit": -20464381,
+            "employees": 65
+          },
+          {
+            "year": 2025,
+            "revenue": 20457917,
+            "profit": -6334351,
+            "employees": 34
+          }
+        ]
       },
       "tags": [
         "furnizor-energie",
@@ -1742,7 +2618,33 @@
       "financials": {
         "year": 2025,
         "revenue": 64443368,
-        "profit": 8574676
+        "profit": 8574676,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 3274529,
+            "profit": 505519,
+            "employees": 41
+          },
+          {
+            "year": 2023,
+            "revenue": 16780503,
+            "profit": 6925973,
+            "employees": 21
+          },
+          {
+            "year": 2024,
+            "revenue": 43229753,
+            "profit": 2199833,
+            "employees": 71
+          },
+          {
+            "year": 2025,
+            "revenue": 64443368,
+            "profit": 8574676,
+            "employees": 98
+          }
+        ]
       },
       "tags": [
         "parcuri-solare",
@@ -1799,7 +2701,39 @@
       "financials": {
         "year": 2025,
         "revenue": 126758248,
-        "profit": 10713795
+        "profit": 10713795,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 85999818,
+            "profit": 8038764,
+            "employees": 238
+          },
+          {
+            "year": 2022,
+            "revenue": 101061027,
+            "profit": 17744365,
+            "employees": 235
+          },
+          {
+            "year": 2023,
+            "revenue": 161728054,
+            "profit": 20171209,
+            "employees": 239
+          },
+          {
+            "year": 2024,
+            "revenue": 185982727,
+            "profit": 24855071,
+            "employees": 234
+          },
+          {
+            "year": 2025,
+            "revenue": 126758248,
+            "profit": 10713795,
+            "employees": 228
+          }
+        ]
       },
       "tags": [
         "proiecte-mari",
@@ -1867,7 +2801,39 @@
       "financials": {
         "year": 2025,
         "revenue": 22867601,
-        "profit": 1395879
+        "profit": 1395879,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 8994876,
+            "profit": 590869,
+            "employees": 7
+          },
+          {
+            "year": 2022,
+            "revenue": 18044228,
+            "profit": 2332498,
+            "employees": 10
+          },
+          {
+            "year": 2023,
+            "revenue": 19039502,
+            "profit": 2141703,
+            "employees": 11
+          },
+          {
+            "year": 2024,
+            "revenue": 15357083,
+            "profit": 776499,
+            "employees": 16
+          },
+          {
+            "year": 2025,
+            "revenue": 22867601,
+            "profit": 1395879,
+            "employees": 15
+          }
+        ]
       },
       "tags": [
         "experienta-15-ani",
@@ -1929,7 +2895,39 @@
       "financials": {
         "year": 2025,
         "revenue": 47681390,
-        "profit": 6695293
+        "profit": 6695293,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 145823,
+            "profit": 224336,
+            "employees": 5
+          },
+          {
+            "year": 2022,
+            "revenue": 9003691,
+            "profit": 1815263,
+            "employees": 8
+          },
+          {
+            "year": 2023,
+            "revenue": 31642185,
+            "profit": 4447248,
+            "employees": 17
+          },
+          {
+            "year": 2024,
+            "revenue": 46992721,
+            "profit": 9215299,
+            "employees": 40
+          },
+          {
+            "year": 2025,
+            "revenue": 47681390,
+            "profit": 6695293,
+            "employees": 57
+          }
+        ]
       },
       "tags": [
         "experienta-20-ani",
@@ -1985,7 +2983,39 @@
       "financials": {
         "year": 2025,
         "revenue": 40063296,
-        "profit": -2078507
+        "profit": -2078507,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 25948624,
+            "profit": 3067908,
+            "employees": 10
+          },
+          {
+            "year": 2022,
+            "revenue": 61075279,
+            "profit": 7750630,
+            "employees": 13
+          },
+          {
+            "year": 2023,
+            "revenue": 37131681,
+            "profit": 2587594,
+            "employees": 14
+          },
+          {
+            "year": 2024,
+            "revenue": 29852450,
+            "profit": -1982585,
+            "employees": 15
+          },
+          {
+            "year": 2025,
+            "revenue": 40063296,
+            "profit": -2078507,
+            "employees": 17
+          }
+        ]
       },
       "tags": [
         "experienta-20-ani",
@@ -2040,7 +3070,39 @@
       "financials": {
         "year": 2025,
         "revenue": 4225477,
-        "profit": 138176
+        "profit": 138176,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3613101,
+            "profit": 416521,
+            "employees": 2
+          },
+          {
+            "year": 2022,
+            "revenue": 13667670,
+            "profit": 760706,
+            "employees": 3
+          },
+          {
+            "year": 2023,
+            "revenue": 4768000,
+            "profit": 310420,
+            "employees": 6
+          },
+          {
+            "year": 2024,
+            "revenue": 4757329,
+            "profit": 525023,
+            "employees": 9
+          },
+          {
+            "year": 2025,
+            "revenue": 4225477,
+            "profit": 138176,
+            "employees": 9
+          }
+        ]
       },
       "tags": [
         "experienta-15-ani",
@@ -2098,7 +3160,39 @@
       "financials": {
         "year": 2025,
         "revenue": 12578149,
-        "profit": 1978240
+        "profit": 1978240,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2437119,
+            "profit": 804480,
+            "employees": 3
+          },
+          {
+            "year": 2022,
+            "revenue": 4834167,
+            "profit": 1469548,
+            "employees": 7
+          },
+          {
+            "year": 2023,
+            "revenue": 7404297,
+            "profit": 2179836,
+            "employees": 10
+          },
+          {
+            "year": 2024,
+            "revenue": 11492372,
+            "profit": 1675107,
+            "employees": 13
+          },
+          {
+            "year": 2025,
+            "revenue": 12578149,
+            "profit": 1978240,
+            "employees": 10
+          }
+        ]
       },
       "tags": [
         "experienta-15-ani",
@@ -2161,7 +3255,39 @@
       "financials": {
         "year": 2024,
         "revenue": 51636828,
-        "profit": 3271679
+        "profit": 3271679,
+        "history": [
+          {
+            "year": 2020,
+            "revenue": 13902559,
+            "profit": 1244872,
+            "employees": 21
+          },
+          {
+            "year": 2021,
+            "revenue": 16231129,
+            "profit": 1440888,
+            "employees": 47
+          },
+          {
+            "year": 2022,
+            "revenue": 32636884,
+            "profit": 1790516,
+            "employees": 100
+          },
+          {
+            "year": 2023,
+            "revenue": 45617004,
+            "profit": 3921290,
+            "employees": 104
+          },
+          {
+            "year": 2024,
+            "revenue": 51636828,
+            "profit": 3271679,
+            "employees": 126
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -2222,7 +3348,39 @@
       "financials": {
         "year": 2025,
         "revenue": 23613704,
-        "profit": 728595
+        "profit": 728595,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 16772283,
+            "profit": 909669,
+            "employees": 15
+          },
+          {
+            "year": 2022,
+            "revenue": 20522746,
+            "profit": 1794537,
+            "employees": 16
+          },
+          {
+            "year": 2023,
+            "revenue": 20493182,
+            "profit": 2363970,
+            "employees": 21
+          },
+          {
+            "year": 2024,
+            "revenue": 18891110,
+            "profit": 761856,
+            "employees": 29
+          },
+          {
+            "year": 2025,
+            "revenue": 23613704,
+            "profit": 728595,
+            "employees": 31
+          }
+        ]
       },
       "tags": [
         "experienta-30-ani",
@@ -2283,7 +3441,39 @@
       "financials": {
         "year": 2025,
         "revenue": 16645348,
-        "profit": 516791
+        "profit": 516791,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 378570,
+            "profit": 121448,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 6886129,
+            "profit": 991288,
+            "employees": 6
+          },
+          {
+            "year": 2023,
+            "revenue": 6890923,
+            "profit": 691786,
+            "employees": 13
+          },
+          {
+            "year": 2024,
+            "revenue": 9723490,
+            "profit": 1084544,
+            "employees": 15
+          },
+          {
+            "year": 2025,
+            "revenue": 16645348,
+            "profit": 516791,
+            "employees": 17
+          }
+        ]
       },
       "tags": [
         "experienta-20-ani",
@@ -2341,7 +3531,39 @@
       "financials": {
         "year": 2025,
         "revenue": 4654404,
-        "profit": 17023
+        "profit": 17023,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4837648,
+            "profit": 270482,
+            "employees": 5
+          },
+          {
+            "year": 2022,
+            "revenue": 18782283,
+            "profit": 2249751,
+            "employees": 12
+          },
+          {
+            "year": 2023,
+            "revenue": 16244553,
+            "profit": 2963970,
+            "employees": 18
+          },
+          {
+            "year": 2024,
+            "revenue": 8483408,
+            "profit": 8273,
+            "employees": 15
+          },
+          {
+            "year": 2025,
+            "revenue": 4654404,
+            "profit": 17023,
+            "employees": 6
+          }
+        ]
       },
       "tags": [
         "statii-incarcare-ev",
@@ -2397,7 +3619,39 @@
       "financials": {
         "year": 2025,
         "revenue": 89359870,
-        "profit": 1714106
+        "profit": 1714106,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 20769419,
+            "profit": 970372,
+            "employees": 3
+          },
+          {
+            "year": 2022,
+            "revenue": 80242536,
+            "profit": 5954901,
+            "employees": 6
+          },
+          {
+            "year": 2023,
+            "revenue": 72508137,
+            "profit": 2380739,
+            "employees": 9
+          },
+          {
+            "year": 2024,
+            "revenue": 63942344,
+            "profit": 1095582,
+            "employees": 12
+          },
+          {
+            "year": 2025,
+            "revenue": 89359870,
+            "profit": 1714106,
+            "employees": 13
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -2454,7 +3708,39 @@
       "financials": {
         "year": 2025,
         "revenue": 44000516,
-        "profit": 5683737
+        "profit": 5683737,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 21008,
+            "profit": 1866797,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 10682330,
+            "profit": 450895,
+            "employees": 9
+          },
+          {
+            "year": 2023,
+            "revenue": 32284863,
+            "profit": 2156885,
+            "employees": 22
+          },
+          {
+            "year": 2024,
+            "revenue": 38244040,
+            "profit": 3948683,
+            "employees": 31
+          },
+          {
+            "year": 2025,
+            "revenue": 44000516,
+            "profit": 5683737,
+            "employees": 39
+          }
+        ]
       },
       "tags": [
         "mentenanta-inclusa",
@@ -2512,7 +3798,39 @@
       "financials": {
         "year": 2025,
         "revenue": 115034645,
-        "profit": 5119946
+        "profit": 5119946,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 19592299,
+            "profit": 916821,
+            "employees": 10
+          },
+          {
+            "year": 2022,
+            "revenue": 93377329,
+            "profit": 8389340,
+            "employees": 12
+          },
+          {
+            "year": 2023,
+            "revenue": 100992103,
+            "profit": 4349451,
+            "employees": 8
+          },
+          {
+            "year": 2024,
+            "revenue": 67254492,
+            "profit": 2251334,
+            "employees": 41
+          },
+          {
+            "year": 2025,
+            "revenue": 115034645,
+            "profit": 5119946,
+            "employees": 56
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani",
@@ -2579,7 +3897,20 @@
       "financials": {
         "year": 2024,
         "revenue": 5869664,
-        "profit": 322258
+        "profit": 322258,
+        "history": [
+          {
+            "year": 2023,
+            "revenue": 0,
+            "profit": -248265
+          },
+          {
+            "year": 2024,
+            "revenue": 5869664,
+            "profit": 322258,
+            "employees": 8
+          }
+        ]
       },
       "tags": [
         "grup-international",
@@ -2637,7 +3968,39 @@
       "financials": {
         "year": 2025,
         "revenue": 18494971,
-        "profit": 838611
+        "profit": 838611,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 6938424,
+            "profit": 444376,
+            "employees": 4
+          },
+          {
+            "year": 2022,
+            "revenue": 26923537,
+            "profit": 1293780,
+            "employees": 27
+          },
+          {
+            "year": 2023,
+            "revenue": 31318296,
+            "profit": 3353111,
+            "employees": 31
+          },
+          {
+            "year": 2024,
+            "revenue": 31165291,
+            "profit": 772308,
+            "employees": 26
+          },
+          {
+            "year": 2025,
+            "revenue": 18494971,
+            "profit": 838611,
+            "employees": 22
+          }
+        ]
       },
       "tags": [
         "proiecte-mari",
@@ -2699,7 +4062,38 @@
       "financials": {
         "year": 2025,
         "revenue": 6358935,
-        "profit": 571254
+        "profit": 571254,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 0,
+            "profit": -500
+          },
+          {
+            "year": 2022,
+            "revenue": 2491379,
+            "profit": 205628,
+            "employees": 11
+          },
+          {
+            "year": 2023,
+            "revenue": 2352864,
+            "profit": 493490,
+            "employees": 24
+          },
+          {
+            "year": 2024,
+            "revenue": 4567504,
+            "profit": 417557,
+            "employees": 30
+          },
+          {
+            "year": 2025,
+            "revenue": 6358935,
+            "profit": 571254,
+            "employees": 18
+          }
+        ]
       },
       "tags": [
         "crestere-rapida",
@@ -2753,7 +4147,39 @@
       "financials": {
         "year": 2025,
         "revenue": 19951469,
-        "profit": 3185617
+        "profit": 3185617,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 8533729,
+            "profit": 1555939,
+            "employees": 27
+          },
+          {
+            "year": 2022,
+            "revenue": 13200590,
+            "profit": 1840139,
+            "employees": 32
+          },
+          {
+            "year": 2023,
+            "revenue": 14349846,
+            "profit": 1670756,
+            "employees": 33
+          },
+          {
+            "year": 2024,
+            "revenue": 22477552,
+            "profit": 3727726,
+            "employees": 34
+          },
+          {
+            "year": 2025,
+            "revenue": 19951469,
+            "profit": 3185617,
+            "employees": 36
+          }
+        ]
       },
       "tags": [
         "experienta-peste-20-ani",
@@ -2811,7 +4237,33 @@
       "financials": {
         "year": 2025,
         "revenue": 10865631,
-        "profit": 1553891
+        "profit": 1553891,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 5485520,
+            "profit": 104931,
+            "employees": 9
+          },
+          {
+            "year": 2023,
+            "revenue": 5831699,
+            "profit": 536618,
+            "employees": 9
+          },
+          {
+            "year": 2024,
+            "revenue": 6346074,
+            "profit": 655162,
+            "employees": 15
+          },
+          {
+            "year": 2025,
+            "revenue": 10865631,
+            "profit": 1553891,
+            "employees": 18
+          }
+        ]
       },
       "tags": [
         "proiecte-mari",
@@ -2865,7 +4317,39 @@
       "financials": {
         "year": 2025,
         "revenue": 4623618,
-        "profit": 670175
+        "profit": 670175,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1972185,
+            "profit": 386802,
+            "employees": 14
+          },
+          {
+            "year": 2022,
+            "revenue": 4390443,
+            "profit": 442573,
+            "employees": 14
+          },
+          {
+            "year": 2023,
+            "revenue": 5769582,
+            "profit": 1283516,
+            "employees": 15
+          },
+          {
+            "year": 2024,
+            "revenue": 1578093,
+            "profit": 379293,
+            "employees": 15
+          },
+          {
+            "year": 2025,
+            "revenue": 4623618,
+            "profit": 670175,
+            "employees": 15
+          }
+        ]
       },
       "tags": [
         "experienta-peste-10-ani",
@@ -2921,7 +4405,39 @@
       "financials": {
         "year": 2025,
         "revenue": 4172912,
-        "profit": -1275162
+        "profit": -1275162,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1242480,
+            "profit": 210079,
+            "employees": 8
+          },
+          {
+            "year": 2022,
+            "revenue": 6054201,
+            "profit": 2647219,
+            "employees": 15
+          },
+          {
+            "year": 2023,
+            "revenue": 6279092,
+            "profit": 898650,
+            "employees": 22
+          },
+          {
+            "year": 2024,
+            "revenue": 3582515,
+            "profit": 14905,
+            "employees": 26
+          },
+          {
+            "year": 2025,
+            "revenue": 4172912,
+            "profit": -1275162,
+            "employees": 19
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -2975,7 +4491,32 @@
       "financials": {
         "year": 2025,
         "revenue": 621230,
-        "profit": -244974
+        "profit": -244974,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 0,
+            "profit": -200
+          },
+          {
+            "year": 2023,
+            "revenue": 1676450,
+            "profit": 136831,
+            "employees": 2
+          },
+          {
+            "year": 2024,
+            "revenue": 1184183,
+            "profit": 1956,
+            "employees": 9
+          },
+          {
+            "year": 2025,
+            "revenue": 621230,
+            "profit": -244974,
+            "employees": 4
+          }
+        ]
       },
       "tags": [
         "afm-validat"
@@ -3022,7 +4563,38 @@
       "financials": {
         "year": 2025,
         "revenue": 33784161,
-        "profit": 336738
+        "profit": 336738,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 24849116,
+            "profit": -1117869
+          },
+          {
+            "year": 2022,
+            "revenue": 28910828,
+            "profit": 1005430,
+            "employees": 580
+          },
+          {
+            "year": 2023,
+            "revenue": 25897468,
+            "profit": 1310817,
+            "employees": 367
+          },
+          {
+            "year": 2024,
+            "revenue": 31943736,
+            "profit": 1789730,
+            "employees": 435
+          },
+          {
+            "year": 2025,
+            "revenue": 33784161,
+            "profit": 336738,
+            "employees": 287
+          }
+        ]
       },
       "tags": [
         "proiecte-mari"
@@ -3070,7 +4642,39 @@
       "financials": {
         "year": 2025,
         "revenue": 7430415,
-        "profit": 3437086
+        "profit": 3437086,
+        "history": [
+          {
+            "year": 2019,
+            "revenue": 861317,
+            "profit": 676038,
+            "employees": 1
+          },
+          {
+            "year": 2020,
+            "revenue": 908720,
+            "profit": 552065,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 988788,
+            "profit": 535306,
+            "employees": 1
+          },
+          {
+            "year": 2024,
+            "revenue": 5045858,
+            "profit": 207406,
+            "employees": 4
+          },
+          {
+            "year": 2025,
+            "revenue": 7430415,
+            "profit": 3437086,
+            "employees": 4
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3111,7 +4715,39 @@
       "financials": {
         "year": 2025,
         "revenue": 19711949,
-        "profit": 2411560
+        "profit": 2411560,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 10657259,
+            "profit": 2332573,
+            "employees": 11
+          },
+          {
+            "year": 2022,
+            "revenue": 14636642,
+            "profit": 3174500,
+            "employees": 11
+          },
+          {
+            "year": 2023,
+            "revenue": 18518441,
+            "profit": 2179561,
+            "employees": 11
+          },
+          {
+            "year": 2024,
+            "revenue": 4933766,
+            "profit": -329868,
+            "employees": 11
+          },
+          {
+            "year": 2025,
+            "revenue": 19711949,
+            "profit": 2411560,
+            "employees": 13
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani"
@@ -3155,7 +4791,38 @@
       "financials": {
         "year": 2025,
         "revenue": 66014,
-        "profit": -28347
+        "profit": -28347,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 0,
+            "profit": -2227
+          },
+          {
+            "year": 2022,
+            "revenue": 1520591,
+            "profit": 163828,
+            "employees": 1
+          },
+          {
+            "year": 2023,
+            "revenue": 540282,
+            "profit": -188580,
+            "employees": 3
+          },
+          {
+            "year": 2024,
+            "revenue": 309970,
+            "profit": -236687,
+            "employees": 2
+          },
+          {
+            "year": 2025,
+            "revenue": 66014,
+            "profit": -28347,
+            "employees": 1
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3194,7 +4861,39 @@
       "financials": {
         "year": 2025,
         "revenue": 3573100,
-        "profit": 81569
+        "profit": 81569,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 840306,
+            "profit": 617167,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 13373570,
+            "profit": 1614418,
+            "employees": 2
+          },
+          {
+            "year": 2023,
+            "revenue": 7334995,
+            "profit": -322642,
+            "employees": 3
+          },
+          {
+            "year": 2024,
+            "revenue": 13313116,
+            "profit": 816429,
+            "employees": 8
+          },
+          {
+            "year": 2025,
+            "revenue": 3573100,
+            "profit": 81569,
+            "employees": 5
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3235,7 +4934,33 @@
       "financials": {
         "year": 2025,
         "revenue": 5704609,
-        "profit": 488586
+        "profit": 488586,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 435495,
+            "profit": 87419,
+            "employees": 1
+          },
+          {
+            "year": 2023,
+            "revenue": 1109132,
+            "profit": 96736,
+            "employees": 5
+          },
+          {
+            "year": 2024,
+            "revenue": 5114768,
+            "profit": 1597826,
+            "employees": 9
+          },
+          {
+            "year": 2025,
+            "revenue": 5704609,
+            "profit": 488586,
+            "employees": 12
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3282,7 +5007,39 @@
       "financials": {
         "year": 2025,
         "revenue": 10026016,
-        "profit": 1396539
+        "profit": 1396539,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 8659391,
+            "profit": 406846,
+            "employees": 13
+          },
+          {
+            "year": 2022,
+            "revenue": 28740196,
+            "profit": 3881401,
+            "employees": 15
+          },
+          {
+            "year": 2023,
+            "revenue": 20794297,
+            "profit": 5674762,
+            "employees": 15
+          },
+          {
+            "year": 2024,
+            "revenue": 9212374,
+            "profit": 2866094,
+            "employees": 15
+          },
+          {
+            "year": 2025,
+            "revenue": 10026016,
+            "profit": 1396539,
+            "employees": 15
+          }
+        ]
       },
       "tags": [
         "proiecte-mari"
@@ -3323,7 +5080,39 @@
       "financials": {
         "year": 2025,
         "revenue": 12233921,
-        "profit": 780026
+        "profit": 780026,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 377688,
+            "profit": 2965,
+            "employees": 2
+          },
+          {
+            "year": 2022,
+            "revenue": 5511097,
+            "profit": 829983,
+            "employees": 4
+          },
+          {
+            "year": 2023,
+            "revenue": 6317492,
+            "profit": 1295352,
+            "employees": 12
+          },
+          {
+            "year": 2024,
+            "revenue": 12493764,
+            "profit": 486019,
+            "employees": 11
+          },
+          {
+            "year": 2025,
+            "revenue": 12233921,
+            "profit": 780026,
+            "employees": 10
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3361,7 +5150,39 @@
       "financials": {
         "year": 2025,
         "revenue": 9567444,
-        "profit": 2705578
+        "profit": 2705578,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4014772,
+            "profit": 610803,
+            "employees": 15
+          },
+          {
+            "year": 2022,
+            "revenue": 6848692,
+            "profit": 2194740,
+            "employees": 13
+          },
+          {
+            "year": 2023,
+            "revenue": 6583078,
+            "profit": 1540092,
+            "employees": 13
+          },
+          {
+            "year": 2024,
+            "revenue": 8463190,
+            "profit": 2278727,
+            "employees": 14
+          },
+          {
+            "year": 2025,
+            "revenue": 9567444,
+            "profit": 2705578,
+            "employees": 16
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3403,7 +5224,32 @@
       "financials": {
         "year": 2025,
         "revenue": 2596137,
-        "profit": 104256
+        "profit": 104256,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 2000,
+            "profit": -1821
+          },
+          {
+            "year": 2023,
+            "revenue": 682958,
+            "profit": 401522,
+            "employees": 3
+          },
+          {
+            "year": 2024,
+            "revenue": 1427930,
+            "profit": -112668,
+            "employees": 8
+          },
+          {
+            "year": 2025,
+            "revenue": 2596137,
+            "profit": 104256,
+            "employees": 10
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3441,7 +5287,39 @@
       "financials": {
         "year": 2025,
         "revenue": 703786,
-        "profit": 148936
+        "profit": 148936,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 697214,
+            "profit": 145708,
+            "employees": 3
+          },
+          {
+            "year": 2022,
+            "revenue": 1377958,
+            "profit": 542764,
+            "employees": 3
+          },
+          {
+            "year": 2023,
+            "revenue": 2033337,
+            "profit": 1412125,
+            "employees": 3
+          },
+          {
+            "year": 2024,
+            "revenue": 533057,
+            "profit": -245227,
+            "employees": 3
+          },
+          {
+            "year": 2025,
+            "revenue": 703786,
+            "profit": 148936,
+            "employees": 2
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3483,7 +5361,38 @@
       "financials": {
         "year": 2025,
         "revenue": 3309028,
-        "profit": 760427
+        "profit": 760427,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 35799,
+            "profit": 18066
+          },
+          {
+            "year": 2022,
+            "revenue": 622103,
+            "profit": 250447,
+            "employees": 2
+          },
+          {
+            "year": 2023,
+            "revenue": 944924,
+            "profit": 101656,
+            "employees": 5
+          },
+          {
+            "year": 2024,
+            "revenue": 1353204,
+            "profit": 107860,
+            "employees": 7
+          },
+          {
+            "year": 2025,
+            "revenue": 3309028,
+            "profit": 760427,
+            "employees": 7
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3524,7 +5433,39 @@
       "financials": {
         "year": 2025,
         "revenue": 11003363,
-        "profit": 796795
+        "profit": 796795,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2345132,
+            "profit": 339827,
+            "employees": 13
+          },
+          {
+            "year": 2022,
+            "revenue": 3404608,
+            "profit": 297994,
+            "employees": 18
+          },
+          {
+            "year": 2023,
+            "revenue": 6340059,
+            "profit": 1015340,
+            "employees": 18
+          },
+          {
+            "year": 2024,
+            "revenue": 7478737,
+            "profit": 1229418,
+            "employees": 18
+          },
+          {
+            "year": 2025,
+            "revenue": 11003363,
+            "profit": 796795,
+            "employees": 20
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3562,7 +5503,39 @@
       "financials": {
         "year": 2025,
         "revenue": 4831895,
-        "profit": 2467072
+        "profit": 2467072,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 429548,
+            "profit": 147042,
+            "employees": 4
+          },
+          {
+            "year": 2022,
+            "revenue": 1408366,
+            "profit": 1083197,
+            "employees": 4
+          },
+          {
+            "year": 2023,
+            "revenue": 2347047,
+            "profit": 1784928,
+            "employees": 3
+          },
+          {
+            "year": 2024,
+            "revenue": 2438383,
+            "profit": 1870537,
+            "employees": 3
+          },
+          {
+            "year": 2025,
+            "revenue": 4831895,
+            "profit": 2467072,
+            "employees": 4
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3605,7 +5578,39 @@
       "financials": {
         "year": 2025,
         "revenue": 25427167,
-        "profit": 6453102
+        "profit": 6453102,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4618257,
+            "profit": 2451600,
+            "employees": 7
+          },
+          {
+            "year": 2022,
+            "revenue": 10125110,
+            "profit": 4405996,
+            "employees": 11
+          },
+          {
+            "year": 2023,
+            "revenue": 5461131,
+            "profit": 2357187,
+            "employees": 14
+          },
+          {
+            "year": 2024,
+            "revenue": 20553265,
+            "profit": 3077076,
+            "employees": 17
+          },
+          {
+            "year": 2025,
+            "revenue": 25427167,
+            "profit": 6453102,
+            "employees": 31
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3650,7 +5655,39 @@
       "financials": {
         "year": 2025,
         "revenue": 9438593,
-        "profit": 3508898
+        "profit": 3508898,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 143350,
+            "profit": 28685,
+            "employees": 3
+          },
+          {
+            "year": 2022,
+            "revenue": 179217,
+            "profit": 52597,
+            "employees": 2
+          },
+          {
+            "year": 2023,
+            "revenue": 2015112,
+            "profit": 395456,
+            "employees": 4
+          },
+          {
+            "year": 2024,
+            "revenue": 4388289,
+            "profit": 690527,
+            "employees": 7
+          },
+          {
+            "year": 2025,
+            "revenue": 9438593,
+            "profit": 3508898,
+            "employees": 14
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3695,7 +5732,39 @@
       "financials": {
         "year": 2025,
         "revenue": 4355771,
-        "profit": 17347
+        "profit": 17347,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2797351,
+            "profit": 45656,
+            "employees": 11
+          },
+          {
+            "year": 2022,
+            "revenue": 3356215,
+            "profit": 9090,
+            "employees": 12
+          },
+          {
+            "year": 2023,
+            "revenue": 5301081,
+            "profit": 61355,
+            "employees": 12
+          },
+          {
+            "year": 2024,
+            "revenue": 4662861,
+            "profit": 33384,
+            "employees": 11
+          },
+          {
+            "year": 2025,
+            "revenue": 4355771,
+            "profit": 17347,
+            "employees": 12
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3748,7 +5817,39 @@
       "financials": {
         "year": 2025,
         "revenue": 50913015,
-        "profit": 3283465
+        "profit": 3283465,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 56343747,
+            "profit": 6144286,
+            "employees": 59
+          },
+          {
+            "year": 2022,
+            "revenue": 72086875,
+            "profit": 6016139,
+            "employees": 63
+          },
+          {
+            "year": 2023,
+            "revenue": 85661175,
+            "profit": 6941342,
+            "employees": 63
+          },
+          {
+            "year": 2024,
+            "revenue": 86045921,
+            "profit": 7766032,
+            "employees": 63
+          },
+          {
+            "year": 2025,
+            "revenue": 50913015,
+            "profit": 3283465,
+            "employees": 61
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani"
@@ -3800,7 +5901,25 @@
       "financials": {
         "year": 2025,
         "revenue": 4296843,
-        "profit": 500283
+        "profit": 500283,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 4185,
+            "profit": 1499
+          },
+          {
+            "year": 2024,
+            "revenue": 180000,
+            "profit": 58800
+          },
+          {
+            "year": 2025,
+            "revenue": 4296843,
+            "profit": 500283,
+            "employees": 14
+          }
+        ]
       },
       "tags": [
         "mentenanta-inclusa",
@@ -3848,7 +5967,39 @@
       "financials": {
         "year": 2025,
         "revenue": 1679127,
-        "profit": 216750
+        "profit": 216750,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1369532,
+            "profit": 234715,
+            "employees": 5
+          },
+          {
+            "year": 2022,
+            "revenue": 1648332,
+            "profit": 326154,
+            "employees": 5
+          },
+          {
+            "year": 2023,
+            "revenue": 1754679,
+            "profit": 174552,
+            "employees": 5
+          },
+          {
+            "year": 2024,
+            "revenue": 793065,
+            "profit": 32222,
+            "employees": 5
+          },
+          {
+            "year": 2025,
+            "revenue": 1679127,
+            "profit": 216750,
+            "employees": 5
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani"
@@ -3895,7 +6046,39 @@
       "financials": {
         "year": 2025,
         "revenue": 4593029,
-        "profit": 645021
+        "profit": 645021,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2150765,
+            "profit": 152895,
+            "employees": 7
+          },
+          {
+            "year": 2022,
+            "revenue": 1446469,
+            "profit": 288582,
+            "employees": 7
+          },
+          {
+            "year": 2023,
+            "revenue": 3136065,
+            "profit": 441465,
+            "employees": 9
+          },
+          {
+            "year": 2024,
+            "revenue": 2908731,
+            "profit": 280004,
+            "employees": 9
+          },
+          {
+            "year": 2025,
+            "revenue": 4593029,
+            "profit": 645021,
+            "employees": 12
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -3940,7 +6123,39 @@
       "financials": {
         "year": 2025,
         "revenue": 2406722,
-        "profit": 281091
+        "profit": 281091,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1434453,
+            "profit": 136172,
+            "employees": 12
+          },
+          {
+            "year": 2022,
+            "revenue": 1356784,
+            "profit": 49276,
+            "employees": 11
+          },
+          {
+            "year": 2023,
+            "revenue": 1627060,
+            "profit": 216330,
+            "employees": 9
+          },
+          {
+            "year": 2024,
+            "revenue": 1729270,
+            "profit": 205604,
+            "employees": 10
+          },
+          {
+            "year": 2025,
+            "revenue": 2406722,
+            "profit": 281091,
+            "employees": 10
+          }
+        ]
       },
       "tags": [
         "experienta-10-ani"
@@ -3987,7 +6202,39 @@
       "financials": {
         "year": 2025,
         "revenue": 872330,
-        "profit": -42809
+        "profit": -42809,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 668960,
+            "profit": 117383,
+            "employees": 9
+          },
+          {
+            "year": 2022,
+            "revenue": 908564,
+            "profit": 116843,
+            "employees": 9
+          },
+          {
+            "year": 2023,
+            "revenue": 699064,
+            "profit": 4446,
+            "employees": 9
+          },
+          {
+            "year": 2024,
+            "revenue": 915195,
+            "profit": 1823,
+            "employees": 5
+          },
+          {
+            "year": 2025,
+            "revenue": 872330,
+            "profit": -42809,
+            "employees": 6
+          }
+        ]
       },
       "services": [
         "proiectare",
@@ -4036,7 +6283,39 @@
       "financials": {
         "year": 2025,
         "revenue": 1209166,
-        "profit": 346873
+        "profit": 346873,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 236316,
+            "profit": 137323,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 456754,
+            "profit": 185451,
+            "employees": 1
+          },
+          {
+            "year": 2023,
+            "revenue": 1036070,
+            "profit": 341396,
+            "employees": 3
+          },
+          {
+            "year": 2024,
+            "revenue": 1068066,
+            "profit": 315548,
+            "employees": 4
+          },
+          {
+            "year": 2025,
+            "revenue": 1209166,
+            "profit": 346873,
+            "employees": 3
+          }
+        ]
       },
       "services": [
         "proiectare",
@@ -4085,7 +6364,27 @@
       "financials": {
         "year": 2025,
         "revenue": 2259264,
-        "profit": 821772
+        "profit": 821772,
+        "history": [
+          {
+            "year": 2023,
+            "revenue": 12161,
+            "profit": -25654,
+            "employees": 1
+          },
+          {
+            "year": 2024,
+            "revenue": 555118,
+            "profit": 225710,
+            "employees": 3
+          },
+          {
+            "year": 2025,
+            "revenue": 2259264,
+            "profit": 821772,
+            "employees": 5
+          }
+        ]
       },
       "services": [
         "proiectare",
@@ -4138,7 +6437,39 @@
       "financials": {
         "year": 2025,
         "revenue": 2963275,
-        "profit": 5135
+        "profit": 5135,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1561555,
+            "profit": 186128,
+            "employees": 2
+          },
+          {
+            "year": 2022,
+            "revenue": 3259448,
+            "profit": 482752,
+            "employees": 5
+          },
+          {
+            "year": 2023,
+            "revenue": 4090686,
+            "profit": 1026248,
+            "employees": 2
+          },
+          {
+            "year": 2024,
+            "revenue": 3977304,
+            "profit": 497173,
+            "employees": 2
+          },
+          {
+            "year": 2025,
+            "revenue": 2963275,
+            "profit": 5135,
+            "employees": 3
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -4189,7 +6520,39 @@
       "financials": {
         "year": 2025,
         "revenue": 14159609,
-        "profit": 5179849
+        "profit": 5179849,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 5825629,
+            "profit": 893674,
+            "employees": 16
+          },
+          {
+            "year": 2022,
+            "revenue": 9157747,
+            "profit": 2309922,
+            "employees": 16
+          },
+          {
+            "year": 2023,
+            "revenue": 12440856,
+            "profit": 3118508,
+            "employees": 18
+          },
+          {
+            "year": 2024,
+            "revenue": 9874580,
+            "profit": 3987557,
+            "employees": 19
+          },
+          {
+            "year": 2025,
+            "revenue": 14159609,
+            "profit": 5179849,
+            "employees": 12
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -4243,7 +6606,39 @@
       "financials": {
         "year": 2025,
         "revenue": 10246554,
-        "profit": -569012
+        "profit": -569012,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 11094660,
+            "profit": 430715,
+            "employees": 49
+          },
+          {
+            "year": 2022,
+            "revenue": 16927606,
+            "profit": 99632,
+            "employees": 51
+          },
+          {
+            "year": 2023,
+            "revenue": 10948339,
+            "profit": -485844,
+            "employees": 53
+          },
+          {
+            "year": 2024,
+            "revenue": 8956827,
+            "profit": -683823,
+            "employees": 43
+          },
+          {
+            "year": 2025,
+            "revenue": 10246554,
+            "profit": -569012,
+            "employees": 37
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -4298,7 +6693,39 @@
       "financials": {
         "year": 2025,
         "revenue": 20082661,
-        "profit": 1592596
+        "profit": 1592596,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 14230805,
+            "profit": 1905176,
+            "employees": 36
+          },
+          {
+            "year": 2022,
+            "revenue": 9422633,
+            "profit": 184085,
+            "employees": 37
+          },
+          {
+            "year": 2023,
+            "revenue": 16185649,
+            "profit": 2495457,
+            "employees": 34
+          },
+          {
+            "year": 2024,
+            "revenue": 19855722,
+            "profit": 1594323,
+            "employees": 37
+          },
+          {
+            "year": 2025,
+            "revenue": 20082661,
+            "profit": 1592596,
+            "employees": 38
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -4348,7 +6775,39 @@
       "financials": {
         "year": 2025,
         "revenue": 4571197,
-        "profit": 57460
+        "profit": 57460,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1457811,
+            "profit": 179181,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 8927828,
+            "profit": 463418,
+            "employees": 4
+          },
+          {
+            "year": 2023,
+            "revenue": 5275147,
+            "profit": 129300,
+            "employees": 6
+          },
+          {
+            "year": 2024,
+            "revenue": 3196133,
+            "profit": 102027,
+            "employees": 5
+          },
+          {
+            "year": 2025,
+            "revenue": 4571197,
+            "profit": 57460,
+            "employees": 5
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -4400,7 +6859,33 @@
       "financials": {
         "year": 2025,
         "revenue": 124187,
-        "profit": 12094
+        "profit": 12094,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 0,
+            "profit": -807,
+            "employees": 1
+          },
+          {
+            "year": 2023,
+            "revenue": 106448,
+            "profit": 19822,
+            "employees": 1
+          },
+          {
+            "year": 2024,
+            "revenue": 142530,
+            "profit": 36626,
+            "employees": 1
+          },
+          {
+            "year": 2025,
+            "revenue": 124187,
+            "profit": 12094,
+            "employees": 1
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -4458,7 +6943,35 @@
       "financials": {
         "year": 2025,
         "revenue": 16450,
-        "profit": -42180
+        "profit": -42180,
+        "history": [
+          {
+            "year": 2019,
+            "revenue": 0,
+            "profit": -72997
+          },
+          {
+            "year": 2020,
+            "revenue": 0,
+            "profit": -4232
+          },
+          {
+            "year": 2021,
+            "revenue": 0,
+            "profit": -250
+          },
+          {
+            "year": 2022,
+            "revenue": 0,
+            "profit": 0
+          },
+          {
+            "year": 2025,
+            "revenue": 16450,
+            "profit": -42180,
+            "employees": 1
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -4508,7 +7021,39 @@
       "financials": {
         "year": 2025,
         "revenue": 3368783,
-        "profit": -684795
+        "profit": -684795,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 48149,
+            "profit": -25082,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 328564,
+            "profit": 4981,
+            "employees": 4
+          },
+          {
+            "year": 2023,
+            "revenue": 1591888,
+            "profit": 125602,
+            "employees": 8
+          },
+          {
+            "year": 2024,
+            "revenue": 2295593,
+            "profit": 505364,
+            "employees": 14
+          },
+          {
+            "year": 2025,
+            "revenue": 3368783,
+            "profit": -684795,
+            "employees": 17
+          }
+        ]
       },
       "tags": [],
       "featured": false,
@@ -4553,7 +7098,39 @@
       "financials": {
         "year": 2025,
         "revenue": 23482039,
-        "profit": 1264678
+        "profit": 1264678,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4006689,
+            "profit": 696114,
+            "employees": 12
+          },
+          {
+            "year": 2022,
+            "revenue": 7009420,
+            "profit": 317204,
+            "employees": 13
+          },
+          {
+            "year": 2023,
+            "revenue": 14404917,
+            "profit": 4461286,
+            "employees": 13
+          },
+          {
+            "year": 2024,
+            "revenue": 6757812,
+            "profit": 780970,
+            "employees": 13
+          },
+          {
+            "year": 2025,
+            "revenue": 23482039,
+            "profit": 1264678,
+            "employees": 10
+          }
+        ]
       },
       "tags": [
         "stocare",
@@ -4601,7 +7178,39 @@
       "financials": {
         "year": 2025,
         "revenue": 8286372,
-        "profit": 999226
+        "profit": 999226,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2231661,
+            "profit": 145376,
+            "employees": 10
+          },
+          {
+            "year": 2022,
+            "revenue": 8739222,
+            "profit": 2379499,
+            "employees": 10
+          },
+          {
+            "year": 2023,
+            "revenue": 6967498,
+            "profit": 1745812,
+            "employees": 10
+          },
+          {
+            "year": 2024,
+            "revenue": 4919037,
+            "profit": 465188,
+            "employees": 10
+          },
+          {
+            "year": 2025,
+            "revenue": 8286372,
+            "profit": 999226,
+            "employees": 10
+          }
+        ]
       },
       "tags": [
         "monitorizare-inclusa",
@@ -4651,7 +7260,39 @@
       "financials": {
         "year": 2024,
         "revenue": 11556008,
-        "profit": 1810556
+        "profit": 1810556,
+        "history": [
+          {
+            "year": 2020,
+            "revenue": 1911332,
+            "profit": 308753,
+            "employees": 16
+          },
+          {
+            "year": 2021,
+            "revenue": 4731957,
+            "profit": 594188,
+            "employees": 26
+          },
+          {
+            "year": 2022,
+            "revenue": 6722609,
+            "profit": 62668,
+            "employees": 14
+          },
+          {
+            "year": 2023,
+            "revenue": 16010108,
+            "profit": 1333908,
+            "employees": 23
+          },
+          {
+            "year": 2024,
+            "revenue": 11556008,
+            "profit": 1810556,
+            "employees": 26
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -4708,7 +7349,39 @@
       "financials": {
         "year": 2025,
         "revenue": 4369469,
-        "profit": 772716
+        "profit": 772716,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4880339,
+            "profit": 15567,
+            "employees": 16
+          },
+          {
+            "year": 2022,
+            "revenue": 4841544,
+            "profit": 157758,
+            "employees": 13
+          },
+          {
+            "year": 2023,
+            "revenue": 9732759,
+            "profit": 251497,
+            "employees": 14
+          },
+          {
+            "year": 2024,
+            "revenue": 9017701,
+            "profit": 2357757,
+            "employees": 16
+          },
+          {
+            "year": 2025,
+            "revenue": 4369469,
+            "profit": 772716,
+            "employees": 15
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -4759,7 +7432,37 @@
       "financials": {
         "year": 2025,
         "revenue": 833022,
-        "profit": -226121
+        "profit": -226121,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 20000,
+            "profit": 498,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 4050175,
+            "profit": 830193,
+            "employees": 6
+          },
+          {
+            "year": 2023,
+            "revenue": 5929005,
+            "profit": 415474
+          },
+          {
+            "year": 2024,
+            "revenue": 4247558,
+            "profit": 79751,
+            "employees": 18
+          },
+          {
+            "year": 2025,
+            "revenue": 833022,
+            "profit": -226121
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -4808,7 +7511,39 @@
       "financials": {
         "year": 2025,
         "revenue": 4990174,
-        "profit": 755916
+        "profit": 755916,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1029897,
+            "profit": 308617,
+            "employees": 8
+          },
+          {
+            "year": 2022,
+            "revenue": 2875750,
+            "profit": 811462,
+            "employees": 10
+          },
+          {
+            "year": 2023,
+            "revenue": 3351404,
+            "profit": 851726,
+            "employees": 10
+          },
+          {
+            "year": 2024,
+            "revenue": 3414995,
+            "profit": 581142,
+            "employees": 9
+          },
+          {
+            "year": 2025,
+            "revenue": 4990174,
+            "profit": 755916,
+            "employees": 9
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -4856,7 +7591,39 @@
       "financials": {
         "year": 2025,
         "revenue": 1384711,
-        "profit": 34309
+        "profit": 34309,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 700495,
+            "profit": 86784,
+            "employees": 5
+          },
+          {
+            "year": 2022,
+            "revenue": 1436505,
+            "profit": 244981,
+            "employees": 6
+          },
+          {
+            "year": 2023,
+            "revenue": 1844616,
+            "profit": 661848,
+            "employees": 7
+          },
+          {
+            "year": 2024,
+            "revenue": 1291876,
+            "profit": 203612,
+            "employees": 7
+          },
+          {
+            "year": 2025,
+            "revenue": 1384711,
+            "profit": 34309,
+            "employees": 8
+          }
+        ]
       },
       "tags": [
         "on-grid"
@@ -4903,7 +7670,39 @@
       "financials": {
         "year": 2025,
         "revenue": 6229752,
-        "profit": 18979
+        "profit": 18979,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 5095303,
+            "profit": 423209,
+            "employees": 32
+          },
+          {
+            "year": 2022,
+            "revenue": 7013507,
+            "profit": 969627,
+            "employees": 32
+          },
+          {
+            "year": 2023,
+            "revenue": 5541963,
+            "profit": -157025,
+            "employees": 32
+          },
+          {
+            "year": 2024,
+            "revenue": 10343736,
+            "profit": 1085345,
+            "employees": 34
+          },
+          {
+            "year": 2025,
+            "revenue": 6229752,
+            "profit": 18979,
+            "employees": 35
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -4952,7 +7751,39 @@
       "financials": {
         "year": 2025,
         "revenue": 8591592,
-        "profit": 1961815
+        "profit": 1961815,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 5837380,
+            "profit": 346081,
+            "employees": 42
+          },
+          {
+            "year": 2022,
+            "revenue": 5571264,
+            "profit": 530279,
+            "employees": 37
+          },
+          {
+            "year": 2023,
+            "revenue": 10092112,
+            "profit": 1159725,
+            "employees": 36
+          },
+          {
+            "year": 2024,
+            "revenue": 7276055,
+            "profit": 500484,
+            "employees": 40
+          },
+          {
+            "year": 2025,
+            "revenue": 8591592,
+            "profit": 1961815,
+            "employees": 38
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5001,7 +7832,39 @@
       "financials": {
         "year": 2025,
         "revenue": 2356611,
-        "profit": 526691
+        "profit": 526691,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1145156,
+            "profit": 226396,
+            "employees": 6
+          },
+          {
+            "year": 2022,
+            "revenue": 2673291,
+            "profit": 419922,
+            "employees": 7
+          },
+          {
+            "year": 2023,
+            "revenue": 3479337,
+            "profit": 838529,
+            "employees": 7
+          },
+          {
+            "year": 2024,
+            "revenue": 2528542,
+            "profit": 553986,
+            "employees": 7
+          },
+          {
+            "year": 2025,
+            "revenue": 2356611,
+            "profit": 526691,
+            "employees": 6
+          }
+        ]
       },
       "tags": [
         "on-grid"
@@ -5048,7 +7911,33 @@
       "financials": {
         "year": 2025,
         "revenue": 928107,
-        "profit": -111193
+        "profit": -111193,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 426498,
+            "profit": 37502,
+            "employees": 1
+          },
+          {
+            "year": 2023,
+            "revenue": 619776,
+            "profit": 7145,
+            "employees": 1
+          },
+          {
+            "year": 2024,
+            "revenue": 412949,
+            "profit": -19600,
+            "employees": 1
+          },
+          {
+            "year": 2025,
+            "revenue": 928107,
+            "profit": -111193,
+            "employees": 1
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5100,7 +7989,21 @@
       "financials": {
         "year": 2025,
         "revenue": 3950765,
-        "profit": 934098
+        "profit": 934098,
+        "history": [
+          {
+            "year": 2024,
+            "revenue": 3214809,
+            "profit": 1227117,
+            "employees": 3
+          },
+          {
+            "year": 2025,
+            "revenue": 3950765,
+            "profit": 934098,
+            "employees": 7
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5152,7 +8055,39 @@
       "financials": {
         "year": 2024,
         "revenue": 6270213,
-        "profit": -480945
+        "profit": -480945,
+        "history": [
+          {
+            "year": 2020,
+            "revenue": 2198075,
+            "profit": 218167,
+            "employees": 12
+          },
+          {
+            "year": 2021,
+            "revenue": 3280431,
+            "profit": 548148,
+            "employees": 13
+          },
+          {
+            "year": 2022,
+            "revenue": 5357006,
+            "profit": 474917,
+            "employees": 16
+          },
+          {
+            "year": 2023,
+            "revenue": 15994544,
+            "profit": 2362356,
+            "employees": 28
+          },
+          {
+            "year": 2024,
+            "revenue": 6270213,
+            "profit": -480945,
+            "employees": 28
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5202,7 +8137,39 @@
       "financials": {
         "year": 2025,
         "revenue": 3814168,
-        "profit": -2913
+        "profit": -2913,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2765640,
+            "profit": 108190,
+            "employees": 9
+          },
+          {
+            "year": 2022,
+            "revenue": 7829844,
+            "profit": 28847,
+            "employees": 9
+          },
+          {
+            "year": 2023,
+            "revenue": 4593723,
+            "profit": 819886,
+            "employees": 11
+          },
+          {
+            "year": 2024,
+            "revenue": 3033198,
+            "profit": -602725,
+            "employees": 11
+          },
+          {
+            "year": 2025,
+            "revenue": 3814168,
+            "profit": -2913,
+            "employees": 11
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5252,7 +8219,39 @@
       "financials": {
         "year": 2025,
         "revenue": 330343,
-        "profit": 4983
+        "profit": 4983,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 153770,
+            "profit": 34496,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 2363105,
+            "profit": 604353,
+            "employees": 2
+          },
+          {
+            "year": 2023,
+            "revenue": 859617,
+            "profit": 3190,
+            "employees": 2
+          },
+          {
+            "year": 2024,
+            "revenue": 498921,
+            "profit": 199838,
+            "employees": 1
+          },
+          {
+            "year": 2025,
+            "revenue": 330343,
+            "profit": 4983,
+            "employees": 1
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5303,7 +8302,39 @@
       "financials": {
         "year": 2025,
         "revenue": 32052219,
-        "profit": 2109999
+        "profit": 2109999,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4858795,
+            "profit": 194932,
+            "employees": 28
+          },
+          {
+            "year": 2022,
+            "revenue": 9951017,
+            "profit": 1770895,
+            "employees": 28
+          },
+          {
+            "year": 2023,
+            "revenue": 18097050,
+            "profit": 5347251,
+            "employees": 43
+          },
+          {
+            "year": 2024,
+            "revenue": 17425188,
+            "profit": 1874609,
+            "employees": 50
+          },
+          {
+            "year": 2025,
+            "revenue": 32052219,
+            "profit": 2109999,
+            "employees": 48
+          }
+        ]
       },
       "tags": [
         "on-grid"
@@ -5350,7 +8381,39 @@
       "financials": {
         "year": 2025,
         "revenue": 17636274,
-        "profit": 2364600
+        "profit": 2364600,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2843919,
+            "profit": 570433,
+            "employees": 12
+          },
+          {
+            "year": 2022,
+            "revenue": 3692013,
+            "profit": 523816,
+            "employees": 12
+          },
+          {
+            "year": 2023,
+            "revenue": 8344149,
+            "profit": 807949,
+            "employees": 12
+          },
+          {
+            "year": 2024,
+            "revenue": 10883980,
+            "profit": 1994680,
+            "employees": 14
+          },
+          {
+            "year": 2025,
+            "revenue": 17636274,
+            "profit": 2364600,
+            "employees": 18
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5408,7 +8471,39 @@
       "financials": {
         "year": 2025,
         "revenue": 82854823,
-        "profit": 6605989
+        "profit": 6605989,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4697272,
+            "profit": 766954,
+            "employees": 14
+          },
+          {
+            "year": 2022,
+            "revenue": 11148419,
+            "profit": 860258,
+            "employees": 20
+          },
+          {
+            "year": 2023,
+            "revenue": 23339270,
+            "profit": 2695897,
+            "employees": 31
+          },
+          {
+            "year": 2024,
+            "revenue": 33428361,
+            "profit": 3137701,
+            "employees": 33
+          },
+          {
+            "year": 2025,
+            "revenue": 82854823,
+            "profit": 6605989,
+            "employees": 36
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5457,7 +8552,37 @@
       "financials": {
         "year": 2025,
         "revenue": 1381435,
-        "profit": 407559
+        "profit": 407559,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 224912,
+            "profit": 27967,
+            "employees": 2
+          },
+          {
+            "year": 2022,
+            "revenue": 732857,
+            "profit": 430640
+          },
+          {
+            "year": 2023,
+            "revenue": 714432,
+            "profit": 354740
+          },
+          {
+            "year": 2024,
+            "revenue": 1868946,
+            "profit": 1082949,
+            "employees": 3
+          },
+          {
+            "year": 2025,
+            "revenue": 1381435,
+            "profit": 407559,
+            "employees": 3
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5505,7 +8630,33 @@
       "financials": {
         "year": 2025,
         "revenue": 450781,
-        "profit": 29068
+        "profit": 29068,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 6128533,
+            "profit": 1678132,
+            "employees": 3
+          },
+          {
+            "year": 2023,
+            "revenue": 3912567,
+            "profit": 713325,
+            "employees": 11
+          },
+          {
+            "year": 2024,
+            "revenue": 2481837,
+            "profit": 545902,
+            "employees": 4
+          },
+          {
+            "year": 2025,
+            "revenue": 450781,
+            "profit": 29068,
+            "employees": 4
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5557,7 +8708,39 @@
       "financials": {
         "year": 2025,
         "revenue": 21664989,
-        "profit": 245984
+        "profit": 245984,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 23288107,
+            "profit": 3219039,
+            "employees": 48
+          },
+          {
+            "year": 2022,
+            "revenue": 17737755,
+            "profit": 1351982,
+            "employees": 46
+          },
+          {
+            "year": 2023,
+            "revenue": 15610540,
+            "profit": 532476,
+            "employees": 44
+          },
+          {
+            "year": 2024,
+            "revenue": 20398360,
+            "profit": 3272557,
+            "employees": 49
+          },
+          {
+            "year": 2025,
+            "revenue": 21664989,
+            "profit": 245984,
+            "employees": 45
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5609,7 +8792,39 @@
       "financials": {
         "year": 2025,
         "revenue": 7257046,
-        "profit": 451048
+        "profit": 451048,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2504969,
+            "profit": 54630,
+            "employees": 14
+          },
+          {
+            "year": 2022,
+            "revenue": 5857340,
+            "profit": 943100,
+            "employees": 14
+          },
+          {
+            "year": 2023,
+            "revenue": 6023765,
+            "profit": 446980,
+            "employees": 15
+          },
+          {
+            "year": 2024,
+            "revenue": 5098540,
+            "profit": 389809,
+            "employees": 15
+          },
+          {
+            "year": 2025,
+            "revenue": 7257046,
+            "profit": 451048,
+            "employees": 16
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5664,7 +8879,39 @@
       "financials": {
         "year": 2025,
         "revenue": 22122518,
-        "profit": 1669153
+        "profit": 1669153,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 7724792,
+            "profit": 118477,
+            "employees": 22
+          },
+          {
+            "year": 2022,
+            "revenue": 13604137,
+            "profit": 979507,
+            "employees": 27
+          },
+          {
+            "year": 2023,
+            "revenue": 28231099,
+            "profit": 1606754,
+            "employees": 28
+          },
+          {
+            "year": 2024,
+            "revenue": 21925295,
+            "profit": 1554677,
+            "employees": 35
+          },
+          {
+            "year": 2025,
+            "revenue": 22122518,
+            "profit": 1669153,
+            "employees": 42
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5716,7 +8963,39 @@
       "financials": {
         "year": 2025,
         "revenue": 9169711,
-        "profit": 902005
+        "profit": 902005,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3333090,
+            "profit": 727451,
+            "employees": 12
+          },
+          {
+            "year": 2022,
+            "revenue": 10108901,
+            "profit": 3725358,
+            "employees": 14
+          },
+          {
+            "year": 2023,
+            "revenue": 8139766,
+            "profit": 1243900,
+            "employees": 19
+          },
+          {
+            "year": 2024,
+            "revenue": 8058973,
+            "profit": 1039104,
+            "employees": 23
+          },
+          {
+            "year": 2025,
+            "revenue": 9169711,
+            "profit": 902005,
+            "employees": 25
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5768,7 +9047,39 @@
       "financials": {
         "year": 2025,
         "revenue": 5495229,
-        "profit": 1081216
+        "profit": 1081216,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1412679,
+            "profit": 158744,
+            "employees": 13
+          },
+          {
+            "year": 2022,
+            "revenue": 5477310,
+            "profit": 1152766,
+            "employees": 14
+          },
+          {
+            "year": 2023,
+            "revenue": 5252330,
+            "profit": 1084555,
+            "employees": 14
+          },
+          {
+            "year": 2024,
+            "revenue": 3551380,
+            "profit": 262262,
+            "employees": 14
+          },
+          {
+            "year": 2025,
+            "revenue": 5495229,
+            "profit": 1081216,
+            "employees": 13
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5825,7 +9136,39 @@
       "financials": {
         "year": 2025,
         "revenue": 7602516,
-        "profit": 269000
+        "profit": 269000,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4125585,
+            "profit": 710370,
+            "employees": 13
+          },
+          {
+            "year": 2022,
+            "revenue": 5804811,
+            "profit": 291094,
+            "employees": 17
+          },
+          {
+            "year": 2023,
+            "revenue": 8510690,
+            "profit": 288699,
+            "employees": 16
+          },
+          {
+            "year": 2024,
+            "revenue": 8821693,
+            "profit": 1609787,
+            "employees": 16
+          },
+          {
+            "year": 2025,
+            "revenue": 7602516,
+            "profit": 269000,
+            "employees": 19
+          }
+        ]
       },
       "tags": [
         "on-grid",
@@ -5875,7 +9218,39 @@
       "financials": {
         "year": 2025,
         "revenue": 32165415,
-        "profit": 3642840
+        "profit": 3642840,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 7314654,
+            "profit": 1415787,
+            "employees": 39
+          },
+          {
+            "year": 2022,
+            "revenue": 14125189,
+            "profit": 1245527,
+            "employees": 49
+          },
+          {
+            "year": 2023,
+            "revenue": 23791923,
+            "profit": 3804704,
+            "employees": 55
+          },
+          {
+            "year": 2024,
+            "revenue": 30046246,
+            "profit": 5109913,
+            "employees": 63
+          },
+          {
+            "year": 2025,
+            "revenue": 32165415,
+            "profit": 3642840,
+            "employees": 57
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -5935,7 +9310,39 @@
       "financials": {
         "year": 2025,
         "revenue": 28968339,
-        "profit": 5599566
+        "profit": 5599566,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 14912525,
+            "profit": 3043263,
+            "employees": 31
+          },
+          {
+            "year": 2022,
+            "revenue": 19363059,
+            "profit": 3328063,
+            "employees": 33
+          },
+          {
+            "year": 2023,
+            "revenue": 22205750,
+            "profit": 3049774,
+            "employees": 35
+          },
+          {
+            "year": 2024,
+            "revenue": 26593189,
+            "profit": 3133726,
+            "employees": 34
+          },
+          {
+            "year": 2025,
+            "revenue": 28968339,
+            "profit": 5599566,
+            "employees": 36
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -5990,7 +9397,39 @@
       "financials": {
         "year": 2025,
         "revenue": 1715488,
-        "profit": -715880
+        "profit": -715880,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 276811,
+            "profit": 4353,
+            "employees": 4
+          },
+          {
+            "year": 2022,
+            "revenue": 7158329,
+            "profit": 443868,
+            "employees": 8
+          },
+          {
+            "year": 2023,
+            "revenue": 9904698,
+            "profit": 33289,
+            "employees": 8
+          },
+          {
+            "year": 2024,
+            "revenue": 1332271,
+            "profit": 40193,
+            "employees": 5
+          },
+          {
+            "year": 2025,
+            "revenue": 1715488,
+            "profit": -715880,
+            "employees": 3
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -6041,7 +9480,33 @@
       "financials": {
         "year": 2025,
         "revenue": 5753716,
-        "profit": 302403
+        "profit": 302403,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 1230073,
+            "profit": 158462,
+            "employees": 5
+          },
+          {
+            "year": 2023,
+            "revenue": 3649590,
+            "profit": 442703,
+            "employees": 14
+          },
+          {
+            "year": 2024,
+            "revenue": 3511051,
+            "profit": 537637,
+            "employees": 12
+          },
+          {
+            "year": 2025,
+            "revenue": 5753716,
+            "profit": 302403,
+            "employees": 13
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -6097,7 +9562,39 @@
       "financials": {
         "year": 2025,
         "revenue": 5956868,
-        "profit": 1373247
+        "profit": 1373247,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2397475,
+            "profit": 453849,
+            "employees": 12
+          },
+          {
+            "year": 2022,
+            "revenue": 3923211,
+            "profit": 1020938,
+            "employees": 14
+          },
+          {
+            "year": 2023,
+            "revenue": 5205490,
+            "profit": 902958,
+            "employees": 13
+          },
+          {
+            "year": 2024,
+            "revenue": 5980383,
+            "profit": 1513437,
+            "employees": 11
+          },
+          {
+            "year": 2025,
+            "revenue": 5956868,
+            "profit": 1373247,
+            "employees": 11
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -6151,7 +9648,39 @@
       "financials": {
         "year": 2025,
         "revenue": 17436194,
-        "profit": 2404925
+        "profit": 2404925,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 7944275,
+            "profit": 817834,
+            "employees": 40
+          },
+          {
+            "year": 2022,
+            "revenue": 15421328,
+            "profit": 3502465,
+            "employees": 42
+          },
+          {
+            "year": 2023,
+            "revenue": 26094405,
+            "profit": 7668502,
+            "employees": 43
+          },
+          {
+            "year": 2024,
+            "revenue": 29725674,
+            "profit": 6978981,
+            "employees": 42
+          },
+          {
+            "year": 2025,
+            "revenue": 17436194,
+            "profit": 2404925,
+            "employees": 42
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -6201,7 +9730,39 @@
       "financials": {
         "year": 2025,
         "revenue": 11575390,
-        "profit": 250994
+        "profit": 250994,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 6886626,
+            "profit": 404868,
+            "employees": 35
+          },
+          {
+            "year": 2022,
+            "revenue": 13102913,
+            "profit": 278275,
+            "employees": 38
+          },
+          {
+            "year": 2023,
+            "revenue": 14428647,
+            "profit": 175947,
+            "employees": 44
+          },
+          {
+            "year": 2024,
+            "revenue": 11802286,
+            "profit": 165697,
+            "employees": 40
+          },
+          {
+            "year": 2025,
+            "revenue": 11575390,
+            "profit": 250994,
+            "employees": 29
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -6255,7 +9816,39 @@
       "financials": {
         "year": 2025,
         "revenue": 85461185,
-        "profit": 8554527
+        "profit": 8554527,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 38483188,
+            "profit": 8777972,
+            "employees": 92
+          },
+          {
+            "year": 2022,
+            "revenue": 52303357,
+            "profit": 7810410,
+            "employees": 108
+          },
+          {
+            "year": 2023,
+            "revenue": 87528465,
+            "profit": 15471977,
+            "employees": 125
+          },
+          {
+            "year": 2024,
+            "revenue": 74361564,
+            "profit": 10987417,
+            "employees": 134
+          },
+          {
+            "year": 2025,
+            "revenue": 85461185,
+            "profit": 8554527,
+            "employees": 165
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -6307,7 +9900,39 @@
       "financials": {
         "year": 2025,
         "revenue": 8355266,
-        "profit": 157661
+        "profit": 157661,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1001287,
+            "profit": -31093,
+            "employees": 9
+          },
+          {
+            "year": 2022,
+            "revenue": 7709196,
+            "profit": 1482908,
+            "employees": 18
+          },
+          {
+            "year": 2023,
+            "revenue": 9018213,
+            "profit": 1502522,
+            "employees": 19
+          },
+          {
+            "year": 2024,
+            "revenue": 8681283,
+            "profit": 1256512,
+            "employees": 20
+          },
+          {
+            "year": 2025,
+            "revenue": 8355266,
+            "profit": 157661,
+            "employees": 14
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -6358,7 +9983,39 @@
       "financials": {
         "year": 2025,
         "revenue": 3488666,
-        "profit": 438858
+        "profit": 438858,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 80977,
+            "profit": -44594,
+            "employees": 2
+          },
+          {
+            "year": 2022,
+            "revenue": 386131,
+            "profit": -58640,
+            "employees": 3
+          },
+          {
+            "year": 2023,
+            "revenue": 1519754,
+            "profit": 283928,
+            "employees": 4
+          },
+          {
+            "year": 2024,
+            "revenue": 1443915,
+            "profit": 266496,
+            "employees": 6
+          },
+          {
+            "year": 2025,
+            "revenue": 3488666,
+            "profit": 438858,
+            "employees": 8
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -6412,7 +10069,39 @@
       "financials": {
         "year": 2025,
         "revenue": 14991243,
-        "profit": 3593968
+        "profit": 3593968,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 9349982,
+            "profit": 2564984,
+            "employees": 48
+          },
+          {
+            "year": 2022,
+            "revenue": 9772071,
+            "profit": 1923236,
+            "employees": 49
+          },
+          {
+            "year": 2023,
+            "revenue": 16998626,
+            "profit": 5528012,
+            "employees": 50
+          },
+          {
+            "year": 2024,
+            "revenue": 12012596,
+            "profit": 1640571,
+            "employees": 47
+          },
+          {
+            "year": 2025,
+            "revenue": 14991243,
+            "profit": 3593968,
+            "employees": 36
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -6466,7 +10155,39 @@
       "financials": {
         "year": 2025,
         "revenue": 8144276,
-        "profit": 898001
+        "profit": 898001,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2911303,
+            "profit": 27839,
+            "employees": 14
+          },
+          {
+            "year": 2022,
+            "revenue": 2515362,
+            "profit": 31420,
+            "employees": 13
+          },
+          {
+            "year": 2023,
+            "revenue": 9837855,
+            "profit": 1908102,
+            "employees": 13
+          },
+          {
+            "year": 2024,
+            "revenue": 5693967,
+            "profit": 873475,
+            "employees": 14
+          },
+          {
+            "year": 2025,
+            "revenue": 8144276,
+            "profit": 898001,
+            "employees": 16
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -6519,7 +10240,39 @@
       "financials": {
         "year": 2025,
         "revenue": 7636932,
-        "profit": 1255251
+        "profit": 1255251,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4578076,
+            "profit": 348623,
+            "employees": 13
+          },
+          {
+            "year": 2022,
+            "revenue": 15293826,
+            "profit": 1846453,
+            "employees": 24
+          },
+          {
+            "year": 2023,
+            "revenue": 30294475,
+            "profit": 8425142,
+            "employees": 30
+          },
+          {
+            "year": 2024,
+            "revenue": 17451819,
+            "profit": 4456786,
+            "employees": 14
+          },
+          {
+            "year": 2025,
+            "revenue": 7636932,
+            "profit": 1255251,
+            "employees": 15
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -6570,7 +10323,39 @@
       "financials": {
         "year": 2025,
         "revenue": 9748294,
-        "profit": 385931
+        "profit": 385931,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1935624,
+            "profit": 415806,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 9338018,
+            "profit": 2022461,
+            "employees": 6
+          },
+          {
+            "year": 2023,
+            "revenue": 5474890,
+            "profit": 20243,
+            "employees": 14
+          },
+          {
+            "year": 2024,
+            "revenue": 7620161,
+            "profit": 344386,
+            "employees": 21
+          },
+          {
+            "year": 2025,
+            "revenue": 9748294,
+            "profit": 385931,
+            "employees": 25
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -6621,7 +10406,39 @@
       "financials": {
         "year": 2025,
         "revenue": 18796769,
-        "profit": 2424658
+        "profit": 2424658,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4467065,
+            "profit": 115741,
+            "employees": 25
+          },
+          {
+            "year": 2022,
+            "revenue": 6885692,
+            "profit": 319001,
+            "employees": 28
+          },
+          {
+            "year": 2023,
+            "revenue": 10854841,
+            "profit": 544205,
+            "employees": 31
+          },
+          {
+            "year": 2024,
+            "revenue": 8867013,
+            "profit": 1133389,
+            "employees": 27
+          },
+          {
+            "year": 2025,
+            "revenue": 18796769,
+            "profit": 2424658,
+            "employees": 28
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -6671,7 +10488,39 @@
       "financials": {
         "year": 2025,
         "revenue": 14063309,
-        "profit": 2619054
+        "profit": 2619054,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3235576,
+            "profit": 405894,
+            "employees": 2
+          },
+          {
+            "year": 2022,
+            "revenue": 16764195,
+            "profit": 2682101,
+            "employees": 5
+          },
+          {
+            "year": 2023,
+            "revenue": 25721668,
+            "profit": 7396635,
+            "employees": 12
+          },
+          {
+            "year": 2024,
+            "revenue": 13885412,
+            "profit": 3890230,
+            "employees": 10
+          },
+          {
+            "year": 2025,
+            "revenue": 14063309,
+            "profit": 2619054,
+            "employees": 14
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -6722,7 +10571,39 @@
       "financials": {
         "year": 2025,
         "revenue": 12268848,
-        "profit": 3187995
+        "profit": 3187995,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4393529,
+            "profit": 1039272,
+            "employees": 10
+          },
+          {
+            "year": 2022,
+            "revenue": 9796354,
+            "profit": 873664,
+            "employees": 12
+          },
+          {
+            "year": 2023,
+            "revenue": 13344782,
+            "profit": 2936669,
+            "employees": 14
+          },
+          {
+            "year": 2024,
+            "revenue": 12724127,
+            "profit": 2744354,
+            "employees": 14
+          },
+          {
+            "year": 2025,
+            "revenue": 12268848,
+            "profit": 3187995,
+            "employees": 14
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -6771,7 +10652,33 @@
       "financials": {
         "year": 2025,
         "revenue": 2041466,
-        "profit": 79618
+        "profit": 79618,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 780354,
+            "profit": 117509,
+            "employees": 3
+          },
+          {
+            "year": 2023,
+            "revenue": 2401945,
+            "profit": 526704,
+            "employees": 4
+          },
+          {
+            "year": 2024,
+            "revenue": 1003916,
+            "profit": 33629,
+            "employees": 3
+          },
+          {
+            "year": 2025,
+            "revenue": 2041466,
+            "profit": 79618,
+            "employees": 2
+          }
+        ]
       },
       "tags": [
         "pv-rezidential"
@@ -6820,7 +10727,39 @@
       "financials": {
         "year": 2025,
         "revenue": 3901657,
-        "profit": 81253
+        "profit": 81253,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 391318,
+            "profit": 1930,
+            "employees": 3
+          },
+          {
+            "year": 2022,
+            "revenue": 5165694,
+            "profit": 496775,
+            "employees": 11
+          },
+          {
+            "year": 2023,
+            "revenue": 6178068,
+            "profit": 722119,
+            "employees": 14
+          },
+          {
+            "year": 2024,
+            "revenue": 4856959,
+            "profit": 81607,
+            "employees": 15
+          },
+          {
+            "year": 2025,
+            "revenue": 3901657,
+            "profit": 81253,
+            "employees": 15
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -6871,7 +10810,39 @@
       "financials": {
         "year": 2025,
         "revenue": 2359056,
-        "profit": 160433
+        "profit": 160433,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1663004,
+            "profit": 90618,
+            "employees": 23
+          },
+          {
+            "year": 2022,
+            "revenue": 1577602,
+            "profit": 245007,
+            "employees": 21
+          },
+          {
+            "year": 2023,
+            "revenue": 2253037,
+            "profit": 315095,
+            "employees": 16
+          },
+          {
+            "year": 2024,
+            "revenue": 2312164,
+            "profit": 101504,
+            "employees": 13
+          },
+          {
+            "year": 2025,
+            "revenue": 2359056,
+            "profit": 160433,
+            "employees": 13
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -6932,7 +10903,33 @@
       "financials": {
         "year": 2025,
         "revenue": 3947709,
-        "profit": 182387
+        "profit": 182387,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 2956793,
+            "profit": 555682,
+            "employees": 6
+          },
+          {
+            "year": 2023,
+            "revenue": 1450304,
+            "profit": -298623,
+            "employees": 12
+          },
+          {
+            "year": 2024,
+            "revenue": 1264974,
+            "profit": 1949,
+            "employees": 9
+          },
+          {
+            "year": 2025,
+            "revenue": 3947709,
+            "profit": 182387,
+            "employees": 6
+          }
+        ]
       },
       "tags": [
         "pv-comercial",
@@ -6984,7 +10981,39 @@
       "financials": {
         "year": 2025,
         "revenue": 14562158,
-        "profit": 3114493
+        "profit": 3114493,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1676383,
+            "profit": 365498,
+            "employees": 4
+          },
+          {
+            "year": 2022,
+            "revenue": 3236530,
+            "profit": 471041,
+            "employees": 5
+          },
+          {
+            "year": 2023,
+            "revenue": 11674443,
+            "profit": 3123367,
+            "employees": 11
+          },
+          {
+            "year": 2024,
+            "revenue": 6052186,
+            "profit": 673904,
+            "employees": 11
+          },
+          {
+            "year": 2025,
+            "revenue": 14562158,
+            "profit": 3114493,
+            "employees": 15
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7035,7 +11064,39 @@
       "financials": {
         "year": 2025,
         "revenue": 12041595,
-        "profit": 345366
+        "profit": 345366,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1378597,
+            "profit": 197625,
+            "employees": 3
+          },
+          {
+            "year": 2022,
+            "revenue": 14226597,
+            "profit": 2306647,
+            "employees": 13
+          },
+          {
+            "year": 2023,
+            "revenue": 11780610,
+            "profit": 1232696,
+            "employees": 24
+          },
+          {
+            "year": 2024,
+            "revenue": 10414395,
+            "profit": 145588,
+            "employees": 25
+          },
+          {
+            "year": 2025,
+            "revenue": 12041595,
+            "profit": 345366,
+            "employees": 23
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7126,7 +11187,39 @@
       "financials": {
         "year": 2025,
         "revenue": 40927122,
-        "profit": 5856045
+        "profit": 5856045,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 506532,
+            "profit": 99567,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 8918043,
+            "profit": 1683152,
+            "employees": 10
+          },
+          {
+            "year": 2023,
+            "revenue": 13931877,
+            "profit": 617693,
+            "employees": 14
+          },
+          {
+            "year": 2024,
+            "revenue": 11105532,
+            "profit": 502737,
+            "employees": 22
+          },
+          {
+            "year": 2025,
+            "revenue": 40927122,
+            "profit": 5856045,
+            "employees": 32
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7182,7 +11275,33 @@
       "financials": {
         "year": 2025,
         "revenue": 11540697,
-        "profit": 3399615
+        "profit": 3399615,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 14564077,
+            "profit": 3786140,
+            "employees": 2
+          },
+          {
+            "year": 2023,
+            "revenue": 14672066,
+            "profit": 5067168,
+            "employees": 4
+          },
+          {
+            "year": 2024,
+            "revenue": 9020884,
+            "profit": 1920849,
+            "employees": 3
+          },
+          {
+            "year": 2025,
+            "revenue": 11540697,
+            "profit": 3399615,
+            "employees": 6
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7235,7 +11354,39 @@
       "financials": {
         "year": 2025,
         "revenue": 14309317,
-        "profit": 1781760
+        "profit": 1781760,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2581941,
+            "profit": 231166,
+            "employees": 6
+          },
+          {
+            "year": 2022,
+            "revenue": 13652185,
+            "profit": 1810133,
+            "employees": 8
+          },
+          {
+            "year": 2023,
+            "revenue": 14645509,
+            "profit": 3735144,
+            "employees": 13
+          },
+          {
+            "year": 2024,
+            "revenue": 11798045,
+            "profit": 2004754,
+            "employees": 13
+          },
+          {
+            "year": 2025,
+            "revenue": 14309317,
+            "profit": 1781760,
+            "employees": 15
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7286,7 +11437,39 @@
       "financials": {
         "year": 2025,
         "revenue": 27899013,
-        "profit": 1240901
+        "profit": 1240901,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2001458,
+            "profit": 643478,
+            "employees": 2
+          },
+          {
+            "year": 2022,
+            "revenue": 10077721,
+            "profit": 1559644,
+            "employees": 4
+          },
+          {
+            "year": 2023,
+            "revenue": 17209045,
+            "profit": 559955,
+            "employees": 4
+          },
+          {
+            "year": 2024,
+            "revenue": 14025180,
+            "profit": 644958,
+            "employees": 4
+          },
+          {
+            "year": 2025,
+            "revenue": 27899013,
+            "profit": 1240901,
+            "employees": 4
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7339,7 +11522,39 @@
       "financials": {
         "year": 2025,
         "revenue": 10827092,
-        "profit": 544775
+        "profit": 544775,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3345653,
+            "profit": 244291,
+            "employees": 23
+          },
+          {
+            "year": 2022,
+            "revenue": 7289441,
+            "profit": 355083,
+            "employees": 23
+          },
+          {
+            "year": 2023,
+            "revenue": 10197651,
+            "profit": 1058717,
+            "employees": 25
+          },
+          {
+            "year": 2024,
+            "revenue": 9915599,
+            "profit": 1784806,
+            "employees": 31
+          },
+          {
+            "year": 2025,
+            "revenue": 10827092,
+            "profit": 544775,
+            "employees": 30
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7392,7 +11607,39 @@
       "financials": {
         "year": 2025,
         "revenue": 7059035,
-        "profit": 427322
+        "profit": 427322,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2444455,
+            "profit": 53503,
+            "employees": 3
+          },
+          {
+            "year": 2022,
+            "revenue": 10549390,
+            "profit": 557928,
+            "employees": 2
+          },
+          {
+            "year": 2023,
+            "revenue": 9527003,
+            "profit": 627594,
+            "employees": 3
+          },
+          {
+            "year": 2024,
+            "revenue": 5863711,
+            "profit": 375522,
+            "employees": 7
+          },
+          {
+            "year": 2025,
+            "revenue": 7059035,
+            "profit": 427322,
+            "employees": 6
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7443,7 +11690,39 @@
       "financials": {
         "year": 2025,
         "revenue": 14334755,
-        "profit": -530132
+        "profit": -530132,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 10172182,
+            "profit": 1164316,
+            "employees": 29
+          },
+          {
+            "year": 2022,
+            "revenue": 20055368,
+            "profit": 2578194,
+            "employees": 35
+          },
+          {
+            "year": 2023,
+            "revenue": 23216781,
+            "profit": 3880631,
+            "employees": 40
+          },
+          {
+            "year": 2024,
+            "revenue": 14192246,
+            "profit": 1259935,
+            "employees": 36
+          },
+          {
+            "year": 2025,
+            "revenue": 14334755,
+            "profit": -530132,
+            "employees": 34
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7496,7 +11775,39 @@
       "financials": {
         "year": 2025,
         "revenue": 15992296,
-        "profit": 1512511
+        "profit": 1512511,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4687378,
+            "profit": 258477,
+            "employees": 17
+          },
+          {
+            "year": 2022,
+            "revenue": 9874871,
+            "profit": 980122,
+            "employees": 25
+          },
+          {
+            "year": 2023,
+            "revenue": 12360516,
+            "profit": 1369441,
+            "employees": 21
+          },
+          {
+            "year": 2024,
+            "revenue": 8394315,
+            "profit": 682908,
+            "employees": 20
+          },
+          {
+            "year": 2025,
+            "revenue": 15992296,
+            "profit": 1512511,
+            "employees": 21
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7549,7 +11860,39 @@
       "financials": {
         "year": 2025,
         "revenue": 28012121,
-        "profit": 5571044
+        "profit": 5571044,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3532000,
+            "profit": 1351767,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 26870032,
+            "profit": 6882578,
+            "employees": 5
+          },
+          {
+            "year": 2023,
+            "revenue": 10301033,
+            "profit": 502956,
+            "employees": 10
+          },
+          {
+            "year": 2024,
+            "revenue": 15116635,
+            "profit": 923234,
+            "employees": 20
+          },
+          {
+            "year": 2025,
+            "revenue": 28012121,
+            "profit": 5571044,
+            "employees": 26
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7600,7 +11943,39 @@
       "financials": {
         "year": 2025,
         "revenue": 18788651,
-        "profit": 5782462
+        "profit": 5782462,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 7922082,
+            "profit": 752234,
+            "employees": 27
+          },
+          {
+            "year": 2022,
+            "revenue": 11821276,
+            "profit": 1468626,
+            "employees": 29
+          },
+          {
+            "year": 2023,
+            "revenue": 15872083,
+            "profit": 4163211,
+            "employees": 32
+          },
+          {
+            "year": 2024,
+            "revenue": 11815511,
+            "profit": 3329644,
+            "employees": 35
+          },
+          {
+            "year": 2025,
+            "revenue": 18788651,
+            "profit": 5782462,
+            "employees": 35
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7651,7 +12026,39 @@
       "financials": {
         "year": 2025,
         "revenue": 16977866,
-        "profit": 1715486
+        "profit": 1715486,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4446838,
+            "profit": 419783,
+            "employees": 10
+          },
+          {
+            "year": 2022,
+            "revenue": 8234686,
+            "profit": 32091,
+            "employees": 8
+          },
+          {
+            "year": 2023,
+            "revenue": 9067474,
+            "profit": 1774142,
+            "employees": 8
+          },
+          {
+            "year": 2024,
+            "revenue": 15046733,
+            "profit": 4002521,
+            "employees": 10
+          },
+          {
+            "year": 2025,
+            "revenue": 16977866,
+            "profit": 1715486,
+            "employees": 10
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7705,7 +12112,39 @@
       "financials": {
         "year": 2025,
         "revenue": 18017124,
-        "profit": 2139447
+        "profit": 2139447,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 6489286,
+            "profit": 384863,
+            "employees": 33
+          },
+          {
+            "year": 2022,
+            "revenue": 11631846,
+            "profit": 760215,
+            "employees": 34
+          },
+          {
+            "year": 2023,
+            "revenue": 13859055,
+            "profit": 2140238,
+            "employees": 40
+          },
+          {
+            "year": 2024,
+            "revenue": 11690676,
+            "profit": 1675945,
+            "employees": 41
+          },
+          {
+            "year": 2025,
+            "revenue": 18017124,
+            "profit": 2139447,
+            "employees": 41
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7755,7 +12194,39 @@
       "financials": {
         "year": 2025,
         "revenue": 14227537,
-        "profit": 1802492
+        "profit": 1802492,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 4539205,
+            "profit": 430366,
+            "employees": 10
+          },
+          {
+            "year": 2022,
+            "revenue": 4887731,
+            "profit": 592607,
+            "employees": 9
+          },
+          {
+            "year": 2023,
+            "revenue": 9384615,
+            "profit": 846087,
+            "employees": 15
+          },
+          {
+            "year": 2024,
+            "revenue": 8816517,
+            "profit": 654195,
+            "employees": 15
+          },
+          {
+            "year": 2025,
+            "revenue": 14227537,
+            "profit": 1802492,
+            "employees": 18
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7808,7 +12279,39 @@
       "financials": {
         "year": 2025,
         "revenue": 60467855,
-        "profit": 1578071
+        "profit": 1578071,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 8732149,
+            "profit": 1877431,
+            "employees": 2
+          },
+          {
+            "year": 2022,
+            "revenue": 63978190,
+            "profit": 9106666,
+            "employees": 10
+          },
+          {
+            "year": 2023,
+            "revenue": 61335773,
+            "profit": 5136210,
+            "employees": 24
+          },
+          {
+            "year": 2024,
+            "revenue": 36145268,
+            "profit": 620570,
+            "employees": 27
+          },
+          {
+            "year": 2025,
+            "revenue": 60467855,
+            "profit": 1578071,
+            "employees": 27
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7863,7 +12366,39 @@
       "financials": {
         "year": 2025,
         "revenue": 43516775,
-        "profit": 2494991
+        "profit": 2494991,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 43949367,
+            "profit": 4613572,
+            "employees": 28
+          },
+          {
+            "year": 2022,
+            "revenue": 66206042,
+            "profit": 9856772,
+            "employees": 27
+          },
+          {
+            "year": 2023,
+            "revenue": 51669068,
+            "profit": 8212229,
+            "employees": 26
+          },
+          {
+            "year": 2024,
+            "revenue": 49859526,
+            "profit": 2465104,
+            "employees": 20
+          },
+          {
+            "year": 2025,
+            "revenue": 43516775,
+            "profit": 2494991,
+            "employees": 17
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7918,7 +12453,39 @@
       "financials": {
         "year": 2025,
         "revenue": 31096126,
-        "profit": 3744551
+        "profit": 3744551,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 11622790,
+            "profit": 2167409,
+            "employees": 56
+          },
+          {
+            "year": 2022,
+            "revenue": 16315594,
+            "profit": 1524351,
+            "employees": 58
+          },
+          {
+            "year": 2023,
+            "revenue": 27766513,
+            "profit": 4804897,
+            "employees": 63
+          },
+          {
+            "year": 2024,
+            "revenue": 24968394,
+            "profit": 3335486,
+            "employees": 72
+          },
+          {
+            "year": 2025,
+            "revenue": 31096126,
+            "profit": 3744551,
+            "employees": 73
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -7970,7 +12537,39 @@
       "financials": {
         "year": 2025,
         "revenue": 38919807,
-        "profit": 6836936
+        "profit": 6836936,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 18219514,
+            "profit": 1305255,
+            "employees": 101
+          },
+          {
+            "year": 2022,
+            "revenue": 21396032,
+            "profit": 1550753,
+            "employees": 90
+          },
+          {
+            "year": 2023,
+            "revenue": 27390333,
+            "profit": 1472335,
+            "employees": 88
+          },
+          {
+            "year": 2024,
+            "revenue": 32907788,
+            "profit": 5698338,
+            "employees": 87
+          },
+          {
+            "year": 2025,
+            "revenue": 38919807,
+            "profit": 6836936,
+            "employees": 85
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8023,7 +12622,39 @@
       "financials": {
         "year": 2025,
         "revenue": 26612062,
-        "profit": 6771563
+        "profit": 6771563,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 11459341,
+            "profit": 880050,
+            "employees": 54
+          },
+          {
+            "year": 2022,
+            "revenue": 20390900,
+            "profit": 3234616,
+            "employees": 55
+          },
+          {
+            "year": 2023,
+            "revenue": 25649999,
+            "profit": 4046331,
+            "employees": 57
+          },
+          {
+            "year": 2024,
+            "revenue": 22143245,
+            "profit": 3797255,
+            "employees": 55
+          },
+          {
+            "year": 2025,
+            "revenue": 26612062,
+            "profit": 6771563,
+            "employees": 63
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8076,7 +12707,39 @@
       "financials": {
         "year": 2025,
         "revenue": 36637926,
-        "profit": 492272
+        "profit": 492272,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 14181361,
+            "profit": 725740,
+            "employees": 71
+          },
+          {
+            "year": 2022,
+            "revenue": 26115971,
+            "profit": 2635066,
+            "employees": 76
+          },
+          {
+            "year": 2023,
+            "revenue": 25203987,
+            "profit": 3033926,
+            "employees": 81
+          },
+          {
+            "year": 2024,
+            "revenue": 21712763,
+            "profit": 2694029,
+            "employees": 76
+          },
+          {
+            "year": 2025,
+            "revenue": 36637926,
+            "profit": 492272,
+            "employees": 88
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8129,7 +12792,39 @@
       "financials": {
         "year": 2025,
         "revenue": 27491145,
-        "profit": 4388529
+        "profit": 4388529,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 9024321,
+            "profit": 855377,
+            "employees": 22
+          },
+          {
+            "year": 2022,
+            "revenue": 15605687,
+            "profit": 878088,
+            "employees": 23
+          },
+          {
+            "year": 2023,
+            "revenue": 22834516,
+            "profit": 5023215,
+            "employees": 25
+          },
+          {
+            "year": 2024,
+            "revenue": 20059672,
+            "profit": 4780240,
+            "employees": 24
+          },
+          {
+            "year": 2025,
+            "revenue": 27491145,
+            "profit": 4388529,
+            "employees": 24
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8184,7 +12879,39 @@
       "financials": {
         "year": 2025,
         "revenue": 37335671,
-        "profit": 1805794
+        "profit": 1805794,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 15070543,
+            "profit": 494554,
+            "employees": 41
+          },
+          {
+            "year": 2022,
+            "revenue": 15880550,
+            "profit": 515340,
+            "employees": 48
+          },
+          {
+            "year": 2023,
+            "revenue": 18811542,
+            "profit": 914101,
+            "employees": 53
+          },
+          {
+            "year": 2024,
+            "revenue": 30224456,
+            "profit": 2129519,
+            "employees": 53
+          },
+          {
+            "year": 2025,
+            "revenue": 37335671,
+            "profit": 1805794,
+            "employees": 63
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8235,7 +12962,39 @@
       "financials": {
         "year": 2025,
         "revenue": 26892966,
-        "profit": 1701843
+        "profit": 1701843,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 7758292,
+            "profit": 416665,
+            "employees": 16
+          },
+          {
+            "year": 2022,
+            "revenue": 15965627,
+            "profit": 1561275,
+            "employees": 29
+          },
+          {
+            "year": 2023,
+            "revenue": 18444263,
+            "profit": 1382765,
+            "employees": 27
+          },
+          {
+            "year": 2024,
+            "revenue": 22233582,
+            "profit": 1989462,
+            "employees": 33
+          },
+          {
+            "year": 2025,
+            "revenue": 26892966,
+            "profit": 1701843,
+            "employees": 30
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8287,7 +13046,39 @@
       "financials": {
         "year": 2025,
         "revenue": 11153573,
-        "profit": 354256
+        "profit": 354256,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 14022803,
+            "profit": 597619,
+            "employees": 40
+          },
+          {
+            "year": 2022,
+            "revenue": 15289776,
+            "profit": 497189,
+            "employees": 54
+          },
+          {
+            "year": 2023,
+            "revenue": 16873371,
+            "profit": 421734,
+            "employees": 80
+          },
+          {
+            "year": 2024,
+            "revenue": 14623415,
+            "profit": 415762,
+            "employees": 64
+          },
+          {
+            "year": 2025,
+            "revenue": 11153573,
+            "profit": 354256,
+            "employees": 42
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8340,7 +13131,39 @@
       "financials": {
         "year": 2025,
         "revenue": 22667896,
-        "profit": 1749040
+        "profit": 1749040,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 7291892,
+            "profit": 1567907,
+            "employees": 46
+          },
+          {
+            "year": 2022,
+            "revenue": 8562914,
+            "profit": 1274233,
+            "employees": 47
+          },
+          {
+            "year": 2023,
+            "revenue": 14379778,
+            "profit": 2082598,
+            "employees": 47
+          },
+          {
+            "year": 2024,
+            "revenue": 18905767,
+            "profit": 4618916,
+            "employees": 44
+          },
+          {
+            "year": 2025,
+            "revenue": 22667896,
+            "profit": 1749040,
+            "employees": 43
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8394,7 +13217,39 @@
       "financials": {
         "year": 2025,
         "revenue": 13546830,
-        "profit": 681196
+        "profit": 681196,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 9359764,
+            "profit": 892973,
+            "employees": 15
+          },
+          {
+            "year": 2022,
+            "revenue": 9539751,
+            "profit": 847515,
+            "employees": 13
+          },
+          {
+            "year": 2023,
+            "revenue": 10383453,
+            "profit": 1050068,
+            "employees": 11
+          },
+          {
+            "year": 2024,
+            "revenue": 8796203,
+            "profit": 188669,
+            "employees": 19
+          },
+          {
+            "year": 2025,
+            "revenue": 13546830,
+            "profit": 681196,
+            "employees": 16
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8446,7 +13301,39 @@
       "financials": {
         "year": 2025,
         "revenue": 6587118,
-        "profit": -141382
+        "profit": -141382,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 6638695,
+            "profit": 821564,
+            "employees": 23
+          },
+          {
+            "year": 2022,
+            "revenue": 10633047,
+            "profit": 1808562,
+            "employees": 23
+          },
+          {
+            "year": 2023,
+            "revenue": 9989427,
+            "profit": 1490339,
+            "employees": 23
+          },
+          {
+            "year": 2024,
+            "revenue": 5379866,
+            "profit": -446323,
+            "employees": 24
+          },
+          {
+            "year": 2025,
+            "revenue": 6587118,
+            "profit": -141382,
+            "employees": 22
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8501,7 +13388,39 @@
       "financials": {
         "year": 2025,
         "revenue": 21351653,
-        "profit": 2756638
+        "profit": 2756638,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 5139236,
+            "profit": 519785,
+            "employees": 21
+          },
+          {
+            "year": 2022,
+            "revenue": 6989278,
+            "profit": 442267,
+            "employees": 23
+          },
+          {
+            "year": 2023,
+            "revenue": 9399270,
+            "profit": -2325478,
+            "employees": 34
+          },
+          {
+            "year": 2024,
+            "revenue": 11311010,
+            "profit": 879620,
+            "employees": 31
+          },
+          {
+            "year": 2025,
+            "revenue": 21351653,
+            "profit": 2756638,
+            "employees": 32
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8556,7 +13475,39 @@
       "financials": {
         "year": 2025,
         "revenue": 15224436,
-        "profit": 2094924
+        "profit": 2094924,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 7367075,
+            "profit": 264186,
+            "employees": 25
+          },
+          {
+            "year": 2022,
+            "revenue": 4959534,
+            "profit": 116986,
+            "employees": 21
+          },
+          {
+            "year": 2023,
+            "revenue": 17161234,
+            "profit": 3305797,
+            "employees": 23
+          },
+          {
+            "year": 2024,
+            "revenue": 12993259,
+            "profit": 1185953,
+            "employees": 28
+          },
+          {
+            "year": 2025,
+            "revenue": 15224436,
+            "profit": 2094924,
+            "employees": 23
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8608,7 +13559,39 @@
       "financials": {
         "year": 2025,
         "revenue": 3499463,
-        "profit": 715570
+        "profit": 715570,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1512102,
+            "profit": 10435,
+            "employees": 5
+          },
+          {
+            "year": 2022,
+            "revenue": 1670594,
+            "profit": 25291,
+            "employees": 5
+          },
+          {
+            "year": 2023,
+            "revenue": 4756917,
+            "profit": 314047,
+            "employees": 6
+          },
+          {
+            "year": 2024,
+            "revenue": 1929604,
+            "profit": 172115,
+            "employees": 5
+          },
+          {
+            "year": 2025,
+            "revenue": 3499463,
+            "profit": 715570,
+            "employees": 6
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8659,7 +13642,39 @@
       "financials": {
         "year": 2025,
         "revenue": 2866006,
-        "profit": 51087
+        "profit": 51087,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2377119,
+            "profit": 425007,
+            "employees": 8
+          },
+          {
+            "year": 2022,
+            "revenue": 2440123,
+            "profit": 416347,
+            "employees": 7
+          },
+          {
+            "year": 2023,
+            "revenue": 4624226,
+            "profit": 1145932,
+            "employees": 9
+          },
+          {
+            "year": 2024,
+            "revenue": 2722391,
+            "profit": 230050,
+            "employees": 9
+          },
+          {
+            "year": 2025,
+            "revenue": 2866006,
+            "profit": 51087,
+            "employees": 8
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8710,7 +13725,33 @@
       "financials": {
         "year": 2025,
         "revenue": 3237120,
-        "profit": 219594
+        "profit": 219594,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 6211036,
+            "profit": 1135589,
+            "employees": 7
+          },
+          {
+            "year": 2023,
+            "revenue": 4882590,
+            "profit": 1234023,
+            "employees": 8
+          },
+          {
+            "year": 2024,
+            "revenue": 2845615,
+            "profit": 385544,
+            "employees": 8
+          },
+          {
+            "year": 2025,
+            "revenue": 3237120,
+            "profit": 219594,
+            "employees": 8
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8764,7 +13805,39 @@
       "financials": {
         "year": 2025,
         "revenue": 3617703,
-        "profit": 681391
+        "profit": 681391,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1968654,
+            "profit": 104873,
+            "employees": 10
+          },
+          {
+            "year": 2022,
+            "revenue": 3896160,
+            "profit": 540890,
+            "employees": 8
+          },
+          {
+            "year": 2023,
+            "revenue": 4756206,
+            "profit": 1176697,
+            "employees": 7
+          },
+          {
+            "year": 2024,
+            "revenue": 1364857,
+            "profit": -373000,
+            "employees": 7
+          },
+          {
+            "year": 2025,
+            "revenue": 3617703,
+            "profit": 681391,
+            "employees": 6
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8815,7 +13888,39 @@
       "financials": {
         "year": 2025,
         "revenue": 3789832,
-        "profit": 119818
+        "profit": 119818,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2228626,
+            "profit": 430108,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 7272811,
+            "profit": 452195,
+            "employees": 2
+          },
+          {
+            "year": 2023,
+            "revenue": 4948161,
+            "profit": 499217,
+            "employees": 5
+          },
+          {
+            "year": 2024,
+            "revenue": 2805544,
+            "profit": 8673,
+            "employees": 5
+          },
+          {
+            "year": 2025,
+            "revenue": 3789832,
+            "profit": 119818,
+            "employees": 3
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8867,7 +13972,39 @@
       "financials": {
         "year": 2025,
         "revenue": 6631142,
-        "profit": 337238
+        "profit": 337238,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 232926,
+            "profit": 1418,
+            "employees": 2
+          },
+          {
+            "year": 2022,
+            "revenue": 2293736,
+            "profit": 18754,
+            "employees": 6
+          },
+          {
+            "year": 2023,
+            "revenue": 4320692,
+            "profit": 774010,
+            "employees": 7
+          },
+          {
+            "year": 2024,
+            "revenue": 3794823,
+            "profit": 254414,
+            "employees": 6
+          },
+          {
+            "year": 2025,
+            "revenue": 6631142,
+            "profit": 337238,
+            "employees": 7
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8921,7 +14058,39 @@
       "financials": {
         "year": 2025,
         "revenue": 4530398,
-        "profit": 726315
+        "profit": 726315,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2841467,
+            "profit": 303941,
+            "employees": 10
+          },
+          {
+            "year": 2022,
+            "revenue": 5259908,
+            "profit": 1044328,
+            "employees": 10
+          },
+          {
+            "year": 2023,
+            "revenue": 4433869,
+            "profit": 866198,
+            "employees": 11
+          },
+          {
+            "year": 2024,
+            "revenue": 4363256,
+            "profit": 458635,
+            "employees": 11
+          },
+          {
+            "year": 2025,
+            "revenue": 4530398,
+            "profit": 726315,
+            "employees": 11
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -8974,7 +14143,39 @@
       "financials": {
         "year": 2025,
         "revenue": 7356439,
-        "profit": 800437
+        "profit": 800437,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3963328,
+            "profit": 293453,
+            "employees": 12
+          },
+          {
+            "year": 2022,
+            "revenue": 5238551,
+            "profit": 834719,
+            "employees": 9
+          },
+          {
+            "year": 2023,
+            "revenue": 4992440,
+            "profit": 1108871,
+            "employees": 11
+          },
+          {
+            "year": 2024,
+            "revenue": 4626606,
+            "profit": 282291,
+            "employees": 19
+          },
+          {
+            "year": 2025,
+            "revenue": 7356439,
+            "profit": 800437,
+            "employees": 17
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9024,7 +14225,39 @@
       "financials": {
         "year": 2025,
         "revenue": 4770419,
-        "profit": 956147
+        "profit": 956147,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1028053,
+            "profit": 67808,
+            "employees": 2
+          },
+          {
+            "year": 2022,
+            "revenue": 3464683,
+            "profit": 147997,
+            "employees": 6
+          },
+          {
+            "year": 2023,
+            "revenue": 4850240,
+            "profit": 44634,
+            "employees": 11
+          },
+          {
+            "year": 2024,
+            "revenue": 4576102,
+            "profit": 1098113,
+            "employees": 6
+          },
+          {
+            "year": 2025,
+            "revenue": 4770419,
+            "profit": 956147,
+            "employees": 8
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9075,7 +14308,39 @@
       "financials": {
         "year": 2025,
         "revenue": 5752426,
-        "profit": 476973
+        "profit": 476973,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3737076,
+            "profit": 92013,
+            "employees": 6
+          },
+          {
+            "year": 2022,
+            "revenue": 4942377,
+            "profit": 810450,
+            "employees": 7
+          },
+          {
+            "year": 2023,
+            "revenue": 4766933,
+            "profit": 435204,
+            "employees": 7
+          },
+          {
+            "year": 2024,
+            "revenue": 4811474,
+            "profit": 418427,
+            "employees": 8
+          },
+          {
+            "year": 2025,
+            "revenue": 5752426,
+            "profit": 476973,
+            "employees": 7
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9127,7 +14392,37 @@
       "financials": {
         "year": 2025,
         "revenue": 4741574,
-        "profit": 116003
+        "profit": 116003,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2218301,
+            "profit": 130106
+          },
+          {
+            "year": 2022,
+            "revenue": 7850908,
+            "profit": 727692,
+            "employees": 2
+          },
+          {
+            "year": 2023,
+            "revenue": 5296775,
+            "profit": 296245,
+            "employees": 3
+          },
+          {
+            "year": 2024,
+            "revenue": 4869312,
+            "profit": 318099,
+            "employees": 3
+          },
+          {
+            "year": 2025,
+            "revenue": 4741574,
+            "profit": 116003
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9180,7 +14475,39 @@
       "financials": {
         "year": 2024,
         "revenue": 5653345,
-        "profit": 835708
+        "profit": 835708,
+        "history": [
+          {
+            "year": 2020,
+            "revenue": 513563,
+            "profit": 64431,
+            "employees": 1
+          },
+          {
+            "year": 2021,
+            "revenue": 1323424,
+            "profit": 127538,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 5226322,
+            "profit": 340206,
+            "employees": 4
+          },
+          {
+            "year": 2023,
+            "revenue": 4414512,
+            "profit": 339449,
+            "employees": 6
+          },
+          {
+            "year": 2024,
+            "revenue": 5653345,
+            "profit": 835708,
+            "employees": 7
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9231,7 +14558,39 @@
       "financials": {
         "year": 2025,
         "revenue": 5690829,
-        "profit": 2339037
+        "profit": 2339037,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2480820,
+            "profit": 462892,
+            "employees": 9
+          },
+          {
+            "year": 2022,
+            "revenue": 5416432,
+            "profit": 2315341,
+            "employees": 12
+          },
+          {
+            "year": 2023,
+            "revenue": 4504902,
+            "profit": 952686,
+            "employees": 8
+          },
+          {
+            "year": 2024,
+            "revenue": 4272515,
+            "profit": 1553810,
+            "employees": 6
+          },
+          {
+            "year": 2025,
+            "revenue": 5690829,
+            "profit": 2339037,
+            "employees": 8
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9281,7 +14640,33 @@
       "financials": {
         "year": 2025,
         "revenue": 10546506,
-        "profit": 1525973
+        "profit": 1525973,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 994452,
+            "profit": 4717,
+            "employees": 5
+          },
+          {
+            "year": 2023,
+            "revenue": 5632980,
+            "profit": 1241658,
+            "employees": 13
+          },
+          {
+            "year": 2024,
+            "revenue": 5908983,
+            "profit": 569641,
+            "employees": 19
+          },
+          {
+            "year": 2025,
+            "revenue": 10546506,
+            "profit": 1525973,
+            "employees": 26
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9332,7 +14717,39 @@
       "financials": {
         "year": 2025,
         "revenue": 6079068,
-        "profit": 722817
+        "profit": 722817,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3200388,
+            "profit": 1062594,
+            "employees": 13
+          },
+          {
+            "year": 2022,
+            "revenue": 5197669,
+            "profit": 1668371,
+            "employees": 12
+          },
+          {
+            "year": 2023,
+            "revenue": 5190109,
+            "profit": 908247,
+            "employees": 16
+          },
+          {
+            "year": 2024,
+            "revenue": 6378354,
+            "profit": 1226234,
+            "employees": 15
+          },
+          {
+            "year": 2025,
+            "revenue": 6079068,
+            "profit": 722817,
+            "employees": 16
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9382,7 +14799,39 @@
       "financials": {
         "year": 2025,
         "revenue": 11142397,
-        "profit": 388100
+        "profit": 388100,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 3270264,
+            "profit": 163797,
+            "employees": 25
+          },
+          {
+            "year": 2022,
+            "revenue": 5412738,
+            "profit": 337874,
+            "employees": 33
+          },
+          {
+            "year": 2023,
+            "revenue": 5077502,
+            "profit": 223257,
+            "employees": 36
+          },
+          {
+            "year": 2024,
+            "revenue": 7154132,
+            "profit": 313130,
+            "employees": 39
+          },
+          {
+            "year": 2025,
+            "revenue": 11142397,
+            "profit": 388100,
+            "employees": 37
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9430,7 +14879,39 @@
       "financials": {
         "year": 2025,
         "revenue": 34491887,
-        "profit": 12139533
+        "profit": 12139533,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 1269199,
+            "profit": 640769,
+            "employees": 6
+          },
+          {
+            "year": 2022,
+            "revenue": 4321269,
+            "profit": 296227,
+            "employees": 8
+          },
+          {
+            "year": 2023,
+            "revenue": 5426813,
+            "profit": 931077,
+            "employees": 14
+          },
+          {
+            "year": 2024,
+            "revenue": 8513682,
+            "profit": 358113,
+            "employees": 17
+          },
+          {
+            "year": 2025,
+            "revenue": 34491887,
+            "profit": 12139533,
+            "employees": 24
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9483,7 +14964,32 @@
       "financials": {
         "year": 2025,
         "revenue": 6826157,
-        "profit": 731115
+        "profit": 731115,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 26865,
+            "profit": 336
+          },
+          {
+            "year": 2023,
+            "revenue": 957308,
+            "profit": 203530,
+            "employees": 3
+          },
+          {
+            "year": 2024,
+            "revenue": 3222843,
+            "profit": 449590,
+            "employees": 8
+          },
+          {
+            "year": 2025,
+            "revenue": 6826157,
+            "profit": 731115,
+            "employees": 7
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9536,7 +15042,32 @@
       "financials": {
         "year": 2025,
         "revenue": 1250911,
-        "profit": 87334
+        "profit": 87334,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 0,
+            "profit": -1632
+          },
+          {
+            "year": 2023,
+            "revenue": 400925,
+            "profit": -47904,
+            "employees": 2
+          },
+          {
+            "year": 2024,
+            "revenue": 588291,
+            "profit": 74828,
+            "employees": 2
+          },
+          {
+            "year": 2025,
+            "revenue": 1250911,
+            "profit": 87334,
+            "employees": 3
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9590,7 +15121,33 @@
       "financials": {
         "year": 2025,
         "revenue": 1296834,
-        "profit": 114143
+        "profit": 114143,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 164925,
+            "profit": 41463,
+            "employees": 1
+          },
+          {
+            "year": 2023,
+            "revenue": 890777,
+            "profit": 165111,
+            "employees": 3
+          },
+          {
+            "year": 2024,
+            "revenue": 1070188,
+            "profit": -43676,
+            "employees": 4
+          },
+          {
+            "year": 2025,
+            "revenue": 1296834,
+            "profit": 114143,
+            "employees": 6
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9697,7 +15254,39 @@
       "financials": {
         "year": 2025,
         "revenue": 1610849,
-        "profit": 161432
+        "profit": 161432,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 556833,
+            "profit": 19886,
+            "employees": 11
+          },
+          {
+            "year": 2022,
+            "revenue": 740523,
+            "profit": 89835,
+            "employees": 9
+          },
+          {
+            "year": 2023,
+            "revenue": 824806,
+            "profit": 16148,
+            "employees": 10
+          },
+          {
+            "year": 2024,
+            "revenue": 831213,
+            "profit": 2695,
+            "employees": 8
+          },
+          {
+            "year": 2025,
+            "revenue": 1610849,
+            "profit": 161432,
+            "employees": 8
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",
@@ -9751,7 +15340,36 @@
       "financials": {
         "year": 2025,
         "revenue": 1079341,
-        "profit": 47110
+        "profit": 47110,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 17643,
+            "profit": -3512
+          },
+          {
+            "year": 2022,
+            "revenue": 26280,
+            "profit": -2303
+          },
+          {
+            "year": 2023,
+            "revenue": 0,
+            "profit": -34522
+          },
+          {
+            "year": 2024,
+            "revenue": 38144,
+            "profit": 3165,
+            "employees": 1
+          },
+          {
+            "year": 2025,
+            "revenue": 1079341,
+            "profit": 47110,
+            "employees": 2
+          }
+        ]
       },
       "tags": [
         "pv-rezidential",

@@ -162,13 +162,30 @@ export default function AnreVerificationClient() {
 
     try {
       // Extract the core company name (strip leading "SC" and trailing S.A./S.R.L. etc.)
-      const searchName = sourceName
-        .replace(/^\s*S\.?C\.?\s+/i, '')
-        .replace(/\s*(S\.?A\.?|S\.?R\.?L\.?|S\.?C\.?S\.?|S\.?N\.?C\.?)\.?\s*$/i, '')
-        .trim();
+      const cleanName = (name: string) =>
+        name
+          .replace(/^\s*S\.?C\.?\s+/i, '')
+          .replace(/\s*(S\.?A\.?|S\.?R\.?L\.?|S\.?C\.?S\.?|S\.?N\.?C\.?)\.?\s*$/i, '')
+          .trim();
 
-      const res = await fetch(`/api/anre/search?text=${encodeURIComponent(searchName)}`);
-      const data = await res.json();
+      // Registrul ANRE are des numele scris altfel decât la Registrul Comerțului
+      // (typo-uri, punctuație, prescurtări). Când firma e deja potrivită manual
+      // în director, numele din `anreMatch` e cel care chiar există în registru.
+      const searchName = cleanName(company?.anreMatch?.societate || sourceName);
+
+      const runSearch = async (text: string) => {
+        const res = await fetch(`/api/anre/search?text=${encodeURIComponent(text)}`);
+        return res.json();
+      };
+
+      let data = await runSearch(searchName);
+
+      // Fallback: căutarea ANRE e „contains" pe tot șirul, deci o singură literă
+      // diferită întoarce zero. Reîncercăm cu primele două cuvinte.
+      const shortName = searchName.split(/\s+/).slice(0, 2).join(' ');
+      if (!data.error && data.length === 0 && shortName.length >= 4 && shortName !== searchName) {
+        data = await runSearch(shortName);
+      }
 
       if (data.error) {
         setError(data.error);

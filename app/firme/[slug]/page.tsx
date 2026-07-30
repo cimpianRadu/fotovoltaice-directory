@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import CompanyHeader from '@/components/company/CompanyHeader';
-import CompanyStats from '@/components/company/CompanyStats';
 import CompanyContact from '@/components/company/CompanyContact';
 import FinancialStability from '@/components/company/FinancialStability';
 import CompanyTestimonials from '@/components/company/CompanyTestimonials';
@@ -103,7 +102,7 @@ export default async function CompanyDetailPage({ params }: Props) {
           {/* Main content */}
           <div className="lg:col-span-2 space-y-8">
             <CompanyHeader company={company} />
-            <CompanyStats company={company} />
+            <FinancialStability company={company} />
 
             {/* Specializations */}
             <div>
@@ -227,9 +226,6 @@ export default async function CompanyDetailPage({ params }: Props) {
                 și le actualizăm imediat.
               </p>
             </div>
-
-            {/* Financial Stability */}
-            <FinancialStability company={company} />
           </div>
 
           {/* Sidebar */}
