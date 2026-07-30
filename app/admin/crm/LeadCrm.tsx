@@ -125,10 +125,18 @@ export default function LeadCrm({
   const [contacted, setContacted] = useState(initialContacted);
   const [notes, setNotes] = useState(initialNotes);
   const [draft, setDraft] = useState('');
+  const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [editDraft, setEditDraft] = useState('');
   const [state, setState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [message, setMessage] = useState<string | null>(null);
 
-  async function save(payload: { status?: LeadStatus; contacted?: ContactState; note?: string }) {
+  async function save(payload: {
+    status?: LeadStatus;
+    contacted?: ContactState;
+    note?: string;
+    editNote?: { index: number; text: string; expected: string };
+    deleteNote?: { index: number; expected: string };
+  }) {
     setState('saving');
     setMessage(null);
     // Optimist pe selecții: cursorul trebuie să plece în clipa clickului, nu
@@ -165,15 +173,30 @@ export default function LeadCrm({
     save({ note });
   }
 
-  // Grupate pe zi, cu ziua cea mai recentă prima: panoul are înălțime fixă și
-  // derulează, deci un card nu crește la infinit oricâte note ar aduna.
-  const grouped: { date: string; texts: string[] }[] = [];
-  for (const n of notes) {
-    const last = grouped[grouped.length - 1];
-    if (last && last.date === n.date) last.texts.push(n.text);
-    else grouped.push({ date: n.date, texts: [n.text] });
+  function startEdit(index: number, text: string) {
+    setEditIndex(index);
+    setEditDraft(text);
+    setMessage(null);
   }
-  grouped.reverse();
+
+  function commitEdit(index: number, expected: string, value: string) {
+    setEditIndex(null);
+    if (value.trim() === expected.trim()) return;
+    save({ editNote: { index, text: value, expected } });
+  }
+
+  function removeNote(index: number, expected: string) {
+    const preview = expected.length > 60 ? `${expected.slice(0, 60)}…` : expected;
+    if (!confirm(`Ștergi nota?\n\n${preview}`)) return;
+    setEditIndex(null);
+    save({ deleteNote: { index, expected } });
+  }
+
+  // Notele vin cele noi primele, ca în celulă. Fiecare e o intrare separată,
+  // cu data afișată o singură dată pe zi, ca să se vadă unde se termină una
+  // și începe alta. Panoul are înălțime fixă și derulează, deci un card nu
+  // crește la infinit oricâte note ar aduna.
+  const days = new Set(notes.map((n) => n.date)).size;
 
   const busy = state === 'saving';
 
@@ -218,28 +241,103 @@ export default function LeadCrm({
             {state === 'error' && <span className="text-red-600">{message}</span>}
             {state === 'idle' &&
               notes.length > 0 &&
-              `${notes.length} ${notes.length === 1 ? 'notă' : 'note'} · ${grouped.length} ${
-                grouped.length === 1 ? 'zi' : 'zile'
+              `${notes.length} ${notes.length === 1 ? 'notă' : 'note'} · ${days} ${
+                days === 1 ? 'zi' : 'zile'
               }`}
           </span>
         </div>
 
-        {grouped.length > 0 && (
-          <ul className="max-h-44 divide-y divide-slate-100 overflow-y-auto">
-            {grouped.map((g, i) => (
-              <li key={`${g.date}-${i}`} className="flex gap-3 px-3 py-2">
-                <span className="w-14 shrink-0 pt-px text-[10px] font-semibold tracking-wide text-slate-400 uppercase">
-                  {fmtDay(g.date)}
-                </span>
-                <div className="min-w-0 flex-1 space-y-1">
-                  {g.texts.map((t, j) => (
-                    <p key={j} className="text-xs leading-relaxed whitespace-pre-wrap text-slate-700">
-                      {t}
-                    </p>
-                  ))}
-                </div>
-              </li>
-            ))}
+        {/* Lista derulează ca să nu crească cardul la infinit, dar în editare
+            se lărgește: altfel butoanele de salvare cad sub margine. */}
+        {notes.length > 0 && (
+          <ul
+            className={`divide-y divide-slate-100 overflow-y-auto ${
+              editIndex === null ? 'max-h-44' : 'max-h-80'
+            }`}
+          >
+            {notes.map((n, i) => {
+              const firstOfDay = i === 0 || notes[i - 1].date !== n.date;
+              const editing = editIndex === i;
+              return (
+                <li
+                  key={`${n.date}-${i}`}
+                  className={`group flex gap-3 px-3 py-2 transition-colors ${
+                    editing ? 'bg-slate-50' : 'hover:bg-slate-50/70'
+                  }`}
+                >
+                  <span className="w-14 shrink-0 pt-px text-[10px] font-semibold tracking-wide text-slate-400 uppercase">
+                    {firstOfDay ? fmtDay(n.date) : ''}
+                  </span>
+
+                  {editing ? (
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <textarea
+                        autoFocus
+                        value={editDraft}
+                        onChange={(e) => setEditDraft(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Escape') setEditIndex(null);
+                          if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+                            commitEdit(i, n.text, e.currentTarget.value);
+                          }
+                        }}
+                        rows={Math.min(editDraft.split('\n').length + 1, 6)}
+                        className="w-full resize-y rounded-md border border-slate-300 bg-white px-2 py-1 text-xs leading-relaxed text-slate-700 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-900/5"
+                      />
+                      <div className="flex items-center gap-2 text-[10px]">
+                        <button
+                          type="button"
+                          onClick={() => commitEdit(i, n.text, editDraft)}
+                          className="rounded bg-slate-900 px-2 py-0.5 font-medium text-white hover:bg-slate-700"
+                        >
+                          Salvează
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setEditIndex(null)}
+                          className="text-slate-500 hover:text-slate-900"
+                        >
+                          Renunță
+                        </button>
+                        <span className="text-slate-400">golește textul ca s-o ștergi</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <p className="min-w-0 flex-1 text-xs leading-relaxed whitespace-pre-wrap text-slate-700">
+                        {n.text}
+                      </p>
+                      {/* Vizibile mereu, doar decolorate: pe hover-only nu se
+                          vede că notele se pot edita până nu dai din mouse. */}
+                      <span className="flex shrink-0 items-start gap-1 text-slate-300 transition-colors group-hover:text-slate-400">
+                        <button
+                          type="button"
+                          title="Editează nota"
+                          disabled={busy}
+                          onClick={() => startEdit(i, n.text)}
+                          className="rounded p-1 transition-colors hover:bg-slate-200 hover:text-slate-700 disabled:cursor-wait"
+                        >
+                          <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                          </svg>
+                        </button>
+                        <button
+                          type="button"
+                          title="Șterge nota"
+                          disabled={busy}
+                          onClick={() => removeNote(i, n.text)}
+                          className="rounded p-1 transition-colors hover:bg-red-100 hover:text-red-600 disabled:cursor-wait"
+                        >
+                          <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </span>
+                    </>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         )}
 

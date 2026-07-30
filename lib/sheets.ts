@@ -669,7 +669,9 @@ export function parseNotes(raw: string): LeadNote[] {
 }
 
 function serializeNotes(notes: LeadNote[]): string {
-  return notes.map((n) => `[${n.date}] ${n.text}`).join('\n');
+  // Notele vechi, dinainte de jurnal, n-au dată. `[] text` nu s-ar mai citi
+  // înapoi ca notă separată, deci le scriem fără prefix, cum au venit.
+  return notes.map((n) => (n.date ? `[${n.date}] ${n.text}` : n.text)).join('\n');
 }
 
 async function findLeadRow(timestamp: string): Promise<{ row: string[]; sheetRow: number }> {
@@ -700,13 +702,28 @@ export function readCrmFields(row: string[]): LeadCrmFields {
   };
 }
 
+/** O notă existentă, identificată prin poziție + textul pe care îl avea clientul. */
+export interface NoteRef {
+  index: number;
+  /** Textul văzut de client. Dacă nu mai e ăsta, altcineva a scris între timp. */
+  expected: string;
+}
+
 /**
- * Setează statusul, marcajul de contactare și/sau adaugă o notă datată. Notele
- * sunt append-only, cele noi primele, ca să se citească fără scroll în celulă.
+ * Setează statusul, marcajul de contactare și/sau operează pe jurnalul de note:
+ * adaugă o notă datată (cele noi primele, ca să se citească fără scroll în
+ * celulă), editează sau șterge una existentă.
  */
 export async function updateLeadCrm(
   timestamp: string,
-  changes: { status?: LeadStatus; contacted?: ContactState; note?: string; today?: string },
+  changes: {
+    status?: LeadStatus;
+    contacted?: ContactState;
+    note?: string;
+    editNote?: NoteRef & { text: string };
+    deleteNote?: NoteRef;
+    today?: string;
+  },
 ): Promise<LeadCrmFields> {
   const { row, sheetRow } = await findLeadRow(timestamp);
   const data: { range: string; values: string[][] }[] = [];
@@ -722,11 +739,33 @@ export async function updateLeadCrm(
   }
 
   const note = changes.note?.trim();
-  if (note) {
-    const date = changes.today || new Date().toISOString().slice(0, 10);
-    const next = serializeNotes([{ date, text: note }, ...parseNotes(row[LEAD_NOTES_COL] || '')]);
-    data.push({ range: `Leads!W${sheetRow}`, values: [[next]] });
-    row[LEAD_NOTES_COL] = next;
+  const { editNote, deleteNote } = changes;
+
+  if (note || editNote || deleteNote) {
+    const existing = parseNotes(row[LEAD_NOTES_COL] || '');
+    let next: LeadNote[];
+
+    if (note) {
+      const date = changes.today || new Date().toISOString().slice(0, 10);
+      next = [{ date, text: note }, ...existing];
+    } else {
+      // Editarea și ștergerea merg pe poziție, dar poziția singură minte dacă
+      // altcineva a adăugat o notă între citire și click. Textul e martorul.
+      const ref = (editNote || deleteNote) as NoteRef;
+      const target = existing[ref.index];
+      if (!target || target.text !== ref.expected) {
+        throw new Error('Nota s-a schimbat între timp. Reîmprospătează pagina și încearcă din nou.');
+      }
+      const text = editNote?.text.trim();
+      next = [...existing];
+      // Editare care golește nota = ștergere. Altfel ar rămâne o dată fără text.
+      if (editNote && text) next[ref.index] = { ...target, text };
+      else next.splice(ref.index, 1);
+    }
+
+    const serialized = serializeNotes(next);
+    data.push({ range: `Leads!W${sheetRow}`, values: [[serialized]] });
+    row[LEAD_NOTES_COL] = serialized;
   }
 
   if (data.length) {
