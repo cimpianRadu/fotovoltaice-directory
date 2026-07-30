@@ -43,6 +43,17 @@ export interface LeadNote {
 }
 
 /**
+ * Cum a ajuns o revendicare în Sheet. `self` = firma a apăsat singură pe
+ * /cereri (fluxul public), `manual` = am marcat noi în /admin/crm după ce am
+ * sunat firma. Distincția contează pentru a nu confunda tracțiunea organică a
+ * platformei cu ce împingem noi telefonic. Rândurile scrise înainte de
+ * introducerea coloanei rămân goale — le tratăm ca `self` (fluxul singur
+ * disponibil atunci).
+ */
+export const CLAIM_SOURCES = ['self', 'manual'] as const;
+export type ClaimSource = (typeof CLAIM_SOURCES)[number];
+
+/**
  * Câte cereri poate ține o firmă în același timp fără să confirme că a sunat
  * clientul. Plafonul per cerere (MAX_CLAIMS_PER_LEAD) nu rezolvă nimic singur:
  * pe 24 iulie 2026 o singură firmă avea 22 din cele 25 de revendicări, iar

@@ -1,4 +1,12 @@
-import { LEAD_STATUSES, CONTACT_STATES, type LeadStatus, type ContactState, type LeadNote } from './sheets-shared';
+import {
+  LEAD_STATUSES,
+  CONTACT_STATES,
+  CLAIM_SOURCES,
+  type LeadStatus,
+  type ContactState,
+  type LeadNote,
+  type ClaimSource,
+} from './sheets-shared';
 import { google } from 'googleapis';
 
 function getAuth() {
@@ -352,6 +360,12 @@ export interface LeadClaim {
   telefon: string;
   /** Coloana G: data la care s-a confirmat că firma a sunat clientul. Gol = slot ocupat. */
   contactedAt: string;
+  /**
+   * Coloana H (adăugată 30 iul 2026): cum a intrat revendicarea.
+   * `self` = firma a apăsat pe /cereri, `manual` = am marcat noi în /admin/crm
+   * după apel telefonic. Rândurile vechi (fără valoare) sunt tratate ca `self`.
+   */
+  source: ClaimSource;
 }
 
 export async function getClaims(): Promise<LeadClaim[]> {
@@ -364,14 +378,23 @@ export async function getClaims(): Promise<LeadClaim[]> {
   }
   return rows
     .filter((r) => Number.isFinite(Date.parse(r[0] || '')))
-    .map((r) => ({
-      timestamp: r[0] || '',
-      leadId: r[1] || '',
-      numeFirma: r[2] || '',
-      numeContact: r[3] || '',
-      telefon: r[4] || '',
-      contactedAt: r[6] || '',
-    }));
+    .map((r) => {
+      const raw = (r[7] || '').trim().toLowerCase();
+      // Rândurile de dinainte de coloana H sunt goale — le tratăm ca `self`,
+      // singurul flux existent atunci.
+      const source: ClaimSource = (CLAIM_SOURCES as readonly string[]).includes(raw)
+        ? (raw as ClaimSource)
+        : 'self';
+      return {
+        timestamp: r[0] || '',
+        leadId: r[1] || '',
+        numeFirma: r[2] || '',
+        numeContact: r[3] || '',
+        telefon: r[4] || '',
+        contactedAt: r[6] || '',
+        source,
+      };
+    });
 }
 
 async function createSheetTab(title: string) {
@@ -388,6 +411,7 @@ export async function saveClaimToSheet(claim: {
   numeFirma: string;
   numeContact: string;
   telefon: string;
+  source: ClaimSource;
 }) {
   const values = [
     new Date().toISOString(),
@@ -397,6 +421,7 @@ export async function saveClaimToSheet(claim: {
     claim.telefon,
     'Nou', // coloana Status
     '',    // G — Contactat la: se completează din /admin/crm, eliberează slotul firmei
+    claim.source, // H — Sursă: `self` (public /cereri) sau `manual` (marcat din CRM)
   ];
   try {
     await appendRow(CLAIMS_SHEET, values);
@@ -416,6 +441,7 @@ const CLAIMS_HEADER = [
   'Telefon',
   'Status',
   'Contactat la',
+  'Sursă',
 ];
 
 /**
@@ -445,6 +471,10 @@ export async function markClaimContacted(
   );
 
   const row = rows[index];
+  const rawSource = (row[7] || '').trim().toLowerCase();
+  const source: ClaimSource = (CLAIM_SOURCES as readonly string[]).includes(rawSource)
+    ? (rawSource as ClaimSource)
+    : 'self';
   return {
     timestamp: row[0] || '',
     leadId: row[1] || '',
@@ -452,6 +482,7 @@ export async function markClaimContacted(
     numeContact: row[3] || '',
     telefon: row[4] || '',
     contactedAt,
+    source,
   };
 }
 
@@ -614,12 +645,14 @@ export {
   LEAD_STATUS_HINTS,
   CONTACT_STATES,
   MAX_ACTIVE_CLAIMS_PER_FIRM,
+  CLAIM_SOURCES,
   countActiveClaimsForFirm,
   isSameFirm,
   normalizePhone,
   type LeadStatus,
   type ContactState,
   type LeadNote,
+  type ClaimSource,
 } from './sheets-shared';
 
 /** Jurnalul e text simplu în celulă: fiecare intrare începe cu `[YYYY-MM-DD] `. */

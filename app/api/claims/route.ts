@@ -80,6 +80,7 @@ export async function POST(request: Request) {
       numeFirma: numeFirma.trim(),
       numeContact: numeContact.trim(),
       telefon: telefon.trim(),
+      source: 'self' as const,
     };
     await saveClaimToSheet(claim);
 

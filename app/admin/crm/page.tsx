@@ -11,11 +11,13 @@ import {
   type NewListing,
   type LeadClaim,
 } from '@/lib/sheets';
+import { getCompaniesBySegment } from '@/lib/utils';
 import { getFinancingShort, getFinancingTone, type FinancingTone } from '@/lib/utils-shared';
 import ClaimList, { type ClaimRow } from './ClaimList';
 import LeadCrm from './LeadCrm';
 import MessagePreview from './MessagePreview';
 import ShareLeadButton from './ShareLeadButton';
+import ManualClaimForm, { type FirmOption } from './ManualClaimForm';
 import { formatLeadForShare } from './formatLead';
 
 export const dynamic = 'force-dynamic';
@@ -96,7 +98,15 @@ function Caption({ children }: { children: React.ReactNode }) {
   );
 }
 
-function LeadCard({ lead, claims }: { lead: NewLead; claims: ClaimRow[] }) {
+function LeadCard({
+  lead,
+  claims,
+  firms,
+}: {
+  lead: NewLead;
+  claims: ClaimRow[];
+  firms: FirmOption[];
+}) {
   // Formularul cere putere în kW și suprafață în mp, dar salvează cifra goală.
   const specs = [lead.putere && `${lead.putere} kW`, lead.suprafata && `${lead.suprafata} mp`]
     .filter(Boolean)
@@ -185,9 +195,12 @@ function LeadCard({ lead, claims }: { lead: NewLead; claims: ClaimRow[] }) {
         </div>
       </div>
 
-      <div className="flex items-center justify-between gap-2 border-t border-slate-100 px-4 py-2">
+      <div className="space-y-2 border-t border-slate-100 px-4 py-2">
         <Caption>Trimite la instalator</Caption>
-        <ShareLeadButton text={shareText} />
+        <div className="flex flex-wrap items-center gap-1.5">
+          <ShareLeadButton text={shareText} />
+          <ManualClaimForm leadId={lead.timestamp} firms={firms} full={full} />
+        </div>
       </div>
 
       <div className="mt-auto border-t border-slate-100 bg-slate-50 px-4 py-3">
@@ -321,6 +334,26 @@ export default async function CrmPage({ searchParams }: Props) {
   const counties = [...new Set(leads.map((l) => l.judet).filter(Boolean))].sort((a, b) =>
     a.localeCompare(b, 'ro')
   );
+
+  // Lista de firme pentru revendicarea manuală, pre-filtrată pe segment.
+  // O firmă cu segment='ambele' apare în ambele liste (asta face
+  // getCompaniesBySegment). Trecem doar câmpurile de care are nevoie formul,
+  // nu toată structura Company (companies.json e ~300 KB, dar {id,name,phone,city}
+  // × ~180 firme e ~10 KB serializat).
+  function toFirmOptions(segment: 'rezidential' | 'comercial'): FirmOption[] {
+    return getCompaniesBySegment(segment)
+      .map((c) => ({
+        id: c.id,
+        name: c.name,
+        phone: c.contact.phone,
+        city: c.location.city,
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name, 'ro'));
+  }
+  const firmsBySegment = {
+    rezidential: toFirmOptions('rezidential'),
+    comercial: toFirmOptions('comercial'),
+  };
 
   const newestFirst = [...leads].reverse();
   const visible = newestFirst.filter((l) => {
@@ -472,6 +505,7 @@ export default async function CrmPage({ searchParams }: Props) {
             key={lead.timestamp}
             lead={lead}
             claims={claimsByLead.get(lead.timestamp) ?? []}
+            firms={firmsBySegment[lead.segment === 'rezidential' ? 'rezidential' : 'comercial']}
           />
         ))}
       </div>

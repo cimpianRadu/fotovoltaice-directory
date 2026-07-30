@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MAX_ACTIVE_CLAIMS_PER_FIRM } from '@/lib/sheets-shared';
+import { MAX_ACTIVE_CLAIMS_PER_FIRM, type ClaimSource } from '@/lib/sheets-shared';
 
 export interface ClaimRow {
   timestamp: string;
@@ -10,6 +10,7 @@ export interface ClaimRow {
   numeContact: string;
   telefon: string;
   contactedAt: string;
+  source: ClaimSource;
   /** Câte cereri ține firma asta fără apel confirmat, la încărcarea paginii. */
   firmActive: number;
 }
@@ -70,7 +71,17 @@ function Claim({ claim }: { claim: ClaimRow }) {
   return (
     <div className="rounded-md border border-slate-100 bg-slate-50/70 px-2 py-1.5 text-xs">
       <div className="flex items-baseline justify-between gap-2">
-        <span className="min-w-0 truncate font-medium text-slate-800">{claim.numeFirma}</span>
+        <div className="flex min-w-0 items-baseline gap-1.5">
+          <span className="min-w-0 truncate font-medium text-slate-800">{claim.numeFirma}</span>
+          {claim.source === 'manual' && (
+            <span
+              title="Revendicare marcată din CRM după apel telefonic (nu prin /cereri)"
+              className="shrink-0 rounded bg-amber-100 px-1 py-px text-[9px] font-semibold tracking-wide text-amber-700 uppercase"
+            >
+              prin admin
+            </span>
+          )}
+        </div>
         <span
           title={`Cereri ținute fără apel confirmat, din ${MAX_ACTIVE_CLAIMS_PER_FIRM} posibile`}
           className={`shrink-0 text-[10px] font-semibold tabular-nums ${
