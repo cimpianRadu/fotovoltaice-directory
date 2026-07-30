@@ -127,6 +127,8 @@ export default function LeadCrm({
   const [draft, setDraft] = useState('');
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editDraft, setEditDraft] = useState('');
+  // Confirmarea la ștergere stă în rând, nu într-un confirm() de browser.
+  const [confirmIndex, setConfirmIndex] = useState<number | null>(null);
   const [state, setState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [message, setMessage] = useState<string | null>(null);
 
@@ -176,6 +178,7 @@ export default function LeadCrm({
   function startEdit(index: number, text: string) {
     setEditIndex(index);
     setEditDraft(text);
+    setConfirmIndex(null);
     setMessage(null);
   }
 
@@ -186,8 +189,7 @@ export default function LeadCrm({
   }
 
   function removeNote(index: number, expected: string) {
-    const preview = expected.length > 60 ? `${expected.slice(0, 60)}…` : expected;
-    if (!confirm(`Ștergi nota?\n\n${preview}`)) return;
+    setConfirmIndex(null);
     setEditIndex(null);
     save({ deleteNote: { index, expected } });
   }
@@ -258,11 +260,16 @@ export default function LeadCrm({
             {notes.map((n, i) => {
               const firstOfDay = i === 0 || notes[i - 1].date !== n.date;
               const editing = editIndex === i;
+              const confirming = confirmIndex === i;
               return (
                 <li
                   key={`${n.date}-${i}`}
                   className={`group flex gap-3 px-3 py-2 transition-colors ${
-                    editing ? 'bg-slate-50' : 'hover:bg-slate-50/70'
+                    confirming
+                      ? 'bg-red-50/70'
+                      : editing
+                        ? 'bg-slate-50'
+                        : 'hover:bg-slate-50/70'
                   }`}
                 >
                   <span className="w-14 shrink-0 pt-px text-[10px] font-semibold tracking-wide text-slate-400 uppercase">
@@ -304,35 +311,72 @@ export default function LeadCrm({
                     </div>
                   ) : (
                     <>
-                      <p className="min-w-0 flex-1 text-xs leading-relaxed whitespace-pre-wrap text-slate-700">
+                      <p
+                        className={`min-w-0 flex-1 text-xs leading-relaxed whitespace-pre-wrap transition-colors ${
+                          confirming ? 'text-slate-400 line-through' : 'text-slate-700'
+                        }`}
+                      >
                         {n.text}
                       </p>
-                      {/* Vizibile mereu, doar decolorate: pe hover-only nu se
-                          vede că notele se pot edita până nu dai din mouse. */}
-                      <span className="flex shrink-0 items-start gap-1 text-slate-300 transition-colors group-hover:text-slate-400">
-                        <button
-                          type="button"
-                          title="Editează nota"
-                          disabled={busy}
-                          onClick={() => startEdit(i, n.text)}
-                          className="rounded p-1 transition-colors hover:bg-slate-200 hover:text-slate-700 disabled:cursor-wait"
-                        >
-                          <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                          </svg>
-                        </button>
-                        <button
-                          type="button"
-                          title="Șterge nota"
-                          disabled={busy}
-                          onClick={() => removeNote(i, n.text)}
-                          className="rounded p-1 transition-colors hover:bg-red-100 hover:text-red-600 disabled:cursor-wait"
-                        >
-                          <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
-                        </button>
-                      </span>
+
+                      {confirming ? (
+                        // Confirmarea ia locul iconițelor, în rând: aceeași
+                        // pauză de gândire ca un dialog, fără să blocheze pagina.
+                        <span className="flex shrink-0 items-center gap-2 text-[10px]">
+                          <span className="font-semibold tracking-wide text-red-600 uppercase">
+                            Ștergi?
+                          </span>
+                          <button
+                            type="button"
+                            autoFocus
+                            disabled={busy}
+                            onClick={() => removeNote(i, n.text)}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Escape') setConfirmIndex(null);
+                            }}
+                            className="rounded bg-red-600 px-2 py-0.5 font-medium text-white transition-colors hover:bg-red-700 disabled:cursor-wait"
+                          >
+                            Șterge
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setConfirmIndex(null)}
+                            className="text-slate-500 transition-colors hover:text-slate-900"
+                          >
+                            Renunță
+                          </button>
+                        </span>
+                      ) : (
+                        /* Vizibile mereu, doar decolorate: pe hover-only nu se
+                           vede că notele se pot edita până nu dai din mouse. */
+                        <span className="flex shrink-0 items-start gap-1 text-slate-300 transition-colors group-hover:text-slate-400">
+                          <button
+                            type="button"
+                            title="Editează nota"
+                            disabled={busy}
+                            onClick={() => startEdit(i, n.text)}
+                            className="rounded p-1 transition-colors hover:bg-slate-200 hover:text-slate-700 disabled:cursor-wait"
+                          >
+                            <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                          </button>
+                          <button
+                            type="button"
+                            title="Șterge nota"
+                            disabled={busy}
+                            onClick={() => {
+                              setConfirmIndex(i);
+                              setEditIndex(null);
+                            }}
+                            className="rounded p-1 transition-colors hover:bg-red-100 hover:text-red-600 disabled:cursor-wait"
+                          >
+                            <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </button>
+                        </span>
+                      )}
                     </>
                   )}
                 </li>
