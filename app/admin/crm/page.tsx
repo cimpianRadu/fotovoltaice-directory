@@ -15,6 +15,8 @@ import { getFinancingShort, getFinancingTone, type FinancingTone } from '@/lib/u
 import ClaimList, { type ClaimRow } from './ClaimList';
 import LeadCrm from './LeadCrm';
 import MessagePreview from './MessagePreview';
+import ShareLeadButton from './ShareLeadButton';
+import { formatLeadForShare } from './formatLead';
 
 export const dynamic = 'force-dynamic';
 
@@ -100,6 +102,7 @@ function LeadCard({ lead, claims }: { lead: NewLead; claims: ClaimRow[] }) {
     .filter(Boolean)
     .join(' · ');
   const full = claims.length >= MAX_CLAIMS_PER_LEAD;
+  const shareText = formatLeadForShare(lead);
 
   return (
     <article className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
@@ -180,6 +183,11 @@ function LeadCard({ lead, claims }: { lead: NewLead; claims: ClaimRow[] }) {
           </div>
           <ClaimList claims={claims} />
         </div>
+      </div>
+
+      <div className="flex items-center justify-between gap-2 border-t border-slate-100 px-4 py-2">
+        <Caption>Trimite la instalator</Caption>
+        <ShareLeadButton text={shareText} />
       </div>
 
       <div className="mt-auto border-t border-slate-100 bg-slate-50 px-4 py-3">
