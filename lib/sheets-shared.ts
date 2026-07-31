@@ -32,6 +32,20 @@ export const LEAD_STATUS_HINTS: Record<LeadStatus, string> = {
   renuntat: 'nu mai face investiția',
 };
 
+/**
+ * Stările în care clientul nu mai are nevoie de nicio ofertă: a semnat, și-a
+ * rezolvat în altă parte sau a renunțat. Cererile astea dispar din feedul
+ * public /cereri și nu mai pot fi revendicate — o firmă care sună un client
+ * închis pierde un apel și pare neserioasă, iar noi pierdem credibilitatea
+ * feedului. „În ofertare" NU intră aici: acolo clientul încă vrea oferte, doar
+ * că are deja una, iar plafonul de 3 revendicări face restul.
+ */
+export const LEAD_CLOSED_STATUSES = ['castigata', 'altundeva', 'renuntat'] as const;
+
+export function isLeadClosed(status: LeadStatus): boolean {
+  return (LEAD_CLOSED_STATUSES as readonly string[]).includes(status);
+}
+
 // Ortogonal față de stare: o cerere poate fi „altundeva" ȘI necontactată, iar
 // combinația aia e alarma, nu concurență pierdută. Gol = încă neverificat.
 export const CONTACT_STATES = ['da', 'nu'] as const;

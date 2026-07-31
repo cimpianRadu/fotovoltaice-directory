@@ -2,6 +2,7 @@ import {
   LEAD_STATUSES,
   CONTACT_STATES,
   CLAIM_SOURCES,
+  isLeadClosed,
   type LeadStatus,
   type ContactState,
   type LeadNote,
@@ -321,12 +322,18 @@ function isPubliclyVisible(l: NewLead): boolean {
   return l.status !== 'Ascuns';
 }
 
+// Vizibil ȘI încă de dat: statusul de CRM (coloana V) scoate din feed cererile
+// pe care clientul nu le mai are — vezi LEAD_CLOSED_STATUSES.
+function isOpenForClaims(l: NewLead): boolean {
+  return isPubliclyVisible(l) && !isLeadClosed(l.crmStatus);
+}
+
 // Toate cererile, indiferent de vechime — la volumul actual feedul afișează
 // istoricul complet, cu filtru de vechime în UI. De restrâns când crește volumul.
 export async function getPublicLeads(): Promise<PublicLead[]> {
   const leads = await getLeadsSince(new Date(0));
   return leads
-    .filter(isPubliclyVisible)
+    .filter(isOpenForClaims)
     .map((l) => ({
       id: l.timestamp,
       tipProiect: l.tipProiect,
@@ -643,10 +650,12 @@ export {
   LEAD_STATUSES,
   LEAD_STATUS_LABELS,
   LEAD_STATUS_HINTS,
+  LEAD_CLOSED_STATUSES,
   CONTACT_STATES,
   MAX_ACTIVE_CLAIMS_PER_FIRM,
   CLAIM_SOURCES,
   countActiveClaimsForFirm,
+  isLeadClosed,
   isSameFirm,
   normalizePhone,
   type LeadStatus,

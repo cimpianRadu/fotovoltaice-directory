@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import {
   CONTACT_STATES,
   LEAD_STATUSES,
@@ -66,6 +67,11 @@ export async function POST(request: Request) {
         : undefined,
       today: todayBucharest(),
     });
+
+    // Statusul decide dacă cererea mai apare în feedul public. Fără asta,
+    // una închisă ar mai sta acolo până la 5 minute (ISR-ul din /cereri).
+    if (status) revalidatePath('/cereri');
+
     return NextResponse.json({ ok: true, ...fields });
   } catch (err) {
     console.error('Lead CRM update error:', err);

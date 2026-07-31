@@ -6,6 +6,7 @@ import {
   countActiveClaimsForFirm,
   getClaims,
   getFullLeadById,
+  isLeadClosed,
   isSameFirm,
   saveClaimToSheet,
 } from '@/lib/sheets';
@@ -36,6 +37,15 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: 'Cererea nu mai este activă.' },
         { status: 404 }
+      );
+    }
+
+    // Cererea poate fi închisă între generarea feedului (ISR de 5 minute) și
+    // click — clientul a semnat, s-a rezolvat altundeva sau a renunțat.
+    if (isLeadClosed(lead.crmStatus)) {
+      return NextResponse.json(
+        { error: 'Clientul și-a rezolvat deja proiectul. Cererea a fost închisă.' },
+        { status: 409 },
       );
     }
 

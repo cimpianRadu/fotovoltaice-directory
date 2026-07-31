@@ -5,6 +5,7 @@ import {
   LEAD_STATUSES,
   LEAD_STATUS_HINTS,
   LEAD_STATUS_LABELS,
+  isLeadClosed,
   type ContactState,
   type LeadNote,
   type LeadStatus,
@@ -219,6 +220,13 @@ export default function LeadCrm({
           disabled={busy}
           onPick={(s) => save({ status: s })}
         />
+        {/* Statusul are un efect vizibil în afara CRM-ului, deci se scrie unde
+            se apasă: altfel nu se vede de ce dispar cereri din feed. */}
+        {isLeadClosed(status) && (
+          <p className="text-[10px] text-slate-400">
+            Scoasă din feedul public /cereri — nu mai poate fi revendicată.
+          </p>
+        )}
       </div>
 
       <div className="flex items-center gap-3">
