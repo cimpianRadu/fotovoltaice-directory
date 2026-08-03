@@ -61,20 +61,29 @@ Linkul din bio (IG, TikTok) se schimbă la fiecare reel, cu `utm_campaign`-ul po
 
 ## 📋 Coadă activă
 
-> **📅 Calendar săptămâna 3-9 aug (setat 2026-08-03, cadență din 2 în 2 zile, goal = cereri):** marți 4 aug **#9 AFIR narat** (deadline 14 aug, cereri comerciale agro) → joi 6 aug **#20 alertă energetică → stocare** (hot news, cel mai puternic semnal al scanului de duminică) → sâmbătă 8 aug **#21 kit preț cu montaj** (derivat din ghidul #46, intenție de cumpărare maximă). Toate 3 sunt reels narate gata de postat, cu texte per platformă + UTM în foldere. Candidat pentru luni 10 aug: reel derivat din #36 (Legea prosumatorilor rezidențial, articolul vine joi prin rutină) sau #6 „câte firme are județul tău". ⚠️ De verificat în Meta Planner: posterul #19 (programat 30 iul) nu e marcat postat în Sheet.
+> **📅 Calendar săptămâna 3-9 aug (revizuit 2026-08-03 seara, goal = cereri):** **#9 AFIR narat ✅ POSTAT 3 aug pe Facebook + Instagram** (marcat în Sheet, folder redenumit cu ✅; rămâne nedistribuit pe YouTube Shorts și TikTok, unde încă se poate posta) → joi 6 aug **#20 reel alertă, re-cut pe hook B** (aceeași zi cu articolul #43, se susțin reciproc) → sâmbătă 8 aug **#21 kit preț cu montaj** (derivat din ghidul #46, intenție de cumpărare maximă). Posterul #22 a fost **renunțat**, absorbit în #20. Decizie de format: **doar reels narate**, sunt cele care au mers cel mai bine; obiectivul pe #20 e keywords + trafic spre site, nu followers. Candidat pentru luni 10 aug: reel derivat din #36 (Legea prosumatorilor rezidențial, articolul vine joi prin rutină) sau #6 „câte firme are județul tău". ⚠️ De verificat în Meta Planner: posterul #19 (programat 30 iul) tot nu e marcat postat în Sheet.
+>
+> **Marcarea ca postat din terminal:** `node scripts/social-mark-posted.mjs --id <n> --platforme facebook,instagram --write` (dry-run implicit). Alternativa din UI rămâne /admin/social, click pe badge. Scriptul respectă convenția: `postat` se setează la prima platformă marcată și nu se suprascrie după.
 
-### #20 — Alertă energetică pe august: bateria acoperă orele 20-23
-- **Status:** ✅ generat 2026-08-03, **programat joi 6 aug** — `social/2026-08-03-alerta-energetica-stocare/`
-- Reel narat 26s (compoziția `Alerta`), hot news din scanul de duminică: stare de alertă energetică națională pe august (anunț Guvern 31 iul: secetă, Dunărea la debite mici, reactor oprit Cernavodă; recomandare reducere consum 20:00-23:00). Unghi conversie: bateria încărcată ziua acoperă exact orele 20-23 → cerere cu stocare. Fapte din presă convergentă (Digi24/Mediafax/ProTV citând premierul), fără citare de act normativ (nu era pe gov.ro). **Verifică situația înainte de postare** (vezi README-ul folderului).
-- **CTA:** /cere-oferta (bio IG/TT tot pe /cere-oferta, campanie UTM `alerta-energetica`)
+### #20 — Alertă energetică → anti-islanding → baterie (reel)
+- **Status:** ✅ **re-cut 2026-08-03 seara pe hook-ul B**, programat joi 6 aug — `social/2026-08-03-alerta-energetica-stocare/`
+- Reel narat **34s** (compoziția `Alerta`, 7 scene). Versiunea de 26s („bateria acoperă orele 20-23") a fost înlocuită integral: script, voce și compoziție noi. Decizia userului: reels narate, hook B, obiectiv **keywords + atenție + trafic spre site**, nu followers.
+- **Structura:** hook pe termenul căutat („stare de alertă", 30 de zile) → citatul oficial exact cu atribuire → presiunea reală seara, orele 19-23 + Dunărea la cel mai mic debit din 40 de ani → **răsturnarea: un sistem on-grid se oprește și el la pană de curent** → anti-islanding ca protecție, nu defect → invertor hibrid + baterie → ghidul de dimensionare.
+- **De ce unghiul ăsta și nu „pregătește-te de blackout":** conferința din 3 aug a schimbat faptele. Ministerul Energiei a negat explicit orice risc pentru populație („Nu restricții, nu întreruperi, nu pericole, nu raționalizări", Bușoi, via Agerpres) și a semnalat că circulă teorii ale conspirației pe subiect. Un reel alarmist ne-ar fi pus de partea greșită a unei dezinformări pe care autoritatea o combate, pe o temă unde avem interes comercial. Reelul citează poziția oficială și apoi lămurește confuzia tehnică reală.
+- **Corecții de fapte față de v1:** scos „risc de 20% din producție" (imprecis), intervalul 20:00-23:00 înlocuit cu **19-23** (cifra din conferința de luni), actul identificat ca **hotărâre CNSU din 31 iulie, nu HG**. Fără afirmație pe ecran despre cât de repede se deconectează invertorul (pragul vine din norma de racordare). Tabel complet de atribuire în `../2026-08-03-alerta-energetica/surse.md`.
+- **CTA:** ghidul de baterii (bio IG/TT + primul comentariu, fiindcă vocea îl promite explicit), /cere-oferta secundar. Campanie UTM `alerta-stocare`.
+
+### #22 — Poster alertă (anti-islanding) — ❌ renunțat 2026-08-03
+- Absorbit în #20 după decizia userului de a merge pe reels narate. Textele și, mai important, **tabelul de surse din `social/2026-08-03-alerta-energetica/surse.md` rămân** și sunt sursa de fapte pentru #20 și pentru articolul #43. Folderul nu se șterge.
+- Nu s-a adăugat rând în Sheet (nu a ajuns să fie programat).
 
 ### #21 — Cât costă un kit fotovoltaic cu montaj (prețuri reale 3/5/10 kW)
 - **Status:** ✅ generat 2026-08-03, **programat sâmbătă 8 aug** — `social/2026-08-03-kit-pret-montaj/`
 - Reel narat 32s (compoziția `KitPret`), derivat din ghidul #46 publicat 3 aug (regula ghid nou → reel). Cifre din `data/kit-prices.json` (88 produse, 5 magazine, 30 iul), consistente cu ghidul: 3 kW de la 8.399 lei (Solar1000) / 5 kW de la 12.287 lei (VoltGrid) / 10 kW de la 25.554 lei (VoltExpert), cu montaj + TVA. Vocea rotunjește doar conservator, ecranul arată exact.
 - **CTA:** ghid #46 + /cere-oferta (bio IG/TT pe ghid, campanie UTM `kit-pret-montaj`)
 
-### #20 — Alertă energetică: panourile on-grid nu vă țin casa la pană de curent
-- **Status:** 🟡 în lucru 2026-08-03, **de postat azi sau mâine dimineață** (știre perisabilă) — `social/2026-08-03-alerta-energetica/`
+### #22 — Alertă energetică: panourile on-grid nu vă țin casa la pană de curent (poster)
+- **Status:** 🟡 în lucru 2026-08-03, **de postat azi sau mâine dimineață** (știre perisabilă) — `social/2026-08-03-alerta-energetica/` · *(renumerotat din #20: în Sheet #20 e reelul de stocare; la postare adaugă rândul cu `social-add.mjs`, va primi ID 22)*
 - Poster foto (nu reel), 4:5 pe FB și IG, 9:16 story. **Hook neales încă: 4 variante în `hooks.md`, A e recomandată.** Imaginea rămâne de compus cu `pil-slide-composer` după alegerea hook-ului.
 - **De ce nu reel:** reelul AFIR (#9) e deja generat și are termen pe 14 august. Două video-uri suprapuse ar canibaliza. Posterul iese azi, reelul AFIR rămâne prioritar pe slotul video.
 - **Unghi:** Guvernul a declarat stare de alertă în energie pe 30 de zile (hotărâre CNSU, 31 iul). Postarea nu vinde frică, ci face opusul: citează poziția oficială („nu restricții, nu întreruperi, nu raționalizări", Bușoi, 3 aug) și apoi lămurește confuzia tehnică reală, aceea că **un sistem on-grid se oprește automat la pană de curent** (anti-islanding). Poziționare de sursă calmă într-o săptămână cu multă dezinformare.
@@ -92,7 +101,8 @@ Linkul din bio (IG, TikTok) se schimbă la fiecare reel, cu `utm_campaign`-ul po
 > **Calendar (revizuit 2026-07-20, seara: #2 postat 16 iul, #8 postat 20 iul)** (MP4-urile generate cu `social/make_mp4.py`, `reel.mp4` în fiecare folder; durate: hook 3s / conținut 4,5s / CTA 4s): #10 producție județe → programat joi 23 iul (decizie user, devansat; de ales static `reel.mp4` vs pilot `reel-remotion.mp4`), #9 AFIR → 27-28 iul. Userul postează manual din folder (reel.mp4 + caption-reel.txt + comentariu-fixat.txt + etichete.txt).
 
 ### #9 — AFIR: fereastra se închide pe 14 august
-- **Status:** ✅ refăcut 2026-08-03 ca **reel narat** (`reel-voce.mp4`, 31,7s, Charon + rețeta validată), **de postat URGENT (deadline 14 aug)** — `social/2026-07-16-afir-deadline/`
+- **Status:** ✅ **POSTAT 2026-08-03 pe Facebook + Instagram** (marcat în Sheet, folder `social/2026-07-16-afir-deadline ✅/`). Nedistribuit încă pe YouTube Shorts și TikTok, unde masterul e același și mai poate fi urcat până pe 14 aug.
+- Refăcut 2026-08-03 ca **reel narat** (`reel-voce.mp4`, 31,7s, Charon + rețeta validată)
 - Compoziția Remotion `Afir` (`social/remotion/src/Afir.tsx` + `timeline-afir.json` + `voice-afir/`), 5 scene mapate pe cele 5 slide-uri originale. Fapte re-verificate 3 aug (guides.json + afir.ro: sesiunea e în continuare deschisă, fără prelungire): 265 mil. EUR; 145 mil. ≤1 MW (650k EUR/MW) / 120 mil. >1 MW (550k EUR/MW); autoconsum minim 70%; selecție pe punctaj. Hook „14 AUGUST" (dată fixă, nu „X zile"). `reel.mp4` static rămâne ca arhivă.
 - Texte per platformă pe noul workflow (caption-facebook / comentariu-facebook / caption-instagram / titlu-youtube / caption-youtube / caption-tiktok / bio-link), UTM `utm_campaign=afir-deadline`; fișierele vechi caption-reel.txt și comentariu-fixat.txt au fost înlocuite. Bio-ul IG/TikTok duce la ghid (reelul promite ghidul), nu la /cere-oferta.
 - **CTA:** primul comentariu FB cu /ghid/fonduri-afir-panouri-fotovoltaice-ferma-industrie-alimentara-2026 + /cere-oferta. Bonus distribuție: grupuri de fermieri, nu doar cele 3 de PV.
