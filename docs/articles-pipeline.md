@@ -4,7 +4,7 @@
 >
 > Când publici un articol, mută-l în secțiunea **Publicat** cu link + data + next-step (GSC Request Indexing, distribuție).
 
-Ultima actualizare: 2026-07-23 (publicat **#28 Checklist Ofertare** ~6.657 cuvinte, bottom-funnel evergreen, al treilea articol al batch-ului 2026-07-16 după #29 Grindină (17 iul) și #26 Baterie Backup (20 iul). Coada activă rămâne cu **#30 EV + PV Wallbox** următorul la rând. Anterior 2026-07-17: publicat **#29 Grindină/Furtuni** ~3.100 cuvinte, sezonier iul-aug, primul din batch-ul de brainstorm 2026-07-16 — slotul de miercuri 16 iul recuperat joi. Coada activă rămâne cu **#26 Baterie Backup Casă** următorul la rând, apoi #28 Checklist Ofertare, #30 EV + PV Wallbox. Clusterele #28/#30 fără date GSC la baseline — de validat/reordonat la următorul pull GSC 200 query-uri. Anterior 2026-07-13: publicat **#27 PV + AC Vara Caniculă** ~5.100 cuvinte, sezonier iul-aug, promovat din backlog la decizia user după observarea drop-ului sezonier de impresii GSC — 3 luni la 3.44K clicks / 131K impresii / poz 9.3, dar recent scădere din vârf. Coada activă rămâne cu #26 baterie backup casă drept următor candidat de promovat din backlog, restul așteaptă triggers hot watch sau semnal GSC nou). Pipot strategic backat de GSC 3 luni (mai 2026): 538 clicks / 29.6K impresii / poz medie 13. Analiza arată că ROI-ul nu mai e în articole noi, ci în (a) extinderea ghidurilor "striking distance" (poz 8-20 cu impresii mari) și (b) fix-uri pe paginile de director. Rutina e acum și **expand-aware** (PASUL 0.5): extinde ghiduri existente ÎNAINTE de a scrie articole noi. Vezi secțiunea „🔧 De extins (ghiduri existente)". Template-ul geo (orașe) e PARCAT — Cluj (poz 43, 1 click) și Timișoara (poz 17, 0 click) nu rankează după ~9 zile, deci nu replicăm pe alte orașe încă. Fix `/firme` (lista era client-only → HTML gol) shipped separat în cod. **Toate cele 3 extinderi striking-distance (Casa Verde, Subvenții, Instalatori ANRE) au fost făcute manual pe 2026-05-27** — vezi „✅ Extinse recent". Faptele de program verificate sunt în memory (`reference_ro_pv_financing_programs.md`).
+Ultima actualizare: 2026-08-03 — **publicat #38 „Kit Panouri Fotovoltaice 3, 5, 10 kW: Preț cu Montaj 2026"** (~5.465 cuvinte, 13 secțiuni, 10 FAQ, hub cluster preț 1.750/lună Google Ads via DataForSEO). Prețurile din `data/kit-prices.json` (88 produse, 5 magazine, 30 iul 2026) publicate integral cu link pe fiecare rând; tabel de 5 puncte de manoperă publicată prezentat individual (never-invent respectat: fără interval agregat). **Urmează #36 (Legea prosumatorilor PF ≤27 kW) în slotul de joi 6 aug** — hot news cu fereastră până la ~30 sept (metodologia ANRE), nu mai amâna. Anterior 2026-07-31 — decizia „#38 kit cu montaj = următorul, țintă luni 3 aug", datele erau deja colectate. Anterior 2026-07-30 — **adăugat „🧭 Plan Recuperare SEO 2026-07-30" + „Batch 2026-07-30" (#38-#42)**. Declanșat de o întrebare despre genway.ro; analiza DataForSEO a scos concurentul real (**necesit.ro**, 3.323 keyword-uri / ~40.487 trafic vs 45 / ~90 la noi) și două greșeli proprii de targeting. Pas 0 executat în aceeași zi (re-target title+meta pe cele 4 pagini de oraș — Timișoara trecută de pe un termen de 40/lună pe unul de 320/lună). **Decizia „template geo PARCAT" e acum explicată, nu infirmată:** paginile nu rankau pentru că erau titrate pe head-term-ul mic. Replicarea geo rămâne blocată până la recheck GSC. Citește secțiunea de plan înainte de a lua orice intrare din batch. Anterior 2026-07-23 (publicat **#28 Checklist Ofertare** ~6.657 cuvinte, bottom-funnel evergreen, al treilea articol al batch-ului 2026-07-16 după #29 Grindină (17 iul) și #26 Baterie Backup (20 iul). Coada activă rămâne cu **#30 EV + PV Wallbox** următorul la rând. Anterior 2026-07-17: publicat **#29 Grindină/Furtuni** ~3.100 cuvinte, sezonier iul-aug, primul din batch-ul de brainstorm 2026-07-16 — slotul de miercuri 16 iul recuperat joi. Coada activă rămâne cu **#26 Baterie Backup Casă** următorul la rând, apoi #28 Checklist Ofertare, #30 EV + PV Wallbox. Clusterele #28/#30 fără date GSC la baseline — de validat/reordonat la următorul pull GSC 200 query-uri. Anterior 2026-07-13: publicat **#27 PV + AC Vara Caniculă** ~5.100 cuvinte, sezonier iul-aug, promovat din backlog la decizia user după observarea drop-ului sezonier de impresii GSC — 3 luni la 3.44K clicks / 131K impresii / poz 9.3, dar recent scădere din vârf. Coada activă rămâne cu #26 baterie backup casă drept următor candidat de promovat din backlog, restul așteaptă triggers hot watch sau semnal GSC nou). Pipot strategic backat de GSC 3 luni (mai 2026): 538 clicks / 29.6K impresii / poz medie 13. Analiza arată că ROI-ul nu mai e în articole noi, ci în (a) extinderea ghidurilor "striking distance" (poz 8-20 cu impresii mari) și (b) fix-uri pe paginile de director. Rutina e acum și **expand-aware** (PASUL 0.5): extinde ghiduri existente ÎNAINTE de a scrie articole noi. Vezi secțiunea „🔧 De extins (ghiduri existente)". Template-ul geo (orașe) e PARCAT — Cluj (poz 43, 1 click) și Timișoara (poz 17, 0 click) nu rankează după ~9 zile, deci nu replicăm pe alte orașe încă. Fix `/firme` (lista era client-only → HTML gol) shipped separat în cod. **Toate cele 3 extinderi striking-distance (Casa Verde, Subvenții, Instalatori ANRE) au fost făcute manual pe 2026-05-27** — vezi „✅ Extinse recent". Faptele de program verificate sunt în memory (`reference_ro_pv_financing_programs.md`).
 
 > Ordinea rutinei (luni + joi): PASUL 0 publică draft programat → PASUL 0.5 extinde un ghid din „🔧 De extins" → PASUL 1 scrie articol nou din „🎯 Propuneri active". Fiecare pas ocupă slotul zilei (fără stacking).
 
@@ -29,6 +29,97 @@ Ultima actualizare: 2026-07-23 (publicat **#28 Checklist Ofertare** ~6.657 cuvin
 - **Linkuri interne:** <ce pagini ajută să urce>
 - **Next step dacă publicat:** <GSC indexing, outreach, etc.>
 ```
+
+---
+
+## 🧭 Plan Recuperare SEO 2026-07-30 — cluster preț + re-target geo
+
+> **Sursa tuturor volumelor din această secțiune:** Google Ads search volume via DataForSEO MCP, locație România, limbă `ro`, pull 2026-07-30. Nu sunt estimări proprii. Pozițiile din SERP sunt din `serp_organic_live_advanced` la aceeași dată.
+
+### Diagnostic
+
+Declanșat de întrebarea „genway.ro fac ce facem noi?". Nu fac (instalator + magazin WooCommerce), dar analiza a scos concurentul real și două greșeli de targeting proprii.
+
+**Concurenții-directoare, nu instalatorii:**
+
+| Domeniu | Keyword-uri organice | Poz #1 | Trafic estimat/lună |
+|---|---|---|---|
+| necesit.ro | 3.323 | 139 | ~40.487 |
+| genway.ro | 376 | 25 | ~19.125 |
+| instalatori-fotovoltaice.ro | 45 | 0 | ~90 |
+
+`daibau.ro` e al treilea director (organic #9 pe „panouri fotovoltaice iasi", pagini „Top 15 executanți" pe oraș).
+
+**Motorul lui necesit.ro NU sunt paginile de firme, sunt paginile de preț.** Top pagini după ETV, toate `/preturi/<meserie>/<pret-x>`: `pret-manopera-acoperis` (ETV 1.263, 10 poz #1), `zugravi-preturi` (848, 12 poz #1), `izolatie-termica-exterior` (785), `montaj-parchet-laminat-pret` (739). Nicio pagină de oraș în top 15. Paginile lor de oraș rankează pe autoritatea construită din paginile de preț.
+
+**Greșeala 1 (rezolvată):** paginile noastre de oraș ținteau „firme panouri fotovoltaice <oraș>" (10-50/lună) în loc de „panouri fotovoltaice <oraș>" (140-320/lună).
+
+**Greșeala 2 (de rezolvat, Pas 1):** substantivul din clusterul de preț e „kit", nu „sistem".
+
+```
+kit panouri fotovoltaice 5 kw pret       2.900
+panouri fotovoltaice 5 kw pret             320
+sistem panouri fotovoltaice 5 kw pret       40   <- ce țintim acum
+```
+
+**Deblochează decizia „template geo PARCAT"** din nota de sus (Cluj poz 43, Timișoara poz 17, 0-1 click după 9 zile). Cauza nu era template-ul, era head-term-ul: Timișoara era titrată pentru un termen de 40/lună când cel real e 320/lună. Pas 4 reia replicarea geo, dar **numai după** ce Pas 0 arată mișcare în GSC la recheck.
+
+**SERP-ul e penetrabil.** Pe „panouri fotovoltaice iasi": 6 poziții `local_pack` (pierdute, nu avem sediu local), dar necesit.ro e organic #4 și daibau.ro organic #9. Google servește directoare pe acest query.
+
+### Pașii
+
+- **Pas 0 — ✅ FĂCUT 2026-07-30.** Re-target title+meta+`updatedAt` pe cele 4 pagini de oraș. Slug-urile rămân neschimbate (redirect-urile ar reseta istoricul GSC; slug-ul contează mult mai puțin decât title/H1 — `title` e și `<title>` și `<h1>` în `app/ghid/[topic]/page.tsx:112`). **„Prețuri" NU e în titluri intenționat** — paginile n-au încă secțiune de preț, iar un titlu care promite prețuri fără să le livreze strică CTR-ul. Se adaugă împreună cu Pas 3. **Next step: Request Indexing manual în GSC pe cele 4.**
+
+  | Pagină | Termen țintit acum | Era |
+  |---|---|---|
+  | Timișoara | 320/lună | 40/lună |
+  | Cluj-Napoca | 260/lună | (fără date) |
+  | București | 170/lună | 10/lună |
+  | Arad | 140/lună | (nemăsurat) |
+
+- **Pas 1 — ✅ FĂCUT 2026-07-30.** Re-target pe „kit": `sistem-fotovoltaic-3-5-10-kw-casa-pret-productie-amortizare-2026` a trecut de la „Sistem Fotovoltaic 3, 5 și 10 kW Casă — Preț 2026" la **„Kit Panouri Fotovoltaice 3, 5 și 10 kW: Preț 2026"**. Puterile erau deja corecte, greșit era doar substantivul (2.900 vs 40/lună). Em dash-ul din titlu eliminat în trecere. Slug neschimbat. **Next step: Request Indexing în GSC.**
+- **Pas 2 — ✅ FĂCUT 2026-07-30.** `scripts/scrape-kit-prices.mjs` → `data/kit-prices.json`. Rulare **manuală, lunară**, nu în build (datele se comit, ca prerenderul să nu depindă de rețea). Flag-uri: `--dry-run`, `--store <nume>`. Citește `FIRECRAWL_API_KEY` din env, `.env.local`, sau `.mcp.json` (fallback — acolo stă deja pentru MCP). Prima rulare: **37 produse din 3 surse**.
+
+  **Două lecții din prima rulare, ambele încorporate în script:**
+
+  1. **Tipurile de sistem NU se compară între ele.** Un off-grid de 1 kW cu banc de baterii costă legitim ~35.000 RON/kW; un on-grid cu montaj costă ~3.000 RON/kW. În aceeași coloană, primul arată ca o eroare sau, mai rău, ca „prețul pieței". Scriptul clasifică acum în `on-grid` / `hibrid` / `off-grid` / `baterie` / `accesoriu` și nu le amestecă niciodată.
+  2. **Bateriile sunt cotate în kWh, nu în kW.** Câmpul e `marime` + `unitate`, nu `putereKw`. Un raport RON/kW pe o baterie nu înseamnă nimic.
+
+  Plus un **detector de outlieri** (mediana pe grup, semnalează >3x sau <1/3): e un detector de erori de extragere, **nu** o afirmație despre piață. Rostul e ca la rularea de luna viitoare o temă schimbată sau un preț citit greșit să iasă la suprafață în loc să ajungă într-un articol. Nu șterge nimic automat. La prima rulare a prins corect 2 produse eSolar clasificate greșit ca on-grid (numele lor nu conține niciun cuvânt de off-grid, deși sunt stand-alone cu baterii).
+
+  **Datele utile obținute** (Genway, on-grid cu montaj inclus, TVA 21%, citit 2026-07-30): 5 kW = 18.250 RON (3.650 RON/kW), 6,37 kW = 21.300 RON, 7,28 kW = 24.990 RON, 10 kW = 29.900 RON (2.990 RON/kW), 12,74 kW = 36.900 RON. Bandă strânsă **2.896-4.341 RON/kW**. Hibrid (cu acumulator): **5.104-6.083 RON/kW**, adică premiumul de baterie se vede direct. Baterii Genway BYD/Huawei: **2.012-2.330 RON/kWh**, curbă descrescătoare curată cu capacitatea.
+
+  **Gap de 3 kW: ✅ ÎNCHIS în aceeași zi.** Adăugate 3 surse noi în `SOURCES` (Solar1000, VoltGrid, VoltExpert), găsite prin `firecrawl_search`, nu ghicite. Dataset final: **88 produse din 6 surse** (32 on-grid, 33 hibrid, 17 baterie, 5 off-grid), acoperind 3 → 30 kW.
+
+  🔑 **Descoperirea cea mai importantă: manopera E parțial derivabilă din surse publice.** Câteva magazine publică, pentru **același** kit, atât prețul fără montaj cât și cel cu montaj inclus. Diferența e manoperă publicată, nu estimată de noi. Scriptul extrage acum `pretFaraMontajRon`, `manoperaRon`, `manoperaPeKw`, dar **numai când ambele prețuri sunt scrise pe pagină** (promptul interzice explicit deducerea). 5 puncte la prima rulare:
+
+  | Putere | Fără montaj → cu montaj | Manoperă | Per kW | Magazin |
+  |---|---|---|---|---|
+  | 3 kW | 5.950 → 8.399 RON (+TVA) | 2.449 RON | 816 RON/kW | Solar1000 |
+  | 3 kW | 9.972 → 12.193 RON (TVA incl.) | 2.221 RON | 740 RON/kW | VoltGrid |
+  | 3 kW | 7.832 → 9.440 RON (TVA incl.) | 1.608 RON | 536 RON/kW | VoltGrid |
+  | 5 kW | 11.273 → 12.287 RON (TVA incl.) | 1.014 RON | 203 RON/kW | VoltGrid |
+  | 10 kW | 21.486 → 26.936 RON (TVA incl.) | 5.450 RON | 545 RON/kW | VoltGrid |
+
+  ⚠️ **NU publica intervalul „203-816 RON/kW" ca preț de piață.** Spread-ul de 4x aproape sigur reflectă **scopuri diferite de pachet**, nu tarife diferite de manoperă: la Solar1000 varianta „fără montaj" include deja structura metalică, clemele, cablul solar și tabloul de siguranțe complet echipat (verificat pe pagină), la alții nu se știe ce intră. Înainte de a cita, verifică pentru fiecare pereche ce conține exact varianta fără montaj. Punctele astea sunt **material de pornire pentru #40**, nu articolul gata făcut; apelurile din Pas 5 rămân necesare pentru validare.
+
+  **Notă de proces:** snippet-ul Google pentru Solar1000 arăta „8799lei+tva", pagina live are `product:price:amount: 8399`. Cache-ul Google era vechi. **Citează întotdeauna pagina, nu snippet-ul din SERP** — și de aici vine și regula de rulare lunară: prețurile se mișcă.
+- **Pas 3 — pillar „Preț Kit Fotovoltaic 2026"**, hub din care linkează toate paginile de oraș (structura necesit.ro). Ăsta e motorul, nu un articol în plus.
+- **Pas 4 — 5 pagini de oraș noi** (vezi tabelul din batch-ul de mai jos). **Blocat până la recheck GSC pe Pas 0.**
+- **Pas 5 — manopera, colectată telefonic** (vezi „Datele de preț" mai jos). Depinde de user.
+- **Pas 6 — fix internal linking pe pagina ANRE.** Pe „firme montaj panouri fotovoltaice" poziția #8 e ocupată de electricup.ro cu o listă ANRE din **martie 2024**, veche de 2 ani, iar `instalatori-autorizati-anre-panouri-fotovoltaice-2026` (registru live, 183 firme matchuite) e la #88. Problemă de on-page/linking, nu de conținut lipsă.
+
+### Datele de preț — ce se scrapează și ce nu
+
+**Echipamentul se scrapează. Verificat, nu presupus.** Firecrawl pe `genway.ro/sisteme-fotovoltaice`, o cerere, 5 credite, 16 produse cu preț exact la doi zecimali (ex. Huawei LUNA2000-5-E0 = 11.399,99 RON; BYD HVS 10,2kWh = 21.965,86 RON). Site-ul e WooCommerce, la fel ca majoritatea magazinelor PV din România (esolar.ro, solar1000.com, trevora.ro). Prețuri de listă publicate = fapte. Se citează cu dată + link către sursă.
+
+**Manopera NU se scrapează, pentru că nimeni nu o publică.** Dovada e în date: `pret manopera montaj panouri fotovoltaice forum` = **210/lună**. Oamenii caută pe forumuri fiindcă nu există sursă. Exact gaura pe care necesit.ro o monetizează în alte meserii.
+
+**De unde vine manopera: din cele 183 de firme.** Planul de monetizare cere oricum apeluri către firmele care au ridicat mâna. Se adaugă o întrebare la finalul apelului (cât ceri pe kWp doar manoperă, la un 5 kW rezidențial pe țiglă). Cost marginal zero.
+
+⚠️ **Regula never-invent se aplică strict aici.** Se publică drept „interval declarat de N firme, colectat <lună>", niciodată „prețul pieței". N = numărul real de răspunsuri. Dacă răspund 5 firme, scrii 5. Ăsta e și avantajul față de Genway: un magazin poate publica un singur preț, al lui; un director poate publica un interval din 183 de firme.
+
+**Comparator live: NU acum.** E un produs, nu un articol — cere pipeline de scraping, monitorizare de prospețime și reparații când un magazin schimbă tema. Firecrawl are unelte de monitorizare, deci e construibil, dar e scope creep față de ținta de 1000 RON/lună la 30 septembrie. Tabel static cu dată, regenerat lunar de script: aceeași valoare SEO, fracțiune din întreținere. Upgrade la comparator live doar dacă paginile de preț prind poziții.
 
 ---
 
@@ -146,6 +237,12 @@ _(gol — după corecția obligatorie Legea 160/2026 executată 2026-07-30 vezi 
 
 ## 🎯 Propuneri active
 
+> ### ⏭️ URMĂTORUL DE SCRIS: **#36 — Legea Prosumatorilor a Intrat în Vigoare (persoană fizică ≤27 kW)**
+>
+> **Țintă: joi 2026-08-06.** #38 (kit cu montaj) publicat 2026-08-03 la termen. #36 e hot-news cu fereastră până la ~30 sept 2026 (metodologia ANRE), nu mai amâna. Entry complet: „Batch 2026-07-27 — trigger legislativ". Sursă primară Legea 160/2026 pe [lege5.ro](https://lege5.ro/Gratuit/ge4dsnrtgq2di/legea-nr-160-2026-pentru-modificarea-si-completarea-legii-energiei-electrice-si-a-gazelor-naturale-nr-123-2012), MO Partea I nr. 603/23.07.2026, în vigoare 26.07.2026.
+>
+> **Următoarele în coadă după #36:** #37 (compensare per furnizor — PPC/Hidroelectrica/Electrica/E.ON/Premier), #39 (kit cu baterii, cluster ~1.360/lună), #41 (kit off-grid ~430/lună), #42 (oferte E.ON/Enel/PPC vs local ~230/lună). #40 (manoperă) rămâne blocat de Pas 5 (apeluri la firme).
+
 ### 2 — Quick win: update title pe /clasament
 - **Status:** ✅ done — title + meta actualizate pentru a capta "top firme panouri fotovoltaice" + sortare/atestate ANRE. Recheck GSC după 14 zile.
 
@@ -219,6 +316,76 @@ _(gol — după corecția obligatorie Legea 160/2026 executată 2026-07-30 vezi 
 - **Never-invent — strict:** oferta fiecărui furnizor (vinde gaz? ce preț? ce procedură?) se verifică **pe site-ul furnizorului la data scrierii** și se datează în articol; nu se preiau tabelele din ghidul #44 fără reverificare, pentru că se schimbă. Nu inventa termene de procesare, formulare sau prețuri per kW. Ce ține de mecanism se citează din Legea 160/2026 (MO 603/23.07.2026), iar ce ține de aplicare se marchează explicit ca fiind condiționat de **metodologia ANRE (termen ~24 septembrie 2026)**.
 - **Linkuri interne:** /ghid/legea-160-2026-prosumatori-compensare-lunara-gaz-surplus, /ghid/vanzare-surplus-energie-fotovoltaica-prosumator-firma-2026, /ghid/1-an-liberalizare-energie-iulie-2026-oferte-pret-kwh-furnizori, /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre, /cere-oferta
 - **Next step dacă publicat:** GSC Request Indexing; recheck la 14/30 zile pe query-urile cu nume de furnizor. **Update obligatoriu** după metodologia ANRE și după primele facturi cu mecanismul nou (nov-dec 2026), când fiecare furnizor își publică procedura.
+- ⚠️ **Corecție de proces 2026-07-30:** nota „nu avem tool de volum" din intrarea de mai sus e depășită. **DataForSEO MCP e disponibil** și dă volume Google Ads reale (`kw_data_google_ads_search_volume`), sugestii long-tail (`dataforseo_labs_google_keyword_suggestions`), SERP live (`serp_organic_live_advanced`) și intersecții de domenii. Nu mai scrie clustere doar din autocomplete — validează volumele. Atenție la rate limit (cod 50301): maxim ~2 apeluri paralele, apoi pauză ~45s.
+
+### Batch 2026-07-30 — cluster preț („kit + kW") + geo re-target
+
+> Sursa volumelor: Google Ads via DataForSEO MCP, România/`ro`, 2026-07-30. Vine din planul „🧭 Recuperare SEO" de mai sus — citește diagnosticul de acolo înainte de a lua o intrare din batch-ul ăsta.
+
+**Clusterul de preț, capul clasamentului** (92 keyword-uri cu volum ≥30 extrase pe seed-ul „panouri fotovoltaice pret"):
+
+```
+kit panouri fotovoltaice 5 kw pret                  2.900
+panouri fotovoltaice pret                           2.400
+kit panouri fotovoltaice 10 kw pret                 1.900
+pret panouri fotovoltaice                             880
+kit panouri fotovoltaice 5 kw pret cu montaj          880
+kit panouri fotovoltaice 3 kw pret                    880
+kit panouri fotovoltaice 5 kw cu acumulatori pret     590
+```
+
+**Sub-clustere, volum cumulat:**
+
+| Cluster | Volum | Articol |
+|---|---|---|
+| kit + montaj | ~1.750 | #38 (mai jos) |
+| kit + acumulatori | ~1.360 | #39 |
+| manoperă/montaj separat | ~500 | #40 |
+| off-grid | ~430 | #41 |
+| oferte furnizori (E.ON, Enel, PPC) | ~230 | #42 |
+| watt/panou (400-700W) | ~250 | secțiune, nu articol |
+
+#### #38 — Cât Costă un Kit Fotovoltaic cu Montaj 2026 (3, 5, 10 kW)
+- **Status:** ✅ publicat 2026-08-03 → [/ghid/kit-panouri-fotovoltaice-3-5-10-kw-pret-montaj-2026](/ghid/kit-panouri-fotovoltaice-3-5-10-kw-pret-montaj-2026). Detalii în „Publicate recent". Recheck 14/30 zile pe „kit panouri fotovoltaice 5 kw pret cu montaj" + restul clusterului. Devine hub-ul de preț din care vor linkează paginile de oraș (Pas 3 din plan). Cluster păstrat aici pentru urmărire CTR: „kit panouri fotovoltaice 5 kw pret cu montaj" (880), „... 3 kw ..." (260), „... 10 kw ..." (170), „panouri fotovoltaice 5 kw pret cu montaj" (140), „panouri fotovoltaice pret cu montaj" (140), „... 6 kw ... si baterie" (90), „... 6 kw ..." (70) ≈ **1.750/lună** (sursă: Google Ads via DataForSEO, 30 iul 2026).
+
+#### #39 — Kit Fotovoltaic cu Baterii 2026: Preț pe Capacitate
+- **Status:** 💡 idee · adăugat 2026-07-30
+- **Cluster:** „kit panouri fotovoltaice 5 kw cu acumulatori pret" (590), „... 10 kw cu acumulatori" (260), „... 6 kw cu acumulatori" (210), „... 3 kw cu acumulatori" (170), „... 10 kw pret cu baterii" (50), „... 15 kw cu acumulatori" (40), „... 8 kw cu acumulatori" (40), „cele mai bune baterii pentru panouri fotovoltaice pret" (90) ≈ **1.360/lună**
+- **De ce:** prețurile de baterii sunt cele mai bine publicate de magazine (scraping-ul de test pe Genway a returnat exact module BYD/Huawei cu preț la doi zecimali), deci e articolul cu cea mai mică dependență de date colectate manual. Se leagă de ghidul existent de baterii pentru casă.
+- **Linkuri interne:** /ghid/baterie-stocare-casa-backup-dimensionare-independenta-energetica-2026, /ghid/stocare-energie-baterii-firme, /ghid/casa-verde-baterii-2026-program-stocare-afm
+
+#### #40 — Cât Costă Doar Manopera de Montaj Panouri Fotovoltaice 2026 (RON/kWp)
+- **Status:** 💡 idee · adăugat 2026-07-30 · **BLOCAT de Pas 5**
+- **Cluster:** „pret manopera montaj panouri fotovoltaice forum" (210), „pret montaj panouri fotovoltaice" (90), „pret montare panouri fotovoltaice" (90), „montaj panouri fotovoltaice pret" (40), „instalare panouri fotovoltaice pret" (40), „pret manopera montaj panouri fotovoltaice" (30) ≈ **500/lună**
+- **De ce:** sufixul „**forum**" pe termenul cel mai căutat din cluster e semnalul cel mai clar din tot research-ul — piața caută pe forumuri pentru că nu există sursă publicată. Nimeni nu poate scrie articolul ăsta fără acces la instalatori. Noi avem 183.
+- ⚠️ **NU scrie articolul fără date reale de la firme.** Fără Pas 5 executat, intrarea rămâne blocată. Un interval inventat aici ar fi exact eșecul pe care regula never-invent îl previne, și pe un termen unde cititorul verifică pe forum în 30 de secunde.
+
+#### #41 — Kit Fotovoltaic Off-Grid 2026: Preț și Când Merită
+- **Status:** 💡 idee · adăugat 2026-07-30
+- **Cluster:** „kit panouri fotovoltaice 5 kw pret off grid" (170), „... 15 kw off grid" (90), „... 3 kw off grid" (50), „... 2 kw off grid" (50), „... 10 kw off grid" (40+30) ≈ **430/lună**
+- **De ce:** cluster complet neacoperit pe site, intent clar de cumpărare, concurență de magazine (nu de directoare). Unghi propriu: când off-grid **nu** merită, subiect pe care un magazin nu îl scrie.
+
+#### #42 — Ofertele PV ale Furnizorilor (E.ON, Enel, PPC) vs Instalator Local
+- **Status:** 💡 idee · adăugat 2026-07-30
+- **Cluster:** „eon panouri fotovoltaice pret" (90), „panouri fotovoltaice eon pret" (70), „enel panouri fotovoltaice pret" (40), „panouri fotovoltaice ppc pret" (30) ≈ **230/lună**
+- **De ce:** intent de comparație, exact poziția editorială a unui director. Complementar cu #37 (care e pe compensare per furnizor, nu pe ofertele de instalare).
+- **Never-invent:** ofertele furnizorilor se verifică pe site-ul lor la data scrierii și se datează. Se schimbă des.
+
+#### Pas 4 — 5 pagini de oraș noi (BLOCAT până la recheck GSC pe Pas 0)
+- **Status:** 🟡 blocat · adăugat 2026-07-30
+- **Regulă:** nu se scrie niciuna până când Pas 0 nu arată mișcare în GSC pe cele 4 pagini re-titrate. Motivul e chiar nota „template geo PARCAT" de la începutul doc-ului: am replicat deja un template care nu ranka, o dată. Nu repetăm până avem dovada că fixul de head-term funcționează.
+- **Prioritizare (volum „panouri fotovoltaice <oraș>" × adâncime de firme din `companies.json`):**
+
+  | # | Oraș | Volum/lună | Firme sediu județ | Acoperire declarată |
+  |---|---|---|---|---|
+  | 1 | Iași | 320 | 8 (4 în oraș) | 21 |
+  | 2 | Craiova (Dolj) | 320 | 6 (4 în oraș) | 16 |
+  | 3 | Constanța | 260 | 4 (3 în oraș) | 25 |
+  | 4 | Brașov | 210 | 9 (6 în oraș) | 25 |
+  | 5 | Oradea (Bihor) | 170 | 9 (6 în oraș) | 15 |
+
+- **Lăsate afară intenționat:** **Alba Iulia** are 11 firme în județ (a 4-a cea mai mare adâncime), dar doar 50 căutări/lună. **Ploiești** are 70/lună, zero firme cu sediu în Prahova și randament PVGIS slab (vezi `project_judet_yields`). **Târgu Mureș** 30/lună. Nu merită încă.
+- **Notă geo:** varianta „panouri **solare** <oraș>" e sistematic mai mică decât „panouri **fotovoltaice** <oraș>" (Iași 110 vs 320, Brașov 90 vs 210, Constanța 70 vs 260, Timișoara 90 vs 320). Titrează pe „fotovoltaice", ține „solare" ca H2 sau în FAQ.
 
 ---
 
@@ -292,6 +459,13 @@ _(gol — după corecția obligatorie Legea 160/2026 executată 2026-07-30 vezi 
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Kit Panouri Fotovoltaice 3, 5, 10 kW: Preț cu Montaj 2026
+- **Publicat:** 2026-08-03 → [/ghid/kit-panouri-fotovoltaice-3-5-10-kw-pret-montaj-2026](/ghid/kit-panouri-fotovoltaice-3-5-10-kw-pret-montaj-2026). Primul articol din „Batch 2026-07-30 — cluster preț" (parte din „🧭 Plan Recuperare SEO 2026-07-30"). Devine hub-ul de preț pentru replicarea geo, când Pas 0 arată mișcare în GSC pe cele 4 pagini de oraș re-titrate.
+- **Cluster GSC țintă (volume Google Ads via DataForSEO, 30 iul 2026):** „kit panouri fotovoltaice 5 kw pret cu montaj" (880), „... 3 kw ..." (260), „... 10 kw ..." (170), „panouri fotovoltaice 5 kw pret cu montaj" (140), „panouri fotovoltaice pret cu montaj" (140), „... 6 kw ... si baterie" (90), „... 6 kw ..." (70) ≈ **1.750/lună**. Head-uri conexe relevante: „kit panouri fotovoltaice 5 kw pret" (2.900), „panouri fotovoltaice pret" (2.400), „kit panouri fotovoltaice 10 kw pret" (1.900), „pret panouri fotovoltaice" (880), „kit panouri fotovoltaice 3 kw pret" (880). Cluster distinct față de ghidul pereche existent `sistem-fotovoltaic-3-5-10-kw-casa-pret-productie-amortizare-2026` (re-titrat pe „kit" la Pas 1 din plan).
+- **Strategie:** 13 secțiuni + 10 FAQ FAQPage, **~5.465 cuvinte**. Datele bazate integral pe `data/kit-prices.json` (scrapat 2026-07-30, 88 produse, 5 magazine unice: Genway, VoltExpert, VoltGrid, Solar1000, eSolar). Acoperă: (1) răspuns direct + tabel intro 3/5/10 kW (min-max preț cu montaj, RON/kW min, magazin, link); (2) ce include un kit la cheie (6 componente); (3) preț kit 3 kW cu 3 puncte (Solar1000 8.399, VoltGrid mono 9.440, VoltGrid tri 12.193, link fiecare); (4) preț kit 5 kW cu 4 puncte (VoltGrid 12.287, Solar1000 12.299, VoltExpert 15.559, Genway 18.250); (5) preț kit 10 kW cu 4 puncte (VoltExpert 25.554, VoltGrid 26.936, Genway Huawei 29.900, Genway Fronius 39.600); (6) preț kit 6 kW hibrid cu baterie (VoltExpert mono/tri 22.052-27.808, Genway Luna 33.464, Genway BYD 41.086) + prețuri baterii separat Genway BYD/Huawei (1.864-2.330 RON/kWh); (7) **manopera publicată — 5 puncte prezentate INDIVIDUAL** (Solar1000 3 kW = 2.449 RON, VoltGrid 3 kW mono/tri = 1.608/2.221 RON, VoltGrid 5 kW = 1.014 RON, VoltGrid 10 kW = 5.450 RON) cu avertisment explicit „NU e interval de piață", explicație despre ce include varianta „fără montaj" la Solar1000; (8) de ce banda RON/kW e largă (4 factori: brand invertor Fronius/Huawei vs DEYE, brand panouri, ce e inclus în „la cheie", fazaj); (9) kit cu vs. fără montaj (95% cazuri = cu montaj, motivul legal); (10) ce NU e inclus (ATR, structuri speciale, cablu extra, tablou vechi, autorizație); (11) 6 elemente pe factura pro-forma pentru verificare ofertă; (12) cum comparați ≥3 oferte (pași + tabel template); (13) metodologie și data actualizării (30 iul 2026, republicare lunară). NEVER-INVENT strict: fiecare preț citează magazin + link produs + dată; niciun interval agregat pentru manoperă (regulă explicită din pipeline); toate cifrele din json-ul de scraping verificat; PVGIS-ul menționat doar la nivel de range (5.900-6.700 kWh/an pentru 5 kW), fără cifre inventate. Leagă /ghid/sistem-fotovoltaic-3-5-10-kw-casa-pret-productie-amortizare-2026 (pereche naturală) + /ghid/amortizare-panouri-fotovoltaice-2026 + /ghid/baterie-stocare-casa-backup-dimensionare-independenta-energetica-2026 + /ghid/legea-160-2026-prosumatori-compensare-lunara-gaz-surplus + /ghid/aviz-tehnic-racordare-atr-prosumator-2026 + /ghid/checklist-intrebari-instalator-fotovoltaic-ofertare-red-flags-2026 + /calculator-panouri-fotovoltaice + /cere-oferta + /firme.
+- **Unghi față de concurență:** un magazin online (Genway 25 de poziții #1 organice, necesit.ro 3.323 keyword-uri) poate publica un singur preț — al lui. Un director poate publica prețuri de la 5 magazine + tabel comparativ pe fiecare putere. Ăsta e singurul avantaj structural pe care poziția editorială de director îl are față de un e-shop pe query-uri de preț.
+- **Next step:** GSC Request Indexing manual pentru /ghid/kit-panouri-fotovoltaice-3-5-10-kw-pret-montaj-2026. Monitorizare 14/30 zile — **KPI cheie:** clicks pe „kit panouri fotovoltaice 5 kw pret cu montaj" (880/lună, head) + „... 3 kw ..." + „... 10 kw ..." (bottom-funnel intent commercial); impresii pe „panouri fotovoltaice pret cu montaj" (140) + „kit panouri fotovoltaice 6 kw ... si baterie" (90). Long-tail bonus dacă apar: „kit panouri fotovoltaice pret 2026", „cat costa kit fotovoltaic cu montaj". **Update obligatoriu lunar** (rulare `node scripts/scrape-kit-prices.mjs` → regenerare tabel prețuri; prețurile de retail se mișcă); marchează în ghid data ultimei rulări. Când Pas 5 (apeluri la firme pentru manoperă declarată) e executat, adaugă un bloc distinct în secțiunea 7, marcat „declarat de N firme, colectat <lună>" cu N real. Pattern replicare dacă urcă: (i) #39 „Kit Fotovoltaic cu Baterii 2026: Preț pe Capacitate" (cluster ~1.360/lună, datele deja parțial în `kit-prices.json`); (ii) #41 „Kit Fotovoltaic Off-Grid 2026: Preț și Când Merită" (cluster ~430/lună, datele parțial în json pentru eSolar); (iii) pillar „Preț Kit Fotovoltaic 2026" din care linkează paginile de oraș (Pas 3 din plan, doar când Pas 0 confirmă mișcare GSC).
 
 ### Legea 160/2026 Prosumatori: Ce Se Schimbă din 26 Iulie
 - **Publicat:** 2026-07-27 → [/ghid/legea-160-2026-prosumatori-compensare-lunara-gaz-surplus](/ghid/legea-160-2026-prosumatori-compensare-lunara-gaz-surplus)
