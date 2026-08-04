@@ -12,6 +12,9 @@ import {
   PHASE_TYPES,
   FINANCING_REZIDENTIAL,
   FINANCING_COMERCIAL,
+  STORAGE_OPTIONS,
+  WALLBOX_OPTIONS,
+  TIMELINE_OPTIONS,
 } from '@/lib/utils-shared';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
@@ -90,6 +93,8 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         roof_type: String(body.tipAcoperis || ''),
         phase: String(body.fazare || ''),
         financing: String(body.finantare || ''),
+        storage: String(body.stocare || ''),
+        timeline: String(body.termen || ''),
       });
 
       setLeadRef(typeof json.id === 'string' ? json.id : null);
@@ -195,6 +200,26 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <Input
+              label="Localitate"
+              name="localitate"
+              required
+              placeholder={isRezidential ? 'ex: Comuna Berceni' : 'ex: Ploiești'}
+            />
+            <p className="mt-1 text-[11px] text-gray-400">
+              Orașul sau comuna. Firmele estimează deplasarea înainte să vă sune.
+            </p>
+          </div>
+          <Select
+            label="Când ați vrea instalarea"
+            name="termen"
+            options={TIMELINE_OPTIONS.map((o) => ({ value: o.value, label: o.label }))}
+            required
+          />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Input
               label={isRezidential ? 'Suprafață acoperiș (mp)' : 'Suprafață estimată (mp)'}
               name="suprafata"
               type="number"
@@ -258,6 +283,27 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <Select
+              label="Baterie de stocare"
+              name="stocare"
+              options={STORAGE_OPTIONS.map((o) => ({ value: o.value, label: o.label }))}
+              required
+            />
+            <p className="mt-1 text-[11px] text-gray-400">
+              Bateria poate dubla valoarea proiectului, firmele au nevoie de răspuns ca să
+              estimeze corect.
+            </p>
+          </div>
+          <Select
+            label="Stație de încărcare auto"
+            name="wallbox"
+            options={WALLBOX_OPTIONS.map((o) => ({ value: o.value, label: o.label }))}
+            required
+          />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Select
               label="Cum finanțați investiția"
               name="finantare"
               options={financingTypes.map((o) => ({ value: o.value, label: o.label }))}
@@ -289,7 +335,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
             type="textarea"
             placeholder={
               isRezidential
-                ? 'Descrieți pe scurt ce vă doriți (ex: vreau și baterie de stocare)...'
+                ? 'Alte detalii utile (ex: acoperiș în două ape, umbrire parțială după-amiaza)...'
                 : 'Descrieți pe scurt proiectul...'
             }
           />

@@ -15,6 +15,7 @@ export async function POST(request: Request) {
     const {
       numeContact, email, telefon, tipProiect, judet, tipAcoperis, finantare, gdpr,
       suprafata, putere, fazare, suprafataNecunoscuta, putereNecunoscuta,
+      localitate, stocare, wallbox, termen,
     } = body;
 
     if (!numeContact || !email || !telefon || !tipProiect || !judet) {
@@ -60,6 +61,33 @@ export async function POST(request: Request) {
     if (!fazare) {
       return NextResponse.json(
         { error: 'Alegeți alimentarea electrică (sau „Nu știu").' },
+        { status: 400 }
+      );
+    }
+
+    // Câmpurile de ofertare (aug 2026) — aceeași regulă ca la restul
+    // dropdown-urilor obligatorii: se verifică și pe server, cu mesaj pe câmp.
+    if (!localitate) {
+      return NextResponse.json(
+        { error: 'Completați localitatea.' },
+        { status: 400 }
+      );
+    }
+    if (!stocare) {
+      return NextResponse.json(
+        { error: 'Alegeți dacă doriți baterie de stocare (sau „Nu m-am hotărât").' },
+        { status: 400 }
+      );
+    }
+    if (!wallbox) {
+      return NextResponse.json(
+        { error: 'Alegeți dacă doriți stație de încărcare (sau „Nu m-am hotărât").' },
+        { status: 400 }
+      );
+    }
+    if (!termen) {
+      return NextResponse.json(
+        { error: 'Alegeți când ați vrea instalarea.' },
         { status: 400 }
       );
     }

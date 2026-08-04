@@ -267,6 +267,45 @@ export function getFinancingTone(slug: string): FinancingTone {
   return 'program';
 }
 
+// Baterie, stație de încărcare, termen (aug 2026) — câmpurile care fac o cerere
+// „ofertabilă pe orb": fără ele, prețul variază cu zeci de mii de lei (o baterie
+// dublează proiectul) iar firmele nu pot estima nimic din feedul anonimizat.
+export const STORAGE_OPTIONS = [
+  { value: 'da', label: 'Da, vreau și baterie' },
+  { value: 'nu', label: 'Nu' },
+  { value: 'nu-stiu', label: 'Nu m-am hotărât' },
+] as const;
+
+export const WALLBOX_OPTIONS = [
+  { value: 'da', label: 'Da' },
+  { value: 'nu', label: 'Nu' },
+  { value: 'nu-stiu', label: 'Nu m-am hotărât' },
+] as const;
+
+// „Mă informez" e opțiune onestă intenționat: separă clientul care cumpără de
+// cel care compară prețuri, exact ca la finanțare. O cerere „mă informez" e tot
+// o cerere, dar firma știe să n-o sune de trei ori pe zi.
+export const TIMELINE_OPTIONS = [
+  { value: 'cat-mai-repede', label: 'Cât mai repede' },
+  { value: '1-3-luni', label: 'În 1-3 luni' },
+  { value: 'peste-3-luni', label: 'Peste 3 luni' },
+  { value: 'ma-informez', label: 'Deocamdată mă informez' },
+] as const;
+
+const YES_NO_LABELS: Record<string, string> = {
+  da: 'Da',
+  nu: 'Nu',
+  'nu-stiu': 'Nehotărât',
+};
+
+export function getYesNoLabel(slug: string): string {
+  return YES_NO_LABELS[slug] ?? slug;
+}
+
+export function getTimelineLabel(slug: string): string {
+  return TIMELINE_OPTIONS.find((o) => o.value === slug)?.label ?? slug;
+}
+
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('ro-RO', {
     style: 'currency',

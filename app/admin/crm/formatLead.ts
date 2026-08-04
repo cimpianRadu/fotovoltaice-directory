@@ -1,5 +1,5 @@
 import type { NewLead } from '@/lib/sheets';
-import { getFinancingLabel } from '@/lib/utils-shared';
+import { getFinancingLabel, getYesNoLabel, getTimelineLabel } from '@/lib/utils-shared';
 
 // Text plain, fără emoji și fără markdown — mesajul se lipește în WhatsApp
 // (care ignoră **bold** cu asteriscuri simple în multe clienți) și în alte
@@ -41,6 +41,7 @@ export function formatLeadForShare(lead: NewLead): string {
     `Segment: ${segmentLabel}`,
     line('Tip proiect', lead.tipProiect),
     line('Județ', lead.judet),
+    line('Localitate', lead.localitate),
   ].filter(Boolean);
 
   const specs = [
@@ -49,7 +50,11 @@ export function formatLeadForShare(lead: NewLead): string {
     line('Consum lunar', lead.consumLunar ? `${lead.consumLunar} kWh` : ''),
     line('Tip acoperiș', lead.tipAcoperis),
     line('Fazare', lead.fazare),
+    line('Baterie de stocare', lead.stocare ? getYesNoLabel(lead.stocare) : ''),
+    line('Stație de încărcare', lead.wallbox ? getYesNoLabel(lead.wallbox) : ''),
+    line('Termen dorit', lead.termen ? getTimelineLabel(lead.termen) : ''),
     line('Finanțare', lead.finantare ? getFinancingLabel(lead.finantare) : ''),
+    line('Poze', lead.poze),
   ].filter(Boolean);
 
   const contactLines = [

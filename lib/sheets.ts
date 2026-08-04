@@ -72,7 +72,10 @@ async function readRows(sheetName: string): Promise<string[][]> {
     () =>
       sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        range: `${sheetName}!A:Z`,
+        // A:AE, nu A:Z — coloanele de lead au trecut de Z în aug 2026 (Z–AD:
+        // localitate, stocare, wallbox, termen, poze). Celelalte taburi au mai
+        // puține coloane, range-ul mai lat nu le afectează.
+        range: `${sheetName}!A:AE`,
       }),
     `read ${sheetName}`,
   );
@@ -98,6 +101,10 @@ export async function saveLeadToSheet(lead: {
   fazare?: string;
   consumLunar?: string;
   finantare?: string;
+  localitate?: string;
+  stocare?: string;
+  wallbox?: string;
+  termen?: string;
 }): Promise<string> {
   const timestamp = new Date().toISOString();
   await appendRow('Leads', [
@@ -127,6 +134,12 @@ export async function saveLeadToSheet(lead: {
     '', // W — Note CRM
     '', // X — Contactat de o firmă
     lead.finantare || '',    // Y — Ruta de finanțare declarată de client
+    lead.localitate || '',   // Z — Localitatea (aug 2026). NU apare în feedul public.
+    lead.stocare || '',      // AA — Baterie de stocare (da/nu/nu-stiu)
+    lead.wallbox || '',      // AB — Stație de încărcare auto (da/nu/nu-stiu)
+    lead.termen || '',       // AC — Termen dorit de instalare
+    // AD — Poze: link Drive lipit manual (pozele vin pe email, după ref din
+    // subiect). Coloana nu se scrie de aici niciodată.
   ]);
   return timestamp;
 }
@@ -198,6 +211,15 @@ export interface NewLead {
   // Y — ruta de finanțare, adăugată în formular pe 29 iulie 2026. Goală pe
   // cererile anterioare. Vezi FINANCING_* din lib/utils-shared.
   finantare: string;
+  // Z–AC — câmpurile de ofertare din aug 2026 (localitate, baterie, wallbox,
+  // termen). Goale pe cererile anterioare. Localitatea NU se publică pe /cereri.
+  localitate: string;
+  stocare: string;
+  wallbox: string;
+  termen: string;
+  // AD — link Drive cu pozele trimise de client pe email (legate după ref din
+  // subiect). Se lipește manual în Sheet; gol = fără poze.
+  poze: string;
 }
 
 export interface NewListing {
@@ -249,6 +271,11 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     fazare: r[19] || '',
     consumLunar: r[20] || '',
     finantare: r[24] || '',
+    localitate: r[25] || '',
+    stocare: r[26] || '',
+    wallbox: r[27] || '',
+    termen: r[28] || '',
+    poze: r[29] || '',
     ...readCrmFields(r),
   }));
 }
@@ -297,6 +324,14 @@ export interface PublicLead {
   consumLunar: string;
   // Public intenționat: e câmpul care decide dacă o firmă sună azi sau nu.
   finantare: string;
+  // Aug 2026, tot detalii de ofertare. Localitatea lipsește INTENȚIONAT:
+  // localitate mică + detalii de proiect pot identifica persoana; județul e
+  // destul pentru decizia de revendicare, localitatea vine cu contactul.
+  stocare: string;
+  wallbox: string;
+  termen: string;
+  // Doar semnal (există/nu există) — pozele în sine se trimit firmei, nu public.
+  arePoze: boolean;
 }
 
 // Redactare pentru afișarea publică a mesajului: emailuri, URL-uri și șiruri
@@ -349,6 +384,10 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       fazare: l.fazare,
       consumLunar: l.consumLunar,
       finantare: l.finantare,
+      stocare: l.stocare,
+      wallbox: l.wallbox,
+      termen: l.termen,
+      arePoze: Boolean(l.poze.trim()),
     }))
     .reverse(); // cele mai noi primele
 }

@@ -22,6 +22,10 @@ export interface LeadCardData {
   consumLunar: string;
   finantareLabel: string;
   finantareTone: FinancingTone;
+  stocareLabel: string;
+  wallboxLabel: string;
+  termenLabel: string;
+  arePoze: boolean;
 }
 
 interface LeadCardProps {
@@ -135,12 +139,24 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
     lead.acoperisLabel ? { label: 'Acoperiș', value: lead.acoperisLabel } : null,
     lead.fazareLabel ? { label: 'Alimentare', value: lead.fazareLabel } : null,
     lead.consumLunar ? { label: 'Consum', value: lead.consumLunar } : null,
+    lead.stocareLabel ? { label: 'Baterie', value: lead.stocareLabel } : null,
+    lead.wallboxLabel ? { label: 'Stație auto', value: lead.wallboxLabel } : null,
+    lead.termenLabel ? { label: 'Termen', value: lead.termenLabel } : null,
   ].filter(Boolean) as { label: string; value: string }[];
 
   return (
     <div className={`bg-white rounded-xl border border-border p-5 flex flex-col ${full && !claimedByMe ? 'opacity-75' : ''}`}>
       <div className="flex items-center justify-between gap-2">
-        <SegmentBadge segment={lead.segment} />
+        <div className="flex items-center gap-1.5">
+          <SegmentBadge segment={lead.segment} />
+          {/* Pozele în sine nu sunt publice — badge-ul semnalează doar că firma
+              care revendică le primește, ceea ce face cererea mai valoroasă. */}
+          {lead.arePoze && (
+            <span className="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold bg-sky-50 text-sky-700">
+              Cu poze
+            </span>
+          )}
+        </div>
         <span className="text-xs text-gray-400">{lead.postedLabel}</span>
       </div>
 
