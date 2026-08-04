@@ -83,7 +83,8 @@ export function formatLeadForShare(lead: NewLead): string {
     parts.push('', 'Note interne CRM:');
     for (const n of lead.notes) {
       const day = fmtNoteDate(n.date);
-      parts.push(day ? `${day} — ${n.text}` : n.text);
+      const when = [day, n.time].filter(Boolean).join(' ');
+      parts.push(when ? `${when} — ${n.text}` : n.text);
     }
   }
 

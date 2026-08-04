@@ -12,6 +12,17 @@ function todayBucharest(): string {
   return new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/Bucharest' });
 }
 
+// Serverul (Vercel) e pe UTC; ora din jurnal trebuie să fie cea de pe ceasul
+// userului din România, altfel timeline-ul minte cu 2-3 ore.
+function timeBucharest(): string {
+  return new Date().toLocaleTimeString('ro-RO', {
+    timeZone: 'Europe/Bucharest',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+}
+
 export async function POST(request: Request) {
   try {
     const { id, status, contacted, note, editNote, deleteNote } = (await request.json()) as {
@@ -66,6 +77,7 @@ export async function POST(request: Request) {
         ? { index: deleteNote.index as number, expected: deleteNote.expected as string }
         : undefined,
       today: todayBucharest(),
+      time: timeBucharest(),
     });
 
     // Statusul decide dacă cererea mai apare în feedul public. Fără asta,

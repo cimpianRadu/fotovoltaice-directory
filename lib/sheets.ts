@@ -664,13 +664,16 @@ export {
   type ClaimSource,
 } from './sheets-shared';
 
-/** Jurnalul e text simplu în celulă: fiecare intrare începe cu `[YYYY-MM-DD] `. */
+/**
+ * Jurnalul e text simplu în celulă: fiecare intrare începe cu `[YYYY-MM-DD] `
+ * sau, de la introducerea orei, cu `[YYYY-MM-DD HH:MM] ` (ora României).
+ */
 export function parseNotes(raw: string): LeadNote[] {
   if (!raw.trim()) return [];
   const notes: LeadNote[] = [];
   for (const line of raw.split('\n')) {
-    const m = line.match(/^\[(\d{4}-\d{2}-\d{2})\]\s?(.*)$/);
-    if (m) notes.push({ date: m[1], text: m[2] });
+    const m = line.match(/^\[(\d{4}-\d{2}-\d{2})(?: (\d{2}:\d{2}))?\]\s?(.*)$/);
+    if (m) notes.push({ date: m[1], ...(m[2] ? { time: m[2] } : {}), text: m[3] });
     else if (notes.length) notes[notes.length - 1].text += `\n${line}`;
     else if (line.trim()) notes.push({ date: '', text: line });
   }
@@ -680,7 +683,9 @@ export function parseNotes(raw: string): LeadNote[] {
 function serializeNotes(notes: LeadNote[]): string {
   // Notele vechi, dinainte de jurnal, n-au dată. `[] text` nu s-ar mai citi
   // înapoi ca notă separată, deci le scriem fără prefix, cum au venit.
-  return notes.map((n) => (n.date ? `[${n.date}] ${n.text}` : n.text)).join('\n');
+  return notes
+    .map((n) => (n.date ? `[${n.date}${n.time ? ` ${n.time}` : ''}] ${n.text}` : n.text))
+    .join('\n');
 }
 
 async function findLeadRow(timestamp: string): Promise<{ row: string[]; sheetRow: number }> {
@@ -732,6 +737,8 @@ export async function updateLeadCrm(
     editNote?: NoteRef & { text: string };
     deleteNote?: NoteRef;
     today?: string;
+    /** HH:MM, ora României — se scrie doar pe notele nou adăugate. */
+    time?: string;
   },
 ): Promise<LeadCrmFields> {
   const { row, sheetRow } = await findLeadRow(timestamp);
@@ -756,7 +763,7 @@ export async function updateLeadCrm(
 
     if (note) {
       const date = changes.today || new Date().toISOString().slice(0, 10);
-      next = [{ date, text: note }, ...existing];
+      next = [{ date, ...(changes.time ? { time: changes.time } : {}), text: note }, ...existing];
     } else {
       // Editarea și ștergerea merg pe poziție, dar poziția singură minte dacă
       // altcineva a adăugat o notă între citire și click. Textul e martorul.

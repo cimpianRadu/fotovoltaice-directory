@@ -53,6 +53,8 @@ export type ContactState = (typeof CONTACT_STATES)[number] | '';
 
 export interface LeadNote {
   date: string; // YYYY-MM-DD
+  /** HH:MM, ora României. Notele scrise înainte de introducerea orei n-o au. */
+  time?: string;
   text: string;
 }
 

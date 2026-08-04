@@ -280,8 +280,20 @@ export default function LeadCrm({
                         : 'hover:bg-slate-50/70'
                   }`}
                 >
-                  <span className="w-14 shrink-0 pt-px text-[10px] font-semibold tracking-wide text-slate-400 uppercase">
-                    {firstOfDay ? fmtDay(n.date) : ''}
+                  {/* Data o dată pe zi, ora pe fiecare notă: pill-ul pătrățos
+                      face timeline-ul lizibil dintr-o privire. Notele vechi
+                      n-au oră salvată, deci acolo nu apare nimic. */}
+                  <span className="flex w-14 shrink-0 flex-col items-start gap-1 pt-px">
+                    {firstOfDay && (
+                      <span className="text-[10px] font-semibold tracking-wide text-slate-400 uppercase">
+                        {fmtDay(n.date)}
+                      </span>
+                    )}
+                    {n.time && (
+                      <span className="rounded-md bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold tabular-nums text-amber-700">
+                        {n.time}
+                      </span>
+                    )}
                   </span>
 
                   {editing ? (
