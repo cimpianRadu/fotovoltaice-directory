@@ -10,6 +10,8 @@ import {
   type LeadNote,
   type LeadStatus,
 } from '@/lib/sheets-shared';
+import Band, { Caption } from './Band';
+import NotesJournal, { type SaveState } from './NotesJournal';
 
 const STATUS_TONE: Record<LeadStatus, string> = {
   noua: 'bg-slate-500',
@@ -32,85 +34,6 @@ const CONTACT_OPTIONS: { value: ContactState; label: string; hint: string }[] = 
   { value: 'nu', label: 'Nu', hint: 'nu l-a căutat nimeni' },
 ];
 
-function fmtDay(iso: string): string {
-  if (!iso) return 'fără dată';
-  return new Date(`${iso}T00:00:00`).toLocaleDateString('ro-RO', {
-    day: 'numeric',
-    month: 'short',
-  });
-}
-
-function Caption({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="shrink-0 text-[10px] font-semibold tracking-wider whitespace-nowrap text-slate-400 uppercase">
-      {children}
-    </span>
-  );
-}
-
-/**
- * Bandă de selecție cu un cursor care alunecă între poziții, ca acul unui radio.
- * Segmentele sunt egale ca lățime (grid), ca poziția cursorului să fie o simplă
- * regulă de trei și tranziția să nu depindă de lungimea etichetelor.
- */
-function Band<T extends string>({
-  options,
-  value,
-  tone,
-  disabled,
-  onPick,
-}: {
-  options: { value: T; label: string; hint?: string }[];
-  value: T;
-  tone: Record<string, string>;
-  disabled?: boolean;
-  onPick: (v: T) => void;
-}) {
-  const idx = options.findIndex((o) => o.value === value);
-  const pct = 100 / options.length;
-
-  return (
-    <div
-      className="relative grid rounded-full border border-slate-200 bg-slate-100 p-0.5"
-      style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}
-    >
-      {/* Gradațiile dintre segmente, ca reperele de pe scala unui radio. */}
-      <div aria-hidden className="pointer-events-none absolute inset-y-2 left-0 w-full">
-        {options.slice(1).map((o, i) => (
-          <span
-            key={o.value}
-            className="absolute inset-y-0 w-px bg-slate-300/70"
-            style={{ left: `${(i + 1) * pct}%` }}
-          />
-        ))}
-      </div>
-
-      {idx >= 0 && (
-        <span
-          aria-hidden
-          className={`absolute top-0.5 bottom-0.5 rounded-full shadow-sm transition-[left,background-color] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${tone[value] ?? 'bg-slate-400'}`}
-          style={{ left: `calc(${idx * pct}% + 2px)`, width: `calc(${pct}% - 4px)` }}
-        />
-      )}
-
-      {options.map((o) => (
-        <button
-          key={o.value}
-          type="button"
-          title={o.hint}
-          disabled={disabled}
-          onClick={() => onPick(o.value)}
-          className={`relative z-10 truncate rounded-full px-1 py-1 text-[11px] font-medium transition-colors duration-200 disabled:cursor-wait ${
-            o.value === value ? 'text-white' : 'text-slate-500 hover:text-slate-900'
-          }`}
-        >
-          {o.label}
-        </button>
-      ))}
-    </div>
-  );
-}
-
 export default function LeadCrm({
   id,
   status: initialStatus,
@@ -125,12 +48,7 @@ export default function LeadCrm({
   const [status, setStatus] = useState(initialStatus);
   const [contacted, setContacted] = useState(initialContacted);
   const [notes, setNotes] = useState(initialNotes);
-  const [draft, setDraft] = useState('');
-  const [editIndex, setEditIndex] = useState<number | null>(null);
-  const [editDraft, setEditDraft] = useState('');
-  // Confirmarea la ștergere stă în rând, nu într-un confirm() de browser.
-  const [confirmIndex, setConfirmIndex] = useState<number | null>(null);
-  const [state, setState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [state, setState] = useState<SaveState>('idle');
   const [message, setMessage] = useState<string | null>(null);
 
   async function save(payload: {
@@ -164,42 +82,6 @@ export default function LeadCrm({
       setMessage(e instanceof Error ? e.message : 'Eroare');
     }
   }
-
-  // Auto-save la ieșirea din câmp: nu pe fiecare tastă, ca să nu spargem nota
-  // în bucăți și să nu batem în Sheets la fiecare literă.
-  // Valoarea vine din câmp, nu din state: dacă blur-ul cade în aceeași bucată de
-  // execuție cu ultima tastă, state-ul e încă cel vechi și nota s-ar pierde.
-  function commitDraft(value: string) {
-    const note = value.trim();
-    if (!note) return;
-    setDraft('');
-    save({ note });
-  }
-
-  function startEdit(index: number, text: string) {
-    setEditIndex(index);
-    setEditDraft(text);
-    setConfirmIndex(null);
-    setMessage(null);
-  }
-
-  function commitEdit(index: number, expected: string, value: string) {
-    setEditIndex(null);
-    if (value.trim() === expected.trim()) return;
-    save({ editNote: { index, text: value, expected } });
-  }
-
-  function removeNote(index: number, expected: string) {
-    setConfirmIndex(null);
-    setEditIndex(null);
-    save({ deleteNote: { index, expected } });
-  }
-
-  // Notele vin cele noi primele, ca în celulă. Fiecare e o intrare separată,
-  // cu data afișată o singură dată pe zi, ca să se vadă unde se termină una
-  // și începe alta. Panoul are înălțime fixă și derulează, deci un card nu
-  // crește la infinit oricâte note ar aduna.
-  const days = new Set(notes.map((n) => n.date)).size;
 
   const busy = state === 'saving';
 
@@ -242,183 +124,14 @@ export default function LeadCrm({
         </div>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white">
-        <div className="flex items-center justify-between border-b border-slate-100 px-3 py-1.5">
-          <Caption>Note</Caption>
-          <span className="text-[10px] text-slate-400">
-            {state === 'saving' && 'se salvează…'}
-            {state === 'saved' && <span className="text-emerald-600">salvat</span>}
-            {state === 'error' && <span className="text-red-600">{message}</span>}
-            {state === 'idle' &&
-              notes.length > 0 &&
-              `${notes.length} ${notes.length === 1 ? 'notă' : 'note'} · ${days} ${
-                days === 1 ? 'zi' : 'zile'
-              }`}
-          </span>
-        </div>
-
-        {/* Lista derulează ca să nu crească cardul la infinit, dar în editare
-            se lărgește: altfel butoanele de salvare cad sub margine. */}
-        {notes.length > 0 && (
-          <ul
-            className={`divide-y divide-slate-100 overflow-y-auto ${
-              editIndex === null ? 'max-h-44' : 'max-h-80'
-            }`}
-          >
-            {notes.map((n, i) => {
-              const firstOfDay = i === 0 || notes[i - 1].date !== n.date;
-              const editing = editIndex === i;
-              const confirming = confirmIndex === i;
-              return (
-                <li
-                  key={`${n.date}-${i}`}
-                  className={`group flex gap-3 px-3 py-2 transition-colors ${
-                    confirming
-                      ? 'bg-red-50/70'
-                      : editing
-                        ? 'bg-slate-50'
-                        : 'hover:bg-slate-50/70'
-                  }`}
-                >
-                  {/* Data o dată pe zi, ora pe fiecare notă: pill-ul pătrățos
-                      face timeline-ul lizibil dintr-o privire. Notele vechi
-                      n-au oră salvată, deci acolo nu apare nimic. */}
-                  <span className="flex w-14 shrink-0 flex-col items-start gap-1 pt-px">
-                    {firstOfDay && (
-                      <span className="text-[10px] font-semibold tracking-wide text-slate-400 uppercase">
-                        {fmtDay(n.date)}
-                      </span>
-                    )}
-                    {n.time && (
-                      <span className="rounded-md bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold tabular-nums text-amber-700">
-                        {n.time}
-                      </span>
-                    )}
-                  </span>
-
-                  {editing ? (
-                    <div className="min-w-0 flex-1 space-y-1">
-                      <textarea
-                        autoFocus
-                        value={editDraft}
-                        onChange={(e) => setEditDraft(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Escape') setEditIndex(null);
-                          if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
-                            commitEdit(i, n.text, e.currentTarget.value);
-                          }
-                        }}
-                        rows={Math.min(editDraft.split('\n').length + 1, 6)}
-                        className="w-full resize-y rounded-md border border-slate-300 bg-white px-2 py-1 text-xs leading-relaxed text-slate-700 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-900/5"
-                      />
-                      <div className="flex items-center gap-2 text-[10px]">
-                        <button
-                          type="button"
-                          onClick={() => commitEdit(i, n.text, editDraft)}
-                          className="rounded bg-slate-900 px-2 py-0.5 font-medium text-white hover:bg-slate-700"
-                        >
-                          Salvează
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setEditIndex(null)}
-                          className="text-slate-500 hover:text-slate-900"
-                        >
-                          Renunță
-                        </button>
-                        <span className="text-slate-400">golește textul ca s-o ștergi</span>
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      <p
-                        className={`min-w-0 flex-1 text-xs leading-relaxed whitespace-pre-wrap transition-colors ${
-                          confirming ? 'text-slate-400 line-through' : 'text-slate-700'
-                        }`}
-                      >
-                        {n.text}
-                      </p>
-
-                      {confirming ? (
-                        // Confirmarea ia locul iconițelor, în rând: aceeași
-                        // pauză de gândire ca un dialog, fără să blocheze pagina.
-                        <span className="flex shrink-0 items-center gap-2 text-[10px]">
-                          <span className="font-semibold tracking-wide text-red-600 uppercase">
-                            Ștergi?
-                          </span>
-                          <button
-                            type="button"
-                            autoFocus
-                            disabled={busy}
-                            onClick={() => removeNote(i, n.text)}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Escape') setConfirmIndex(null);
-                            }}
-                            className="rounded bg-red-600 px-2 py-0.5 font-medium text-white transition-colors hover:bg-red-700 disabled:cursor-wait"
-                          >
-                            Șterge
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setConfirmIndex(null)}
-                            className="text-slate-500 transition-colors hover:text-slate-900"
-                          >
-                            Renunță
-                          </button>
-                        </span>
-                      ) : (
-                        /* Vizibile mereu, doar decolorate: pe hover-only nu se
-                           vede că notele se pot edita până nu dai din mouse. */
-                        <span className="flex shrink-0 items-start gap-1 text-slate-300 transition-colors group-hover:text-slate-400">
-                          <button
-                            type="button"
-                            title="Editează nota"
-                            disabled={busy}
-                            onClick={() => startEdit(i, n.text)}
-                            className="rounded p-1 transition-colors hover:bg-slate-200 hover:text-slate-700 disabled:cursor-wait"
-                          >
-                            <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                          </button>
-                          <button
-                            type="button"
-                            title="Șterge nota"
-                            disabled={busy}
-                            onClick={() => {
-                              setConfirmIndex(i);
-                              setEditIndex(null);
-                            }}
-                            className="rounded p-1 transition-colors hover:bg-red-100 hover:text-red-600 disabled:cursor-wait"
-                          >
-                            <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                          </button>
-                        </span>
-                      )}
-                    </>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        )}
-
-        <div className="border-t border-slate-100 p-2">
-          <textarea
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            onBlur={(e) => commitDraft(e.currentTarget.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) e.currentTarget.blur();
-            }}
-            rows={2}
-            placeholder="Scrie o notă… se salvează pe ziua de azi când ieși din câmp"
-            className="w-full resize-y rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs leading-relaxed text-slate-700 transition outline-none placeholder:text-slate-400 focus:border-slate-400 focus:bg-white focus:ring-2 focus:ring-slate-900/5"
-          />
-        </div>
-      </div>
+      <NotesJournal
+        notes={notes}
+        state={state}
+        message={message}
+        onAdd={(note) => save({ note })}
+        onEdit={(editNote) => save({ editNote })}
+        onDelete={(deleteNote) => save({ deleteNote })}
+      />
     </div>
   );
 }

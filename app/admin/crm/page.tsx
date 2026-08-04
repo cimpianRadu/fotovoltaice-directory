@@ -115,7 +115,12 @@ function LeadCard({
   const shareText = formatLeadForShare(lead);
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+    // id-ul e timestampul cererii: fișele din /admin/firme leagă „vezi cererea"
+    // direct de cardul ei de aici. scroll-mt lasă loc de header la săritură.
+    <article
+      id={lead.timestamp}
+      className="flex scroll-mt-20 flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm"
+    >
       <header className="flex items-start justify-between gap-3 border-b border-slate-100 px-4 py-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2">

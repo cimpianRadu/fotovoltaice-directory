@@ -129,3 +129,70 @@ export function countActiveClaimsForFirm<
 >(claims: T[], firm: { numeFirma: string; telefon: string }): number {
   return claims.filter((c) => !c.contactedAt && isSameFirm(c, firm)).length;
 }
+
+// ── CRM Firme: pipeline-ul telefonic pe instalatori ─────────────────────────
+// Stările urmăresc conversația de vânzare (exclusivitate pe județ, leaduri),
+// nu starea firmei în director. Fără diacritice, ca la LEAD_STATUSES.
+
+export const FIRM_STATUSES = [
+  'de_sunat',
+  'nu_raspunde',
+  'discutii',
+  'interesat',
+  'client',
+  'refuzat',
+] as const;
+export type FirmStatus = (typeof FIRM_STATUSES)[number];
+
+export const FIRM_STATUS_LABELS: Record<FirmStatus, string> = {
+  de_sunat: 'De sunat',
+  nu_raspunde: 'Nu răspunde',
+  discutii: 'În discuții',
+  interesat: 'Interesat',
+  client: 'Client',
+  refuzat: 'Refuzat',
+};
+
+export const FIRM_STATUS_HINTS: Record<FirmStatus, string> = {
+  de_sunat: 'pe listă, încă n-am vorbit',
+  nu_raspunde: 'am încercat, nu răspunde, mai încearcă',
+  discutii: 'am vorbit, discuția e deschisă',
+  interesat: 'vrea să lucreze cu noi, de închis',
+  client: 'are o înțelegere activă cu noi',
+  refuzat: 'a zis nu, nu insista',
+};
+
+function foldDiacritics(s: string): string {
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+/**
+ * Cuvinte care apar și în denumiri de firme, și în limbajul curent al notelor
+ * („i-am zis de sistemul solar", „instalație electrică"). Singure nu identifică
+ * o firmă, deci nu declanșează o mențiune.
+ */
+const GENERIC_NAME_WORDS = new Set([
+  'solar', 'solare', 'energy', 'energie', 'electric', 'electrica', 'instal',
+  'instalatii', 'panouri', 'power', 'green', 'eco', 'smart', 'pro', 'total',
+  'construct', 'constructii', 'service', 'servicii', 'grup', 'group', 'tech',
+  'system', 'systems', 'sisteme', 'romania', 'expert', 'proiect', 'montaj',
+]);
+
+/**
+ * O notă de pe o cerere „pomenește" firma? În vorbire firma e rar numele
+ * complet din registru — „JTS Instal Construct" e „JTS" — deci după numele
+ * complet normalizat încercăm și primul cuvânt singur, dar doar dacă e
+ * distinctiv (nu generic, minim 3 caractere). Fals-pozitivele rămase sunt
+ * inofensive: secțiunea de mențiuni doar afișează, nu scrie nicăieri.
+ */
+export function firmMentionedIn(text: string, firmName: string): boolean {
+  const clean = (s: string) =>
+    foldDiacritics(s.toLowerCase()).replace(/[^a-z0-9]+/g, ' ').trim();
+  const name = clean(normalizeFirmName(firmName));
+  if (name.length < 3) return false;
+  const hay = ` ${clean(text)} `;
+  if (hay.includes(` ${name} `)) return true;
+  const first = name.split(' ')[0];
+  if (first === name || first.length < 3 || GENERIC_NAME_WORDS.has(first)) return false;
+  return hay.includes(` ${first} `);
+}

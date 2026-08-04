@@ -2,11 +2,14 @@ import {
   LEAD_STATUSES,
   CONTACT_STATES,
   CLAIM_SOURCES,
+  FIRM_STATUSES,
   isLeadClosed,
+  isSameFirm,
   type LeadStatus,
   type ContactState,
   type LeadNote,
   type ClaimSource,
+  type FirmStatus,
 } from './sheets-shared';
 import { google } from 'googleapis';
 
@@ -654,7 +657,11 @@ export {
   CONTACT_STATES,
   MAX_ACTIVE_CLAIMS_PER_FIRM,
   CLAIM_SOURCES,
+  FIRM_STATUSES,
+  FIRM_STATUS_LABELS,
+  FIRM_STATUS_HINTS,
   countActiveClaimsForFirm,
+  firmMentionedIn,
   isLeadClosed,
   isSameFirm,
   normalizePhone,
@@ -662,6 +669,7 @@ export {
   type ContactState,
   type LeadNote,
   type ClaimSource,
+  type FirmStatus,
 } from './sheets-shared';
 
 /**
@@ -797,4 +805,174 @@ export async function updateLeadCrm(
   }
 
   return readCrmFields(row);
+}
+
+// ── CRM Firme: pipeline-ul telefonic pe instalatori ────────────────────────
+// O fișă per firmă, într-un tab separat: cu cine am vorbit, unde am rămas,
+// când revin. Notele folosesc același format de jurnal ca pe cereri
+// (parseNotes/serializeNotes). Ce NU se stochează aici: revendicările și
+// notele de pe cereri care pomenesc firma — alea se derivă la afișare din
+// taburile lor, ca să nu existe două copii care să divergă.
+
+const FIRMS_SHEET = 'CRM Firme';
+
+const FIRMS_HEADER = [
+  'Timestamp',
+  'Firm ID',
+  'Firmă',
+  'Telefon',
+  'Status',
+  'Follow-up',
+  'Note',
+];
+
+const FIRM_STATUS_COL = 4; // E
+const FIRM_FOLLOWUP_COL = 5; // F
+const FIRM_NOTES_COL = 6; // G
+
+export interface CrmFirm {
+  /** ISO — rândul e identificat prin timestampul creării, ca la Leads. */
+  timestamp: string;
+  /** id-ul din companies.json, dacă firma e în director. Gol pentru restul. */
+  firmId: string;
+  numeFirma: string;
+  telefon: string;
+  status: FirmStatus;
+  /** YYYY-MM-DD — când trebuie sunată din nou. Gol = fără termen. */
+  followUp: string;
+  notes: LeadNote[];
+}
+
+function readFirmRow(r: string[]): CrmFirm {
+  const status = (r[FIRM_STATUS_COL] || '').trim().toLowerCase();
+  return {
+    timestamp: r[0] || '',
+    firmId: r[1] || '',
+    numeFirma: r[2] || '',
+    telefon: r[3] || '',
+    status: (FIRM_STATUSES as readonly string[]).includes(status)
+      ? (status as FirmStatus)
+      : 'de_sunat',
+    followUp: r[FIRM_FOLLOWUP_COL] || '',
+    notes: parseNotes(r[FIRM_NOTES_COL] || ''),
+  };
+}
+
+export async function getCrmFirms(): Promise<CrmFirm[]> {
+  let rows: string[][];
+  try {
+    rows = await readRows(FIRMS_SHEET);
+  } catch {
+    // Tabul nu există încă (prima fișă îl creează) — nicio firmă în pipeline.
+    return [];
+  }
+  return rows
+    .filter((r) => Number.isFinite(Date.parse(r[0] || '')))
+    .map(readFirmRow);
+}
+
+export async function addCrmFirm(firm: {
+  firmId?: string;
+  numeFirma: string;
+  telefon: string;
+}): Promise<CrmFirm> {
+  // Aceeași identitate ca la plafonul de revendicări: telefon SAU nume. Fără
+  // verificare, aceeași firmă ar primi două fișe cu istoricul rupt în două.
+  const existing = await getCrmFirms();
+  if (existing.some((f) => isSameFirm(f, firm))) {
+    throw new Error('Firma are deja o fișă în CRM.');
+  }
+
+  const timestamp = new Date().toISOString();
+  const values = [timestamp, firm.firmId || '', firm.numeFirma, firm.telefon, 'de_sunat', '', ''];
+  try {
+    await appendRow(FIRMS_SHEET, values);
+  } catch {
+    // Tabul „CRM Firme" nu există încă — îl creăm cu header și reîncercăm o dată.
+    await createSheetTab(FIRMS_SHEET);
+    await appendRow(FIRMS_SHEET, FIRMS_HEADER);
+    await appendRow(FIRMS_SHEET, values);
+  }
+  return readFirmRow(values);
+}
+
+/**
+ * Setează statusul, termenul de follow-up și/sau operează pe jurnalul de note
+ * al unei fișe de firmă. Oglinda lui updateLeadCrm, pe tabul „CRM Firme".
+ */
+export async function updateCrmFirm(
+  timestamp: string,
+  changes: {
+    status?: FirmStatus;
+    /** Șirul gol șterge termenul. */
+    followUp?: string;
+    note?: string;
+    editNote?: NoteRef & { text: string };
+    deleteNote?: NoteRef;
+    today?: string;
+    /** HH:MM, ora României — se scrie doar pe notele nou adăugate. */
+    time?: string;
+  },
+): Promise<CrmFirm> {
+  const rows = await readRows(FIRMS_SHEET);
+  const index = rows.findIndex((r, i) => i > 0 && r[0] === timestamp);
+  if (index === -1) throw new Error('Firma nu există în tabul CRM Firme.');
+  const row = rows[index];
+  const sheetRow = index + 1;
+
+  const data: { range: string; values: string[][] }[] = [];
+
+  if (changes.status) {
+    data.push({ range: `${FIRMS_SHEET}!E${sheetRow}`, values: [[changes.status]] });
+    row[FIRM_STATUS_COL] = changes.status;
+  }
+
+  if (changes.followUp !== undefined) {
+    data.push({ range: `${FIRMS_SHEET}!F${sheetRow}`, values: [[changes.followUp]] });
+    row[FIRM_FOLLOWUP_COL] = changes.followUp;
+  }
+
+  const note = changes.note?.trim();
+  const { editNote, deleteNote } = changes;
+
+  if (note || editNote || deleteNote) {
+    const existing = parseNotes(row[FIRM_NOTES_COL] || '');
+    let next: LeadNote[];
+
+    if (note) {
+      const date = changes.today || new Date().toISOString().slice(0, 10);
+      next = [{ date, ...(changes.time ? { time: changes.time } : {}), text: note }, ...existing];
+    } else {
+      // Editarea și ștergerea merg pe poziție, dar poziția singură minte dacă
+      // altcineva a adăugat o notă între citire și click. Textul e martorul.
+      const ref = (editNote || deleteNote) as NoteRef;
+      const target = existing[ref.index];
+      if (!target || target.text !== ref.expected) {
+        throw new Error('Nota s-a schimbat între timp. Reîmprospătează pagina și încearcă din nou.');
+      }
+      const text = editNote?.text.trim();
+      next = [...existing];
+      // Editare care golește nota = ștergere. Altfel ar rămâne o dată fără text.
+      if (editNote && text) next[ref.index] = { ...target, text };
+      else next.splice(ref.index, 1);
+    }
+
+    const serialized = serializeNotes(next);
+    data.push({ range: `${FIRMS_SHEET}!G${sheetRow}`, values: [[serialized]] });
+    row[FIRM_NOTES_COL] = serialized;
+  }
+
+  if (data.length) {
+    const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+    await withRetry(
+      () =>
+        sheets.spreadsheets.values.batchUpdate({
+          spreadsheetId: SPREADSHEET_ID,
+          requestBody: { valueInputOption: 'RAW', data },
+        }),
+      'update CRM firmă',
+    );
+  }
+
+  return readFirmRow(row);
 }
