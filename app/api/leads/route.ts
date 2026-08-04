@@ -12,7 +12,10 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     // numeCompanie is optional — residential leads have no company name.
-    const { numeContact, email, telefon, tipProiect, judet, tipAcoperis, finantare, gdpr } = body;
+    const {
+      numeContact, email, telefon, tipProiect, judet, tipAcoperis, finantare, gdpr,
+      suprafata, putere, fazare, suprafataNecunoscuta, putereNecunoscuta,
+    } = body;
 
     if (!numeContact || !email || !telefon || !tipProiect || !judet) {
       return NextResponse.json(
@@ -34,6 +37,29 @@ export async function POST(request: Request) {
     if (!finantare) {
       return NextResponse.json(
         { error: 'Alegeți cum finanțați investiția.' },
+        { status: 400 }
+      );
+    }
+
+    // Suprafața și puterea cer un răspuns explicit: o cifră SAU bifa „Nu
+    // știu" (checkbox-ul dezactivează inputul, deci vine doar unul din două).
+    // În Sheet „nu știu" rămâne celulă goală — coloanele H/I sunt numerice
+    // peste tot în aval (/cereri, lead-match), un text acolo le-ar strica.
+    if (!suprafata && !suprafataNecunoscuta) {
+      return NextResponse.json(
+        { error: 'Completați suprafața sau bifați „Nu știu".' },
+        { status: 400 }
+      );
+    }
+    if (!putere && !putereNecunoscuta) {
+      return NextResponse.json(
+        { error: 'Completați puterea dorită sau bifați „Nu știu".' },
+        { status: 400 }
+      );
+    }
+    if (!fazare) {
+      return NextResponse.json(
+        { error: 'Alegeți alimentarea electrică (sau „Nu știu").' },
         { status: 400 }
       );
     }

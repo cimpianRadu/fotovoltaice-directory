@@ -47,6 +47,12 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [leadRef, setLeadRef] = useState<string | null>(null);
+  // Suprafața și puterea sunt obligatorii, dar cu scăpare onestă: bifa „Nu
+  // știu" scoate câmpul din validare și îl dezactivează. Scopul e să forțeze
+  // un răspuns explicit, nu o cifră inventată — o cerere „nu știu" e mai
+  // utilă firmei decât una goală sau cu un număr scos din burtă.
+  const [suprafataNS, setSuprafataNS] = useState(false);
+  const [putereNS, setPutereNS] = useState(false);
   const counties = getCounties();
   const { segment } = useSegment();
   const isRezidential = segment === 'rezidential';
@@ -89,6 +95,8 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
       setLeadRef(typeof json.id === 'string' ? json.id : null);
       setStatus('success');
       form.reset();
+      setSuprafataNS(false);
+      setPutereNS(false);
     } catch (err) {
       setStatus('error');
       setToast({
@@ -185,18 +193,46 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Input
-            label={isRezidential ? 'Suprafață acoperiș (mp)' : 'Suprafață estimată (mp)'}
-            name="suprafata"
-            type="number"
-            placeholder={isRezidential ? 'ex: 60' : 'ex: 2000'}
-          />
-          <Input
-            label="Putere dorită (kW)"
-            name="putere"
-            type="number"
-            placeholder={isRezidential ? 'ex: 5' : 'ex: 200'}
-          />
+          <div>
+            <Input
+              label={isRezidential ? 'Suprafață acoperiș (mp)' : 'Suprafață estimată (mp)'}
+              name="suprafata"
+              type="number"
+              required={!suprafataNS}
+              disabled={suprafataNS}
+              placeholder={isRezidential ? 'ex: 60' : 'ex: 2000'}
+            />
+            <label className="mt-1.5 flex items-center gap-2 text-xs text-gray-600 cursor-pointer">
+              <input
+                type="checkbox"
+                name="suprafataNecunoscuta"
+                checked={suprafataNS}
+                onChange={(e) => setSuprafataNS(e.target.checked)}
+                className="w-3.5 h-3.5 rounded border-gray-300 text-primary focus:ring-primary"
+              />
+              Nu știu, nu am măsurat
+            </label>
+          </div>
+          <div>
+            <Input
+              label="Putere dorită (kW)"
+              name="putere"
+              type="number"
+              required={!putereNS}
+              disabled={putereNS}
+              placeholder={isRezidential ? 'ex: 5' : 'ex: 200'}
+            />
+            <label className="mt-1.5 flex items-center gap-2 text-xs text-gray-600 cursor-pointer">
+              <input
+                type="checkbox"
+                name="putereNecunoscuta"
+                checked={putereNS}
+                onChange={(e) => setPutereNS(e.target.checked)}
+                className="w-3.5 h-3.5 rounded border-gray-300 text-primary focus:ring-primary"
+              />
+              Nu știu, aștept recomandarea instalatorului
+            </label>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -208,9 +244,10 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
           />
           <div>
             <Select
-              label="Alimentare electrică (opțional)"
+              label="Alimentare electrică"
               name="fazare"
               options={PHASE_TYPES.map((o) => ({ value: o.value, label: o.label }))}
+              required
             />
             <p className="mt-1 text-[11px] text-gray-400">
               Scrie pe contor sau pe siguranța generală. Dacă nu găsiți, alegeți „Nu știu".

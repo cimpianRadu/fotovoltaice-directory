@@ -11,6 +11,8 @@ interface InputProps {
   inputMode?: 'text' | 'email' | 'tel' | 'numeric' | 'url';
   autoComplete?: string;
   hint?: string;
+  /** Dezactivat vizibil (ex: „Nu știu" bifat). Exclus din FormData la submit. */
+  disabled?: boolean;
 }
 
 export default function Input({
@@ -26,9 +28,10 @@ export default function Input({
   inputMode,
   autoComplete,
   hint,
+  disabled = false,
 }: InputProps) {
   const baseStyles =
-    'w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors';
+    'w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed';
   const errorStyles = error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : '';
 
   return (
@@ -42,6 +45,7 @@ export default function Input({
           id={name}
           name={name}
           required={required}
+          disabled={disabled}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
@@ -55,6 +59,7 @@ export default function Input({
           name={name}
           type={type}
           required={required}
+          disabled={disabled}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
