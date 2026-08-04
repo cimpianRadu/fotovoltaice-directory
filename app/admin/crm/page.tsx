@@ -3,15 +3,19 @@ import {
   getLeadsSince,
   getClaims,
   getListingsSince,
+  getCrmFirms,
   countActiveClaimsForFirm,
+  isLeadClosed,
   LEAD_STATUSES,
   LEAD_STATUS_LABELS,
   MAX_CLAIMS_PER_LEAD,
   type NewLead,
   type NewListing,
   type LeadClaim,
+  type CrmFirm,
 } from '@/lib/sheets';
 import { getCompanies } from '@/lib/utils';
+import { matchFirmsForLead, type FirmMatch } from '@/lib/lead-match';
 import { getFinancingShort, getFinancingTone, type FinancingTone } from '@/lib/utils-shared';
 import ClaimList, { type ClaimRow } from './ClaimList';
 import LeadCrm from './LeadCrm';
@@ -98,14 +102,69 @@ function Caption({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * Cele 3-4 firme pe care le-aș suna pentru cererea asta, cu motivele la
+ * vedere. Scorul decide ordinea, dar nu se afișează: motivele sunt
+ * argumentul, cifra ar părea mai exactă decât e.
+ */
+function MatchList({ matches, lead }: { matches: FirmMatch[]; lead: NewLead }) {
+  return (
+    <div className="space-y-2 border-t border-slate-100 px-4 py-2">
+      <Caption>De contactat, potriviri din director</Caption>
+      {matches.length > 0 && (
+        <ul className="space-y-1.5">
+          {matches.map((m) => (
+            <li key={m.id} className="text-xs leading-snug">
+              <div className="flex flex-wrap items-baseline gap-x-2">
+                <Link
+                  href={`/firme/${m.slug}`}
+                  className="font-medium text-slate-800 hover:underline"
+                >
+                  {m.name}
+                </Link>
+                <span className="text-slate-400">{m.city}</span>
+                {m.phone && (
+                  <a href={`tel:${m.phone}`} className="text-slate-500 tabular-nums hover:text-slate-900">
+                    {m.phone}
+                  </a>
+                )}
+              </div>
+              <p className="text-[10px] text-slate-400">{m.reasons.join(' · ')}</p>
+              {m.warnings.length > 0 && (
+                <p className="text-[10px] text-amber-600">{m.warnings.join(' · ')}</p>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+      {/* Directorul nu acoperă tot: sub 3 potriviri, restul se caută offline
+          cu targetare (cheia API nu există pe Vercel, doar în .env.local). */}
+      {matches.length < 3 && lead.judet && (
+        <p className="text-[10px] leading-relaxed text-slate-400">
+          {matches.length === 0
+            ? 'Nicio potrivire în director.'
+            : `Doar ${matches.length} ${matches.length === 1 ? 'potrivire' : 'potriviri'} în director.`}{' '}
+          Caută candidați ANRE cu targetare, local:{' '}
+          <code className="rounded bg-slate-100 px-1 py-0.5 text-[10px] text-slate-600">
+            node scripts/lead-targetare.mjs --judet=&quot;{lead.judet}&quot; --segment=
+            {lead.segment || 'comercial'}
+          </code>
+        </p>
+      )}
+    </div>
+  );
+}
+
 function LeadCard({
   lead,
   claims,
   firms,
+  matches,
 }: {
   lead: NewLead;
   claims: ClaimRow[];
   firms: FirmOption[];
+  matches: FirmMatch[] | null;
 }) {
   // Formularul cere putere în kW și suprafață în mp, dar salvează cifra goală.
   const specs = [lead.putere && `${lead.putere} kW`, lead.suprafata && `${lead.suprafata} mp`]
@@ -207,6 +266,9 @@ function LeadCard({
           <ManualClaimForm leadId={lead.timestamp} firms={firms} full={full} />
         </div>
       </div>
+
+      {/* null = cerere închisă, nu mai sun pe nimeni pentru ea. */}
+      {matches !== null && <MatchList matches={matches} lead={lead} />}
 
       <div className="mt-auto border-t border-slate-100 bg-slate-50 px-4 py-3">
         <LeadCrm
@@ -310,12 +372,14 @@ export default async function CrmPage({ searchParams }: Props) {
   let leads: NewLead[];
   let claims: LeadClaim[];
   let listings: NewListing[];
+  let crmFirms: CrmFirm[];
   try {
     const listingsCutoff = new Date(Date.now() - LISTINGS_WINDOW_DAYS * 86_400_000);
-    [leads, claims, listings] = await Promise.all([
+    [leads, claims, listings, crmFirms] = await Promise.all([
       getLeadsSince(new Date(0)),
       getClaims(),
       getListingsSince(listingsCutoff),
+      getCrmFirms(),
     ]);
   } catch (err) {
     return (
@@ -347,7 +411,8 @@ export default async function CrmPage({ searchParams }: Props) {
   // rapid din SearchableSelect face lungimea listei irelevantă. Trecem doar
   // câmpurile de care are nevoie formul, nu toată structura Company
   // (~180 firme × {id,name,phone,city} ≈ 10 KB serializat).
-  const firms: FirmOption[] = getCompanies()
+  const companies = getCompanies();
+  const firms: FirmOption[] = companies
     .map((c) => ({
       id: c.id,
       name: c.name,
@@ -507,6 +572,13 @@ export default async function CrmPage({ searchParams }: Props) {
             lead={lead}
             claims={claimsByLead.get(lead.timestamp) ?? []}
             firms={firms}
+            // Potrivirile se calculează doar pe cererile deschise: pentru una
+            // închisă nu mai sun pe nimeni, secțiunea ar fi zgomot.
+            matches={
+              isLeadClosed(lead.crmStatus)
+                ? null
+                : matchFirmsForLead(lead, lead.timestamp, companies, claims, crmFirms)
+            }
           />
         ))}
       </div>
