@@ -84,8 +84,24 @@ export default function SearchableSelect({
         </label>
       )}
 
-      {/* Hidden input for form submission */}
-      <input type="hidden" name={name} value={currentValue} />
+      {/* Input pentru submit. NU type="hidden": inputurile hidden sunt excluse
+          din validarea browserului, deci `required` ar fi doar decor (așa au
+          trecut cereri cu dropdown-uri obligatorii goale până pe 4 aug 2026).
+          Un text input invizibil dar focusabil intră în validare: la submit cu
+          valoarea goală, browserul îl focusează (asta deschide lista) și
+          arată bula nativă „completați acest câmp" ancorată pe control. */}
+      <input
+        type="text"
+        name={name}
+        value={currentValue}
+        required={required}
+        onChange={() => {}}
+        onFocus={() => setOpen(true)}
+        tabIndex={-1}
+        aria-hidden="true"
+        autoComplete="off"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px w-full opacity-0"
+      />
 
       {/* Trigger button */}
       <button

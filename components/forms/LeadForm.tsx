@@ -69,7 +69,12 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         body: JSON.stringify({ ...body, sourcePage, preselectedCompany, segment }),
       });
 
-      if (!res.ok) throw new Error('Eroare la trimitere');
+      // Serverul numește câmpul lipsă („Alegeți tipul de acoperiș."); mesajul
+      // ajunge în toast ca omul să știe ce să corecteze, nu doar că a eșuat.
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(typeof err.error === 'string' ? err.error : 'Eroare la trimitere');
+      }
       const json = await res.json().catch(() => ({}));
 
       trackEvent('lead_form_submitted', {
@@ -84,9 +89,15 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
       setLeadRef(typeof json.id === 'string' ? json.id : null);
       setStatus('success');
       form.reset();
-    } catch {
+    } catch (err) {
       setStatus('error');
-      setToast({ message: 'A apărut o eroare. Vă rugăm încercați din nou.', type: 'error' });
+      setToast({
+        message:
+          err instanceof Error && err.message !== 'Eroare la trimitere'
+            ? err.message
+            : 'A apărut o eroare. Vă rugăm încercați din nou.',
+        type: 'error',
+      });
     }
   }
 

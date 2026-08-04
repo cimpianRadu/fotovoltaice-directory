@@ -12,11 +12,28 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     // numeCompanie is optional — residential leads have no company name.
-    const { numeContact, email, telefon, tipProiect, judet, gdpr } = body;
+    const { numeContact, email, telefon, tipProiect, judet, tipAcoperis, finantare, gdpr } = body;
 
     if (!numeContact || !email || !telefon || !tipProiect || !judet) {
       return NextResponse.json(
         { error: 'Toate câmpurile obligatorii trebuie completate.' },
+        { status: 400 }
+      );
+    }
+
+    // Dropdown-urile marcate obligatorii în formular se verifică și aici:
+    // validarea de browser din SearchableSelect poate fi ocolită (cache vechi,
+    // POST direct), iar pe 3 aug 2026 a trecut o cerere fără tip de acoperiș.
+    // Mesajul numește câmpul: formularul îl afișează ca atare în toast.
+    if (!tipAcoperis) {
+      return NextResponse.json(
+        { error: 'Alegeți tipul de acoperiș.' },
+        { status: 400 }
+      );
+    }
+    if (!finantare) {
+      return NextResponse.json(
+        { error: 'Alegeți cum finanțați investiția.' },
         { status: 400 }
       );
     }
