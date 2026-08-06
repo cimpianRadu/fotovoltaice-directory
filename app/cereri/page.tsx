@@ -5,6 +5,8 @@ import JsonLd from '@/components/seo/JsonLd';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 import { MAX_CLAIMS_PER_LEAD, getClaims, getPublicLeads, type PublicLead } from '@/lib/sheets';
 import {
+  calendarAgeDays,
+  cerereAgeLabel,
   getProjectTypeLabel,
   getRoofTypeLabel,
   getPhaseLabel,
@@ -28,15 +30,6 @@ export const metadata: Metadata = {
   alternates: { canonical: '/cereri' },
 };
 
-function ageInDays(iso: string): number {
-  return Math.floor((Date.now() - Date.parse(iso)) / 86_400_000);
-}
-
-function postedLabel(days: number): string {
-  if (days <= 0) return 'azi';
-  if (days === 1) return 'ieri';
-  return `acum ${days} zile`;
-}
 
 export default async function CereriPage() {
   let leads: PublicLead[] = [];
@@ -54,7 +47,7 @@ export default async function CereriPage() {
   }
 
   const cards: LeadCardData[] = leads.map((l) => {
-    const ageDays = ageInDays(l.id);
+    const ageDays = calendarAgeDays(l.id);
     return {
       id: l.id,
       tipLabel: getProjectTypeLabel(l.tipProiect),
@@ -62,7 +55,7 @@ export default async function CereriPage() {
       putere: l.putere,
       suprafata: l.suprafata,
       segment: l.segment,
-      postedLabel: postedLabel(ageDays),
+      postedLabel: cerereAgeLabel(ageDays),
       ageDays,
       mesaj: l.mesaj,
       acoperisLabel: l.tipAcoperis ? getRoofTypeLabel(l.tipAcoperis) : '',

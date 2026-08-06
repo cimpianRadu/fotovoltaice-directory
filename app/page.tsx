@@ -23,6 +23,8 @@ import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
 import { getCompanies, getCoveredCounties, getPremiumCompanies, getCompaniesBySegment, getCompaniesByCounty, slugifyCounty } from '@/lib/utils';
 import {
+  calendarAgeDays,
+  cerereAgeLabel,
   getProjectTypeLabel,
   getFinancingShort,
   getFinancingTone,
@@ -36,12 +38,6 @@ import guidesData from '@/data/guides.json';
 // Teaser-ul de cereri vine din Google Sheets — regenerare la 5 minute, ca /cereri.
 export const revalidate = 300;
 
-function cerereAgeLabel(iso: string): string {
-  const days = Math.floor((Date.now() - Date.parse(iso)) / 86_400_000);
-  if (days <= 0) return 'azi';
-  if (days === 1) return 'ieri';
-  return `acum ${days} zile`;
-}
 
 const COMPANY_COUNT = getCompanies().length;
 const COUNTY_COUNT = getCoveredCounties().length;
@@ -259,7 +255,7 @@ export default async function HomePage() {
                     >
                       {c.segment === 'rezidential' ? 'Rezidențial' : 'Comercial'}
                     </span>
-                    <span className="text-xs text-white/50">{cerereAgeLabel(c.id)}</span>
+                    <span className="text-xs text-white/50">{cerereAgeLabel(calendarAgeDays(c.id))}</span>
                   </div>
                   <p className="font-semibold text-white text-sm">{getProjectTypeLabel(c.tipProiect)}</p>
                   <p className="text-white/60 text-sm mt-0.5">

@@ -318,6 +318,29 @@ export function formatNumber(num: number): string {
   return new Intl.NumberFormat('ro-RO').format(num);
 }
 
+// Vârsta unei cereri în zile CALENDARISTICE pe ora României, nu în ferestre
+// glisante de 24h: o cerere de ieri seara e „ieri" din prima clipă a zilei de
+// azi, nu abia după ce trec 24 de ore de la trimitere. en-CA dă „YYYY-MM-DD",
+// pe care Date.parse îl citește ca miezul nopții UTC, deci diferența e mereu
+// un multiplu exact de zile.
+const RO_DAY = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Europe/Bucharest',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+});
+
+export function calendarAgeDays(iso: string, now: Date = new Date()): number {
+  const midnight = (d: Date) => Date.parse(RO_DAY.format(d));
+  return Math.round((midnight(now) - midnight(new Date(iso))) / 86_400_000);
+}
+
+export function cerereAgeLabel(days: number): string {
+  if (days <= 0) return 'azi';
+  if (days === 1) return 'ieri';
+  return `acum ${days} zile`;
+}
+
 const RO_MONTHS_SHORT = ['ian', 'feb', 'mar', 'apr', 'mai', 'iun', 'iul', 'aug', 'sep', 'oct', 'noi', 'dec'];
 
 export function formatShortDate(iso: string | undefined | null): string {
