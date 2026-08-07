@@ -260,8 +260,8 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
                 clientului în{' '}
                 <a href="/portal" className="font-medium underline hover:no-underline">
                   Portalul Instalatorilor
-                </a>{' '}
-                — intri cu emailul firmei, fără parolă.
+                </a>
+                , intri cu emailul firmei, fără parolă.
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">

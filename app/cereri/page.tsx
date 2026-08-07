@@ -111,8 +111,8 @@ export default async function CereriPage() {
             <li className="flex gap-3">
               <span className="shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary-dark font-bold text-sm inline-flex items-center justify-center">2</span>
               <span>
-                Te sunăm pentru confirmare (revendicarea este rezervată firmelor de instalare) și
-                îți transmitem datele complete ale clientului
+                Te sunăm pentru confirmare (revendicarea este rezervată firmelor de instalare),
+                apoi datele complete ale clientului apar în Portalul Instalatorilor
               </span>
             </li>
             <li className="flex gap-3">
