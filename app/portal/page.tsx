@@ -64,6 +64,7 @@ export default async function PortalPage() {
           releaseReason: c.releaseReason,
           contactedAt: c.contactedAt,
           approved,
+          offeredAt: c.offeredAt,
           notes: c.firmNotes,
           tipLabel: lead ? getProjectTypeLabel(lead.tipProiect) : 'Cerere',
           judet: lead?.judet || '',

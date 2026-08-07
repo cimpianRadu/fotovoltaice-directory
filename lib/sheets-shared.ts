@@ -147,6 +147,43 @@ export function claimsHeldForLead<T extends { leadId: string; releasedAt: string
   return claims.filter((c) => c.leadId === leadId && !c.releasedAt);
 }
 
+/** Pragul de la care o revendicare cu datele deblocate dar fără ofertă cere follow-up telefonic. */
+export const CLAIM_STALE_DAYS = 2;
+
+interface ClaimActivity {
+  timestamp: string;
+  contactedAt: string;
+  approvedAt: string;
+  offeredAt: string;
+  releasedAt: string;
+  firmNotes: LeadNote[];
+}
+
+/** Ultima mișcare pe revendicare (revendicat/aprobat/apel/ofertă/notă), în unix ms. */
+export function claimLastActivity(claim: ClaimActivity): number {
+  const stamps = [claim.timestamp, claim.contactedAt, claim.approvedAt, claim.offeredAt]
+    .map((s) => Date.parse(s))
+    .filter((n) => Number.isFinite(n));
+  for (const n of claim.firmNotes) {
+    // Notele au doar dată (+ oră locală RO) — parse-ul aproximativ e suficient
+    // pentru un prag de zile întregi.
+    const t = Date.parse(n.time ? `${n.date}T${n.time}:00` : `${n.date}T12:00:00`);
+    if (Number.isFinite(t)) stamps.push(t);
+  }
+  return stamps.length ? Math.max(...stamps) : 0;
+}
+
+/**
+ * Firma a primit datele clientului, n-a marcat oferta și nimic nu s-a mișcat
+ * de CLAIM_STALE_DAYS zile: de sunat, aflăm dacă mai e de interes sau
+ * realocăm cererea. Revendicările de dinainte de portal (fără aprobare) nu
+ * intră — ar aprinde tot istoricul.
+ */
+export function isClaimStale(claim: ClaimActivity, now: number = Date.now()): boolean {
+  if (claim.releasedAt || claim.offeredAt || !claim.approvedAt) return false;
+  return now - claimLastActivity(claim) >= CLAIM_STALE_DAYS * 86_400_000;
+}
+
 // ── CRM Firme: pipeline-ul telefonic pe instalatori ─────────────────────────
 // Stările urmăresc conversația de vânzare (exclusivitate pe județ, leaduri),
 // nu starea firmei în director. Fără diacritice, ca la LEAD_STATUSES.

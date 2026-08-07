@@ -14,6 +14,7 @@ export interface PortalClaim {
   releaseReason: string;
   contactedAt: string;
   approved: boolean;
+  offeredAt: string;
   notes: LeadNote[];
   tipLabel: string;
   judet: string;
@@ -50,6 +51,13 @@ function StatusBadge({ claim }: { claim: PortalClaim }) {
       </span>
     );
   }
+  if (claim.offeredAt) {
+    return (
+      <span className="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold bg-sky-50 text-sky-700">
+        Ofertă trimisă · {fmtDate(claim.offeredAt)}
+      </span>
+    );
+  }
   if (claim.approved) {
     return (
       <span className="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700">
@@ -69,6 +77,10 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
   const [noteText, setNoteText] = useState('');
   const [noteBusy, setNoteBusy] = useState(false);
   const [noteError, setNoteError] = useState<string | null>(null);
+
+  const [offeredAt, setOfferedAt] = useState(claim.offeredAt);
+  const [offerBusy, setOfferBusy] = useState(false);
+  const [offerError, setOfferError] = useState<string | null>(null);
 
   const [releaseOpen, setReleaseOpen] = useState(false);
   const [motiv, setMotiv] = useState('');
@@ -103,6 +115,33 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
       setNoteError('A apărut o eroare. Încearcă din nou.');
     } finally {
       setNoteBusy(false);
+    }
+  }
+
+  async function toggleOffered() {
+    setOfferBusy(true);
+    setOfferError(null);
+    try {
+      const res = await fetch('/api/portal/claims/offer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          claimTimestamp: claim.claimTimestamp,
+          leadId: claim.leadId,
+          offered: !offeredAt,
+        }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setOfferError(json.error || 'A apărut o eroare. Încearcă din nou.');
+        return;
+      }
+      if (!offeredAt) trackEvent('portal_offer_marked');
+      setOfferedAt(json.offeredAt || '');
+    } catch {
+      setOfferError('A apărut o eroare. Încearcă din nou.');
+    } finally {
+      setOfferBusy(false);
     }
   }
 
@@ -145,7 +184,9 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
             {claim.tipLabel}
             {claim.judet ? ` · ${claim.judet}` : ''}
           </h3>
-          <StatusBadge claim={{ ...claim, releasedAt: released ? claim.releasedAt || 'acum' : '' }} />
+          <StatusBadge
+            claim={{ ...claim, offeredAt, releasedAt: released ? claim.releasedAt || 'acum' : '' }}
+          />
         </div>
         <span className="text-xs text-gray-400">revendicat {fmtDate(claim.claimedAt)}</span>
       </div>
@@ -207,6 +248,38 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
             obicei sub o zi lucrătoare).
           </div>
         )
+      )}
+
+      {/* Pasul de după datele clientului: firma ne spune că a trimis oferta.
+          Contorul de oferte intră în statisticile noastre de follow-up. */}
+      {!inactive && claim.client && (
+        <div className="mt-3">
+          {offeredAt ? (
+            <div className="flex items-center gap-3 text-sm">
+              <span className="text-sky-700 font-medium">
+                Ofertă trimisă pe {fmtDate(offeredAt)}.
+              </span>
+              <button
+                type="button"
+                onClick={toggleOffered}
+                disabled={offerBusy}
+                className="text-xs text-gray-400 underline hover:text-gray-600 disabled:opacity-60"
+              >
+                {offerBusy ? '...' : 'Retrage (am greșit)'}
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={toggleOffered}
+              disabled={offerBusy}
+              className="rounded-lg bg-secondary px-4 py-2 text-sm font-medium text-white hover:bg-secondary-dark disabled:opacity-60"
+            >
+              {offerBusy ? 'Se salvează...' : 'Am trimis oferta clientului'}
+            </button>
+          )}
+          {offerError && <p className="mt-1 text-xs text-red-600">{offerError}</p>}
+        </div>
       )}
 
       {released && claim.releaseReason && (

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Scrie rândul de header al tabului „Revendicări" (A1:M1), inclusiv coloanele
- * de portal adăugate în aug 2026 (I–M: Email, Renunțat la, Motiv renunțare,
- * Note firmă, Aprobat la).
+ * Scrie rândul de header al tabului „Revendicări" (A1:N1), inclusiv coloanele
+ * de portal adăugate în aug 2026 (I–N: Email, Renunțat la, Motiv renunțare,
+ * Note firmă, Aprobat la, Ofertat la).
  *
  * Același model ca fix-leads-header.mjs: scrie DOAR rândul 1 și doar dacă
  * rândul 1 nu conține date (codul nu citește headerul — rândurile se filtrează
@@ -47,6 +47,7 @@ const HEADERS = [
   'Motiv renunțare', // K — obligatoriu la renunț
   'Note firmă', // L — jurnal datat, scris de firmă din /portal
   'Aprobat la', // M — scris din /admin/crm; deblochează datele clientului în portal
+  'Ofertat la', // N — firma marchează din /portal că a trimis oferta clientului
 ];
 
 const auth = new google.auth.JWT({
@@ -61,7 +62,7 @@ const current =
   (
     await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
-      range: 'Revendicări!A1:M1',
+      range: 'Revendicări!A1:N1',
     })
   ).data.values?.[0] || [];
 
@@ -72,7 +73,7 @@ if (Number.isFinite(Date.parse(current[0] || ''))) {
   process.exit(1);
 }
 
-console.log(`=== Header Revendicări!A1:M1 ${APPLY ? '(APPLY)' : '(DRY RUN)'} ===\n`);
+console.log(`=== Header Revendicări!A1:N1 ${APPLY ? '(APPLY)' : '(DRY RUN)'} ===\n`);
 const colLetter = (i) => String.fromCharCode(65 + i);
 let changes = 0;
 for (const [i, want] of HEADERS.entries()) {
@@ -94,7 +95,7 @@ if (!APPLY) {
 
 await sheets.spreadsheets.values.update({
   spreadsheetId: SPREADSHEET_ID,
-  range: 'Revendicări!A1:M1',
+  range: 'Revendicări!A1:N1',
   valueInputOption: 'RAW',
   requestBody: { values: [HEADERS] },
 });

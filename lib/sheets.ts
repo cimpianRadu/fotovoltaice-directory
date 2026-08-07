@@ -434,6 +434,8 @@ export interface LeadClaim {
    * detaliile de proiect, nu contactul clientului.
    */
   approvedAt: string;
+  /** Coloana N: ISO — firma a marcat din /portal că a trimis oferta clientului. */
+  offeredAt: string;
 }
 
 function readClaimRow(r: string[]): LeadClaim {
@@ -456,6 +458,7 @@ function readClaimRow(r: string[]): LeadClaim {
     releaseReason: r[10] || '',
     firmNotes: parseNotes(r[11] || ''),
     approvedAt: r[12] || '',
+    offeredAt: r[13] || '',
   };
 }
 
@@ -503,6 +506,7 @@ export async function saveClaimToSheet(claim: {
     '', // K — Motiv renunțare: obligatoriu la renunț, scris din /portal
     '', // L — Note firmă: jurnalul firmei din /portal (format parseNotes)
     '', // M — Aprobat la: scris din /admin/crm; deblochează datele clientului în portal
+    '', // N — Ofertat la: firma marchează din /portal că a trimis oferta
   ];
   try {
     await appendRow(CLAIMS_SHEET, values);
@@ -528,6 +532,7 @@ const CLAIMS_HEADER = [
   'Motiv renunțare', // K — obligatoriu la renunț
   'Note firmă', // L — jurnal datat, scris de firmă din /portal
   'Aprobat la', // M — scris din /admin/crm; deblochează datele clientului în portal
+  'Ofertat la', // N — firma marchează din /portal că a trimis oferta clientului
 ];
 
 /**
@@ -620,6 +625,21 @@ export async function setClaimApproved(
   const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
   await updateClaimCells(`${CLAIMS_SHEET}!M${sheetRow}`, [[approvedAt]]);
   row[12] = approvedAt;
+  return readClaimRow(row);
+}
+
+/**
+ * Firma marchează din /portal că a trimis oferta clientului. `offeredAt` gol
+ * retrage marcajul (apăsat din greșeală).
+ */
+export async function setClaimOffered(
+  claimTimestamp: string,
+  leadId: string,
+  offeredAt: string,
+): Promise<LeadClaim> {
+  const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
+  await updateClaimCells(`${CLAIMS_SHEET}!N${sheetRow}`, [[offeredAt]]);
+  row[13] = offeredAt;
   return readClaimRow(row);
 }
 
@@ -787,8 +807,10 @@ export {
   FIRM_STATUSES,
   FIRM_STATUS_LABELS,
   FIRM_STATUS_HINTS,
+  claimLastActivity,
   claimsHeldForLead,
   countActiveClaimsForFirm,
+  isClaimStale,
   firmMentionedIn,
   isLeadClosed,
   isSameFirm,

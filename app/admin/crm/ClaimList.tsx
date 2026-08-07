@@ -2,7 +2,10 @@
 
 import { useState } from 'react';
 import {
+  CLAIM_STALE_DAYS,
   MAX_ACTIVE_CLAIMS_PER_FIRM,
+  claimLastActivity,
+  isClaimStale,
   type ClaimSource,
   type LeadNote,
 } from '@/lib/sheets-shared';
@@ -21,6 +24,8 @@ export interface ClaimRow {
   releaseReason: string;
   firmNotes: LeadNote[];
   approvedAt: string;
+  /** Firma a marcat din portal că a trimis oferta clientului. */
+  offeredAt: string;
   /** Câte cereri ține firma asta fără apel confirmat, la încărcarea paginii. */
   firmActive: number;
 }
@@ -138,6 +143,23 @@ function Claim({ claim }: { claim: ClaimRow }) {
         </div>
       )}
       <div className="text-slate-400">{fmtDateTime(claim.timestamp)}</div>
+
+      {claim.offeredAt && (
+        <div className="mt-1 inline-block rounded bg-sky-100 px-1.5 py-px text-[10px] font-semibold text-sky-700">
+          ofertă trimisă · {fmtDay(claim.offeredAt)}
+        </div>
+      )}
+      {/* Datele au plecat spre firmă, oferta nu, și nimic nu s-a mișcat de 2 zile:
+          apel de follow-up, aflăm dacă mai e de interes sau realocăm cererea. */}
+      {isClaimStale({ ...claim, approvedAt, offeredAt: claim.offeredAt, contactedAt })
+        && (
+          <div
+            title={`Nimic nou din ${fmtDateTime(new Date(claimLastActivity({ ...claim, approvedAt, contactedAt })).toISOString())}`}
+            className="mt-1 inline-block rounded bg-red-100 px-1.5 py-px text-[10px] font-semibold text-red-700"
+          >
+            fără mișcare de {CLAIM_STALE_DAYS}+ zile, sună firma
+          </div>
+        )}
 
       {/* Jurnalul firmei din portal — derivat, doar afișare. */}
       {claim.firmNotes.length > 0 && (

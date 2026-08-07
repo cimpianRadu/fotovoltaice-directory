@@ -5,6 +5,7 @@ import {
   getListingsSince,
   getCrmFirms,
   countActiveClaimsForFirm,
+  isClaimStale,
   isLeadClosed,
   LEAD_STATUSES,
   LEAD_STATUS_LABELS,
@@ -441,6 +442,10 @@ export default async function CrmPage({ searchParams }: Props) {
   // Revendicări pe care nicio firmă nu le-a confirmat cu un apel. Astea sunt
   // sloturile ocupate degeaba, și tot ele sunt ce blochează firma să ia altele.
   const claimsWithoutCall = claims.filter((c) => !c.contactedAt).length;
+  // Contorul pentru statistici (inclusiv rezumatul săptămânal): oferte marcate de firme din portal.
+  const offersSent = claims.filter((c) => c.offeredAt).length;
+  // Date deblocate, ofertă nemarcată, nicio mișcare de 2 zile: lista de sunat azi.
+  const staleClaims = claims.filter((c) => isClaimStale(c)).length;
   // Clientul a vrut panouri, s-a rezolvat în altă parte, și nu l-a sunat nimeni.
   // Asta nu e concurență pierdută, e livrare ruptă.
   const lostUncontacted = leads.filter(
@@ -489,6 +494,8 @@ export default async function CrmPage({ searchParams }: Props) {
         <Stat label="Pierdute fără niciun apel" value={lostUncontacted} tone="alert" />
         <Stat label="Revendicări total" value={claims.length} />
         <Stat label="Revendicări fără apel" value={claimsWithoutCall} tone="alert" />
+        <Stat label="Oferte trimise" value={offersSent} />
+        <Stat label="De follow-up (2z+)" value={staleClaims} tone="alert" />
         <Stat label={`Listări (${LISTINGS_WINDOW_DAYS}z)`} value={listings.length} />
       </div>
 
