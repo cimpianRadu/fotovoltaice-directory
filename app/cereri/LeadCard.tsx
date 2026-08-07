@@ -256,7 +256,12 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
 
             {claimedByMe ? (
               <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-800">
-                Revendicare înregistrată. Te sunăm pentru confirmare și detaliile de livrare.
+                Revendicare înregistrată. Te sunăm pentru confirmare, apoi găsești datele
+                clientului în{' '}
+                <a href="/portal" className="font-medium underline hover:no-underline">
+                  Portalul Instalatorilor
+                </a>{' '}
+                — intri cu emailul firmei, fără parolă.
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">
@@ -270,16 +275,25 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
                   placeholder="0740 123 456"
                   autoComplete="tel"
                 />
+                <Input
+                  label="Email firmă"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="contact@firma.ro"
+                  autoComplete="email"
+                />
                 {error && <p className="text-xs text-red-600">{error}</p>}
                 <Button type="submit" variant="primary" disabled={status === 'submitting'} className="w-full">
                   {status === 'submitting' ? 'Se trimite...' : 'Trimite revendicarea'}
                 </Button>
                 <p className="text-[11px] text-gray-500 leading-relaxed">
                   Revendicarea este rezervată firmelor de instalare fotovoltaice. Te contactăm
-                  telefonic pentru confirmare, apoi primești datele complete ale clientului. Datele
-                  firmei tale sunt folosite doar pentru alocarea acestei cereri. Poți ține{' '}
-                  {MAX_ACTIVE_CLAIMS_PER_FIRM} cereri odată: locurile se eliberează pe măsură ce
-                  clienții confirmă că i-ai sunat.
+                  telefonic pentru confirmare, apoi primești datele complete ale clientului în{' '}
+                  <a href="/portal" className="underline hover:no-underline">Portalul Instalatorilor</a>{' '}
+                  (intri cu emailul firmei, fără parolă). Datele firmei tale sunt folosite doar
+                  pentru alocarea acestei cereri. Poți ține {MAX_ACTIVE_CLAIMS_PER_FIRM} cereri
+                  odată: locurile se eliberează pe măsură ce clienții confirmă că i-ai sunat.
                 </p>
               </form>
             )}

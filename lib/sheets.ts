@@ -415,6 +415,48 @@ export interface LeadClaim {
    * după apel telefonic. Rândurile vechi (fără valoare) sunt tratate ca `self`.
    */
   source: ClaimSource;
+  /**
+   * Coloana I (portal, aug 2026): emailul firmei = identitatea ei în /portal.
+   * Rândurile de dinainte n-au email — apar în portal abia după ce completăm
+   * manual celula cu emailul firmei.
+   */
+  email: string;
+  /** Coloana J: ISO — firma a renunțat din portal. Eliberează și slotul firmei, și locul cererii. */
+  releasedAt: string;
+  /** Coloana K: motivul renunțării, obligatoriu la renunț — ne spune de ce mor lead-urile. */
+  releaseReason: string;
+  /** Coloana L: jurnalul firmei din portal (format parseNotes), vizibil și în /admin/crm. */
+  firmNotes: LeadNote[];
+  /**
+   * Coloana M: ISO — revendicarea a fost aprobată (după apelul nostru de
+   * confirmare) și datele clientului sunt vizibile firmei în portal. Gate-ul
+   * telefonic rămâne: fără aprobarea din /admin/crm, portalul arată doar
+   * detaliile de proiect, nu contactul clientului.
+   */
+  approvedAt: string;
+}
+
+function readClaimRow(r: string[]): LeadClaim {
+  const raw = (r[7] || '').trim().toLowerCase();
+  // Rândurile de dinainte de coloana H sunt goale — le tratăm ca `self`,
+  // singurul flux existent atunci.
+  const source: ClaimSource = (CLAIM_SOURCES as readonly string[]).includes(raw)
+    ? (raw as ClaimSource)
+    : 'self';
+  return {
+    timestamp: r[0] || '',
+    leadId: r[1] || '',
+    numeFirma: r[2] || '',
+    numeContact: r[3] || '',
+    telefon: r[4] || '',
+    contactedAt: r[6] || '',
+    source,
+    email: (r[8] || '').trim().toLowerCase(),
+    releasedAt: r[9] || '',
+    releaseReason: r[10] || '',
+    firmNotes: parseNotes(r[11] || ''),
+    approvedAt: r[12] || '',
+  };
 }
 
 export async function getClaims(): Promise<LeadClaim[]> {
@@ -427,23 +469,7 @@ export async function getClaims(): Promise<LeadClaim[]> {
   }
   return rows
     .filter((r) => Number.isFinite(Date.parse(r[0] || '')))
-    .map((r) => {
-      const raw = (r[7] || '').trim().toLowerCase();
-      // Rândurile de dinainte de coloana H sunt goale — le tratăm ca `self`,
-      // singurul flux existent atunci.
-      const source: ClaimSource = (CLAIM_SOURCES as readonly string[]).includes(raw)
-        ? (raw as ClaimSource)
-        : 'self';
-      return {
-        timestamp: r[0] || '',
-        leadId: r[1] || '',
-        numeFirma: r[2] || '',
-        numeContact: r[3] || '',
-        telefon: r[4] || '',
-        contactedAt: r[6] || '',
-        source,
-      };
-    });
+    .map(readClaimRow);
 }
 
 async function createSheetTab(title: string) {
@@ -461,6 +487,7 @@ export async function saveClaimToSheet(claim: {
   numeContact: string;
   telefon: string;
   source: ClaimSource;
+  email?: string;
 }) {
   const values = [
     new Date().toISOString(),
@@ -471,6 +498,11 @@ export async function saveClaimToSheet(claim: {
     'Nou', // coloana Status
     '',    // G — Contactat la: se completează din /admin/crm, eliberează slotul firmei
     claim.source, // H — Sursă: `self` (public /cereri) sau `manual` (marcat din CRM)
+    (claim.email || '').trim().toLowerCase(), // I — Email: identitatea firmei în /portal
+    '', // J — Renunțat la: ISO, scris din /portal la renunț
+    '', // K — Motiv renunțare: obligatoriu la renunț, scris din /portal
+    '', // L — Note firmă: jurnalul firmei din /portal (format parseNotes)
+    '', // M — Aprobat la: scris din /admin/crm; deblochează datele clientului în portal
   ];
   try {
     await appendRow(CLAIMS_SHEET, values);
@@ -491,6 +523,11 @@ const CLAIMS_HEADER = [
   'Status',
   'Contactat la',
   'Sursă',
+  'Email', // I — identitatea firmei în /portal
+  'Renunțat la', // J — scris din /portal; eliberează slotul firmei + locul cererii
+  'Motiv renunțare', // K — obligatoriu la renunț
+  'Note firmă', // L — jurnal datat, scris de firmă din /portal
+  'Aprobat la', // M — scris din /admin/crm; deblochează datele clientului în portal
 ];
 
 /**
@@ -503,36 +540,87 @@ export async function markClaimContacted(
   leadId: string,
   contactedAt: string,
 ): Promise<LeadClaim> {
+  const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
+  await updateClaimCells(`${CLAIMS_SHEET}!G${sheetRow}`, [[contactedAt]]);
+  row[6] = contactedAt;
+  return readClaimRow(row);
+}
+
+async function findClaimRow(
+  claimTimestamp: string,
+  leadId: string,
+): Promise<{ row: string[]; sheetRow: number }> {
   const rows = await readRows(CLAIMS_SHEET);
   const index = rows.findIndex((r) => r[0] === claimTimestamp && r[1] === leadId);
   if (index === -1) throw new Error('Revendicarea nu există în tabul Revendicări.');
+  return { row: rows[index], sheetRow: index + 1 };
+}
 
+async function updateClaimCells(range: string, values: string[][]) {
   const sheets = google.sheets({ version: 'v4', auth: getAuth() });
   await withRetry(
     () =>
       sheets.spreadsheets.values.update({
         spreadsheetId: SPREADSHEET_ID,
-        range: `${CLAIMS_SHEET}!G${index + 1}`,
+        range,
         valueInputOption: 'RAW',
-        requestBody: { values: [[contactedAt]] },
+        requestBody: { values },
       }),
     'update revendicare',
   );
+}
 
-  const row = rows[index];
-  const rawSource = (row[7] || '').trim().toLowerCase();
-  const source: ClaimSource = (CLAIM_SOURCES as readonly string[]).includes(rawSource)
-    ? (rawSource as ClaimSource)
-    : 'self';
-  return {
-    timestamp: row[0] || '',
-    leadId: row[1] || '',
-    numeFirma: row[2] || '',
-    numeContact: row[3] || '',
-    telefon: row[4] || '',
-    contactedAt,
-    source,
-  };
+/**
+ * Renunțarea firmei, din /portal. Scrie J (data) + K (motivul) dintr-un singur
+ * update — o renunțare fără motiv n-are voie să existe, regula e a userului:
+ * „renunț doar după ce a discutat și a lăsat notițe cu motivul".
+ */
+export async function releaseClaim(
+  claimTimestamp: string,
+  leadId: string,
+  reason: string,
+): Promise<LeadClaim> {
+  const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
+  const releasedAt = new Date().toISOString();
+  await updateClaimCells(`${CLAIMS_SHEET}!J${sheetRow}:K${sheetRow}`, [[releasedAt, reason]]);
+  row[9] = releasedAt;
+  row[10] = reason;
+  return readClaimRow(row);
+}
+
+/** Adaugă o notă datată în jurnalul firmei (coloana L), cele noi primele — ca la updateLeadCrm. */
+export async function addClaimNote(
+  claimTimestamp: string,
+  leadId: string,
+  text: string,
+  today: string,
+  time?: string,
+): Promise<LeadClaim> {
+  const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
+  const existing = parseNotes(row[11] || '');
+  const next: LeadNote[] = [
+    { date: today, ...(time ? { time } : {}), text: text.trim() },
+    ...existing,
+  ];
+  const serialized = serializeNotes(next);
+  await updateClaimCells(`${CLAIMS_SHEET}!L${sheetRow}`, [[serialized]]);
+  row[11] = serialized;
+  return readClaimRow(row);
+}
+
+/**
+ * Aprobarea din /admin/crm, după apelul de confirmare cu firma: deblochează
+ * datele clientului în portal. `approvedAt` gol retrage aprobarea.
+ */
+export async function setClaimApproved(
+  claimTimestamp: string,
+  leadId: string,
+  approvedAt: string,
+): Promise<LeadClaim> {
+  const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
+  await updateClaimCells(`${CLAIMS_SHEET}!M${sheetRow}`, [[approvedAt]]);
+  row[12] = approvedAt;
+  return readClaimRow(row);
 }
 
 export async function saveWaitlistToSheet(email: string) {
@@ -699,6 +787,7 @@ export {
   FIRM_STATUSES,
   FIRM_STATUS_LABELS,
   FIRM_STATUS_HINTS,
+  claimsHeldForLead,
   countActiveClaimsForFirm,
   firmMentionedIn,
   isLeadClosed,

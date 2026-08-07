@@ -217,7 +217,7 @@ export async function sendSubmissionsDigest(
 }
 
 interface ClaimNotificationData {
-  claim: { numeFirma: string; numeContact: string; telefon: string };
+  claim: { numeFirma: string; numeContact: string; telefon: string; email?: string };
   lead: {
     numeCompanie: string;
     numeContact: string;
@@ -262,6 +262,7 @@ export async function sendClaimNotification(data: ClaimNotificationData): Promis
         ${row('Firmă', escapeHtml(claim.numeFirma))}
         ${row('Contact', escapeHtml(claim.numeContact))}
         ${row('Telefon', `<a href="tel:${escapeHtml(claim.telefon.replace(/\s/g, ''))}" style="color:#2563eb">${escapeHtml(claim.telefon)}</a>`)}
+        ${claim.email ? row('Email (portal)', `<a href="mailto:${escapeHtml(claim.email)}" style="color:#2563eb">${escapeHtml(claim.email)}</a>`) : ''}
       </table>
       <div style="font-size:12px;color:#6b7280;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin:18px 0 6px">Lead-ul (datele clientului)</div>
       <table style="border-collapse:collapse;width:100%">
@@ -358,5 +359,140 @@ export async function sendListingNotification(data: ListingNotificationData): Pr
 
   if (!result.ok) {
     console.warn('[email] Listing notification not sent:', result.reason);
+  }
+}
+
+// ── Portal instalatori ──────────────────────────────────────────────────────
+
+const PORTAL_BASE_URL = 'https://instalatori-fotovoltaice.ro';
+
+/**
+ * Emailul de login: link de acces direct + cod de 6 cifre. Codul există pentru
+ * clienții de email care rup linkurile (Yahoo pe mobil) — oricare din cele două
+ * ajunge. Ambele expiră împreună, TTL-ul vine din portal-auth.
+ */
+export async function sendPortalLoginEmail(data: {
+  to: string;
+  code: string;
+  verifyUrl: string;
+  ttlMinutes: number;
+}): Promise<{ ok: boolean; reason?: string }> {
+  const html = `<!DOCTYPE html>
+<html>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
+  <div style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
+    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#fffbeb">
+      <div style="font-size:12px;color:#92400e;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">Portal Instalatori</div>
+      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">Codul tău de acces</h1>
+    </div>
+    <div style="padding:24px">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="display:inline-block;padding:12px 28px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;font-size:30px;font-weight:700;letter-spacing:0.35em;color:#111827">${escapeHtml(data.code)}</div>
+      </div>
+      <p style="font-size:14px;color:#374151;margin:0 0 16px;text-align:center">
+        Introdu codul în pagina de login sau apasă butonul de mai jos.
+      </p>
+      <div style="text-align:center;margin-bottom:8px">
+        <a href="${escapeHtml(data.verifyUrl)}" style="display:inline-block;padding:12px 24px;background:#f59e0b;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">Intră în portal</a>
+      </div>
+    </div>
+    <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280">
+      Linkul și codul expiră în ${data.ttlMinutes} minute. Dacă nu ai cerut acest email, îl poți ignora.
+    </div>
+  </div>
+</body>
+</html>`;
+
+  return sendEmail({
+    to: data.to,
+    subject: `Cod de acces Portal Instalatori: ${data.code}`,
+    html,
+  });
+}
+
+/**
+ * Notificare către noi când o firmă renunță la o revendicare din portal —
+ * clientul rămâne fără firmă pe locul eliberat, deci trebuie sunat.
+ */
+export async function sendClaimReleaseNotification(data: {
+  numeFirma: string;
+  email: string;
+  motiv: string;
+  leadSummary: string;
+  leadId: string;
+}): Promise<void> {
+  const to = process.env.LISTING_NOTIFICATION_EMAIL || 'radu.cimpian94@gmail.com';
+
+  const html = `<!DOCTYPE html>
+<html>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
+  <div style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
+    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#fef2f2">
+      <div style="font-size:12px;color:#b91c1c;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">Renunțare la revendicare</div>
+      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${escapeHtml(data.numeFirma)}</h1>
+    </div>
+    <div style="padding:20px 24px">
+      <p style="font-size:14px;color:#374151;margin:0 0 12px">${escapeHtml(data.leadSummary)}</p>
+      <div style="padding:12px;background:#f9fafb;border-radius:8px;font-size:13px;color:#374151;white-space:pre-wrap"><strong>Motiv:</strong> ${escapeHtml(data.motiv)}</div>
+      <p style="font-size:12px;color:#6b7280;margin:12px 0 0">Firma: ${escapeHtml(data.email)} · Lead: ${escapeHtml(data.leadId)}</p>
+    </div>
+    <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280">
+      Locul s-a eliberat pe /cereri. Verifică dacă clientul trebuie sunat sau realocat.
+    </div>
+  </div>
+</body>
+</html>`;
+
+  const result = await sendEmail({
+    to,
+    subject: `Renunțare: ${data.numeFirma} · ${data.leadSummary}`,
+    html,
+  });
+
+  if (!result.ok) {
+    console.warn('[email] Release notification not sent:', result.reason);
+  }
+}
+
+/**
+ * Către firmă, după ce aprobăm revendicarea din /admin/crm: datele clientului
+ * s-au deblocat în portal. Fail-open ca restul notificărilor.
+ */
+export async function sendClaimApprovedEmail(data: {
+  to: string;
+  leadSummary: string;
+}): Promise<void> {
+  const html = `<!DOCTYPE html>
+<html>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
+  <div style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
+    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#ecfdf5">
+      <div style="font-size:12px;color:#047857;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">Revendicare confirmată</div>
+      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">Datele clientului sunt disponibile</h1>
+    </div>
+    <div style="padding:24px">
+      <p style="font-size:14px;color:#374151;margin:0 0 16px">
+        Revendicarea pentru <strong>${escapeHtml(data.leadSummary)}</strong> a fost confirmată.
+        Găsești datele de contact ale clientului în portal.
+      </p>
+      <div style="text-align:center">
+        <a href="${PORTAL_BASE_URL}/portal" style="display:inline-block;padding:12px 24px;background:#f59e0b;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">Deschide portalul</a>
+      </div>
+    </div>
+    <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280">
+      Sună clientul cât e caldă cererea. Locul tău se eliberează după ce clientul confirmă apelul.
+    </div>
+  </div>
+</body>
+</html>`;
+
+  const result = await sendEmail({
+    to: data.to,
+    subject: `Datele clientului sunt disponibile: ${data.leadSummary}`,
+    html,
+  });
+
+  if (!result.ok) {
+    console.warn('[email] Claim approved email not sent:', result.reason);
   }
 }

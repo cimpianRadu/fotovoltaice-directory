@@ -25,8 +25,9 @@ const FORMS = [
     id: 'lead', label: 'Cere ofertă (/cere-oferta)', path: '/cere-oferta',
     api: '/api/leads', formKey: 'tipProiect', sheet: 'Leads', emailCol: 3,
     // numeCompanie only exists in the "Firmă"/commercial segment (required there); harmless if absent in residential
-    text: { numeCompanie: `ROUTINE TEST ${TOKEN}`, numeContact: 'ROUTINE TEST', email: `${TEST_EMAIL_PREFIX}${TOKEN}-lead@example.com`, telefon: '0712345678', mesaj: `E2E routine ${TOKEN} — auto, ștergeți` },
-    selects: [{ name: 'tipProiect' }, { name: 'judet' }, { name: 'tipAcoperis' }],
+    // suprafata/putere are covered by the "Nu știu" checkboxes (fillForm ticks every checkbox)
+    text: { numeCompanie: `ROUTINE TEST ${TOKEN}`, numeContact: 'ROUTINE TEST', email: `${TEST_EMAIL_PREFIX}${TOKEN}-lead@example.com`, telefon: '0712345678', localitate: 'ROUTINE TEST', mesaj: `E2E routine ${TOKEN} — auto, ștergeți` },
+    selects: [{ name: 'tipProiect' }, { name: 'judet' }, { name: 'termen' }, { name: 'tipAcoperis' }, { name: 'fazare' }, { name: 'stocare' }, { name: 'wallbox' }, { name: 'finantare' }],
   },
   {
     id: 'listing', label: 'Listare firmă (/listeaza-firma)', path: '/listeaza-firma',

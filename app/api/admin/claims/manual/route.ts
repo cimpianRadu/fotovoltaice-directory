@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache';
 import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
   MAX_CLAIMS_PER_LEAD,
+  claimsHeldForLead,
   countActiveClaimsForFirm,
   getClaims,
   getFullLeadById,
@@ -40,7 +41,10 @@ export async function POST(request: Request) {
     }
 
     const allClaims = await getClaims();
-    const claimsForLead = allClaims.filter((c) => c.leadId === leadId);
+    // Renunțările nu ocupă locuri, dar manual poți re-aloca și unei firme care
+    // a renunțat (tu decizi, după apel) — de-aia duplicatul se verifică doar pe
+    // revendicările încă ținute, spre deosebire de fluxul public.
+    const claimsForLead = claimsHeldForLead(allClaims, leadId);
 
     if (claimsForLead.length >= MAX_CLAIMS_PER_LEAD) {
       return NextResponse.json(

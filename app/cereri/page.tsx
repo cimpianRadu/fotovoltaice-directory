@@ -39,6 +39,8 @@ export default async function CereriPage() {
     const [publicLeads, claims] = await Promise.all([getPublicLeads(), getClaims()]);
     leads = publicLeads;
     for (const c of claims) {
+      // Renunțările din portal nu ocupă locuri — cererea reapare disponibilă.
+      if (c.releasedAt) continue;
       claimCounts[c.leadId] = (claimCounts[c.leadId] || 0) + 1;
     }
   } catch (err) {
@@ -122,7 +124,13 @@ export default async function CereriPage() {
             </li>
           </ol>
           <p className="text-sm text-gray-600 mt-4 pt-4 border-t border-border">
-            Vrei să primești cererile direct, înainte să apară aici?{' '}
+            Ai revendicat deja cereri? Intră în{' '}
+            <Link href="/portal" className="text-primary-dark underline hover:no-underline">
+              Portalul Instalatorilor
+            </Link>{' '}
+            cu emailul firmei (fără parolă) ca să-ți vezi cererile, să lași note și să
+            eliberezi locurile la care renunți. Vrei să primești cererile direct, înainte să
+            apară aici?{' '}
             <Link href="/listeaza-firma" className="text-primary-dark underline hover:no-underline">
               Listează-ți firma gratuit
             </Link>{' '}

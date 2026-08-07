@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache';
 import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
   MAX_CLAIMS_PER_LEAD,
+  claimsHeldForLead,
   countActiveClaimsForFirm,
   getClaims,
   getFullLeadById,
@@ -10,6 +11,7 @@ import {
   isSameFirm,
   saveClaimToSheet,
 } from '@/lib/sheets';
+import { isValidEmail, normalizeEmail } from '@/lib/portal-auth';
 import { sendClaimNotification } from '@/lib/email';
 import {
   getProjectTypeLabel,
@@ -21,11 +23,20 @@ import {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { leadId, numeFirma, numeContact, telefon } = body as Record<string, string>;
+    const { leadId, numeFirma, numeContact, telefon, email } = body as Record<string, string>;
 
-    if (!leadId || !numeFirma?.trim() || !numeContact?.trim() || !telefon?.trim()) {
+    if (!leadId || !numeFirma?.trim() || !numeContact?.trim() || !telefon?.trim() || !email?.trim()) {
       return NextResponse.json(
         { error: 'Toate câmpurile sunt obligatorii.' },
+        { status: 400 }
+      );
+    }
+
+    // Emailul e identitatea firmei în /portal — cu el își vede revendicările,
+    // lasă note și renunță. Fără email valid, revendicarea ar rămâne orfană.
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { error: 'Adresa de email nu este validă.' },
         { status: 400 }
       );
     }
@@ -50,7 +61,12 @@ export async function POST(request: Request) {
     }
 
     const allClaims = await getClaims();
-    const claimsForLead = allClaims.filter((c) => c.leadId === leadId);
+    // Renunțările nu ocupă locuri — dar rămân în `allClaimsForLead` pentru
+    // regula de duplicat: cine a renunțat nu-și mai ia înapoi aceeași cerere
+    // singur (ne scrie, o dăm manual — altfel renunțatul devine un buton de
+    // ciclat cereri fără niciun apel dat).
+    const allClaimsForLead = allClaims.filter((c) => c.leadId === leadId);
+    const claimsForLead = claimsHeldForLead(allClaims, leadId);
 
     if (claimsForLead.length >= MAX_CLAIMS_PER_LEAD) {
       return NextResponse.json(
@@ -61,7 +77,7 @@ export async function POST(request: Request) {
 
     // Aceeași regulă de identificare ca la plafonul pe firmă, ca să nu poată o
     // firmă să treacă de una și să cadă în cealaltă cu aceleași date.
-    const duplicate = claimsForLead.some((c) => isSameFirm(c, { numeFirma, telefon }));
+    const duplicate = allClaimsForLead.some((c) => isSameFirm(c, { numeFirma, telefon }));
     if (duplicate) {
       return NextResponse.json(
         { error: 'Firma ta a revendicat deja această cerere. Te contactăm telefonic.' },
@@ -91,6 +107,7 @@ export async function POST(request: Request) {
       numeContact: numeContact.trim(),
       telefon: telefon.trim(),
       source: 'self' as const,
+      email: normalizeEmail(email),
     };
     await saveClaimToSheet(claim);
 

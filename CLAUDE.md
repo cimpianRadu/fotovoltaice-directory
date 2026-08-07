@@ -8,7 +8,7 @@ Director online de firme de instalare panouri fotovoltaice comerciale și indust
 
 ## Structura Proiectului
 ```
-app/            # Next.js App Router — pages (firme, ghid, cere-oferta, intrebari-frecvente, publicitate, clasament, despre)
+app/            # Next.js App Router — pages (firme, ghid, cere-oferta, cereri, portal, intrebari-frecvente, publicitate, clasament, despre)
 components/     # layout/, ui/ (SearchableSelect, Markdown), seo/JsonLd, forms/, sponsor/
 data/           # companies.json, counties.json, specializations.json, guides.json, anre-atestate.json, anre-rejected.json
 docs/           # planning, pipeline firme, long-tail keywords, roadmap.md

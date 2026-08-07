@@ -1,7 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { MAX_ACTIVE_CLAIMS_PER_FIRM, type ClaimSource } from '@/lib/sheets-shared';
+import {
+  MAX_ACTIVE_CLAIMS_PER_FIRM,
+  type ClaimSource,
+  type LeadNote,
+} from '@/lib/sheets-shared';
 
 export interface ClaimRow {
   timestamp: string;
@@ -11,6 +15,12 @@ export interface ClaimRow {
   telefon: string;
   contactedAt: string;
   source: ClaimSource;
+  /** Email-ul de portal al firmei; gol pe revendicările de dinainte de portal. */
+  email: string;
+  releasedAt: string;
+  releaseReason: string;
+  firmNotes: LeadNote[];
+  approvedAt: string;
   /** Câte cereri ține firma asta fără apel confirmat, la încărcarea paginii. */
   firmActive: number;
 }
@@ -29,13 +39,14 @@ function fmtDateTime(iso: string): string {
 }
 
 function fmtDay(ymd: string): string {
-  const d = new Date(`${ymd}T00:00:00`);
+  const d = new Date(ymd.includes('T') ? ymd : `${ymd}T00:00:00`);
   if (Number.isNaN(d.getTime())) return ymd;
   return d.toLocaleDateString('ro-RO', { day: 'numeric', month: 'short' });
 }
 
 function Claim({ claim }: { claim: ClaimRow }) {
   const [contactedAt, setContactedAt] = useState(claim.contactedAt);
+  const [approvedAt, setApprovedAt] = useState(claim.approvedAt);
   const [state, setState] = useState<'idle' | 'saving' | 'error'>('idle');
   const [message, setMessage] = useState<string | null>(null);
 
@@ -44,28 +55,47 @@ function Claim({ claim }: { claim: ClaimRow }) {
   const active = claim.firmActive - (contactedAt ? 1 : 0) + (claim.contactedAt ? 1 : 0);
   const capped = active >= MAX_ACTIVE_CLAIMS_PER_FIRM;
 
-  async function toggle() {
-    const next = !contactedAt;
+  async function call(url: string, body: Record<string, unknown>, apply: (b: Record<string, string>) => void) {
     setState('saving');
     setMessage(null);
     try {
-      const res = await fetch('/api/admin/claims', {
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          claimTimestamp: claim.timestamp,
-          leadId: claim.leadId,
-          contacted: next,
-        }),
+        body: JSON.stringify({ claimTimestamp: claim.timestamp, leadId: claim.leadId, ...body }),
       });
-      const body = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(body.error || `Eroare ${res.status}`);
-      setContactedAt(body.contactedAt || '');
+      const resBody = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(resBody.error || `Eroare ${res.status}`);
+      apply(resBody);
       setState('idle');
     } catch (e) {
       setState('error');
       setMessage(e instanceof Error ? e.message : 'Eroare');
     }
+  }
+
+  const toggleContacted = () =>
+    call('/api/admin/claims', { contacted: !contactedAt }, (b) => setContactedAt(b.contactedAt || ''));
+  const toggleApproved = () =>
+    call('/api/admin/claims/approve', { approved: !approvedAt }, (b) => setApprovedAt(b.approvedAt || ''));
+
+  // Renunțarea din portal: card gri, doar informație — nu mai e nimic de apăsat.
+  if (claim.releasedAt) {
+    return (
+      <div className="rounded-md border border-slate-100 bg-slate-50/40 px-2 py-1.5 text-xs opacity-70">
+        <div className="flex items-baseline justify-between gap-2">
+          <span className="min-w-0 truncate font-medium text-slate-500 line-through">
+            {claim.numeFirma}
+          </span>
+          <span className="shrink-0 rounded bg-slate-200 px-1 py-px text-[9px] font-semibold tracking-wide text-slate-600 uppercase">
+            a renunțat · {fmtDay(claim.releasedAt)}
+          </span>
+        </div>
+        {claim.releaseReason && (
+          <div className="mt-0.5 text-slate-500 italic">„{claim.releaseReason}"</div>
+        )}
+      </div>
+    );
   }
 
   return (
@@ -102,29 +132,72 @@ function Claim({ claim }: { claim: ClaimRow }) {
           </>
         )}
       </div>
+      {claim.email && (
+        <div className="truncate text-slate-400" title="Emailul de portal al firmei">
+          {claim.email}
+        </div>
+      )}
       <div className="text-slate-400">{fmtDateTime(claim.timestamp)}</div>
 
-      <button
-        type="button"
-        onClick={toggle}
-        disabled={state === 'saving'}
-        title={
-          contactedAt
-            ? 'Retrage confirmarea — locul se ocupă la loc'
-            : 'Confirmă că firma a sunat clientul — eliberează un loc'
-        }
-        className={`mt-1.5 w-full rounded px-2 py-1 text-[11px] font-medium transition disabled:cursor-wait ${
-          contactedAt
-            ? 'bg-emerald-600 text-white hover:bg-emerald-700'
-            : 'border border-slate-300 bg-white text-slate-600 hover:border-slate-400 hover:text-slate-900'
-        }`}
-      >
-        {state === 'saving'
-          ? 'se salvează…'
-          : contactedAt
-            ? `A sunat clientul · ${fmtDay(contactedAt)}`
-            : 'Marchează apelul'}
-      </button>
+      {/* Jurnalul firmei din portal — derivat, doar afișare. */}
+      {claim.firmNotes.length > 0 && (
+        <div className="mt-1 space-y-0.5 border-t border-slate-100 pt-1">
+          {claim.firmNotes.map((n, i) => (
+            <div key={`${n.date}-${i}`} className="text-slate-500">
+              <span className="mr-1 text-[10px] text-slate-400">
+                {n.date ? fmtDay(n.date) : ''}
+                {n.time ? ` ${n.time}` : ''}
+              </span>
+              {n.text}
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div className="mt-1.5 grid grid-cols-2 gap-1">
+        <button
+          type="button"
+          onClick={toggleApproved}
+          disabled={state === 'saving'}
+          title={
+            approvedAt
+              ? 'Retrage aprobarea — datele clientului dispar din portal'
+              : 'Aprobă revendicarea (după apelul cu firma) — datele clientului apar în portalul ei'
+          }
+          className={`rounded px-2 py-1 text-[11px] font-medium transition disabled:cursor-wait ${
+            approvedAt
+              ? 'bg-sky-600 text-white hover:bg-sky-700'
+              : 'border border-slate-300 bg-white text-slate-600 hover:border-slate-400 hover:text-slate-900'
+          }`}
+        >
+          {state === 'saving'
+            ? '…'
+            : approvedAt
+              ? `Date în portal · ${fmtDay(approvedAt)}`
+              : 'Aprobă → portal'}
+        </button>
+        <button
+          type="button"
+          onClick={toggleContacted}
+          disabled={state === 'saving'}
+          title={
+            contactedAt
+              ? 'Retrage confirmarea — locul se ocupă la loc'
+              : 'Confirmă că firma a sunat clientul — eliberează un loc'
+          }
+          className={`rounded px-2 py-1 text-[11px] font-medium transition disabled:cursor-wait ${
+            contactedAt
+              ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+              : 'border border-slate-300 bg-white text-slate-600 hover:border-slate-400 hover:text-slate-900'
+          }`}
+        >
+          {state === 'saving'
+            ? 'se salvează…'
+            : contactedAt
+              ? `A sunat · ${fmtDay(contactedAt)}`
+              : 'Marchează apelul'}
+        </button>
+      </div>
       {state === 'error' && <p className="mt-1 text-[10px] text-red-600">{message}</p>}
     </div>
   );

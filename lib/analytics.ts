@@ -16,7 +16,11 @@ type EventName =
   | 'segment_selected'
   | 'hero_search_select'
   | 'hero_pill_click'
-  | 'cere_oferta_click';
+  | 'cere_oferta_click'
+  | 'portal_login_requested'
+  | 'portal_login_completed'
+  | 'portal_note_added'
+  | 'portal_claim_released';
 
 type EventProps = Record<string, string | number | boolean>;
 

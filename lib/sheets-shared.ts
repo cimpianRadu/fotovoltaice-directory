@@ -123,11 +123,28 @@ export function isSameFirm(
   return nameA !== '' && nameA === normalizeFirmName(b.numeFirma);
 }
 
-/** Revendicările fără apel confirmat — alea ocupă sloturile firmei. */
+/**
+ * Revendicările fără apel confirmat — alea ocupă sloturile firmei. O
+ * revendicare la care firma a renunțat din portal (releasedAt) nu mai ocupă
+ * nimic: renunțarea există exact ca să elibereze locul.
+ */
 export function countActiveClaimsForFirm<
-  T extends { numeFirma: string; telefon: string; contactedAt: string },
+  T extends { numeFirma: string; telefon: string; contactedAt: string; releasedAt: string },
 >(claims: T[], firm: { numeFirma: string; telefon: string }): number {
-  return claims.filter((c) => !c.contactedAt && isSameFirm(c, firm)).length;
+  return claims.filter((c) => !c.contactedAt && !c.releasedAt && isSameFirm(c, firm)).length;
+}
+
+/**
+ * Revendicările care ocupă locurile unei cereri (plafonul MAX_CLAIMS_PER_LEAD).
+ * Renunțările nu se numără: dacă o firmă se retrage, locul se întoarce în feed
+ * pentru alta. Apelul confirmat NU eliberează locul cererii — clientul e deja
+ * în discuții cu firma aia, doar slotul firmei se eliberează.
+ */
+export function claimsHeldForLead<T extends { leadId: string; releasedAt: string }>(
+  claims: T[],
+  leadId: string,
+): T[] {
+  return claims.filter((c) => c.leadId === leadId && !c.releasedAt);
 }
 
 // ── CRM Firme: pipeline-ul telefonic pe instalatori ─────────────────────────

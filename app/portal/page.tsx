@@ -1,0 +1,164 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { getPortalEmail } from '@/lib/portal-session';
+import { getClaims, getLeadsSince, type NewLead } from '@/lib/sheets';
+import {
+  getProjectTypeLabel,
+  getRoofTypeLabel,
+  getPhaseLabel,
+  getFinancingLabel,
+  getYesNoLabel,
+  getTimelineLabel,
+} from '@/lib/utils-shared';
+import PortalClaimCard, { type PortalClaim } from './PortalClaimCard';
+import LogoutButton from './LogoutButton';
+
+// Datele firmei logate nu au voie în cache-ul static — mereu proaspete, per sesiune.
+export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Portal Instalatori - Cererile firmei tale',
+  description: 'Gestionează cererile revendicate: datele clienților, note și renunțări.',
+  robots: { index: false },
+};
+
+function specsFor(lead: NewLead | undefined): { label: string; value: string }[] {
+  if (!lead) return [];
+  return [
+    lead.putere ? { label: 'Putere', value: `${lead.putere} kW` } : null,
+    lead.suprafata ? { label: 'Suprafață', value: `${lead.suprafata} mp` } : null,
+    lead.tipAcoperis ? { label: 'Acoperiș', value: getRoofTypeLabel(lead.tipAcoperis) } : null,
+    lead.fazare ? { label: 'Alimentare', value: getPhaseLabel(lead.fazare) } : null,
+    lead.consumLunar ? { label: 'Consum', value: lead.consumLunar } : null,
+    lead.finantare ? { label: 'Finanțare', value: getFinancingLabel(lead.finantare) } : null,
+    lead.stocare ? { label: 'Baterie', value: getYesNoLabel(lead.stocare) } : null,
+    lead.wallbox ? { label: 'Stație auto', value: getYesNoLabel(lead.wallbox) } : null,
+    lead.termen ? { label: 'Termen', value: getTimelineLabel(lead.termen) } : null,
+  ].filter(Boolean) as { label: string; value: string }[];
+}
+
+export default async function PortalPage() {
+  // Middleware-ul păzește ruta, dar dubla verificare e ieftină și explicită.
+  const email = await getPortalEmail();
+  if (!email) redirect('/portal/login');
+
+  let mine: PortalClaim[] = [];
+  let loadError = false;
+
+  try {
+    const [claims, leads] = await Promise.all([getClaims(), getLeadsSince(new Date(0))]);
+    const leadById = new Map(leads.map((l) => [l.timestamp, l]));
+
+    mine = claims
+      .filter((c) => c.email === email)
+      .map((c) => {
+        const lead = leadById.get(c.leadId);
+        const approved = Boolean(c.approvedAt);
+        return {
+          claimTimestamp: c.timestamp,
+          leadId: c.leadId,
+          numeFirma: c.numeFirma,
+          claimedAt: c.timestamp,
+          releasedAt: c.releasedAt,
+          releaseReason: c.releaseReason,
+          contactedAt: c.contactedAt,
+          approved,
+          notes: c.firmNotes,
+          tipLabel: lead ? getProjectTypeLabel(lead.tipProiect) : 'Cerere',
+          judet: lead?.judet || '',
+          segment: lead?.segment || 'comercial',
+          specs: specsFor(lead),
+          mesaj: lead && !lead.mesajAscuns ? lead.mesaj : '',
+          // Datele de contact ale clientului pleacă spre client DOAR pe
+          // revendicările aprobate — gate-ul telefonic din /admin/crm.
+          client: approved && lead
+            ? {
+                nume: lead.numeContact,
+                companie: lead.numeCompanie,
+                telefon: lead.telefon,
+                email: lead.email,
+                localitate: [lead.localitate, lead.judet].filter(Boolean).join(', '),
+                poze: lead.poze.trim(),
+              }
+            : null,
+        };
+      })
+      .reverse(); // cele mai noi primele
+  } catch (err) {
+    console.error('[portal] failed to load claims:', err);
+    loadError = true;
+  }
+
+  const active = mine.filter((c) => !c.releasedAt);
+  const released = mine.filter((c) => c.releasedAt);
+
+  return (
+    <div className="max-w-3xl mx-auto px-4 py-8">
+      <div className="flex items-start justify-between gap-4 mb-2">
+        <h1 className="text-2xl font-bold text-gray-900">Cererile firmei tale</h1>
+        <LogoutButton />
+      </div>
+      <p className="text-sm text-gray-500 mb-8">
+        Conectat ca <strong>{email}</strong>. Aici vezi cererile revendicate cu acest email,
+        lași note și eliberezi locurile la care renunți.
+      </p>
+
+      {loadError && (
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 mb-6">
+          Nu am putut încărca cererile. Reîmprospătează pagina.
+        </div>
+      )}
+
+      {!loadError && mine.length === 0 && (
+        <div className="bg-surface rounded-xl border border-border p-10 text-center">
+          <p className="text-gray-600 font-medium">Nicio cerere revendicată cu acest email.</p>
+          <p className="text-sm text-gray-500 mt-2 leading-relaxed">
+            Revendică cereri din{' '}
+            <Link href="/cereri" className="text-primary-dark underline hover:no-underline">
+              feedul de cereri active
+            </Link>{' '}
+            folosind emailul <strong>{email}</strong>. Dacă ai revendicat înainte de lansarea
+            portalului, scrie-ne la{' '}
+            <a
+              href="mailto:contact@instalatori-fotovoltaice.ro"
+              className="text-primary-dark underline hover:no-underline"
+            >
+              contact@instalatori-fotovoltaice.ro
+            </a>{' '}
+            și îți legăm revendicările vechi de cont.
+          </p>
+        </div>
+      )}
+
+      {active.length > 0 && (
+        <div className="space-y-4">
+          {active.map((c) => (
+            <PortalClaimCard key={`${c.leadId}-${c.claimTimestamp}`} claim={c} />
+          ))}
+        </div>
+      )}
+
+      {released.length > 0 && (
+        <>
+          <h2 className="mt-10 mb-3 text-sm font-semibold uppercase tracking-wide text-gray-400">
+            Cereri la care ai renunțat
+          </h2>
+          <div className="space-y-4">
+            {released.map((c) => (
+              <PortalClaimCard key={`${c.leadId}-${c.claimTimestamp}`} claim={c} />
+            ))}
+          </div>
+        </>
+      )}
+
+      {mine.length > 0 && (
+        <p className="mt-8 text-xs text-gray-400 leading-relaxed">
+          Datele clienților se deblochează după apelul nostru de confirmare. Locul unei firme se
+          eliberează când clientul confirmă că a fost sunat, sau când renunți tu, cu un motiv,
+          de aici.
+        </p>
+      )}
+    </div>
+  );
+}
