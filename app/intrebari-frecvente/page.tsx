@@ -79,7 +79,7 @@ const faqSections = [
       {
         question: 'Ce TVA se aplică la achiziția panourilor fotovoltaice pentru firme?',
         answer:
-          'Legea 39/2023 a redus TVA la 5% pentru panouri fotovoltaice, dar cota redusă NU se aplică firmelor care folosesc instalațiile comercial. Companiile plătesc TVA standard de 19%, dar îl pot deduce integral (TVA deductibil). Investiția este deductibilă fiscal cu amortizare accelerată pe 4 ani. Unele primării oferă reduceri de 50% la impozitul pe clădiri cu panouri fotovoltaice.',
+          'De la 1 august 2025, prin Legea 141/2025, cota redusă pentru panouri fotovoltaice a fost eliminată: se aplică TVA standard de 21% atât firmelor, cât și persoanelor fizice. Firmele îl pot însă deduce integral (TVA deductibil). Investiția este deductibilă fiscal cu amortizare accelerată pe 4 ani. Unele primării oferă reduceri de 50% la impozitul pe clădiri cu panouri fotovoltaice.',
       },
     ],
   },

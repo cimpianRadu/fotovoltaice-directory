@@ -522,7 +522,7 @@ export default function AdvertisePage() {
               <thead>
                 <tr className="bg-surface border-b border-border text-left">
                   <th className="px-4 py-3 font-semibold text-gray-700">Pachet</th>
-                  <th className="px-4 py-3 font-semibold text-gray-700 text-right">Preț (+ TVA 21%)</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 text-right">Preț (+ TVA {TVA_PCT}%)</th>
                   <th className="px-4 py-3 font-semibold text-gray-700">Ce primești</th>
                 </tr>
               </thead>
