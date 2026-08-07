@@ -5,53 +5,24 @@ import Link from 'next/link';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import { formatCurrency, formatNumber, slugifyCounty } from '@/lib/utils-shared';
-import type { KitPriceCurve, PricePoint } from '@/lib/kit-price-curve';
-import pvgisData from '@/data/pvgis-yields.json';
+import type { KitPriceCurve } from '@/lib/kit-price-curve';
+import {
+  SCRAPED_DATA_MAX_KWP,
+  SYSTEM_LIFETIME_YEARS,
+  estimate,
+  yieldFor,
+  type Mounting,
+} from '@/lib/pv-estimate';
 import countiesData from '@/data/counties.json';
-
-type Mounting = 'inclinat' | 'terasa' | 'sol';
-
-const YIELDS = pvgisData.yields as Record<string, number>;
-const FACTORS = pvgisData._factors as Record<Mounting, number>;
-/**
- * Peste pragul ăsta nu mai avem oferte scanate, iar un sistem comercial nu e
- * un kit de magazin: are racord trifazat, ATR și avize care nu apar în preț.
- * Sub prag folosim ofertele reale, peste el rămân estimările de piață.
- */
-const SCRAPED_DATA_MAX_KWP = 20;
-// Casa Verde Fotovoltaice (AFM) funds up to 90% of the system cost — the beneficiary
-// always pays a minimum 10% contribution. Source: afm.ro program rules.
+// Casa Verde Fotovoltaice (AFM) acoperă până la 90% din costul sistemului,
+// beneficiarul pune întotdeauna minim 10%. Sursa: regulile programului, afm.ro.
 const CASA_VERDE_MAX_COVERAGE = 0.90;
-const SYSTEM_LIFETIME_YEARS = 25;
-const ANNUAL_DEGRADATION = 0.005;
-const M2_PER_KWP = 5;
-const KG_CO2_PER_KWH = 0.299;
 
 const MOUNTING_OPTIONS: { value: Mounting; label: string; hint: string }[] = [
   { value: 'inclinat', label: 'Acoperiș înclinat', hint: '~30°, orientare sud' },
   { value: 'terasa', label: 'Terasă', hint: 'plat, structură 10–15°' },
   { value: 'sol', label: 'Montaj la sol', hint: 'optim ~30°' },
 ];
-
-/**
- * Prețul pe kWp: din ofertele reale acolo unde le avem, din estimările de
- * piață pentru sistemele comerciale mari. `point` e null când cifra e estimare,
- * ca rezultatul să poată spune cinstit de unde vine.
- */
-function pricePerKwp(
-  kwp: number,
-  curve: KitPriceCurve,
-): { value: number; point: PricePoint | null } {
-  if (kwp <= SCRAPED_DATA_MAX_KWP) {
-    const point = curve.points.find(
-      (p) => kwp >= p.minKwp && (p.maxKwp === null || kwp < p.maxKwp),
-    );
-    if (point) return { value: point.median, point };
-  }
-  if (kwp < 50) return { value: 4500, point: null };
-  if (kwp < 200) return { value: 3800, point: null };
-  return { value: 3500, point: null };
-}
 
 function trackUmami(event: string, data?: Record<string, string | number>) {
   if (typeof window === 'undefined') return;
@@ -64,6 +35,9 @@ export default function CalculatorClient({ priceCurve }: { priceCurve: KitPriceC
   const isRezidential = segment === 'rezidential';
 
   const [consumLunar, setConsumLunar] = useState<string>('5000');
+  // Oamenii își știu factura în lei, nu în kWh. Fără varianta asta, jumătate
+  // din vizitatori ar trebui să facă o împărțire ca să poată folosi pagina.
+  const [unitateConsum, setUnitateConsum] = useState<'kwh' | 'lei'>('kwh');
   const [judet, setJudet] = useState<string>('București');
   const [mounting, setMounting] = useState<Mounting>('inclinat');
   const [tarif, setTarif] = useState<string>('1.30');
@@ -90,79 +64,36 @@ export default function CalculatorClient({ priceCurve }: { priceCurve: KitPriceC
     [],
   );
 
-  const yieldKwhPerKwp = useMemo(() => {
-    const baseYield = YIELDS[judet] ?? 1250;
-    return Math.round(baseYield * FACTORS[mounting]);
-  }, [judet, mounting]);
+  const yieldKwhPerKwp = useMemo(() => yieldFor(judet, mounting), [judet, mounting]);
 
-  const result = useMemo(() => {
-    const consumLunarNum = Number(consumLunar);
-    const tarifNum = Number(tarif);
-    if (!Number.isFinite(consumLunarNum) || consumLunarNum <= 0) return null;
-    if (!Number.isFinite(tarifNum) || tarifNum <= 0) return null;
+  // Consumul poate fi dat în kWh sau în lei; în lei îl împărțim la tariful de
+  // mai jos, care e oricum cel folosit la calculul economiei.
+  const consumLunarKwh = useMemo(() => {
+    const n = Number(consumLunar);
+    if (!Number.isFinite(n) || n <= 0) return 0;
+    if (unitateConsum === 'kwh') return n;
+    const t = Number(tarif);
+    return Number.isFinite(t) && t > 0 ? n / t : 0;
+  }, [consumLunar, unitateConsum, tarif]);
 
-    const consumAnual = consumLunarNum * 12;
-
-    const kwp = consumAnual / yieldKwhPerKwp;
-    const kwpRounded = Math.max(1, Math.round(kwp * 10) / 10);
-    const suprafata = Math.round(kwpRounded * M2_PER_KWP);
-    const price = pricePerKwp(kwpRounded, priceCurve);
-    const investitieBruta = Math.round(kwpRounded * price.value);
-    // Casa Verde funds up to 90% of the cost (beneficiary pays min. 10%), capped at
-    // the program's max grant. The subsidy can never make the system free.
-    const subventieCap = Math.max(Number(subventie) || 0, 0);
-    const subventieNum = isRezidential
-      ? Math.min(subventieCap, Math.round(investitieBruta * CASA_VERDE_MAX_COVERAGE))
-      : 0;
-    const investitie = investitieBruta - subventieNum;
-
-    const productieAnuala = Math.round(kwpRounded * yieldKwhPerKwp);
-    const autoFactor = autoconsum / 100;
-    const autoconsumKwh = Math.round(productieAnuala * autoFactor);
-    const injectatKwh = productieAnuala - autoconsumKwh;
-    const surplusNum = Math.max(Number(pretSurplus) || 0, 0);
-    const economieAutoconsum = Math.round(autoconsumKwh * tarifNum);
-    const venitInjectat = Math.round(injectatKwh * surplusNum);
-    const economieAnuala = economieAutoconsum + venitInjectat;
-
-    let cumulativeNet = -investitie;
-    let payback: number | null = null;
-    let totalProfit25 = -investitie;
-    for (let an = 1; an <= SYSTEM_LIFETIME_YEARS; an++) {
-      const degradationFactor = Math.pow(1 - ANNUAL_DEGRADATION, an - 1);
-      const venitulAnuluiAcesta = economieAnuala * degradationFactor;
-      cumulativeNet += venitulAnuluiAcesta;
-      if (payback === null && cumulativeNet >= 0) {
-        const venitAnAnterior = economieAnuala * Math.pow(1 - ANNUAL_DEGRADATION, an - 2);
-        const remainingFromPrev = cumulativeNet - venitulAnuluiAcesta;
-        const fraction = -remainingFromPrev / Math.max(venitAnAnterior, 1);
-        payback = an - 1 + fraction;
-      }
-      if (an === SYSTEM_LIFETIME_YEARS) totalProfit25 = cumulativeNet;
-    }
-
-    const co2Tone = Math.round((productieAnuala * KG_CO2_PER_KWH) / 100) / 10;
-
-    return {
-      kwp: kwpRounded,
-      yieldKwhPerKwp,
-      suprafata,
-      investitie,
-      investitieBruta,
-      subventie: subventieNum,
-      productieAnuala,
-      autoconsumKwh,
-      injectatKwh,
-      economieAutoconsum,
-      venitInjectat,
-      economieAnuala,
-      payback,
-      totalProfit25,
-      co2Tone,
-      pricePerKwp: price.value,
-      pricePoint: price.point,
-    };
-  }, [consumLunar, tarif, autoconsum, yieldKwhPerKwp, isRezidential, subventie, pretSurplus, priceCurve]);
+  const result = useMemo(
+    () =>
+      estimate(
+        {
+          consumLunarKwh,
+          judet,
+          mounting,
+          tarif: Number(tarif),
+          autoconsum: autoconsum / 100,
+          pretSurplus: Math.max(Number(pretSurplus) || 0, 0),
+          // Doar rezidențialul are Casa Verde; la firme plafonul nu se aplică.
+          subventie: isRezidential ? Math.max(Number(subventie) || 0, 0) : 0,
+          subventieMaxCoverage: CASA_VERDE_MAX_COVERAGE,
+        },
+        priceCurve,
+      ),
+    [consumLunarKwh, judet, mounting, tarif, autoconsum, pretSurplus, isRezidential, subventie, priceCurve],
+  );
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -200,21 +131,48 @@ export default function CalculatorClient({ priceCurve }: { priceCurve: KitPriceC
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Consum lunar mediu (kWh) <span className="text-red-500">*</span>
+              Consum lunar mediu <span className="text-red-500">*</span>
             </label>
-            <input
-              type="number"
-              min={100}
-              step={100}
-              value={consumLunar}
-              onChange={(e) => setConsumLunar(e.target.value)}
-              required
-              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none"
-            />
+            <div className="flex gap-2">
+              <input
+                type="number"
+                min={1}
+                // `any`, nu un pas fix: consumul nu vine în trepte, iar un step
+                // de 50 sau 100 face ca 350 să fie respins de validarea nativă.
+                step="any"
+                value={consumLunar}
+                onChange={(e) => setConsumLunar(e.target.value)}
+                required
+                className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+              />
+              <div className="shrink-0 inline-flex rounded-lg border border-gray-300 p-0.5">
+                {(['kwh', 'lei'] as const).map((u) => (
+                  <button
+                    key={u}
+                    type="button"
+                    onClick={() => setUnitateConsum(u)}
+                    className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
+                      unitateConsum === u
+                        ? 'bg-primary text-white'
+                        : 'text-gray-500 hover:text-gray-800'
+                    }`}
+                  >
+                    {u === 'kwh' ? 'kWh' : 'lei'}
+                  </button>
+                ))}
+              </div>
+            </div>
             <p className="mt-1 text-xs text-gray-500">
-              {isRezidential
-                ? 'Vezi pe factură. Tipic pentru o casă: 150–500 kWh/lună.'
-                : 'Vezi pe factură. Tipic: birou mic 1.500–3.000, hală 5.000–30.000.'}
+              {unitateConsum === 'lei' ? (
+                <>
+                  Suma de pe factură. O împărțim la tariful de mai jos, deci ies{' '}
+                  <strong>~{formatNumber(Math.round(consumLunarKwh))} kWh pe lună</strong>.
+                </>
+              ) : isRezidential ? (
+                'Vezi pe factură. Tipic pentru o casă: 150–500 kWh/lună.'
+              ) : (
+                'Vezi pe factură. Tipic: birou mic 1.500–3.000, hală 5.000–30.000.'
+              )}
             </p>
           </div>
 
@@ -324,7 +282,7 @@ export default function CalculatorClient({ priceCurve }: { priceCurve: KitPriceC
               <input
                 type="number"
                 min={0}
-                step={500}
+                step="any"
                 value={subventie}
                 onChange={(e) => setSubventie(e.target.value)}
                 className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none"
@@ -469,7 +427,9 @@ export default function CalculatorClient({ priceCurve }: { priceCurve: KitPriceC
             </div>
 
             <div className="bg-surface rounded-xl border border-border p-5">
-              <p className="text-sm font-semibold text-secondary-dark mb-3">Profit pe durata de viață (25 ani)</p>
+              <p className="text-sm font-semibold text-secondary-dark mb-3">
+                Profit pe durata de viață ({SYSTEM_LIFETIME_YEARS} ani)
+              </p>
               <dl className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <dt className="text-gray-600">Investiție inițială</dt>
