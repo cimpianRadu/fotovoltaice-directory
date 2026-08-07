@@ -5,6 +5,7 @@ import Link from 'next/link';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import { formatCurrency, formatNumber, slugifyCounty } from '@/lib/utils-shared';
+import type { KitPriceCurve, PricePoint } from '@/lib/kit-price-curve';
 import pvgisData from '@/data/pvgis-yields.json';
 import countiesData from '@/data/counties.json';
 
@@ -12,7 +13,12 @@ type Mounting = 'inclinat' | 'terasa' | 'sol';
 
 const YIELDS = pvgisData.yields as Record<string, number>;
 const FACTORS = pvgisData._factors as Record<Mounting, number>;
-const GRID_BUYBACK_RON_PER_KWH = 0.30;
+/**
+ * Peste pragul ăsta nu mai avem oferte scanate, iar un sistem comercial nu e
+ * un kit de magazin: are racord trifazat, ATR și avize care nu apar în preț.
+ * Sub prag folosim ofertele reale, peste el rămân estimările de piață.
+ */
+const SCRAPED_DATA_MAX_KWP = 20;
 // Casa Verde Fotovoltaice (AFM) funds up to 90% of the system cost — the beneficiary
 // always pays a minimum 10% contribution. Source: afm.ro program rules.
 const CASA_VERDE_MAX_COVERAGE = 0.90;
@@ -27,10 +33,24 @@ const MOUNTING_OPTIONS: { value: Mounting; label: string; hint: string }[] = [
   { value: 'sol', label: 'Montaj la sol', hint: 'optim ~30°' },
 ];
 
-function pricePerKwp(kwp: number): number {
-  if (kwp < 50) return 4500;
-  if (kwp < 200) return 3800;
-  return 3500;
+/**
+ * Prețul pe kWp: din ofertele reale acolo unde le avem, din estimările de
+ * piață pentru sistemele comerciale mari. `point` e null când cifra e estimare,
+ * ca rezultatul să poată spune cinstit de unde vine.
+ */
+function pricePerKwp(
+  kwp: number,
+  curve: KitPriceCurve,
+): { value: number; point: PricePoint | null } {
+  if (kwp <= SCRAPED_DATA_MAX_KWP) {
+    const point = curve.points.find(
+      (p) => kwp >= p.minKwp && (p.maxKwp === null || kwp < p.maxKwp),
+    );
+    if (point) return { value: point.median, point };
+  }
+  if (kwp < 50) return { value: 4500, point: null };
+  if (kwp < 200) return { value: 3800, point: null };
+  return { value: 3500, point: null };
 }
 
 function trackUmami(event: string, data?: Record<string, string | number>) {
@@ -39,7 +59,7 @@ function trackUmami(event: string, data?: Record<string, string | number>) {
   w.umami?.track?.(event, data);
 }
 
-export default function CalculatorClient() {
+export default function CalculatorClient({ priceCurve }: { priceCurve: KitPriceCurve }) {
   const { segment } = useSegment();
   const isRezidential = segment === 'rezidential';
 
@@ -48,7 +68,10 @@ export default function CalculatorClient() {
   const [mounting, setMounting] = useState<Mounting>('inclinat');
   const [tarif, setTarif] = useState<string>('1.30');
   const [autoconsum, setAutoconsum] = useState<number>(70);
-  const [subventie, setSubventie] = useState<string>('20000');
+  // Casa Verde nu are sesiune deschisă pe panouri în 2026, deci a preumple
+  // câmpul cu un plafon ar face amortizarea să pară mai bună decât e.
+  const [subventie, setSubventie] = useState<string>('0');
+  const [pretSurplus, setPretSurplus] = useState<string>('0.30');
   const [showResult, setShowResult] = useState<boolean>(false);
 
   // When the visitor is in residential mode, apply home-appropriate defaults once
@@ -83,7 +106,8 @@ export default function CalculatorClient() {
     const kwp = consumAnual / yieldKwhPerKwp;
     const kwpRounded = Math.max(1, Math.round(kwp * 10) / 10);
     const suprafata = Math.round(kwpRounded * M2_PER_KWP);
-    const investitieBruta = Math.round(kwpRounded * pricePerKwp(kwpRounded));
+    const price = pricePerKwp(kwpRounded, priceCurve);
+    const investitieBruta = Math.round(kwpRounded * price.value);
     // Casa Verde funds up to 90% of the cost (beneficiary pays min. 10%), capped at
     // the program's max grant. The subsidy can never make the system free.
     const subventieCap = Math.max(Number(subventie) || 0, 0);
@@ -96,8 +120,9 @@ export default function CalculatorClient() {
     const autoFactor = autoconsum / 100;
     const autoconsumKwh = Math.round(productieAnuala * autoFactor);
     const injectatKwh = productieAnuala - autoconsumKwh;
+    const surplusNum = Math.max(Number(pretSurplus) || 0, 0);
     const economieAutoconsum = Math.round(autoconsumKwh * tarifNum);
-    const venitInjectat = Math.round(injectatKwh * GRID_BUYBACK_RON_PER_KWH);
+    const venitInjectat = Math.round(injectatKwh * surplusNum);
     const economieAnuala = economieAutoconsum + venitInjectat;
 
     let cumulativeNet = -investitie;
@@ -134,9 +159,10 @@ export default function CalculatorClient() {
       payback,
       totalProfit25,
       co2Tone,
-      pricePerKwp: pricePerKwp(kwpRounded),
+      pricePerKwp: price.value,
+      pricePoint: price.point,
     };
-  }, [consumLunar, tarif, autoconsum, yieldKwhPerKwp, isRezidential, subventie]);
+  }, [consumLunar, tarif, autoconsum, yieldKwhPerKwp, isRezidential, subventie, pretSurplus, priceCurve]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -157,8 +183,14 @@ export default function CalculatorClient() {
     <div className="space-y-8">
       {/* Disclaimer top */}
       <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-        <strong>Estimare orientativă.</strong> Calculele folosesc medii statistice (producția specifică pe județ din modelul PVGIS, prețuri de piață pentru 2026, tarif prosumator de aproximativ 0,30 RON/kWh).
-        Pentru o ofertă reală, cere oferte de la cel puțin trei instalatori — variația poate fi de ±20%, în funcție de acoperiș, orientare, umbrire, tip de invertor și condițiile concrete ale locației.
+        <strong>Estimare orientativă.</strong> Producția specifică pe județ vine din modelul PVGIS.
+        Prețul sistemelor până în {SCRAPED_DATA_MAX_KWP} kWp este mediana a {priceCurve.totalOffers} oferte
+        reale cu montaj inclus, de la {priceCurve.stores} magazine, verificate la{' '}
+        {new Date(priceCurve.scrapedAt).toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })};
+        peste această putere rămân estimări de piață, pentru că un sistem comercial include racordare și avize
+        pe care un kit de magazin nu le are.
+        Pentru o ofertă reală, cereți oferte de la cel puțin trei instalatori: variația poate fi de ±20%,
+        în funcție de acoperiș, orientare, umbrire, tip de invertor și condițiile concrete ale locației.
       </div>
 
       <form
@@ -253,6 +285,37 @@ export default function CalculatorClient() {
             <p className="mt-1 text-xs text-gray-500">Preț total pe factură împărțit la kWh consumați (TVA inclus).</p>
           </div>
 
+          <div className="sm:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Preț pentru energia injectată în rețea (RON/kWh)
+            </label>
+            <input
+              type="number"
+              min={0}
+              step={0.01}
+              value={pretSurplus}
+              onChange={(e) => setPretSurplus(e.target.value)}
+              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+            />
+            <p className="mt-1 text-xs text-gray-500 leading-relaxed">
+              Cât valorează surplusul pe care îl trimiteți în rețea. Valoarea implicită este cea din
+              regimul aplicat până acum.{' '}
+              <strong>
+                Legea 160/2026 schimbă regula: pentru prosumatorii sub 200 kW, compensarea devine lunară,
+                la prețul energiei din contract.
+              </strong>{' '}
+              Legea este în vigoare din 26 iulie 2026, dar ANRE are termen până la aproximativ 24 septembrie
+              să publice metodologia, deci până atunci regula nouă nu este operațională. Dacă vreți să vedeți
+              cum arată calculul după, puneți aici tariful dumneavoastră.{' '}
+              <Link
+                href="/ghid/legea-160-2026-prosumatori-compensare-lunara-gaz-surplus"
+                className="text-primary-dark font-medium hover:underline whitespace-nowrap"
+              >
+                Ce schimbă legea →
+              </Link>
+            </p>
+          </div>
+
           {isRezidential && (
             <div className="sm:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -297,8 +360,8 @@ export default function CalculatorClient() {
             />
             <p className="mt-1 text-xs text-gray-500">
               {isRezidential
-                ? 'Cât din energia produsă o consumi direct în casă (restul se injectează în rețea, plătit la tariful prosumator de aproximativ 0,30 RON/kWh). Fără baterie, o casă cu consum mai ales seara are tipic 25–40%.'
-                : 'Cât din energia produsă o consumă firma direct (restul se injectează în rețea, plătit la tariful prosumator de aproximativ 0,30 RON/kWh). Pentru firme cu activitate de zi, tipic 60–80%.'}
+                ? 'Cât din energia produsă o consumi direct în casă (restul se injectează în rețea, la prețul stabilit mai sus). Fără baterie, o casă cu consum mai ales seara are tipic 25–40%.'
+                : 'Cât din energia produsă o consumă firma direct (restul se injectează în rețea, la prețul stabilit mai sus). Pentru firme cu activitate de zi, tipic 60–80%.'}
             </p>
           </div>
         </div>
@@ -337,6 +400,25 @@ export default function CalculatorClient() {
                 </p>
               ) : (
                 <p className="text-xs text-gray-500 mt-1">~{formatNumber(result.pricePerKwp)} RON/kWp, sistem la cheie</p>
+              )}
+              {result.pricePoint ? (
+                <p className="text-xs text-gray-500 mt-2 leading-relaxed border-t border-border pt-2">
+                  Mediana a {result.pricePoint.offers} oferte reale cu montaj, pentru sisteme{' '}
+                  {result.pricePoint.label}. Cele mai ieftine pornesc de la{' '}
+                  {formatNumber(result.pricePoint.min)} RON/kWp, cele mai scumpe ajung la{' '}
+                  {formatNumber(result.pricePoint.max)} RON/kWp, deci pentru sistemul dumneavoastră
+                  intervalul realist este{' '}
+                  <strong>
+                    {formatCurrency(Math.round(result.kwp * result.pricePoint.min))} -{' '}
+                    {formatCurrency(Math.round(result.kwp * result.pricePoint.max))}
+                  </strong>
+                  .
+                </p>
+              ) : (
+                <p className="text-xs text-gray-500 mt-2 leading-relaxed border-t border-border pt-2">
+                  Estimare de piață pentru sisteme comerciale. Peste {SCRAPED_DATA_MAX_KWP} kWp prețul
+                  depinde de racordare, avize și structură, care nu apar în prețurile publicate de magazine.
+                </p>
               )}
             </div>
             <div className="bg-white rounded-xl border border-border p-5">
@@ -411,7 +493,9 @@ export default function CalculatorClient() {
           </div>
 
           <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-            <strong>Cifrele de mai sus sunt estimări orientative.</strong> Pentru o ofertă reală, adaptată la consumul, acoperișul și locația firmei tale, cere oferte de la cel puțin trei instalatori autorizați ANRE.
+            <strong>Cifrele de mai sus sunt estimări orientative.</strong> Pentru o ofertă reală, adaptată
+            la consumul, acoperișul și locația {isRezidential ? 'casei tale' : 'firmei tale'}, cere oferte
+            de la cel puțin trei instalatori autorizați ANRE.
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">

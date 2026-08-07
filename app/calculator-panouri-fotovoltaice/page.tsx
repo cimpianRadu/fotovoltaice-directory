@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import CalculatorClient from './CalculatorClient';
+import { getKitPriceCurve } from '@/lib/kit-price-curve';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
 import InstallerCta from '@/components/InstallerCta';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
@@ -37,7 +38,7 @@ const faqJsonLd = {
       name: 'Cât costă un sistem fotovoltaic pentru firmă în 2026?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Pentru sisteme comerciale la cheie, prețul mediu este între 3.500 și 4.500 RON pe kWp în 2026, în funcție de mărime: sub 50 kWp aproximativ 4.500 RON/kWp, între 50 și 200 kWp în jur de 3.800 RON/kWp, iar peste 200 kWp aproximativ 3.500 RON/kWp. Prețul include panourile, invertorul, structura de montaj, manopera, autorizațiile și racordarea la rețea.',
+        text: 'Pentru sistemele mici, calculatorul folosește prețuri reale: mediana ofertelor cu montaj inclus publicate de magazinele din România, verificate periodic. La 30 iulie 2026, aceasta era aproximativ 3.400 RON/kWp pentru sisteme până în 4 kWp, 3.100 RON/kWp pentru 4-7 kWp și 2.700 RON/kWp pentru 7-11 kWp, cu TVA inclus. Pentru sisteme comerciale peste 20 kWp cifrele rămân estimări de piață, între 3.500 și 4.500 RON pe kWp, pentru că includ racordarea, avizele și structura, costuri care nu apar în prețurile publicate de magazine.',
       },
     },
     {
@@ -53,7 +54,7 @@ const faqJsonLd = {
       name: 'Ce este cota de autoconsum și cum influențează economiile?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Cota de autoconsum reprezintă procentul din producția fotovoltaică pe care firma îl consumă direct, fără să fie injectat în rețea. Energia autoconsumată îți elimină plata către furnizor (aproximativ 1,30 RON/kWh), iar energia injectată este plătită la tariful prosumator (aproximativ 0,30 RON/kWh). Cu cât autoconsumul este mai mare, cu atât amortizarea este mai rapidă. Pentru firme cu activitate de zi, cota tipică este între 60% și 80%.',
+        text: 'Cota de autoconsum reprezintă procentul din producția fotovoltaică pe care firma îl consumă direct, fără să fie injectat în rețea. Energia autoconsumată îți elimină plata către furnizor, iar energia injectată este plătită separat, la un preț pe care îl poți seta în calculator. Aici regula se schimbă: Legea 160/2026, în vigoare din 26 iulie 2026, introduce compensarea cantitativă lunară la prețul energiei din contract pentru prosumatorii sub 200 kW, dar ANRE are termen până în jurul datei de 24 septembrie 2026 să publice metodologia, deci până atunci regimul nou nu este operațional. Cu cât autoconsumul este mai mare, cu atât amortizarea este mai rapidă. Pentru firme cu activitate de zi, cota tipică este între 60% și 80%.',
       },
     },
     {
@@ -69,7 +70,7 @@ const faqJsonLd = {
       name: 'Cât de precise sunt estimările acestui calculator?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Calculatorul folosește producții specifice multianuale (model PVGIS) și prețuri medii de piață pentru 2026. Variația reală în ofertele primite poate fi de ±20%, în funcție de condițiile concrete ale acoperișului, calitatea echipamentelor, tipul invertorului, distanța până la tabloul de racordare și complexitatea structurii. Pentru o decizie informată, cere oferte detaliate de la cel puțin trei instalatori autorizați ANRE.',
+        text: 'Calculatorul folosește producții specifice multianuale (model PVGIS) și, pentru sistemele până în 20 kWp, mediana ofertelor reale cu montaj inclus publicate de magazinele din România. Rezultatul arată și intervalul dintre cea mai ieftină și cea mai scumpă ofertă din categoria respectivă, ca să vezi cât de mult contează alegerea echipamentelor. Variația reală în ofertele primite poate fi de ±20%, în funcție de condițiile concrete ale acoperișului, calitatea echipamentelor, tipul invertorului, distanța până la tabloul de racordare și complexitatea structurii. Pentru o decizie informată, cere oferte detaliate de la cel puțin trei instalatori autorizați ANRE.',
       },
     },
   ],
@@ -90,7 +91,7 @@ export default function CalculatorPage() {
           și în câți ani se amortizează. Cu date pe fiecare județ și prețuri actualizate pentru 2026.
         </p>
 
-        <CalculatorClient />
+        <CalculatorClient priceCurve={getKitPriceCurve()} />
 
         <InstallerCta />
 
