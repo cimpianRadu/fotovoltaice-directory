@@ -15435,6 +15435,88 @@
       "updatedAt": "2026-08-05",
       "segment": "ambele",
       "anreMatch": null
+    },
+    {
+      "id": "solrom-construct",
+      "slug": "solrom-construct",
+      "name": "Solrom Construct S.R.L.",
+      "cui": "RO47795582",
+      "description": "Solrom Construct este o firmă din județul Dolj, înființată în 2023, atestată ANRE C1A și C2A pentru proiectare și execuție de instalații electrice de joasă și medie tensiune. Instalează sisteme fotovoltaice rezidențiale și comerciale în Craiova, Caracal și în restul Olteniei, cu servicii de consultanță, proiectare, montaj, punere în funcțiune, întocmirea dosarului de prosumator, monitorizare și mentenanță. Oferă sisteme on-grid, hibride cu stocare și off-grid pentru zone fără racord la rețea, și are magazin online propriu cu kituri fotovoltaice.",
+      "founded": 2023,
+      "employees": 3,
+      "location": {
+        "city": "Radomir",
+        "county": "Dolj",
+        "address": "Sat Radomir, Com. Dioști, Str. Marin Voican, Nr. 34"
+      },
+      "contact": {
+        "phone": "+40742790025",
+        "email": "contact@solrom.ro",
+        "website": "https://www.solrom.ro"
+      },
+      "coverage": [
+        "Dolj",
+        "Olt",
+        "Vâlcea",
+        "Gorj",
+        "Mehedinți"
+      ],
+      "specializations": [
+        "rezidential",
+        "retail",
+        "cladiri-birouri",
+        "hale-industriale"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 1850850,
+        "profit": 215459,
+        "history": [
+          {
+            "year": 2023,
+            "revenue": 104529,
+            "profit": 19727,
+            "employees": 3
+          },
+          {
+            "year": 2024,
+            "revenue": 1109895,
+            "profit": 262906,
+            "employees": 1
+          },
+          {
+            "year": 2025,
+            "revenue": 1850850,
+            "profit": 215459,
+            "employees": 3
+          }
+        ]
+      },
+      "tags": [
+        "pv-rezidential",
+        "pv-comercial",
+        "casa-verde",
+        "off-grid",
+        "stocare-baterii",
+        "prosumator",
+        "magazin-online",
+        "mentenanta-pv"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-08-07",
+      "updatedAt": "2026-08-07",
+      "segment": "ambele",
+      "anreMatch": {
+        "societate": "SOLROM CONSTRUCT",
+        "judet": "Dolj"
+      }
     }
   ]
 }

@@ -2914,5 +2914,27 @@
    "isActive": true,
    "tipTarifRaw": "Tarif B"
   }
+ ],
+ "SOLROM CONSTRUCT|Dolj": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "19482",
+   "dataEmitere": "11/05/2023",
+   "dataExpirare": "11/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "19481",
+   "dataEmitere": "11/05/2023",
+   "dataExpirare": "11/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
  ]
 }
