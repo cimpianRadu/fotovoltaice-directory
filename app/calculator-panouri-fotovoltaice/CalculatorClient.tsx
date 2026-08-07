@@ -50,14 +50,40 @@ export default function CalculatorClient({ priceCurve }: { priceCurve: KitPriceC
 
   // When the visitor is in residential mode, apply home-appropriate defaults once
   // (lower consumption + lower daytime self-consumption). Skipped for commercial.
+  // Consumul dat prin link bate valoarea implicită de segment: segmentul se
+  // poate stabiliza după montare, iar altfel ar șterge cifra cerută explicit.
+  const consumFromUrl = useRef(false);
   const residentialDefaultsApplied = useRef(false);
   useEffect(() => {
     if (isRezidential && !residentialDefaultsApplied.current) {
       residentialDefaultsApplied.current = true;
-      setConsumLunar('300');
+      if (!consumFromUrl.current) setConsumLunar('300');
       setAutoconsum(35);
     }
   }, [isRezidential]);
+
+  // Starea poate veni din URL (`?consum=450&unitate=lei&judet=Timiș`), ca un
+  // rezultat să poată fi trimis mai departe ca link. Citim din `window`, nu prin
+  // `useSearchParams`, ca pagina să rămână static prerandată.
+  const urlApplied = useRef(false);
+  useEffect(() => {
+    if (urlApplied.current) return;
+    urlApplied.current = true;
+    const p = new URLSearchParams(window.location.search);
+    const consum = p.get('consum');
+    const unitate = p.get('unitate');
+    const j = p.get('judet');
+    const tarifParam = p.get('tarif');
+    if (j && countiesData.counties.includes(j)) setJudet(j);
+    if (unitate === 'lei' || unitate === 'kwh') setUnitateConsum(unitate);
+    if (tarifParam && Number(tarifParam) > 0) setTarif(tarifParam);
+    if (consum && Number(consum) > 0) {
+      consumFromUrl.current = true;
+      setConsumLunar(consum);
+      // Cu consum dat în link, omul a venit după rezultat, nu după formular.
+      setShowResult(true);
+    }
+  }, []);
 
   const countyOptions = useMemo(
     () => countiesData.counties.map((c) => ({ value: c, label: c })),
