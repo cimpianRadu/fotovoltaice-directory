@@ -58,6 +58,72 @@ export interface LeadNote {
   text: string;
 }
 
+// ── Statusul firmei pe o revendicare ───────────────────────────────────────
+// Ortogonal pe LEAD_STATUSES: acolo e starea CERERII, văzută de noi; aici e
+// starea FIRMEI pe cererea aia, scrisă de ea din /portal. Cele două se pot
+// contrazice, iar contrazicerea e informație („ofertat" la firmă, „noua" la
+// noi = n-am apucat să verificăm). Fără diacritice în valori, ca la restul.
+export const CLAIM_STATUSES = [
+  'de_sunat',
+  'nu_raspunde',
+  'discutii',
+  'ofertat',
+  'castigat',
+  'pierdut',
+] as const;
+export type ClaimStatus = (typeof CLAIM_STATUSES)[number];
+
+export const CLAIM_STATUS_LABELS: Record<ClaimStatus, string> = {
+  de_sunat: 'De sunat',
+  nu_raspunde: 'Nu răspunde',
+  discutii: 'În discuții',
+  ofertat: 'Ofertă trimisă',
+  // Perechea de final. „Pierdut" a fost respins ca etichetă: sună a înfrângere
+  // a firmei, deși jumătate din cazuri n-au nicio vinovăție. „Neinteresat" a
+  // fost respins pentru că ar minți în raport: un client care a semnat cu
+  // altcineva a fost foarte interesat, iar confuzia asta duce la concluzia
+  // greșită („lead prost") în loc de cea reală („am fost înceți").
+  castigat: 'Concretizat',
+  pierdut: 'Neconcretizat',
+};
+
+export const CLAIM_STATUS_HINTS: Record<ClaimStatus, string> = {
+  de_sunat: 'ai datele, încă nu ai sunat clientul',
+  nu_raspunde: 'ai încercat, clientul nu răspunde',
+  discutii: 'ai vorbit cu el, discuția e deschisă',
+  ofertat: 'i-ai trimis oferta, aștepți răspuns',
+  castigat: 'a semnat cu tine',
+  pierdut: 'a ales altă firmă, a amânat sau nu mai face',
+};
+
+/**
+ * Statusurile de dinaintea ofertei. Trecerea înapoi la ele înseamnă că marcajul
+ * de ofertă a fost o greșeală, deci coloana N se golește; „câștigat"/„pierdut"
+ * vin DUPĂ ofertă, deci acolo data ofertei rămâne cum era.
+ */
+const PRE_OFFER_STATUSES: readonly ClaimStatus[] = ['de_sunat', 'nu_raspunde', 'discutii'];
+
+export function clearsOfferMark(status: ClaimStatus): boolean {
+  return PRE_OFFER_STATUSES.includes(status);
+}
+
+/**
+ * Statusul scris în coloana F. Rândurile de dinainte de status (sau cu 'Nou',
+ * valoarea pusă la creare înainte ca cineva să citească coloana) îl primesc
+ * dedus din ce știm deja: renunțarea e „pierdut", marcajul de ofertă e
+ * „ofertat", restul pleacă de la „de sunat".
+ */
+export function deriveClaimStatus(
+  raw: string,
+  claim: { offeredAt: string; releasedAt: string },
+): ClaimStatus {
+  const v = raw.trim().toLowerCase();
+  if ((CLAIM_STATUSES as readonly string[]).includes(v)) return v as ClaimStatus;
+  if (claim.releasedAt) return 'pierdut';
+  if (claim.offeredAt) return 'ofertat';
+  return 'de_sunat';
+}
+
 /**
  * Cum a ajuns o revendicare în Sheet. `self` = firma a apăsat singură pe
  * /cereri (fluxul public), `manual` = am marcat noi în /admin/crm după ce am

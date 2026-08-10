@@ -3,12 +3,15 @@ import {
   CONTACT_STATES,
   CLAIM_SOURCES,
   FIRM_STATUSES,
+  clearsOfferMark,
+  deriveClaimStatus,
   isLeadClosed,
   isSameFirm,
   type LeadStatus,
   type ContactState,
   type LeadNote,
   type ClaimSource,
+  type ClaimStatus,
   type FirmStatus,
 } from './sheets-shared';
 import { google } from 'googleapis';
@@ -436,6 +439,14 @@ export interface LeadClaim {
   approvedAt: string;
   /** Coloana N: ISO — firma a marcat din /portal că a trimis oferta clientului. */
   offeredAt: string;
+  /**
+   * Coloana F: unde e FIRMA cu cererea asta, după propria ei declarație din
+   * /portal. Coloana exista de la început cu 'Nou' scris la creare, dar nimeni
+   * nu o citea; din aug 2026 ține statusul real. Rândurile vechi îl primesc
+   * dedus (vezi deriveClaimStatus) — auto-raportat, deci semnal, nu adevăr:
+   * apelul nostru de verificare rămâne sursa.
+   */
+  firmStatus: ClaimStatus;
 }
 
 function readClaimRow(r: string[]): LeadClaim {
@@ -445,6 +456,8 @@ function readClaimRow(r: string[]): LeadClaim {
   const source: ClaimSource = (CLAIM_SOURCES as readonly string[]).includes(raw)
     ? (raw as ClaimSource)
     : 'self';
+  const releasedAt = r[9] || '';
+  const offeredAt = r[13] || '';
   return {
     timestamp: r[0] || '',
     leadId: r[1] || '',
@@ -454,11 +467,12 @@ function readClaimRow(r: string[]): LeadClaim {
     contactedAt: r[6] || '',
     source,
     email: (r[8] || '').trim().toLowerCase(),
-    releasedAt: r[9] || '',
+    releasedAt,
     releaseReason: r[10] || '',
     firmNotes: parseNotes(r[11] || ''),
     approvedAt: r[12] || '',
-    offeredAt: r[13] || '',
+    offeredAt,
+    firmStatus: deriveClaimStatus(r[5] || '', { offeredAt, releasedAt }),
   };
 }
 
@@ -498,7 +512,7 @@ export async function saveClaimToSheet(claim: {
     claim.numeFirma,
     claim.numeContact,
     claim.telefon,
-    'Nou', // coloana Status
+    'de_sunat', // F — Statusul firmei pe cerere, scris apoi din /portal
     '',    // G — Contactat la: se completează din /admin/crm, eliberează slotul firmei
     claim.source, // H — Sursă: `self` (public /cereri) sau `manual` (marcat din CRM)
     (claim.email || '').trim().toLowerCase(), // I — Email: identitatea firmei în /portal
@@ -524,7 +538,7 @@ const CLAIMS_HEADER = [
   'Firmă',
   'Contact',
   'Telefon',
-  'Status',
+  'Status firmă', // F — unde e firma cu cererea, după declarația ei din /portal
   'Contactat la',
   'Sursă',
   'Email', // I — identitatea firmei în /portal
@@ -588,8 +602,42 @@ export async function releaseClaim(
   const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
   const releasedAt = new Date().toISOString();
   await updateClaimCells(`${CLAIMS_SHEET}!J${sheetRow}:K${sheetRow}`, [[releasedAt, reason]]);
+  // Renunțarea E statusul „pierdut" — dacă F ar rămâne pe altceva, aceeași
+  // revendicare ar spune două lucruri diferite în portal și în CRM.
+  await updateClaimCells(`${CLAIMS_SHEET}!F${sheetRow}`, [['pierdut']]);
+  row[5] = 'pierdut';
   row[9] = releasedAt;
   row[10] = reason;
+  return readClaimRow(row);
+}
+
+/**
+ * Statusul firmei pe revendicare (coloana F), scris din /portal. Coloana N o
+ * urmează: „ofertă trimisă" o setează, întoarcerea la un status de dinaintea
+ * ofertei o golește, iar `castigat`/`pierdut` o lasă cum era (oferta chiar a
+ * plecat). `pierdut` NU se scrie de aici — renunțarea trece prin releaseClaim,
+ * care eliberează și locul, și cere motivul.
+ */
+export async function setClaimFirmStatus(
+  claimTimestamp: string,
+  leadId: string,
+  status: ClaimStatus,
+): Promise<LeadClaim> {
+  const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
+  await updateClaimCells(`${CLAIMS_SHEET}!F${sheetRow}`, [[status]]);
+  row[5] = status;
+
+  const currentOffer = row[13] || '';
+  const nextOffer = clearsOfferMark(status)
+    ? ''
+    : status === 'ofertat'
+      ? currentOffer || new Date().toISOString()
+      : currentOffer;
+  if (nextOffer !== currentOffer) {
+    await updateClaimCells(`${CLAIMS_SHEET}!N${sheetRow}`, [[nextOffer]]);
+    row[13] = nextOffer;
+  }
+
   return readClaimRow(row);
 }
 
@@ -628,20 +676,6 @@ export async function setClaimApproved(
   return readClaimRow(row);
 }
 
-/**
- * Firma marchează din /portal că a trimis oferta clientului. `offeredAt` gol
- * retrage marcajul (apăsat din greșeală).
- */
-export async function setClaimOffered(
-  claimTimestamp: string,
-  leadId: string,
-  offeredAt: string,
-): Promise<LeadClaim> {
-  const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
-  await updateClaimCells(`${CLAIMS_SHEET}!N${sheetRow}`, [[offeredAt]]);
-  row[13] = offeredAt;
-  return readClaimRow(row);
-}
 
 export async function saveWaitlistToSheet(email: string) {
   await appendRow('Waitlist', [
@@ -804,6 +838,9 @@ export {
   CONTACT_STATES,
   MAX_ACTIVE_CLAIMS_PER_FIRM,
   CLAIM_SOURCES,
+  CLAIM_STATUSES,
+  CLAIM_STATUS_LABELS,
+  CLAIM_STATUS_HINTS,
   FIRM_STATUSES,
   FIRM_STATUS_LABELS,
   FIRM_STATUS_HINTS,
@@ -819,6 +856,7 @@ export {
   type ContactState,
   type LeadNote,
   type ClaimSource,
+  type ClaimStatus,
   type FirmStatus,
 } from './sheets-shared';
 

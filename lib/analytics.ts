@@ -20,7 +20,8 @@ type EventName =
   | 'portal_login_requested'
   | 'portal_login_completed'
   | 'portal_note_added'
-  | 'portal_offer_marked'
+  | 'portal_status_set'
+  | 'portal_filter_applied'
   | 'portal_claim_released';
 
 type EventProps = Record<string, string | number | boolean>;

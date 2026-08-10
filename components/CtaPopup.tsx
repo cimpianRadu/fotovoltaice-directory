@@ -10,7 +10,9 @@ import { trackEvent } from '@/lib/analytics';
 // scrolls a bit or a short delay, and stays dismissed per-browser via
 // localStorage. Analytics: click only (no impression/dismiss tracking).
 const STORAGE_KEY = 'cta-popup-dismissed';
-const HIDE_ON = ['/cere-oferta', '/listeaza-firma', '/publicitate'];
+// `/portal` e ecranul firmei logate: acolo cititorul e instalatorul, nu
+// clientul, iar „cauți un instalator?" e o ofertă adresată altcuiva.
+const HIDE_ON = ['/cere-oferta', '/listeaza-firma', '/publicitate', '/portal'];
 
 export default function CtaPopup() {
   const pathname = usePathname();

@@ -11,7 +11,8 @@ import {
   getYesNoLabel,
   getTimelineLabel,
 } from '@/lib/utils-shared';
-import PortalClaimCard, { type PortalClaim } from './PortalClaimCard';
+import { type PortalClaim } from './PortalClaimCard';
+import PortalClaimList from './PortalClaimList';
 import LogoutButton from './LogoutButton';
 
 // Datele firmei logate nu au voie în cache-ul static — mereu proaspete, per sesiune.
@@ -65,6 +66,7 @@ export default async function PortalPage() {
           contactedAt: c.contactedAt,
           approved,
           offeredAt: c.offeredAt,
+          firmStatus: c.firmStatus,
           notes: c.firmNotes,
           tipLabel: lead ? getProjectTypeLabel(lead.tipProiect) : 'Cerere',
           judet: lead?.judet || '',
@@ -91,11 +93,10 @@ export default async function PortalPage() {
     loadError = true;
   }
 
-  const active = mine.filter((c) => !c.releasedAt);
-  const released = mine.filter((c) => c.releasedAt);
-
+  // `pb-24` pe telefon: butonul plutitor de filtre e poziționat fix, iar fără
+  // rezerva asta ar acoperi ultimul lucru de pe pagină când ajungi la capăt.
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="max-w-3xl mx-auto px-4 pt-8 pb-24 sm:pb-8">
       <div className="flex items-start justify-between gap-4 mb-2">
         <h1 className="text-2xl font-bold text-gray-900">Cererile firmei tale</h1>
         <LogoutButton />
@@ -132,31 +133,13 @@ export default async function PortalPage() {
         </div>
       )}
 
-      {active.length > 0 && (
-        <div className="space-y-4">
-          {active.map((c) => (
-            <PortalClaimCard key={`${c.leadId}-${c.claimTimestamp}`} claim={c} />
-          ))}
-        </div>
-      )}
-
-      {released.length > 0 && (
-        <>
-          <h2 className="mt-10 mb-3 text-sm font-semibold uppercase tracking-wide text-gray-400">
-            Cereri la care ai renunțat
-          </h2>
-          <div className="space-y-4">
-            {released.map((c) => (
-              <PortalClaimCard key={`${c.leadId}-${c.claimTimestamp}`} claim={c} />
-            ))}
-          </div>
-        </>
-      )}
+      {mine.length > 0 && <PortalClaimList claims={mine} />}
 
       {mine.length > 0 && (
         <p className="mt-8 text-xs text-gray-400 leading-relaxed">
-          Datele clienților se deblochează după apelul nostru de confirmare. Locul unei firme se
-          eliberează când clientul confirmă că a fost sunat, sau când renunți tu, cu un motiv,
+          Datele clienților se deblochează după apelul nostru de confirmare. Statusul pe care îl
+          setezi tu ne spune unde ești cu clientul, ca să nu te mai sunăm degeaba. Locul unei firme
+          se eliberează când clientul confirmă că a fost sunat, sau când renunți tu, cu un motiv,
           de aici.
         </p>
       )}

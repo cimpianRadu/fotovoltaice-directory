@@ -3,10 +3,13 @@
 import { useState } from 'react';
 import {
   CLAIM_STALE_DAYS,
+  CLAIM_STATUS_HINTS,
+  CLAIM_STATUS_LABELS,
   MAX_ACTIVE_CLAIMS_PER_FIRM,
   claimLastActivity,
   isClaimStale,
   type ClaimSource,
+  type ClaimStatus,
   type LeadNote,
 } from '@/lib/sheets-shared';
 
@@ -26,9 +29,20 @@ export interface ClaimRow {
   approvedAt: string;
   /** Firma a marcat din portal că a trimis oferta clientului. */
   offeredAt: string;
+  /** Unde zice FIRMA că e cu clientul (setat de ea din /portal). Auto-raportat. */
+  firmStatus: ClaimStatus;
   /** Câte cereri ține firma asta fără apel confirmat, la încărcarea paginii. */
   firmActive: number;
 }
+
+const FIRM_STATUS_CHIP: Record<ClaimStatus, string> = {
+  de_sunat: 'bg-slate-200 text-slate-600',
+  nu_raspunde: 'bg-amber-100 text-amber-700',
+  discutii: 'bg-indigo-100 text-indigo-700',
+  ofertat: 'bg-sky-100 text-sky-700',
+  castigat: 'bg-emerald-600 text-white',
+  pierdut: 'bg-rose-100 text-rose-700',
+};
 
 function fmtDateTime(iso: string): string {
   const d = new Date(iso);
@@ -144,9 +158,19 @@ function Claim({ claim }: { claim: ClaimRow }) {
       )}
       <div className="text-slate-400">{fmtDateTime(claim.timestamp)}</div>
 
-      {claim.offeredAt && (
-        <div className="mt-1 inline-block rounded bg-sky-100 px-1.5 py-px text-[10px] font-semibold text-sky-700">
-          ofertă trimisă · {fmtDay(claim.offeredAt)}
+      {/* Statusul declarat de firmă în portal. E auto-raportat, deci semnal, nu
+          adevăr — apelul de verificare cu clientul rămâne sursa. `castigat` e
+          scris tare pentru că cere o acțiune de la noi: închidem cererea. */}
+      <div
+        title={CLAIM_STATUS_HINTS[claim.firmStatus]}
+        className={`mt-1 inline-block rounded px-1.5 py-px text-[10px] font-semibold ${FIRM_STATUS_CHIP[claim.firmStatus]}`}
+      >
+        {CLAIM_STATUS_LABELS[claim.firmStatus].toLowerCase()}
+        {claim.offeredAt ? ` · ${fmtDay(claim.offeredAt)}` : ''}
+      </div>
+      {claim.firmStatus === 'castigat' && (
+        <div className="mt-1 text-[10px] font-medium text-emerald-700">
+          Firma zice că a semnat. Verifică cu clientul, apoi treci cererea pe „Câștigată".
         </div>
       )}
       {/* Datele au plecat spre firmă, oferta nu, și nimic nu s-a mișcat de 2 zile:

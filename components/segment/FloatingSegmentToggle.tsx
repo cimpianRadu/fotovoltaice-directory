@@ -1,7 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import SegmentToggle from './SegmentToggle';
+
+/**
+ * Rutele unde comutatorul nu are ce căuta. `/portal` e unealta de lucru a
+ * firmei logate: acolo nu alege ce fel de conținut citește, ci lucrează pe
+ * cererile ei, iar bara plutitoare acoperă exact partea de jos a cardului
+ * (banda de statusuri, la 375px).
+ */
+const HIDE_ON = ['/portal'];
 
 /**
  * Mobile-only floating Casă/Firmă switcher, pinned bottom-center.
@@ -9,6 +18,7 @@ import SegmentToggle from './SegmentToggle';
  * scrolling stops — so it stays reachable without covering content.
  */
 export default function FloatingSegmentToggle() {
+  const pathname = usePathname();
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
@@ -24,6 +34,8 @@ export default function FloatingSegmentToggle() {
       clearTimeout(idleTimer);
     };
   }, []);
+
+  if (HIDE_ON.some((p) => pathname.startsWith(p))) return null;
 
   return (
     <div

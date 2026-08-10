@@ -3,7 +3,14 @@
 import { useState } from 'react';
 import Button from '@/components/ui/Button';
 import { trackEvent } from '@/lib/analytics';
-import type { LeadNote } from '@/lib/sheets-shared';
+import {
+  CLAIM_STATUSES,
+  CLAIM_STATUS_HINTS,
+  CLAIM_STATUS_LABELS,
+  type ClaimStatus,
+  type LeadNote,
+} from '@/lib/sheets-shared';
+import { usePersistedToggle } from './usePersistedToggle';
 
 export interface PortalClaim {
   claimTimestamp: string;
@@ -15,6 +22,7 @@ export interface PortalClaim {
   contactedAt: string;
   approved: boolean;
   offeredAt: string;
+  firmStatus: ClaimStatus;
   notes: LeadNote[];
   tipLabel: string;
   judet: string;
@@ -32,6 +40,16 @@ export interface PortalClaim {
   } | null;
 }
 
+/** Culoarea de fundal a statusului selectat, aceeași în pastilă, badge și legendă. */
+export const STATUS_TONE: Record<ClaimStatus, string> = {
+  de_sunat: 'bg-slate-500',
+  nu_raspunde: 'bg-amber-500',
+  discutii: 'bg-indigo-500',
+  ofertat: 'bg-sky-600',
+  castigat: 'bg-emerald-600',
+  pierdut: 'bg-rose-600',
+};
+
 function fmtDate(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
@@ -43,31 +61,39 @@ function fmtDate(iso: string): string {
   });
 }
 
-function StatusBadge({ claim }: { claim: PortalClaim }) {
-  if (claim.releasedAt) {
+/**
+ * Două stări diferite, nu una: până la aprobare badge-ul arată unde suntem NOI
+ * (apelul de confirmare), după aprobare arată unde e FIRMA cu clientul. Dacă
+ * le-am amesteca, firma n-ar ști niciodată pe care dintre ele o schimbă.
+ */
+function StatusBadge({
+  released,
+  releasedAt,
+  approved,
+  status,
+}: {
+  released: boolean;
+  releasedAt: string;
+  approved: boolean;
+  status: ClaimStatus;
+}) {
+  // `whitespace-nowrap`: pe 375px „În confirmare, te sunăm" se rupea în două
+  // rânduri lângă titlu și dezalinia tot capul cardului.
+  const base =
+    'inline-block whitespace-nowrap px-2 py-0.5 rounded-full text-[11px] font-semibold';
+  if (released) {
     return (
-      <span className="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold bg-gray-100 text-gray-500">
-        Renunțat · {fmtDate(claim.releasedAt)}
+      <span className={`${base} bg-gray-100 text-gray-500`}>
+        Renunțat{releasedAt && releasedAt !== 'acum' ? ` · ${fmtDate(releasedAt)}` : ''}
       </span>
     );
   }
-  if (claim.offeredAt) {
-    return (
-      <span className="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold bg-sky-50 text-sky-700">
-        Ofertă trimisă · {fmtDate(claim.offeredAt)}
-      </span>
-    );
-  }
-  if (claim.approved) {
-    return (
-      <span className="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700">
-        Date client disponibile
-      </span>
-    );
+  if (!approved) {
+    return <span className={`${base} bg-amber-50 text-amber-700`}>În confirmare, te sunăm</span>;
   }
   return (
-    <span className="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700">
-      În confirmare, te sunăm
+    <span className={`${base} text-white ${STATUS_TONE[status]}`}>
+      {CLAIM_STATUS_LABELS[status]}
     </span>
   );
 }
@@ -78,15 +104,17 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
   const [noteBusy, setNoteBusy] = useState(false);
   const [noteError, setNoteError] = useState<string | null>(null);
 
+  const [status, setStatus] = useState<ClaimStatus>(claim.firmStatus);
   const [offeredAt, setOfferedAt] = useState(claim.offeredAt);
-  const [offerBusy, setOfferBusy] = useState(false);
-  const [offerError, setOfferError] = useState<string | null>(null);
+  const [statusBusy, setStatusBusy] = useState(false);
+  const [statusError, setStatusError] = useState<string | null>(null);
 
   const [releaseOpen, setReleaseOpen] = useState(false);
   const [motiv, setMotiv] = useState('');
   const [releaseBusy, setReleaseBusy] = useState(false);
   const [releaseError, setReleaseError] = useState<string | null>(null);
   const [released, setReleased] = useState(Boolean(claim.releasedAt));
+  const [detailsOpen, setDetailsOpen] = usePersistedToggle('portal-card-details-open', true);
 
   async function addNote(e: React.FormEvent) {
     e.preventDefault();
@@ -118,30 +146,38 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
     }
   }
 
-  async function toggleOffered() {
-    setOfferBusy(true);
-    setOfferError(null);
+  async function pickStatus(next: ClaimStatus) {
+    if (next === status) return;
+    // `pierdut` eliberează locul cererii pentru altă firmă, deci trece prin
+    // formularul de renunțare, cu motiv, nu printr-un click simplu.
+    if (next === 'pierdut') {
+      setReleaseOpen(true);
+      return;
+    }
+    setStatusBusy(true);
+    setStatusError(null);
     try {
-      const res = await fetch('/api/portal/claims/offer', {
+      const res = await fetch('/api/portal/claims/status', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           claimTimestamp: claim.claimTimestamp,
           leadId: claim.leadId,
-          offered: !offeredAt,
+          status: next,
         }),
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setOfferError(json.error || 'A apărut o eroare. Încearcă din nou.');
+        setStatusError(json.error || 'A apărut o eroare. Încearcă din nou.');
         return;
       }
-      if (!offeredAt) trackEvent('portal_offer_marked');
+      trackEvent('portal_status_set', { status: next });
+      setStatus(json.status || next);
       setOfferedAt(json.offeredAt || '');
     } catch {
-      setOfferError('A apărut o eroare. Încearcă din nou.');
+      setStatusError('A apărut o eroare. Încearcă din nou.');
     } finally {
-      setOfferBusy(false);
+      setStatusBusy(false);
     }
   }
 
@@ -166,6 +202,7 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
       }
       trackEvent('portal_claim_released');
       setReleased(true);
+      setStatus('pierdut');
       setReleaseOpen(false);
     } catch {
       setReleaseError('A apărut o eroare. Încearcă din nou.');
@@ -179,32 +216,71 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
   return (
     <div className={`bg-white rounded-xl border border-border p-5 ${inactive ? 'opacity-70' : ''}`}>
       <div className="flex items-center justify-between gap-2 flex-wrap">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <h3 className="font-semibold text-gray-900">
             {claim.tipLabel}
             {claim.judet ? ` · ${claim.judet}` : ''}
           </h3>
           <StatusBadge
-            claim={{ ...claim, offeredAt, releasedAt: released ? claim.releasedAt || 'acum' : '' }}
+            released={released}
+            releasedAt={claim.releasedAt}
+            approved={claim.approved}
+            status={status}
           />
         </div>
         <span className="text-xs text-gray-400">revendicat {fmtDate(claim.claimedAt)}</span>
       </div>
 
-      {claim.specs.length > 0 && (
-        <ul className="mt-3 flex flex-wrap gap-1.5">
-          {claim.specs.map((s) => (
-            <li
-              key={s.label}
-              className="rounded-md bg-surface border border-border px-2 py-0.5 text-[11px] text-gray-600"
+      {/* Detaliile proiectului se citesc o dată, la primul contact, apoi cardul
+          e despre apel, status și note. Pe telefon ocupau jumătate de ecran
+          înaintea datelor clientului, deci se pot strânge; alegerea se ține
+          minte pentru toate cardurile, nu o repeți la fiecare cerere. */}
+      {(claim.specs.length > 0 || claim.mesaj) && (
+        <div className="mt-3">
+          <button
+            type="button"
+            onClick={() => setDetailsOpen(!detailsOpen)}
+            aria-expanded={detailsOpen}
+            className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
+          >
+            Detalii proiect
+            {claim.specs.length > 0 && (
+              <span className="font-normal normal-case tracking-normal">
+                ({claim.specs.length})
+              </span>
+            )}
+            <svg
+              className={`h-3.5 w-3.5 transition-transform ${detailsOpen ? 'rotate-180' : ''}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              aria-hidden="true"
             >
-              <span className="text-gray-400">{s.label}:</span> {s.value}
-            </li>
-          ))}
-        </ul>
-      )}
-      {claim.mesaj && (
-        <p className="mt-2 text-sm text-gray-500 italic leading-relaxed">„{claim.mesaj}”</p>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          {detailsOpen && (
+            <>
+              {claim.specs.length > 0 && (
+                <ul className="mt-2 flex flex-wrap gap-1.5">
+                  {claim.specs.map((s) => (
+                    <li
+                      key={s.label}
+                      className="rounded-md bg-surface border border-border px-2 py-0.5 text-[11px] text-gray-600"
+                    >
+                      <span className="text-gray-400">{s.label}:</span> {s.value}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {claim.mesaj && (
+                <p className="mt-2 text-sm text-gray-500 italic leading-relaxed">„{claim.mesaj}”</p>
+              )}
+            </>
+          )}
+        </div>
       )}
 
       {claim.client ? (
@@ -218,12 +294,36 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
               {claim.client.companie ? ` · ${claim.client.companie}` : ''}
             </p>
             {claim.client.localitate && <p className="text-gray-600">{claim.client.localitate}</p>}
-            <p>
-              <a href={`tel:${claim.client.telefon.replace(/\s/g, '')}`} className="text-primary-dark font-medium hover:underline">
-                {claim.client.telefon}
-              </a>
-              {' · '}
-              <a href={`mailto:${claim.client.email}`} className="text-primary-dark hover:underline">
+
+            {/* Pe telefon apelul e acțiunea principală a întregului portal, iar
+                înainte era un link de 17px într-un rând de text. Buton pe toată
+                lățimea pe mobil, inline pe desktop. */}
+            <a
+              href={`tel:${claim.client.telefon.replace(/\s/g, '')}`}
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700 sm:inline-flex sm:w-auto sm:py-2"
+            >
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                />
+              </svg>
+              Sună {claim.client.telefon}
+            </a>
+
+            <p className="pt-1">
+              <a
+                href={`mailto:${claim.client.email}`}
+                className="break-all text-primary-dark hover:underline"
+              >
                 {claim.client.email}
               </a>
             </p>
@@ -250,35 +350,47 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
         )
       )}
 
-      {/* Pasul de după datele clientului: firma ne spune că a trimis oferta.
-          Contorul de oferte intră în statisticile noastre de follow-up. */}
-      {!inactive && claim.client && (
-        <div className="mt-3">
-          {offeredAt ? (
-            <div className="flex items-center gap-3 text-sm">
-              <span className="text-sky-700 font-medium">
-                Ofertă trimisă pe {fmtDate(offeredAt)}.
-              </span>
-              <button
-                type="button"
-                onClick={toggleOffered}
-                disabled={offerBusy}
-                className="text-xs text-gray-400 underline hover:text-gray-600 disabled:opacity-60"
-              >
-                {offerBusy ? '...' : 'Retrage (am greșit)'}
-              </button>
-            </div>
-          ) : (
-            <button
-              type="button"
-              onClick={toggleOffered}
-              disabled={offerBusy}
-              className="rounded-lg bg-secondary px-4 py-2 text-sm font-medium text-white hover:bg-secondary-dark disabled:opacity-60"
-            >
-              {offerBusy ? 'Se salvează...' : 'Am trimis oferta clientului'}
-            </button>
+      {/* Pipeline-ul firmei pe cererea asta. Apare abia după deblocarea datelor:
+          înainte n-are pe cine suna, deci n-are ce raporta. */}
+      {!inactive && claim.approved && (
+        <div className="mt-4">
+          <div className="text-[11px] font-semibold uppercase tracking-wide text-gray-400 mb-2">
+            Unde ești cu clientul
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {CLAIM_STATUSES.map((s) => {
+              const active = s === status;
+              // 30px înălțime era sub pragul de atingere pe telefon, iar o
+              // atingere greșită aici scrie alt status în Sheet. Pe mobil
+              // pastila crește la ~42px, pe desktop rămâne compactă.
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  title={CLAIM_STATUS_HINTS[s]}
+                  disabled={statusBusy}
+                  onClick={() => pickStatus(s)}
+                  className={`rounded-full border px-3 py-2.5 text-[13px] font-medium transition-colors disabled:cursor-wait disabled:opacity-60 sm:py-1.5 sm:text-xs ${
+                    active
+                      ? `${STATUS_TONE[s]} text-white border-transparent`
+                      : 'bg-white text-gray-600 border-border hover:border-secondary/40 hover:text-secondary-dark'
+                  }`}
+                >
+                  {CLAIM_STATUS_LABELS[s]}
+                </button>
+              );
+            })}
+          </div>
+          <p className="mt-1.5 text-xs text-gray-400">
+            {CLAIM_STATUS_HINTS[status]}
+            {status === 'ofertat' && offeredAt ? ` · marcat pe ${fmtDate(offeredAt)}` : ''}
+          </p>
+          {status === 'castigat' && (
+            <p className="mt-1 text-xs text-emerald-700">
+              Felicitări. Închidem cererea la noi, ca să nu mai fie sunat de alte firme.
+            </p>
           )}
-          {offerError && <p className="mt-1 text-xs text-red-600">{offerError}</p>}
+          {statusError && <p className="mt-1 text-xs text-red-600">{statusError}</p>}
         </div>
       )}
 
@@ -306,8 +418,10 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
             ))}
           </ul>
         )}
+        {/* Pe 375px input + buton pe același rând lăsau ~198px de scris, în
+            care nici placeholderul nu încăpea. Se stivuiesc pe telefon. */}
         {!inactive && (
-          <form onSubmit={addNote} className="flex gap-2">
+          <form onSubmit={addNote} className="flex flex-col gap-2 sm:flex-row">
             <input
               type="text"
               value={noteText}
@@ -328,7 +442,7 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
           {releaseOpen ? (
             <form onSubmit={release} className="space-y-2">
               <label htmlFor={`motiv-${claim.claimTimestamp}`} className="block text-sm font-medium text-gray-700">
-                De ce renunți la această cerere?
+                De ce nu a mers această cerere?
               </label>
               <textarea
                 id={`motiv-${claim.claimTimestamp}`}
