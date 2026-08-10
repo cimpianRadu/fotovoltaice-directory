@@ -140,7 +140,7 @@ _(gol — următoarea rutină trece direct la PASUL 0.5 „De extins" sau PASUL 
 > Ghiduri care stau pe poz 8-20 cu impresii mari ("striking distance") — extinderea lor (research + secțiuni noi, FĂRĂ rescriere de la zero) aduce mai multe click-uri decât un articol nou. Rutina (PASUL 0.5) ia PRIMA intrare cu status „💡 de extins", prioritate peste scrierea unui articol nou. Ordonat după impresii × intent. **Regula never-invent e strictă**: datele de program (sume, date, condiții) doar din surse oficiale (AFM/ANRE/MO).
 
 ### Alertă Energetică August 2026 — CORECȚIE OBLIGATORIE: a apărut hotărârea de Guvern, iar intervalul orar s-a schimbat 🔝 TOP
-- **Status:** 💡 de extins · adăugat 2026-08-10 (news scan) · **prioritate maximă, e o corecție de fapt, nu o îmbogățire**
+- **Status:** ✅ EXECUTAT 2026-08-10 · vezi „✅ Extinse recent" pentru detalii
 - **Paginile:** `/ghid/alerta-energetica-august-2026-panouri-fotovoltaice-baterie-backup-pana-curent` (publicat 6 aug) **și** `/ghid/baterie-stocare-casa-backup-dimensionare-independenta-energetica-2026` (secțiunea de context adăugată tot pe 10 aug). Verificat în `data/guides.json`: intervalul depășit apare de **3 ori în #43 și 1 dată în ghidul de baterii**.
 - **De ce:** #43 a fost scris pe 3-6 august, când singurul lucru existent era apelul la reducere voluntară și o hotărâre CNSU. Pe **6 și 7 august s-a schimbat baza factuală**, exact pe punctele pe care articolul le-a marcat drept „update obligatoriu". Articolul spune acum **20:00–23:00**; documentul oficial spune **19:00–23:00**. Un interval orar greșit într-un articol de actualitate e cel mai ușor de verificat lucru din tot textul.
 - **Ce se corectează / adaugă (toate din [informarea Ministerului Energiei, 7 aug 2026](https://energie.gov.ro/informare-privind-adoptarea-masurilor-de-siguranta-pe-piata-de-energie-electrica-si-aplicarea-mecanismului-de-limitare-a-consumului/)):**
@@ -158,6 +158,18 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 ## ✅ Extinse recent
 
 > Recheck poziția în GSC peste 14/30 zile pentru fiecare. Fă Request Indexing manual după push.
+
+### Alertă Energetică + Baterie de Stocare — corecție interval + adopția hotărârii 2026-08-10
+- **Slug-uri:** `alerta-energetica-august-2026-panouri-fotovoltaice-baterie-backup-pana-curent` (#43, publicat 6 aug) + `baterie-stocare-casa-backup-dimensionare-independenta-energetica-2026` (secțiunea context adăugată 10 aug).
+- **Motivul corecției:** pe 6 și 7 august s-a schimbat baza factuală, exact pe punctele pe care #43 le marcase drept „update obligatoriu". Guvernul a adoptat Planul de Pregătire pentru Riscuri (6 aug) și „Hotărârea privind adoptarea unor măsuri de siguranță pe piața de energie electrică" (7 aug, termen până la 31 aug). Intervalul de reducere voluntară e **19:00–23:00**, nu 20:00–23:00 cum apărea în ambele ghiduri.
+- **Ce s-a corectat (verificat în [informarea Ministerului Energiei, 7 aug 2026](https://energie.gov.ro/informare-privind-adoptarea-masurilor-de-siguranta-pe-piata-de-energie-electrica-si-aplicarea-mecanismului-de-limitare-a-consumului/)):**
+  - **Interval: 19:00–23:00** peste tot (3 locuri în #43: secțiunea „ce s-a hotărât" + secțiunea „ce s-a decis concret" + FAQ; 2 locuri în ghidul de baterii: secțiunea context + FAQ nou).
+  - **Adopția hotărârilor menționată explicit:** în secțiunea „ce s-a hotărât" din #43 s-a înlocuit „Nota tehnică: la 3 august, actul localizabil este hotărârea CNSU. Separat, o hotărâre de Guvern... era anunțată, dar neadoptată" cu **„Actualizare 10 august 2026"** care spune numele hotărârilor din 6 și 7 aug, cu link direct la informarea Ministerului.
+  - **Mecanismul obligatoriu de limitare în tranșe:** introdus ca **măsură de ultimă instanță** (ordinea: rezerve tehnologice → grupuri în rezervă → reducerea exportului → apeluri voluntare → limitare), vizează **exclusiv operatorii economici mari consumatori** din Normativul ANRE, **casnicii sunt exceptați explicit** (la fel spitalele, serviciile de urgență, apa). **Notificare individuală, în scris, cu minimum 24 de ore înainte**, cu principiul rotirii tranșelor. Adăugat în ghidul de baterii ca fragment scurt în secțiunea context și în FAQ; în #43 ca „Actualizare" completă.
+  - **Ghidul de baterii extins de dimineață:** FAQ „ce a recomandat guvernul pentru consum" acum menționează hotărârea din 7 aug + mecanismul care exceptează casnicii.
+- **Never-invent respectat:** numărul hotărârii NU apare în informarea Ministerului la data corecției — formularea rămâne „hotărârea adoptată în ședința de Guvern din 7 august 2026", fără să inventez un „HG nr. X". Ordinea măsurilor de ultimă instanță e cea din informare, nu o simplificare proprie.
+- **Cross-link:** #43 ↔ ghidul de baterii ↔ **#46 (B2B, în curs de scriere)** — cele 3 se leagă natural, fără suprapunere.
+- **Next step:** GSC Request Indexing manual pentru ambele URL-uri, plus vizibilitate în AI search unde citatul actualizat (nume hotărâri + link Ministerul Energiei) crește trust-ul.
 
 ### Baterie de Stocare pentru Casă — secțiune context alerta august 2026 + 3 FAQ 2026-08-10
 - **Slug:** `baterie-stocare-casa-backup-dimensionare-independenta-energetica-2026` — 9 → **10 secțiuni**, 10 → **13 FAQ**.
