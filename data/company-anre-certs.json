@@ -2936,5 +2936,17 @@
    "isActive": true,
    "tipTarifRaw": "Tarif C1A"
   }
+ ],
+ "AXIONET IOT|Ilfov": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18515",
+   "dataEmitere": "09/08/2022",
+   "dataExpirare": "09/08/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
  ]
 }

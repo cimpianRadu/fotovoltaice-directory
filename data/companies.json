@@ -15441,6 +15441,7 @@
       "slug": "solrom-construct",
       "name": "Solrom Construct S.R.L.",
       "cui": "RO47795582",
+      "logo": "/logos/solrom-construct.png",
       "description": "Solrom Construct este o firmă din județul Dolj, înființată în 2023, atestată ANRE C1A și C2A pentru proiectare și execuție de instalații electrice de joasă și medie tensiune. Instalează sisteme fotovoltaice rezidențiale și comerciale în Craiova, Caracal și în restul Olteniei, cu servicii de consultanță, proiectare, montaj, punere în funcțiune, întocmirea dosarului de prosumator, monitorizare și mentenanță. Oferă sisteme on-grid, hibride cu stocare și off-grid pentru zone fără racord la rețea, și are magazin online propriu cu kituri fotovoltaice.",
       "founded": 2023,
       "employees": 3,
@@ -15517,6 +15518,119 @@
         "societate": "SOLROM CONSTRUCT",
         "judet": "Dolj"
       }
+    },
+    {
+      "id": "axionet-iot",
+      "slug": "axionet-iot",
+      "name": "Axionet IoT S.A.",
+      "cui": "RO17858646",
+      "logo": "/logos/axionet-iot.png",
+      "description": "Axionet IoT este o companie din București, înființată în 2005, care instalează centrale fotovoltaice comerciale și industriale sub brandul XSolar. Livrează proiecte la cheie: audit energetic, proiectare, montaj, punere în funcțiune și dosarul de prosumator (ATR, certificat de racordare), plus mentenanță și monitorizare. Portofoliul public cuprinde centrala de 700 kWp de la IKEA Timișoara, 400 kWp la Mobexpert Militari, rețeaua de magazine ALTEX (28 de centrale, circa 9,7 MW, potrivit clientului), hotelurile Kronwell și Qosmo, parcuri logistice P3 și unități de producție precum Bravo International (393 kWp, Fundulea). Pe lângă fotovoltaice, grupul operează platforma de încărcare pentru mașini electrice Polyfazer și soluții de telematică.",
+      "founded": 2005,
+      "employees": 18,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Str. Aviator Traian Vasile, Nr. 76, Sector 1"
+      },
+      "contact": {
+        "phone": "+40743219810",
+        "email": "mihai.patrana@axionet.ro",
+        "website": "https://xsolar.ro"
+      },
+      "coverage": [
+        "București",
+        "Ilfov",
+        "Timiș",
+        "Brașov",
+        "Prahova",
+        "Cluj",
+        "Sibiu",
+        "Maramureș",
+        "Bistrița-Năsăud",
+        "Suceava",
+        "Botoșani",
+        "Vaslui",
+        "Galați",
+        "Brăila",
+        "Dâmbovița",
+        "Olt",
+        "Teleorman",
+        "Gorj",
+        "Caraș-Severin",
+        "Călărași"
+      ],
+      "specializations": [
+        "hale-industriale",
+        "retail",
+        "parcuri-logistice",
+        "cladiri-birouri",
+        "hoteluri",
+        "rezidential"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 700,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 12734938,
+        "profit": 29040,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 8264212,
+            "profit": 232417,
+            "employees": 9
+          },
+          {
+            "year": 2022,
+            "revenue": 33119981,
+            "profit": 3286511,
+            "employees": 12
+          },
+          {
+            "year": 2023,
+            "revenue": 34605247,
+            "profit": 3236607,
+            "employees": 14
+          },
+          {
+            "year": 2024,
+            "revenue": 25632262,
+            "profit": 1076421,
+            "employees": 16
+          },
+          {
+            "year": 2025,
+            "revenue": 12734938,
+            "profit": 29040,
+            "employees": 18
+          }
+        ]
+      },
+      "tags": [
+        "pv-comercial",
+        "pv-industrial",
+        "EPC",
+        "proiecte-mari",
+        "prosumator",
+        "mentenanta-pv",
+        "statii-incarcare-ev",
+        "acoperire-nationala",
+        "experienta-20-ani"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-08-10",
+      "updatedAt": "2026-08-10",
+      "anreMatch": {
+        "societate": "AXIONET IOT",
+        "judet": "Ilfov"
+      },
+      "segment": "ambele"
     }
   ]
 }
