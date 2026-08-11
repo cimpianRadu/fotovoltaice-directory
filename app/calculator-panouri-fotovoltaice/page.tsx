@@ -87,22 +87,30 @@ export default function CalculatorPage() {
           Calculator Cost și Amortizare Sistem Fotovoltaic
         </h1>
         <p className="text-gray-600 mb-8 text-lg">
-          Estimează în 30 de secunde cât costă un sistem fotovoltaic pentru firma ta, cât produce într-un an
-          și în câți ani se amortizează. Cu date pe fiecare județ și prețuri actualizate pentru 2026.
+          {/* Pagina se randează pe server, deci intro-ul nu poate urma segmentul
+              ales în header fără să blocheze statica. Formularea rămâne valabilă
+              pe ambele segmente, în loc să spună „firma ta" unui om care tocmai
+              a apăsat „Casă". */}
+          Estimează în 30 de secunde cât costă un sistem fotovoltaic la casă sau la firmă, cât produce
+          într-un an și în câți ani se amortizează. Cu date pe fiecare județ și prețuri actualizate pentru 2026.
         </p>
 
         <CalculatorClient priceCurve={getKitPriceCurve()} />
 
-        <InstallerCta />
+        {/* Partenerul plătitor stă imediat sub rezultat, unde omul tocmai a aflat
+            cât costă sistemul și întrebarea „cum plătesc" e deschisă. Anunțul
+            nostru de listare coboară sub el: slotul cel mai bun se vinde, nu se
+            folosește pentru reclamă proprie. */}
+        <section className="my-12 max-w-md mx-auto">
+          <SponsorBanner position="calculator" />
+        </section>
 
         <PremiumPoolSection
           title="Instalatori Recomandați"
           subtitle="Firme partenere care pot prelua proiectul tău"
         />
 
-        <section className="my-12 max-w-md mx-auto">
-          <SponsorBanner position="calculator" />
-        </section>
+        <InstallerCta />
 
         {/* SEO content */}
         <section className="mt-16 space-y-6 text-gray-700 text-[15px] leading-relaxed">

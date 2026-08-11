@@ -31,7 +31,16 @@ const page = await browser.newPage({
   deviceScaleFactor: 2,
 });
 
+// Indicatorul de dev al Next.js stă fix în colț și intră peste text în captură.
+// Nu face parte din pagina reală, deci se ascunde, nu se fotografiază.
+await page.addStyleTag({
+  content: 'nextjs-portal, [data-nextjs-toast], #__next-build-watcher { display: none !important; }',
+}).catch(() => {});
+
 await page.goto(BASE, { waitUntil: 'networkidle' });
+await page.addStyleTag({
+  content: 'nextjs-portal, [data-nextjs-toast], #__next-build-watcher { display: none !important; }',
+}).catch(() => {});
 
 // Segmentul „Casă": widgetul își schimbă ipoteza de autoconsum după el, iar
 // postarea e adresată proprietarilor de case.

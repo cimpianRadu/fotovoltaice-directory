@@ -154,9 +154,7 @@ export default async function HomePage() {
           formularului. Curba de preț se citește pe server, fișierul de scrape nu
           are ce căuta în bundle-ul clientului. */}
       <section className="max-w-7xl mx-auto px-4 pt-10">
-        <div className="max-w-xl mx-auto">
-          <QuickEstimateWidget priceCurve={getKitPriceCurve()} />
-        </div>
+        <QuickEstimateWidget priceCurve={getKitPriceCurve()} />
       </section>
 
       {/* Featured Companies — Premium pool when available, else promote ad packages */}

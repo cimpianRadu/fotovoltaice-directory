@@ -418,7 +418,7 @@ export default function CalculatorClient({ priceCurve }: { priceCurve: KitPriceC
                 {result.investitie <= 0
                   ? 'Imediat'
                   : result.payback
-                    ? `${result.payback.toFixed(1)} ani`
+                    ? `${result.payback.toFixed(1).replace('.', ',')} ani`
                     : '—'}
               </p>
               <p className="text-xs text-gray-500 mt-1">
