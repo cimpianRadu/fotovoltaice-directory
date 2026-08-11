@@ -19,6 +19,8 @@ import FAQ from '@/components/seo/FAQ';
 import JsonLd from '@/components/seo/JsonLd';
 import HomeSegmentHero from '@/components/home/HomeSegmentHero';
 import HomeOfertaBand from '@/components/home/HomeOfertaBand';
+import QuickEstimateWidget from '@/components/home/QuickEstimateWidget';
+import { getKitPriceCurve } from '@/lib/kit-price-curve';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
 import { getCompanies, getCoveredCounties, getPremiumCompanies, getCompaniesBySegment, getCompaniesByCounty, slugifyCounty } from '@/lib/utils';
@@ -147,18 +149,27 @@ export default async function HomePage() {
       {/* Cere Ofertă — buyer-facing CTA, segment-aware count */}
       <HomeOfertaBand comercialCount={COMERCIAL_STATS.count} rezidentialCount={REZIDENTIAL_STATS.count} />
 
-      {/* Sponsor. Stătea la 71% din pagină, adică 5,8 ecrane în jos pe mobil, unde
-          practic nu ajungea nimeni. Urcat imediat după banda de ofertă: rămâne sub
-          CTA-ul principal, dar intră în primele ecrane. */}
+      {/* Estimarea rapidă, imediat sub banda de ofertă: omul care tocmai a citit
+          „cere ofertă" are de obicei întrebarea „dar cât costă?" înaintea
+          formularului. Curba de preț se citește pe server, fișierul de scrape nu
+          are ce căuta în bundle-ul clientului. */}
       <section className="max-w-7xl mx-auto px-4 pt-10">
-        <div className="max-w-sm mx-auto">
-          <SponsorBanner position="homepage" />
+        <div className="max-w-xl mx-auto">
+          <QuickEstimateWidget priceCurve={getKitPriceCurve()} />
         </div>
       </section>
 
-
       {/* Featured Companies — Premium pool when available, else promote ad packages */}
       <section className="max-w-7xl mx-auto px-4 py-16">
+        {/* Sponsor. Stătea la 71% din pagină, adică 5,8 ecrane în jos pe mobil, unde
+            practic nu ajungea nimeni. Acum e la lățime plină, cu greutatea vizuală a
+            benzii de promo de mai jos, dar DEASUPRA titlului „Instalatori
+            Recomandați": un partener care nu e instalator nu are voie să stea sub
+            acel titlu, s-ar citi ca firmă recomandată din director. */}
+        <div className="mb-10">
+          <SponsorBanner position="homepage" />
+        </div>
+
         {hasPremium ? (
           <>
             <PremiumPoolSection
