@@ -447,7 +447,9 @@ export default function CalculatorClient({ priceCurve }: { priceCurve: KitPriceC
                 </div>
                 <div className="flex justify-between border-t border-border pt-2">
                   <dt className="text-gray-600">CO₂ evitat</dt>
-                  <dd className="font-medium text-green-700">{result.co2Tone} t/an</dd>
+                  <dd className="font-medium text-green-700">
+                    {String(result.co2Tone).replace('.', ',')} t/an
+                  </dd>
                 </div>
               </dl>
             </div>

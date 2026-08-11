@@ -31,19 +31,28 @@ const url = `${BASE}/calculator-panouri-fotovoltaice?segment=rezidential&consum=
   CONSUM,
 )}&unitate=lei&judet=${encodeURIComponent(JUDET)}`;
 await page.goto(url, { waitUntil: 'networkidle' });
+await page.addStyleTag({
+  content: 'nextjs-portal, [data-nextjs-toast], #__next-build-watcher { display: none !important; }',
+}).catch(() => {});
 
 for (const b of await page.locator('button[aria-label*="nchide"], button[aria-label*="lose"]').all()) {
   await b.click().catch(() => {});
 }
 await page.waitForTimeout(600);
 
-// Rezultatul e sub formular. Îl prindem după eticheta de amortizare, care apare
-// doar când calculul s-a făcut, ca să nu fotografiem un formular gol.
-const rezultat = page.locator('text=/amortiz/i').first();
-await rezultat.waitFor({ state: 'visible', timeout: 15000 });
+// Rezultatul stă sub formular, iar o captură de viewport ar prinde doar
+// formularul. Ancorăm pe „Sistem recomandat", care apare numai după calcul, și
+// urcăm la containerul lui: așa iese panoul de rezultat, nu pagina.
+const ancora = page.locator('text=/Sistem recomandat/i').first();
+await ancora.waitFor({ state: 'visible', timeout: 15000 });
+// Rezultatul e blocul cu `space-y-6 scroll-mt-24`, adică părintele cardului
+// de sumar. Ancorăm pe el, nu pe o clasă de stil care se poate schimba.
+const rezultat = page.locator('div.space-y-6.scroll-mt-24').first();
+await rezultat.scrollIntoViewIfNeeded();
+await page.waitForTimeout(400);
 
 const slug = `${JUDET.toLowerCase().replace(/[^a-z]/g, '')}-${CONSUM}lei`;
-await page.screenshot({ path: `${OUT}/calculator-${slug}.png`, fullPage: false });
+await rezultat.screenshot({ path: `${OUT}/calculator-${slug}.png` });
 
 const text = await page.locator('main').innerText();
 const cifre = text
