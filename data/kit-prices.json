@@ -21,7 +21,11 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-5-kwp-montaj-inclus-monofazat-sau-trifazat-panouri-trina-solar-cu-invertor-huawei/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "stoc": "în stoc",
+          "verificatManualLa": "2026-08-11",
+          "pretCuTva21Ron": 18250,
+          "pretPeUnitateCuTva21": 3650
         },
         {
           "nume": "Kit panouri fotovoltaice 6,37 kWp, montaj inclus, monofazat sau trifazat, panouri Trina Solar, cu invertor Huawei",
@@ -36,7 +40,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-6-37-kwp-montaj-inclus-monofazat-sau-trifazat-panouri-trina-solar-cu-invertor-huawei/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 21300.01,
+          "pretPeUnitateCuTva21": 3344
         },
         {
           "nume": "Kit panouri fotovoltaice 7,28 kWp, montaj inclus, monofazat sau trifazat, panouri Trina Solar, cu invertor Huawei",
@@ -51,7 +57,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-7-kwp-montaj-inclus-monofazat-sau-trifazat-panouri-trina-solar-cu-invertor-huawei/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 24990,
+          "pretPeUnitateCuTva21": 3433
         },
         {
           "nume": "Kit panouri fotovoltaice 6,37kWp, montaj inclus, monofazat sau trifazat, panouri Trina Solar, cu invertor Fronius",
@@ -66,7 +74,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-6kwp-montaj-inclus-monofazat-sau-trifazat-panouri-trina-solar-cu-invertor-fronius-2/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 27500,
+          "pretPeUnitateCuTva21": 4317
         },
         {
           "nume": "Kit panouri fotovoltaice 10 kWp, montaj inclus, trifazat, panouri Trina Solar, cu invertor Huawei",
@@ -81,7 +91,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-10-kwp-montaj-inclus-trifazat-panouri-trina-solar-cu-invertor-huawei/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 29900,
+          "pretPeUnitateCuTva21": 2990
         },
         {
           "nume": "Kit panouri fotovoltaice 5kWp hibrid cu montaj inclus, monofazat, trifazat, panouri Trina Solar, acumulator 5kWh Luna, invertor Huawei",
@@ -96,7 +108,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-5-kwp-hibrid-cu-montaj-inclus-monofazat-trifazat-panouri-trina-solar-acumulator-5kwh-luna-invertor-huawei-2/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 30414,
+          "pretPeUnitateCuTva21": 6083
         },
         {
           "nume": "Kit panouri fotovoltaice 7,28kWp, montaj inclus, monofazat sau trifazat, panouri Trina Solar, cu invertor Fronius",
@@ -111,7 +125,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-7kwp-montaj-inclus-monofazat-sau-trifazat-panouri-trina-solar-cu-invertor-fronius/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 31600,
+          "pretPeUnitateCuTva21": 4341
         },
         {
           "nume": "Kit panouri fotovoltaice 6,37kWp hibrid cu montaj inclus, monofazat, trifazat, panouri Trina Solar, acumulator 5kWh Luna, invertor Huawei",
@@ -126,7 +142,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-6kwp-hibrid-cu-montaj-inclus-monofazat-trifazat-panouri-trina-solar-acumulator-5kwh-luna-invertor-huawei/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 33464,
+          "pretPeUnitateCuTva21": 5253
         },
         {
           "nume": "Kit panouri fotovoltaice 12,74kWp, montaj inclus, trifazat, panouri Trina Solar, cu invertor Huawei",
@@ -141,7 +159,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-12-kwp-montaj-inclus-trifazat-panouri-trina-solar-cu-invertor-huawei/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 36900,
+          "pretPeUnitateCuTva21": 2896
         },
         {
           "nume": "Kit panouri fotovoltaice 7,28kWp hibrid cu montaj inclus, monofazat, trifazat, panouri Trina Solar, acumulator 6,9kWh Luna, invertor Huawei",
@@ -156,7 +176,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-7kwp-hibrid-cu-montaj-inclus-monofazat-trifazat-panouri-trina-solar-acumulator-6kwh-luna-invertor-huawei/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 37154.01,
+          "pretPeUnitateCuTva21": 5104
         },
         {
           "nume": "Kit panouri fotovoltaice 10kWp, montaj inclus, monofazat sau trifazat, panouri Trina Solar, cu invertor Fronius",
@@ -171,7 +193,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-10kwp-montaj-inclus-monofazat-sau-trifazat-panouri-trina-solar-cu-invertor-fronius/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 39600,
+          "pretPeUnitateCuTva21": 3960
         },
         {
           "nume": "Kit panouri fotovoltaice 6,37kWp hibrid cu montaj inclus, monofazat, trifazat, panouri Trina Solar, acumulator 5,1kWh BYD, invertor Fronius",
@@ -186,7 +210,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-6-kwp-hibrid-cu-montaj-inclus-monofazat-trifazat-panouri-trina-solar-acumulator-51kwh-byd-invertor-fronius/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 41086,
+          "pretPeUnitateCuTva21": 6450
         },
         {
           "nume": "Kit panouri fotovoltaice 7,28kWp hibrid cu montaj inclus, monofazat, trifazat, panouri Trina Solar, acumulator 5,1kWh BYD, invertor Fronius",
@@ -201,7 +227,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-7kwp-hibrid-cu-montaj-inclus-monofazat-trifazat-panouri-trina-solar-acumulator-51kwh-byd-invertor-fronius/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 45186,
+          "pretPeUnitateCuTva21": 6207
         },
         {
           "nume": "Kit panouri fotovoltaice 10kWp hibrid cu montaj inclus, monofazat, trifazat, panouri Trina Solar, acumulator 6,9kWh Luna, invertor Huawei",
@@ -216,7 +244,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-10kwp-hibrid-cu-montaj-inclus-monofazat-trifazat-panouri-trina-solar-acumulator-7kwh-luna-invertor-huawei/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 45904,
+          "pretPeUnitateCuTva21": 4590
         },
         {
           "nume": "Kit panouri fotovoltaice 12,74kWp, montaj inclus, trifazat, panouri Trina Solar, cu invertor Fronius",
@@ -231,7 +261,9 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-12kwp-montaj-inclus-trifazat-panouri-trina-solar-cu-invertor-fronius/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 46200,
+          "pretPeUnitateCuTva21": 3626
         },
         {
           "nume": "Kit panouri fotovoltaice 12,74kWp hibrid cu montaj inclus, monofazat, trifazat, panouri Trina Solar, acumulator 6,9kWh Luna, invertor Huawei",
@@ -246,9 +278,14 @@
           "urlProdus": "https://www.genway.ro/kit-panouri-fotovoltaice-12kwp-hibrid-cu-montaj-inclus-monofazat-trifazat-panouri-trina-solar-acumulator-69kwh-luna-invertor-huawei/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 52904,
+          "pretPeUnitateCuTva21": 4153
         }
-      ]
+      ],
+      "cotaTvaAfisata": 0.21,
+      "cotaTvaVerificatLa": "2026-08-11",
+      "cotaTvaDovada": "Pagina afișează 18.250,00 lei cu TVA 21%."
     },
     {
       "store": "Genway",
@@ -270,7 +307,9 @@
           "urlProdus": "https://www.genway.ro/byd-battery-box-premium-hvs-2-56-kwh-25ah-battery-module-2/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 4772.72,
+          "pretPeUnitateCuTva21": 1864
         },
         {
           "nume": "Acumulator – Modul acumulator 2,76kWh – BYD HVM",
@@ -285,7 +324,9 @@
           "urlProdus": "https://www.genway.ro/hvm-276-kw-byd-battery-box/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 5199.61,
+          "pretPeUnitateCuTva21": 1884
         },
         {
           "nume": "Acumulator – Modul acumulator 5kWh – Huawei LUNA2000-5-E0",
@@ -300,7 +341,9 @@
           "urlProdus": "https://www.genway.ro/acumulator-huawei-luna2000-5-e0-2/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 11399.99,
+          "pretPeUnitateCuTva21": 2280
         },
         {
           "nume": "Acumulator – Modul acumulator 5kWh, LUNA2000-5-E1",
@@ -315,7 +358,9 @@
           "urlProdus": "https://www.genway.ro/acumulator-modul-acumulator-5kwh-luna2000-5-e1/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 11650,
+          "pretPeUnitateCuTva21": 2330
         },
         {
           "nume": "Acumulator – Modul acumulator 6,9kWh – Huawei LUNA2000-7-E1",
@@ -330,7 +375,9 @@
           "urlProdus": "https://www.genway.ro/acumulator-suplimentar-stocare-energie-solara-huawei-luna2000-7-e1-6-9kwh/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 15400,
+          "pretPeUnitateCuTva21": 2232
         },
         {
           "nume": "Acumulator – Modul BCU BYD si Base Unit – pentru HVS/HVM",
@@ -345,7 +392,9 @@
           "urlProdus": "https://www.genway.ro/modul-byd-bcubase-unit-for-hvs-hvm-battery-sets-2/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 2874.96,
+          "pretPeUnitateCuTva21": null
         },
         {
           "nume": "Acumulator – Modul BMS Fronius Reserva",
@@ -360,7 +409,9 @@
           "urlProdus": "https://www.genway.ro/acumulator-modul-bms-fronius-reserva/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 5713.62,
+          "pretPeUnitateCuTva21": null
         },
         {
           "nume": "Acumulator – Modul BMS Huawei LUNA2000-10KW-C1",
@@ -375,7 +426,9 @@
           "urlProdus": "https://www.genway.ro/bms-huawei-luna2000-10kw-c1/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 5183.12,
+          "pretPeUnitateCuTva21": null
         },
         {
           "nume": "Acumulator – Pachet BYD Battery-Box Premium HVM – 11kWh – compus din 1 modul BCU BYD si Base Unit + 4 module acumulator 2,76kWh – BYD HVM",
@@ -390,7 +443,9 @@
           "urlProdus": "https://www.genway.ro/byd-battery-box-premium-hvm-11-0/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 23673.41,
+          "pretPeUnitateCuTva21": 2152
         },
         {
           "nume": "Acumulator – Pachet BYD Battery-Box Premium HVS – 10,2kWh – compus din 1 modul BCU BYD si Base Unit + 4 module acumulator 2,56kWh – BYD HVS",
@@ -405,7 +460,9 @@
           "urlProdus": "https://www.genway.ro/byd-battery-box-premium-hvs-10-2/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 21965.86,
+          "pretPeUnitateCuTva21": 2154
         },
         {
           "nume": "Acumulator – Pachet BYD Battery-Box Premium HVS – 12,8kWh – compus din 1 modul BCU BYD si Base Unit + 5 module acumulator 2,56kWh – BYD HVS",
@@ -420,7 +477,9 @@
           "urlProdus": "https://www.genway.ro/byd-battery-box-premium-hvs-128-acumulator-lifepo4-128-kwh/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 26738.58,
+          "pretPeUnitateCuTva21": 2089
         },
         {
           "nume": "Acumulator – Pachet BYD Battery-Box Premium HVM – 13,8kWh – compus din 1 modul BCU BYD si Base Unit + 5 module acumulator 2,76kWh – BYD HVM",
@@ -435,7 +494,9 @@
           "urlProdus": "https://www.genway.ro/byd-battery-box-premium-hvm-13-8/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 28873.02,
+          "pretPeUnitateCuTva21": 2092
         },
         {
           "nume": "Acumulator – Pachet BYD Battery-Box Premium HVS – 16,6kWh – compus din 1 modul BCU BYD si Base Unit + 6 module acumulator 2,76kWh – BYD HVM",
@@ -450,7 +511,9 @@
           "urlProdus": "https://www.genway.ro/byd-battery-box-premium-hvm-16-6-acumulator-lifepo4-16-6-kwh/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 34072.63,
+          "pretPeUnitateCuTva21": 2053
         },
         {
           "nume": "Acumulator – Pachet BYD Battery-Box Premium HVM – 19,3kWh – compus din 1 modul BCU BYD si Base Unit + 7 module acumulator 2,76kWh – BYD HVM",
@@ -465,7 +528,9 @@
           "urlProdus": "https://www.genway.ro/byd-battery-box-premium-hvm-19-3-acumulator-lifepo4-19-3-kwh/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 39272.24,
+          "pretPeUnitateCuTva21": 2035
         },
         {
           "nume": "Acumulator – Pachet BYD Battery-Box Premium HVM – 22,1kWh – compus din 1 modul BCU BYD si Base Unit + 8 module acumulator 2,76kWh – BYD HVM",
@@ -480,9 +545,14 @@
           "urlProdus": "https://www.genway.ro/byd-battery-box-premium-hvm-22-1-acumulator-lifepo4-22-1-kwh/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 44471.86,
+          "pretPeUnitateCuTva21": 2012
         }
-      ]
+      ],
+      "cotaTvaAfisata": 0.21,
+      "cotaTvaVerificatLa": "2026-08-11",
+      "cotaTvaDovada": "Pagina afișează 18.250,00 lei cu TVA 21%."
     },
     {
       "store": "eSolar",
@@ -504,7 +574,8 @@
           "urlProdus": "https://www.esolar.ro/acumulator-solar-leapton-el-a05-15-kwh-utilizabili-51-2v-low-voltage-pentru-stocare-rezidenial.html",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": null
         },
         {
           "nume": "Baterie fotovoltaică Leapton EL-A05 capacitate reală 10 kWh LiFePO4 51.2V stocare energie solară",
@@ -519,7 +590,8 @@
           "urlProdus": "https://www.esolar.ro/baterie-fotovoltaic-leapton-el-a05-capacitate-real-10-kwh-lifepo4-51-2v-stocare-energie-solar.html",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": null
         },
         {
           "nume": "Instalatie fotovoltaica off-grid la cheie de 2.5kW putere instalata pentru zone rezidentiale",
@@ -534,7 +606,8 @@
           "urlProdus": "https://www.esolar.ro/instalatie-fotovoltaica-off-grid-la-cheie-de-2-5kw-putere-instalata-pentru-zone-rezidentiale.html",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": null
         },
         {
           "nume": "Instalatie fotovoltaica stand alone de 3.75kW putere instalata cu montaj si manopera incluse la cheie",
@@ -549,7 +622,8 @@
           "urlProdus": "https://www.esolar.ro/instalatie-fotovoltaica-stand-alone-de-3-75kw-putere-instalata-cu-montaj-si-manopera-incluse-la-cheie.html",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": null
         },
         {
           "nume": "Instalatie fotovoltaica stand alone de 3kW putere instalata",
@@ -564,7 +638,8 @@
           "urlProdus": "https://www.esolar.ro/instalatie-fotovoltaica-stand-alone-de-3kw-putere-instalata.html",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": null
         },
         {
           "nume": "Instalatie solara fotovoltaica cu montaj inclus de 1kW putere instalata cu garantie panouri solare de 12 ani",
@@ -579,7 +654,8 @@
           "urlProdus": "https://www.esolar.ro/instalatie-solara-fotovoltaica-cu-montaj-inclus-de-1kw-putere-instalata-cu-garantie-panouri-solare-de-12-ani.html",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": null
         },
         {
           "nume": "Instalatii fotovoltaice monofazate de 10kW putere instalata",
@@ -594,7 +670,8 @@
           "urlProdus": "https://www.esolar.ro/instalatii-fotovoltaice-monofazate-de-10kw-putere-instalata.html",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": null
         },
         {
           "nume": "Kit cu celule fotovoltaice de 6.75kW putere instalata pentru energie electrica obtinuta economic cu manopera de instalare inclusa",
@@ -609,7 +686,8 @@
           "urlProdus": "https://www.esolar.ro/kit-cu-celule-fotovoltaice-de-6-75kw-putere-instalata-pentru-energie-electrica-obtinuta-economic-cu-manopera-de-instalare-inclusa.html",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": null
         },
         {
           "nume": "Kit fotovoltaic incarcator mobil 220V 400Wh",
@@ -624,7 +702,8 @@
           "urlProdus": "https://www.esolar.ro/kit-fotovoltaic-incarcator-mobil-220v-400wh.html",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": null
         },
         {
           "nume": "Kit fotovoltaic independent pentru casa 12V IPP200Wx4-Tarom235-35Ah-100Ah",
@@ -639,7 +718,8 @@
           "urlProdus": "https://www.esolar.ro/kit-fotovoltaic-independent-pentru-casa-12v-ipp200wx4-tarom235-35ah-100ah.html",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": null
         },
         {
           "nume": "Kit fotovoltaic mobil aplicatii mici 12V 330Wh",
@@ -654,7 +734,8 @@
           "urlProdus": "https://www.esolar.ro/kit-fotovoltaic-mobil-aplicatii-mici-12v-330wh.html",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": null
         },
         {
           "nume": "Kit fotovoltaic monocristalin cu invertor IPM150W-550W-6.6F-6A-50Ah",
@@ -669,9 +750,13 @@
           "urlProdus": "https://www.esolar.ro/kit-fotovoltaic-monocristalin-cu-invertor-ipm150w-550w-6-6f-6a-50ah.html",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": null
         }
-      ]
+      ],
+      "cotaTvaAfisata": null,
+      "cotaTvaVerificatLa": null,
+      "cotaTvaDovada": "Neverificat. Magazinul vinde echipament fără montaj, produsele lui nu intră în comparațiile „cu montaj\"."
     },
     {
       "store": "Solar1000",
@@ -693,7 +778,11 @@
           "urlProdus": "https://solar1000.com/produs/montaj-panouri-fotovoltaice-3-kw-sistem-fotovoltaic-3-kw-monofazat/",
           "pretFaraMontajRon": 5950,
           "manoperaRon": 2449,
-          "manoperaPeKw": 816
+          "manoperaPeKw": 816,
+          "stoc": "în stoc",
+          "verificatManualLa": "2026-08-11",
+          "pretCuTva21Ron": 10162.79,
+          "pretPeUnitateCuTva21": 3388
         },
         {
           "nume": "Sistem Fotovoltaic 5 KW – Panouri Fotovoltaice 5 KW Trifazat",
@@ -708,7 +797,9 @@
           "urlProdus": "https://solar1000.com/produs/sistem-fotovoltaic-5-kw-panouri-fotovoltaice-5-kw-trifazat/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 10224.5,
+          "pretPeUnitateCuTva21": 2045
         },
         {
           "nume": "Montaj Panouri Fotovoltaice 8 KW – Sistem Fotovoltaic 8 KW Trifazat",
@@ -723,7 +814,9 @@
           "urlProdus": "https://solar1000.com/produs/montaj-panouri-fotovoltaice-8-kw-sistem-fotovoltaic-8-kw-trifazat/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 20447.79,
+          "pretPeUnitateCuTva21": 2556
         },
         {
           "nume": "Sistem Fotovoltaic 10 KW – Panouri Fotovoltaice 10 KW Trifazat",
@@ -738,7 +831,9 @@
           "urlProdus": "https://solar1000.com/produs/sistem-fotovoltaic-10-kw-panouri-fotovoltaice-10-kw-trifazat/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 16879.5,
+          "pretPeUnitateCuTva21": 1688
         },
         {
           "nume": "Montaj Panouri Fotovoltaice 5 KW – Sistem Fotovoltaic 5 KW Trifazat",
@@ -753,7 +848,11 @@
           "urlProdus": "https://solar1000.com/produs/montaj-panouri-fotovoltaice-5-kw-sistem-fotovoltaic-5-kw-trifazat/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "stoc": "în stoc",
+          "verificatManualLa": "2026-08-11",
+          "pretCuTva21Ron": 14881.79,
+          "pretPeUnitateCuTva21": 2976
         },
         {
           "nume": "Montaj Sistem Fotovoltaic 50 KW – Panouri Fotovoltaice 50 KW Trifazat",
@@ -768,7 +867,9 @@
           "urlProdus": "https://solar1000.com/produs/montaj-sistem-fotovoltaic-50-kw-panouri-fotovoltaice-50-kw-trifazat/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 94319.5,
+          "pretPeUnitateCuTva21": 1886
         },
         {
           "nume": "Montaj Panouri Fotovoltaice 8 KW – Sistem Fotovoltaic 8 KW Monofazat",
@@ -783,9 +884,52 @@
           "urlProdus": "https://solar1000.com/produs/montaj-panouri-fotovoltaice-8-kw-sistem-fotovoltaic-8-kw-monofazat/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 19479.79,
+          "pretPeUnitateCuTva21": 2435
+        },
+        {
+          "nume": "Montaj Panouri Fotovoltaice 5 KW – Sistem Fotovoltaic 5 KW Monofazat",
+          "tip": "on-grid",
+          "unitate": "kW",
+          "marime": 5,
+          "pretRon": 11699,
+          "pretPeUnitate": 2340,
+          "includeMontaj": "da",
+          "includeBaterie": false,
+          "tvaInclus": false,
+          "urlProdus": "https://solar1000.com/produs/montaj-panouri-fotovoltaice-5-kw-sistem-fotovoltaic-5-kw-monofazat/",
+          "pretFaraMontajRon": null,
+          "manoperaRon": null,
+          "manoperaPeKw": null,
+          "stoc": "în stoc",
+          "verificatManualLa": "2026-08-11",
+          "pretCuTva21Ron": 14155.79,
+          "pretPeUnitateCuTva21": 2831
+        },
+        {
+          "nume": "Montaj Panouri Fotovoltaice 10 KW – Sistem Fotovoltaic 10 KW Trifazat",
+          "tip": "on-grid",
+          "unitate": "kW",
+          "marime": 10,
+          "pretRon": 19399,
+          "pretPeUnitate": 1940,
+          "includeMontaj": "da",
+          "includeBaterie": false,
+          "tvaInclus": false,
+          "urlProdus": "https://solar1000.com/produs/montaj-panouri-fotovoltaice-10-kw-sistem-fotovoltaic-10-kw-trifazat-invertor-10kw/",
+          "pretFaraMontajRon": 13950,
+          "manoperaRon": 5449,
+          "manoperaPeKw": 545,
+          "stoc": "în stoc",
+          "verificatManualLa": "2026-08-11",
+          "pretCuTva21Ron": 23472.79,
+          "pretPeUnitateCuTva21": 2347
         }
-      ]
+      ],
+      "cotaTvaAfisata": 0,
+      "cotaTvaVerificatLa": "2026-08-11",
+      "cotaTvaDovada": "Pagina afișează „8,399.00 lei + 21% TVA\" și „*Pret fara TVA (21%)\"."
     },
     {
       "store": "VoltGrid",
@@ -807,7 +951,9 @@
           "urlProdus": "https://voltgrid.ro/produs/kit-panouri-fotovoltaice-3-kw-trifazat-ongrid/",
           "pretFaraMontajRon": 9972.45,
           "manoperaRon": 2220.5599999999995,
-          "manoperaPeKw": 740
+          "manoperaPeKw": 740,
+          "pretCuTva21Ron": 13535.36,
+          "pretPeUnitateCuTva21": 4512
         },
         {
           "nume": "Kit panouri fotovoltaice 3 kW monofazat ongrid",
@@ -822,7 +968,11 @@
           "urlProdus": "https://voltgrid.ro/produs/kit-panouri-fotovoltaice-3-kw-monofazat-ongrid/",
           "pretFaraMontajRon": 7832.1,
           "manoperaRon": 1607.5200000000004,
-          "manoperaPeKw": 536
+          "manoperaPeKw": 536,
+          "stoc": "stoc epuizat",
+          "verificatManualLa": "2026-08-11",
+          "pretCuTva21Ron": 10478.84,
+          "pretPeUnitateCuTva21": 3493
         },
         {
           "nume": "Kit panouri fotovoltaice 5 kW monofazat ongrid",
@@ -837,7 +987,11 @@
           "urlProdus": "https://voltgrid.ro/produs/kit-panouri-fotovoltaice-5-kw-monofazat-ongrid/",
           "pretFaraMontajRon": 11273,
           "manoperaRon": 1014.2399999999998,
-          "manoperaPeKw": 203
+          "manoperaPeKw": 203,
+          "stoc": "stoc epuizat",
+          "verificatManualLa": "2026-08-11",
+          "pretCuTva21Ron": 13639.96,
+          "pretPeUnitateCuTva21": 2728
         },
         {
           "nume": "Kit panouri fotovoltaice 10 kW trifazat ongrid",
@@ -852,9 +1006,14 @@
           "urlProdus": "https://voltgrid.ro/produs/kit-panouri-fotovoltaice-10-kw-trifazat-ongrid/",
           "pretFaraMontajRon": 21486.4,
           "manoperaRon": 5449.809999999998,
-          "manoperaPeKw": 545
+          "manoperaPeKw": 545,
+          "pretCuTva21Ron": 29901.66,
+          "pretPeUnitateCuTva21": 2990
         }
-      ]
+      ],
+      "cotaTvaAfisata": 0.09,
+      "cotaTvaVerificatLa": "2026-08-11",
+      "cotaTvaDovada": "Pagina afișează trei rânduri: fără TVA, „cu TVA 9%\" (rândul luat de scraper) și „cu TVA 19%\". Cotele citate din Legea 39/2023, neactualizate."
     },
     {
       "store": "VoltExpert",
@@ -876,7 +1035,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-30-kw-deye-trifazic-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 72584.78,
+          "pretPeUnitateCuTva21": 2419
         },
         {
           "nume": "Sistem Fotovoltaic 20 KW DEYE Trifazic Hibrid (montaj + dosar prosumator incluse)",
@@ -891,7 +1052,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-20-kw-deye-trifazic-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 45216.49,
+          "pretPeUnitateCuTva21": 2261
         },
         {
           "nume": "Sistem Fotovoltaic 15 KW DEYE Trifazic Hibrid (montaj + dosar prosumator incluse)",
@@ -906,7 +1069,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-15-kw-deye-trifazic-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 38191.23,
+          "pretPeUnitateCuTva21": 2546
         },
         {
           "nume": "Sistem Fotovoltaic 10 KW DEYE Monofazic Hibrid (montaj + dosar prosumator incluse)",
@@ -921,7 +1086,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-10-kw-deye-trifazic-hibrid-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 31843.57,
+          "pretPeUnitateCuTva21": 3184
         },
         {
           "nume": "Sistem Fotovoltaic 10 KW DEYE Monofazic Hibrid cu Acumulator DEYE 5kw LFP (montaj + dosar prosumator incluse)",
@@ -936,7 +1103,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-10-kw-deye-trifazic-hibrid-cu-acumulator-deye-5kw-lfp-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 36476.66,
+          "pretPeUnitateCuTva21": 3648
         },
         {
           "nume": "Sistem Fotovoltaic 10 KW DEYE Trifazic Hibrid cu Acumulator DEYE 5kw LFP (montaj + dosar prosumator incluse)",
@@ -951,7 +1120,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-10-kw-deye-trifazic-hibrid-cu-acumulator-deye-5kw-lfp-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 36598.87,
+          "pretPeUnitateCuTva21": 3660
         },
         {
           "nume": "Sistem Fotovoltaic 8 KW DEYE Trifazic Hibrid cu Acumulator DEYE 5kw LFP (montaj + dosar prosumator incluse)",
@@ -966,7 +1137,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-8-kw-deye-trifazic-hibrid-cu-acumulator-deye-5kw-lfp-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 29559.09,
+          "pretPeUnitateCuTva21": 3695
         },
         {
           "nume": "Sistem Fotovoltaic 6 KW DEYE Trifazic Hibrid cu Acumulator DEYE 5kw LFP (montaj + dosar prosumator incluse)",
@@ -981,7 +1154,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-6-kw-deye-trifazic-hibrid-cu-acumulator-deye-5kw-lfp-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 27808.22,
+          "pretPeUnitateCuTva21": 4635
         },
         {
           "nume": "Sistem Fotovoltaic 5 KW DEYE Trifazic Hibrid cu Acumulator DEYE 5kw LFP (montaj + dosar prosumator incluse)",
@@ -996,7 +1171,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-5-kw-deye-trifazic-hibrid-cu-acumulator-deye-5kw-lfp-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 26382.84,
+          "pretPeUnitateCuTva21": 5277
         },
         {
           "nume": "Sistem Fotovoltaic 8 KW DEYE Monofazic Hibrid cu Acumulator DEYE 5kw LFP (montaj + dosar prosumator incluse)",
@@ -1011,7 +1188,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-8-kw-deye-monofazic-hibrid-cu-acumulator-deye-5kw-lfp-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 27297.6,
+          "pretPeUnitateCuTva21": 3412
         },
         {
           "nume": "Sistem Fotovoltaic 6 KW DEYE Monofazic Hibrid cu Acumulator DEYE 5kw LFP (montaj + dosar prosumator incluse)",
@@ -1026,7 +1205,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-6-kw-deye-monofazic-hibrid-cu-acumulator-deye-5kw-lfp-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 22052.25,
+          "pretPeUnitateCuTva21": 3675
         },
         {
           "nume": "Sistem Fotovoltaic 5 KW DEYE Monofazic Hibrid cu Acumulator DEYE 5kw LFP (montaj + dosar prosumator incluse)",
@@ -1041,7 +1222,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-5-kw-deye-monofazic-hibrid-cu-acumulator-deye-5kw-lfp-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 21439.99,
+          "pretPeUnitateCuTva21": 4288
         },
         {
           "nume": "Sistem Fotovoltaic 12 KW DEYE Trifazic ON Grid (montaj + dosar prosumator , incluse)",
@@ -1056,7 +1239,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-12-kw-deye-trifazic-on-grid-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 28276.49,
+          "pretPeUnitateCuTva21": 2356
         },
         {
           "nume": "Sistem Fotovoltaic 10 KW DEYE Trifazic ON Grid (montaj + dosar prosumator , incluse)",
@@ -1071,7 +1256,11 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-10-kw-deye-trifazic-on-grid-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "stoc": "în stoc",
+          "verificatManualLa": "2026-08-11",
+          "pretCuTva21Ron": 25553.99,
+          "pretPeUnitateCuTva21": 2555
         },
         {
           "nume": "Sistem Fotovoltaic 8 KW DEYE Trifazic ON Grid (montaj + dosar prosumator , incluse)",
@@ -1086,7 +1275,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-8-kw-deye-trifazic-on-grid-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 19110.74,
+          "pretPeUnitateCuTva21": 2389
         },
         {
           "nume": "Sistem Fotovoltaic 6 KW DEYE Trifazic ON Grid (montaj + dosar prosumator incluse)",
@@ -1101,7 +1292,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-6-kw-deye-trifazic-on-grid-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 16946.05,
+          "pretPeUnitateCuTva21": 2824
         },
         {
           "nume": "Sistem Fotovoltaic 5 KW DEYE Trifazic ON Grid (montaj + dosar prosumator incluse)",
@@ -1116,7 +1309,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-5-kw-deye-trifazic-on-grid-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 15559.39,
+          "pretPeUnitateCuTva21": 3112
         },
         {
           "nume": "Sistem Fotovoltaic 12 KW DEYE Trifazic hibrid (montaj + dosar prosumator , incluse)",
@@ -1131,7 +1326,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-12-kw-deye-trifazic-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 34809.28,
+          "pretPeUnitateCuTva21": 2901
         },
         {
           "nume": "Sistem Fotovoltaic 10 KW DEYE Trifazic hibrid (montaj + dosar prosumator incluse)",
@@ -1146,7 +1343,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-10-kw-deye-trifazic-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 31999.66,
+          "pretPeUnitateCuTva21": 3200
         },
         {
           "nume": "Sistem Fotovoltaic 8 KW DEYE Trifazic hibrid (montaj + dosar prosumator incluse)",
@@ -1161,7 +1360,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-8-kw-deye-trifazic-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 24923.58,
+          "pretPeUnitateCuTva21": 3115
         },
         {
           "nume": "Sistem Fotovoltaic 6 KW DEYE Trifazic Hibrid (montaj + dosar prosumator , incluse)",
@@ -1176,7 +1377,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-6-kw-deye-trifazic-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 23154.56,
+          "pretPeUnitateCuTva21": 3859
         },
         {
           "nume": "Sistem Fotovoltaic 5 KW DEYE Trifazic Hibrid (montaj + dosar prosumator , incluse)",
@@ -1191,7 +1394,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-5-kw-deye-trifazic-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 21749.75,
+          "pretPeUnitateCuTva21": 4350
         },
         {
           "nume": "Sistem Fotovoltaic 3 KW Huawei Trifazic Hibrid (montaj + dosar prosumator , incluse)",
@@ -1206,7 +1411,9 @@
           "urlProdus": "https://voltexpert.ro/kit-complet-sistem-fotovoltaic-3-kw-huawei-trifazic-montaj-dosar-prosumator-incluse/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 15109.27,
+          "pretPeUnitateCuTva21": 5036
         },
         {
           "nume": "Sistem Fotovoltaic 20 KW Huawei Trifazic ON Grid (montaj + dosar prosumator incluse)",
@@ -1221,7 +1428,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-20-kw-huawei-trifazic-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 46612.83,
+          "pretPeUnitateCuTva21": 2331
         },
         {
           "nume": "Sistem Fotovoltaic 15 KW Huawei Trifazic ON Grid (montaj + dosar prosumator incluse)",
@@ -1236,7 +1445,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-15-kw-huawei-trifazic-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 40623.33,
+          "pretPeUnitateCuTva21": 2708
         },
         {
           "nume": "Sistem Fotovoltaic 12 KW Huawei Trifazic ON Grid (montaj + dosar prosumator , incluse)",
@@ -1251,7 +1462,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-12-kw-huawei-trifazic-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 35254.56,
+          "pretPeUnitateCuTva21": 2938
         },
         {
           "nume": "Sistem Fotovoltaic 10 KW Huawei Trifazic Hibrid(montaj + dosar prosumator incluse)",
@@ -1266,7 +1479,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-10-kw-huawei-trifazic-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 27686.01,
+          "pretPeUnitateCuTva21": 2769
         },
         {
           "nume": "Sistem Fotovoltaic 8 KW Huawei Trifazic Hibrid (montaj + dosar prosumator incluse)",
@@ -1281,7 +1496,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-8-kw-huawei-trifazic-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 19725.42,
+          "pretPeUnitateCuTva21": 2466
         },
         {
           "nume": "Sistem Fotovoltaic 8 KW Huawei Monofazic Hibrid (montaj + dosar prosumator incluse)",
@@ -1296,7 +1513,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-8-kw-huawei-monofazic-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 21453.3,
+          "pretPeUnitateCuTva21": 2682
         },
         {
           "nume": "Sistem Fotovoltaic 6 KW Huawei Trifazic Hibrid  (montaj + dosar prosumator , incluse)",
@@ -1311,7 +1530,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-6-kw-huawei-trifazic-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 17984.23,
+          "pretPeUnitateCuTva21": 2997
         },
         {
           "nume": "Sistem Fotovoltaic 5 KW Huawei Trifazic Hibrid (montaj + dosar prosumator incluse)",
@@ -1326,7 +1547,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-5-kw-huawei-monofazic-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 16463.26,
+          "pretPeUnitateCuTva21": 3293
         },
         {
           "nume": "Sistem Fotovoltaic 6 KW Huawei Monofazic Hibrid (montaj + dosar prosumator incluse)",
@@ -1341,7 +1564,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-6-kw-huawei-la-cheie-cu-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 17116.66,
+          "pretPeUnitateCuTva21": 2853
         },
         {
           "nume": "Sistem Fotovoltaic 5 KW Huawei Monofazic Hibrid (montaj + dosar prosumator incluse)",
@@ -1356,7 +1581,9 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-5-kw-huawei-la-cheie-cu-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 15659.82,
+          "pretPeUnitateCuTva21": 3132
         },
         {
           "nume": "Sistem Fotovoltaic 3 KW Huawei Monofazic Hibrid (montaj + dosar prosumator incluse)",
@@ -1371,13 +1598,20 @@
           "urlProdus": "https://voltexpert.ro/sistem-fotovoltaic-3-kw-huawei-la-cheie-cu-montaj-inclus/",
           "pretFaraMontajRon": null,
           "manoperaRon": null,
-          "manoperaPeKw": null
+          "manoperaPeKw": null,
+          "pretCuTva21Ron": 12795.75,
+          "pretPeUnitateCuTva21": 4265
         }
-      ]
+      ],
+      "cotaTvaAfisata": 0.21,
+      "cotaTvaVerificatLa": "2026-08-11",
+      "cotaTvaDovada": "Pagina afișează „25553.99 lei TVA 21% inclus\"."
     }
   ],
   "warnings": [
     "outlier [on-grid|kW] 35.256 RON/kW vs mediana 2.896 (12.2x) — Instalatie solara fotovoltaica cu montaj inclus de 1kW puter",
     "outlier [on-grid|kW] 18.304 RON/kW vs mediana 2.896 (6.3x) — Kit cu celule fotovoltaice de 6.75kW putere instalata pentru"
-  ]
+  ],
+  "tvaNormalizatLa": "2026-08-11",
+  "tvaNota": "pretRon = prețul afișat de magazin, pe baza LUI de TVA (vezi cotaTvaAfisata per sursă). pretCuTva21Ron = același preț adus la TVA 21%, cota legală pentru panouri din 1 august 2025. ORICE comparație între magazine se face pe pretCuTva21Ron, niciodată pe pretRon."
 }

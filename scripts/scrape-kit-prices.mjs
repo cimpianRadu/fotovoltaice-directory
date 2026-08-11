@@ -354,6 +354,19 @@ async function main() {
   writeFileSync(OUT_PATH, JSON.stringify(out, null, 2) + '\n');
   console.log(`\n[kit-prices] ${total} produse din ${out.sources.length} surse → ${OUT_PATH}`);
 
+  // ⚠️ pretRon e prețul AFIȘAT, pe baza de TVA a magazinului, și magazinele NU
+  // folosesc aceeași bază: unul publică fără TVA, altul cu o cotă de 9% care nu
+  // se mai aplică panourilor din 1 august 2025, altul cu 21% inclus. Comparate
+  // ca atare, ies minime greșite; exact așa au ajuns prețuri false în ghidul #46
+  // și în reelul #21 (descoperit 2026-08-11). Nimic din ce se publică nu se ia
+  // din pretRon: se rulează întâi normalizarea și se citește pretCuTva21Ron.
+  console.log(
+    '\n[kit-prices] ⚠️  Cifrele de mai jos sunt prețuri AFIȘATE, pe baze de TVA diferite.\n' +
+      '             NU le compara între magazine și NU le publica așa.\n' +
+      '             Rulează: node scripts/normalize-kit-prices.mjs --write\n' +
+      '             și citează pretCuTva21Ron.',
+  );
+
   // Sumar pe tip. Tipurile NU se compară între ele — vezi comentariul de la classify().
   for (const tip of ['on-grid', 'hibrid', 'off-grid', 'baterie']) {
     const items = allProducts
