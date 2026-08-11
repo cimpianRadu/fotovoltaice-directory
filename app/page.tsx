@@ -164,7 +164,7 @@ export default async function HomePage() {
             sus e vândut. Curba de preț se citește pe server, fișierul de scrape
             nu are ce căuta în bundle-ul clientului. */}
         <div className="mb-10">
-          <QuickEstimateWidget priceCurve={getKitPriceCurve()} />
+          <QuickEstimateWidget priceCurve={getKitPriceCurve()} sursa="home" />
         </div>
 
         {hasPremium ? (

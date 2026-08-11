@@ -84,7 +84,7 @@ export default function FirmePage() {
             instalatori ajunge aici fără să știe ce sistem îi trebuie, iar cifra îi
             dă un reper înainte să filtreze. */}
         <div className="mb-8">
-          <QuickEstimateWidget priceCurve={getKitPriceCurve()} />
+          <QuickEstimateWidget priceCurve={getKitPriceCurve()} sursa="firme" />
         </div>
 
         <Suspense fallback={<div className="text-center py-12 text-gray-400">Se încarcă...</div>}>

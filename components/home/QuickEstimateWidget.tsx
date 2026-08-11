@@ -56,7 +56,15 @@ const Metric = ({ eticheta, valoare }: { eticheta: string; valoare: string }) =>
   </div>
 );
 
-export default function QuickEstimateWidget({ priceCurve }: { priceCurve: KitPriceCurve }) {
+export default function QuickEstimateWidget({
+  priceCurve,
+  sursa,
+}: {
+  priceCurve: KitPriceCurve;
+  /** Pagina pe care stă widgetul. Fără ea, în Umami cele două plasări se
+      amestecă și nu se poate spune care aduce cereri. */
+  sursa: 'home' | 'firme';
+}) {
   const { segment } = useSegment();
   const isRezidential = segment === 'rezidential';
   const autoconsum = isRezidential ? AUTOCONSUM_REZIDENTIAL : AUTOCONSUM_FIRMA;
@@ -102,7 +110,14 @@ export default function QuickEstimateWidget({ priceCurve }: { priceCurve: KitPri
               min={1}
               value={factura}
               onChange={(e) => setFactura(e.target.value)}
-              onBlur={() => trackUmami('widget-estimate', { factura: Number(factura) || 0 })}
+              onBlur={() =>
+              trackUmami('widget-estimate', {
+                sursa,
+                segment,
+                factura: Number(factura) || 0,
+                kwp: result?.kwp ?? 0,
+              })
+            }
               className="w-32 rounded-lg border border-border px-3 py-2.5 text-lg font-semibold text-secondary-dark focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
               aria-describedby="widget-ipoteze"
             />
@@ -139,14 +154,26 @@ export default function QuickEstimateWidget({ priceCurve }: { priceCurve: KitPri
         <div className="lg:col-span-3 flex flex-col sm:flex-row lg:flex-col gap-3">
           <Link
             href="/cere-oferta"
-            onClick={() => trackUmami('widget-cere-oferta')}
+            onClick={() =>
+              trackUmami('widget-cere-oferta', {
+                sursa,
+                segment,
+                factura: Number(factura) || 0,
+              })
+            }
             className="flex-1 text-center rounded-lg bg-primary px-4 py-3 font-semibold text-secondary-dark hover:bg-primary-dark transition-colors"
           >
             Cere ofertă gratuit
           </Link>
           <Link
             href={linkCalculator}
-            onClick={() => trackUmami('widget-calculator-complet')}
+            onClick={() =>
+              trackUmami('widget-calculator-complet', {
+                sursa,
+                segment,
+                factura: Number(factura) || 0,
+              })
+            }
             className="flex-1 text-center rounded-lg border border-secondary/25 px-4 py-2.5 text-sm font-semibold text-secondary-dark hover:bg-surface transition-colors"
           >
             Vezi calculul complet
