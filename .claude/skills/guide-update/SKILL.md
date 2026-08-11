@@ -30,6 +30,14 @@ Actualizează ghiduri existente din `data/guides.json`.
 - `/guide-update unpublish slug-ghid` — setează `unpublished: true`
 - `/guide-update date slug-ghid 2026-04-15` — schimbă data publicării
 
+## După deploy
+Dacă s-a schimbat conținutul sau ghidul tocmai a fost publicat, anunță motoarele
+care suportă IndexNow (Bing, Yandex, Naver, Seznam) **după ce modificarea e live**:
+```bash
+npm run indexnow -- --ghid {slug}
+```
+Google nu suportă IndexNow, acolo rămâne Request Indexing manual din GSC.
+
 ## Reguli
 - Nu modifica conținutul fără confirmarea user-ului
 - Păstrează structura JSON validă

@@ -107,6 +107,18 @@ cp generated_imgs/<fisier-generat>.jpg public/images/guides/{slug}.png
 3. Verifică JSON valid
 4. Verifică că nu există deja un ghid cu același slug
 
+## Pasul 5: Anunțare indexare (după deploy)
+
+Ghidul trebuie să fie LIVE pe instalatori-fotovoltaice.ro înainte de ping, altfel
+motoarele primesc un 404 și ignoră URL-ul.
+
+```bash
+npm run indexnow -- --ghid {slug}
+```
+
+Acoperă Bing, Yandex, Naver, Seznam. **Google nu suportă IndexNow** — pentru
+Google rămâne Request Indexing manual din Search Console.
+
 ## Workflow complet
 ```
 1. Research (WebSearch + Firecrawl) → colectare date verificate
@@ -115,4 +127,5 @@ cp generated_imgs/<fisier-generat>.jpg public/images/guides/{slug}.png
 4. Copiere imagine în public/images/guides/{slug}.png
 5. Adăugare ghid în data/guides.json
 6. Prezentare rezumat user-ului
+7. După deploy: npm run indexnow -- --ghid {slug} + Request Indexing în GSC
 ```

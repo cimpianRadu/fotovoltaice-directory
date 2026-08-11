@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:forms": "node scripts/e2e-forms.mjs"
+    "test:forms": "node scripts/e2e-forms.mjs",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "googleapis": "^171.4.0",
