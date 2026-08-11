@@ -4,18 +4,23 @@
 // în bundle-ul clientului, așa că pagina pasează rezultatul ca prop.
 //
 // Se iau în calcul DOAR ofertele comparabile între ele: on-grid, cu montaj
-// inclus, fără baterie. Prețurile fără TVA sunt aduse la TVA inclus, altfel
-// mediana ar fi trasă artificial în jos de magazinele care afișează fără TVA.
+// inclus, fără baterie.
+//
+// Prețul folosit e `pretCuTva21Ron`, produs de `scripts/normalize-kit-prices.mjs`,
+// NU `pretRon`. Motivul: `pretRon` e prețul afișat, iar magazinele îl afișează
+// pe baze diferite (unul fără TVA, unul cu cota de 9% ieșită din uz pentru
+// panouri din 1 august 2025, două cu 21% inclus). O verificare anterioară care
+// se uita doar la flagul `tvaInclus` lăsa prețurile VoltGrid cu 9% în mediană,
+// adică cu ~11% sub valoarea reală.
 
 import kitPrices from '@/data/kit-prices.json';
-
-/** Cota de TVA folosită de magazinele scanate (vezi nota sursei Genway). */
-const TVA_RATE = 0.21;
 
 interface ScrapedProduct {
   tip?: string;
   marime?: number;
   pretRon?: number;
+  /** Prețul adus la TVA 21%. null dacă baza magazinului nu e verificată. */
+  pretCuTva21Ron?: number | null;
   includeMontaj?: string;
   includeBaterie?: boolean;
   tvaInclus?: boolean;
@@ -70,10 +75,15 @@ export function getKitPriceCurve(): KitPriceCurve {
       if (p.tip !== 'on-grid') continue;
       if (p.includeMontaj !== 'da') continue;
       if (p.includeBaterie) continue;
-      if (!p.marime || !p.pretRon) continue;
+      // Fără preț normalizat, oferta iese din calcul. Un magazin cu bază de TVA
+      // neverificată nu are voie să intre în mediană doar fiindcă are un preț.
+      if (!p.marime || !p.pretCuTva21Ron) continue;
 
-      const withVat = p.tvaInclus ? p.pretRon : p.pretRon * (1 + TVA_RATE);
-      offers.push({ kwp: p.marime, perKwp: Math.round(withVat / p.marime), store: source.store });
+      offers.push({
+        kwp: p.marime,
+        perKwp: Math.round(p.pretCuTva21Ron / p.marime),
+        store: source.store,
+      });
     }
   }
 
