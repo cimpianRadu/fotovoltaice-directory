@@ -41,6 +41,16 @@ Linkul din bio (IG, TikTok) se schimbă la fiecare reel, cu `utm_campaign`-ul po
 
 **Evidența per canal:** în `data/social-schedule.json`, câmpul `platforme` per postare, cu valori `<dată ISO>` (postat), `programat` sau `sarit`. Cheie lipsă = nedistribuit pe canalul ăla. Se vede ca badge-uri FB/IG/YT/TT în /admin/social.
 
+## Reguli învățate pe pielea noastră (2026-08-11)
+
+**Verifică pozele înainte să le urci.** `node scripts/check-social-images.mjs social/<folder>` spune în două secunde dacă raportul e acceptat de Meta (feed: între 4:5 și 1,91:1; story: 9:16). Pe 11 august au ieșit trei capturi de 5,4:1, refuzate la încărcare, iar a doua încercare a scos 0,739 în loc de 0,800 fără ca nimic să prindă diferența. Constrângerea era scrisă în documentul ăsta de la început, doar că nu o verifica nimeni.
+
+**Fotografiază în formatul destinației, nu îl repara după.** O captură de desktop lipită pe o pânză cu chenar arată a cârpeală. Pentru componente de site, deschide pagina la lățime de telefon, unde layoutul se aranjează vertical, și decupează cadrul 4:5 din pagina reală (`scripts/shoot-widget.mjs`).
+
+**Nu pune în narație o cifră care se poate schimba.** Reelul #26 a supraviețuit unei corecții de preț fiindcă vocea spunea „puțin peste unsprezece mii de lei" și „puțin peste patru ani": ecranul s-a schimbat, banda de voce nu. Reelul #21 a rămas blocat pentru că vocea spunea „de la douăsprezece mii trei sute", exact cifra care s-a mișcat. Ecranul arată exact, vocea rotunjește conservator.
+
+**Când o cifră citată se schimbă, poza statică e ieșirea rapidă.** `scripts/compose-kit-poster.py` recompune posterul din datele normalizate în câteva secunde, cât un reel narat cere voce nouă plus render. Postarea nu are de ce să aștepte reelul.
+
 ## Cadență
 
 **Decizie 2026-07-08: doar REELS pentru o perioadă** (fără carousel foto). 1 reel/săptămână. Implicații pe producție: slide-urile se compun NATIV la 1080×1920 (nu extinse din pătrate cu make_reel.py — arată rău pe desktop), durată per slide controlată prin MP4 generat local (ffmpeg) dacă slideshow-ul FB rămâne blocat la 2s/cadru, distribuire în cele 3 grupuri mari de PV cu text per grup + comentariu cu link pe fiecare share. Motorul de teme rămâne: **fiecare ghid nou publicat → un reel derivat**; între ghiduri: tool-uri (calculator, verificare ANRE, clasament) și status-uri de program.
