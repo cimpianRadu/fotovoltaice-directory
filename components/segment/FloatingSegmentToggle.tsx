@@ -9,8 +9,12 @@ import SegmentToggle from './SegmentToggle';
  * firmei logate: acolo nu alege ce fel de conținut citește, ci lucrează pe
  * cererile ei, iar bara plutitoare acoperă exact partea de jos a cardului
  * (banda de statusuri, la 375px).
+ * Pe `/cere-oferta` și `/despre`, LeadForm își ține butonul de trimitere
+ * lipit de baza ecranului pe telefon, exact unde ar pluti și comutatorul;
+ * ambele pagini au comutatorul în altă parte (caseta de deasupra
+ * formularului, respectiv meniul din header).
  */
-const HIDE_ON = ['/portal'];
+const HIDE_ON = ['/portal', '/cere-oferta', '/despre'];
 
 /**
  * Mobile-only floating Casă/Firmă switcher, pinned bottom-center.

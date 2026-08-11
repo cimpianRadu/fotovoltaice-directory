@@ -46,6 +46,28 @@ interface LeadFormProps {
 
 const PHOTO_INBOX = 'contact@instalatori-fotovoltaice.ro';
 
+// iOS Safari focusează primul câmp invalid la submit, dar nu scrollează fiabil
+// până la el: pe telefon, apăsarea butonului părea că nu face nimic. Scrollăm
+// noi câmpul în mijlocul ecranului (deasupra barei sticky cu butonul), apoi
+// cerem bula nativă de validare; la dropdown-uri focusul deschide și lista.
+// scrollTo cu poziție calculată și behavior instant, nu scrollIntoView cu
+// smooth: scrollIntoView are propriile capricii pe iOS (fix ce reparăm aici),
+// iar globals.css setează scroll-behavior: smooth, care ar anima scroll-ul și
+// ar lăsa reportValidity să-l întrerupă cu scroll-ul lui propriu, la mijloc.
+function focusField(el: unknown) {
+  if (!(el instanceof HTMLElement)) return;
+  const rect = el.getBoundingClientRect();
+  window.scrollTo({
+    top: window.scrollY + rect.top - (window.innerHeight - rect.height) / 2,
+    behavior: 'instant',
+  });
+  const input = el as HTMLInputElement;
+  input.focus({ preventScroll: true });
+  if (typeof input.reportValidity === 'function' && !input.checkValidity()) {
+    input.reportValidity();
+  }
+}
+
 export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta' }: LeadFormProps) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
@@ -65,9 +87,17 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+
+    // Regulile rămân cele native (required de pe câmpuri), doar afișarea o
+    // preluăm noi ca să putem scrolla la câmp — formularul are noValidate.
+    if (!form.checkValidity()) {
+      focusField(form.querySelector(':invalid'));
+      return;
+    }
+
     setStatus('submitting');
 
-    const form = e.currentTarget;
     const data = new FormData(form);
     const body = Object.fromEntries(data.entries());
 
@@ -78,10 +108,14 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         body: JSON.stringify({ ...body, sourcePage, preselectedCompany, segment }),
       });
 
-      // Serverul numește câmpul lipsă („Alegeți tipul de acoperiș."); mesajul
-      // ajunge în toast ca omul să știe ce să corecteze, nu doar că a eșuat.
+      // Serverul numește câmpul lipsă („Alegeți tipul de acoperiș.") și îl
+      // identifică prin `field`: scrollăm și focusăm direct controlul, iar
+      // mesajul ajunge și în toast ca omul să știe ce să corecteze.
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
+        if (typeof err.field === 'string') {
+          focusField(form.elements.namedItem(err.field));
+        }
         throw new Error(typeof err.error === 'string' ? err.error : 'Eroare la trimitere');
       }
       const json = await res.json().catch(() => ({}));
@@ -161,7 +195,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} noValidate className="space-y-4">
         {isRezidential ? (
           <Input label="Nume și prenume" name="numeContact" required placeholder="Ion Popescu" />
         ) : (
@@ -367,9 +401,17 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
           </label>
         </div>
 
-        <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full">
-          {status === 'submitting' ? 'Se trimite...' : 'Trimite Cererea'}
-        </Button>
+        {/* Pe telefon butonul rămâne lipit de baza ecranului cât timp formularul
+            e în viewport (formularul e lung, altfel CTA-ul apare abia la capăt);
+            gradientul maschează câmpurile care trec pe sub el. Marginile negative
+            îl întind până la rama cardului părinte (p-5 pe /despre, p-6 aici).
+            Pilula Casă/Firmă e scoasă de pe aceste pagini, vezi HIDE_ON în
+            FloatingSegmentToggle. */}
+        <div className="max-md:sticky max-md:bottom-0 max-md:z-30 max-md:-mx-5 max-md:-mb-5 max-md:px-5 max-md:pt-3 max-md:pb-[max(1.25rem,env(safe-area-inset-bottom))] max-md:bg-linear-to-t from-white via-white/95 to-transparent">
+          <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full max-md:shadow-lg max-md:shadow-gray-900/15">
+            {status === 'submitting' ? 'Se trimite...' : 'Trimite Cererea'}
+          </Button>
+        </div>
       </form>
 
       {toast && (

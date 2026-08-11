@@ -18,9 +18,14 @@ export async function POST(request: Request) {
       localitate, stocare, wallbox, termen,
     } = body;
 
-    if (!numeContact || !email || !telefon || !tipProiect || !judet) {
+    // `field` = atributul name al controlului din formular: LeadForm scrollează
+    // și focusează direct câmpul vinovat, mesajul rămâne și în toast.
+    const missingBase =
+      (!numeContact && 'numeContact') || (!email && 'email') || (!telefon && 'telefon') ||
+      (!tipProiect && 'tipProiect') || (!judet && 'judet') || null;
+    if (missingBase) {
       return NextResponse.json(
-        { error: 'Toate câmpurile obligatorii trebuie completate.' },
+        { error: 'Toate câmpurile obligatorii trebuie completate.', field: missingBase },
         { status: 400 }
       );
     }
@@ -31,13 +36,13 @@ export async function POST(request: Request) {
     // Mesajul numește câmpul: formularul îl afișează ca atare în toast.
     if (!tipAcoperis) {
       return NextResponse.json(
-        { error: 'Alegeți tipul de acoperiș.' },
+        { error: 'Alegeți tipul de acoperiș.', field: 'tipAcoperis' },
         { status: 400 }
       );
     }
     if (!finantare) {
       return NextResponse.json(
-        { error: 'Alegeți cum finanțați investiția.' },
+        { error: 'Alegeți cum finanțați investiția.', field: 'finantare' },
         { status: 400 }
       );
     }
@@ -48,19 +53,19 @@ export async function POST(request: Request) {
     // peste tot în aval (/cereri, lead-match), un text acolo le-ar strica.
     if (!suprafata && !suprafataNecunoscuta) {
       return NextResponse.json(
-        { error: 'Completați suprafața sau bifați „Nu știu".' },
+        { error: 'Completați suprafața sau bifați „Nu știu".', field: 'suprafata' },
         { status: 400 }
       );
     }
     if (!putere && !putereNecunoscuta) {
       return NextResponse.json(
-        { error: 'Completați puterea dorită sau bifați „Nu știu".' },
+        { error: 'Completați puterea dorită sau bifați „Nu știu".', field: 'putere' },
         { status: 400 }
       );
     }
     if (!fazare) {
       return NextResponse.json(
-        { error: 'Alegeți alimentarea electrică (sau „Nu știu").' },
+        { error: 'Alegeți alimentarea electrică (sau „Nu știu").', field: 'fazare' },
         { status: 400 }
       );
     }
@@ -69,32 +74,32 @@ export async function POST(request: Request) {
     // dropdown-urilor obligatorii: se verifică și pe server, cu mesaj pe câmp.
     if (!localitate) {
       return NextResponse.json(
-        { error: 'Completați localitatea.' },
+        { error: 'Completați localitatea.', field: 'localitate' },
         { status: 400 }
       );
     }
     if (!stocare) {
       return NextResponse.json(
-        { error: 'Alegeți dacă doriți baterie de stocare (sau „Nu m-am hotărât").' },
+        { error: 'Alegeți dacă doriți baterie de stocare (sau „Nu m-am hotărât").', field: 'stocare' },
         { status: 400 }
       );
     }
     if (!wallbox) {
       return NextResponse.json(
-        { error: 'Alegeți dacă doriți stație de încărcare (sau „Nu m-am hotărât").' },
+        { error: 'Alegeți dacă doriți stație de încărcare (sau „Nu m-am hotărât").', field: 'wallbox' },
         { status: 400 }
       );
     }
     if (!termen) {
       return NextResponse.json(
-        { error: 'Alegeți când ați vrea instalarea.' },
+        { error: 'Alegeți când ați vrea instalarea.', field: 'termen' },
         { status: 400 }
       );
     }
 
     if (!gdpr && gdpr !== 'on') {
       return NextResponse.json(
-        { error: 'Trebuie să acceptați prelucrarea datelor personale.' },
+        { error: 'Trebuie să acceptați prelucrarea datelor personale.', field: 'gdpr' },
         { status: 400 }
       );
     }
