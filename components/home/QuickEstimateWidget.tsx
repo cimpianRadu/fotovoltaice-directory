@@ -42,10 +42,15 @@ function trackUmami(event: string, data?: Record<string, string | number>) {
   w.umami?.track?.(event, data);
 }
 
+// Cele trei casete stau pe un rând și la 390px lățime, unde „10.130 RON" nu
+// încape la dimensiunea de desktop: textul ieșea din chenar și se suprapunea
+// peste caseta următoare. Deci corpul cifrei crește cu ecranul, nu invers, iar
+// Fără `break-words`: ăla rupea „RON" în „RO" și „N". Lăsăm ruperea normală,
+// care se face pe spațiu, deci cel mult „19.786" și „RON" ajung pe rânduri diferite.
 const Metric = ({ eticheta, valoare }: { eticheta: string; valoare: string }) => (
-  <div className="rounded-xl bg-surface px-3 py-3 text-center">
-    <dt className="text-xs text-gray-600">{eticheta}</dt>
-    <dd className="text-lg sm:text-xl font-bold text-secondary-dark mt-0.5 whitespace-nowrap">
+  <div className="rounded-xl bg-surface px-2 py-3 text-center">
+    <dt className="text-[11px] sm:text-xs text-gray-600 leading-tight">{eticheta}</dt>
+    <dd className="text-sm sm:text-lg lg:text-xl font-bold text-secondary-dark mt-1 leading-tight">
       {valoare}
     </dd>
   </div>
