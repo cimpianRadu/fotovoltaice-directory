@@ -8,6 +8,8 @@ import { generateBreadcrumbJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { getCompanies, getCoveredCounties, slugifyCounty, getCompaniesByCounty } from '@/lib/utils';
 import CompanyListClient from './CompanyListClient';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
+import QuickEstimateWidget from '@/components/home/QuickEstimateWidget';
+import { getKitPriceCurve } from '@/lib/kit-price-curve';
 
 const COMPANY_COUNT = getCompanies().length;
 const COUNTY_COUNT = getCoveredCounties().length;
@@ -69,6 +71,22 @@ export default function FirmePage() {
           </p>
         </div>
 
+        {/* Deasupra căutării, sub H1 și descriere. Jos, după lista de județe,
+            slotul era practic invizibil. Rămâne totuși sub titlu și textul
+            introductiv: pagina asta trăiește din căutarea organică, iar o
+            reclamă care împinge H1-ul sub linia de plutire ne-ar costa exact
+            traficul pe care îl vindem. */}
+        <div className="mb-8 max-w-md">
+          <SponsorBanner position="firme" />
+        </div>
+
+        {/* Estimarea rapidă, deasupra barei de căutare și filtre: omul care caută
+            instalatori ajunge aici fără să știe ce sistem îi trebuie, iar cifra îi
+            dă un reper înainte să filtreze. */}
+        <div className="mb-8">
+          <QuickEstimateWidget priceCurve={getKitPriceCurve()} />
+        </div>
+
         <Suspense fallback={<div className="text-center py-12 text-gray-400">Se încarcă...</div>}>
           <CompanyListClient />
         </Suspense>
@@ -117,12 +135,6 @@ export default function FirmePage() {
                 );
               })}
           </div>
-        </div>
-
-        {/* Partenerii apar separat de listă, ca să fie clar că nu sunt firme din
-            director și că nu influențează ordinea. */}
-        <div className="mt-12 max-w-sm">
-          <SponsorBanner position="firme" />
         </div>
 
         {/* FAQ — national "firme autorizate ANRE" cluster */}

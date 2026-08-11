@@ -149,14 +149,6 @@ export default async function HomePage() {
       {/* Cere Ofertă — buyer-facing CTA, segment-aware count */}
       <HomeOfertaBand comercialCount={COMERCIAL_STATS.count} rezidentialCount={REZIDENTIAL_STATS.count} />
 
-      {/* Estimarea rapidă, imediat sub banda de ofertă: omul care tocmai a citit
-          „cere ofertă" are de obicei întrebarea „dar cât costă?" înaintea
-          formularului. Curba de preț se citește pe server, fișierul de scrape nu
-          are ce căuta în bundle-ul clientului. */}
-      <section className="max-w-7xl mx-auto px-4 pt-10">
-        <QuickEstimateWidget priceCurve={getKitPriceCurve()} />
-      </section>
-
       {/* Featured Companies — Premium pool when available, else promote ad packages */}
       <section className="max-w-7xl mx-auto px-4 py-16">
         {/* Sponsor. Stătea la 71% din pagină, adică 5,8 ecrane în jos pe mobil, unde
@@ -166,6 +158,13 @@ export default async function HomePage() {
             acel titlu, s-ar citi ca firmă recomandată din director. */}
         <div className="mb-10">
           <SponsorBanner position="homepage" />
+        </div>
+
+        {/* Estimarea rapidă stă sub bannerul plătit, nu deasupra lui: slotul de
+            sus e vândut. Curba de preț se citește pe server, fișierul de scrape
+            nu are ce căuta în bundle-ul clientului. */}
+        <div className="mb-10">
+          <QuickEstimateWidget priceCurve={getKitPriceCurve()} />
         </div>
 
         {hasPremium ? (
