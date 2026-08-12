@@ -28,24 +28,13 @@ function fmtDateTime(iso: string): string {
   });
 }
 
-/**
- * Urma cea mai recentă pe care o firmă a lăsat-o SCRIIND din /portal: notele,
- * renunțarea, marcajul de ofertă și statusul pe revendicare vin exclusiv de
- * acolo. Contează pentru că jurnalul de accesări a pornit abia în august 2026,
- * iar firmele care au folosit portalul înainte n-au niciun rând în el — dovada
- * lor e ce au scris. Șir gol = nicio urmă (sau status schimbat fără dată).
- */
-function lastPortalWrite(c: LeadClaim): string {
-  const stamps = [c.releasedAt, c.offeredAt];
-  for (const n of c.firmNotes) stamps.push(n.time ? `${n.date}T${n.time}` : n.date);
-  const valid = stamps.filter((s) => s && Number.isFinite(Date.parse(s)));
-  return valid.sort().at(-1) ?? '';
-}
-
-/** A atins firma portalul vreodată, chiar și fără dată (doar status schimbat)? */
-function touchedPortal(c: LeadClaim): boolean {
-  return Boolean(lastPortalWrite(c)) || c.firmStatus !== 'de_sunat';
-}
+// Notă, pentru cine e tentat să deducă accesul din revendicări: statusul firmei
+// (coloana F), marcajul de ofertă (N), renunțarea (J) și notele (L) NU dovedesc
+// că firma a fost în portal, deși aplicația le scrie doar de acolo. Aceleași
+// celule se completează și de mână în Sheet, după un telefon sau un WhatsApp,
+// iar cele două cazuri sunt identice în date. Pe 12 aug 2026 pagina a afirmat
+// „a folosit portalul" despre o firmă care trimisese oferta pe WhatsApp.
+// Singura dovadă de cont e jurnalul „Portal Acces".
 
 /**
  * Un email = o firmă în portal. Rând per email, nu per eveniment: cele patru
@@ -53,17 +42,20 @@ function touchedPortal(c: LeadClaim): boolean {
  */
 interface PortalAccount {
   email: string;
-  /** Câte emailuri de login au plecat către adresa asta (doar din jurnal). */
+  /** Câte emailuri de login au plecat către adresa asta. */
   requests: number;
-  /** Câte s-au terminat cu o sesiune deschisă (doar din jurnal). */
+  /** Câte s-au terminat cu o sesiune deschisă = câte ori și-a făcut cont. */
   logins: number;
+  /** Deschideri de portal cu sesiune deja validă (cel mult una pe oră). */
+  visits: number;
   firstRequest: string;
-  lastLogin: string;
-  /** Ultima mișcare, din jurnal SAU dedusă din ce a scris firma în portal. */
+  /** Prima autentificare reușită — data la care firma „și-a făcut cont". */
+  firstLogin: string;
+  /** Ultima dată când a fost efectiv în portal (autentificare sau vizită). */
+  lastInPortal: string;
+  /** Ultima mișcare de orice fel, pentru ordonare. */
   lastSeen: string;
   events: PortalAccessEvent[];
-  /** A folosit portalul înainte să existe jurnalul (dedus din ce a scris). */
-  usedBeforeLog: boolean;
   claims: LeadClaim[];
   /** Revendicări active fără datele clientului deblocate — de aprobat. */
   pending: number;
@@ -72,43 +64,47 @@ interface PortalAccount {
 }
 
 /**
- * Patru situații, patru acțiuni diferite:
- * - `de_aprobat`: are cereri cărora le lipsește deblocarea datelor. Ăsta e
- *   butonul, restul e context.
+ * Starea contului, strict din jurnal:
+ * - `cont`: s-a autentificat măcar o dată. Singura afirmație de prezență.
  * - `blocat`: a cerut acces și n-a intrat niciodată. De sunat, ceva n-a mers.
- * - `gol`: intră, dar pe emailul lui nu e nicio revendicare, deci vede o pagină
- *   goală — aproape mereu emailul lipsă/greșit în coloana I din „Revendicări".
- * - `ok`: are cereri, toate deblocate.
+ * - `gol`: are cont sau a cerut acces, dar pe emailul lui nu e nicio
+ *   revendicare — vede o pagină goală. Aproape mereu emailul lipsă sau scris
+ *   altfel în coloana I din „Revendicări".
+ * - `necunoscut`: jurnalul nu știe nimic despre email. NU înseamnă „n-a
+ *   intrat": jurnalul a pornit pe 12 aug 2026, iar sesiunile durează 30 de
+ *   zile, deci o firmă logată dinainte nu produce niciun eveniment până
+ *   deschide portalul din nou.
  */
-type AccountState = 'de_aprobat' | 'blocat' | 'gol' | 'ok';
+type AccountState = 'cont' | 'blocat' | 'gol' | 'necunoscut';
 
 function stateOf(a: PortalAccount): AccountState {
-  if (a.pending > 0) return 'de_aprobat';
-  if (a.claims.length === 0) return 'gol';
-  if (a.logins === 0 && !a.usedBeforeLog) return 'blocat';
-  return 'ok';
+  if (a.claims.length === 0 && (a.logins > 0 || a.requests > 0)) return 'gol';
+  if (a.logins > 0 || a.visits > 0) return 'cont';
+  if (a.requests > 0) return 'blocat';
+  return 'necunoscut';
 }
 
 const STATE_LABELS: Record<AccountState, string> = {
-  de_aprobat: 'de aprobat',
+  cont: 'are cont',
   blocat: 'a cerut, n-a intrat',
   gol: 'portal gol',
-  ok: 'la zi',
+  necunoscut: 'jurnalul nu știe',
 };
 
 const STATE_TONES: Record<AccountState, string> = {
-  de_aprobat: 'bg-sky-50 text-sky-700',
+  cont: 'bg-emerald-50 text-emerald-700',
   blocat: 'bg-red-50 text-red-700',
   gol: 'bg-amber-50 text-amber-700',
-  ok: 'bg-emerald-50 text-emerald-700',
+  necunoscut: 'bg-slate-100 text-slate-500',
 };
 
 const FILTERS: { key: string; label: string; state?: AccountState }[] = [
   { key: 'toate', label: 'Toate' },
-  { key: 'de-aprobat', label: 'De aprobat', state: 'de_aprobat' },
+  { key: 'de-aprobat', label: 'De aprobat' },
+  { key: 'cont', label: 'Au cont', state: 'cont' },
   { key: 'blocati', label: 'N-au intrat', state: 'blocat' },
+  { key: 'necunoscut', label: 'Jurnalul nu știe', state: 'necunoscut' },
   { key: 'goi', label: 'Portal gol', state: 'gol' },
-  { key: 'la-zi', label: 'La zi', state: 'ok' },
 ];
 
 function Stat({ label, value, tone }: { label: string; value: number; tone?: 'alert' | 'action' }) {
@@ -146,6 +142,43 @@ function leadLabel(lead: NewLead | undefined, leadId: string): string {
   return [getProjectTypeLabel(lead.tipProiect), lead.judet, lead.putere ? `${lead.putere} kW` : '']
     .filter(Boolean)
     .join(' · ');
+}
+
+/** Linia de acces: ce știm sigur, spus fără să sune a mai mult decât e. */
+function accessLine(account: PortalAccount): React.ReactNode {
+  if (account.logins > 0 || account.visits > 0) {
+    return (
+      <>
+        {account.firstLogin ? (
+          <>
+            Cont din <span className="text-slate-900">{fmtDateTime(account.firstLogin)}</span>
+          </>
+        ) : (
+          'Are sesiune activă'
+        )}
+        {account.lastInPortal && (
+          <> · ultima dată în portal {fmtDateTime(account.lastInPortal)}</>
+        )}
+      </>
+    );
+  }
+  if (account.requests > 0) {
+    return (
+      <span className="text-red-700">
+        {account.requests === 1
+          ? 'A cerut acces o dată'
+          : `A cerut acces de ${account.requests} ori`}
+        , nicio autentificare reușită
+        {account.firstRequest && <> · prima {fmtDateTime(account.firstRequest)}</>}
+      </span>
+    );
+  }
+  return (
+    <span className="text-slate-400">
+      Jurnalul nu știe nimic despre emailul ăsta. Dacă are sesiunea deschisă
+      dinainte de 12 aug, apare aici la prima pagină de portal pe care o deschide.
+    </span>
+  );
 }
 
 function AccountCard({
@@ -195,33 +228,22 @@ function AccountCard({
             )}
           </p>
         </div>
-        <span
-          className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase ${STATE_TONES[state]}`}
-        >
-          {STATE_LABELS[state]}
-        </span>
+        <div className="flex shrink-0 flex-col items-end gap-1">
+          <span
+            className={`rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase ${STATE_TONES[state]}`}
+          >
+            {STATE_LABELS[state]}
+          </span>
+          {account.pending > 0 && (
+            <span className="rounded-full bg-sky-50 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-sky-700 uppercase">
+              {account.pending} de aprobat
+            </span>
+          )}
+        </div>
       </header>
 
       <div className="border-b border-slate-100 px-4 py-2 text-xs text-slate-600">
-        {account.events.length > 0 ? (
-          <>
-            <span className="text-slate-900">{account.requests}</span> cereri de acces,{' '}
-            <span className="text-slate-900">{account.logins}</span> intrări
-            {account.lastLogin && <> · ultima {fmtDateTime(account.lastLogin)}</>}
-            {!account.lastLogin && account.firstRequest && (
-              <> · prima cerere {fmtDateTime(account.firstRequest)}</>
-            )}
-          </>
-        ) : account.usedBeforeLog ? (
-          <span title="Note, renunțări, oferte sau status pe revendicări — se pot scrie doar din portal.">
-            A folosit portalul înainte de jurnal
-            {account.lastSeen && <> · ultima urmă {fmtDateTime(account.lastSeen)}</>}
-          </span>
-        ) : (
-          <span className="text-slate-400">
-            Nicio urmă că ar fi intrat vreodată în portal
-          </span>
-        )}
+        {accessLine(account)}
       </div>
 
       <div className="px-4 py-3">
@@ -267,9 +289,10 @@ function AccountCard({
                   {fmtDateTime(e.timestamp)}
                 </span>
                 <span className="text-slate-600">
-                  {e.event === 'cerut'
-                    ? 'a cerut acces (email trimis)'
-                    : `a intrat (${e.method === 'cod' ? 'cod' : 'link'})`}
+                  {e.event === 'cerut' && 'a cerut acces (email trimis)'}
+                  {e.event === 'intrat' &&
+                    `s-a autentificat (${e.method === 'cod' ? 'cod' : 'link'})`}
+                  {e.event === 'vazut' && 'a deschis portalul'}
                 </span>
               </li>
             ))}
@@ -317,10 +340,10 @@ export default async function PortalAccessPage({ searchParams }: Props) {
     else eventsByEmail.set(e.email, [e]);
   }
 
-  // Lista completă a emailurilor care au portal: cele din jurnal plus cele de
-  // pe revendicări. Al doilea set contează dublu — acolo sunt și firmele
-  // dinaintea jurnalului, și cele cărora trebuie să le aprob deblocarea
-  // datelor, indiferent dacă au apucat să intre.
+  // Lista completă a emailurilor care POT avea portal: cele din jurnal plus
+  // cele de pe revendicări. Al doilea set trebuie să fie aici chiar dacă
+  // jurnalul nu știe nimic despre ele — altfel n-ai de unde să le aprobi
+  // cererile, iar aprobarea e jumătate din motivul paginii.
   const emails = new Set(eventsByEmail.keys());
   for (const c of claims) if (c.email) emails.add(c.email);
 
@@ -330,6 +353,8 @@ export default async function PortalAccessPage({ searchParams }: Props) {
     );
     const requests = evs.filter((e) => e.event === 'cerut');
     const logins = evs.filter((e) => e.event === 'intrat');
+    const visits = evs.filter((e) => e.event === 'vazut');
+    const inPortal = [...logins, ...visits].sort((a, b) => b.timestamp.localeCompare(a.timestamp));
     const mine = claims.filter((c) => c.email === email);
 
     const company =
@@ -345,18 +370,16 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         ? { numeFirma: company.name, telefon: company.contact.phone }
         : undefined;
 
-    const writes = mine.map(lastPortalWrite).filter(Boolean).sort();
-    const lastSeen = [evs[0]?.timestamp ?? '', writes.at(-1) ?? ''].sort().at(-1) ?? '';
-
     return {
       email,
       requests: requests.length,
       logins: logins.length,
+      visits: visits.length,
       firstRequest: requests.at(-1)?.timestamp ?? '',
-      lastLogin: logins[0]?.timestamp ?? '',
-      lastSeen,
+      firstLogin: logins.at(-1)?.timestamp ?? '',
+      lastInPortal: inPortal[0]?.timestamp ?? '',
+      lastSeen: evs[0]?.timestamp || mine[0]?.timestamp || '',
       events: evs,
-      usedBeforeLog: mine.some(touchedPortal),
       claims: mine,
       pending: mine.filter((c) => !c.releasedAt && !c.approvedAt).length,
       company,
@@ -365,10 +388,11 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   });
 
   // Ordinea = lista de lucru: întâi ce cere o apăsare de la mine (aprobări),
-  // apoi cine s-a împotmolit la intrare, apoi portalurile goale, apoi restul.
-  // În fiecare grup, cel mai recent sus.
-  const rank: Record<AccountState, number> = { de_aprobat: 0, blocat: 1, gol: 2, ok: 3 };
+  // apoi conturile confirmate, apoi cine s-a împotmolit la intrare. În fiecare
+  // grup, cel mai recent sus.
+  const rank: Record<AccountState, number> = { cont: 0, blocat: 1, gol: 2, necunoscut: 3 };
   accounts.sort((a, b) => {
+    if ((a.pending > 0) !== (b.pending > 0)) return a.pending > 0 ? -1 : 1;
     const d = rank[stateOf(a)] - rank[stateOf(b)];
     return d !== 0 ? d : b.lastSeen.localeCompare(a.lastSeen);
   });
@@ -376,31 +400,31 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   const activeFilter = FILTERS.find((f) => f.key === filtru) ?? FILTERS[0];
   const visible = activeFilter.state
     ? accounts.filter((a) => stateOf(a) === activeFilter.state)
-    : accounts;
+    : activeFilter.key === 'de-aprobat'
+      ? accounts.filter((a) => a.pending > 0)
+      : accounts;
 
   const pendingTotal = accounts.reduce((s, a) => s + a.pending, 0);
+  const withAccount = accounts.filter((a) => stateOf(a) === 'cont').length;
 
   return (
     <div>
-      <h1 className="text-xl font-bold text-slate-900">Portal · Acces și aprobări</h1>
+      <h1 className="text-xl font-bold text-slate-900">Portal · Conturi și aprobări</h1>
       <p className="mt-1 text-sm text-slate-500">
-        Fiecare firmă care are portal: cine a cerut acces, cine a intrat și, pentru fiecare,
-        cererile ei cu butonul care deblochează datele clientului. Jurnalul de accesări a
-        pornit odată cu pagina asta, deci intrările de dinainte apar doar acolo unde firma a
-        lăsat o urmă scrisă în portal (notă, renunțare, ofertă, status).
+        Cine s-a autentificat pe /portal și, pentru fiecare, cererile lui cu butonul care
+        deblochează datele clientului. „Are cont" se spune doar pe baza jurnalului de acces,
+        pornit pe 12 august 2026. Marcajele de pe revendicări (status, ofertă, note) nu
+        dovedesc nimic aici, pentru că se scriu și de mână în Sheet.
       </p>
 
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <Stat label="Firme cu portal" value={accounts.length} />
+        <Stat label="Emailuri cu portal posibil" value={accounts.length} />
+        <Stat label="Conturi confirmate" value={withAccount} />
         <Stat label="Revendicări de aprobat" value={pendingTotal} tone="action" />
         <Stat
           label="Au cerut acces, n-au intrat"
           value={accounts.filter((a) => stateOf(a) === 'blocat').length}
           tone="alert"
-        />
-        <Stat
-          label="Portal gol (email fără revendicări)"
-          value={accounts.filter((a) => stateOf(a) === 'gol').length}
         />
       </div>
 

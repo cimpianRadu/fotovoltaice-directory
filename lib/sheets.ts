@@ -677,17 +677,19 @@ export async function setClaimApproved(
 }
 
 // ── Portal: cine cere acces și cine chiar intră ─────────────────────────────
-// Jurnal append-only, o linie per eveniment: `cerut` la pasul 1 (emailul cu
-// link + cod a plecat), `intrat` la pasul 2 (link sau cod acceptat). Perechea
-// ruptă e semnalul care contează: o firmă care a cerut acces și n-a ajuns
-// înăuntru a vrut ceva de la noi și s-a împotmolit — aia e o listă de sunat, nu
-// o statistică. Sesiunea ține 30 de zile, deci absența unui `intrat` nou NU
-// înseamnă că firma nu mai folosește portalul.
+// Jurnal append-only, o linie per eveniment:
+//   `cerut`  — pasul 1, emailul cu link + cod a plecat;
+//   `intrat` — pasul 2, link sau cod acceptat;
+//   `vazut`  — firma a deschis portalul cu o sesiune deja validă.
+// Al treilea e cel care face jurnalul să răspundă la „intră lumea pe portal?".
+// Sesiunea ține 30 de zile, deci loginurile sunt rare prin construcție: o firmă
+// care intră zilnic produce un singur `intrat` pe lună. Fără `vazut`, jurnalul
+// măsura autentificările, nu folosirea.
 const PORTAL_SHEET = 'Portal Acces';
 
 const PORTAL_HEADER = ['Timestamp', 'Email', 'Eveniment', 'Metodă'];
 
-export const PORTAL_EVENTS = ['cerut', 'intrat'] as const;
+export const PORTAL_EVENTS = ['cerut', 'intrat', 'vazut'] as const;
 export type PortalEventKind = (typeof PORTAL_EVENTS)[number];
 
 export interface PortalAccessEvent {
@@ -695,8 +697,36 @@ export interface PortalAccessEvent {
   timestamp: string;
   email: string;
   event: PortalEventKind;
-  /** Doar pe `intrat`: pe unde a intrat. Gol pe `cerut`. */
+  /** Doar pe `intrat`: pe unde a intrat. Gol pe restul. */
   method: 'link' | 'cod' | '';
+}
+
+/**
+ * Cât timp o vizită mai e „aceeași vizită". O firmă care dă refresh de zece ori
+ * nu e zece vizite, iar Sheets are 60 de scrieri pe minut — un rând per
+ * încărcare de pagină ar arde cota și ar face istoricul ilizibil. Contorul e
+ * per instanță de server, deci în cel mai rău caz apar câteva rânduri în plus
+ * pe zi; pentru „când a fost ultima dată în portal" e destul.
+ */
+const VISIT_THROTTLE_MS = 60 * 60_000;
+const visitLoggedAt = new Map<string, number>();
+
+/** Jurnalizează o vizită în portal, cel mult una pe oră per email. */
+export async function logPortalVisit(email: string) {
+  const key = email.trim().toLowerCase();
+  if (!key) return;
+  const now = Date.now();
+  const prev = visitLoggedAt.get(key);
+  if (prev && now - prev < VISIT_THROTTLE_MS) return;
+  // Marcat înainte de scriere: două cereri paralele n-au voie să scrie două
+  // rânduri. La eroare îl scoatem, ca următoarea vizită să reîncerce.
+  visitLoggedAt.set(key, now);
+  try {
+    await savePortalAccessEvent({ email: key, event: 'vazut' });
+  } catch (err) {
+    visitLoggedAt.delete(key);
+    throw err;
+  }
 }
 
 export async function savePortalAccessEvent(e: {
@@ -732,10 +762,13 @@ export async function getPortalAccessEvents(): Promise<PortalAccessEvent[]> {
     .filter((r) => Number.isFinite(Date.parse(r[0] || '')))
     .map((r) => {
       const method = (r[3] || '').trim().toLowerCase();
+      const event = (r[2] || '').trim().toLowerCase();
       return {
         timestamp: r[0] || '',
         email: (r[1] || '').trim().toLowerCase(),
-        event: (r[2] || '').trim().toLowerCase() === 'intrat' ? 'intrat' : 'cerut',
+        event: (PORTAL_EVENTS as readonly string[]).includes(event)
+          ? (event as PortalEventKind)
+          : 'cerut',
         method: method === 'link' || method === 'cod' ? method : '',
       } satisfies PortalAccessEvent;
     });
