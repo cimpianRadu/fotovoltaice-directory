@@ -458,6 +458,62 @@ export async function sendClaimReleaseNotification(data: {
  * Către firmă, după ce aprobăm revendicarea din /admin/crm: datele clientului
  * s-au deblocat în portal. Fail-open ca restul notificărilor.
  */
+/**
+ * „Mai ești interesat?" — cererea are datele deblocate de câteva zile și firma
+ * n-a atins-o deloc. Tonul e cerut de user și e deliberat fără reproș: se poate
+ * foarte bine să fi sunat clientul și doar să nu fi bifat nimic în portal.
+ * Pleacă o singură dată per revendicare (coloana O din „Revendicări").
+ *
+ * Închiderea cere feedback pe portal: firmele astea sunt primii utilizatori, iar
+ * un răspuns la emailul ăsta ajunge în inboxul nostru (from = contact@).
+ */
+export async function sendClaimInactiveEmail(data: {
+  to: string;
+  leadSummary: string;
+  days: number;
+}): Promise<{ ok: boolean; reason?: string }> {
+  const html = `<!DOCTYPE html>
+<html>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
+  <div style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
+    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#fffbeb">
+      <div style="font-size:12px;color:#b45309;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">Cerere fără activitate</div>
+      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">Mai ești interesat de cererea asta?</h1>
+    </div>
+    <div style="padding:24px">
+      <p style="font-size:14px;color:#374151;margin:0 0 14px">
+        Au trecut ${data.days} zile de când ai datele clientului pentru
+        <strong>${escapeHtml(data.leadSummary)}</strong> și nu văd nicio mișcare pe cerere.
+      </p>
+      <p style="font-size:14px;color:#374151;margin:0 0 16px">
+        Poate ai vorbit deja cu el și doar n-ai apucat să bifezi. M-ar ajuta să știu unde ești:
+        intră în portal și mută statusul sau lasă o notă. Dacă nu mai lucrezi la ea, renunță
+        și o preia altă firmă, iar clientul primește un telefon.
+      </p>
+      <div style="text-align:center">
+        <a href="${PORTAL_BASE_URL}/portal" style="display:inline-block;padding:12px 24px;background:#f59e0b;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">Deschide portalul</a>
+      </div>
+    </div>
+    <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280">
+      Ești printre primii care folosesc portalul. Dacă ceva nu merge, te încurcă sau ți se pare
+      inutil, răspunde direct la emailul ăsta, îl citesc eu.
+    </div>
+  </div>
+</body>
+</html>`;
+
+  const result = await sendEmail({
+    to: data.to,
+    subject: `Mai ești interesat de cererea ${data.leadSummary}?`,
+    html,
+  });
+
+  if (!result.ok) {
+    console.warn('[email] Claim inactive email not sent:', result.reason);
+  }
+  return result;
+}
+
 export async function sendClaimApprovedEmail(data: {
   to: string;
   leadSummary: string;

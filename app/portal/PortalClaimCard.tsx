@@ -370,12 +370,13 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
         }) && (
           <div className="mt-4 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
             <p className="font-semibold">
-              Au trecut {claimIdleDays(claim.approvedAt)} zile și nu s-a întâmplat nimic aici.
+              Au trecut {claimIdleDays(claim.approvedAt)} zile de când ai datele clientului. Mai
+              ești interesat de cererea asta?
             </p>
             <p className="mt-1 text-amber-800">
-              Ai datele clientului, dar n-ai mutat statusul și n-ai lăsat nicio notă. Mai ești
-              interesat de cererea asta? Dacă l-ai sunat, spune-ne unde ești; dacă nu mai
-              lucrezi la ea, renunță și o preia altă firmă. Clientul așteaptă.
+              Nu văd nicio activitate pe cerere, dar poate ai vorbit deja cu el. M-ar ajuta să
+              știu unde ești: mută statusul sau lasă o notă. Dacă nu mai lucrezi la ea, renunță
+              și o preia altă firmă. Clientul așteaptă.
             </p>
           </div>
         )}

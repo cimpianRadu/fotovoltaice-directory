@@ -440,6 +440,13 @@ export interface LeadClaim {
   /** Coloana N: ISO — firma a marcat din /portal că a trimis oferta clientului. */
   offeredAt: string;
   /**
+   * Coloana O: ISO — când i-am trimis firmei emailul „mai ești interesat?"
+   * pentru cererea asta. Există ca să nu-l trimitem de două ori: cronul rulează
+   * zilnic, iar o cerere neatinsă rămâne neatinsă, deci fără marcaj ar pleca
+   * același email în fiecare dimineață. Un singur email per revendicare.
+   */
+  inactivityNotifiedAt: string;
+  /**
    * Coloana F: unde e FIRMA cu cererea asta, după propria ei declarație din
    * /portal. Coloana exista de la început cu 'Nou' scris la creare, dar nimeni
    * nu o citea; din aug 2026 ține statusul real. Rândurile vechi îl primesc
@@ -472,6 +479,7 @@ function readClaimRow(r: string[]): LeadClaim {
     firmNotes: parseNotes(r[11] || ''),
     approvedAt: r[12] || '',
     offeredAt,
+    inactivityNotifiedAt: r[14] || '',
     firmStatus: deriveClaimStatus(r[5] || '', { offeredAt, releasedAt }),
   };
 }
@@ -523,6 +531,7 @@ export async function saveClaimToSheet(claim: {
     '', // L — Note firmă: jurnalul firmei din /portal (format parseNotes)
     '', // M — Aprobat la: scris din /admin/crm; deblochează datele clientului în portal
     '', // N — Ofertat la: firma marchează din /portal că a trimis oferta
+    '', // O — Notificat inactiv la: emailul „mai ești interesat?", o singură dată
   ];
   try {
     await appendRow(CLAIMS_SHEET, values);
@@ -550,6 +559,7 @@ const CLAIMS_HEADER = [
   'Note firmă', // L — jurnal datat, scris de firmă din /portal
   'Aprobat la', // M — scris din /admin/crm; deblochează datele clientului în portal
   'Ofertat la', // N — firma marchează din /portal că a trimis oferta clientului
+  'Notificat inactiv la', // O — emailul „mai ești interesat?", trimis o singură dată
 ];
 
 /**
@@ -677,6 +687,20 @@ export async function setClaimApproved(
   await updateClaimCells(`${CLAIMS_SHEET}!M${sheetRow}`, [[approvedAt]]);
   row[12] = approvedAt;
   return readClaimRow(row);
+}
+
+/**
+ * Marchează că firmei i-a plecat emailul de inactivitate pe revendicarea asta.
+ * Se scrie DUPĂ trimitere: dacă emailul pică, marcajul lipsește și cronul de
+ * mâine reîncearcă — mai bine o reîncercare decât o tăcere definitivă.
+ */
+export async function markClaimInactivityNotified(
+  claimTimestamp: string,
+  leadId: string,
+  notifiedAt: string,
+): Promise<void> {
+  const { sheetRow } = await findClaimRow(claimTimestamp, leadId);
+  await updateClaimCells(`${CLAIMS_SHEET}!O${sheetRow}`, [[notifiedAt]]);
 }
 
 // ── Portal: cine cere acces și cine chiar intră ─────────────────────────────
@@ -944,10 +968,12 @@ export {
   FIRM_STATUSES,
   FIRM_STATUS_LABELS,
   FIRM_STATUS_HINTS,
+  claimIdleDays,
   claimLastActivity,
   claimsHeldForLead,
   countActiveClaimsForFirm,
   isClaimStale,
+  isClaimUntouched,
   firmMentionedIn,
   isLeadClosed,
   isSameFirm,
