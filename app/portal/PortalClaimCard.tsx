@@ -468,13 +468,21 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
               </div>
             </form>
           ) : (
-            <button
-              type="button"
-              onClick={() => setReleaseOpen(true)}
-              className="text-xs text-gray-400 underline hover:text-red-600"
-            >
-              Renunț la această cerere
-            </button>
+            /* Link gri de 12px, firmele nu-l vedeau. Renunțarea nu e o acțiune
+               de ascuns: fără ea cererea stă ocupată la o firmă care nu mai
+               lucrează la ea, iar clientul așteaptă degeaba. */
+            <div>
+              <button
+                type="button"
+                onClick={() => setReleaseOpen(true)}
+                className="inline-flex items-center rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-700 transition-colors hover:border-red-300 hover:bg-red-100 sm:py-2"
+              >
+                Renunț la această cerere
+              </button>
+              <p className="mt-1.5 text-xs text-gray-500">
+                Eliberezi locul pentru altă firmă. Îți cerem doar motivul.
+              </p>
+            </div>
           )}
         </div>
       )}

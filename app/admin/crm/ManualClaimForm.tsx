@@ -215,18 +215,21 @@ export default function ManualClaimForm({ leadId, firms, full, onDone }: Props) 
       />
 
       {/* Emailul e cheia contului de portal: pe el se leagă revendicarea de
-          firmă când își face cont. Gol = firma n-o vede niciodată acolo. */}
+          firmă. A fost opțional până pe 12 aug 2026 și așa au ieșit 11
+          revendicări invizibile în portal — firme cărora le dădusem cererea la
+          telefon și care intrau pe o pagină goală. Acum e obligatoriu. */}
       <input
         type="email"
+        required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email (contul de portal al firmei)"
+        placeholder="Email (contul de portal al firmei) *"
         className="w-full rounded-md border border-slate-300 bg-white px-2.5 py-1.5 text-xs text-slate-800 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-900/5"
       />
       <p className="text-[10px] leading-snug text-slate-500">
         {email.trim()
           ? 'Firma vede cererea în /portal dacă intră cu exact acest email.'
-          : 'Fără email, revendicarea nu apare în /portal — completează-l dacă firma va intra acolo.'}
+          : 'Fără email, revendicarea nu apare în /portal, oricât ar căuta firma acolo.'}
       </p>
 
       <label className="flex items-start gap-2 text-[10px] leading-snug text-slate-600">

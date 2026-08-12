@@ -10,6 +10,7 @@ import {
   isSameFirm,
   saveClaimToSheet,
 } from '@/lib/sheets';
+import { isValidEmail } from '@/lib/portal-auth';
 
 /**
  * Revendicare marcată din /admin/crm după ce am sunat firma la telefon —
@@ -34,6 +35,21 @@ export async function POST(request: Request) {
     if (!leadId || !numeFirma?.trim() || !numeContact?.trim() || !telefon?.trim()) {
       return NextResponse.json(
         { error: 'Firma, contactul și telefonul sunt obligatorii.' },
+        { status: 400 },
+      );
+    }
+
+    // Emailul a fost opțional până pe 12 aug 2026, iar rezultatul au fost 11
+    // revendicări fără coloana I: firme cărora le dădusem cererea la telefon și
+    // care, când intrau în /portal, vedeau o pagină goală. Revendicarea se
+    // leagă de cont NUMAI pe adresa asta, deci una fără email e o promisiune
+    // pe care portalul n-o poate ține.
+    if (!email?.trim() || !isValidEmail(email)) {
+      return NextResponse.json(
+        {
+          error:
+            'Emailul firmei e obligatoriu — fără el revendicarea nu apare niciodată în portalul ei.',
+        },
         { status: 400 },
       );
     }
@@ -79,15 +95,13 @@ export async function POST(request: Request) {
       );
     }
 
-    // Emailul e opțional, dar fără el firma NU-și vede niciodată cererea în
-    // /portal: acolo revendicările se leagă de cont exact pe coloana asta.
     await saveClaimToSheet({
       leadId,
       numeFirma: claimData.numeFirma,
       numeContact: numeContact.trim(),
       telefon: claimData.telefon,
       source: 'manual',
-      email: (email || '').trim(),
+      email: email.trim(),
     });
 
     // Feedul public și CRM-ul citesc din Sheets prin ISR: invalidăm ambele ca
