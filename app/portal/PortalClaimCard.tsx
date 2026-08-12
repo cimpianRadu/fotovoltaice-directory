@@ -7,6 +7,8 @@ import {
   CLAIM_STATUSES,
   CLAIM_STATUS_HINTS,
   CLAIM_STATUS_LABELS,
+  claimIdleDays,
+  isClaimUntouched,
   type ClaimStatus,
   type LeadNote,
 } from '@/lib/sheets-shared';
@@ -21,6 +23,8 @@ export interface PortalClaim {
   releaseReason: string;
   contactedAt: string;
   approved: boolean;
+  /** ISO — când i s-au deblocat datele clientului. Gol pe cele neaprobate. */
+  approvedAt: string;
   offeredAt: string;
   firmStatus: ClaimStatus;
   notes: LeadNote[];
@@ -352,6 +356,30 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
 
       {/* Pipeline-ul firmei pe cererea asta. Apare abia după deblocarea datelor:
           înainte n-are pe cine suna, deci n-are ce raporta. */}
+      {/* Nimic nu s-a mișcat de două zile de când firma are datele: nici status
+          mutat, nici notă. Bannerul e pentru client, nu pentru noi — el așteaptă
+          un telefon care nu vine. Dispare în clipa în care firma atinge ceva,
+          pentru că se calculează din starea locală, nu din ce a venit de pe
+          server. */}
+      {!inactive &&
+        isClaimUntouched({
+          approvedAt: claim.approvedAt,
+          releasedAt: claim.releasedAt,
+          firmStatus: status,
+          noteCount: notes.length,
+        }) && (
+          <div className="mt-4 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            <p className="font-semibold">
+              Au trecut {claimIdleDays(claim.approvedAt)} zile și nu s-a întâmplat nimic aici.
+            </p>
+            <p className="mt-1 text-amber-800">
+              Ai datele clientului, dar n-ai mutat statusul și n-ai lăsat nicio notă. Mai ești
+              interesat de cererea asta? Dacă l-ai sunat, spune-ne unde ești; dacă nu mai
+              lucrezi la ea, renunță și o preia altă firmă. Clientul așteaptă.
+            </p>
+          </div>
+        )}
+
       {!inactive && claim.approved && (
         <div className="mt-4">
           <div className="text-[11px] font-semibold uppercase tracking-wide text-gray-400 mb-2">

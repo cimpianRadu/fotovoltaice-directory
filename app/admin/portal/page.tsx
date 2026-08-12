@@ -13,6 +13,7 @@ import {
   type CrmFirm,
   type NewLead,
 } from '@/lib/sheets';
+import { isClaimUntouched } from '@/lib/sheets-shared';
 import { matchFirmsForLead } from '@/lib/lead-match';
 import { getCompanies } from '@/lib/utils';
 import { getProjectTypeLabel, type Company } from '@/lib/utils-shared';
@@ -64,6 +65,8 @@ interface PortalAccount {
   claims: LeadClaim[];
   /** Revendicări active fără datele clientului deblocate — de aprobat. */
   pending: number;
+  /** Revendicări cu datele deblocate de 2+ zile pe care firma nu le-a atins. */
+  untouched: number;
   company: Company | undefined;
   crmFirm: CrmFirm | undefined;
   /** Cui se scrie revendicarea când îi dau o cerere de aici. */
@@ -115,6 +118,7 @@ const STATE_STYLES: Record<AccountState, { header: string; badge: string }> = {
 const FILTERS: { key: string; label: string; state?: AccountState }[] = [
   { key: 'toate', label: 'Toate' },
   { key: 'de-aprobat', label: 'De aprobat' },
+  { key: 'fara-miscare', label: 'Fără mișcare 2z+' },
   { key: 'cont', label: 'Au cont', state: 'cont' },
   { key: 'blocati', label: 'N-au intrat', state: 'blocat' },
   { key: 'necunoscut', label: 'Jurnalul nu știe', state: 'necunoscut' },
@@ -220,6 +224,7 @@ function AccountCard({
       offeredAt: c.offeredAt,
       contactedAt: c.contactedAt,
       firmStatus: c.firmStatus,
+      noteCount: c.firmNotes.length,
     }))
     .sort((a, b) => b.timestamp.localeCompare(a.timestamp));
 
@@ -454,6 +459,9 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       events: evs,
       claims: mine,
       pending: mine.filter((c) => !c.releasedAt && !c.approvedAt).length,
+      untouched: mine.filter((c) =>
+        isClaimUntouched({ ...c, noteCount: c.firmNotes.length }),
+      ).length,
       company,
       crmFirm: identity ? firms.find((f) => isSameFirm(f, identity)) : undefined,
       giveFirm,
@@ -467,6 +475,8 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   const rank: Record<AccountState, number> = { cont: 0, blocat: 1, gol: 2, necunoscut: 3 };
   accounts.sort((a, b) => {
     if ((a.pending > 0) !== (b.pending > 0)) return a.pending > 0 ? -1 : 1;
+    // Apoi cine cere un telefon: are datele și n-a făcut nimic cu ele.
+    if ((a.untouched > 0) !== (b.untouched > 0)) return a.untouched > 0 ? -1 : 1;
     const d = rank[stateOf(a)] - rank[stateOf(b)];
     return d !== 0 ? d : b.lastSeen.localeCompare(a.lastSeen);
   });
@@ -476,9 +486,12 @@ export default async function PortalAccessPage({ searchParams }: Props) {
     ? accounts.filter((a) => stateOf(a) === activeFilter.state)
     : activeFilter.key === 'de-aprobat'
       ? accounts.filter((a) => a.pending > 0)
-      : accounts;
+      : activeFilter.key === 'fara-miscare'
+        ? accounts.filter((a) => a.untouched > 0)
+        : accounts;
 
   const pendingTotal = accounts.reduce((s, a) => s + a.pending, 0);
+  const untouchedTotal = accounts.reduce((s, a) => s + a.untouched, 0);
   const withAccount = accounts.filter((a) => stateOf(a) === 'cont').length;
 
   return (
@@ -491,10 +504,11 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         dovedesc nimic aici, pentru că se scriu și de mână în Sheet.
       </p>
 
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         <Stat label="Emailuri cu portal posibil" value={accounts.length} />
         <Stat label="Conturi confirmate" value={withAccount} />
         <Stat label="Revendicări de aprobat" value={pendingTotal} tone="action" />
+        <Stat label="Neatinse de 2+ zile" value={untouchedTotal} tone="alert" />
         <Stat
           label="Au cerut acces, n-au intrat"
           value={accounts.filter((a) => stateOf(a) === 'blocat').length}

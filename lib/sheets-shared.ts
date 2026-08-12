@@ -250,6 +250,36 @@ export function isClaimStale(claim: ClaimActivity, now: number = Date.now()): bo
   return now - claimLastActivity(claim) >= CLAIM_STALE_DAYS * 86_400_000;
 }
 
+/**
+ * Cazul mai tare decât `isClaimStale`: firma are datele clientului de
+ * CLAIM_STALE_DAYS zile și **n-a atins deloc** revendicarea — statusul e tot
+ * `de_sunat` (n-a mutat pastila) și n-a scris nicio notă. Aici nu e vorba de o
+ * ofertă care întârzie, ci de o cerere luată și uitată, în care clientul
+ * așteaptă un telefon care nu vine. Se calculează identic în portal (bannerul
+ * către firmă) și în admin (marcajul de follow-up), de-aia stă aici și ia doar
+ * câmpuri simple, ca să meargă și în componentele client.
+ */
+export function isClaimUntouched(
+  claim: {
+    approvedAt: string;
+    releasedAt: string;
+    firmStatus: ClaimStatus;
+    noteCount: number;
+  },
+  now: number = Date.now(),
+): boolean {
+  if (!claim.approvedAt || claim.releasedAt) return false;
+  if (claim.firmStatus !== 'de_sunat' || claim.noteCount > 0) return false;
+  return claimIdleDays(claim.approvedAt, now) >= CLAIM_STALE_DAYS;
+}
+
+/** Zile întregi de când firma are datele clientului. -1 dacă data nu se parsează. */
+export function claimIdleDays(approvedAt: string, now: number = Date.now()): number {
+  const t = Date.parse(approvedAt);
+  if (!Number.isFinite(t)) return -1;
+  return Math.floor((now - t) / 86_400_000);
+}
+
 // ── CRM Firme: pipeline-ul telefonic pe instalatori ─────────────────────────
 // Stările urmăresc conversația de vânzare (exclusivitate pe județ, leaduri),
 // nu starea firmei în director. Fără diacritice, ca la LEAD_STATUSES.

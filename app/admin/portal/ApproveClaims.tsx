@@ -4,6 +4,8 @@ import { useState } from 'react';
 import {
   CLAIM_STATUS_HINTS,
   CLAIM_STATUS_LABELS,
+  claimIdleDays,
+  isClaimUntouched,
   type ClaimStatus,
 } from '@/lib/sheets-shared';
 
@@ -21,6 +23,8 @@ export interface PortalClaimRow {
   offeredAt: string;
   contactedAt: string;
   firmStatus: ClaimStatus;
+  /** Câte note a scris firma din portal — 0 + status nemutat = n-a atins-o. */
+  noteCount: number;
 }
 
 const STATUS_CHIP: Record<ClaimStatus, string> = {
@@ -158,6 +162,17 @@ export default function ApproveClaims({ claims }: { claims: PortalClaimRow[] }) 
                 {c.offeredAt && (
                   <span className="text-[10px] text-slate-500">
                     ofertă trimisă · {fmtDay(c.offeredAt)}
+                  </span>
+                )}
+                {/* Are datele de 2+ zile și n-a atins nimic: firma asta se sună,
+                    iar clientul ei stă degeaba. Aceeași regulă ca bannerul din
+                    portal, ca să nu spună cele două locuri lucruri diferite. */}
+                {isClaimUntouched({ ...c, approvedAt: at, noteCount: c.noteCount }) && (
+                  <span
+                    title="Nici status mutat, nici notă scrisă de când are datele"
+                    className="rounded bg-red-100 px-1.5 py-px text-[10px] font-semibold text-red-700"
+                  >
+                    n-a atins-o de {claimIdleDays(at)} zile
                   </span>
                 )}
                 {!c.contactedAt && !at && (

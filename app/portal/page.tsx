@@ -65,6 +65,9 @@ export default async function PortalPage() {
           releaseReason: c.releaseReason,
           contactedAt: c.contactedAt,
           approved,
+          // Data deblocării, nu doar faptul ei: din ea se calculează de câte
+          // zile stă cererea neatinsă, pentru bannerul de pe card.
+          approvedAt: c.approvedAt,
           offeredAt: c.offeredAt,
           firmStatus: c.firmStatus,
           notes: c.firmNotes,
