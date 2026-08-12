@@ -4,15 +4,20 @@ import {
   getClaims,
   getCrmFirms,
   getLeadsSince,
+  claimsHeldForLead,
+  isLeadClosed,
   isSameFirm,
+  MAX_CLAIMS_PER_LEAD,
   type PortalAccessEvent,
   type LeadClaim,
   type CrmFirm,
   type NewLead,
 } from '@/lib/sheets';
+import { matchFirmsForLead } from '@/lib/lead-match';
 import { getCompanies } from '@/lib/utils';
 import { getProjectTypeLabel, type Company } from '@/lib/utils-shared';
 import ApproveClaims, { type PortalClaimRow } from './ApproveClaims';
+import GiveLead, { type GiveLeadFirm, type LeadOption } from './GiveLead';
 
 export const dynamic = 'force-dynamic';
 
@@ -61,6 +66,10 @@ interface PortalAccount {
   pending: number;
   company: Company | undefined;
   crmFirm: CrmFirm | undefined;
+  /** Cui se scrie revendicarea când îi dau o cerere de aici. */
+  giveFirm: GiveLeadFirm | null;
+  /** Cereri deschise pe care i le pot da, cele mai potrivite primele. */
+  giveOptions: LeadOption[];
 }
 
 /**
@@ -258,6 +267,11 @@ function AccountCard({
           Revendicări · vizibilitatea datelor de client
         </p>
         <ApproveClaims claims={rows} />
+        {account.giveFirm && (
+          <div className="mt-2">
+            <GiveLead firm={account.giveFirm} leads={account.giveOptions} />
+          </div>
+        )}
         {state === 'gol' && (
           <p className="mt-1.5 text-xs text-amber-700">
             Verifică coloana Email (I) din tabul „Revendicări" — cu emailul lipsă sau scris
@@ -354,6 +368,21 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   const emails = new Set(eventsByEmail.keys());
   for (const c of claims) if (c.email) emails.add(c.email);
 
+  // Cererile pe care le pot da: deschise (nu ascunse, nu închise din CRM) și
+  // cu loc liber. Potrivirea firmă→cerere se calculează o dată per cerere, nu
+  // per firmă, și se citește apoi din map — altfel scorul s-ar recalcula peste
+  // tot directorul pentru fiecare card.
+  const openLeads = leads.filter((l) => l.status !== 'Ascuns' && !isLeadClosed(l.crmStatus));
+  const heldByLead = new Map(
+    openLeads.map((l) => [l.timestamp, claimsHeldForLead(claims, l.timestamp)]),
+  );
+  const matchesByLead = new Map(
+    openLeads.map((l) => [
+      l.timestamp,
+      matchFirmsForLead(l, l.timestamp, companies, claims, firms, 500),
+    ]),
+  );
+
   const accounts: PortalAccount[] = [...emails].map((email) => {
     const evs = (eventsByEmail.get(email) ?? []).sort((a, b) =>
       b.timestamp.localeCompare(a.timestamp),
@@ -377,6 +406,42 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         ? { numeFirma: company.name, telefon: company.contact.phone }
         : undefined;
 
+    // Fără nume și telefon n-am ce scrie în „Revendicări", deci butonul de
+    // atribuire nu apare: un email singur nu identifică o firmă.
+    const giveFirm: GiveLeadFirm | null = identity
+      ? {
+          email,
+          numeFirma: identity.numeFirma,
+          numeContact:
+            mine.find((c) => c.numeContact && c.numeContact !== '-')?.numeContact || '-',
+          telefon: identity.telefon,
+        }
+      : null;
+
+    const giveOptions: LeadOption[] = !identity
+      ? []
+      : openLeads
+          .filter((l) => {
+            const held = heldByLead.get(l.timestamp) ?? [];
+            if (held.length >= MAX_CLAIMS_PER_LEAD) return false;
+            return !held.some((c) => isSameFirm(c, identity) || c.email === email);
+          })
+          .map((l) => {
+            const m = company
+              ? matchesByLead.get(l.timestamp)?.find((x) => x.id === company.id)
+              : undefined;
+            return {
+              id: l.timestamp,
+              label: leadLabel(l, l.timestamp),
+              slots: MAX_CLAIMS_PER_LEAD - (heldByLead.get(l.timestamp)?.length ?? 0),
+              score: m?.score ?? 0,
+              reasons: m?.reasons ?? [],
+              warnings: m?.warnings ?? [],
+            };
+          })
+          .sort((a, b) => b.score - a.score || b.id.localeCompare(a.id))
+          .slice(0, 10);
+
     return {
       email,
       requests: requests.length,
@@ -391,6 +456,8 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       pending: mine.filter((c) => !c.releasedAt && !c.approvedAt).length,
       company,
       crmFirm: identity ? firms.find((f) => isSameFirm(f, identity)) : undefined,
+      giveFirm,
+      giveOptions,
     };
   });
 

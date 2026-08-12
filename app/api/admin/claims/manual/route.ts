@@ -95,7 +95,7 @@ export async function POST(request: Request) {
       );
     }
 
-    await saveClaimToSheet({
+    const claimTimestamp = await saveClaimToSheet({
       leadId,
       numeFirma: claimData.numeFirma,
       numeContact: numeContact.trim(),
@@ -108,8 +108,11 @@ export async function POST(request: Request) {
     // rândul nou să apară imediat, nu la următorul refresh de 5 min.
     revalidatePath('/cereri');
     revalidatePath('/admin/crm');
+    revalidatePath('/admin/portal');
 
-    return NextResponse.json({ ok: true, claims: claimsForLead.length + 1 });
+    // Timestampul e cheia rândului: cine dă cererea din /admin/portal aprobă
+    // imediat după, iar aprobarea are nevoie de el.
+    return NextResponse.json({ ok: true, claims: claimsForLead.length + 1, claimTimestamp });
   } catch (err) {
     console.error('Manual claim error:', err);
     return NextResponse.json(

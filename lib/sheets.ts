@@ -498,6 +498,7 @@ async function createSheetTab(title: string) {
   });
 }
 
+/** Întoarce timestampul rândului scris — cheia lui, alături de leadId. */
 export async function saveClaimToSheet(claim: {
   leadId: string;
   numeFirma: string;
@@ -505,9 +506,10 @@ export async function saveClaimToSheet(claim: {
   telefon: string;
   source: ClaimSource;
   email?: string;
-}) {
+}): Promise<string> {
+  const timestamp = new Date().toISOString();
   const values = [
-    new Date().toISOString(),
+    timestamp,
     claim.leadId,
     claim.numeFirma,
     claim.numeContact,
@@ -530,6 +532,7 @@ export async function saveClaimToSheet(claim: {
     await appendRow(CLAIMS_SHEET, CLAIMS_HEADER);
     await appendRow(CLAIMS_SHEET, values);
   }
+  return timestamp;
 }
 
 const CLAIMS_HEADER = [
