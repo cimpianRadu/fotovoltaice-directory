@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, after } from 'next/server';
 import {
   PORTAL_LOGIN_TTL_MINUTES,
   PORTAL_PENDING_COOKIE,
@@ -10,6 +10,7 @@ import {
   portalCookieOptions,
 } from '@/lib/portal-auth';
 import { sendPortalLoginEmail } from '@/lib/email';
+import { savePortalAccessEvent } from '@/lib/sheets';
 
 /**
  * Pasul 1 al loginului: firma își lasă emailul, primește link + cod de 6 cifre.
@@ -52,6 +53,14 @@ export async function POST(request: Request) {
         { status: 502 },
       );
     }
+
+    // Jurnalul de acces din /admin/portal. Scris DUPĂ răspuns (`after`) și cu
+    // eroarea înghițită: un Sheets picat n-are voie să blocheze un login.
+    after(() =>
+      savePortalAccessEvent({ email, event: 'cerut' }).catch((err) =>
+        console.error('[portal] jurnal acces (cerut):', err),
+      ),
+    );
 
     const res = NextResponse.json({ ok: true });
     res.cookies.set(

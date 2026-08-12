@@ -32,6 +32,8 @@ export async function POST(request: Request) {
     }
 
     revalidatePath('/admin/crm');
+    // Același buton există și pe fișa de portal a firmei.
+    revalidatePath('/admin/portal');
     return NextResponse.json({ ok: true, approvedAt });
   } catch (err) {
     console.error('Claim approve error:', err);

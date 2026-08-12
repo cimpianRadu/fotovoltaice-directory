@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, after } from 'next/server';
 import { cookies } from 'next/headers';
+import { savePortalAccessEvent } from '@/lib/sheets';
 import {
   PORTAL_COOKIE,
   PORTAL_PENDING_COOKIE,
@@ -50,6 +51,12 @@ export async function POST(request: Request) {
         exp: Date.now() + PORTAL_SESSION_DAYS * 86_400_000,
       },
       secret,
+    );
+
+    after(() =>
+      savePortalAccessEvent({ email: pending.email, event: 'intrat', method: 'cod' }).catch((err) =>
+        console.error('[portal] jurnal acces (intrat/cod):', err),
+      ),
     );
 
     const res = NextResponse.json({ ok: true });

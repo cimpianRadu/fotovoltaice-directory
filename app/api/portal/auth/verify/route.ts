@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
+import { savePortalAccessEvent } from '@/lib/sheets';
 import {
   PORTAL_COOKIE,
   PORTAL_PENDING_COOKIE,
@@ -34,6 +35,12 @@ export async function GET(request: NextRequest) {
       exp: Date.now() + PORTAL_SESSION_DAYS * 86_400_000,
     },
     secret,
+  );
+
+  after(() =>
+    savePortalAccessEvent({ email: payload.email, event: 'intrat', method: 'link' }).catch((err) =>
+      console.error('[portal] jurnal acces (intrat/link):', err),
+    ),
   );
 
   const res = NextResponse.redirect(new URL('/portal', request.url));

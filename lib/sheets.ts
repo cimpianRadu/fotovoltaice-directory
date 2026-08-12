@@ -676,6 +676,70 @@ export async function setClaimApproved(
   return readClaimRow(row);
 }
 
+// ── Portal: cine cere acces și cine chiar intră ─────────────────────────────
+// Jurnal append-only, o linie per eveniment: `cerut` la pasul 1 (emailul cu
+// link + cod a plecat), `intrat` la pasul 2 (link sau cod acceptat). Perechea
+// ruptă e semnalul care contează: o firmă care a cerut acces și n-a ajuns
+// înăuntru a vrut ceva de la noi și s-a împotmolit — aia e o listă de sunat, nu
+// o statistică. Sesiunea ține 30 de zile, deci absența unui `intrat` nou NU
+// înseamnă că firma nu mai folosește portalul.
+const PORTAL_SHEET = 'Portal Acces';
+
+const PORTAL_HEADER = ['Timestamp', 'Email', 'Eveniment', 'Metodă'];
+
+export const PORTAL_EVENTS = ['cerut', 'intrat'] as const;
+export type PortalEventKind = (typeof PORTAL_EVENTS)[number];
+
+export interface PortalAccessEvent {
+  /** ISO. */
+  timestamp: string;
+  email: string;
+  event: PortalEventKind;
+  /** Doar pe `intrat`: pe unde a intrat. Gol pe `cerut`. */
+  method: 'link' | 'cod' | '';
+}
+
+export async function savePortalAccessEvent(e: {
+  email: string;
+  event: PortalEventKind;
+  method?: 'link' | 'cod';
+}) {
+  const values = [
+    new Date().toISOString(),
+    e.email.trim().toLowerCase(),
+    e.event,
+    e.method ?? '',
+  ];
+  try {
+    await appendRow(PORTAL_SHEET, values);
+  } catch {
+    // Tabul nu există încă — îl creăm cu header și reîncercăm o dată.
+    await createSheetTab(PORTAL_SHEET);
+    await appendRow(PORTAL_SHEET, PORTAL_HEADER);
+    await appendRow(PORTAL_SHEET, values);
+  }
+}
+
+export async function getPortalAccessEvents(): Promise<PortalAccessEvent[]> {
+  let rows: string[][];
+  try {
+    rows = await readRows(PORTAL_SHEET);
+  } catch {
+    // Tabul nu există încă (prima cerere de acces îl creează).
+    return [];
+  }
+  return rows
+    .filter((r) => Number.isFinite(Date.parse(r[0] || '')))
+    .map((r) => {
+      const method = (r[3] || '').trim().toLowerCase();
+      return {
+        timestamp: r[0] || '',
+        email: (r[1] || '').trim().toLowerCase(),
+        event: (r[2] || '').trim().toLowerCase() === 'intrat' ? 'intrat' : 'cerut',
+        method: method === 'link' || method === 'cod' ? method : '',
+      } satisfies PortalAccessEvent;
+    });
+}
 
 export async function saveWaitlistToSheet(email: string) {
   await appendRow('Waitlist', [
