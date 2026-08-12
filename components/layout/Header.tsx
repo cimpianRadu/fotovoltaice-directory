@@ -8,22 +8,24 @@ import SegmentToggle from '@/components/segment/SegmentToggle';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import { trackEvent } from '@/lib/analytics';
 
-// În bara principală rămân doar destinațiile de conținut. Uneltele
-// (verificare ANRE, calculator, clasament) trec sub „Mai multe": sunt căutate punctual,
-// nu răsfoite. /cere-oferta nu e link aici: e CTA-ul amber al headerului, pe
-// ambele lățimi — conversia principală a site-ului nu concurează cu propriul link.
+// În bara principală rămân destinațiile pentru clientul care caută (Calculatorul
+// e momeala care se termină în cerere de ofertă). Uneltele căutate punctual trec
+// sub „Mai multe", inclusiv listarea de firmă: partea de listări nu e focusul
+// acum. /cere-oferta nu e link aici: e CTA-ul amber al headerului, pe ambele
+// lățimi — conversia principală a site-ului nu concurează cu propriul link.
 const primaryLinks = [
   { href: '/firme', label: 'Firme' },
   { href: '/cereri', label: 'Cereri Clienți' },
   { href: '/studii-de-caz', label: 'Studii de Caz' },
   { href: '/ghid', label: 'Ghiduri' },
+  { href: '/calculator-panouri-fotovoltaice', label: 'Calculator' },
 ];
 
 // Uneltele primele, paginile despre site la urmă.
 const moreLinks = [
   { href: '/verificare-anre', label: 'Verificare ANRE' },
-  { href: '/calculator-panouri-fotovoltaice', label: 'Calculator' },
   { href: '/clasament', label: 'Clasament' },
+  { href: '/listeaza-firma', label: 'Listează-ți firma' },
   { href: '/publicitate', label: 'Publicitate' },
   { href: '/intrebari-frecvente', label: 'Întrebări frecvente' },
   { href: '/despre', label: 'Despre noi' },
@@ -92,19 +94,6 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-
-          {/* Fostul CTA, retrogradat la link: publicul principal e clientul care
-              cere ofertă, dar firmele au în continuare ușa la vedere în bară. */}
-          <Link
-            href="/listeaza-firma"
-            className={`text-sm font-medium whitespace-nowrap transition-colors ${
-              isActive('/listeaza-firma')
-                ? 'text-primary-dark border-b-2 border-primary pb-0.5'
-                : 'text-gray-600 hover:text-secondary-dark'
-            }`}
-          >
-            Listează-ți Firma
-          </Link>
 
           {/* "Mai multe" dropdown */}
           <div ref={moreRef} className="relative">
@@ -233,13 +222,6 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/listeaza-firma"
-            onClick={() => setMobileOpen(false)}
-            className="mt-2 text-base font-medium rounded-lg px-3 py-2.5 border border-primary/30 text-primary-dark text-center hover:bg-primary/5 transition-colors"
-          >
-            Listează-ți firma
-          </Link>
         </nav>
       </div>
     </header>
