@@ -8,12 +8,12 @@ import SegmentToggle from '@/components/segment/SegmentToggle';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import { trackEvent } from '@/lib/analytics';
 
-// În bara principală rămân doar destinațiile de conținut și de conversie. Uneltele
+// În bara principală rămân doar destinațiile de conținut. Uneltele
 // (verificare ANRE, calculator, clasament) trec sub „Mai multe": sunt căutate punctual,
-// nu răsfoite, iar locul eliberat îl ia secțiunea /studii-de-caz.
+// nu răsfoite. /cere-oferta nu e link aici: e CTA-ul amber al headerului, pe
+// ambele lățimi — conversia principală a site-ului nu concurează cu propriul link.
 const primaryLinks = [
   { href: '/firme', label: 'Firme' },
-  { href: '/cere-oferta', label: 'Cere Ofertă' },
   { href: '/cereri', label: 'Cereri Clienți' },
   { href: '/studii-de-caz', label: 'Studii de Caz' },
   { href: '/ghid', label: 'Ghiduri' },
@@ -83,11 +83,6 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              onClick={
-                link.href === '/cere-oferta'
-                  ? () => trackEvent('cere_oferta_click', { segment, source: 'nav' })
-                  : undefined
-              }
               className={`text-sm font-medium whitespace-nowrap transition-colors ${
                 isActive(link.href)
                   ? 'text-primary-dark border-b-2 border-primary pb-0.5'
@@ -97,6 +92,19 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+
+          {/* Fostul CTA, retrogradat la link: publicul principal e clientul care
+              cere ofertă, dar firmele au în continuare ușa la vedere în bară. */}
+          <Link
+            href="/listeaza-firma"
+            className={`text-sm font-medium whitespace-nowrap transition-colors ${
+              isActive('/listeaza-firma')
+                ? 'text-primary-dark border-b-2 border-primary pb-0.5'
+                : 'text-gray-600 hover:text-secondary-dark'
+            }`}
+          >
+            Listează-ți Firma
+          </Link>
 
           {/* "Mai multe" dropdown */}
           <div ref={moreRef} className="relative">
@@ -147,10 +155,11 @@ export default function Header() {
           </div>
 
           <Link
-            href="/listeaza-firma"
+            href="/cere-oferta"
+            onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_desktop' })}
             className="bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-4 py-2 rounded-lg whitespace-nowrap transition-colors"
           >
-            Listează-ți Firma
+            Cere Ofertă
           </Link>
         </nav>
 
@@ -194,12 +203,7 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              onClick={() => {
-                setMobileOpen(false);
-                if (link.href === '/cere-oferta') {
-                  trackEvent('cere_oferta_click', { segment, source: 'nav_mobile' });
-                }
-              }}
+              onClick={() => setMobileOpen(false)}
               className={`text-base font-medium rounded-lg px-3 py-2.5 transition-colors ${
                 isActive(link.href)
                   ? 'text-primary-dark bg-primary/5'
