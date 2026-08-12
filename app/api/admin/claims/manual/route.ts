@@ -16,15 +16,20 @@ import {
  * se comportă identic cu revendicarea de pe /cereri (aceleași plafoane, aceeași
  * regulă de duplicat) dar **NU trimite email de confirmare** către firmă (i-am
  * dat deja cererea manual) și e etichetată `source: 'manual'` în Sheet, ca să
- * o distingem în analytics de tracțiunea organică. Plafoanele sunt respectate
- * intenționat: dacă o firmă are deja 3 revendicări active necontactate, nu i
- * se mai dă a patra nici pe cale manuală — regula există ca să nu ocupe
- * degeaba sloturi.
+ * o distingem în analytics de tracțiunea organică. Plafoanele se aplică
+ * implicit: dacă o firmă are deja 3 revendicări active necontactate, nu i se
+ * mai dă a patra pe cale automată — regula există ca să nu ocupe degeaba
+ * sloturi. `override: true` le trece, pentru cazul în care ai dat cererea
+ * telefonic unei firme în plus și vrei doar să consemnezi realitatea: un rând
+ * lipsă înseamnă o firmă care nu-și vede cererea în /portal. Duplicatul rămâne
+ * blocat oricum, două rânduri pentru aceeași firmă pe aceeași cerere n-au ce
+ * descrie.
  */
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { leadId, numeFirma, numeContact, telefon } = body as Record<string, string>;
+    const { leadId, numeFirma, numeContact, telefon, email } = body as Record<string, string>;
+    const override = Boolean(body?.override);
 
     if (!leadId || !numeFirma?.trim() || !numeContact?.trim() || !telefon?.trim()) {
       return NextResponse.json(
@@ -46,7 +51,7 @@ export async function POST(request: Request) {
     // revendicările încă ținute, spre deosebire de fluxul public.
     const claimsForLead = claimsHeldForLead(allClaims, leadId);
 
-    if (claimsForLead.length >= MAX_CLAIMS_PER_LEAD) {
+    if (!override && claimsForLead.length >= MAX_CLAIMS_PER_LEAD) {
       return NextResponse.json(
         { error: 'Cererea are deja numărul maxim de revendicări.', full: true },
         { status: 409 },
@@ -64,7 +69,7 @@ export async function POST(request: Request) {
     }
 
     const active = countActiveClaimsForFirm(allClaims, claimData);
-    if (active >= MAX_ACTIVE_CLAIMS_PER_FIRM) {
+    if (!override && active >= MAX_ACTIVE_CLAIMS_PER_FIRM) {
       return NextResponse.json(
         {
           error: `Firma are deja ${active} revendicări active necontactate. Confirmă un apel ca să eliberezi un slot.`,
@@ -74,12 +79,15 @@ export async function POST(request: Request) {
       );
     }
 
+    // Emailul e opțional, dar fără el firma NU-și vede niciodată cererea în
+    // /portal: acolo revendicările se leagă de cont exact pe coloana asta.
     await saveClaimToSheet({
       leadId,
       numeFirma: claimData.numeFirma,
       numeContact: numeContact.trim(),
       telefon: claimData.telefon,
       source: 'manual',
+      email: (email || '').trim(),
     });
 
     // Feedul public și CRM-ul citesc din Sheets prin ISR: invalidăm ambele ca

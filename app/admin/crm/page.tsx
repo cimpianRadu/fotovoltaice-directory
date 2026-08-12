@@ -411,7 +411,7 @@ export default async function CrmPage({ searchParams }: Props) {
   // lead rezidențial mic dacă îi convine. Ești admin, ai judecata ta; searchul
   // rapid din SearchableSelect face lungimea listei irelevantă. Trecem doar
   // câmpurile de care are nevoie formul, nu toată structura Company
-  // (~180 firme × {id,name,phone,city} ≈ 10 KB serializat).
+  // (~180 firme × {id,name,phone,city,email} ≈ 14 KB serializat).
   const companies = getCompanies();
   const firms: FirmOption[] = companies
     .map((c) => ({
@@ -419,6 +419,9 @@ export default async function CrmPage({ searchParams }: Props) {
       name: c.name,
       phone: c.contact.phone,
       city: c.location.city,
+      // Preumple emailul de portal: revendicarea manuală fără el rămâne
+      // invizibilă pentru firmă când își face cont.
+      email: c.contact.email || '',
     }))
     .sort((a, b) => a.name.localeCompare(b.name, 'ro'));
 

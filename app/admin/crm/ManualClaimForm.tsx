@@ -10,12 +10,13 @@ export interface FirmOption {
   name: string;
   phone: string;
   city: string;
+  email: string;
 }
 
 interface Props {
   leadId: string;
   firms: FirmOption[];
-  /** true = cererea are deja 3/3 revendicări. Butonul e blocat. */
+  /** true = cererea are deja 3/3 revendicări. Se poate trece, cu bifă. */
   full: boolean;
   onDone?: () => void;
 }
@@ -26,6 +27,10 @@ export default function ManualClaimForm({ leadId, firms, full, onDone }: Props) 
   const [numeFirma, setNumeFirma] = useState('');
   const [numeContact, setNumeContact] = useState('');
   const [telefon, setTelefon] = useState('');
+  const [email, setEmail] = useState('');
+  // Peste plafon se trece doar cu bifa asta, ca a patra firmă pe o cerere să
+  // rămână o decizie luată, nu un accident de click.
+  const [override, setOverride] = useState(false);
   const [state, setState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -44,11 +49,12 @@ export default function ManualClaimForm({ leadId, firms, full, onDone }: Props) 
     if (!id) return;
     const firm = firms.find((f) => f.id === id);
     if (!firm) return;
-    // Numele + telefonul sunt din director; numele contactului îl completezi
-    // tu — nu-l știm din companies.json și e cel mai important pentru firmă,
-    // ca să nu ajungă la persoana greșită.
+    // Numele + telefonul + emailul sunt din director; numele contactului îl
+    // completezi tu — nu-l știm din companies.json și e cel mai important
+    // pentru firmă, ca să nu ajungă la persoana greșită.
     setNumeFirma(firm.name);
     setTelefon(firm.phone);
+    setEmail(firm.email);
   }
 
   async function submit(e: React.FormEvent) {
@@ -64,6 +70,8 @@ export default function ManualClaimForm({ leadId, firms, full, onDone }: Props) 
           numeFirma: numeFirma.trim(),
           numeContact: numeContact.trim(),
           telefon: telefon.trim(),
+          email: email.trim(),
+          override,
         }),
       });
       const body = await res.json().catch(() => ({}));
@@ -73,6 +81,8 @@ export default function ManualClaimForm({ leadId, firms, full, onDone }: Props) 
       setNumeFirma('');
       setNumeContact('');
       setTelefon('');
+      setEmail('');
+      setOverride(false);
       setTimeout(() => {
         setOpen(false);
         setState('idle');
@@ -90,16 +100,20 @@ export default function ManualClaimForm({ leadId, firms, full, onDone }: Props) 
     return (
       <button
         type="button"
-        disabled={full}
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          // La 3/3 formularul se deschide direct în regim peste plafon: dacă
+          // tot ai dat cererea și firmei a patra, rândul trebuie consemnat.
+          setOverride(full);
+          setOpen(true);
+        }}
         title={
           full
-            ? 'Cererea are deja 3/3 revendicări'
+            ? 'Cererea are 3/3 revendicări — se poate adăuga peste plafon, cu bifă'
             : 'Marchează revendicare după apel telefonic (nu trimite email firmei)'
         }
         className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-1 text-[11px] font-medium transition ${
           full
-            ? 'border-slate-200 bg-slate-50 text-slate-400 cursor-not-allowed'
+            ? 'border-amber-200 bg-amber-50 text-amber-800 hover:border-amber-300 hover:bg-amber-100'
             : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
         }`}
       >
@@ -117,13 +131,17 @@ export default function ManualClaimForm({ leadId, firms, full, onDone }: Props) 
           <circle cx="12" cy="7" r="4" />
           <path d="M17 11l2 2 4-4" />
         </svg>
-        Revendică pt firmă
+        {full ? 'Revendică peste plafon' : 'Revendică pt firmă'}
       </button>
     );
   }
 
   const canSubmit =
-    numeFirma.trim() && numeContact.trim() && telefon.trim() && state !== 'saving';
+    numeFirma.trim() &&
+    numeContact.trim() &&
+    telefon.trim() &&
+    (!full || override) &&
+    state !== 'saving';
 
   return (
     <form
@@ -152,6 +170,14 @@ export default function ManualClaimForm({ leadId, firms, full, onDone }: Props) 
         nu e listată. Emailul de confirmare <strong>nu</strong> se trimite —
         i-ai dat deja cererea telefonic.
       </div>
+
+      {full && (
+        <div className="rounded-md border border-amber-200 bg-amber-50 px-2.5 py-2 text-[10px] leading-snug text-amber-900">
+          Cererea are deja 3/3 revendicări. Bifa de mai jos scrie a patra: o
+          folosești când ai dat cererea telefonic și vrei ca firma să și-o vadă
+          în portal, nu ca să încarci cererea.
+        </div>
+      )}
 
       <SearchableSelect
         name="firm"
@@ -187,6 +213,34 @@ export default function ManualClaimForm({ leadId, firms, full, onDone }: Props) 
         placeholder="Telefon *"
         className="w-full rounded-md border border-slate-300 bg-white px-2.5 py-1.5 text-xs text-slate-800 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-900/5"
       />
+
+      {/* Emailul e cheia contului de portal: pe el se leagă revendicarea de
+          firmă când își face cont. Gol = firma n-o vede niciodată acolo. */}
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email (contul de portal al firmei)"
+        className="w-full rounded-md border border-slate-300 bg-white px-2.5 py-1.5 text-xs text-slate-800 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-900/5"
+      />
+      <p className="text-[10px] leading-snug text-slate-500">
+        {email.trim()
+          ? 'Firma vede cererea în /portal dacă intră cu exact acest email.'
+          : 'Fără email, revendicarea nu apare în /portal — completează-l dacă firma va intra acolo.'}
+      </p>
+
+      <label className="flex items-start gap-2 text-[10px] leading-snug text-slate-600">
+        <input
+          type="checkbox"
+          checked={override}
+          onChange={(e) => setOverride(e.target.checked)}
+          className="mt-0.5 h-3 w-3 rounded border-slate-300"
+        />
+        <span>
+          Treci peste plafoane (a 4-a firmă pe cerere / firma are deja 3
+          revendicări necontactate)
+        </span>
+      </label>
 
       <div className="flex items-center justify-between gap-2">
         <span
