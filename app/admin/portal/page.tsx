@@ -91,11 +91,16 @@ const STATE_LABELS: Record<AccountState, string> = {
   necunoscut: 'jurnalul nu știe',
 };
 
-const STATE_TONES: Record<AccountState, string> = {
-  cont: 'bg-emerald-50 text-emerald-700',
-  blocat: 'bg-red-50 text-red-700',
-  gol: 'bg-amber-50 text-amber-700',
-  necunoscut: 'bg-slate-100 text-slate-500',
+/**
+ * Starea se citește de la distanță, de pe capul cardului: un pill mic într-un
+ * colț se pierde când ai douăzeci de carduri pe ecran. Fundalul colorat e
+ * semnalul, badge-ul plin doar confirmă în cuvinte.
+ */
+const STATE_STYLES: Record<AccountState, { header: string; badge: string }> = {
+  cont: { header: 'bg-emerald-50 border-emerald-200', badge: 'bg-emerald-600 text-white' },
+  blocat: { header: 'bg-red-50 border-red-200', badge: 'bg-red-600 text-white' },
+  gol: { header: 'bg-amber-50 border-amber-200', badge: 'bg-amber-500 text-white' },
+  necunoscut: { header: 'bg-slate-100 border-slate-200', badge: 'bg-slate-400 text-white' },
 };
 
 const FILTERS: { key: string; label: string; state?: AccountState }[] = [
@@ -211,10 +216,12 @@ function AccountCard({
 
   return (
     <article className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-      <header className="flex items-start justify-between gap-3 border-b border-slate-100 px-4 py-3">
+      <header
+        className={`flex items-start justify-between gap-3 border-b px-4 py-3 ${STATE_STYLES[state].header}`}
+      >
         <div className="min-w-0">
           <h3 className="truncate font-semibold text-slate-900">{firmName || account.email}</h3>
-          <p className="mt-0.5 truncate text-xs text-slate-500">
+          <p className="mt-0.5 truncate text-xs text-slate-600">
             <a href={`mailto:${account.email}`} className="hover:text-slate-900">
               {account.email}
             </a>
@@ -230,12 +237,12 @@ function AccountCard({
         </div>
         <div className="flex shrink-0 flex-col items-end gap-1">
           <span
-            className={`rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase ${STATE_TONES[state]}`}
+            className={`rounded-full px-2.5 py-1 text-[11px] font-bold tracking-wide uppercase ${STATE_STYLES[state].badge}`}
           >
             {STATE_LABELS[state]}
           </span>
           {account.pending > 0 && (
-            <span className="rounded-full bg-sky-50 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-sky-700 uppercase">
+            <span className="rounded-full bg-sky-600 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white uppercase">
               {account.pending} de aprobat
             </span>
           )}
