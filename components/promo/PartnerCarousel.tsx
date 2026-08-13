@@ -23,14 +23,44 @@ type Partner = {
   active: boolean;
 };
 
-const ACTIVE_PARTNERS: Partner[] = (partnersData.partners as Partner[])
-  .filter((p) => p.active)
-  .slice(0, partnersData.maxActive);
+const ALL_PARTNERS = partnersData.partners as Partner[];
+
+const ACTIVE_PARTNERS: Partner[] = ALL_PARTNERS.filter((p) => p.active).slice(
+  0,
+  partnersData.maxActive,
+);
 
 const ROTATION_MS = partnersData.rotationSeconds * 1000;
 
+/**
+ * Aceeași previzualizare ca la `SponsorBanner`: `?preview=<slug>` arată un
+ * partener cu `active: false` exact cum ar rula după semnare, iar slug-ul
+ * rămâne în `sessionStorage` cât ține sesiunea. Fără asta nu poți arăta unui
+ * prospect popup-ul lui înainte de contract decât publicându-l, ceea ce ar
+ * însemna să-l dai gratis tuturor vizitatorilor.
+ *
+ * În preview nu pleacă niciun eveniment, ca cifrele din raportul lui să nu
+ * conțină propriile lui vizite.
+ */
+const PREVIEW_KEY = 'sponsor-preview';
+
+function readPreviewSlug(): string | null {
+  const fromUrl = new URLSearchParams(window.location.search).get('preview');
+  if (fromUrl === 'off') {
+    sessionStorage.removeItem(PREVIEW_KEY);
+    return null;
+  }
+  if (fromUrl) {
+    sessionStorage.setItem(PREVIEW_KEY, fromUrl);
+    return fromUrl;
+  }
+  return sessionStorage.getItem(PREVIEW_KEY);
+}
+
 export default function PartnerCarousel() {
   const [visible, setVisible] = useState(false);
+  const [partners, setPartners] = useState<Partner[]>(ACTIVE_PARTNERS);
+  const [preview, setPreview] = useState(false);
   // Start at 0 server-side (matches SSR) then randomize on client mount before
   // the popup becomes visible. This way every page load gets a different first
   // partner — without random start, partner at index N is only seen by visitors
@@ -40,17 +70,31 @@ export default function PartnerCarousel() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (ACTIVE_PARTNERS.length === 0) return;
+
+    const previewSlug = readPreviewSlug();
+    const pending = previewSlug
+      ? ALL_PARTNERS.find((p) => p.slug === previewSlug && !p.active)
+      : undefined;
+    const list = pending ? [pending, ...ACTIVE_PARTNERS] : ACTIVE_PARTNERS;
+    const isPreview = Boolean(pending);
+
+    setPartners(list);
+    setPreview(isPreview);
+
+    if (list.length === 0) return;
     if (sessionStorage.getItem(STORAGE_KEY) === 'dismissed') return;
 
-    // Random starting index — equal share-of-voice across page loads
-    const startIndex = Math.floor(Math.random() * ACTIVE_PARTNERS.length);
+    // Random starting index — equal share-of-voice across page loads.
+    // În preview pornim de la partenerul previzualizat, altfel prospectul ar
+    // putea aștepta o rotație întreagă până să-și vadă propriul popup.
+    const startIndex = isPreview ? 0 : Math.floor(Math.random() * list.length);
     setIndex(startIndex);
 
     const timer = setTimeout(() => {
       setVisible(true);
+      if (isPreview) return;
       window.umami?.track('partner-carousel-view', {
-        partner: ACTIVE_PARTNERS[startIndex]?.slug,
+        partner: list[startIndex]?.slug,
         position: startIndex + 1,
       });
     }, SHOW_AFTER_MS);
@@ -60,24 +104,26 @@ export default function PartnerCarousel() {
 
   useEffect(() => {
     if (!visible) return;
-    if (ACTIVE_PARTNERS.length <= 1) return;
+    if (partners.length <= 1) return;
 
     const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % ACTIVE_PARTNERS.length);
+      setIndex((prev) => (prev + 1) % partners.length);
     }, ROTATION_MS);
 
     return () => clearInterval(interval);
-  }, [visible]);
+  }, [visible, partners]);
 
   const dismiss = () => {
     setVisible(false);
     sessionStorage.setItem(STORAGE_KEY, 'dismissed');
+    if (preview) return;
     window.umami?.track('partner-carousel-dismiss', {
-      partner: ACTIVE_PARTNERS[index]?.slug,
+      partner: partners[index]?.slug,
     });
   };
 
   const handleClick = (partner: Partner) => {
+    if (preview) return;
     window.umami?.track('partner-carousel-click', { partner: partner.slug });
   };
 
@@ -90,10 +136,10 @@ export default function PartnerCarousel() {
     return `${partner.url}${sep}utm_content=${encodeURIComponent(pathname)}`;
   };
 
-  if (!visible || ACTIVE_PARTNERS.length === 0) return null;
+  if (!visible || partners.length === 0) return null;
 
-  const partner = ACTIVE_PARTNERS[index];
-  const total = ACTIVE_PARTNERS.length;
+  const partner = partners[index];
+  const total = partners.length;
 
   return (
     <div

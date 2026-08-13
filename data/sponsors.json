@@ -7,11 +7,34 @@
       "logo": "/logos/diodor.png",
       "baseUrl": "https://diodor.ro",
       "active": true,
-      "positions": ["homepage", "ghid-index", "ghid-topic", "calculator", "clasament", "firme"],
+      "positions": [
+        "homepage",
+        "ghid-index",
+        "ghid-topic",
+        "calculator",
+        "clasament",
+        "firme"
+      ],
       "messages": {
         "client": "Materiale electrice și echipamente fotovoltaice",
         "instalator": "Materiale electrice și echipamente fotovoltaice, distribuitor Cluj-Napoca"
       }
+    },
+    {
+      "slug": "rca-non-stop",
+      "name": "Leasing și Asigurări",
+      "location": "Agent Safety Broker",
+      "logo": "/logos/rca-non-stop.png",
+      "baseUrl": "https://www.safetyleasing.ro",
+      "active": false,
+      "positions": "all",
+      "messages": {
+        "client": "Leasing și finanțare pentru sistemul tău fotovoltaic, până la 60 de luni",
+        "instalator": "Răspundere civilă pentru instalatorii de fotovoltaice, plus leasing pentru utilaje și mașini de firmă"
+      },
+      "phone": "0763 990 097",
+      "whatsapp": "40763990097",
+      "facebook": "https://www.facebook.com/safetyleasing"
     }
   ]
 }

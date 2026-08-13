@@ -9,7 +9,7 @@
       "cta": "Încearcă gratuit →",
       "logo": "/images/partners/reviewqr.svg",
       "url": "https://www.reviewqr.app/?utm_source=instalatori-fotovoltaice&utm_medium=popup-carousel&utm_campaign=partner-slot",
-      "active": true
+      "active": false
     },
     {
       "slug": "diodor",
@@ -27,7 +27,16 @@
       "cta": "Vezi cum funcționează →",
       "logo": "/images/partners/sopia.svg",
       "url": "https://sopia.xyz?utm_source=instalatori-fotovoltaice&utm_medium=popup-carousel&utm_campaign=partner-slot",
-      "active": true
+      "active": false
+    },
+    {
+      "slug": "rca-non-stop",
+      "name": "Leasing și Asigurări",
+      "description": "Răspundere civilă pentru instalatori, plus leasing și finanțare pentru sisteme fotovoltaice.",
+      "cta": "Cere o ofertă →",
+      "logo": "/logos/rca-non-stop.png",
+      "url": "https://www.safetyleasing.ro?utm_source=instalatori-fotovoltaice&utm_medium=popup-carousel&utm_campaign=partner-slot",
+      "active": false
     }
   ]
 }

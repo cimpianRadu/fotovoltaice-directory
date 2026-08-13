@@ -11,6 +11,7 @@ import {
   getYesNoLabel,
   getTimelineLabel,
 } from '@/lib/utils-shared';
+import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { type PortalClaim } from './PortalClaimCard';
 import PortalClaimList from './PortalClaimList';
 import LogoutButton from './LogoutButton';
@@ -146,6 +147,14 @@ export default async function PortalPage() {
           de aici.
         </p>
       )}
+
+      {/* Cea mai bună plasare de instalatori de pe site, și singura unde firma
+          e prinsă exact în momentul potrivit: tocmai a luat o lucrare nouă.
+          Volumul e mic, intenția e maximă, deci se vinde ca moment, nu ca
+          impresii. Ține slotul jos, sub cereri: portalul e unealtă de lucru. */}
+      <div className="mt-10">
+        <SponsorBanner position="portal" title="Servicii pentru firma ta" />
+      </div>
     </div>
   );
 }
