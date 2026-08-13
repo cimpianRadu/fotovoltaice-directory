@@ -55,6 +55,7 @@ const POSITION_AUDIENCE: Record<SponsorPosition, SponsorAudience> = {
   'clasament-featured': 'client',
   calculator: 'client',
   firme: 'client',
+  'cere-oferta': 'client',
   'cere-oferta-confirmare': 'client',
   cereri: 'instalator',
   portal: 'instalator',
@@ -166,6 +167,9 @@ export default function SponsorBanner({
     const live = LIVE_SPONSORS.filter(
       (s) => s.positions === 'all' || s.positions.includes(position),
     );
+    // Premium (`positions: "all"`) stă mereu primul: plătește pachetul cel mai
+    // mare, deci ia și primul loc când slotul afișează mai mulți parteneri.
+    live.sort((a, b) => Number(b.positions === 'all') - Number(a.positions === 'all'));
     if (!previewSlug) return live;
 
     const pending = ALL_SPONSORS.find((s) => s.slug === previewSlug && !s.active);

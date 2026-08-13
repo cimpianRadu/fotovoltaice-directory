@@ -3,6 +3,7 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import LeadForm from '@/components/forms/LeadForm';
 import SegmentNotice from './SegmentNotice';
+import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 import companiesData from '@/data/companies.json';
 
@@ -64,6 +65,13 @@ export default async function CereOfertaPage({
             <li>Trimitem cererea ta către instalatorii potriviți de pe platformă, din zona ta</li>
             <li>Instalatorii interesați te contactează cu oferte, pe care le compari și alegi</li>
           </ol>
+        </div>
+
+        {/* Sub form, nu deasupra: pagina există ca să convertească cererea,
+            partenerul (finanțare/leasing) e relevant abia după ce omul s-a
+            hotărât să ceară oferte. */}
+        <div className="mt-6">
+          <SponsorBanner position="cere-oferta" />
         </div>
       </div>
     </>
