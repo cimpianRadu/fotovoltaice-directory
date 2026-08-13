@@ -20,6 +20,8 @@ export interface PortalClaimRow {
   label: string;
   approvedAt: string;
   releasedAt: string;
+  /** Motivul scris de firmă când a renunțat — de ce n-a mers cererea. */
+  releaseReason: string;
   offeredAt: string;
   contactedAt: string;
   firmStatus: ClaimStatus;
@@ -137,8 +139,14 @@ export default function ApproveClaims({ claims }: { claims: PortalClaimRow[] }) 
             </div>
 
             {c.releasedAt ? (
-              <p className="mt-0.5 text-[10px] text-slate-500">
+              /* Motivul renunțării, pe un singur rând ca să nu umfle cardul —
+                 textul complet stă în title, la hover. */
+              <p
+                className="mt-0.5 truncate text-[10px] text-slate-500"
+                title={c.releaseReason ? `Motivul renunțării: ${c.releaseReason}` : undefined}
+              >
                 a renunțat · {fmtDay(c.releasedAt)}
+                {c.releaseReason && <span className="italic"> · „{c.releaseReason}"</span>}
               </p>
             ) : (
               <div className="mt-1 flex items-center gap-2">

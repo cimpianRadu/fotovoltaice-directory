@@ -232,6 +232,7 @@ function AccountCard({
       label: leadLabel(leadById.get(c.leadId), c.leadId),
       approvedAt: c.approvedAt,
       releasedAt: c.releasedAt,
+      releaseReason: c.releaseReason,
       offeredAt: c.offeredAt,
       contactedAt: c.contactedAt,
       firmStatus: c.firmStatus,
