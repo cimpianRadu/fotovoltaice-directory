@@ -7,6 +7,7 @@ const TABS = [
   { href: '/admin/crm', label: 'CRM' },
   { href: '/admin/firme', label: 'Instalatori' },
   { href: '/admin/portal', label: 'Portal' },
+  { href: '/admin/sponsori', label: 'Parteneri' },
   { href: '/admin/analytics', label: 'Overview' },
   { href: '/admin/analytics/ghiduri', label: 'Ghiduri' },
   { href: '/admin/analytics/firme', label: 'Firme' },

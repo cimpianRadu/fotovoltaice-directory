@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import sponsorsData from '@/data/sponsors.json';
+import { type SponsorPosition } from '@/lib/sponsor-positions';
 
 declare global {
   interface Window {
@@ -41,18 +42,7 @@ declare global {
  */
 export type SponsorAudience = 'client' | 'instalator';
 
-export type SponsorPosition =
-  | 'homepage'
-  | 'ghid-index'
-  | 'ghid-topic'
-  | 'clasament'
-  | 'clasament-featured'
-  | 'calculator'
-  | 'firme'
-  | 'cere-oferta-confirmare'
-  | 'cereri'
-  | 'portal'
-  | 'listeaza-firma';
+export type { SponsorPosition };
 
 // Cine citește pagina, nu ce conține pagina. Paginile de instalatori sunt cele
 // unde ajunge o firmă care caută de lucru sau se ocupă de propria prezență:

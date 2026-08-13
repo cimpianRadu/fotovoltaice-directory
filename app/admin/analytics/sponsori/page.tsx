@@ -24,20 +24,10 @@ const SPONSOR_BANNER_NAMES: string[] = (
   .filter((s) => s.active)
   .map((s) => s.slug);
 
+import { SPONSOR_POSITION_LABELS } from '@/lib/sponsor-positions';
+
 // Perechea poziție → audiență e ținută în SponsorBanner; aici e doar eticheta.
-const POSITION_LABELS: Record<string, string> = {
-  homepage: 'Homepage',
-  'ghid-index': '/ghid (index)',
-  'ghid-topic': '/ghid/[topic]',
-  calculator: '/calculator',
-  clasament: '/clasament',
-  'clasament-featured': '/clasament (featured)',
-  firme: '/firme',
-  'cere-oferta-confirmare': '/cere-oferta (după trimitere) · doar Premium',
-  cereri: '/cereri (instalatori) · doar Premium',
-  portal: '/portal (instalatori logați) · doar Premium',
-  'listeaza-firma': '/listeaza-firma (instalatori)',
-};
+const POSITION_LABELS: Record<string, string> = SPONSOR_POSITION_LABELS;
 
 const AUDIENCE_LABELS: Record<string, string> = {
   client: 'Clienți (caută instalator)',
@@ -172,7 +162,10 @@ export default async function SponsoriPage({ searchParams }: { searchParams: Sea
         <div>
           <h1 className="text-2xl font-semibold text-slate-900">Sponsori &amp; Parteneri</h1>
           <p className="text-sm text-slate-500 mt-1">
-            {label} · impressions / clicks / CTR per locație · cache 1h
+            {label} · impressions / clicks / CTR per locație · cache 1h ·{' '}
+            <a href="/admin/sponsori" className="underline hover:text-slate-900">
+              control parteneri →
+            </a>
           </p>
         </div>
         <RangePicker pathname="/admin/analytics/sponsori" preset={preset} />

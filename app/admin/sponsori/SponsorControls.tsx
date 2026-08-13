@@ -1,0 +1,476 @@
+'use client';
+
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
+import {
+  SPONSOR_POSITIONS,
+  SPONSOR_POSITION_LABELS,
+  type SponsorPosition,
+} from '@/lib/sponsor-positions';
+// Doar tipurile: importul de tip se șterge la compilare, deci garda
+// `server-only` din modul nu se declanșează în bundle-ul client.
+import type {
+  BannerSponsor,
+  CarouselPartner,
+  SponsorData,
+  StoreMode,
+  WriteResult,
+} from '@/lib/sponsors-store';
+
+const inputCls =
+  'mt-1 w-full rounded border border-slate-200 bg-white px-2.5 py-1.5 text-sm text-slate-900 ' +
+  'focus:border-slate-400 focus:outline-none disabled:bg-slate-50 disabled:text-slate-400';
+
+function Field({
+  label,
+  value,
+  onChange,
+  hint,
+  textarea,
+  disabled,
+  className,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  hint?: string;
+  textarea?: boolean;
+  disabled?: boolean;
+  className?: string;
+}) {
+  return (
+    <label className={`block text-xs ${className ?? ''}`}>
+      <span className="font-medium text-slate-600">{label}</span>
+      {textarea ? (
+        <textarea
+          rows={2}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          disabled={disabled}
+          className={`${inputCls} leading-snug`}
+        />
+      ) : (
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          disabled={disabled}
+          className={inputCls}
+        />
+      )}
+      {hint && <span className="mt-0.5 block text-[11px] text-slate-400">{hint}</span>}
+    </label>
+  );
+}
+
+function ActiveToggle({
+  active,
+  onToggle,
+  disabled,
+}: {
+  active: boolean;
+  onToggle: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      disabled={disabled}
+      className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold transition disabled:opacity-50 ${
+        active
+          ? 'border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-emerald-100'
+          : 'border-slate-200 bg-slate-100 text-slate-500 hover:bg-slate-200'
+      }`}
+    >
+      <span className={`h-2 w-2 rounded-full ${active ? 'bg-emerald-500' : 'bg-slate-400'}`} />
+      {active ? 'Activ' : 'Oprit'}
+    </button>
+  );
+}
+
+function CardHeader({
+  logo,
+  name,
+  slug,
+  active,
+  onToggle,
+  disabled,
+}: {
+  logo: string;
+  name: string;
+  slug: string;
+  active: boolean;
+  onToggle: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded border border-slate-200 bg-white">
+        <Image src={logo} alt={name} width={32} height={32} className="h-8 w-8 object-contain" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="truncate text-sm font-semibold text-slate-900">{name || slug}</div>
+        <div className="flex items-center gap-2 text-[11px] text-slate-400">
+          <code className="font-mono">{slug}</code>
+          <a
+            href={`/?preview=${slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slate-500 underline hover:text-slate-900"
+          >
+            preview pe site →
+          </a>
+        </div>
+      </div>
+      <ActiveToggle active={active} onToggle={onToggle} disabled={disabled} />
+    </div>
+  );
+}
+
+export default function SponsorControls({
+  initial,
+  writable,
+  mode,
+}: {
+  initial: SponsorData;
+  writable: boolean;
+  mode: StoreMode;
+}) {
+  const router = useRouter();
+  const [baseline, setBaseline] = useState<SponsorData>(initial);
+  const [data, setData] = useState<SponsorData>(() => structuredClone(initial));
+  const [saving, setSaving] = useState(false);
+  const [result, setResult] = useState<{ kind: 'ok' | 'err'; text: string; url?: string } | null>(
+    null,
+  );
+
+  const dirty = useMemo(
+    () => JSON.stringify(data) !== JSON.stringify(baseline),
+    [data, baseline],
+  );
+
+  const patchSponsor = (slug: string, patch: Partial<BannerSponsor>) =>
+    setData((d) => ({
+      ...d,
+      sponsors: d.sponsors.map((s) => (s.slug === slug ? { ...s, ...patch } : s)),
+    }));
+
+  const patchPartner = (slug: string, patch: Partial<CarouselPartner>) =>
+    setData((d) => ({
+      ...d,
+      carousel: {
+        ...d.carousel,
+        partners: d.carousel.partners.map((p) => (p.slug === slug ? { ...p, ...patch } : p)),
+      },
+    }));
+
+  const togglePosition = (sponsor: BannerSponsor, pos: SponsorPosition) => {
+    if (sponsor.positions === 'all') return;
+    const has = sponsor.positions.includes(pos);
+    patchSponsor(sponsor.slug, {
+      positions: has
+        ? sponsor.positions.filter((p) => p !== pos)
+        : [...sponsor.positions, pos],
+    });
+  };
+
+  const reset = () => {
+    setData(structuredClone(baseline));
+    setResult(null);
+  };
+
+  const save = async () => {
+    setSaving(true);
+    setResult(null);
+    try {
+      const res = await fetch('/api/admin/sponsors', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const json = (await res.json()) as (WriteResult & { ok: true }) | { error: string; issues?: string[] };
+      if (!res.ok || !('ok' in json)) {
+        const err = json as { error: string; issues?: string[] };
+        setResult({ kind: 'err', text: err.issues ? err.issues.join(' · ') : err.error });
+        return;
+      }
+      if (!json.changed) {
+        setResult({ kind: 'ok', text: 'Nimic de salvat: datele sunt identice cu cele existente.' });
+        setData(structuredClone(baseline));
+        return;
+      }
+      const what = json.changes.join(' · ');
+      if (json.mode === 'github') {
+        setResult({
+          kind: 'ok',
+          text: `Salvat (${what}). Commit ${json.commitSha.slice(0, 7)} creat, Vercel redeployează singur — live în ~2 minute.`,
+          url: json.commitUrl,
+        });
+      } else {
+        setResult({
+          kind: 'ok',
+          text: `Salvat în data/ (${what}). Local se vede imediat; live intră la următorul push.`,
+        });
+      }
+      setBaseline(structuredClone(data));
+      router.refresh();
+    } catch {
+      setResult({ kind: 'err', text: 'Eroare de rețea la salvare. Încearcă din nou.' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="space-y-8">
+      {/* Bannerul din pagini */}
+      <section className="space-y-3">
+        <div>
+          <h2 className="text-lg font-semibold text-slate-900">Banner „Parteneri Recomandați"</h2>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Cardurile din sloturile de pagină. Mesajul se alege singur după cine citește pagina:
+            clienți sau instalatori.
+          </p>
+        </div>
+        {data.sponsors.map((s) => (
+          <div key={s.slug} className="rounded-lg border border-slate-200 bg-white p-4 space-y-4">
+            <CardHeader
+              logo={s.logo}
+              name={s.name}
+              slug={s.slug}
+              active={s.active}
+              onToggle={() => patchSponsor(s.slug, { active: !s.active })}
+              disabled={!writable}
+            />
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Field
+                label="Titlu card"
+                value={s.name}
+                onChange={(v) => patchSponsor(s.slug, { name: v })}
+                disabled={!writable}
+              />
+              <Field
+                label="Site (link-ul cardului)"
+                value={s.baseUrl}
+                onChange={(v) => patchSponsor(s.slug, { baseUrl: v })}
+                hint="UTM-urile se adaugă singure la click"
+                disabled={!writable}
+              />
+              <Field
+                label={'Telefon (buton „Sună")'}
+                value={s.phone ?? ''}
+                onChange={(v) => patchSponsor(s.slug, { phone: v })}
+                hint="gol = fără buton"
+                disabled={!writable}
+              />
+              <Field
+                label="WhatsApp"
+                value={s.whatsapp ?? ''}
+                onChange={(v) => patchSponsor(s.slug, { whatsapp: v })}
+                hint="doar cifre cu prefix de țară, ex: 40763990097 · gol = fără buton"
+                disabled={!writable}
+              />
+              <Field
+                label="Pagină de Facebook"
+                value={s.facebook ?? ''}
+                onChange={(v) => patchSponsor(s.slug, { facebook: v })}
+                hint="URL complet · gol = fără buton"
+                className="sm:col-span-2"
+                disabled={!writable}
+              />
+              <Field
+                label="Mesaj pentru clienți"
+                value={s.messages.client}
+                onChange={(v) =>
+                  patchSponsor(s.slug, { messages: { ...s.messages, client: v } })
+                }
+                textarea
+                className="sm:col-span-2"
+                disabled={!writable}
+              />
+              <Field
+                label="Mesaj pentru instalatori"
+                value={s.messages.instalator ?? ''}
+                onChange={(v) =>
+                  patchSponsor(s.slug, { messages: { ...s.messages, instalator: v } })
+                }
+                hint="gol = se afișează mesajul de clienți și pe paginile de instalatori"
+                textarea
+                className="sm:col-span-2"
+                disabled={!writable}
+              />
+            </div>
+            <div className="text-xs">
+              <span className="font-medium text-slate-600">Plasări</span>
+              <label className="mt-1.5 flex items-center gap-2 text-slate-700">
+                <input
+                  type="checkbox"
+                  checked={s.positions === 'all'}
+                  onChange={(e) =>
+                    patchSponsor(s.slug, {
+                      positions: e.target.checked ? 'all' : [...SPONSOR_POSITIONS],
+                    })
+                  }
+                  disabled={!writable}
+                />
+                Toate plasările (pachet Premium)
+              </label>
+              {s.positions !== 'all' && (
+                <div className="mt-2 grid gap-1.5 sm:grid-cols-2">
+                  {SPONSOR_POSITIONS.map((pos) => (
+                    <label key={pos} className="flex items-center gap-2 text-slate-600">
+                      <input
+                        type="checkbox"
+                        checked={s.positions !== 'all' && s.positions.includes(pos)}
+                        onChange={() => togglePosition(s, pos)}
+                        disabled={!writable}
+                      />
+                      {SPONSOR_POSITION_LABELS[pos]}
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* Popup-ul carusel */}
+      <section className="space-y-3">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-semibold text-slate-900">Popup carusel (dreapta-jos)</h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Apare după 15 secunde, doar pe desktop, și rotește partenerii activi.
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <label className="block text-xs">
+              <span className="font-medium text-slate-600">Max activi</span>
+              <input
+                type="number"
+                min={1}
+                max={20}
+                value={data.carousel.maxActive}
+                onChange={(e) =>
+                  setData((d) => ({
+                    ...d,
+                    carousel: { ...d.carousel, maxActive: Number(e.target.value) },
+                  }))
+                }
+                disabled={!writable}
+                className={`${inputCls} w-20`}
+              />
+            </label>
+            <label className="block text-xs">
+              <span className="font-medium text-slate-600">Rotație (sec)</span>
+              <input
+                type="number"
+                min={5}
+                max={120}
+                value={data.carousel.rotationSeconds}
+                onChange={(e) =>
+                  setData((d) => ({
+                    ...d,
+                    carousel: { ...d.carousel, rotationSeconds: Number(e.target.value) },
+                  }))
+                }
+                disabled={!writable}
+                className={`${inputCls} w-20`}
+              />
+            </label>
+          </div>
+        </div>
+        {data.carousel.partners.map((p) => (
+          <div key={p.slug} className="rounded-lg border border-slate-200 bg-white p-4 space-y-4">
+            <CardHeader
+              logo={p.logo}
+              name={p.name}
+              slug={p.slug}
+              active={p.active}
+              onToggle={() => patchPartner(p.slug, { active: !p.active })}
+              disabled={!writable}
+            />
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Field
+                label="Titlu"
+                value={p.name}
+                onChange={(v) => patchPartner(p.slug, { name: v })}
+                disabled={!writable}
+              />
+              <Field
+                label="CTA (rândul amber)"
+                value={p.cta}
+                onChange={(v) => patchPartner(p.slug, { cta: v })}
+                disabled={!writable}
+              />
+              <Field
+                label="URL destinație"
+                value={p.url}
+                onChange={(v) => patchPartner(p.slug, { url: v })}
+                hint="cu tot cu UTM-uri; doar utm_content se adaugă singur, cu pagina curentă"
+                className="sm:col-span-2"
+                disabled={!writable}
+              />
+              <Field
+                label="Descriere"
+                value={p.description}
+                onChange={(v) => patchPartner(p.slug, { description: v })}
+                textarea
+                className="sm:col-span-2"
+                disabled={!writable}
+              />
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* Bara de salvare: apare doar când e ceva de salvat sau de raportat. */}
+      {(dirty || result) && (
+        <div className="sticky bottom-4 z-10 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white p-3 shadow-lg">
+          <div className="min-w-0 text-sm">
+            {result ? (
+              <span className={result.kind === 'ok' ? 'text-emerald-700' : 'text-red-600'}>
+                {result.text}{' '}
+                {result.url && (
+                  <a
+                    href={result.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    vezi commit-ul →
+                  </a>
+                )}
+              </span>
+            ) : (
+              <span className="text-slate-600">Ai modificări nesalvate.</span>
+            )}
+          </div>
+          {dirty && (
+            <div className="flex shrink-0 gap-2">
+              <button
+                type="button"
+                onClick={reset}
+                disabled={saving}
+                className="rounded border border-slate-200 px-3 py-1.5 text-sm text-slate-600 transition hover:bg-slate-50 disabled:opacity-50"
+              >
+                Renunță
+              </button>
+              <button
+                type="button"
+                onClick={save}
+                disabled={saving || !writable}
+                className="rounded bg-slate-900 px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:opacity-50"
+              >
+                {saving ? 'Se salvează…' : mode === 'github' ? 'Salvează (commit + deploy)' : 'Salvează'}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
