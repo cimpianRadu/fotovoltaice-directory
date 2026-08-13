@@ -78,19 +78,18 @@ interface PortalAccount {
 /**
  * Starea contului, strict din jurnal:
  * - `cont`: s-a autentificat măcar o dată. Singura afirmație de prezență.
+ *   Contul nu cere nici revendicări, nici firmă cunoscută — un email care a
+ *   intrat și vede portalul gol tot cont e; golul e marcaj separat pe card,
+ *   nu altă stare, ca să nu scoată contul din vederea implicită.
  * - `blocat`: a cerut acces și n-a intrat niciodată. De sunat, ceva n-a mers.
- * - `gol`: are cont sau a cerut acces, dar pe emailul lui nu e nicio
- *   revendicare — vede o pagină goală. Aproape mereu emailul lipsă sau scris
- *   altfel în coloana I din „Revendicări".
  * - `necunoscut`: jurnalul nu știe nimic despre email. NU înseamnă „n-a
  *   intrat": jurnalul a pornit pe 12 aug 2026, iar sesiunile durează 30 de
  *   zile, deci o firmă logată dinainte nu produce niciun eveniment până
  *   deschide portalul din nou.
  */
-type AccountState = 'cont' | 'blocat' | 'gol' | 'necunoscut';
+type AccountState = 'cont' | 'blocat' | 'necunoscut';
 
 function stateOf(a: PortalAccount): AccountState {
-  if (a.claims.length === 0 && (a.logins > 0 || a.requests > 0)) return 'gol';
   if (a.logins > 0 || a.visits > 0) return 'cont';
   if (a.requests > 0) return 'blocat';
   return 'necunoscut';
@@ -99,7 +98,6 @@ function stateOf(a: PortalAccount): AccountState {
 const STATE_LABELS: Record<AccountState, string> = {
   cont: 'are cont',
   blocat: 'a cerut, n-a intrat',
-  gol: 'portal gol',
   necunoscut: 'jurnalul nu știe',
 };
 
@@ -111,18 +109,22 @@ const STATE_LABELS: Record<AccountState, string> = {
 const STATE_STYLES: Record<AccountState, { header: string; badge: string }> = {
   cont: { header: 'bg-emerald-50 border-emerald-200', badge: 'bg-emerald-600 text-white' },
   blocat: { header: 'bg-red-50 border-red-200', badge: 'bg-red-600 text-white' },
-  gol: { header: 'bg-amber-50 border-amber-200', badge: 'bg-amber-500 text-white' },
   necunoscut: { header: 'bg-slate-100 border-slate-200', badge: 'bg-slate-400 text-white' },
 };
 
+// Primul filtru = vederea implicită a paginii: doar cine ARE cont, chiar dacă
+// emailul n-are nicio revendicare și nu e legat de vreo firmă din director —
+// pagina răspunde întâi la „cine mi-a intrat în portal?". Restul emailurilor
+// (revendicări pe care jurnalul nu le știe, blocați la intrare) stau pe
+// filtrele lor, nu amestecate printre conturi.
 const FILTERS: { key: string; label: string; state?: AccountState }[] = [
+  { key: 'cont', label: 'Au cont', state: 'cont' },
   { key: 'toate', label: 'Toate' },
   { key: 'de-aprobat', label: 'De aprobat' },
   { key: 'fara-miscare', label: 'Fără mișcare 2z+' },
-  { key: 'cont', label: 'Au cont', state: 'cont' },
   { key: 'blocati', label: 'N-au intrat', state: 'blocat' },
   { key: 'necunoscut', label: 'Jurnalul nu știe', state: 'necunoscut' },
-  { key: 'goi', label: 'Portal gol', state: 'gol' },
+  { key: 'goi', label: 'Portal gol' },
 ];
 
 function Stat({ label, value, tone }: { label: string; value: number; tone?: 'alert' | 'action' }) {
@@ -152,6 +154,15 @@ function Pill({ href, active, children }: { href: string; active: boolean; child
     >
       {children}
     </Link>
+  );
+}
+
+/** Badge-ul „portal gol": informație pe card, nu stare — contul rămâne cont. */
+function EmptyPortalBadge() {
+  return (
+    <span className="rounded-full bg-amber-500 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white uppercase">
+      portal gol
+    </span>
   );
 }
 
@@ -255,6 +266,7 @@ function AccountCard({
           >
             {STATE_LABELS[state]}
           </span>
+          {account.claims.length === 0 && <EmptyPortalBadge />}
           {account.pending > 0 && (
             <span className="rounded-full bg-sky-600 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white uppercase">
               {account.pending} de aprobat
@@ -277,10 +289,11 @@ function AccountCard({
             <GiveLead firm={account.giveFirm} leads={account.giveOptions} />
           </div>
         )}
-        {state === 'gol' && (
+        {account.claims.length === 0 && (
           <p className="mt-1.5 text-xs text-amber-700">
-            Verifică coloana Email (I) din tabul „Revendicări" — cu emailul lipsă sau scris
-            altfel, firma vede o pagină goală când intră.
+            Nicio revendicare pe emailul ăsta — în portal vede o pagină goală. Dacă e o
+            firmă cu cereri, scrie-i emailul în coloana Email (I) din „Revendicări" sau
+            dă-i o cerere de aici.
           </p>
         )}
       </div>
@@ -472,7 +485,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   // Ordinea = lista de lucru: întâi ce cere o apăsare de la mine (aprobări),
   // apoi conturile confirmate, apoi cine s-a împotmolit la intrare. În fiecare
   // grup, cel mai recent sus.
-  const rank: Record<AccountState, number> = { cont: 0, blocat: 1, gol: 2, necunoscut: 3 };
+  const rank: Record<AccountState, number> = { cont: 0, blocat: 1, necunoscut: 2 };
   accounts.sort((a, b) => {
     if ((a.pending > 0) !== (b.pending > 0)) return a.pending > 0 ? -1 : 1;
     // Apoi cine cere un telefon: are datele și n-a făcut nimic cu ele.
@@ -488,7 +501,9 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       ? accounts.filter((a) => a.pending > 0)
       : activeFilter.key === 'fara-miscare'
         ? accounts.filter((a) => a.untouched > 0)
-        : accounts;
+        : activeFilter.key === 'goi'
+          ? accounts.filter((a) => a.claims.length === 0)
+          : accounts;
 
   const pendingTotal = accounts.reduce((s, a) => s + a.pending, 0);
   const untouchedTotal = accounts.reduce((s, a) => s + a.untouched, 0);
@@ -498,10 +513,11 @@ export default async function PortalAccessPage({ searchParams }: Props) {
     <div>
       <h1 className="text-xl font-bold text-slate-900">Portal · Conturi și aprobări</h1>
       <p className="mt-1 text-sm text-slate-500">
-        Cine s-a autentificat pe /portal și, pentru fiecare, cererile lui cu butonul care
-        deblochează datele clientului. „Are cont" se spune doar pe baza jurnalului de acces,
-        pornit pe 12 august 2026. Marcajele de pe revendicări (status, ofertă, note) nu
-        dovedesc nimic aici, pentru că se scriu și de mână în Sheet.
+        Implicit, doar cine s-a autentificat pe /portal — chiar dacă emailul n-are nicio
+        revendicare sau nu e al vreunei firme din director. „Are cont" se spune doar pe baza
+        jurnalului de acces, pornit pe 12 august 2026: un cont făcut înainte apare abia la
+        prima pagină de portal pe care o mai deschide. Restul emailurilor (revendicări
+        despre care jurnalul nu știe nimic, blocați la intrare) sunt pe filtrele de mai jos.
       </p>
 
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
@@ -520,7 +536,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         {FILTERS.map((f) => (
           <Pill
             key={f.key}
-            href={f.key === 'toate' ? '/admin/portal' : `/admin/portal?filtru=${f.key}`}
+            href={f.key === 'cont' ? '/admin/portal' : `/admin/portal?filtru=${f.key}`}
             active={activeFilter.key === f.key}
           >
             {f.label}
