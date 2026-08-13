@@ -26,7 +26,7 @@
       "location": "Agent Safety Broker",
       "logo": "/logos/rca-non-stop.png",
       "baseUrl": "https://www.safetyleasing.ro",
-      "active": false,
+      "active": true,
       "positions": "all",
       "messages": {
         "client": "Leasing și finanțare pentru sistemul tău fotovoltaic, până la 60 de luni",
