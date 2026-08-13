@@ -34,6 +34,13 @@ export default function ListeazaFirmaPage() {
           </p>
         </div>
 
+        {/* Pagină citită de instalatori, deci partenerii apar cu mesajul B2B.
+            Deasupra formularului: cine derulează un formular lung nu mai vede
+            nimic după el. */}
+        <div className="mb-6">
+          <SponsorBanner position="listeaza-firma" title="Parteneri pentru instalatori" />
+        </div>
+
         <div className="bg-white rounded-xl border border-border p-6">
           <ListingForm />
         </div>
@@ -54,11 +61,6 @@ export default function ListeazaFirmaPage() {
               <span><strong>Contact direct</strong> — Clienții te pot contacta direct prin telefon, email sau site</span>
             </li>
           </ul>
-
-          {/* Pagină citită de instalatori, deci partenerii apar cu mesajul B2B. */}
-          <div className="mt-8">
-            <SponsorBanner position="listeaza-firma" title="Parteneri pentru instalatori" />
-          </div>
         </div>
       </div>
     </>

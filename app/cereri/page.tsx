@@ -145,6 +145,13 @@ export default async function CereriPage() {
           </p>
         </div>
 
+        {/* Singura pagină cu audiență de instalatori, deci partenerii apar aici
+            cu mesajul lor B2B. Sus, imediat după explicație: jos, sub feed, nu
+            ajungea nimeni la el. */}
+        <div className="mb-8">
+          <SponsorBanner position="cereri" title="Parteneri pentru instalatori" />
+        </div>
+
         {cards.length === 0 ? (
           <div className="bg-surface rounded-xl border border-border p-10 text-center">
             <p className="text-gray-600 font-medium">Nicio cerere activă momentan.</p>
@@ -166,11 +173,6 @@ export default async function CereriPage() {
           </>
         )}
 
-        {/* Singura pagină cu audiență de instalatori, deci partenerii apar aici cu
-            mesajul lor B2B. Pusă după feed, ca să nu concureze cu revendicarea. */}
-        <div className="mt-10 max-w-sm mx-auto">
-          <SponsorBanner position="cereri" title="Parteneri pentru instalatori" />
-        </div>
       </div>
     </>
   );

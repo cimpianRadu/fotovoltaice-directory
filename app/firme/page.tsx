@@ -76,7 +76,7 @@ export default function FirmePage() {
             introductiv: pagina asta trăiește din căutarea organică, iar o
             reclamă care împinge H1-ul sub linia de plutire ne-ar costa exact
             traficul pe care îl vindem. */}
-        <div className="mb-8 max-w-md">
+        <div className="mb-8">
           <SponsorBanner position="firme" />
         </div>
 

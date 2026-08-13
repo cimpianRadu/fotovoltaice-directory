@@ -53,7 +53,7 @@ export default function GhidIndexPage() {
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-[1fr_240px] items-start">
+        <div className="grid gap-6 sm:grid-cols-[1fr_300px] items-start">
           <div className="grid gap-6">
             {guides.map((guide) => {
               const heroImage = getHeroImage(guide.slug);
