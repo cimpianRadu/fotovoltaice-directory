@@ -1,5 +1,7 @@
 import type { NewLead } from '@/lib/sheets';
-import { getFinancingLabel, getYesNoLabel, getTimelineLabel } from '@/lib/utils-shared';
+import {
+  getFinancingLabel, getYesNoLabel, getTimelineLabel, getRoofTypeLabel, getPhaseLabel,
+} from '@/lib/utils-shared';
 
 // Text plain, fără emoji și fără markdown — mesajul se lipește în WhatsApp
 // (care ignoră **bold** cu asteriscuri simple în multe clienți) și în alte
@@ -48,8 +50,8 @@ export function formatLeadForShare(lead: NewLead): string {
     line('Putere estimată', lead.putere ? `${lead.putere} kW` : ''),
     line('Suprafață disponibilă', lead.suprafata ? `${lead.suprafata} mp` : ''),
     line('Consum lunar', lead.consumLunar ? `${lead.consumLunar} kWh` : ''),
-    line('Tip acoperiș', lead.tipAcoperis),
-    line('Fazare', lead.fazare),
+    line('Tip acoperiș', lead.tipAcoperis ? getRoofTypeLabel(lead.tipAcoperis) : ''),
+    line('Fazare', lead.fazare ? getPhaseLabel(lead.fazare) : ''),
     line('Baterie de stocare', lead.stocare ? getYesNoLabel(lead.stocare) : ''),
     line('Stație de încărcare', lead.wallbox ? getYesNoLabel(lead.wallbox) : ''),
     line('Termen dorit', lead.termen ? getTimelineLabel(lead.termen) : ''),

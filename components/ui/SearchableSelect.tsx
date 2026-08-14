@@ -14,6 +14,10 @@ interface SearchableSelectProps {
   error?: string;
 }
 
+// Peste atâtea opțiuni lista primește căsuță de căutare. Sub prag încap toate
+// pe ecran, deci căutarea ar fi doar zgomot.
+const SEARCH_THRESHOLD = 12;
+
 export default function SearchableSelect({
   label,
   name,
@@ -44,6 +48,11 @@ export default function SearchableSelect({
   }, [options, search]);
 
   const selectedLabel = options.find((opt) => opt.value === currentValue)?.label;
+
+  // Căsuța de căutare are sens pe listele lungi (județe, specializări). Pe
+  // listele scurte (tip acoperiș, fazare) mânca înălțime degeaba și împingea
+  // opțiunile sub marginea listei — fără ea intră toate fără scroll.
+  const showSearch = options.length > SEARCH_THRESHOLD;
 
   useEffect(() => {
     if (open) {
@@ -131,19 +140,22 @@ export default function SearchableSelect({
       {open && (
         <div className="absolute z-50 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
           {/* Search input */}
-          <div className="p-2 border-b border-gray-100">
-            <input
-              ref={searchInputRef}
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Caută..."
-              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-            />
-          </div>
+          {showSearch && (
+            <div className="p-2 border-b border-gray-100">
+              <input
+                ref={searchInputRef}
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Caută..."
+                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              />
+            </div>
+          )}
 
-          {/* Options list */}
-          <ul className="max-h-56 overflow-y-auto py-1">
+          {/* Options list. Plafonul e și în vh: pe ecrane mici o listă de 400px
+              ar ieși sub marginea de jos a ferestrei. */}
+          <ul className="max-h-[min(26rem,60vh)] overflow-y-auto py-1">
             {/* "All" / reset option */}
             <li>
               <button

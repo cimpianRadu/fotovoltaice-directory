@@ -158,14 +158,18 @@ export function getProjectTypeLabel(slug: string): string {
 
 // Tip acoperiș + fazare: cerute de instalatori ca să poată oferta fără un tur
 // telefonic prealabil (feedback JTS Instal Construct, iulie 2026). Listele diferă
-// pe segment — un hale industriale n-are șindrilă, o casă n-are panouri sandwich.
+// pe segment — o hală industrială n-are șindrilă. „Panouri sandwich" stă totuși
+// pe ambele: anexele și garajele pe structură metalică de la case sunt frecvente
+// în rural (feedback instalator, august 2026).
 export const ROOF_TYPES_REZIDENTIAL = [
   { value: 'tigla-ceramica', label: 'Țiglă ceramică sau din beton' },
   { value: 'tabla', label: 'Tablă (fălțuită sau trapezoidală)' },
+  { value: 'panouri-sandwich', label: 'Panouri sandwich' },
   { value: 'terasa', label: 'Terasă / acoperiș plat cu membrană' },
   { value: 'sindrila', label: 'Șindrilă bituminoasă' },
   { value: 'azbociment', label: 'Azbociment / eternit' },
   { value: 'la-sol', label: 'La sol (curte sau teren)' },
+  { value: 'carport', label: 'Carport / parcare acoperită' },
   { value: 'nu-stiu', label: 'Altul / nu știu' },
 ] as const;
 
@@ -181,6 +185,7 @@ export const ROOF_TYPES_COMERCIAL = [
   { value: 'tigla-ceramica', label: 'Țiglă ceramică sau din beton' },
   { value: 'azbociment', label: 'Azbociment / eternit' },
   { value: 'la-sol', label: 'La sol (curte sau teren)' },
+  { value: 'carport', label: 'Carport / parcare acoperită' },
   { value: 'nu-stiu', label: 'Altul / nu știu' },
 ] as const;
 

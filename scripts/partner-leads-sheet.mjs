@@ -97,7 +97,7 @@ const ROOF_LABELS = {
   'tigla-ceramica': 'Țiglă ceramică/beton', tabla: 'Tablă', 'tabla-cutata': 'Tablă cutată',
   'panouri-sandwich': 'Panouri sandwich', terasa: 'Terasă cu membrană', beton: 'Planșeu beton',
   sindrila: 'Șindrilă bituminoasă', azbociment: 'Azbociment', 'la-sol': 'La sol',
-  'nu-stiu': 'Nespecificat',
+  carport: 'Carport', 'nu-stiu': 'Nespecificat',
 };
 const PHASE_LABELS = { monofazat: 'Monofazat', trifazat: 'Trifazat', 'nu-stiu': 'Nu știe' };
 

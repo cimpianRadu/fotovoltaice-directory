@@ -126,6 +126,7 @@ const ROOF_LABELS = {
   'sindrila': 'șindrilă bituminoasă',
   'azbociment': 'azbociment / eternit',
   'la-sol': 'la sol (curte sau teren)',
+  'carport': 'carport / parcare acoperită',
   'nu-stiu': 'nespecificat',
 };
 const PHASE_LABELS = {
