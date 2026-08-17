@@ -32,6 +32,19 @@ const BAZE = {
   VoltExpert: { cotaAfisata: 0.21, verificatLa: '2026-08-11', dovada: 'Pagina afișează „25553.99 lei TVA 21% inclus".' },
   Genway: { cotaAfisata: 0.21, verificatLa: '2026-08-11', dovada: 'Pagina afișează 18.250,00 lei cu TVA 21%.' },
   eSolar: { cotaAfisata: null, verificatLa: null, dovada: 'Neverificat. Magazinul vinde echipament fără montaj, produsele lui nu intră în comparațiile „cu montaj".' },
+
+  // Verificate pe 2026-08-17, pe pagini reale, nu deduse din practica pieței.
+  Kilowat: { cotaAfisata: 0, verificatLa: '2026-08-17', dovada: 'Pagina de oferte afișează „20.909,09 lei fără TVA" pe fiecare configurație.' },
+  'X-Energy': { cotaAfisata: 0.21, verificatLa: '2026-08-17', dovada: 'Fiecare preț de pe pagina de produs are dedesubt „TVA inclus" (ex. 13.951,30 Lei). Montajul e opțiune separată, +5.687,00 Lei, deci prețul de bază e FĂRĂ montaj.' },
+
+  // Rămân nenormalizate deliberat: niciun magazin din astea nu declară baza de
+  // TVA pe pagină. Practica pieței spune că un magazin B2C afișează cu TVA, dar
+  // „probabil" nu e „verificat", iar exact presupunerea asta a produs prețurile
+  // false din ghidul #46. Se completează când cineva se uită pe o pagină de
+  // produs și scrie dovada aici.
+  EnergyFix: { cotaAfisata: null, verificatLa: null, dovada: 'Neverificat: pagina de categorie nu menționează TVA nicăieri.' },
+  Pedavo: { cotaAfisata: null, verificatLa: null, dovada: 'Neverificat: pagina nu menționează TVA în afara scripturilor.' },
+  MacoSolar: { cotaAfisata: null, verificatLa: null, dovada: 'Neverificat: pagina nu menționează TVA deloc.' },
 };
 
 const date = JSON.parse(readFileSync(FILE, 'utf8'));

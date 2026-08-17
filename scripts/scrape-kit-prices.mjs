@@ -75,6 +75,43 @@ const SOURCES = [
     montajInclus: 'da',
     note: 'Categorie „sisteme fotovoltaice cu montaj", filtrabilă pe putere. Acoperă 3 kW.',
   },
+
+  // Adăugate 17 aug 2026. Motivul e eșantionul, nu varietatea: cu 6 surse,
+  // intervalele curbei stăteau pe 3-10 oferte, iar la eșantioane atât de mici
+  // medianele ies nemonotone (11-20 kWp ieșea mai scump pe kWp decât 7-11 kWp,
+  // ceea ce nu descrie piața, descrie zgomotul). Toate cele de mai jos sunt
+  // categorii cu kituri la cheie, verificate că răspund 200 și că listează mai
+  // multe produse cu preț și putere pe aceeași pagină.
+  {
+    store: 'EnergyFix',
+    url: 'https://energyfix.ro/kituri-fotovoltaice/',
+    montajInclus: 'da',
+    note: 'Kituri complete cu montaj, 6-12 kW. Acoperă exact zona subțire 7-11 kWp.',
+  },
+  {
+    store: 'Kilowat',
+    url: 'https://kilowat.ro/oferte-panouri-fotovoltaice/',
+    montajInclus: 'da',
+    note: 'Oferte cu montaj inclus. Atenție: afișează prețuri FĂRĂ TVA, normalizarea le aduce la 21%.',
+  },
+  {
+    store: 'X-Energy',
+    url: 'https://www.x-energy.ro/sisteme-fotovoltaice-complete/',
+    montajInclus: 'variabil',
+    note: 'Montajul e opțiune separată cu preț afișat, deci manopera e derivabilă ca la Solar1000.',
+  },
+  {
+    store: 'Pedavo',
+    url: 'https://pedavo.ro/collections/kit-panouri-fotovoltaice-solare',
+    montajInclus: 'variabil',
+    note: 'Mixt on-grid / off-grid / hibrid. Filtrarea pe on-grid fără baterie se face în curbă.',
+  },
+  {
+    store: 'MacoSolar',
+    url: 'https://macosolar.ro/kit-sisteme-complete-fotovoltaice-cu-montaj-si-stocare-',
+    montajInclus: 'da',
+    note: 'Sisteme complete cu montaj, majoritatea CU stocare. Util mai ales clusterului de baterii.',
+  },
 ];
 
 const EXTRACT_PROMPT = [
