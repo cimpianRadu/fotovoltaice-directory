@@ -57,6 +57,7 @@ const POSITION_AUDIENCE: Record<SponsorPosition, SponsorAudience> = {
   firme: 'client',
   'cere-oferta': 'client',
   'cere-oferta-confirmare': 'client',
+  finantare: 'client',
   cereri: 'instalator',
   portal: 'instalator',
   'listeaza-firma': 'instalator',
