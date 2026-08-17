@@ -106,15 +106,31 @@ function main() {
     : [];
 
   // Keys of firms we already evaluated and rejected (not PV, no site, etc.)
-  // Never surface them again in the candidates list.
+  // Never surface them again in the candidates list. Matching on the exact
+  // `societate|judet` key alone is not enough: the rejection file keeps the
+  // name as it was written by hand ("DELPHI ELECTRIC SRL") while the ANRE
+  // registry drops the legal form ("DELPHI ELECTRIC"), so a third of the
+  // rejected firms used to resurface on every run. CUI is the reliable key,
+  // with the normalized name as fallback for the entries that have none.
   const rejectedKeys = new Set(rejected.map((r) => `${r.societate}|${r.judet}`));
+  const rejectedCuis = new Set(rejected.map((r) => normalizeCui(r.cui)).filter(Boolean));
+  const rejectedNorm = new Set(
+    rejected.map((r) => `${normalizeName(r.societate)}|${normalizeJudet(r.judet)}`),
+  );
+
+  const isRejected = (societate, judet, cui) =>
+    rejectedKeys.has(`${societate}|${judet}`) ||
+    (cui && rejectedCuis.has(cui)) ||
+    rejectedNorm.has(`${normalizeName(societate)}|${normalizeJudet(judet)}`);
 
   // Build CUI → (anreName, anreJudet) map so we can resolve companies.json CUIs
   // back to their ANRE registry entry key.
   const cuiToAnreKey = new Map();
+  const anreKeyToCui = new Map();
   for (const e of cuiEnriched) {
     if (!e.cui || !e.anreName || !e.anreJudet) continue;
     cuiToAnreKey.set(normalizeCui(e.cui), `${e.anreName}|${e.anreJudet}`);
+    anreKeyToCui.set(`${e.anreName}|${e.anreJudet}`, normalizeCui(e.cui));
   }
 
   // Build set of "occupied" ANRE keys (societate|judet) — firms already in directory.
@@ -136,13 +152,17 @@ function main() {
 
   // Scan ANRE registry for active C2A/C1A not in directory.
   const candidates = [];
+  let rejectedHits = 0;
   for (const firm of anre) {
     const codes = activeTargetCodes(firm);
     if (codes.length === 0) continue;
 
     const key = `${firm.societate}|${firm.judet}`;
     if (occupiedKeys.has(key)) continue;
-    if (rejectedKeys.has(key)) continue;
+    if (isRejected(firm.societate, firm.judet, anreKeyToCui.get(key))) {
+      rejectedHits += 1;
+      continue;
+    }
 
     const normKey = `${normalizeName(firm.societate)}|${normalizeJudet(firm.judet)}`;
     if (occupiedNormNameJudet.has(normKey)) continue;
@@ -237,7 +257,7 @@ function main() {
   console.log(`  - C1A activ: ${totalC1A}`);
   console.log(`  - Ambele: ${both}`);
   console.log(`  - Județe: ${byJudet.size}`);
-  console.log(`  - Respinși filtrați: ${rejectedKeys.size}`);
+  console.log(`  - Respinși filtrați: ${rejectedHits} din ${rejected.length} în fișier`);
   console.log(`\n  Output: ${path.relative(process.cwd(), OUT_PATH)}`);
 
   // Top 5 județe

@@ -13,6 +13,7 @@
  *   node scripts/lead-targetare.mjs --judet="Ialomița" --segment=rezidential
  *   node scripts/lead-targetare.mjs --judet=Timis --segment=comercial --limit=8
  *   node scripts/lead-targetare.mjs --judet=Cluj --codes=C2A,C1A,B
+ *   node scripts/lead-targetare.mjs --judet=Alba --segment=rezidential --dry
  *
  * Coduri ANRE per segment (aceeași semantică ca anre-discover.js):
  *   comercial   → C2A, C1A  (PV comercial/industrial)
@@ -45,7 +46,15 @@ if (!API_KEY) {
 
 const args = process.argv.slice(2).reduce((acc, a) => {
   const m = a.match(/^--([^=]+)=(.+)$/);
-  if (m) acc[m[1]] = m[2];
+  if (m) {
+    acc[m[1]] = m[2];
+    return acc;
+  }
+  // Steagurile fără valoare („--dry") trebuie să prindă și ele: altfel un
+  // `--dry` scris fără `=true` e ignorat în tăcere și scriptul cheltuie
+  // credite exact în rularea în care voiai să nu cheltuiască.
+  const flag = a.match(/^--([^=]+)$/);
+  if (flag) acc[flag[1]] = true;
   return acc;
 }, {});
 
@@ -134,10 +143,30 @@ for (const c of companies) {
     for (const [k, v] of cuiByKey) if (v === cui) occupied.add(k);
   }
 }
+// Respinșii se filtrează pe trei chei, nu doar pe cheia exactă: fișierul de
+// respingeri păstrează numele așa cum l-a scris omul („DELPHI ELECTRIC SRL"),
+// iar registrul ANRE îl are fără forma juridică („DELPHI ELECTRIC"). Pe cheia
+// exactă, o treime dintre respinși reapăreau la fiecare rulare.
 const rejectedKeys = new Set(rejected.map((r) => `${r.societate}|${r.judet}`));
+const rejectedCuis = new Set(rejected.map((r) => normalizeCui(r.cui)).filter(Boolean));
+const rejectedNorm = new Set(
+  rejected.map((r) => `${normalizeName(r.societate)}|${normalizeJudet(r.judet)}`),
+);
+
+function isRejected(societate, judet, cui) {
+  if (rejectedKeys.has(`${societate}|${judet}`)) return true;
+  if (cui && rejectedCuis.has(cui)) return true;
+  return rejectedNorm.has(`${normalizeName(societate)}|${normalizeJudet(judet)}`);
+}
 
 const wantedJudet = normalizeJudet(judet);
-const SOLAR_KEYWORDS = /fotovoltaic|solar(?!ium)|PV\b|panouri|energie regenerabil/i;
+// Două trepte de semnal, nu una: „solar/fotovoltaic" în nume e dovadă de
+// profil PV, „energy/sun/power/volt" e doar indiciu că firma lucrează pe
+// energie. Cu o singură treaptă, creditele se duceau pe micro-firmele cu
+// „Solar" în nume, iar firmele de milioane numite „... Energy" rămâneau
+// neverificate la coada listei.
+const SOLAR_KEYWORDS = /fotovoltaic|solar(?!ium)|photovolt|PV\b|panouri|energie regenerabil/i;
+const ENERGY_KEYWORDS = /\bsun|energ|power|volt|electrocentr/i;
 
 const candidates = [];
 let noCui = 0;
@@ -146,9 +175,10 @@ for (const firm of anre) {
   const firmCodes = activeCodes(firm);
   if (firmCodes.length === 0) continue;
   const key = `${firm.societate}|${firm.judet}`;
-  if (occupied.has(key) || rejectedKeys.has(key)) continue;
+  if (occupied.has(key)) continue;
   if (occupiedNorm.has(`${normalizeName(firm.societate)}|${normalizeJudet(firm.judet)}`)) continue;
   const cui = cuiByKey.get(key);
+  if (isRejected(firm.societate, firm.judet, cui)) continue;
   if (!cui) {
     noCui += 1;
     continue;
@@ -163,11 +193,10 @@ for (const firm of anre) {
 }
 
 // Creditele se cheltuie pe cei mai promițători: numele cu solar/PV întâi,
-// apoi cei cu mai multe atestate din țintă.
+// apoi cele cu profil de energie, apoi cei cu mai multe atestate din țintă.
+const nameTier = (n) => (SOLAR_KEYWORDS.test(n) ? 2 : ENERGY_KEYWORDS.test(n) ? 1 : 0);
 candidates.sort(
-  (a, b) =>
-    Number(SOLAR_KEYWORDS.test(b.societate)) - Number(SOLAR_KEYWORDS.test(a.societate)) ||
-    b.codes.length - a.codes.length,
+  (a, b) => nameTier(b.societate) - nameTier(a.societate) || b.codes.length - a.codes.length,
 );
 
 console.log(
@@ -178,6 +207,17 @@ console.log(
 if (candidates.length === 0) process.exit(0);
 
 const picked = candidates.slice(0, limit);
+
+// --dry arată pe cine ar întreba, fără să cheltuie un singur credit. Util ca
+// să verifici ordinea înainte de a plăti pentru ea.
+if (args.dry !== undefined) {
+  console.log(`[lead-targetare] --dry: primii ${picked.length}, fără apel la targetare.ro\n`);
+  for (const [i, c] of picked.entries()) {
+    console.log(`  ${i + 1}. ${c.societate} [${c.codes.join('+')}] · ${c.localitate || '—'} · CUI ${c.cui}`);
+  }
+  process.exit(0);
+}
+
 console.log(`[lead-targetare] Îmbogățesc primii ${picked.length} prin targetare.ro...\n`);
 
 // ── Enrichment targetare ───────────────────────────────────────────────────
@@ -247,6 +287,7 @@ for (const [i, cand] of picked.entries()) {
 const relevance = (r) =>
   (TARGET_CAEN.has(r.caen) ? 3 : 0) +
   (SOLAR_KEYWORDS.test(`${r.societate} ${r.caenLabel}`) ? 3 : 0) +
+  (ENERGY_KEYWORDS.test(r.societate) ? 1 : 0) +
   (r.website ? 1 : 0) +
   (r.revenue > 0 ? 1 : 0);
 results.sort((a, b) => relevance(b) - relevance(a));

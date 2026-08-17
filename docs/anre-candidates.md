@@ -1,15 +1,15 @@
 # ANRE Candidates — C2A / C1A (industrial/comercial)
 
-_Generated: 2026-05-23_
+_Generated: 2026-08-17_
 
 Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **nu** sunt încă în `data/companies.json`. Sursă: `data/anre-atestate.json`.
 
 ## Stats
 
-- **Total candidați:** 1414
-- Cu **C2A** activ: 1179
-- Cu **C1A** activ: 1028
-- Cu **ambele**: 793
+- **Total candidați:** 1387
+- Cu **C2A** activ: 1156
+- Cu **C1A** activ: 1005
+- Cu **ambele**: 774
 - **Județe acoperite:** 43
 
 ## Cum folosești
@@ -22,44 +22,44 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 
 | Județ | Candidați |
 |---|---:|
-| Bucuresti | 220 |
+| Bucuresti | 218 |
 | Cluj | 84 |
-| Ilfov | 78 |
-| Bihor | 63 |
-| Timis | 61 |
-| Arges | 54 |
-| Maramures | 53 |
-| Dolj | 50 |
+| Ilfov | 77 |
+| Bihor | 62 |
+| Timis | 60 |
+| Arges | 51 |
+| Maramures | 51 |
 | Prahova | 50 |
-| Brasov | 48 |
-| Iasi | 48 |
-| Bacau | 47 |
+| Brasov | 47 |
 | Constanta | 47 |
+| Dolj | 47 |
+| Iasi | 47 |
+| Bacau | 46 |
 | Sibiu | 45 |
-| Galati | 36 |
+| Galati | 35 |
 | Suceava | 30 |
 | Dambovita | 29 |
-| Buzau | 28 |
+| Buzau | 27 |
 | Neamt | 27 |
-| Mures | 26 |
-| Olt | 22 |
+| Mures | 25 |
 | Satu Mare | 22 |
-| Hunedoara | 19 |
+| Olt | 21 |
 | Valcea | 19 |
-| Harghita | 17 |
+| Hunedoara | 18 |
 | Bistrita-Nasaud | 16 |
-| Vrancea | 16 |
+| Harghita | 16 |
 | Arad | 15 |
-| Botosani | 15 |
-| Vaslui | 15 |
-| Gorj | 14 |
+| Vrancea | 15 |
+| Botosani | 14 |
+| Vaslui | 14 |
+| Gorj | 13 |
 | Mehedinti | 13 |
 | Teleorman | 12 |
 | Alba | 11 |
 | Giurgiu | 11 |
 | Salaj | 11 |
 | Braila | 10 |
-| Caras Severin | 8 |
+| Caras Severin | 7 |
 | Covasna | 7 |
 | Calarasi | 6 |
 | Ialomita | 6 |
@@ -104,7 +104,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | TEHNODOMUS | Arad | C1A + C2A | 19926 | 10.08.2028 | 0257 276 613, 0722 257381, 07446354 0257 276445 |
 | WEST PROJECT ENERGY | Arad | C1A + C2A | 15789 | 14.04.2030 | 0744566855 |
 
-### Arges (54)
+### Arges (51)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -125,13 +125,11 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ELECTRICAL VISION TCV | Pitesti | C2A | 17752 | 25.10.2026 | 0740225931. 0753043188 |
 | ELECTRO METAL CONSTRUCT EMCO | Stefanesti (AG) | C1A | 15428 | 14.01.2030 | 0722358437 0248 206333 |
 | ELECTROLIM INVEST TOTAL | Budeasa | C1A + C2A | 15530 | 23.01.2030 | 0752 084623, 0248236096 0248236096 |
-| ENERGO PREST COMPANY | Pitesti | C1A + C2A | 14966 | 24.07.2029 | 0745185400, 0752 011 530 0248 223295 |
 | ENERGO PROIECT CONSULT | Pitesti | C1A | 12327 | 08.02.2027 | 0723716782, 0723195038, 0348 434276 0348434276 |
 | ENERGOMONTAJ GRUP | Bascov | C2A | 24058 | 20.01.2031 | 0722502067 |
 | EURO CONSULT ELECTRIC | Pitesti | C1A | 12721 | 21.06.2027 | 0348 415265, 0723221475 0348 415265 |
 | EXCLUSIVE ELECTRIC | Zavoi | C1A + C2A | 21396 | 06.02.2029 | 0763352989 / 0771192679 |
 | GAMA TOP INSTAL | Albota | C1A | 12676 | 06.07.2027 | 0756494080; 0248233200 0248233200 |
-| GENERAL PREST | Pitesti | C1A + C2A | 17736 | 18.10.2026 | 0248.212387, 0744.325751 0248.635363 |
 | INCONEX ENGINEERING | Pitesti | C2A | 23422 | 10.07.2030 |  |
 | INELCO-MON IMPEX | Bascov | C1A + C2A | 12914 | 13.10.2027 | 0747117703 0248 284647 |
 | INTENS ELECTRIC EXCLUSIV | Bascov | C1A + C2A | 14534 | 10.05.2029 | 0752167881, 0744754228 |
@@ -153,7 +151,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | PROELECTRIC & FOTOVOLTAIC | ARGESELU | C1A + C2A | 18901 | 21.12.2027 | 0748506863 |
 | PROIECT ELECTRIC DESIGN | Pitesti | C1A + C2A | 18990 | 06.02.2028 | 0759330883, 0742356296 |
 | RO ALPHA AUTOMATION | Pitesti | C2A | 20022 | 29.08.2028 | 0741503304 |
-| ROMTURINGIA | Campulung | C1A + C2A | 15242 | 09.09.2029 | 0248 531330, 0744 571849,0730571849 0248 531335 |
 | SAN SYSTEMS INDUSTRY | Pitesti | C1A + C2A | 16392 | 12.09.2030 | 0756638520 0248 222033 |
 | SERVICII EDILITARE PENTRU COMUNITATE MIOVENI | Mioveni | C2A | 16670 | 17.11.2030 | 0348456999, 0730444745; 0732723126, 0348445886 |
 | SMART OFFICE SOLUTIONS | Pitesti | C2A | 14811 | 19.06.2029 | 0722421160 0348430583 |
@@ -163,7 +160,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | VECTRUM SOLUTIONS | Pitesti | C2A | 13951 | 22.11.2028 | 0726273383 0348800879 |
 | ZEUS | Pitesti | C1A + C2A | 13911 | 16.11.2028 | 0248/251450, 0746116361 0248/251450 |
 
-### Bacau (47)
+### Bacau (46)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -181,7 +178,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ELBIM GRUPSERV | Onesti | C1A + C2A | 13930 | 08.11.2028 | 0755683097 |
 | ELECTRIC PUZZLE | Rusi-Ciutea | C1A + C2A | 23613 | 08.08.2030 | 0749706116 |
 | ELECTROIND | Onesti | C1A + C2A | 12943 | 07.12.2027 | 0744 396053, 0234 302399 0234 302399 |
-| ELECTROPREST | Bacau | C1A | 15093 | 29.08.2029 | 0733667304 0234/544761 |
 | ELGEDI | Podu Turcului | C1A + C2A | 21662 | 22.04.2029 | 0744785227 0234289727 |
 | ELROM [BC] | Bacau | C2A | 15144 | 04.09.2029 | 0234511001 0234519963 |
 | ENA ELECTRIC | Lilieci | C1A + C2A | 13089 | 26.01.2028 | 0741625140 0334413871 |
@@ -215,14 +211,13 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | SOFIN INVEST | Bacau | C1A + C2A | 14680 | 27.05.2029 | 0724544446, 0372703403 0234578555 |
 | TG SERVICES | Bacau | C1A + C2A | 22611 | 25.11.2029 | 0741190729 |
 
-### Bihor (63)
+### Bihor (62)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
 | ACOM DISTRIBUTIE | Hidiselu de Jos | C1A + C2A | 15711 | 02.04.2030 | 0744861255 |
 | ADAR ELECTRIC VEST SRL-D | Valani de Pomezeu | C1A + C2A | 18947 | 10.01.2028 | 0753527328 |
 | AMPER ELECTRO INSTAL | Oradea | C1A + C2A | 17352 | 07.06.2026 | 0745534082, 0747602687 |
-| AMPER PROIECT | Oradea | C2A | 14106 | 25.01.2029 | 0359 405489, 0745 518097,073011798 0359 405489 |
 | AMT CRISANA TRAVEL | Gepiu | C1A | 22705 | 16.12.2029 | 0721394345 |
 | ANDALUSIA IMPEX | Buntesti | C2A | 19497 | 10.05.2028 | 0728938809, 0259332187 0259332187 |
 | BAD CAB DYNAMIC | Sintandrei (BH) | C1A + C2A | 19800 | 12.07.2028 | 0758916491 |
@@ -304,7 +299,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | SIST-ELECTRO | Bistrita | C1A + C2A | 13541 | 03.08.2028 | 0745838147, 0263218855 0263218855 |
 | THE EBZ ENERGY | Cristestii Ciceului | C1A + C2A | 21966 | 03.07.2029 | 0734359595 |
 
-### Botosani (15)
+### Botosani (14)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -319,7 +314,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ELECTRO ALFA SERVICII INGINERIE | Botosani | C2A | 18771 | 21.11.2027 | 0727546148 |
 | ELECTRO-PRIMA | Darabani | C1A + C2A | 14322 | 25.03.2029 | 0747153748 0231 631401 |
 | ELIENA EPCON | Dorohoi | C1A + C2A | 14529 | 10.05.2029 | 0749640824 0331560123 |
-| ELPROEX Botosani | Botosani | C1A + C2A | 16012 | 16.06.2030 | 0231530313, 0744500335 0231585494 |
 | ENERMAX PROJECT | Botosani | C1A | 22952 | 10.03.2030 | 0748262556 |
 | TOP ELECTRISSIMO INVERTOR | Corni | C1A | 18538 | 17.08.2027 | 0747435743 |
 | TUDOR ELECTRIC GRUP | Saveni [BT] | C1A + C2A | 23655 | 26.08.2030 | 0231540379, 0741041354 0231540379 |
@@ -339,7 +333,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ROFLOVI ELECTRIC | Insuratei [BR] | C1A + C2A | 18004 | 22.02.2027 | 0735549063 |
 | SEVENERG | Braila | C1A + C2A | 17481 | 28.06.2026 | 0744 535972, 0239 682338 0239 682338 |
 
-### Brasov (48)
+### Brasov (47)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -382,7 +376,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | PRO CONEL IMPEX | Brasov | C1A + C2A | 16922 | 05.02.2031 | 0268423102, 0741129501 0268423102 |
 | RAMIBO ELECTRIC | Brasov | C1A + C2A | 14149 | 13.12.2028 | 0268476969, 0722628557 0268 476969 |
 | RAP INSTAL | Brasov | C1A | 13164 | 22.03.2028 | 0731043615, 0734889101,036841211 0372871424 |
-| REAL AUTOMATIC | Brasov | C1A + C2A | 17025 | 06.03.2031 | 0744 359 949 |
 | RTH ELECTRIC PROLIGHT | Sacele [BV] | C1A + C2A | 22434 | 08.10.2029 | 0725084346 |
 | SENCON | Brasov | C1A + C2A | 22675 | 11.12.2029 | 0744608322 |
 | SERVICIUL PUBLIC RUPEA | Rupea | C2A | 13791 | 20.10.2028 | 0722367668 0268 260383 |
@@ -392,7 +385,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | TEODORESCU EXTRACT | Tarlungeni | C1A + C2A | 23686 | 28.08.2030 | 0743438143 |
 | TOP ECOMAX | Brasov | C1A + C2A | 15702 | 06.03.2030 | 0723020482 0368 424578 |
 
-### Bucuresti (220)
+### Bucuresti (218)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -450,7 +443,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ELECTRIC TRIUMF INSTALL SERVICE | Bucuresti | C1A + C2A | 21058 | 03.10.2028 | 0735033254/ 0720053450 0311373937 |
 | ELECTRICA POWER CONECT | Bucuresti | C2A | 13456 | 17.07.2028 | 0723 336027 021 2401716 |
 | ELECTRICAL INTEGRATION SYSTEMS | Bucuresti | C1A + C2A | 23866 | 28.10.2030 | 0722298044 |
-| ELECTRICOM | Bucuresti | C2A | 20070 | 11.09.2028 | 0744577011, 0745 340 156, 031413744 0314382510 |
 | ELECTRIN | Bucuresti | C1A | 20017 | 29.08.2028 | 0726432439 / 0728553754 |
 | ELECTRO BRANCH GRUP | Bucuresti | C2A | 16263 | 14.07.2030 | 0761336250 0213367543 |
 | ELECTRO COMPACT SERVICE | Bucuresti | C2A | 15528 | 07.02.2030 | 0744501265; 0212219181 0212219181 |
@@ -494,7 +486,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | H2M ENGINEERING DESIGN | Bucuresti | C1A | 19227 | 24.03.2028 | 0728060013 |
 | HALLO UP | Bucuresti | C1A + C2A | 23355 | 23.06.2030 | 0374863533, 0741177362 |
 | HIDRO SALT-B-92 | Bucuresti | C1A + C2A | 15954 | 05.06.2030 | 0722590642 ; |
-| HOIURA ELECTRO CONSTRUCT | Bucuresti | C1A + C2A | 16966 | 13.03.2031 | 0788269689, 0723237314 021 3217226 |
 | IFORT SYSTEMS | Bucuresti | C1A + C2A | 22277 | 29.08.2029 | 0740060606 |
 | IMEP SYSTEMS | Bucuresti | C1A | 12481 | 11.04.2027 | 0749871870, 0724525268 |
 | INECO ELECTRIC | Bucuresti | C1A + C2A | 18202 | 28.04.2027 | 0729883913, 0726176760 |
@@ -617,7 +608,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ZAG TEHNIC AVI | Bucuresti | C1A + C2A | 22636 | 02.12.2029 | 0761324344 |
 | ZUBCUENERGY GROUP | Bucuresti | C2A | 19241 | 27.03.2028 | 0743122272 |
 
-### Buzau (28)
+### Buzau (27)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -628,7 +619,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | CONSTRUCTII FEROVIARE DRUMURI PODURI | Buzau | C1A + C2A | 23622 | 11.08.2030 | 0742429989 |
 | CRIVA FAVORITE TRUCK | Caldaruseanca | C2A | 22152 | 30.07.2029 | 0785078684 |
 | DIOMA ELECTRICE | Posta Calnau | C1A + C2A | 14461 | 22.04.2029 | 0742080766, 0744835864 0245 217064 |
-| ELECTRO & CONSTRUCT | Vernesti | C1A + C2A | 17342 | 24.05.2026 | 0740030241, 0338401002 0338401002 |
 | ELECTRO ADI TIME | Buzau | C1A + C2A | 13346 | 03.05.2028 | 0722259414 |
 | ELECTRO ID HOME CONSTRUCT | Stalpu | C2A | 22310 | 04.09.2029 | 0749893458 |
 | ELECTROVISION SISTEM CONSTRUCT | Nehoiu(BZ) | C1A + C2A | 22190 | 05.08.2029 | 0740392650 |
@@ -661,7 +651,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | PROEX INSTAL CONSULTING | Calarasi [CL] | C1A | 12500 | 07.03.2027 | 0721214699 |
 | STYL XXI | Oltenita | C1A + C2A | 12737 | 08.08.2027 | 0724 550917, 0342220016 0342 220016 |
 
-### Caras Severin (8)
+### Caras Severin (7)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -669,7 +659,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | BANAT CONSULTING | Resita | C1A | 22042 | 15.07.2029 | 0740066113 0355814360 |
 | CHRIS SKETCH ART | Resita | C1A + C2A | 21315 | 18.01.2029 | 0744474633 0255226676 |
 | ELECTRO EUROSTAR | Resita | C1A + C2A | 12166 | 19.04.2027 | 0721 256880, 0729881769 0255 206127 |
-| ELECTRO-CONSULT CARAS | Resita | C1A + C2A | 14071 | 16.01.2029 | 0255 219322, 0731 616901 - |
 | MULTITASK_ING | Buchin | C1A + C2A | 21532 | 12.03.2029 | 0771133736 |
 | PRO-ELECTRO-CONS | Resita | C1A + C2A | 16507 | 06.10.2030 | 0731351224, 0731833889 0255213763 |
 | SOLIVET REAL LOGISTIC | Resita | C1A + C2A | 18163 | 14.04.2027 | 0740060370 |
@@ -861,13 +850,12 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | T-ELECTRIF PROD | Bucsani [DB] | C1A | 12921 | 07.10.2027 | 0722469295 0245235119 |
 | TRIVOLT POWER | Potlogi | C2A | 22105 | 23.07.2029 | 0723770620 |
 
-### Dolj (50)
+### Dolj (47)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
 | 3D VIO MART | Maglavit | C2A | 21948 | 01.07.2029 | 0762160997 |
 | AL TRADING | Craiova | C1A + C2A | 13518 | 31.07.2028 | 0744572398 0251530180 |
-| ALM POWER GROUP | Craiova | C1A | 18410 | 13.07.2027 | 0723609015, 0371174040 0372895898 |
 | ANDREI & PAUL ELECTRICAL LTD | Golenti | C2A | 24048 | 19.01.2031 | 0784 863 365/ 0763 601 187 |
 | ATON GRID | Craiova | C2A | 22781 | 21.01.2030 | 0760 651 600 / 07286302/ 0725256300 |
 | AVANTEC ELEKTRA SOCIETATE CU RASPUNDERE LIMITATA | Podari | C1A + C2A | 23108 | 30.04.2030 | 0725330384 |
@@ -898,7 +886,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | MF ELECTRIC | Craiova | C2A | 14940 | 18.07.2029 | 0751 229880, 0251 472002 |
 | MV DINAMIC PROENGINEERING | Craiova | C1A | 22408 | 01.10.2029 | 0740168050 |
 | NEXT MAINTENANCE | Craiova | C1A | 13889 | 14.11.2028 | 0763791319, 0745025299 0351419620 |
-| PRIMASERV | Craiova | C1A | 19759 | 28.06.2028 | 0351421841, 0729046037 Fax: 0351/801815; email: retele@pri |
 | RECON | Carcea | C2A | 12257 | 21.12.2026 | 0744 544293, 0251 406600 0251 439736 |
 | RED ELECTRIC CONSULT | Craiova | C1A | 19616 | 17.05.2028 | 0749281295 |
 | RESCOMT | Dudovicesti | C2A | 20096 | 19.09.2029 | 0766186714 |
@@ -907,7 +894,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | SADRYF | Craiova | C1A + C2A | 23644 | 21.08.2030 | 0766729554 |
 | SERVICII ELECTRICE OLTENIA | Robanesti | C1A | 24219 | 16.02.2031 | 0724747930, 0722363356 |
 | SMART ENERGOTEHNOLOGY | Craiova | C2A | 21518 | 11.03.2029 | 0720990470 |
-| SOLROM CONSTRUCT | Diosti | C1A + C2A | 19482 | 11.05.2028 | 0767987818, 0746415480 |
 | SSM LAUMI | Craiova | C1A + C2A | 22527 | 04.11.2029 | 0741011288 |
 | TECHNICAL SYNERGY | Craiova | C1A + C2A | 16734 | 15.12.2030 | 0743563898, 0351419620 |
 | TIB - ENERGO SUN | Craiova | C2A | 18441 | 18.07.2027 | 0730.465.740/0784.636.191 |
@@ -916,7 +902,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | TWINSMAR | Craiova | C1A + C2A | 23542 | 06.08.2030 | 0765805612 |
 | VICAM CM | Craiova | C1A | 13862 | 31.10.2028 | 0749090528 |
 
-### Galati (36)
+### Galati (35)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -932,7 +918,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | CRIOMEC HIDRO | Sendreni | C2A | 21846 | 13.06.2029 | 0770355381 |
 | DBC PROJECT & DESIGN | Galati | C1A | 18756 | 16.11.2027 | 0742064631 |
 | DG LUC ELEC ANDPAV | Tecuci | C1A + C2A | 21743 | 23.05.2029 | 0742094726 |
-| DIAMSES | Galati | C1A + C2A | 13871 | 16.11.2028 | 0236 473880, 0721286576 0236 473880 |
 | DISEZA EXPERT | Galati | C2A | 17298 | 10.05.2026 | 0741572652 |
 | DRUM CONSTRUCT | Galati | C1A + C2A | 12616 | 19.04.2027 | 0741135878, 0773371622 |
 | EL MARP COMPANY | Galati | C1A + C2A | 14021 | 25.05.2028 | 0336417609,0753113919 0336417609 |
@@ -973,12 +958,11 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | PHYSEC SOLUTIONS | Joita | C1A + C2A | 19134 | 27.02.2028 | 0783076718 |
 | SOGARD | Giurgiu | C2A | 14090 | 11.01.2029 | 0732804269 0346818633 |
 
-### Gorj (14)
+### Gorj (13)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
 | AMDARSIEDI | Izvoarele | C1A + C2A | 23083 | 16.04.2030 | 0761326594 |
-| ANDU LAU GRUP | Targu Jiu | C1A + C2A | 21144 | 13.11.2028 | 0761688260 |
 | AP24 SYSTEMS | Targu Jiu | C1A + C2A | 24150 | 05.02.2031 | 074551459/0757191191 |
 | ASTRALUX [GJ] | Danesti [GJ] | C1A + C2A | 17765 | 08.11.2026 | 0723553665 0353 814114 |
 | EDILITARA PUBLIC | Targu Jiu | C1A + C2A | 19037 | 08.02.2028 | 0253238220, 0726779053 0253238221 |
@@ -992,7 +976,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | SPERANTA | Novaci | C2A | 23039 | 01.04.2030 | 0721327983, 0766752532 |
 | THOMASINSTALVIS | Blahita de Jos | C2A | 22419 | 01.10.2029 | 0778.764.775 / 0756 881 424 ; |
 
-### Harghita (17)
+### Harghita (16)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -1002,7 +986,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ELECTRO LINE [HR] | Toplita | C1A + C2A | 14254 | 05.02.2029 | 0740 262179, 0266 343551 0266 343551 |
 | ELECTRO SHOP | Toplita | C1A + C2A | 14815 | 12.06.2029 | 0745641879 0266342947 |
 | ELECTRO-BETA | Toplita | C2A | 15288 | 22.10.2029 | 0744 703598, 0745 582711,0266342094 0266 342094 |
-| GERSOLTECH | Tomesti (HR) | C1A + C2A | 21454 | 19.02.2029 | 0747031906 |
 | INSTEL Miercurea Ciuc | Miercurea Ciuc | C2A | 12687 | 07.07.2027 | 0744497304, 0266317937 0266317937 |
 | LTL MECHAVILL | Mihaileni | C1A | 15866 | 30.04.2030 | 0742171760 |
 | MOLPOP SERVIS | Miercurea Ciuc | C2A | 12588 | 11.04.2027 | 0266316015, 0745 628216 0266 310415 |
@@ -1014,7 +997,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | VARTONI | Sancraieni | C2A | 15738 | 04.04.2030 | 0266 332515, 0723 191427;0745512672 0266 311113 |
 | VASIMOIMPEX | Odorheiu Secuiesc | C2A | 23833 | 13.10.2030 |  |
 
-### Hunedoara (19)
+### Hunedoara (18)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -1025,7 +1008,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ELECTROPTIM | Deva | C1A + C2A | 23163 | 19.05.2030 | 0740826963, 0723826963 |
 | ELEKTROALPIN INSTAL | Petrosani [HD] | C1A + C2A | 15345 | 01.11.2029 | 0721364552 |
 | ENERGOGRUP INSTALATII MONTAJ | Orastie | C2A | 17785 | 08.11.2026 | 0254.243.335 / 0722.338.620 Fax: 0254.243.334; email: office@en |
-| EUROELECTRIC | Baru | C2A | 13189 | 06.04.2028 | 0254 545444, 0722 514619 0254 545444 |
 | FIA ELECTROINVEST | Orastie | C2A | 22928 | 26.02.2030 | 0728399019, 0254 244078 0254 244078 |
 | PARVA ELECTRIC | Deva | C1A + C2A | 12601 | 19.04.2027 | 0741.126141, 0254.218318 0254.218318 |
 | RECOM SID | Hunedoara | C1A + C2A | 22106 | 23.07.2029 | 0254207022 / 0722296362 0254207022 |
@@ -1049,7 +1031,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ROMSERV IT | Slobozia (IL) | C1A + C2A | 23003 | 28.03.2030 | 0721190241 |
 | SERVPROIECT CONCEPT | Slobozia (IL) | C1A | 22838 | 03.02.2030 | 0773386872 |
 
-### Iasi (48)
+### Iasi (47)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -1099,10 +1081,9 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | TOTAL ELECTRIC SERV [IS] | Targu Frumos | C2A | 15397 | 07.11.2029 | 0747892979, 0758515271;0232712490 0232 712490 |
 | URBIO DOWNSTREAM | Iasi [IS] | C1A + C2A | 17215 | 23.04.2026 | 0799308793, 0372166541 0372899636 |
 | URBIOLED | Valea Lupului | C1A + C2A | 14378 | 25.03.2029 | 0747851114 0372899636 |
-| VELIS AG | Tutora | C1A + C2A | 22822 | 31.01.2030 | 0744114418 |
 | VIVIDE | Iasi [IS] | C2A | 19692 | 14.06.2028 | 0729094462 0232211821 |
 
-### Ilfov (78)
+### Ilfov (77)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -1113,7 +1094,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | APC ELECTROPROIECT INSTAL | Tunari | C1A | 18886 | 21.12.2027 | 0755150358 |
 | ARTEON AUTOMATIZATION GROUP | Popesti-Leordeni | C1A + C2A | 23615 | 08.08.2030 | 0775521840 |
 | ARYTRANS CONSTRUCT & TELECOM | Ciolpani | C2A | 21835 | 11.06.2029 | 0722244340 |
-| Ascorp Retele Electrice | Snagov | C2A | 14402 | 20.03.2029 | 0748140220, 0213136307 0213136307 |
 | AVITECH CO. | Voluntari | C1A | 23427 | 10.07.2030 | 021 2006464, 0744507731 021 2006465 |
 | AXA ELECTRIC | Jilava | C1A + C2A | 15773 | 14.04.2030 | 0723043937 |
 | BND WERT | Voluntari | C1A + C2A | 16958 | 16.02.2031 | 0765174022 |
@@ -1185,7 +1165,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | VAULT TRADE | Ostratu | C2A | 19859 | 28.07.2028 | 0764401111 |
 | VLADUTA TOPAZ IMOBILIARE | Bragadiru [IF] | C2A | 16366 | 28.08.2030 | 0723149448 |
 
-### Maramures (53)
+### Maramures (51)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -1193,7 +1173,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ANTREPRIZA MONTAJ INSTALATII | Baia Mare | C2A | 15742 | 04.04.2030 | 0262/216525, 0744516040 0262 215015,0262 212862 |
 | B.H.T. SMART CONCEPT | Tulghies | C1A + C2A | 22873 | 11.02.2030 | 0749811815 |
 | BARSAN ELECTRIC | BARSANA | C2A | 13090 | 16.02.2028 | 0740732071, 0768529585 |
-| BLUE PREST ELECTRIC | Satu Nou de Jos [MM] | C1A + C2A | 22696 | 13.12.2029 | 0786577700 |
 | BUDA-ETAP | Lapus | C1A + C2A | 21955 | 01.07.2029 | 0262381102, 0745113828 |
 | BYG EUROHAZARD | Viseu de Jos | C1A + C2A | 18718 | 18.10.2027 | 0262354508, 0740841922 0262354508, |
 | CONPREST EDILITAR | Baia Mare | C1A + C2A | 21886 | 20.06.2029 | 0757244215 |
@@ -1206,7 +1185,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ELECTRO MEGAWAT | Lapus | C1A + C2A | 17560 | 09.08.2026 | 0743219341, 0763679457 |
 | ELECTRO POL CITY | Baia Mare | C1A + C2A | 15474 | 16.12.2029 | 0726 071693; 0262250221 0262 250221 |
 | ELECTRO S.N. | Baia Mare | C2A | 14991 | 30.07.2029 | 0262 228001, 0733086623; 0733978749 0262 228001 |
-| ELECTRO TERM INSTAL | Calinesti [MM] | C1A + C2A | 17667 | 08.09.2026 | 0755818090 |
 | ELECTRO-CONSTRUCTII-PARCHET | Ulmeni (MM) | C1A + C2A | 19734 | 23.06.2028 | 0745043446 0262 264031 |
 | ELECTROCENTER DUE | Baia Mare | C1A + C2A | 15966 | 30.05.2030 | 0742 028250, 0729028250; 0262 26009 0262 260097 |
 | ELECTROMEDIA SERV | Târgu Lapus | C1A + C2A | 22647 | 03.12.2029 | 0745422873 |
@@ -1261,7 +1239,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ROENESYS | Drobeta -Turnu Severin | C1A + C2A | 23684 | 28.08.2030 | 0752222377 |
 | SHIMANO | Drobeta -Turnu Severin | C2A | 21276 | 18.12.2028 | 0723208099 |
 
-### Mures (26)
+### Mures (25)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -1275,7 +1253,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ELBO VOLTAJ | Targu Mures | C2A | 14556 | 13.05.2029 | 0265 314989, 0722659434 |
 | ELECTRIC LIGHT EXPERT | Sancraiu de Mures | C1A + C2A | 19499 | 10.05.2028 | 0745306281 0365 432382 |
 | ELECTRIC RASARITULUI | Ludus | C2A | 16307 | 21.08.2030 | 0741937201 0265 414565; 0265210650 |
-| EN-RG-ETIC | Targu Mures | C1A + C2A | 17288 | 10.05.2026 | 0744 583375, 0365 882975 0365882976 |
 | ENERGO ELECTRIC | Nazna | C1A + C2A | 12695 | 09.06.2027 | 0740455202, 0733710799 0365453806 |
 | INSTASERVICE | Targu Mures | C1A + C2A | 18086 | 28.03.2027 | 0265/264549 0265/264549 |
 | INSTGAZ | Bardesti | C1A + C2A | 16913 | 20.02.2031 | 0743682548 |
@@ -1330,7 +1307,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 |---|---|---|---|---|---|
 | ELECTRIC GRID ENERGY | Necunoscuta | C1A | 17943 | 08.02.2027 | 0784072814, 0751992111 |
 
-### Olt (22)
+### Olt (21)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -1354,7 +1331,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | RECTIF IMPEX | Slatina [OT] | C1A + C2A | 14049 | 14.12.2028 | 0749754028, 0748337452 0349780135 |
 | ROMINSTEC CONSTRUCT | Slatina [OT] | C2A | 23072 | 14.04.2030 | 0746990573 / 0769669530 |
 | SMART TECH ELECTRICA | Movileni | C2A | 23749 | 17.09.2030 | 0765292217 |
-| SPECTRUM ENERGY SOLUTION | Slatina [OT] | C1A | 19822 | 14.07.2028 | 0747374717 |
 | TRIO ELECTRIC | Slatina [OT] | C1A + C2A | 22442 | 08.10.2029 | 0761557300 |
 
 ### Prahova (50)
@@ -1557,7 +1533,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | RONY BIO GROUP | Izvoarele (TR) | C1A + C2A | 21908 | 20.06.2029 | 0722118999 |
 | SOLSTAR ENERGY PRO | Alexandria | C1A | 13474 | 19.07.2028 | 0761403143 |
 
-### Timis (61)
+### Timis (60)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -1571,7 +1547,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | CRC NEW ENERGY | Ghiroda | C1A + C2A | 22025 | 15.07.2029 | 0747290735 0356465580 |
 | DANNYS-M.D. | Lugoj | C1A + C2A | 16231 | 22.07.2030 | 0722580784, 0256359760 |
 | DUPA PATRU | Timisoara | C1A + C2A | 22828 | 03.02.2030 | 0738164933 |
-| EETIM ECHIPAMENTE DE AUTOMATIZARE | Timisoara | C1A + C2A | 14151 | 08.02.2029 | 0745642089 0256291672 |
 | ELBA | Timisoara | C2A | 17757 | 25.10.2026 | 0746169004, 0744767908, 0365443911; 0356443902 |
 | ELDD | Timisoara | C1A | 23249 | 05.06.2030 | 0757234777 0256 232269 |
 | ELECTRIC EYE | Ghiroda | C1A | 24235 | 23.02.2031 | 0729 931456 0356 818537 |
@@ -1656,12 +1631,11 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | VALORIS | Ramnicu Valcea | C1A + C2A | 12637 | 12.04.2027 | 00250.732227, 0721.299711,073535013 0250732227 |
 | YES SYSTEMS | Popesti [VL] | C1A + C2A | 19120 | 21.02.2028 | 0745045942 |
 
-### Vaslui (15)
+### Vaslui (14)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
 | AMENAJARI IVCONS | Ivesti (VS) | C2A | 18634 | 03.10.2027 | 0799240863 |
-| ELDAC GRUP | Vaslui | C1A + C2A | 12729 | 28.03.2027 | 0235 317836, 0720960123 0235 317836 |
 | ELECTRIC-COMPANY Vaslui | Vaslui | C1A + C2A | 15111 | 13.08.2029 | 0235 316889, 0744 580118; 023531243 0235 312438 |
 | ELECTRICOPET | Barlad | C2A | 16526 | 20.10.2030 | 0742068013, 0729874012 0235414023 |
 | ELECTROCONSTRUCTIA ELCO VASLUI | Vaslui | C1A + C2A | 12260 | 06.12.2026 | 0741419473, 0235312512 0235317572 |
@@ -1676,7 +1650,7 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | TRUST ELECTRO-M | Vaslui | C1A + C2A | 15908 | 22.05.2030 | 0235/316986, 0785267367 0235/322266 |
 | VOLTPET GRUP | Barlad | C2A | 15027 | 08.08.2029 | 0740159149, 0235414023 0335803435 |
 
-### Vrancea (16)
+### Vrancea (15)
 
 | Societate | Localitate | Certs | Nr. atestat | Expirare | Telefon |
 |---|---|---|---|---|---|
@@ -1691,7 +1665,6 @@ Firme cu atestat ANRE activ **C2A** sau **C1A** (industrial & comercial) care **
 | ELECTRO CONECTOR | Focsani | C2A | 22163 | 31.07.2029 | 0740 527236 0337107684 |
 | ELECTRO DAC | Focsani | C1A + C2A | 23606 | 07.08.2030 | 0726690243 |
 | ENIO CONSTRUCT | Focsani | C2A | 13879 | 26.10.2028 | 0788 285569, 0788 285570 |
-| IDNA POWER | Gologanu | C1A + C2A | 23331 | 23.06.2030 | 0741262944 / 0337820249 |
 | INOVATIV ELECTRICAL COMPANY | Adjudu Vechi | C1A + C2A | 16499 | 08.10.2030 | 0775521840 |
 | LUXTRANS | Adjud | C1A + C2A | 19476 | 10.05.2028 | 0744229530 0237640003 |
 | SABCONS TOTAL | Focsani | C1A + C2A | 21802 | 05.06.2029 | 0722550680 |
