@@ -5,7 +5,16 @@ type EventName =
   | 'filter_applied'
   | 'search_performed'
   | 'lead_form_opened'
+  | 'lead_form_started'
+  // Pașii formularului de cerere. `lead_step_completed` se trimite la trecerea
+  // ÎNAINTE, o singură dată per pas per sesiune de completare: raportul dintre
+  // pași arată unde pică omul, ceea ce `lead_form_submitted` singur nu spunea.
+  | 'lead_step_completed'
+  | 'lead_step_back'
   | 'lead_form_submitted'
+  // Îmbogățirea de după trimitere — cererea e deja salvată, evenimentul măsoară
+  // doar cât din detaliile opționale acceptă omul să completeze (`fields`).
+  | 'lead_enrich_submitted'
   | 'lead_claim_opened'
   | 'lead_claim_submitted'
   | 'listing_form_submitted'

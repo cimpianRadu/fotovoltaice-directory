@@ -12,11 +12,7 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     // numeCompanie is optional — residential leads have no company name.
-    const {
-      numeContact, email, telefon, tipProiect, judet, tipAcoperis, finantare, gdpr,
-      suprafata, putere, fazare, suprafataNecunoscuta, putereNecunoscuta,
-      localitate, stocare, wallbox, termen,
-    } = body;
+    const { numeContact, email, telefon, tipProiect, judet, gdpr } = body;
 
     // `field` = atributul name al controlului din formular: LeadForm scrollează
     // și focusează direct câmpul vinovat, mesajul rămâne și în toast.
@@ -30,73 +26,18 @@ export async function POST(request: Request) {
       );
     }
 
-    // Dropdown-urile marcate obligatorii în formular se verifică și aici:
-    // validarea de browser din SearchableSelect poate fi ocolită (cache vechi,
-    // POST direct), iar pe 3 aug 2026 a trecut o cerere fără tip de acoperiș.
-    // Mesajul numește câmpul: formularul îl afișează ca atare în toast.
-    if (!tipAcoperis) {
-      return NextResponse.json(
-        { error: 'Alegeți tipul de acoperiș.', field: 'tipAcoperis' },
-        { status: 400 }
-      );
-    }
-    if (!finantare) {
-      return NextResponse.json(
-        { error: 'Alegeți cum finanțați investiția.', field: 'finantare' },
-        { status: 400 }
-      );
-    }
-
-    // Suprafața și puterea cer un răspuns explicit: o cifră SAU bifa „Nu
-    // știu" (checkbox-ul dezactivează inputul, deci vine doar unul din două).
-    // În Sheet „nu știu" rămâne celulă goală — coloanele H/I sunt numerice
-    // peste tot în aval (/cereri, lead-match), un text acolo le-ar strica.
-    if (!suprafata && !suprafataNecunoscuta) {
-      return NextResponse.json(
-        { error: 'Completați suprafața sau bifați „Nu știu".', field: 'suprafata' },
-        { status: 400 }
-      );
-    }
-    if (!putere && !putereNecunoscuta) {
-      return NextResponse.json(
-        { error: 'Completați puterea dorită sau bifați „Nu știu".', field: 'putere' },
-        { status: 400 }
-      );
-    }
-    if (!fazare) {
-      return NextResponse.json(
-        { error: 'Alegeți alimentarea electrică (sau „Nu știu").', field: 'fazare' },
-        { status: 400 }
-      );
-    }
-
-    // Câmpurile de ofertare (aug 2026) — aceeași regulă ca la restul
-    // dropdown-urilor obligatorii: se verifică și pe server, cu mesaj pe câmp.
-    if (!localitate) {
-      return NextResponse.json(
-        { error: 'Completați localitatea.', field: 'localitate' },
-        { status: 400 }
-      );
-    }
-    if (!stocare) {
-      return NextResponse.json(
-        { error: 'Alegeți dacă doriți baterie de stocare (sau „Nu m-am hotărât").', field: 'stocare' },
-        { status: 400 }
-      );
-    }
-    if (!wallbox) {
-      return NextResponse.json(
-        { error: 'Alegeți dacă doriți stație de încărcare (sau „Nu m-am hotărât").', field: 'wallbox' },
-        { status: 400 }
-      );
-    }
-    if (!termen) {
-      return NextResponse.json(
-        { error: 'Alegeți când ați vrea instalarea.', field: 'termen' },
-        { status: 400 }
-      );
-    }
-
+    // Restul câmpurilor (acoperiș, fazare, suprafață, putere, finanțare,
+    // stocare, wallbox, termen, localitate) NU mai sunt obligatorii aici.
+    // Din 17 aug 2026 cererea se trimite cu setul minim vandabil, iar detaliile
+    // se strâng după trimitere, prin /api/leads/enrich, pe ecranul de
+    // confirmare. Motivul e măsurat: din 182 de afișări ale formularului în
+    // 30 de zile au ieșit 29 de cereri, deci 84% abandonau peretele de 15
+    // câmpuri obligatorii. Un lead cu nume, telefon și județ e contactabil;
+    // unul abandonat nu e nimic.
+    //
+    // În Sheet, câmpurile necompletate rămân celule goale — la fel ca vechea
+    // bifă „Nu știu". Tot ce citește în aval (feedul /cereri, LeadCard,
+    // lib/lead-match) tratează deja golul ca lipsă, nu ca eroare.
     if (!gdpr && gdpr !== 'on') {
       return NextResponse.json(
         { error: 'Trebuie să acceptați prelucrarea datelor personale.', field: 'gdpr' },

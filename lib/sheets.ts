@@ -147,6 +147,65 @@ export async function saveLeadToSheet(lead: {
   return timestamp;
 }
 
+// Detaliile pe care nu le mai cerem înainte de trimitere (vezi app/api/leads),
+// completate ulterior de pe ecranul de confirmare. Cheia = numele câmpului din
+// formular, valoarea = coloana din tabul Leads. Aceleași coloane pe care le-ar
+// fi scris saveLeadToSheet, ca să nu existe două adevăruri.
+const LEAD_ENRICH_COLUMNS = {
+  suprafata: 'H',
+  putere: 'I',
+  tipAcoperis: 'S',
+  fazare: 'T',
+  consumLunar: 'U',
+  finantare: 'Y',
+  localitate: 'Z',
+  stocare: 'AA',
+  wallbox: 'AB',
+  termen: 'AC',
+} as const;
+
+export type LeadEnrichField = keyof typeof LEAD_ENRICH_COLUMNS;
+
+export const LEAD_ENRICH_FIELDS = Object.keys(LEAD_ENRICH_COLUMNS) as LeadEnrichField[];
+
+/**
+ * Completează detaliile opționale pe o cerere deja salvată, identificată prin
+ * timestamp. Scrie doar câmpurile primite cu valoare: nimic din ce trimite
+ * clientul nu poate goli o celulă completată, ca un al doilea submit parțial
+ * (revenire pe pagină, dublu click) să nu șteargă ce s-a strâns înainte.
+ * Întoarce lista câmpurilor chiar scrise.
+ */
+export async function enrichLeadInSheet(
+  timestamp: string,
+  fields: Partial<Record<LeadEnrichField, string>>,
+): Promise<LeadEnrichField[]> {
+  const { sheetRow } = await findLeadRow(timestamp);
+
+  const data: { range: string; values: string[][] }[] = [];
+  const written: LeadEnrichField[] = [];
+
+  for (const field of LEAD_ENRICH_FIELDS) {
+    const value = (fields[field] || '').trim();
+    if (!value) continue;
+    data.push({ range: `Leads!${LEAD_ENRICH_COLUMNS[field]}${sheetRow}`, values: [[value]] });
+    written.push(field);
+  }
+
+  if (!data.length) return [];
+
+  const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+  await withRetry(
+    () =>
+      sheets.spreadsheets.values.batchUpdate({
+        spreadsheetId: SPREADSHEET_ID,
+        requestBody: { valueInputOption: 'RAW', data },
+      }),
+    'enrich lead',
+  );
+
+  return written;
+}
+
 export async function saveListingToSheet(listing: {
   numeFirma: string;
   cui: string;
