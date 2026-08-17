@@ -5890,7 +5890,9 @@
         "Bistrița-Năsăud"
       ],
       "specializations": [
-        "hale-industriale"
+        "hale-industriale",
+        "cladiri-birouri",
+        "rezidential"
       ],
       "certifications": [],
       "capacity": {
@@ -5928,12 +5930,12 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-04-22",
-      "updatedAt": "2026-07-28",
+      "updatedAt": "2026-08-17",
       "anreMatch": {
         "societate": "ENERA SWITCH",
         "judet": "Cluj"
       },
-      "segment": "comercial"
+      "segment": "ambele"
     },
     {
       "id": "delcom-import-export",
@@ -11176,7 +11178,8 @@
         "Vrancea"
       ],
       "specializations": [
-        "rezidential"
+        "rezidential",
+        "hale-industriale"
       ],
       "certifications": [],
       "capacity": {
@@ -11231,8 +11234,8 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-05-23",
-      "updatedAt": "2026-07-27",
-      "segment": "rezidential",
+      "updatedAt": "2026-08-17",
+      "segment": "ambele",
       "anreMatch": {
         "societate": "J.T.S. INSTAL CONTRUCT",
         "judet": "Arges"
