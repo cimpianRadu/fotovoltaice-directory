@@ -63,13 +63,14 @@ function resolveSource(fallback: string): string {
   return clean || fallback;
 }
 
-// Patru pași, dar cererea pleacă la al treilea. Ordinea nu e cea clasică
-// („contactul la final"): datele de contact stau al treilea pentru că
-// businessul e pe leaduri, deci cine abandonează la detaliile tehnice a lăsat
-// deja un nume și un telefon și rămâne o cerere de urmărit. Cu contactul la
-// final, fiecare abandon ar fi zero. Pasul 4 e tot în flux, ca instalatorii să
-// primească datele pe care le cer oricum la primul telefon, dar rulează după
-// salvare și se scrie singur, fără buton.
+// Patru pași, iar cererea pleacă la ultimul. Ordinea nu e cea clasică
+// („contactul la final"): datele de contact stau al treilea, înaintea detaliilor
+// tehnice, ca omul să fi trecut deja de partea grea când ajunge la ele.
+//
+// Pasul 4 conține exact ce cer instalatorii la primul telefon și e integral
+// opțional: fiecare câmp are „nu știu", iar butonul de trimitere e activ
+// indiferent ce se completează acolo. Așa cererea pleacă mai bogată, fără ca
+// vreo întrebare tehnică să poată bloca trimiterea.
 const STEPS = [
   { id: 'proiect', label: 'Proiect' },
   { id: 'zona', label: 'Zonă' },
@@ -77,10 +78,7 @@ const STEPS = [
   { id: 'detalii', label: 'Detalii' },
 ] as const;
 
-// Cererea pleacă la pasul 3, nu la 4: pasul de detalii rulează DUPĂ ce leadul
-// e salvat, ca cine îl abandonează să rămână totuși o cerere contactabilă.
-const SUBMIT_STEP = 2;
-const DETAILS_STEP = 3;
+const SUBMIT_STEP = STEPS.length - 1;
 
 // iOS Safari focusează primul câmp invalid la submit, dar nu scrollează fiabil
 // până la el: pe telefon, apăsarea butonului părea că nu face nimic. Scrollăm
@@ -104,35 +102,31 @@ function focusField(el: unknown) {
   }
 }
 
-// Detaliile pe care instalatorii le cer oricum la primul telefon. Stau la pasul
-// 4, adică după ce cererea e deja salvată, și se scriu singure pe măsură ce
-// omul răspunde — nu există buton de salvare, vezi scheduleSave.
+// Pasul 4, trimis odată cu cererea.
 const STEP4_KEYS = ['tipAcoperis', 'putere', 'consumLunar', 'termen', 'finantare'] as const;
 
-// Restul, în panoul de sub pasul 4, lângă trimiterea pozelor.
+// Detaliile secundare, strânse pe ecranul de confirmare lângă trimiterea pozelor.
+// Astea chiar merg prin /api/leads/enrich, pentru că vin după salvare.
 const PANEL_KEYS = ['suprafata', 'fazare', 'stocare', 'wallbox'] as const;
 
-const ENRICH_KEYS = [...STEP4_KEYS, ...PANEL_KEYS] as const;
-
-type EnrichKey = (typeof ENRICH_KEYS)[number];
+type Step4Key = (typeof STEP4_KEYS)[number];
+type PanelKey = (typeof PANEL_KEYS)[number];
 
 // `putere` și `consumLunar` sunt câmpuri libere, deci n-au opțiune „Nu știu" în
-// listă ca dropdown-urile. Bifa de aici o ține local: în Sheet tot celulă goală
-// se scrie, dar contorul de completitudine numără răspunsul ca dat, fiindcă un
-// „nu știu" explicit e un răspuns, nu o omisiune.
-const UNKNOWN_TOGGLES = ['putere', 'consumLunar'] as const;
+// listă ca dropdown-urile. Bifa o ține local: în Sheet tot celulă goală se
+// scrie, fiindcă „nu știu" înseamnă lipsa cifrei, nu un text în coloană.
+type UnknownKey = 'putere' | 'consumLunar';
 
-type UnknownKey = (typeof UNKNOWN_TOGGLES)[number];
-
-const EMPTY_ENRICH = Object.fromEntries(ENRICH_KEYS.map((k) => [k, ''])) as Record<EnrichKey, string>;
+const EMPTY_STEP4 = Object.fromEntries(STEP4_KEYS.map((k) => [k, ''])) as Record<Step4Key, string>;
+const EMPTY_PANEL = Object.fromEntries(PANEL_KEYS.map((k) => [k, ''])) as Record<PanelKey, string>;
 
 type Option = { value: string; label: string };
-type EnrichSelect = { name: EnrichKey; label: string; options: Option[]; hint?: string };
+type FieldSpec = { name: string; label: string; options: Option[]; hint?: string };
 
 const opts = (list: readonly { value: string; label: string }[]): Option[] =>
   list.map((o) => ({ value: o.value, label: o.label }));
 
-/** Bara de pași. Aceeași sus pe formular și pe ecranul de după trimitere. */
+/** Bara de pași, deasupra formularului. */
 function StepBar({ step, onBack }: { step: number; onBack?: () => void }) {
   return (
     <div>
@@ -191,14 +185,14 @@ function SaveHint({ status }: { status: 'idle' | 'saving' | 'saved' | 'error' })
   return <span className={`shrink-0 text-xs font-medium ${s.cls}`}>{s.text}</span>;
 }
 
-function EnrichField({
+function SelectField({
   field,
   value,
   onChange,
 }: {
-  field: EnrichSelect;
+  field: FieldSpec;
   value: string;
-  onChange: (key: EnrichKey, value: string) => void;
+  onChange: (key: string, value: string) => void;
 }) {
   return (
     <div>
@@ -231,7 +225,7 @@ function NumberWithUnknown({
   placeholder: string;
   value: string;
   unknown: boolean;
-  onChange: (key: EnrichKey, value: string) => void;
+  onChange: (key: string, value: string) => void;
   onToggle: (key: UnknownKey) => void;
   unknownLabel: string;
   free?: boolean;
@@ -281,8 +275,9 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
     email: '',
     mesaj: '',
   });
+  const [details, setDetails] = useState<Record<Step4Key, string>>(EMPTY_STEP4);
   const [gdpr, setGdpr] = useState(false);
-  const [extra, setExtra] = useState<Record<EnrichKey, string>>(EMPTY_ENRICH);
+  const [extra, setExtra] = useState<Record<PanelKey, string>>(EMPTY_PANEL);
   const [unknown, setUnknown] = useState<Record<UnknownKey, boolean>>({
     putere: false,
     consumLunar: false,
@@ -302,6 +297,17 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
   function set<K extends keyof typeof values>(key: K, value: string) {
     markStarted();
     setValues((v) => ({ ...v, [key]: value }));
+  }
+
+  function setDetail(key: string, value: string) {
+    markStarted();
+    setDetails((d) => ({ ...d, [key]: value }));
+  }
+
+  function toggleUnknown(key: UnknownKey) {
+    setUnknown((u) => ({ ...u, [key]: !u[key] }));
+    // Bifa golește câmpul: „nu știu" înseamnă celulă goală, nu text în Sheet.
+    if (!unknown[key]) setDetail(key, '');
   }
 
   // O singură dată per încărcare: numitorul față de care se citesc pașii.
@@ -380,6 +386,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...values,
+          ...details,
           gdpr: gdpr ? 'on' : '',
           sourcePage: src(),
           preselectedCompany,
@@ -404,6 +411,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         county: values.judet,
         segment,
         source_page: src(),
+        details_filled: STEP4_KEYS.filter((k) => details[k].trim()).length,
       });
 
       setLeadRef(typeof json.id === 'string' ? json.id : null);
@@ -420,24 +428,22 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
     }
   }
 
-  // Un „nu știu" bifat contează ca răspuns dat, deși în Sheet rămâne gol.
-  const answered =
-    ENRICH_KEYS.filter((k) => extra[k].trim()).length +
-    UNKNOWN_TOGGLES.filter((k) => unknown[k] && !extra[k].trim()).length;
+  const panelAnswered = PANEL_KEYS.filter((k) => extra[k].trim()).length;
 
   /**
-   * Salvare automată, fără buton. Fiecare răspuns repornește un temporizator
-   * scurt și trimite starea curentă; serverul ignoră valorile goale, deci o
-   * cursă între două salvări nu poate șterge un câmp completat înainte.
+   * Salvare automată pentru panoul de după trimitere, fără buton. Fiecare
+   * răspuns repornește un temporizator scurt și trimite starea curentă;
+   * serverul ignoră valorile goale, deci o cursă între două salvări nu poate
+   * șterge un câmp completat înainte.
    */
-  function scheduleSave(next: Record<EnrichKey, string>) {
+  function scheduleSave(next: Record<PanelKey, string>) {
     if (!leadRef) return;
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = setTimeout(() => void pushEnrich(next), 800);
   }
 
-  async function pushEnrich(next: Record<EnrichKey, string>) {
-    const filled = ENRICH_KEYS.filter((k) => next[k].trim()).length;
+  async function pushEnrich(next: Record<PanelKey, string>) {
+    const filled = PANEL_KEYS.filter((k) => next[k].trim()).length;
     if (!leadRef || !filled) return;
     setEnrichStatus('saving');
     try {
@@ -446,10 +452,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: leadRef, ...next }),
       });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(typeof err.error === 'string' ? err.error : 'Eroare la salvare');
-      }
+      if (!res.ok) throw new Error('enrich failed');
       // Un eveniment per câmp nou completat, nu per salvare: altfel tastatul
       // într-un câmp liber ar umple Umami cu zgomot.
       if (filled > reportedFields.current) {
@@ -464,18 +467,12 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
     }
   }
 
-  function setExtraField(key: EnrichKey, value: string) {
+  function setExtraField(key: string, value: string) {
     setExtra((x) => {
-      const next = { ...x, [key]: value };
+      const next = { ...x, [key]: value } as Record<PanelKey, string>;
       scheduleSave(next);
       return next;
     });
-  }
-
-  function toggleUnknown(key: UnknownKey) {
-    setUnknown((u) => ({ ...u, [key]: !u[key] }));
-    // Bifa golește câmpul: „nu știu" înseamnă celulă goală, nu text în Sheet.
-    if (!unknown[key]) setExtraField(key, '');
   }
 
   // Uploadul de poze vine DUPĂ trimitere, intenționat: pe mobil un câmp de fișier
@@ -486,13 +483,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
       'Atașez pozele cu acoperișul și cu tabloul electric.\n\n(Nu ștergeți referința din subiect, după ea legăm pozele de cererea dumneavoastră.)',
     )}`;
 
-    const step4Selects: EnrichSelect[] = [
-      { name: 'tipAcoperis', label: 'Tip acoperiș', options: opts(roofTypes) },
-      { name: 'termen', label: 'Cât de repede vreți instalarea', options: opts(TIMELINE_OPTIONS) },
-      { name: 'finantare', label: 'Cum finanțați investiția', options: opts(financingTypes) },
-    ];
-
-    const panelSelects: EnrichSelect[] = [
+    const panelSelects: FieldSpec[] = [
       {
         name: 'fazare',
         label: 'Alimentare electrică',
@@ -505,86 +496,54 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
 
     return (
       <div className="space-y-6">
-        <StepBar step={DETAILS_STEP} />
-
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-5">
           <h3 className="font-bold text-emerald-900">Cererea a fost trimisă ✓</h3>
           <p className="mt-1 text-sm text-emerald-800">
             Vă contactăm în cel mai scurt timp cu oferte de la firme care acoperă zona
-            dumneavoastră. Restul întrebărilor sunt opționale și se salvează singure.
+            dumneavoastră. Mai jos puteți completa câteva detalii, dar nu e obligatoriu.
           </p>
         </div>
 
-        {/* Pasul 4. Întrebările pe care instalatorii le pun oricum la primul
-            telefon, deci un răspuns aici scutește un tur de discuție. Nu există
-            buton: fiecare răspuns pleacă singur spre cerere. */}
+        {/* Restul detaliilor, plus pozele. Fără buton de salvare: fiecare răspuns
+            pleacă singur spre cerere, vezi scheduleSave. */}
         <div className="rounded-xl border border-border bg-white p-5 sm:p-6">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h3 className="font-bold text-gray-900">Ajutați instalatorii să vă dea un preț real</h3>
+              <p className="font-semibold text-gray-900">Mai puteți adăuga</p>
               <p className="mt-1 text-sm text-gray-600 leading-relaxed">
-                Firmele văd cererea într-o listă și aleg pe care o preiau. Fiecare răspuns de aici
-                scade numărul de întrebări la primul telefon. Puteți răspunde &bdquo;nu
-                știu&rdquo; oriunde.
+                Firmele văd cererea într-o listă și aleg pe care o preiau. Fiecare detaliu în plus
+                scade numărul de întrebări la primul telefon.
               </p>
             </div>
             <SaveHint status={enrichStatus} />
           </div>
 
-          <Meter answered={answered} total={ENRICH_KEYS.length} />
+          <Meter answered={panelAnswered} total={PANEL_KEYS.length} />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {step4Selects.map((f) => (
-              <EnrichField key={f.name} field={f} value={extra[f.name]} onChange={setExtraField} />
-            ))}
-
-            <NumberWithUnknown
-              name="putere"
-              label="Putere dorită (kW)"
-              placeholder={isRezidential ? 'ex: 5' : 'ex: 200'}
-              value={extra.putere}
-              unknown={unknown.putere}
-              onChange={setExtraField}
-              onToggle={toggleUnknown}
-              unknownLabel="Nu știu, aștept recomandarea instalatorului"
+            <Input
+              label={isRezidential ? 'Suprafață acoperiș (mp)' : 'Suprafață estimată (mp)'}
+              name="suprafata"
+              type="number"
+              inputMode="numeric"
+              placeholder={isRezidential ? 'ex: 60' : 'ex: 2000'}
+              value={extra.suprafata}
+              onChange={(e) => setExtraField('suprafata', e.target.value)}
             />
-            <NumberWithUnknown
-              name="consumLunar"
-              label="Consum lunar mediu"
-              placeholder="ex: 350 lei sau 250 kWh"
-              value={extra.consumLunar}
-              unknown={unknown.consumLunar}
-              onChange={setExtraField}
-              onToggle={toggleUnknown}
-              free
-              unknownLabel="Nu știu, nu am factura la îndemână"
-            />
-          </div>
-        </div>
-
-        {/* Restul: poze plus detaliile care contează mai puțin la primul contact. */}
-        <div className="rounded-xl border border-border bg-white p-5 sm:p-6">
-          <p className="font-semibold text-gray-900">Mai puteți adăuga</p>
-
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <Input
-                label={isRezidential ? 'Suprafață acoperiș (mp)' : 'Suprafață estimată (mp)'}
-                name="suprafata"
-                type="number"
-                inputMode="numeric"
-                placeholder={isRezidential ? 'ex: 60' : 'ex: 2000'}
-                value={extra.suprafata}
-                onChange={(e) => setExtraField('suprafata', e.target.value)}
-              />
-            </div>
             {panelSelects.map((f) => (
-              <EnrichField key={f.name} field={f} value={extra[f.name]} onChange={setExtraField} />
+              <SelectField
+                key={f.name}
+                field={f}
+                value={extra[f.name as PanelKey]}
+                onChange={setExtraField}
+              />
             ))}
           </div>
 
           <div className="mt-6 pt-5 border-t border-border">
-            <p className="font-semibold text-gray-900 text-sm">Poze cu acoperișul și tabloul electric</p>
+            <p className="font-semibold text-gray-900 text-sm">
+              Poze cu acoperișul și tabloul electric
+            </p>
             <p className="mt-1 text-sm text-gray-700 leading-relaxed">
               Două-trei poze: una cu acoperișul văzut din exterior, una cu tabloul electric și
               contorul. Cu ele, instalatorii pot calcula montajul fără să mai vină întâi în vizită.
@@ -609,6 +568,12 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
       </div>
     );
   }
+
+  const step4Selects: FieldSpec[] = [
+    { name: 'tipAcoperis', label: 'Tip acoperiș', options: opts(roofTypes) },
+    { name: 'termen', label: 'Cât de repede vreți instalarea', options: opts(TIMELINE_OPTIONS) },
+    { name: 'finantare', label: 'Cum finanțați investiția', options: opts(financingTypes) },
+  ];
 
   return (
     <>
@@ -730,6 +695,49 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
                 onChange={(e) => set('email', e.target.value)}
               />
             </div>
+          </div>
+        )}
+
+        {step === 3 && (
+          <div className="space-y-4">
+            <p className="text-sm text-gray-600 leading-relaxed">
+              Ultimul pas. Instalatorii întreabă oricum astea la primul telefon, iar un răspuns aici
+              vă aduce o ofertă mai apropiată de prețul final. Puteți răspunde
+              &bdquo;nu știu&rdquo; oriunde, nimic de aici nu e obligatoriu.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {step4Selects.map((f) => (
+                <SelectField
+                  key={f.name}
+                  field={f}
+                  value={details[f.name as Step4Key]}
+                  onChange={setDetail}
+                />
+              ))}
+
+              <NumberWithUnknown
+                name="putere"
+                label="Putere dorită (kW)"
+                placeholder={isRezidential ? 'ex: 5' : 'ex: 200'}
+                value={details.putere}
+                unknown={unknown.putere}
+                onChange={setDetail}
+                onToggle={toggleUnknown}
+                unknownLabel="Nu știu, aștept recomandarea instalatorului"
+              />
+              <NumberWithUnknown
+                name="consumLunar"
+                label="Consum lunar mediu"
+                placeholder="ex: 350 lei sau 250 kWh"
+                value={details.consumLunar}
+                unknown={unknown.consumLunar}
+                onChange={setDetail}
+                onToggle={toggleUnknown}
+                free
+                unknownLabel="Nu știu, nu am factura la îndemână"
+              />
+            </div>
 
             <div>
               <Input
@@ -807,7 +815,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
               </Button>
             )}
             <p className="mt-2 text-center text-[11px] text-gray-400">
-              Gratuit, fără obligații. Detaliile tehnice le completați după trimitere.
+              Gratuit, fără obligații.
             </p>
           </div>
         )}
