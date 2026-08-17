@@ -101,7 +101,7 @@ export default function CtaPopup() {
         </ul>
 
         <Link
-          href="/cere-oferta"
+          href="/cere-oferta?sursa=popup"
           onClick={() => {
             trackEvent('cere_oferta_click', { source: 'popup' });
             dismiss();

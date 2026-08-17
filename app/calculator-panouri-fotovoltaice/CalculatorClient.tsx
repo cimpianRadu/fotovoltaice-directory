@@ -488,7 +488,7 @@ export default function CalculatorClient({ priceCurve }: { priceCurve: KitPriceC
 
           <div className="grid gap-3 sm:grid-cols-2">
             <Link
-              href="/cere-oferta"
+              href="/cere-oferta?sursa=calculator-rezultat"
               data-umami-event="calculator-cta-oferta"
               data-umami-event-judet={judet}
               data-umami-event-kwp={String(result.kwp)}

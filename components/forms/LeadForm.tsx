@@ -46,6 +46,23 @@ interface LeadFormProps {
 
 const PHOTO_INBOX = 'contact@instalatori-fotovoltaice.ro';
 
+/**
+ * Atribuirea: de pe ce pagină a pornit cererea. Butoanele „Cere ofertă" duc pe
+ * /cere-oferta?sursa=<slug>, iar valoarea ajunge în coloana K din Sheet, aceeași
+ * pe care înainte o umplea mereu literalul „cere-oferta". Până acum nu se putea
+ * spune care ghid produce cereri; de aici încolo se poate.
+ *
+ * Citim direct din window, nu cu useSearchParams: hook-ul ar cere o graniță
+ * Suspense pe o pagină altfel statică. Toate apelurile sunt din handlere, deci
+ * rulează după hidratare și nu există risc de nepotrivire la randarea pe server.
+ */
+function resolveSource(fallback: string): string {
+  if (typeof window === 'undefined') return fallback;
+  const raw = new URLSearchParams(window.location.search).get('sursa');
+  const clean = raw?.trim().replace(/[^a-z0-9\-_/]/gi, '').slice(0, 80);
+  return clean || fallback;
+}
+
 // Patru pași, dar cererea pleacă la al treilea. Ordinea nu e cea clasică
 // („contactul la final"): datele de contact stau al treilea pentru că
 // businessul e pe leaduri, deci cine abandonează la detaliile tehnice a lăsat
@@ -245,6 +262,8 @@ function NumberWithUnknown({
 }
 
 export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta' }: LeadFormProps) {
+  // Rezolvată la fiecare folosire, nu memoizată: toate apelurile vin din handlere.
+  const src = () => resolveSource(sourcePage);
   const [step, setStep] = useState(0);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
@@ -289,7 +308,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
   function markStarted() {
     if (startedRef.current) return;
     startedRef.current = true;
-    trackEvent('lead_form_started', { segment, source_page: sourcePage });
+    trackEvent('lead_form_started', { segment, source_page: src() });
   }
 
   function completeStep(index: number) {
@@ -297,7 +316,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
       step: index + 1,
       name: STEPS[index].id,
       segment,
-      source_page: sourcePage,
+      source_page: src(),
     });
   }
 
@@ -362,7 +381,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         body: JSON.stringify({
           ...values,
           gdpr: gdpr ? 'on' : '',
-          sourcePage,
+          sourcePage: src(),
           preselectedCompany,
           segment,
         }),
@@ -384,7 +403,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         project_type: values.tipProiect,
         county: values.judet,
         segment,
-        source_page: sourcePage,
+        source_page: src(),
       });
 
       setLeadRef(typeof json.id === 'string' ? json.id : null);
@@ -435,7 +454,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
       // într-un câmp liber ar umple Umami cu zgomot.
       if (filled > reportedFields.current) {
         reportedFields.current = filled;
-        trackEvent('lead_enrich_submitted', { fields: filled, segment, source_page: sourcePage });
+        trackEvent('lead_enrich_submitted', { fields: filled, segment, source_page: src() });
       }
       setEnrichStatus('saved');
     } catch {

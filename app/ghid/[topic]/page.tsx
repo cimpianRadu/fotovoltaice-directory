@@ -10,6 +10,7 @@ import InstallerCta from '@/components/InstallerCta';
 import Markdown from '@/components/ui/Markdown';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
+import { GUIDE_CTA } from '@/lib/guide-cta';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import guidesData from '@/data/guides.json';
@@ -75,7 +76,15 @@ export default async function GuidePage({ params }: Props) {
 
   const heroImage = getHeroImage(guide.slug);
 
-  const ctaBlock = <InstallerCta specializare={guide.relatedSpecializations[0]} />;
+  // Ghidurile cu volum au text scris pe subiect; restul iau textul generic.
+  // `sursa` e slug-ul ghidului, ca să știm în sfârșit care articol produce cereri.
+  const ctaBlock = (
+    <InstallerCta
+      specializare={guide.relatedSpecializations[0]}
+      sursa={`ghid/${guide.slug}`}
+      {...GUIDE_CTA[guide.slug]}
+    />
+  );
 
   return (
     <>
@@ -180,7 +189,7 @@ export default async function GuidePage({ params }: Props) {
             <Fragment key={section.id}>
               <section id={section.id} className="mb-12 scroll-mt-20">
                 <h2 className="text-xl font-bold text-gray-900 mb-4">{section.title}</h2>
-                <Markdown content={section.content} />
+                <Markdown content={section.content} linkSource={`ghid/${guide.slug}`} />
               </section>
               {/* CTA după prima secțiune — puțini ajung la finalul articolului */}
               {i === 0 && ctaBlock}

@@ -219,7 +219,7 @@ export default function VerificareAnrePage() {
             <li>Verifică și <strong>certificările ISO</strong> (9001, 14001, 45001) pentru un indicator suplimentar de profesionalism</li>
           </ul>
 
-          <InstallerCta />
+          <InstallerCta sursa="verificare-anre" />
         </section>
 
         {/* FAQ section visible */}

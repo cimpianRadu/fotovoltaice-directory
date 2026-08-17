@@ -221,7 +221,7 @@ export default function ClasamentPage() {
           </div>
         </section>
 
-        <InstallerCta />
+        <InstallerCta sursa="clasament" />
 
         {/* Correction Form */}
         <section className="mb-12 bg-white rounded-xl border-2 border-primary/20 p-6" id="corectie">

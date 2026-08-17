@@ -214,7 +214,7 @@ export default async function CaseStudyPage({ params }: Props) {
           </section>
         )}
 
-        <InstallerCta specializare="rezidential" />
+        <InstallerCta specializare="rezidential" sursa={`studiu-caz/${study.slug}`} />
 
         <section id="faq" className="scroll-mt-20 mb-10">
           <FAQ items={study.faq} title="Întrebări Frecvente" />

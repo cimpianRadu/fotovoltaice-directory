@@ -144,7 +144,7 @@ export default function Header() {
           </div>
 
           <Link
-            href="/cere-oferta"
+            href="/cere-oferta?sursa=header"
             onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_desktop' })}
             className="bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-4 py-2 rounded-lg whitespace-nowrap transition-colors"
           >
@@ -155,7 +155,7 @@ export default function Header() {
         {/* Mobile hamburger */}
         <div className="flex items-center gap-2 lg:hidden">
           <Link
-            href="/cere-oferta"
+            href="/cere-oferta?sursa=header"
             onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_mobile' })}
             className="inline-flex items-center gap-1.5 justify-center bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-3 min-h-[44px] rounded-lg transition-colors"
           >

@@ -153,7 +153,7 @@ export default function QuickEstimateWidget({
         {/* Pașii următori */}
         <div className="lg:col-span-3 flex flex-col sm:flex-row lg:flex-col gap-3">
           <Link
-            href="/cere-oferta"
+            href={`/cere-oferta?sursa=widget-${sursa}`}
             onClick={() =>
               trackUmami('widget-cere-oferta', {
                 sursa,

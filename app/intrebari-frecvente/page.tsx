@@ -188,7 +188,7 @@ export default function FAQPage() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <Button href="/despre" variant="primary">Contactează-ne</Button>
-            <Button href="/cere-oferta" variant="outline">Cere Ofertă</Button>
+            <Button href="/cere-oferta?sursa=faq" variant="outline">Cere Ofertă</Button>
           </div>
         </div>
       </div>

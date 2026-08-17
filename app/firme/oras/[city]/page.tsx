@@ -165,7 +165,7 @@ export default async function CityPage({ params }: Props) {
           <p className="text-sm text-gray-600 mb-4">
             Completează formularul și primești oferte personalizate de la firmele din {city}.
           </p>
-          <Button href="/cere-oferta" size="lg">
+          <Button href="/cere-oferta?sursa=oras" size="lg">
             Cere Ofertă Gratuită
           </Button>
         </div>

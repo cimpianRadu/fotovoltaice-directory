@@ -26,7 +26,7 @@ export default function HomeOfertaBand({ comercialCount, rezidentialCount }: Pro
           </p>
         </div>
         <Link
-          href="/cere-oferta"
+          href="/cere-oferta?sursa=home-band"
           onClick={() => trackEvent('cere_oferta_click', { segment, source: 'home_band' })}
           className="shrink-0 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors"
         >

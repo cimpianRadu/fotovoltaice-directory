@@ -110,7 +110,7 @@ export default function CalculatorPage() {
           subtitle="Firme partenere care pot prelua proiectul tău"
         />
 
-        <InstallerCta />
+        <InstallerCta sursa="calculator" />
 
         {/* SEO content */}
         <section className="mt-16 space-y-6 text-gray-700 text-[15px] leading-relaxed">
@@ -191,7 +191,7 @@ export default function CalculatorPage() {
           <div className="bg-primary/5 border border-primary/10 rounded-xl p-5 mt-8">
             <p className="text-sm text-gray-800">
               <strong>Vrei oferte concrete pe baza estimării?</strong>{' '}
-              <a href="/cere-oferta" className="text-primary-dark font-medium hover:underline">Trimite cererea</a>{' '}
+              <a href="/cere-oferta?sursa=calculator-text" className="text-primary-dark font-medium hover:underline">Trimite cererea</a>{' '}
               către instalatori verificați din județul tău, sau{' '}
               <a href="/firme" className="text-primary-dark font-medium hover:underline">vezi lista completă</a>{' '}
               de instalatori cu certificări ANRE active.

@@ -5,9 +5,23 @@ import remarkGfm from 'remark-gfm';
 
 interface MarkdownProps {
   content: string;
+  /**
+   * Slug-ul paginii gazdă. Linkurile din text către /cere-oferta îl primesc ca
+   * `?sursa=`, la fel ca butoanele din InstallerCta: un link pus în mijlocul
+   * unui articol e cel mai intenționat click de pe pagină și n-are rost să fie
+   * singurul pe care nu îl putem atribui.
+   */
+  linkSource?: string;
 }
 
-export default function Markdown({ content }: MarkdownProps) {
+export default function Markdown({ content, linkSource }: MarkdownProps) {
+  function resolveHref(href?: string): string | undefined {
+    if (!href || !linkSource) return href;
+    // Doar linkurile fără query propriu: dacă autorul a pus deja parametri, îi respectăm.
+    if (href !== '/cere-oferta') return href;
+    return `/cere-oferta?sursa=${encodeURIComponent(linkSource)}`;
+  }
+
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
@@ -50,9 +64,21 @@ export default function Markdown({ content }: MarkdownProps) {
         tr: ({ children }) => (
           <tr className="hover:bg-surface/50 transition-colors">{children}</tr>
         ),
-        a: ({ href, children }) => (
-          <a href={href} className="text-primary-dark hover:underline" target="_blank" rel="noopener noreferrer">{children}</a>
-        ),
+        // Tab nou doar pentru linkurile externe. Înainte plecau toate acolo,
+        // inclusiv cele interne, ceea ce rupea inutil parcursul spre formular.
+        a: ({ href, children }) => {
+          const resolved = resolveHref(href);
+          const isInternal = resolved?.startsWith('/') ?? false;
+          return (
+            <a
+              href={resolved}
+              className="text-primary-dark hover:underline"
+              {...(isInternal ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+            >
+              {children}
+            </a>
+          );
+        },
         blockquote: ({ children }) => (
           <blockquote className="border-l-4 border-primary/30 pl-4 my-4 text-gray-500 italic">{children}</blockquote>
         ),

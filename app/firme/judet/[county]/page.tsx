@@ -202,7 +202,7 @@ export default async function CountyPage({ params }: Props) {
           <p className="text-sm text-gray-600 mb-4">
             Completează formularul și primești oferte personalizate de la firmele din zona ta.
           </p>
-          <Button href="/cere-oferta" size="lg">
+          <Button href="/cere-oferta?sursa=judet" size="lg">
             Cere Ofertă Gratuită
           </Button>
         </div>
