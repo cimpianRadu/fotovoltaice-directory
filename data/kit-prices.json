@@ -761,7 +761,9 @@
           "manoperaRon": 2449,
           "manoperaPeKw": 816,
           "pretCuTva21Ron": 10162.79,
-          "pretPeUnitateCuTva21": 3388
+          "pretPeUnitateCuTva21": 3388,
+          "manoperaCuTva21Ron": 2963.29,
+          "manoperaPeKwCuTva21": 988
         },
         {
           "nume": "Sistem Fotovoltaic 10 KW – Panouri Fotovoltaice 10 KW Trifazat",
@@ -875,7 +877,9 @@
           "manoperaRon": 2220.5599999999995,
           "manoperaPeKw": 740,
           "pretCuTva21Ron": 13535.36,
-          "pretPeUnitateCuTva21": 4512
+          "pretPeUnitateCuTva21": 4512,
+          "manoperaCuTva21Ron": 2465.03,
+          "manoperaPeKwCuTva21": 822
         },
         {
           "nume": "Kit panouri fotovoltaice 3 kW monofazat ongrid",
@@ -892,7 +896,9 @@
           "manoperaRon": 1607.5200000000004,
           "manoperaPeKw": 536,
           "pretCuTva21Ron": 10478.84,
-          "pretPeUnitateCuTva21": 3493
+          "pretPeUnitateCuTva21": 3493,
+          "manoperaCuTva21Ron": 1784.49,
+          "manoperaPeKwCuTva21": 595
         },
         {
           "nume": "Kit panouri fotovoltaice 5 kW monofazat ongrid",
@@ -909,7 +915,9 @@
           "manoperaRon": 1014.2399999999998,
           "manoperaPeKw": 203,
           "pretCuTva21Ron": 13639.96,
-          "pretPeUnitateCuTva21": 2728
+          "pretPeUnitateCuTva21": 2728,
+          "manoperaCuTva21Ron": 1125.9,
+          "manoperaPeKwCuTva21": 225
         },
         {
           "nume": "Invertor on-grid trifazat Huawei SUN2000-3KTL-M1 (3 kW)",

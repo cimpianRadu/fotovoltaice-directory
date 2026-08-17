@@ -72,6 +72,17 @@ for (const sursa of date.sources) {
     const faraTva = p.pretRon / (1 + cota);
     p.pretCuTva21Ron = Math.round(faraTva * (1 + TVA_LEGAL) * 100) / 100;
     p.pretPeUnitateCuTva21 = p.marime ? Math.round(p.pretCuTva21Ron / p.marime) : null;
+
+    // Manopera are aceeași problemă ca prețul, doar că mai ascunsă: `manoperaRon`
+    // e diferența dintre două prețuri afișate, deci moștenește baza de TVA a
+    // magazinului. Solar1000 o publică fără TVA, VoltGrid cu 9%. Puse una lângă
+    // alta ca atare, cifrele par comparabile și nu sunt.
+    if (typeof p.manoperaRon === 'number') {
+      const manoperaFaraTva = p.manoperaRon / (1 + cota);
+      p.manoperaCuTva21Ron = Math.round(manoperaFaraTva * (1 + TVA_LEGAL) * 100) / 100;
+      p.manoperaPeKwCuTva21 = p.marime ? Math.round(p.manoperaCuTva21Ron / p.marime) : null;
+    }
+
     normalizate++;
   }
 }
