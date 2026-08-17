@@ -4,7 +4,7 @@ import { useState } from 'react';
 import {
   CLAIM_STATUS_HINTS,
   CLAIM_STATUS_LABELS,
-  claimIdleDays,
+  claimIdleBusinessDays,
   isClaimUntouched,
   type ClaimStatus,
 } from '@/lib/sheets-shared';
@@ -180,7 +180,7 @@ export default function ApproveClaims({ claims }: { claims: PortalClaimRow[] }) 
                     title="Nici status mutat, nici notă scrisă de când are datele"
                     className="rounded bg-red-100 px-1.5 py-px text-[10px] font-semibold text-red-700"
                   >
-                    n-a atins-o de {claimIdleDays(at)} zile
+                    n-a atins-o de {claimIdleBusinessDays(at)} zile lucrătoare
                   </span>
                 )}
                 {!c.contactedAt && !at && (

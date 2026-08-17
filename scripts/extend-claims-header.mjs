@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Scrie rândul de header al tabului „Revendicări" (A1:O1), inclusiv coloanele
- * de portal adăugate în aug 2026 (I–O: Email, Renunțat la, Motiv renunțare,
- * Note firmă, Aprobat la, Ofertat la, Notificat inactiv la).
+ * Scrie rândul de header al tabului „Revendicări" (A1:P1), inclusiv coloanele
+ * de portal adăugate în aug 2026 (I–P: Email, Renunțat la, Motiv renunțare,
+ * Note firmă, Aprobat la, Ofertat la, Ultimul reminder la, Remindere trimise).
  *
  * Același model ca fix-leads-header.mjs: scrie DOAR rândul 1 și doar dacă
  * rândul 1 nu conține date (codul nu citește headerul — rândurile se filtrează
@@ -48,7 +48,8 @@ const HEADERS = [
   'Note firmă', // L — jurnal datat, scris de firmă din /portal
   'Aprobat la', // M — scris din /admin/crm; deblochează datele clientului în portal
   'Ofertat la', // N — firma marchează din /portal că a trimis oferta clientului
-  'Notificat inactiv la', // O — emailul „mai ești interesat?", o singură dată per revendicare
+  'Ultimul reminder la', // O — emailul „mai ești interesat?", ultima trimitere
+  'Remindere trimise', // P — contorul de cadență (2 zile lucrătoare, apoi la 4)
 ];
 
 const auth = new google.auth.JWT({
@@ -63,7 +64,7 @@ const current =
   (
     await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
-      range: 'Revendicări!A1:O1',
+      range: 'Revendicări!A1:P1',
     })
   ).data.values?.[0] || [];
 
@@ -74,7 +75,7 @@ if (Number.isFinite(Date.parse(current[0] || ''))) {
   process.exit(1);
 }
 
-console.log(`=== Header Revendicări!A1:O1 ${APPLY ? '(APPLY)' : '(DRY RUN)'} ===\n`);
+console.log(`=== Header Revendicări!A1:P1 ${APPLY ? '(APPLY)' : '(DRY RUN)'} ===\n`);
 const colLetter = (i) => String.fromCharCode(65 + i);
 let changes = 0;
 for (const [i, want] of HEADERS.entries()) {
@@ -96,7 +97,7 @@ if (!APPLY) {
 
 await sheets.spreadsheets.values.update({
   spreadsheetId: SPREADSHEET_ID,
-  range: 'Revendicări!A1:O1',
+  range: 'Revendicări!A1:P1',
   valueInputOption: 'RAW',
   requestBody: { values: [HEADERS] },
 });

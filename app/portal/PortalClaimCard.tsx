@@ -7,7 +7,7 @@ import {
   CLAIM_STATUSES,
   CLAIM_STATUS_HINTS,
   CLAIM_STATUS_LABELS,
-  claimIdleDays,
+  claimIdleBusinessDays,
   isClaimUntouched,
   type ClaimStatus,
   type LeadNote,
@@ -370,8 +370,10 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
         }) && (
           <div className="mt-4 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
             <p className="font-semibold">
-              Au trecut {claimIdleDays(claim.approvedAt)} zile de când ai datele clientului. Mai
-              ești interesat de cererea asta?
+              {claimIdleBusinessDays(claim.approvedAt) === 1
+                ? 'A trecut o zi lucrătoare'
+                : `Au trecut ${claimIdleBusinessDays(claim.approvedAt)} zile lucrătoare`}{' '}
+              de când ai datele clientului. Mai ești interesat de cererea asta?
             </p>
             <p className="mt-1 text-amber-800">
               Nu văd nicio activitate pe cerere, dar poate ai vorbit deja cu el. M-ar ajuta să

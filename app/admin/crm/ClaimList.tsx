@@ -2,12 +2,18 @@
 
 import { useState } from 'react';
 import {
+  CLAIM_REMINDER_MAX,
   CLAIM_STALE_DAYS,
   CLAIM_STATUS_HINTS,
   CLAIM_STATUS_LABELS,
   MAX_ACTIVE_CLAIMS_PER_FIRM,
+  claimHoldsFirmSlot,
+  claimIdleBusinessDays,
+  claimIdleCalendarDays,
   claimLastActivity,
+  claimRemindersExhausted,
   isClaimStale,
+  isClaimStatusUnproven,
   type ClaimSource,
   type ClaimStatus,
   type LeadNote,
@@ -31,8 +37,12 @@ export interface ClaimRow {
   offeredAt: string;
   /** Unde zice FIRMA că e cu clientul (setat de ea din /portal). Auto-raportat. */
   firmStatus: ClaimStatus;
-  /** Câte cereri ține firma asta fără apel confirmat, la încărcarea paginii. */
+  /** Câte sloturi ține firma asta ocupate, la încărcarea paginii. */
   firmActive: number;
+  /** Când i-a plecat firmei ultimul reminder pe cererea asta. */
+  remindedAt: string;
+  /** Câte remindere au plecat. La CLAIM_REMINDER_MAX seria s-a terminat. */
+  reminderCount: number;
 }
 
 const FIRM_STATUS_CHIP: Record<ClaimStatus, string> = {
@@ -70,8 +80,13 @@ function Claim({ claim }: { claim: ClaimRow }) {
   const [message, setMessage] = useState<string | null>(null);
 
   // Slotul se eliberează în clipa confirmării, deci contorul afișat trebuie să
-  // se miște odată cu butonul, nu abia la următorul refresh.
-  const active = claim.firmActive - (contactedAt ? 1 : 0) + (claim.contactedAt ? 1 : 0);
+  // se miște odată cu butonul, nu abia la următorul refresh. Regula de ocupare e
+  // aceeași ca la revendicare (statusul poate să fi eliberat deja slotul), ca să
+  // nu arate contorul altceva decât refuză API-ul.
+  const noteCount = claim.firmNotes.length;
+  const heldAtLoad = claimHoldsFirmSlot({ ...claim, noteCount });
+  const heldNow = claimHoldsFirmSlot({ ...claim, contactedAt, noteCount });
+  const active = claim.firmActive - (heldAtLoad ? 1 : 0) + (heldNow ? 1 : 0);
   const capped = active >= MAX_ACTIVE_CLAIMS_PER_FIRM;
 
   async function call(url: string, body: Record<string, unknown>, apply: (b: Record<string, string>) => void) {
@@ -132,7 +147,7 @@ function Claim({ claim }: { claim: ClaimRow }) {
           )}
         </div>
         <span
-          title={`Cereri ținute fără apel confirmat, din ${MAX_ACTIVE_CLAIMS_PER_FIRM} posibile`}
+          title={`Sloturi ocupate de firmă (status încă „de sunat", sau „nu răspunde" fără notă), din ${MAX_ACTIVE_CLAIMS_PER_FIRM}`}
           className={`shrink-0 text-[10px] font-semibold tabular-nums ${
             capped ? 'text-red-600' : 'text-slate-400'
           }`}
@@ -173,17 +188,43 @@ function Claim({ claim }: { claim: ClaimRow }) {
           Firma zice că a semnat. Verifică cu clientul, apoi treci cererea pe „Câștigată".
         </div>
       )}
-      {/* Datele au plecat spre firmă, oferta nu, și nimic nu s-a mișcat de 2 zile:
-          apel de follow-up, aflăm dacă mai e de interes sau realocăm cererea. */}
-      {isClaimStale({ ...claim, approvedAt, offeredAt: claim.offeredAt, contactedAt })
-        && (
-          <div
-            title={`Nimic nou din ${fmtDateTime(new Date(claimLastActivity({ ...claim, approvedAt, contactedAt })).toISOString())}`}
-            className="mt-1 inline-block rounded bg-red-100 px-1.5 py-px text-[10px] font-semibold text-red-700"
-          >
-            fără mișcare de {CLAIM_STALE_DAYS}+ zile, sună firma
-          </div>
-        )}
+      {/* Datele au plecat spre firmă, oferta nu, și nimic nu s-a mișcat de 2 zile
+          LUCRĂTOARE: apel de follow-up, aflăm dacă mai e de interes sau realocăm.
+          Weekendul nu se numără, dar clientul îl trăiește, deci lângă cifra de
+          zile lucrătoare stă și cât așteaptă omul de fapt. */}
+      {isClaimStale({ ...claim, approvedAt, offeredAt: claim.offeredAt, contactedAt }) && (
+        <div
+          title={`Nimic nou din ${fmtDateTime(new Date(claimLastActivity({ ...claim, approvedAt, contactedAt })).toISOString())}`}
+          className="mt-1 inline-block rounded bg-red-100 px-1.5 py-px text-[10px] font-semibold text-red-700"
+        >
+          fără mișcare de {CLAIM_STALE_DAYS}+ zile lucrătoare, sună firma
+          {approvedAt ? ` (clientul așteaptă de ${claimIdleCalendarDays(approvedAt)} zile)` : ''}
+        </div>
+      )}
+
+      {/* Seria de remindere s-a terminat și tot n-a atins cererea: emailul și-a
+          făcut treaba cât a putut, mai departe e apel sau realocare. */}
+      {claimRemindersExhausted({ ...claim, approvedAt, noteCount, remindedAt: claim.remindedAt }) && (
+        <div
+          title={`${claim.reminderCount} remindere trimise, ultimul ${claim.remindedAt ? fmtDay(claim.remindedAt) : '?'}`}
+          className="mt-1 inline-block rounded bg-red-600 px-1.5 py-px text-[10px] font-semibold text-white"
+        >
+          {CLAIM_REMINDER_MAX} remindere fără reacție, de realocat
+        </div>
+      )}
+
+      {/* Statusul mutat i-a eliberat un slot, dar nu există nicio urmă că a
+          vorbit cu clientul. De cele mai multe ori a sunat și n-a scris, dar
+          asta e singura formă pe care ar lua-o și mutarea pastilei doar ca să se
+          elibereze locuri: verific la clientul din cerere. */}
+      {isClaimStatusUnproven({ ...claim, approvedAt, contactedAt, noteCount }) && (
+        <div
+          title="Status mutat, dar fără notă, fără ofertă și fără apel confirmat de client"
+          className="mt-1 inline-block rounded bg-amber-100 px-1.5 py-px text-[10px] font-semibold text-amber-800"
+        >
+          status mutat fără dovadă de {claimIdleBusinessDays(approvedAt)} zile, verifică la client
+        </div>
+      )}
 
       {/* Jurnalul firmei din portal — derivat, doar afișare. */}
       {claim.firmNotes.length > 0 && (

@@ -1,7 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { slugifyCity } from '@/lib/utils-shared';
 import LeadCard, { type LeadCardData } from './LeadCard';
+import CountyFilter from './CountyFilter';
 
 interface LeadFeedProps {
   cards: LeadCardData[];
@@ -46,6 +48,10 @@ function matchesSegment(segment: string, filter: SegmentFilter): boolean {
   return seg === filter;
 }
 
+function matchesCounty(judet: string, counties: string[]): boolean {
+  return counties.length === 0 || counties.includes(judet);
+}
+
 const pillClass = (active: boolean) =>
   `px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
     active
@@ -57,15 +63,76 @@ export default function LeadFeed({ cards, claimCounts, maxClaims }: LeadFeedProp
   const [age, setAge] = useState<AgeFilter>('toate');
   const [segment, setSegment] = useState<SegmentFilter>('toate');
   const [sort, setSort] = useState<SortDir>('recente');
+  const [counties, setCounties] = useState<string[]>([]);
 
-  // Counterele pe fiecare dimensiune țin cont de filtrul celeilalte (faceted).
+  // Județele din URL (`/cereri?judet=galati,braila`) se citesc după montare, nu
+  // în starea inițială: pagina e prerandată fără parametru, iar o stare diferită
+  // între server și client ar da eroare de hidratare.
+  useEffect(() => {
+    const raw = new URLSearchParams(window.location.search).get('judet');
+    if (!raw) return;
+    const wanted = new Set(raw.split(',').map((s) => s.trim()).filter(Boolean));
+    const found = [...new Set(cards.map((c) => c.judet).filter(Boolean))].filter((j) =>
+      wanted.has(slugifyCity(j)),
+    );
+    if (found.length) setCounties(found);
+    // Doar la montare: după aceea URL-ul îl scriem noi, nu-l mai citim.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /**
+   * Selecția merge în URL ca să poată fi trimisă mai departe: linkul „cererile
+   * din Galați" ajunge direct în emailul sau mesajul către firmă. `replaceState`
+   * în loc de router: parametrul nu schimbă nimic pe server, iar o navigare ar
+   * reface pagina (deci și citirea din Sheets) degeaba.
+   */
+  const pickCounties = (next: string[]) => {
+    setCounties(next);
+    const params = new URLSearchParams(window.location.search);
+    if (next.length) params.set('judet', next.map(slugifyCity).join(','));
+    else params.delete('judet');
+    // Virgula rămâne virgulă (nu %2C): linkul se citește în email, unde e trimis
+    // manual, iar parsarea e identică.
+    const qs = params.toString().replace(/%2C/g, ',');
+    window.history.replaceState(null, '', qs ? `?${qs}` : window.location.pathname);
+  };
+
+  // Counterele pe fiecare dimensiune țin cont de filtrele celorlalte (faceted).
   const ageCount = (f: AgeFilter) =>
-    cards.filter((c) => matchesAge(c.ageDays, f) && matchesSegment(c.segment, segment)).length;
+    cards.filter(
+      (c) =>
+        matchesAge(c.ageDays, f) &&
+        matchesSegment(c.segment, segment) &&
+        matchesCounty(c.judet, counties),
+    ).length;
   const segmentCount = (f: SegmentFilter) =>
-    cards.filter((c) => matchesAge(c.ageDays, age) && matchesSegment(c.segment, f)).length;
+    cards.filter(
+      (c) =>
+        matchesAge(c.ageDays, age) &&
+        matchesSegment(c.segment, f) &&
+        matchesCounty(c.judet, counties),
+    ).length;
+
+  // Lista de județe = doar cele care au cereri, numărate în restul filtrelor
+  // active. Un județ care ar da zero rezultate n-are ce căuta în listă.
+  const countyOptions = [...new Set(cards.map((c) => c.judet).filter(Boolean))]
+    .map((name) => ({
+      name,
+      count: cards.filter(
+        (c) =>
+          c.judet === name && matchesAge(c.ageDays, age) && matchesSegment(c.segment, segment),
+      ).length,
+    }))
+    .filter((o) => o.count > 0 || counties.includes(o.name))
+    .sort((a, b) => a.name.localeCompare(b.name, 'ro'));
 
   const visible = cards
-    .filter((c) => matchesAge(c.ageDays, age) && matchesSegment(c.segment, segment))
+    .filter(
+      (c) =>
+        matchesAge(c.ageDays, age) &&
+        matchesSegment(c.segment, segment) &&
+        matchesCounty(c.judet, counties),
+    )
     .sort((a, b) => (sort === 'recente' ? a.ageDays - b.ageDays : b.ageDays - a.ageDays));
 
   return (
@@ -112,6 +179,11 @@ export default function LeadFeed({ cards, claimCounts, maxClaims }: LeadFeedProp
               <span className={age === f.id ? 'opacity-80' : 'text-gray-400'}>({ageCount(f.id)})</span>
             </button>
           ))}
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs text-gray-400 font-medium w-16">Județ</span>
+          <CountyFilter options={countyOptions} selected={counties} onChange={pickCounties} />
         </div>
       </div>
 

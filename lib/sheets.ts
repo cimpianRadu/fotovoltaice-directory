@@ -499,12 +499,14 @@ export interface LeadClaim {
   /** Coloana N: ISO — firma a marcat din /portal că a trimis oferta clientului. */
   offeredAt: string;
   /**
-   * Coloana O: ISO — când i-am trimis firmei emailul „mai ești interesat?"
-   * pentru cererea asta. Există ca să nu-l trimitem de două ori: cronul rulează
-   * zilnic, iar o cerere neatinsă rămâne neatinsă, deci fără marcaj ar pleca
-   * același email în fiecare dimineață. Un singur email per revendicare.
+   * Coloana O: ISO — când i-a plecat firmei ultimul email „mai ești interesat?"
+   * pentru cererea asta. Cronul rulează zilnic, iar o cerere neatinsă rămâne
+   * neatinsă, deci fără marcaj ar pleca același email în fiecare dimineață.
+   * Împreună cu `reminderCount` dă cadența din `claimReminderDue`.
    */
-  inactivityNotifiedAt: string;
+  remindedAt: string;
+  /** Coloana P: câte remindere au plecat. Plafonat la CLAIM_REMINDER_MAX. */
+  reminderCount: number;
   /**
    * Coloana F: unde e FIRMA cu cererea asta, după propria ei declarație din
    * /portal. Coloana exista de la început cu 'Nou' scris la creare, dar nimeni
@@ -538,7 +540,11 @@ function readClaimRow(r: string[]): LeadClaim {
     firmNotes: parseNotes(r[11] || ''),
     approvedAt: r[12] || '',
     offeredAt,
-    inactivityNotifiedAt: r[14] || '',
+    remindedAt: r[14] || '',
+    // Rândurile de dinainte de coloana P au marcajul din O dar nu și contorul —
+    // un reminder plecat înseamnă cel puțin unul trimis, altfel cadența ar
+    // reporni de la zero pentru ele.
+    reminderCount: Number(r[15]) || (r[14] ? 1 : 0),
     firmStatus: deriveClaimStatus(r[5] || '', { offeredAt, releasedAt }),
   };
 }
@@ -590,7 +596,8 @@ export async function saveClaimToSheet(claim: {
     '', // L — Note firmă: jurnalul firmei din /portal (format parseNotes)
     '', // M — Aprobat la: scris din /admin/crm; deblochează datele clientului în portal
     '', // N — Ofertat la: firma marchează din /portal că a trimis oferta
-    '', // O — Notificat inactiv la: emailul „mai ești interesat?", o singură dată
+    '', // O — Ultimul reminder la: emailul „mai ești interesat?"
+    '', // P — Remindere trimise: contorul de cadență (max CLAIM_REMINDER_MAX)
   ];
   try {
     await appendRow(CLAIMS_SHEET, values);
@@ -618,7 +625,8 @@ const CLAIMS_HEADER = [
   'Note firmă', // L — jurnal datat, scris de firmă din /portal
   'Aprobat la', // M — scris din /admin/crm; deblochează datele clientului în portal
   'Ofertat la', // N — firma marchează din /portal că a trimis oferta clientului
-  'Notificat inactiv la', // O — emailul „mai ești interesat?", trimis o singură dată
+  'Ultimul reminder la', // O — emailul „mai ești interesat?", ultima trimitere
+  'Remindere trimise', // P — contorul de cadență (2 zile lucrătoare, apoi la 4)
 ];
 
 /**
@@ -749,17 +757,22 @@ export async function setClaimApproved(
 }
 
 /**
- * Marchează că firmei i-a plecat emailul de inactivitate pe revendicarea asta.
- * Se scrie DUPĂ trimitere: dacă emailul pică, marcajul lipsește și cronul de
- * mâine reîncearcă — mai bine o reîncercare decât o tăcere definitivă.
+ * Marchează că firmei i-a plecat un reminder pe revendicarea asta: data ultimei
+ * trimiteri (O) și al câtelea a fost (P). Se scrie DUPĂ trimitere: dacă emailul
+ * pică, marcajul lipsește și cronul de mâine reîncearcă — mai bine o reîncercare
+ * decât o tăcere definitivă. Contorul e cel care oprește seria la
+ * CLAIM_REMINDER_MAX.
  */
-export async function markClaimInactivityNotified(
+export async function markClaimReminded(
   claimTimestamp: string,
   leadId: string,
-  notifiedAt: string,
+  remindedAt: string,
+  reminderCount: number,
 ): Promise<void> {
   const { sheetRow } = await findClaimRow(claimTimestamp, leadId);
-  await updateClaimCells(`${CLAIMS_SHEET}!O${sheetRow}`, [[notifiedAt]]);
+  await updateClaimCells(`${CLAIMS_SHEET}!O${sheetRow}:P${sheetRow}`, [
+    [remindedAt, String(reminderCount)],
+  ]);
 }
 
 // ── Portal: cine cere acces și cine chiar intră ─────────────────────────────
@@ -1027,11 +1040,23 @@ export {
   FIRM_STATUSES,
   FIRM_STATUS_LABELS,
   FIRM_STATUS_HINTS,
-  claimIdleDays,
+  CLAIM_REMINDER_FIRST_DAYS,
+  CLAIM_REMINDER_REPEAT_DAYS,
+  CLAIM_REMINDER_MAX,
+  businessDaysBetween,
+  bucharestDay,
+  isBusinessDay,
+  claimIdleBusinessDays,
+  claimIdleCalendarDays,
   claimLastActivity,
+  claimHoldsFirmSlot,
+  claimOccupiesLeadSlot,
+  claimReminderDue,
+  claimRemindersExhausted,
   claimsHeldForLead,
   countActiveClaimsForFirm,
   isClaimStale,
+  isClaimStatusUnproven,
   isClaimUntouched,
   firmMentionedIn,
   isLeadClosed,

@@ -3,7 +3,13 @@ import Link from 'next/link';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
-import { MAX_CLAIMS_PER_LEAD, getClaims, getPublicLeads, type PublicLead } from '@/lib/sheets';
+import {
+  MAX_CLAIMS_PER_LEAD,
+  claimOccupiesLeadSlot,
+  getClaims,
+  getPublicLeads,
+  type PublicLead,
+} from '@/lib/sheets';
 import {
   calendarAgeDays,
   cerereAgeLabel,
@@ -39,8 +45,10 @@ export default async function CereriPage() {
     const [publicLeads, claims] = await Promise.all([getPublicLeads(), getClaims()]);
     leads = publicLeads;
     for (const c of claims) {
-      // Renunțările din portal nu ocupă locuri — cererea reapare disponibilă.
-      if (c.releasedAt) continue;
+      // Renunțările și cererile marcate „neconcretizat" nu ocupă locuri —
+      // aceeași regulă ca la revendicare (claimsHeldForLead), altfel feedul ar
+      // arăta plină o cerere pe care API-ul o acceptă.
+      if (!claimOccupiesLeadSlot(c)) continue;
       claimCounts[c.leadId] = (claimCounts[c.leadId] || 0) + 1;
     }
   } catch (err) {

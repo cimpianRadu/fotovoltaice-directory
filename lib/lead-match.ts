@@ -8,7 +8,9 @@
 import type { Company } from './utils-shared';
 import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
+  claimHoldsFirmSlot,
   isSameFirm,
+  type ClaimStatus,
   type FirmStatus,
 } from './sheets-shared';
 
@@ -24,6 +26,12 @@ export interface MatchClaim {
   numeFirma: string;
   telefon: string;
   contactedAt: string;
+  // Necesare ca plafonul de aici să numere exact ca `countActiveClaimsForFirm`:
+  // statusul mutat din portal eliberează slotul, deci nu mai e „revendicare fără
+  // apel", e revendicare în lucru.
+  releasedAt: string;
+  firmStatus: ClaimStatus;
+  firmNotes: unknown[];
 }
 
 export interface MatchCrmFirm {
@@ -158,10 +166,12 @@ export function matchFirmsForLead(
       score += 1;
       reasons.push('a confirmat apeluri pe cereri');
     }
-    const active = firmClaims.filter((cl) => !cl.contactedAt).length;
+    const active = firmClaims.filter((cl) =>
+      claimHoldsFirmSlot({ ...cl, noteCount: cl.firmNotes.length }),
+    ).length;
     if (active >= MAX_ACTIVE_CLAIMS_PER_FIRM) {
       score -= 3;
-      warnings.push(`plafon plin (${active} revendicări fără apel)`);
+      warnings.push(`plafon plin (${active} revendicări nemișcate)`);
     }
 
     // Pipeline-ul din CRM Instalatori: firmele cu care avem relație primesc

@@ -293,7 +293,7 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
                   <a href="/portal" className="underline hover:no-underline">Portalul Instalatorilor</a>{' '}
                   (intri cu emailul firmei, fără parolă). Datele firmei tale sunt folosite doar
                   pentru alocarea acestei cereri. Poți ține {MAX_ACTIVE_CLAIMS_PER_FIRM} cereri
-                  odată: locurile se eliberează pe măsură ce clienții confirmă că i-ai sunat.
+                  nemișcate odată: locul se eliberează imediat ce muți statusul cererii în portal.
                 </p>
               </form>
             )}

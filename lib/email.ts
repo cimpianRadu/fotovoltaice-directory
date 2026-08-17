@@ -4,6 +4,7 @@
 // email isn't configured (local dev, preview deploys without secrets).
 
 import { getFinancingShort, getFinancingTone, type FinancingTone } from './utils-shared';
+import { CLAIM_REMINDER_MAX } from './sheets-shared';
 
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 
@@ -459,10 +460,15 @@ export async function sendClaimReleaseNotification(data: {
  * s-au deblocat în portal. Fail-open ca restul notificărilor.
  */
 /**
- * „Mai ești interesat?" — cererea are datele deblocate de câteva zile și firma
- * n-a atins-o deloc. Tonul e cerut de user și e deliberat fără reproș: se poate
- * foarte bine să fi sunat clientul și doar să nu fi bifat nimic în portal.
- * Pleacă o singură dată per revendicare (coloana O din „Revendicări").
+ * „Mai ești interesat?" — cererea are datele deblocate de câteva zile lucrătoare
+ * și firma n-a atins-o deloc. Tonul e cerut de user și e deliberat fără reproș:
+ * se poate foarte bine să fi sunat clientul și doar să nu fi bifat nimic în
+ * portal. Cadența (primul la 2 zile lucrătoare, apoi la 4, maxim
+ * CLAIM_REMINDER_MAX) e în `claimReminderDue`.
+ *
+ * `attempt` schimbă doar tonul, nu regula: al treilea spune consecința reală, ca
+ * să nu fie al treilea email identic cu primul. Consecința e adevărată, cererea
+ * chiar ajunge pe lista de realocat în /admin/crm.
  *
  * Închiderea cere feedback pe portal: firmele astea sunt primii utilizatori, iar
  * un răspuns la emailul ăsta ajunge în inboxul nostru (from = contact@).
@@ -470,26 +476,40 @@ export async function sendClaimReleaseNotification(data: {
 export async function sendClaimInactiveEmail(data: {
   to: string;
   leadSummary: string;
+  /** Zile LUCRĂTOARE de când firma are datele. Weekendurile nu se numără. */
   days: number;
+  attempt: number;
 }): Promise<{ ok: boolean; reason?: string }> {
+  const last = data.attempt >= CLAIM_REMINDER_MAX;
+  const heading = last ? 'Ultimul mesaj pe cererea asta' : 'Mai ești interesat de cererea asta?';
+  const subject = last
+    ? `Ultimul mesaj despre cererea ${data.leadSummary}`
+    : `Mai ești interesat de cererea ${data.leadSummary}?`;
+
+  const zile = data.days === 1 ? 'o zi lucrătoare' : `${data.days} zile lucrătoare`;
+  const body = last
+    ? `Poate ai vorbit deja cu el și doar n-ai apucat să bifezi, dar din portal nu am cum să știu.
+       E ultimul email pe cererea asta: dacă nici acum nu se mișcă nimic, te sun eu, iar dacă nu
+       mai lucrezi la ea o preia altă firmă și clientul primește în sfârșit un telefon.`
+    : `Poate ai vorbit deja cu el și doar n-ai apucat să bifezi. M-ar ajuta să știu unde ești:
+       intră în portal și mută statusul sau lasă o notă. Dacă nu mai lucrezi la ea, renunță
+       și o preia altă firmă, iar clientul primește un telefon.`;
+
   const html = `<!DOCTYPE html>
 <html>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
   <div style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
-    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#fffbeb">
-      <div style="font-size:12px;color:#b45309;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">Cerere fără activitate</div>
-      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">Mai ești interesat de cererea asta?</h1>
+    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:${last ? '#fef2f2' : '#fffbeb'}">
+      <div style="font-size:12px;color:${last ? '#b91c1c' : '#b45309'};font-weight:600;letter-spacing:0.05em;text-transform:uppercase">Cerere fără activitate</div>
+      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${heading}</h1>
     </div>
     <div style="padding:24px">
       <p style="font-size:14px;color:#374151;margin:0 0 14px">
-        Au trecut ${data.days} zile de când ai datele clientului pentru
+        ${data.days === 1 ? 'A trecut' : 'Au trecut'} ${zile} de când ai datele clientului pentru
         <strong>${escapeHtml(data.leadSummary)}</strong> și nu văd nicio mișcare pe cerere.
+        Weekendurile nu le număr.
       </p>
-      <p style="font-size:14px;color:#374151;margin:0 0 16px">
-        Poate ai vorbit deja cu el și doar n-ai apucat să bifezi. M-ar ajuta să știu unde ești:
-        intră în portal și mută statusul sau lasă o notă. Dacă nu mai lucrezi la ea, renunță
-        și o preia altă firmă, iar clientul primește un telefon.
-      </p>
+      <p style="font-size:14px;color:#374151;margin:0 0 16px">${body}</p>
       <div style="text-align:center">
         <a href="${PORTAL_BASE_URL}/portal" style="display:inline-block;padding:12px 24px;background:#f59e0b;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">Deschide portalul</a>
       </div>
@@ -504,7 +524,7 @@ export async function sendClaimInactiveEmail(data: {
 
   const result = await sendEmail({
     to: data.to,
-    subject: `Mai ești interesat de cererea ${data.leadSummary}?`,
+    subject,
     html,
   });
 

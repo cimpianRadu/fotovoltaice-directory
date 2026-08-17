@@ -1,19 +1,26 @@
 import { NextResponse } from 'next/server';
 import {
+  CLAIM_REMINDER_MAX,
   getClaims,
   getLeadsSince,
-  isClaimUntouched,
-  claimIdleDays,
-  markClaimInactivityNotified,
+  bucharestDay,
+  claimIdleBusinessDays,
+  claimReminderDue,
+  isBusinessDay,
+  markClaimReminded,
 } from '@/lib/sheets';
 import { sendClaimInactiveEmail } from '@/lib/email';
 import { getProjectTypeLabel } from '@/lib/utils-shared';
 
 /**
- * Zilnic: firmele care au datele unui client de 2+ zile și n-au atins deloc
- * revendicarea primesc un email „mai ești interesat?". O singură dată per
- * revendicare — marcajul stă în coloana O din „Revendicări", altfel același
- * email ar pleca în fiecare dimineață cât timp cererea rămâne neatinsă.
+ * Zilnic: firmele care au datele unui client de 2 zile LUCRĂTOARE și n-au atins
+ * deloc revendicarea primesc emailul „mai ești interesat?", apoi unul la 4 zile
+ * lucrătoare, de maxim CLAIM_REMINDER_MAX ori. Cadența și pragurile stau în
+ * `claimReminderDue`; aici rămâne doar trimiterea și marcajul (coloanele O + P
+ * din „Revendicări").
+ *
+ * Nu se trimite în weekend sau de sărbătoare legală, oricât ar arăta cadența:
+ * un email de duminică dimineața spune că nu ne interesează cum lucrează omul.
  *
  * Fără email în coloana I nu avem unde trimite; alea rămân treaba telefonului.
  */
@@ -35,18 +42,20 @@ export async function GET(request: Request) {
   }
 
   // `?dry=1` arată exact cine ar primi emailul, fără să trimită și fără să
-  // scrie marcajul. De rulat înainte de prima activare.
+  // scrie marcajul. De rulat înainte de orice schimbare de cadență.
   const dry = new URL(request.url).searchParams.get('dry') === '1';
+
+  const now = Date.now();
+  if (!isBusinessDay(bucharestDay(now)) && !dry) {
+    return NextResponse.json({ ok: true, skipped: 'zi nelucrătoare', sent: 0 });
+  }
 
   try {
     const [claims, leads] = await Promise.all([getClaims(), getLeadsSince(new Date(0))]);
     const leadById = new Map(leads.map((l) => [l.timestamp, l]));
 
     const due = claims.filter(
-      (c) =>
-        c.email &&
-        !c.inactivityNotifiedAt &&
-        isClaimUntouched({ ...c, noteCount: c.firmNotes.length }),
+      (c) => c.email && claimReminderDue({ ...c, noteCount: c.firmNotes.length }, now),
     );
 
     const batch = due.slice(0, MAX_PER_RUN);
@@ -66,22 +75,24 @@ export async function GET(request: Request) {
             .filter(Boolean)
             .join(' · ')
         : c.leadId;
-      const days = claimIdleDays(c.approvedAt);
+      const days = claimIdleBusinessDays(c.approvedAt, now);
+      const attempt = c.reminderCount + 1;
+      const label = `${c.email} → ${leadSummary} (${days} zile lucrătoare, reminder ${attempt}/${CLAIM_REMINDER_MAX})`;
 
       if (dry) {
-        sent.push(`${c.email} → ${leadSummary} (${days} zile)`);
+        sent.push(label);
         continue;
       }
 
-      const res = await sendClaimInactiveEmail({ to: c.email, leadSummary, days });
+      const res = await sendClaimInactiveEmail({ to: c.email, leadSummary, days, attempt });
       if (!res.ok) {
         // Fără marcaj: cronul de mâine reîncearcă. O tăcere definitivă e mai
         // rea decât un email întârziat cu o zi.
         failed.push(`${c.email}: ${res.reason ?? 'necunoscut'}`);
         continue;
       }
-      await markClaimInactivityNotified(c.timestamp, c.leadId, new Date().toISOString());
-      sent.push(`${c.email} → ${leadSummary} (${days} zile)`);
+      await markClaimReminded(c.timestamp, c.leadId, new Date(now).toISOString(), attempt);
+      sent.push(label);
     }
 
     return NextResponse.json({

@@ -92,9 +92,10 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error:
-            `Ai deja ${active} cereri în lucru. Sună clienții pe care i-ai luat, ` +
-            'îi întrebăm dacă i-ai contactat, apoi îți eliberăm locurile. ' +
-            'Scrie-ne la contact@instalatori-fotovoltaice.ro dacă i-ai sunat deja.',
+            `Ai deja ${active} cereri pe care nu le-ai mișcat. Sună clienții și ` +
+            'mută statusul din Portalul Instalatorilor („În discuții", „Ofertă trimisă"), ' +
+            'iar locurile se eliberează pe loc. Scrie-ne la contact@instalatori-fotovoltaice.ro ' +
+            'dacă ceva nu merge.',
           firmCapped: true,
         },
         { status: 409 },
