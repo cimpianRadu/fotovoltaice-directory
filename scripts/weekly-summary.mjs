@@ -70,12 +70,30 @@ const read = async (range) =>
     })
   ).data.values || [];
 
-const [leadRows, claimRows] = await Promise.all([read('Leads!A:N'), read('Revendicări!A:N')]);
+// A:V, nu A:N: coloana M e statusul de vizibilitate și V e statusul de CRM, iar
+// fără ele numărăm altceva decât arată /cereri. Pe 17 august, varianta A:N a
+// raportat 8 cereri libere când pe feed erau 6: una ascunsă manual și un
+// duplicat trimis de același om la 5 minute distanță, ambele „Ascuns" în Sheet.
+const [leadRows, claimRows] = await Promise.all([read('Leads!A:V'), read('Revendicări!A:N')]);
+
+// Aceleași reguli ca în lib/sheets.ts: status „Ascuns" (col. M) scoate cererea din
+// feed, iar LEAD_CLOSED_STATUSES pe statusul de CRM (col. V) o scoate din ce se
+// mai poate revendica. Închisă nu înseamnă nereală: o cerere câștigată rămâne în
+// „cereri noi" ale săptămânii, dar nu mai apare între cele disponibile.
+const LEAD_CLOSED_STATUSES = ['castigata', 'altundeva', 'renuntat'];
 
 const leads = leadRows
   .slice(1)
   .filter((r) => r[0])
-  .map((r) => ({ id: r[0], zi: roDay(r[0]), judet: r[6] || '', segment: r[13] || '' }));
+  .map((r) => ({
+    id: r[0],
+    zi: roDay(r[0]),
+    judet: r[6] || '',
+    segment: r[13] || '',
+    ascuns: (r[12] || '').trim() === 'Ascuns',
+    inchisa: LEAD_CLOSED_STATUSES.includes((r[21] || '').trim().toLowerCase()),
+  }))
+  .filter((l) => !l.ascuns);
 
 // Coloanele contractuale: J = renunțat la, M = aprobat la, N = ofertat la.
 const claims = claimRows
@@ -111,6 +129,21 @@ const topJudete = Object.entries(judete)
   .sort((a, b) => b[1] - a[1])
   .slice(0, 3);
 
+// O cerere merge la maxim 3 firme (MAX_CLAIMS_PER_LEAD din lib/sheets.ts), deci
+// „revendicată" nu înseamnă „luată": cât timp are sub 3 revendicări active, o
+// altă firmă mai poate intra pe ea. Ăsta e argumentul de urgență din postări.
+const MAX_CLAIMS_PER_LEAD = 3;
+const deRevendicat = leads.filter((l) => !l.inchisa);
+const libereAcum = deRevendicat.filter((l) => activeClaimsFor(l.id).length === 0);
+const cuLocuriRamase = deRevendicat.filter((l) => {
+  const n = activeClaimsFor(l.id).length;
+  return n > 0 && n < MAX_CLAIMS_PER_LEAD;
+});
+const locuriRamase = cuLocuriRamase.reduce(
+  (s, l) => s + (MAX_CLAIMS_PER_LEAD - activeClaimsFor(l.id).length),
+  0,
+);
+
 const out = {
   de: from,
   pana: to,
@@ -123,7 +156,10 @@ const out = {
   topJudete,
   // Totaluri, pentru context când săptămâna e slabă.
   totalCereri: leads.length,
-  totalCereriDisponibile: leads.filter((l) => activeClaimsFor(l.id).length === 0).length,
+  totalCereriDisponibile: libereAcum.length,
+  totalCereriDisponibileJudete: libereAcum.map((l) => l.judet).filter(Boolean),
+  cereriCuLocuriRamase: cuLocuriRamase.length,
+  locuriRamase,
 };
 
 if (JSON_ONLY) {
@@ -140,7 +176,13 @@ console.log(`  Oferte marcate trimise ... ${out.oferteTrimise}`);
 if (topJudete.length) {
   console.log(`  Top județe ............... ${topJudete.map(([j, n]) => `${j} ${n}`).join(', ')}`);
 }
-console.log(`\n  Context: ${out.totalCereri} cereri în total, ${out.totalCereriDisponibile} fără nicio firmă.\n`);
+console.log(`\n  Context: ${out.totalCereri} cereri în total, ${out.totalCereriDisponibile} fără nicio firmă`);
+if (out.totalCereriDisponibileJudete.length) {
+  console.log(`  Județele lor ............. ${out.totalCereriDisponibileJudete.join(', ')}`);
+}
+console.log(
+  `  Cu locuri rămase ......... ${out.cereriCuLocuriRamase} cereri (${out.locuriRamase} locuri, maxim ${MAX_CLAIMS_PER_LEAD} firme pe cerere)\n`,
+);
 
 if (out.cereriNoi === 0) {
   console.log('  ⚠️  Zero cereri în interval. Verifică dacă postarea de vineri mai are sens.\n');

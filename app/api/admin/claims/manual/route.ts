@@ -18,8 +18,8 @@ import { isValidEmail } from '@/lib/portal-auth';
  * regulă de duplicat) dar **NU trimite email de confirmare** către firmă (i-am
  * dat deja cererea manual) și e etichetată `source: 'manual'` în Sheet, ca să
  * o distingem în analytics de tracțiunea organică. Plafoanele se aplică
- * implicit: dacă o firmă are deja 3 revendicări active necontactate, nu i se
- * mai dă a patra pe cale automată — regula există ca să nu ocupe degeaba
+ * implicit: dacă o firmă și-a umplut sloturile de revendicări active
+ * necontactate, nu i se mai dă una pe cale automată — regula există ca să nu ocupe degeaba
  * sloturi. `override: true` le trece, pentru cazul în care ai dat cererea
  * telefonic unei firme în plus și vrei doar să consemnezi realitatea: un rând
  * lipsă înseamnă o firmă care nu-și vede cererea în /portal. Duplicatul rămâne

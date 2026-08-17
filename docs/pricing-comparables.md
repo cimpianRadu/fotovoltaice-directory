@@ -117,6 +117,72 @@ Scop: ancoră pentru pricing pe `/publicitate` când va fi cazul. Cifrele NU sun
 
 ---
 
+## Necesit.ro (RO, marketplace de servicii, generalist)
+
+- **Niche:** marketplace „cerere → până la 6 oferte", multi-categorie, are categorie dedicată `panouri-solare` și `pompe-de-caldura`
+- **Pricing model:** pay-per-lead, cu buget lunar setat de firmă. NU comision din lucrare.
+- **Public pricing:**
+  - „Solicitările costă, de regulă, **între 10 și 60 lei**, în funcție de complexitatea proiectului" — [necesit.ro/alatura-ni-te](https://www.necesit.ro/alatura-ni-te)
+  - Fiecare solicitare merge la firmă **plus cel mult alți 5 profesioniști** (deci până la 6 firme pe aceeași cerere) — aceeași pagină
+  - Cererile sunt **verificate telefonic** înainte de distribuire; livrare pe WhatsApp sau email
+  - Buget lunar modificabil/anulabil oricând, fără angajament
+- **Scale revendicată:** „10.000 clienți noi în fiecare lună"; Google 4,8 din 1.772 recenzii — aceeași pagină
+- **Notes:** ăsta e plafonul de preț pentru un lead PARTAJAT în RO. 60 lei ≈ 12 EUR pentru o cerere pe care o mai primesc încă 5 firme. Orice preț al nostru se compară cu asta, iar diferențiatorul nostru nu e prețul, ci **câte firme mai primesc aceeași cerere**.
+- **Source date:** pagina de înscriere profesioniști accesată 14 august 2026
+
+---
+
+## CatDam.ro (RO, marketplace de servicii, generalist, categorie „Energie solară")
+
+- **Niche:** marketplace de cereri de ofertă, 9-11 categorii, 20 de orașe
+- **Pricing model:** pur pay-per-lead, **fără abonament**, facturare lunară în urmă
+- **Public pricing (rate card complet public):**
+  - **Energie solară (fotovoltaice, baterii, pompe căldură, wallbox): 80 RON/lead** — [catdam.ro/parteneri](https://catdam.ro/parteneri)
+  - Renovări & construcții 80 RON, Evenimente 80, Medical 50, Instalații 50, Casă & grădină 50, Auto 30, Animale 30, IT 30, Frumusețe 20 — aceeași pagină
+  - **Primele 3 lead-uri gratuite** pentru fiecare partener nou
+  - Un lead merge la **maximum 3 parteneri** din aceeași categorie și același oraș
+  - Lead nepotrivit se refuză cu „nu se aplică" și nu se facturează
+  - Lead care nu răspunde la telefon **rămâne facturat**
+  - Fără perioadă minimă, fără penalizări la ieșire
+- **Notes:** energia solară e în tier-ul de preț maxim, la egalitate cu construcțiile. 80 RON ≈ 16 EUR pentru o cerere partajată cu alți 2. Modelul „primele 3 gratis" e exact testul pe care îl putem copia fără să pierdem nimic. Mecanica „refuzi lead-ul nepotrivit" e ce ne lipsește nouă ca protecție la retenție.
+- **Source date:** pagina parteneri accesată 14 august 2026
+
+---
+
+## Servicii-Rapide.ro (RO, marketplace de servicii, generalist)
+
+- **Operator:** S.C. CADIMA YOU SEE S.R.L., CUI 38611931, jud. Prahova
+- **Niche:** marketplace de cereri, generalist (are landing dedicat pe solar)
+- **Pricing model:** abonament lunar care cumpără **DOAR viteza de livrare a cererii**. Fără comision din lucrare. Free plan real.
+- **Public pricing (per prestator, per lună, EUR):** — [servicii-rapide.ro/tarife](https://servicii-rapide.ro/tarife)
+
+  | Pachet | Livrare cerere | Preț fără TVA | Total cu TVA 21% |
+  | --- | --- | --- | --- |
+  | Free | după 3 zile | 0 € | 0 € |
+  | Standard | după 2 zile | 49 € | 59,29 € |
+  | Pro | după 1 zi | 99 € | 119,79 € |
+  | Ultimate | după 12 ore | 149 € | 180,29 € |
+  | Instant | după 1 oră | 199 € | 240,79 € |
+
+  - Reînnoire automată lunară, card prin NETOPIA, anulare din cont fără telefon
+  - Pagina actualizată 09.07.2026
+- **Notes:** **cel mai important comparabil pe care îl avem.** E fix modelul „feed public cu întârziere + abonament pentru acces instant" din planul nostru de monetizare, deja implementat și cu preț public în RO. Confirmă că întârzierea e un produs vandabil și că scara merge până la 199 €/lună. Ei sunt generaliști, fără verificare de nișă; noi avem nișa și verificarea ANRE.
+- **Source date:** pagina Tarife accesată 14 august 2026
+
+---
+
+## GreenLead.ro (RO, marketplace PV-specific — concurentul direct)
+
+- **Niche:** IDENTIC cu al nostru pe partea de cerere — fotovoltaice, baterii, pompe de căldură, Casa Verde, AFIR. Configuratoare, dashboard client, asistent AI pe WhatsApp („Spark+"), blog cu articole zilnice.
+- **Pricing model pentru instalatori:** **comision de succes doar la contract semnat.** Explicit „fără cost per lead, fără abonament, 0 RON costuri în avans" — [greenlead.ro/devino-partener](https://www.greenlead.ro/devino-partener)
+- **Public pricing:** **procentul NU e publicat nicăieri** pe pagina de parteneri; tabul „Plăți și Comisioane" din FAQ nu returnează cifre. Sales-gated.
+- **Model operațional:** ei fac educarea clientului, dimensionarea și scoringul („sub 80% nu trec mai departe"), instalatorul doar trimite oferta și semnează. Clientul își vede ofertele anonim, instalatorul primește contactul **doar după acceptarea ofertei**.
+- **Criterii de admitere partener:** certificare ANRE, minimum 2 ani vechime, echipă tehnică proprie, poliță de răspundere civilă profesională, certificat constatator max 6 luni, listă de prețuri
+- **Notes:** ăsta e singurul competitor PV-specific din research și e mai avansat operațional decât noi. Relevanța directă: **ei sunt sursa probabilă a ancorei de comision** din capul instalatorilor. Când o firmă spune „5% e mult", compară cu ceva. Modelul lor are aceeași problemă de verificabilitate ca a noastră (nu vezi contractul semnat), doar că ei o rezolvă ținând contactul clientului până la acceptarea ofertei în platformă.
+- **Source date:** homepage + pagina devino-partener accesate 14 august 2026
+
+---
+
 ## Observații generale (factuale, nu speculative)
 
 - **Free tier e norma.** G2, Capterra, Trustpilot, Yelp, Bark, Afacerist — toate oferă listare gratuită cu features reduse. Paywall e doar pe visibility boost, advanced features, sau leads.
@@ -125,6 +191,19 @@ Scop: ancoră pentru pricing pe `/publicitate` când va fi cazul. Cifrele NU sun
 - **Annual commitment e comun:** Trustpilot și Houzz Pro cer 12-month lock. Yelp și Bark sunt cancel-anytime. G2 Starter discount-ează annual cu 16%.
 - **Per-domain / per-geo pricing:** Trustpilot vinde per-domain, Houzz Pro per-geo. Multiplicator natural — relevant dacă vrem vreodată "per județ" sau "național" tier (avem deja cu "Național Plus" 299€).
 - **Floor entry-level la directorii relevante local-service US:** $99-$150/lună (Trustpilot Starter, Yelp Ads). RO general-purpose: ~10€/lună (Afacerist GOLD). Niciuna NU e direct comparabilă — diferă traffic, audience, value.
+
+---
+
+## Piața RO de lead-uri (adăugat 14 august 2026)
+
+Ancorele care contează pentru un abonament pe cereri, toate publice:
+
+- **Un lead solar partajat costă 60-80 RON** (12-16 EUR). Necesit până la 60 lei, CatDam fix 80 lei pe categoria „Energie solară", care e tier-ul lor maxim.
+- **Nimeni nu vinde exclusivitate.** Necesit trimite la până la 6 firme, CatDam la maximum 3. Cererea partajată e norma pieței, deci „ești singurul care o primește" e un argument pe care îl poate folosi doar cine are volum mic — adică noi.
+- **Abonamentul care cumpără viteză există deja și are preț public:** Servicii-Rapide, 49/99/149/199 EUR/lună pentru livrare la 2 zile / 1 zi / 12 ore / 1 oră.
+- **Comisionul din contract nu e publicat de nimeni.** GreenLead îl vinde ca „doar la succes" fără cifră. Asta înseamnă că orice procent pe care îl cerem noi se negociază fără ancoră publică, în dezavantajul nostru.
+- **„Primele N gratuite" e mecanica standard de intrare:** CatDam dă 3 lead-uri gratuite ca test de calitate înainte de orice plată.
+- **Protecția partenerului e parte din produs:** CatDam nu facturează lead-ul refuzat ca nepotrivit, dar facturează lead-ul care nu răspunde la telefon. Noi nu avem nicio regulă scrisă aici.
 
 ---
 

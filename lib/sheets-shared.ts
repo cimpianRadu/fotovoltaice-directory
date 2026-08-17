@@ -142,8 +142,12 @@ export type ClaimSource = (typeof CLAIM_SOURCES)[number];
  * niciunul dintre cei 4 clienți verificați telefonic nu fusese sunat. O
  * revendicare fără apel e mai rea decât nicio revendicare, pentru că îi spune
  * clientului că se ocupă cineva. Slotul se eliberează când apelul e confirmat.
+ *
+ * Ridicat de la 3 la 5 pe 14 august 2026: ciclul real de la revendicare la apel
+ * confirmat e mai lung decât presupuneam, iar firmele care lucrează serios
+ * ajungeau la plafon cu cereri încă în lucru, nu abandonate.
  */
-export const MAX_ACTIVE_CLAIMS_PER_FIRM = 3;
+export const MAX_ACTIVE_CLAIMS_PER_FIRM = 5;
 
 /**
  * Aceleași cifre, scrise diferit, sunt același telefon: „+40 771 504 694",

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Compune cele două poze ale săptămânii 10-16 aug: cazul din Timiș (joi) și
-rezumatul săptămânal (vineri). Fiecare caracter e randat de PIL, deci cifrele
+Compune cele două poze ale săptămânii: cazul din Timiș și rezumatul
+săptămânal (luni dimineață, pe săptămâna încheiată luni-duminică). Fiecare caracter e randat de PIL, deci cifrele
 sunt exacte și tipografia identică între ediții.
 
-Rezumatul de vineri își ia cifrele din `node scripts/weekly-summary.mjs --json`,
+Rezumatul își ia cifrele din `node scripts/weekly-summary.mjs --json`,
 nu din text scris de mână, ca ediția să nu poată rămâne în urma realității.
 
 Usage:
@@ -69,14 +69,23 @@ def poster(size, blocks, footer=None, bg=DEEP):
 
 
 def render_case(outdir: Path):
-    """Cazul din Timiș. Cifrele sunt cele verificate în calculator pe 7 aug."""
+    """Cazul din Timiș, cifrele recitite din calculator pe 11 august.
+
+    Prima versiune (7 aug) avea 11.180 lei, interval 10.385 - 13.411 și 4,2 ani.
+    Curba de preț lua atunci prețurile VoltGrid cu TVA 9%, cotă ieșită din uz
+    pentru panouri din 1 august 2025, deci mediana ieșea prea mică (commit
+    2e3f079). Cifrele de mai jos sunt cele pe care le arată calculatorul live
+    pentru `?segment=rezidential&consum=450&unitate=lei&judet=Timiș` și sunt
+    aceleași pe care le spune reelul publicat pe 12 august; dacă se schimbă
+    iar curba, se schimbă și aici, altfel poza contrazice reelul.
+    """
     rows = [
         ('Sistem potrivit', '3,3 kW'),
-        ('Cost estimat', '11.180 lei'),
-        ('Interval real', '10.385 - 13.411 lei'),
+        ('Cost estimat', '11.527 lei'),
+        ('Interval real', '11.180 - 14.890 lei'),
         ('Produce', '4.158 kWh/an'),
         ('Economie', '2.703 lei/an'),
-        ('Amortizare', '4,2 ani'),
+        ('Amortizare', '4,3 ani'),
     ]
 
     for name, (W, H) in {'4x5': (1080, 1350), 'story': (1080, 1920)}.items():
@@ -141,6 +150,11 @@ def render_weekly(outdir: Path, de=None, pana=None):
         (str(n['preluate']), 'preluate de firme', LIGHT),
         (str(n['disponibile']), 'încă disponibile', AMBER),
     ]
+    # Ediția din 10 august a promis public cifra de oferte trimise. Marcajul din
+    # portal o produce de pe 14 august, deci o arătăm de îndată ce există; e
+    # singura cifră care spune dacă bucla se închide, nu doar dacă intră cereri.
+    if n.get('oferteTrimise'):
+        rows.append((str(n['oferteTrimise']), 'ajunse la ofertă trimisă', GREEN))
 
     for name, (W, H) in {'4x5': (1080, 1350), 'story': (1080, 1920)}.items():
         img = Image.new('RGB', (W, H), NAVY)
@@ -148,9 +162,11 @@ def render_weekly(outdir: Path, de=None, pana=None):
 
         f_kicker = font(int(W * 0.038))
         f_title = font(int(W * 0.064))
-        f_num = font(int(W * 0.135))
-        f_lbl = font(int(W * 0.040))
+        dens = len(rows) >= 4
+        f_num = font(int(W * (0.112 if dens else 0.135)))
+        f_lbl = font(int(W * (0.037 if dens else 0.040)))
         f_note = font(int(W * 0.034))
+        gap_row = int(H * (0.022 if dens else 0.028))
 
         top = int(H * 0.10)
         y = center(d, top, 'SĂPTĂMÂNA', f_kicker, AMBER, W) + int(H * 0.018)
@@ -158,11 +174,10 @@ def render_weekly(outdir: Path, de=None, pana=None):
 
         for num, lbl, col in rows:
             y = center(d, y, num, f_num, col, W) + 2
-            y = center(d, y, lbl, f_lbl, MUTED, W) + int(H * 0.028)
+            y = center(d, y, lbl, f_lbl, MUTED, W) + gap_row
 
         y += int(H * 0.010)
-        y = center(d, y, 'Vinerea viitoare vă spunem', f_note, LIGHT, W) + 8
-        center(d, y, 'câte au ajuns la ofertă.', f_note, LIGHT, W)
+        center(d, y, 'Cereri noi apar în fiecare zi.', f_note, LIGHT, W)
 
         f_foot = font(int(W * 0.030))
         foot = 'instalatori-fotovoltaice.ro/cereri'
@@ -183,13 +198,13 @@ if __name__ == '__main__':
     flag = lambda k: args[args.index(f'--{k}') + 1] if f'--{k}' in args else None
 
     if '--doar-rezumat' not in args:
-        out = ROOT / 'social' / '2026-08-13-caz-timis'
+        out = ROOT / 'social' / '2026-08-w2-10-16' / '2026-08-13-caz-timis'
         out.mkdir(parents=True, exist_ok=True)
         print('Cazul din Timiș:')
         render_case(out)
 
     if '--doar-caz' not in args:
-        out = ROOT / 'social' / '2026-08-14-rezumat-saptamanal'
+        out = ROOT / 'social' / '2026-08-w3-17-23' / '2026-08-17-rezumat-10-16-aug'
         out.mkdir(parents=True, exist_ok=True)
         print('Rezumatul săptămânal:')
         render_weekly(out, flag('de'), flag('pana'))
