@@ -1,26 +1,25 @@
 import { getEventValues, resolveRange } from '@/lib/umami';
 import RangePicker, { resolvePreset } from '../../RangePicker';
 import { ErrorBanner } from '../page';
-import partnersData from '@/data/partners.json';
-
 export const dynamic = 'force-dynamic';
 
 type SearchParams = Promise<{ range?: string }>;
 
-type Partner = {
-  slug: string;
-  name: string;
-  description: string;
-  active: boolean;
-};
-
-const PARTNERS = (partnersData.partners as Partner[]).filter((p) => p.active);
-
 import sponsorsData from '@/data/sponsors.json';
 
-const SPONSOR_BANNER_NAMES: string[] = (
-  sponsorsData.sponsors as { slug: string; active: boolean }[]
-)
+type Sponsor = {
+  slug: string;
+  name: string;
+  active: boolean;
+  positions: string[] | 'all';
+};
+
+// Popup-ul e o plasare pe aceeași intrare de partener, nu o listă separată.
+const PARTNERS = (sponsorsData.sponsors as Sponsor[]).filter(
+  (s) => s.active && (s.positions === 'all' || s.positions.includes('popup')),
+);
+
+const SPONSOR_BANNER_NAMES: string[] = (sponsorsData.sponsors as Sponsor[])
   .filter((s) => s.active)
   .map((s) => s.slug);
 
@@ -405,8 +404,8 @@ export default async function SponsoriPage({ searchParams }: { searchParams: Sea
             Carousel Parteneri (bottom-right popup)
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            Apare după 15s pe orice pagină, rotește la fiecare {partnersData.rotationSeconds}s.
-            Maxim {partnersData.maxActive} parteneri activi.
+            Apare după 15s pe orice pagină, rotește la fiecare{' '}
+            {sponsorsData.popup.rotationSeconds}s partenerii cu plasarea „popup".
           </p>
         </div>
 

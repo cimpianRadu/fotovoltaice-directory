@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import partnersData from '@/data/partners.json';
+import sponsorsData from '@/data/sponsors.json';
 
 declare global {
   interface Window {
@@ -13,24 +13,30 @@ declare global {
 const STORAGE_KEY = 'partner-carousel-dismissed-v1';
 const SHOW_AFTER_MS = 15_000;
 
-type Partner = {
+/**
+ * Popup-ul citește aceeași `data/sponsors.json` ca bannerul: un partener e o
+ * singură intrare, iar popup-ul e doar încă o plasare (`positions` conține
+ * `"popup"`, sau `"all"` la Premium). Textul cardului e mesajul de clienți,
+ * pentru că popup-ul apare pe toate paginile; `cta` e rândul amber de sub el.
+ */
+type Sponsor = {
   slug: string;
   name: string;
-  description: string;
-  cta: string;
   logo: string;
-  url: string;
+  baseUrl: string;
   active: boolean;
+  positions: string[] | 'all';
+  messages: Record<string, string>;
+  cta?: string;
 };
 
-const ALL_PARTNERS = partnersData.partners as Partner[];
+const ALL_SPONSORS = sponsorsData.sponsors as Sponsor[];
 
-const ACTIVE_PARTNERS: Partner[] = ALL_PARTNERS.filter((p) => p.active).slice(
-  0,
-  partnersData.maxActive,
-);
+const inPopup = (s: Sponsor) => s.positions === 'all' || s.positions.includes('popup');
 
-const ROTATION_MS = partnersData.rotationSeconds * 1000;
+const ACTIVE_PARTNERS: Sponsor[] = ALL_SPONSORS.filter((s) => s.active && inPopup(s));
+
+const ROTATION_MS = sponsorsData.popup.rotationSeconds * 1000;
 
 /**
  * Aceeași previzualizare ca la `SponsorBanner`: `?preview=<slug>` arată un
@@ -59,7 +65,7 @@ function readPreviewSlug(): string | null {
 
 export default function PartnerCarousel() {
   const [visible, setVisible] = useState(false);
-  const [partners, setPartners] = useState<Partner[]>(ACTIVE_PARTNERS);
+  const [partners, setPartners] = useState<Sponsor[]>(ACTIVE_PARTNERS);
   const [preview, setPreview] = useState(false);
   // Start at 0 server-side (matches SSR) then randomize on client mount before
   // the popup becomes visible. This way every page load gets a different first
@@ -73,7 +79,7 @@ export default function PartnerCarousel() {
 
     const previewSlug = readPreviewSlug();
     const pending = previewSlug
-      ? ALL_PARTNERS.find((p) => p.slug === previewSlug && !p.active)
+      ? ALL_SPONSORS.find((s) => s.slug === previewSlug && !s.active && inPopup(s))
       : undefined;
     const list = pending ? [pending, ...ACTIVE_PARTNERS] : ACTIVE_PARTNERS;
     const isPreview = Boolean(pending);
@@ -122,18 +128,25 @@ export default function PartnerCarousel() {
     });
   };
 
-  const handleClick = (partner: Partner) => {
+  const handleClick = (partner: Sponsor) => {
     if (preview) return;
     window.umami?.track('partner-carousel-click', { partner: partner.slug });
   };
 
-  const buildPartnerUrl = (partner: Partner) => {
+  const buildPartnerUrl = (partner: Sponsor) => {
     const pathname =
       typeof window !== 'undefined' && window.location.pathname
         ? window.location.pathname.replace(/^\/|\/$/g, '').replace(/\//g, '-') || 'home'
         : 'unknown';
-    const sep = partner.url.includes('?') ? '&' : '?';
-    return `${partner.url}${sep}utm_content=${encodeURIComponent(pathname)}`;
+    // Aceleași valori de utm_medium/campaign ca înainte de unificarea pe
+    // sponsors.json, ca rapoartele partenerilor să rămână comparabile.
+    const params = new URLSearchParams({
+      utm_source: 'instalatori-fotovoltaice',
+      utm_medium: 'popup-carousel',
+      utm_campaign: 'partner-slot',
+      utm_content: pathname,
+    });
+    return `${partner.baseUrl}?${params.toString()}`;
   };
 
   if (!visible || partners.length === 0) return null;
@@ -182,8 +195,8 @@ export default function PartnerCarousel() {
           </div>
           <div className="min-w-0">
             <p className="font-semibold text-gray-900 text-sm">{partner.name}</p>
-            <p className="text-xs text-gray-600 leading-snug mt-0.5">{partner.description}</p>
-            <p className="text-xs font-semibold text-amber-700 mt-2">{partner.cta}</p>
+            <p className="text-xs text-gray-600 leading-snug mt-0.5">{partner.messages.client}</p>
+            <p className="text-xs font-semibold text-amber-700 mt-2">{partner.cta ?? 'Vezi oferta →'}</p>
           </div>
         </div>
       </a>

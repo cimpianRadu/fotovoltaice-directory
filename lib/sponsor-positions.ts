@@ -17,6 +17,7 @@ export const SPONSOR_POSITIONS = [
   'cereri',
   'portal',
   'listeaza-firma',
+  'popup',
 ] as const;
 
 export type SponsorPosition = (typeof SPONSOR_POSITIONS)[number];
@@ -35,4 +36,5 @@ export const SPONSOR_POSITION_LABELS: Record<SponsorPosition, string> = {
   cereri: '/cereri (instalatori) · doar Premium',
   portal: '/portal (instalatori logați) · doar Premium',
   'listeaza-firma': '/listeaza-firma (instalatori)',
+  popup: 'Popup dreapta-jos (toate paginile)',
 };

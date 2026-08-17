@@ -3,16 +3,17 @@ import 'server-only';
 import { promises as fs } from 'fs';
 import path from 'path';
 import bundledSponsors from '@/data/sponsors.json';
-import bundledPartners from '@/data/partners.json';
 import { SPONSOR_POSITIONS, type SponsorPosition } from './sponsor-positions';
 
 /**
- * Sursa adevărului pentru parteneri rămâne perechea de fișiere JSON din repo
- * (`data/sponsors.json` + `data/partners.json`), pentru că site-ul public le
- * importă static la build — exact disciplina care ține bundle-ul client mic.
+ * Sursa adevărului pentru parteneri e un singur fișier JSON din repo
+ * (`data/sponsors.json`), pentru că site-ul public îl importă static la build —
+ * exact disciplina care ține bundle-ul client mic. Un partener e o singură
+ * intrare: bannerul și popup-ul dreapta-jos sunt doar plasări (`positions`),
+ * popup-ul fiind plasarea `"popup"`.
  *
  * Panoul din /admin/sponsori nu schimbă asta, schimbă doar cine scrie
- * fișierele:
+ * fișierul:
  *  - local (dev): direct pe disc, în working tree — se comportă ca o editare
  *    de mână, dev-ul o vede instant prin HMR, commit-ul rămâne pe fluxul
  *    normal de git;
@@ -27,7 +28,6 @@ import { SPONSOR_POSITIONS, type SponsorPosition } from './sponsor-positions';
  */
 
 const SPONSORS_PATH = 'data/sponsors.json';
-const PARTNERS_PATH = 'data/partners.json';
 
 const GH_REPO_FULL = process.env.GITHUB_REPO ?? 'cimpianRadu/fotovoltaice-directory';
 const GH_BRANCH = process.env.GITHUB_BRANCH ?? 'main';
@@ -41,30 +41,20 @@ export interface BannerSponsor {
   active: boolean;
   positions: SponsorPosition[] | 'all';
   messages: { client: string; instalator?: string };
+  /** Rândul amber din popup-ul dreapta-jos; bannerul nu îl afișează. */
+  cta?: string;
   phone?: string;
   whatsapp?: string;
   facebook?: string;
 }
 
-export interface CarouselPartner {
-  slug: string;
-  name: string;
-  description: string;
-  cta: string;
-  logo: string;
-  url: string;
-  active: boolean;
-}
-
-export interface CarouselFile {
-  maxActive: number;
+export interface PopupConfig {
   rotationSeconds: number;
-  partners: CarouselPartner[];
 }
 
 export interface SponsorData {
+  popup: PopupConfig;
   sponsors: BannerSponsor[];
-  carousel: CarouselFile;
 }
 
 export type StoreMode = 'fs' | 'github' | 'bundled';
@@ -102,7 +92,7 @@ function resolveMode(): StoreMode {
 
 const abs = (rel: string) => path.join(process.cwd(), rel);
 
-/** Aceeași serializare ca fișierele existente: 2 spații + newline la final. */
+/** Aceeași serializare ca fișierul existent: 2 spații + newline la final. */
 const serialize = (value: unknown) => JSON.stringify(value, null, 2) + '\n';
 
 interface GhError extends Error {
@@ -145,39 +135,27 @@ async function ghReadFile(filePath: string, ref: string): Promise<string> {
   return Buffer.from(data.content, 'base64').toString('utf8');
 }
 
-function parseData(sponsorsRaw: string, partnersRaw: string): SponsorData {
-  return {
-    sponsors: (JSON.parse(sponsorsRaw) as { sponsors: BannerSponsor[] }).sponsors,
-    carousel: JSON.parse(partnersRaw) as CarouselFile,
-  };
+function parseData(raw: string): SponsorData {
+  return JSON.parse(raw) as SponsorData;
 }
 
 function bundledData(): SponsorData {
   // Clonă, ca nimeni să nu poată muta din greșeală singletonul importat.
-  return structuredClone({
-    sponsors: bundledSponsors.sponsors as BannerSponsor[],
-    carousel: bundledPartners as CarouselFile,
-  });
+  return structuredClone(bundledSponsors as unknown as SponsorData);
 }
 
 export async function readSponsorData(): Promise<{ data: SponsorData; meta: StoreMeta }> {
   const mode = resolveMode();
 
   if (mode === 'fs') {
-    const [s, p] = await Promise.all([
-      fs.readFile(abs(SPONSORS_PATH), 'utf8'),
-      fs.readFile(abs(PARTNERS_PATH), 'utf8'),
-    ]);
-    return { data: parseData(s, p), meta: { mode, writable: true } };
+    const raw = await fs.readFile(abs(SPONSORS_PATH), 'utf8');
+    return { data: parseData(raw), meta: { mode, writable: true } };
   }
 
   if (mode === 'github') {
     try {
-      const [s, p] = await Promise.all([
-        ghReadFile(SPONSORS_PATH, GH_BRANCH),
-        ghReadFile(PARTNERS_PATH, GH_BRANCH),
-      ]);
-      return { data: parseData(s, p), meta: { mode, writable: true } };
+      const raw = await ghReadFile(SPONSORS_PATH, GH_BRANCH);
+      return { data: parseData(raw), meta: { mode, writable: true } };
     } catch (err) {
       // Token expirat sau fără permisiuni: pagina rămâne utilă ca vizualizare
       // a datelor din build, cu eroarea la vedere, în loc să crape.
@@ -205,41 +183,35 @@ const clean = (value: unknown) => (typeof value === 'string' ? value.trim() : ''
 
 /**
  * Construiește obiectele câmp cu câmp, ca un client stricat (sau ostil) să nu
- * poată strecura chei străine în fișierele din repo. Slug-urile sunt chei de
+ * poată strecura chei străine în fișierul din repo. Slug-urile sunt chei de
  * analytics și de preview, deci nu se pot schimba de aici: setul primit
  * trebuie să fie exact setul existent, iar ordinea rămâne cea din fișier.
  */
 function validateAndNormalize(input: SponsorData, current: SponsorData): SponsorData {
   const issues: string[] = [];
 
-  const bySlug = <T extends { slug: string }>(list: T[], label: string, currentList: { slug: string }[]) => {
-    const map = new Map<string, T>();
-    for (const item of list ?? []) {
-      const slug = clean(item?.slug);
-      if (!slug) {
-        issues.push(`${label}: intrare fără slug`);
-        continue;
-      }
-      if (map.has(slug)) issues.push(`${label} ${slug}: slug duplicat`);
-      map.set(slug, item);
+  const bySlug = new Map<string, BannerSponsor>();
+  for (const item of input.sponsors ?? []) {
+    const slug = clean(item?.slug);
+    if (!slug) {
+      issues.push('partener fără slug');
+      continue;
     }
-    const currentSlugs = new Set(currentList.map((c) => c.slug));
-    for (const slug of map.keys()) {
-      if (!currentSlugs.has(slug)) issues.push(`${label} ${slug}: nu există în fișier (adăugarea se face din cod)`);
-    }
-    for (const slug of currentSlugs) {
-      if (!map.has(slug)) issues.push(`${label} ${slug}: lipsește din payload (ștergerea se face din cod)`);
-    }
-    return map;
-  };
-
-  const sponsorsIn = bySlug(input.sponsors, 'banner', current.sponsors);
-  const partnersIn = bySlug(input.carousel?.partners, 'popup', current.carousel.partners);
+    if (bySlug.has(slug)) issues.push(`${slug}: slug duplicat`);
+    bySlug.set(slug, item);
+  }
+  const currentSlugs = new Set(current.sponsors.map((c) => c.slug));
+  for (const slug of bySlug.keys()) {
+    if (!currentSlugs.has(slug)) issues.push(`${slug}: nu există în fișier (adăugarea se face din cod)`);
+  }
+  for (const slug of currentSlugs) {
+    if (!bySlug.has(slug)) issues.push(`${slug}: lipsește din payload (ștergerea se face din cod)`);
+  }
 
   const sponsors: BannerSponsor[] = current.sponsors.map((cur) => {
-    const raw = sponsorsIn.get(cur.slug);
+    const raw = bySlug.get(cur.slug);
     if (!raw) return cur;
-    const where = `banner ${cur.slug}`;
+    const where = cur.slug;
 
     const name = clean(raw.name);
     if (!name) issues.push(`${where}: numele nu poate fi gol`);
@@ -250,6 +222,8 @@ function validateAndNormalize(input: SponsorData, current: SponsorData): Sponsor
     const messagesClient = clean(raw.messages?.client);
     if (!messagesClient) issues.push(`${where}: mesajul pentru clienți nu poate fi gol`);
     const messagesInstalator = clean(raw.messages?.instalator);
+
+    const cta = clean(raw.cta);
 
     const phone = clean(raw.phone);
     if (phone && !/^[+\d][\d\s]{7,19}$/.test(phone))
@@ -279,7 +253,11 @@ function validateAndNormalize(input: SponsorData, current: SponsorData): Sponsor
       positions = cur.positions;
     }
 
-    // Ordinea cheilor e cea din fișierele existente: obiectul se serializează
+    // Cine apare în popup are nevoie de rândul CTA; restul îl pot lăsa gol.
+    const inPopup = positions === 'all' || positions.includes('popup');
+    if (inPopup && !cta) issues.push(`${where}: CTA-ul de popup nu poate fi gol cât timp popup-ul e bifat`);
+
+    // Ordinea cheilor e cea din fișierul existent: obiectul se serializează
     // înapoi în git, iar o ordine diferită ar umple diff-urile cu reordonări.
     return {
       slug: cur.slug,
@@ -294,39 +272,20 @@ function validateAndNormalize(input: SponsorData, current: SponsorData): Sponsor
       messages: messagesInstalator
         ? { client: messagesClient, instalator: messagesInstalator }
         : { client: messagesClient },
+      ...(cta ? { cta } : {}),
       ...(phone ? { phone } : {}),
       ...(whatsapp ? { whatsapp } : {}),
       ...(facebook ? { facebook } : {}),
     };
   });
 
-  const partners: CarouselPartner[] = current.carousel.partners.map((cur) => {
-    const raw = partnersIn.get(cur.slug);
-    if (!raw) return cur;
-    const where = `popup ${cur.slug}`;
-
-    const name = clean(raw.name);
-    if (!name) issues.push(`${where}: numele nu poate fi gol`);
-    const description = clean(raw.description);
-    if (!description) issues.push(`${where}: descrierea nu poate fi goală`);
-    const cta = clean(raw.cta);
-    if (!cta) issues.push(`${where}: CTA-ul nu poate fi gol`);
-    const url = clean(raw.url);
-    if (!isHttpUrl(url)) issues.push(`${where}: URL-ul trebuie să fie http(s) valid`);
-
-    return { slug: cur.slug, name, description, cta, logo: cur.logo, url, active: Boolean(raw.active) };
-  });
-
-  const maxActive = Number(input.carousel?.maxActive);
-  if (!Number.isInteger(maxActive) || maxActive < 1 || maxActive > 20)
-    issues.push('popup: „max activi" trebuie să fie un întreg între 1 și 20');
-  const rotationSeconds = Number(input.carousel?.rotationSeconds);
+  const rotationSeconds = Number(input.popup?.rotationSeconds);
   if (!Number.isInteger(rotationSeconds) || rotationSeconds < 5 || rotationSeconds > 120)
     issues.push('popup: rotația trebuie să fie un întreg între 5 și 120 de secunde');
 
   if (issues.length > 0) throw new SponsorValidationError(issues);
 
-  return { sponsors, carousel: { maxActive, rotationSeconds, partners } };
+  return { popup: { rotationSeconds }, sponsors };
 }
 
 // ---------- diff pentru mesajul de commit și pentru UI ----------
@@ -341,35 +300,24 @@ function changedFields(a: object, b: object): string[] {
 export function summarizeChanges(current: SponsorData, next: SponsorData): string[] {
   const changes: string[] = [];
 
-  const walk = <T extends { slug: string; active: boolean }>(
-    label: string,
-    from: T[],
-    to: T[],
-  ) => {
-    const before = new Map(from.map((s) => [s.slug, s]));
-    for (const item of to) {
-      const prev = before.get(item.slug);
-      if (!prev) continue;
-      const fields = changedFields(prev, item);
-      if (fields.length === 0) continue;
-      if (prev.active !== item.active) {
-        const rest = fields.filter((f) => f !== 'active');
-        changes.push(
-          `${label} ${item.slug}: ${item.active ? 'activat' : 'dezactivat'}${rest.length ? ` + ${rest.join(', ')}` : ''}`,
-        );
-      } else {
-        changes.push(`${label} ${item.slug}: ${fields.join(', ')}`);
-      }
+  const before = new Map(current.sponsors.map((s) => [s.slug, s]));
+  for (const item of next.sponsors) {
+    const prev = before.get(item.slug);
+    if (!prev) continue;
+    const fields = changedFields(prev, item);
+    if (fields.length === 0) continue;
+    if (prev.active !== item.active) {
+      const rest = fields.filter((f) => f !== 'active');
+      changes.push(
+        `${item.slug}: ${item.active ? 'activat' : 'dezactivat'}${rest.length ? ` + ${rest.join(', ')}` : ''}`,
+      );
+    } else {
+      changes.push(`${item.slug}: ${fields.join(', ')}`);
     }
-  };
+  }
 
-  walk('banner', current.sponsors, next.sponsors);
-  walk('popup', current.carousel.partners, next.carousel.partners);
-
-  if (current.carousel.maxActive !== next.carousel.maxActive)
-    changes.push(`popup: maxActive ${current.carousel.maxActive}→${next.carousel.maxActive}`);
-  if (current.carousel.rotationSeconds !== next.carousel.rotationSeconds)
-    changes.push(`popup: rotație ${current.carousel.rotationSeconds}s→${next.carousel.rotationSeconds}s`);
+  if (current.popup.rotationSeconds !== next.popup.rotationSeconds)
+    changes.push(`popup: rotație ${current.popup.rotationSeconds}s→${next.popup.rotationSeconds}s`);
 
   return changes;
 }
@@ -405,33 +353,19 @@ export async function writeSponsorData(input: SponsorData): Promise<WriteResult>
       `/repos/${GH_REPO_FULL}/git/ref/${encodeURIComponent(`heads/${GH_BRANCH}`)}`,
     );
     headSha = ref.object.sha;
-    const [s, p] = await Promise.all([
-      ghReadFile(SPONSORS_PATH, headSha),
-      ghReadFile(PARTNERS_PATH, headSha),
-    ]);
-    current = parseData(s, p);
+    current = parseData(await ghReadFile(SPONSORS_PATH, headSha));
   } else {
-    const [s, p] = await Promise.all([
-      fs.readFile(abs(SPONSORS_PATH), 'utf8'),
-      fs.readFile(abs(PARTNERS_PATH), 'utf8'),
-    ]);
-    current = parseData(s, p);
+    current = parseData(await fs.readFile(abs(SPONSORS_PATH), 'utf8'));
   }
 
   const next = validateAndNormalize(input, current);
   const changes = summarizeChanges(current, next);
   if (changes.length === 0) return { changed: false, mode };
 
-  const files: { path: string; content: string }[] = [];
-  const nextSponsors = serialize({ sponsors: next.sponsors });
-  if (nextSponsors !== serialize({ sponsors: current.sponsors }))
-    files.push({ path: SPONSORS_PATH, content: nextSponsors });
-  const nextCarousel = serialize(next.carousel);
-  if (nextCarousel !== serialize(current.carousel))
-    files.push({ path: PARTNERS_PATH, content: nextCarousel });
+  const content = serialize({ popup: next.popup, sponsors: next.sponsors });
 
   if (mode === 'fs') {
-    await Promise.all(files.map((f) => fs.writeFile(abs(f.path), f.content)));
+    await fs.writeFile(abs(SPONSORS_PATH), content);
     return { changed: true, mode, changes };
   }
 
@@ -442,7 +376,7 @@ export async function writeSponsorData(input: SponsorData): Promise<WriteResult>
     method: 'POST',
     body: JSON.stringify({
       base_tree: headCommit.tree.sha,
-      tree: files.map((f) => ({ path: f.path, mode: '100644', type: 'blob', content: f.content })),
+      tree: [{ path: SPONSORS_PATH, mode: '100644', type: 'blob', content }],
     }),
   });
   const commit = await ghFetch<{ sha: string; html_url: string }>(

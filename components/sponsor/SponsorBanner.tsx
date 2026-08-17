@@ -60,6 +60,9 @@ const POSITION_AUDIENCE: Record<SponsorPosition, SponsorAudience> = {
   cereri: 'instalator',
   portal: 'instalator',
   'listeaza-firma': 'instalator',
+  // Popup-ul dreapta-jos nu se randează prin SponsorBanner (are componenta
+  // lui, PartnerCarousel) — intrarea există doar ca Record-ul să fie complet.
+  popup: 'client',
 };
 
 interface Sponsor {
@@ -72,6 +75,8 @@ interface Sponsor {
   /** `"all"` = pachet Premium, apare pe toate plasările. */
   positions: string[] | 'all';
   messages: Record<string, string>;
+  /** Textul CTA din popup-ul dreapta-jos; bannerul nu îl folosește. */
+  cta?: string;
   /** Opțional, format internațional. Devine buton „Sună" cu eveniment propriu. */
   phone?: string;
   /** Opțional, doar cifre cu prefix de țară (ex: `40763990097`). Devine buton WhatsApp. */

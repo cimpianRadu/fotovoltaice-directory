@@ -12,16 +12,11 @@ import {
 export async function PUT(request: Request) {
   try {
     const body = (await request.json()) as Partial<SponsorData> | null;
-    if (
-      !body ||
-      !Array.isArray(body.sponsors) ||
-      !body.carousel ||
-      !Array.isArray(body.carousel.partners)
-    ) {
+    if (!body || !Array.isArray(body.sponsors) || !body.popup) {
       return NextResponse.json({ error: 'Corp invalid' }, { status: 400 });
     }
 
-    const result = await writeSponsorData({ sponsors: body.sponsors, carousel: body.carousel });
+    const result = await writeSponsorData({ popup: body.popup, sponsors: body.sponsors });
     return NextResponse.json({ ok: true, ...result });
   } catch (err) {
     if (err instanceof SponsorValidationError) {

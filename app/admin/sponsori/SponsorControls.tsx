@@ -12,7 +12,6 @@ import {
 // `server-only` din modul nu se declanșează în bundle-ul client.
 import type {
   BannerSponsor,
-  CarouselPartner,
   SponsorData,
   StoreMode,
   WriteResult,
@@ -157,15 +156,6 @@ export default function SponsorControls({
       sponsors: d.sponsors.map((s) => (s.slug === slug ? { ...s, ...patch } : s)),
     }));
 
-  const patchPartner = (slug: string, patch: Partial<CarouselPartner>) =>
-    setData((d) => ({
-      ...d,
-      carousel: {
-        ...d.carousel,
-        partners: d.carousel.partners.map((p) => (p.slug === slug ? { ...p, ...patch } : p)),
-      },
-    }));
-
   const togglePosition = (sponsor: BannerSponsor, pos: SponsorPosition) => {
     if (sponsor.positions === 'all') return;
     const has = sponsor.positions.includes(pos);
@@ -225,14 +215,33 @@ export default function SponsorControls({
 
   return (
     <div className="space-y-8">
-      {/* Bannerul din pagini */}
+      {/* Un partener = o intrare, cu toate plasările lui (bannere + popup). */}
       <section className="space-y-3">
-        <div>
-          <h2 className="text-lg font-semibold text-slate-900">Banner „Parteneri Recomandați"</h2>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Cardurile din sloturile de pagină. Mesajul se alege singur după cine citește pagina:
-            clienți sau instalatori.
-          </p>
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-semibold text-slate-900">Parteneri</h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Fiecare partener are plasările lui: sloturile din pagini și popup-ul dreapta-jos.
+              Mesajul din pagini se alege singur după cine citește: clienți sau instalatori.
+            </p>
+          </div>
+          <label className="block text-xs">
+            <span className="font-medium text-slate-600">Rotație popup (sec)</span>
+            <input
+              type="number"
+              min={5}
+              max={120}
+              value={data.popup.rotationSeconds}
+              onChange={(e) =>
+                setData((d) => ({
+                  ...d,
+                  popup: { ...d.popup, rotationSeconds: Number(e.target.value) },
+                }))
+              }
+              disabled={!writable}
+              className={`${inputCls} w-24`}
+            />
+          </label>
         </div>
         {data.sponsors.map((s) => (
           <div key={s.slug} className="rounded-lg border border-slate-200 bg-white p-4 space-y-4">
@@ -256,6 +265,13 @@ export default function SponsorControls({
                 value={s.baseUrl}
                 onChange={(v) => patchSponsor(s.slug, { baseUrl: v })}
                 hint="UTM-urile se adaugă singure la click"
+                disabled={!writable}
+              />
+              <Field
+                label="CTA popup (rândul amber)"
+                value={s.cta ?? ''}
+                onChange={(v) => patchSponsor(s.slug, { cta: v })}
+                hint="apare doar în popup-ul dreapta-jos, ex: Vezi oferta →"
                 disabled={!writable}
               />
               <Field
@@ -286,6 +302,7 @@ export default function SponsorControls({
                 onChange={(v) =>
                   patchSponsor(s.slug, { messages: { ...s.messages, client: v } })
                 }
+                hint="același text apare și ca descriere în popup-ul dreapta-jos"
                 textarea
                 className="sm:col-span-2"
                 disabled={!writable}
@@ -332,96 +349,6 @@ export default function SponsorControls({
                   ))}
                 </div>
               )}
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {/* Popup-ul carusel */}
-      <section className="space-y-3">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h2 className="text-lg font-semibold text-slate-900">Popup carusel (dreapta-jos)</h2>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Apare după 15 secunde, doar pe desktop, și rotește partenerii activi.
-            </p>
-          </div>
-          <div className="flex gap-3">
-            <label className="block text-xs">
-              <span className="font-medium text-slate-600">Max activi</span>
-              <input
-                type="number"
-                min={1}
-                max={20}
-                value={data.carousel.maxActive}
-                onChange={(e) =>
-                  setData((d) => ({
-                    ...d,
-                    carousel: { ...d.carousel, maxActive: Number(e.target.value) },
-                  }))
-                }
-                disabled={!writable}
-                className={`${inputCls} w-20`}
-              />
-            </label>
-            <label className="block text-xs">
-              <span className="font-medium text-slate-600">Rotație (sec)</span>
-              <input
-                type="number"
-                min={5}
-                max={120}
-                value={data.carousel.rotationSeconds}
-                onChange={(e) =>
-                  setData((d) => ({
-                    ...d,
-                    carousel: { ...d.carousel, rotationSeconds: Number(e.target.value) },
-                  }))
-                }
-                disabled={!writable}
-                className={`${inputCls} w-20`}
-              />
-            </label>
-          </div>
-        </div>
-        {data.carousel.partners.map((p) => (
-          <div key={p.slug} className="rounded-lg border border-slate-200 bg-white p-4 space-y-4">
-            <CardHeader
-              logo={p.logo}
-              name={p.name}
-              slug={p.slug}
-              active={p.active}
-              onToggle={() => patchPartner(p.slug, { active: !p.active })}
-              disabled={!writable}
-            />
-            <div className="grid gap-3 sm:grid-cols-2">
-              <Field
-                label="Titlu"
-                value={p.name}
-                onChange={(v) => patchPartner(p.slug, { name: v })}
-                disabled={!writable}
-              />
-              <Field
-                label="CTA (rândul amber)"
-                value={p.cta}
-                onChange={(v) => patchPartner(p.slug, { cta: v })}
-                disabled={!writable}
-              />
-              <Field
-                label="URL destinație"
-                value={p.url}
-                onChange={(v) => patchPartner(p.slug, { url: v })}
-                hint="cu tot cu UTM-uri; doar utm_content se adaugă singur, cu pagina curentă"
-                className="sm:col-span-2"
-                disabled={!writable}
-              />
-              <Field
-                label="Descriere"
-                value={p.description}
-                onChange={(v) => patchPartner(p.slug, { description: v })}
-                textarea
-                className="sm:col-span-2"
-                disabled={!writable}
-              />
             </div>
           </div>
         ))}

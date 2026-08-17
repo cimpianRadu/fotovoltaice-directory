@@ -1,5 +1,25 @@
 {
+  "popup": {
+    "rotationSeconds": 15
+  },
   "sponsors": [
+    {
+      "slug": "rca-non-stop",
+      "name": "Leasing și Asigurări",
+      "location": "Agent Safety Broker",
+      "logo": "/logos/rca-non-stop.png",
+      "baseUrl": "https://www.safetyleasing.ro",
+      "active": true,
+      "positions": "all",
+      "messages": {
+        "client": "Leasing și finanțare pentru sistemul tău fotovoltaic, până la 60 de luni",
+        "instalator": "Răspundere civilă pentru instalatorii de fotovoltaice, plus leasing pentru utilaje și mașini de firmă"
+      },
+      "cta": "Cere o ofertă →",
+      "phone": "0763 990 097",
+      "whatsapp": "40763990097",
+      "facebook": "https://www.facebook.com/safetyleasing"
+    },
     {
       "slug": "diodor",
       "name": "Diodor",
@@ -13,28 +33,44 @@
         "ghid-topic",
         "calculator",
         "clasament",
-        "firme"
+        "firme",
+        "popup"
       ],
       "messages": {
         "client": "Materiale electrice și echipamente fotovoltaice",
         "instalator": "Materiale electrice și echipamente fotovoltaice, distribuitor Cluj-Napoca"
-      }
+      },
+      "cta": "Vezi oferta →"
     },
     {
-      "slug": "rca-non-stop",
-      "name": "Leasing și Asigurări",
-      "location": "Agent Safety Broker",
-      "logo": "/logos/rca-non-stop.png",
-      "baseUrl": "https://www.safetyleasing.ro",
-      "active": true,
-      "positions": "all",
+      "slug": "reviewqr",
+      "name": "ReviewQR",
+      "location": "",
+      "logo": "/images/partners/reviewqr.svg",
+      "baseUrl": "https://www.reviewqr.app",
+      "active": false,
+      "positions": [
+        "popup"
+      ],
       "messages": {
-        "client": "Leasing și finanțare pentru sistemul tău fotovoltaic, până la 60 de luni",
-        "instalator": "Răspundere civilă pentru instalatorii de fotovoltaice, plus leasing pentru utilaje și mașini de firmă"
+        "client": "Generează coduri QR pentru recenzii Google — util pentru firmele de instalare."
       },
-      "phone": "0763 990 097",
-      "whatsapp": "40763990097",
-      "facebook": "https://www.facebook.com/safetyleasing"
+      "cta": "Încearcă gratuit →"
+    },
+    {
+      "slug": "sopia",
+      "name": "Sopia",
+      "location": "",
+      "logo": "/images/partners/sopia.svg",
+      "baseUrl": "https://sopia.xyz",
+      "active": false,
+      "positions": [
+        "popup"
+      ],
+      "messages": {
+        "client": "Digitalizare proceduri și asistență AI la execuție — echipa urmează pașii corect, de fiecare dată."
+      },
+      "cta": "Vezi cum funcționează →"
     }
   ]
 }
