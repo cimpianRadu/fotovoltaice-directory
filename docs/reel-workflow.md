@@ -157,3 +157,59 @@ Disclaimerele scoase din voce se pun aici.
 
 Statusul publicării e tabul „Social" din Sheets, nu `data/social-schedule.json`.
 Folderul `social/` nu se comite.
+
+---
+
+## Seria de luni: „Ce e nou?"
+
+Rezumatul săptămânal pentru instalatori (postat luni dimineață) e o serie cu
+identitate fixă, din 17 august 2026. Aceleași trei rânduri pe reel și pe poster:
+
+```
+SĂPTĂMÂNA N DIN <LUNA>     (etichetă amber)
+Ce e nou?                  (întrebarea care se repetă)
+17 - 23 august             (intervalul raportat)
+```
+
+Șablonul complet (compoziție, script, captions, manifest de capturi, regulile care
+nu se negociază) e în `social/_template-rezumat-saptamanal/`. Instanța de referință,
+cu cifre reale, e ediția din 17 august 2026.
+
+Reelul deschide cu `SeriesCover` din `social/remotion/src/lib.tsx` (etichetă,
+întrebare, interval, plus o captură generică din platformă într-o ramă de telefon).
+Cifrele din scene se citesc din `src/cifre-<slug>.json`, scris de
+`weekly-summary.mjs --json`, ca să nu fie retastate la fiecare ediție.
+Posterul primește același cap de afiș din `scripts/compose-posters.py`, unde
+eticheta se calculează singură: `(zi_de_început - 1) // 7 + 1`.
+
+**N e a câta luni a lunii e ziua de început a săptămânii RAPORTATE**, nu ziua
+postării: ediția de luni 17 august raportează 10-16 august, deci „SĂPTĂMÂNA 2 DIN
+AUGUST". Aceeași numerotare ca folderele `social/YYYY-MM-wN-DD-DD`. Motivul: vocea
+spune „săptămâna trecută", iar o etichetă cu săptămâna curentă s-ar contrazice cu
+ce se aude.
+
+**Captura de pe copertă e generică pe intenție** (capul paginii `/cereri`, fără
+carduri de partener și fără numere de telefon în cadru), ca să se refolosească de la
+o ediție la alta fără recaptură săptămânală.
+
+### Cifrele: două categorii, tratate diferit
+
+| Categorie | Unde intră | De ce |
+|---|---|---|
+| bilanțul săptămânii, fixat duminică seara | voce, poster, caption | un reel postat nu se mai corectează |
+| starea de moment (liber acum, locuri rămase) | doar caption | se schimbă de la o oră la alta |
+
+`scripts/weekly-summary.mjs` numără revendicările ținute **la închiderea
+săptămânii**. Înainte de fixul din 17 august număra „acum", iar aceeași săptămână a
+dat 5 preluate / 3 libere, apoi 6 / 2 la 40 de minute distanță, pentru că o firmă
+revendicase între timp. Scriptul citește `Leads!A:V` și aplică filtrele din
+`lib/sheets.ts`: „Ascuns" (col. M) și `LEAD_CLOSED_STATUSES` (col. V). Cifra de
+context se verifică pe `/cereri` („N cereri primite, M încă disponibile"): dacă nu
+dă la fel, ceva e ascuns sau închis și nu ai văzut-o.
+
+### Argumentul recurent pentru instalatori
+
+Urgența vine din regulă, nu din adjective: `MAX_CLAIMS_PER_LEAD = 3`, deci o cerere
+revendicată o dată mai are două locuri („revendicată ≠ luată"). Nicio cerere plină
+(3 din 3) nu se numește pe județ în reel: ar trimite oameni exact spre ce nu mai pot
+lua.

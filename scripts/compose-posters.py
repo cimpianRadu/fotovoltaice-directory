@@ -143,7 +143,20 @@ def render_weekly(outdir: Path, de=None, pana=None):
     luni = ['ianuarie', 'februarie', 'martie', 'aprilie', 'mai', 'iunie', 'iulie',
             'august', 'septembrie', 'octombrie', 'noiembrie', 'decembrie']
     d1, d2 = n['de'], n['pana']
-    titlu = f"{int(d1[8:10])} - {int(d2[8:10])} {luni[int(d2[5:7]) - 1]}"
+    zi1, luna1 = int(d1[8:10]), int(d1[5:7])
+    zi2, luna2 = int(d2[8:10]), int(d2[5:7])
+    # Săptămâna care se termină în luna următoare se scrie cu ambele luni,
+    # altfel „31 - 6 septembrie" ar sugera un interval care nu există.
+    if luna1 == luna2:
+        titlu = f"{zi1} - {zi2} {luni[luna2 - 1]}"
+    else:
+        titlu = f"{zi1} {luni[luna1 - 1]} - {zi2} {luni[luna2 - 1]}"
+
+    # Eticheta seriei: a câta luni a lunii e ziua de început, aceeași numerotare
+    # ca folderele din social/ (`2026-08-w2-10-16`) și ca `SeriesCover` din reel.
+    # Numerotăm săptămâna RAPORTATĂ, nu ziua postării: postarea de luni vorbește
+    # despre săptămâna încheiată duminică.
+    eticheta = f"SĂPTĂMÂNA {(zi1 - 1) // 7 + 1} DIN {luni[luna1 - 1].upper()}"
 
     rows = [
         (str(n['cereriNoi']), 'cereri noi', LIGHT),
@@ -168,9 +181,13 @@ def render_weekly(outdir: Path, de=None, pana=None):
         f_note = font(int(W * 0.034))
         gap_row = int(H * (0.022 if dens else 0.028))
 
-        top = int(H * 0.10)
-        y = center(d, top, 'SĂPTĂMÂNA', f_kicker, AMBER, W) + int(H * 0.018)
-        y = center(d, y, titlu, f_title, LIGHT, W) + int(H * 0.040)
+        # Capul de afiș al seriei, identic cu coperta reelului: eticheta
+        # săptămânii, întrebarea care se repetă de la o ediție la alta, apoi
+        # intervalul. Recurența e ce face postarea recunoscută în feed.
+        top = int(H * 0.09)
+        y = center(d, top, eticheta, f_kicker, AMBER, W) + int(H * 0.016)
+        y = center(d, y, 'Ce e nou?', f_title, LIGHT, W) + int(H * 0.014)
+        y = center(d, y, titlu, f_note, MUTED, W) + int(H * 0.034)
 
         for num, lbl, col in rows:
             y = center(d, y, num, f_num, col, W) + 2

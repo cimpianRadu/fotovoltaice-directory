@@ -113,9 +113,22 @@ const inWeek = (zi) => zi >= from && zi <= to;
 const cereriSaptamana = leads.filter((l) => inWeek(l.zi));
 const activeClaimsFor = (leadId) => claims.filter((c) => c.leadId === leadId && !c.releasedAt);
 
-const preluate = cereriSaptamana.filter((l) => activeClaimsFor(l.id).length > 0).length;
+// Bilanțul săptămânii se închide duminică seara, nu „acum". Altfel raportul se
+// rescrie singur: pe 17 august, la 40 de minute distanță, aceeași săptămână a dat
+// întâi 5 preluate / 3 disponibile, apoi 6 / 2, pentru că o firmă a revendicat
+// între timp. Un reel postat nu se mai poate corecta, deci cifrele din el trebuie
+// să rămână verificabile peste o lună. Ce e liber ACUM se raportează separat, mai
+// jos, și e explicit prezentat ca stare de moment.
+const heldAtClose = (leadId) =>
+  claims.filter(
+    (c) => c.leadId === leadId && c.zi <= to && (!c.releasedAt || roDay(c.releasedAt) > to),
+  );
+
+const preluate = cereriSaptamana.filter((l) => heldAtClose(l.id).length > 0).length;
 const disponibile = cereriSaptamana.length - preluate;
-const revendicariSaptamana = claims.filter((c) => inWeek(c.zi) && !c.releasedAt).length;
+const revendicariSaptamana = claims.filter(
+  (c) => inWeek(c.zi) && (!c.releasedAt || roDay(c.releasedAt) > to),
+).length;
 // Ofertele se numără după data marcării, nu după data cererii: firma poate
 // oferta în această săptămână o cerere primită săptămâna trecută.
 const oferteSaptamana = claims.filter((c) => c.offeredAt && inWeek(roDay(c.offeredAt))).length;
@@ -128,6 +141,15 @@ for (const l of cereriSaptamana) if (l.judet) judete[l.judet] = (judete[l.judet]
 const topJudete = Object.entries(judete)
   .sort((a, b) => b[1] - a[1])
   .slice(0, 3);
+// Numărul de județe distincte și amestecul rezidențial/comercial intră direct în
+// scenele reelului săptămânal (vezi social/_template-rezumat-saptamanal), ca
+// cifrele să nu fie retastate de mână la fiecare ediție.
+const judeteDistincte = Object.keys(judete).length;
+const segmente = { rezidential: 0, comercial: 0 };
+for (const l of cereriSaptamana) {
+  if (l.segment === 'comercial') segmente.comercial += 1;
+  else segmente.rezidential += 1;
+}
 
 // O cerere merge la maxim 3 firme (MAX_CLAIMS_PER_LEAD din lib/sheets.ts), deci
 // „revendicată" nu înseamnă „luată": cât timp are sub 3 revendicări active, o
@@ -154,6 +176,8 @@ const out = {
   oferteTrimise: oferteSaptamana,
   firmeActive,
   topJudete,
+  judeteDistincte,
+  segmente,
   // Totaluri, pentru context când săptămâna e slabă.
   totalCereri: leads.length,
   totalCereriDisponibile: libereAcum.length,
@@ -176,6 +200,10 @@ console.log(`  Oferte marcate trimise ... ${out.oferteTrimise}`);
 if (topJudete.length) {
   console.log(`  Top județe ............... ${topJudete.map(([j, n]) => `${j} ${n}`).join(', ')}`);
 }
+console.log(`  Județe distincte ......... ${out.judeteDistincte}`);
+console.log(
+  `  Segment .................. ${out.segmente.rezidential} rezidențial, ${out.segmente.comercial} comercial`,
+);
 console.log(`\n  Context: ${out.totalCereri} cereri în total, ${out.totalCereriDisponibile} fără nicio firmă`);
 if (out.totalCereriDisponibileJudete.length) {
   console.log(`  Județele lor ............. ${out.totalCereriDisponibileJudete.join(', ')}`);
