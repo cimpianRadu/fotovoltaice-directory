@@ -778,8 +778,9 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
                   Politicii de Confidențialitate
                 </a>
                 . Datele vor fi transmise firmelor de instalare care acoperă zona mea și, dacă am
-                cerut finanțare printr-un program, unui partener de finanțare, pentru a mă contacta
-                cu oferte. *
+                indicat că doresc finanțare, credit sau un program de sprijin ori că nu am decis
+                încă, unui partener de finanțare, pentru a mă contacta cu oferte. Dacă am indicat
+                fonduri proprii, cererea nu se transmite unui partener de finanțare. *
               </label>
             </div>
           </div>

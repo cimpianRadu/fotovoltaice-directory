@@ -1,11 +1,17 @@
 import { NextResponse } from 'next/server';
 import { saveLeadToSheet } from '@/lib/sheets';
 
-// v3 lărgește destinatarii la partenerii de finanțare, DOAR pentru cererile care
-// declară o rută de finanțare printr-un program (coloana Y). Cererile pe fonduri
-// proprii și cele strânse sub v2 nu sunt acoperite: pe alea nu le trimite nimănui
-// în afara firmelor de instalare. Vezi textul din components/forms/LeadForm.tsx.
-const CONSENT_VERSION = 'v3-2026-07-29';
+// v3 lărgea destinatarii la partenerii de finanțare, dar bifa spunea „finanțare
+// printr-un program", ceea ce lăsa pe dinafară tocmai creditul bancar, adică
+// ruta cea mai frecventă. Politica de confidențialitate descria de la început
+// domeniul corect (credit, program de sprijin sau nehotărât, cu excluderea
+// fondurilor proprii), deci v4 aliniază bifa la politică, nu invers.
+//
+// Ce NU se schimbă: cererile pe fonduri proprii rămân în afara oricărei
+// transmiteri către finanțatori, iar cele strânse sub v2 și v3 păstrează
+// domeniul lor mai îngust. Consimțământul nu se extinde retroactiv, de aceea
+// versiunea se scrie per cerere în coloana R. Filtrul e în lib/consent.ts.
+const CONSENT_VERSION = 'v4-2026-08-17';
 
 export async function POST(request: Request) {
   try {

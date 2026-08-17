@@ -53,8 +53,9 @@ export default function PoliticaConfidentialitate() {
             vă contacteze cu oferte
           </li>
           <li>
-            Transmiterea cererilor care menționează finanțare printr-un program către un partener de
-            finanțare, pentru ca acesta să vă contacteze cu opțiuni
+            Transmiterea cererilor în care ați indicat că doriți finanțare, credit sau un program de
+            sprijin, ori că nu ați decis încă, către un partener de finanțare, pentru ca acesta să vă
+            contacteze cu opțiuni
           </li>
           <li>Procesarea cererilor de listare a firmelor pe platformă</li>
           <li>Trimiterea de comunicări solicitate (newsletter)</li>
