@@ -21,6 +21,7 @@ import {
 } from '@/lib/sheets';
 import { sendClaimInactiveEmail, sendCountyLeadAlert } from '@/lib/email';
 import {
+  getConnectionLabel,
   getFinancingLabel,
   getProjectTypeLabel,
   getRoofTypeLabel,
@@ -203,6 +204,7 @@ async function announceUnlockedLeads(
           putere: lead.putere,
           consumLunar: lead.consumLunar,
           acoperisLabel: lead.tipAcoperis ? getRoofTypeLabel(lead.tipAcoperis) : '',
+          bransamentLabel: lead.bransament ? getConnectionLabel(lead.bransament) : '',
           finantareSlug: lead.finantare,
           finantareLabel: lead.finantare ? getFinancingLabel(lead.finantare) : '',
           termenLabel: lead.termen ? getTimelineLabel(lead.termen) : '',

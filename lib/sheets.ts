@@ -75,11 +75,11 @@ async function readRows(sheetName: string): Promise<string[][]> {
     () =>
       sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        // A:AF, nu A:Z — coloanele de lead au trecut de Z în aug 2026 (Z–AD:
+        // A:AG, nu A:Z — coloanele de lead au trecut de Z în aug 2026 (Z–AD:
         // localitate, stocare, wallbox, termen, poze; AE–AF: fereastra de
-        // prioritate și marcajul de alerte). Celelalte taburi au mai puține
-        // coloane, range-ul mai lat nu le afectează.
-        range: `${sheetName}!A:AF`,
+        // prioritate și marcajul de alerte; AG: branșament). Celelalte taburi
+        // au mai puține coloane, range-ul mai lat nu le afectează.
+        range: `${sheetName}!A:AG`,
       }),
     `read ${sheetName}`,
   );
@@ -109,6 +109,7 @@ export async function saveLeadToSheet(lead: {
   stocare?: string;
   wallbox?: string;
   termen?: string;
+  bransament?: string;
 }): Promise<string> {
   const timestamp = new Date().toISOString();
   await appendRow('Leads', [
@@ -142,8 +143,11 @@ export async function saveLeadToSheet(lead: {
     lead.stocare || '',      // AA — Baterie de stocare (da/nu/nu-stiu)
     lead.wallbox || '',      // AB — Stație de încărcare auto (da/nu/nu-stiu)
     lead.termen || '',       // AC — Termen dorit de instalare
-    // AD — Poze: link Drive lipit manual (pozele vin pe email, după ref din
-    // subiect). Coloana nu se scrie de aici niciodată.
+    '', // AD — Poze: link Drive lipit manual (pozele vin pe email, după ref din
+    //     subiect). Rândul trece prin ea doar ca să ajungă la coloanele de după.
+    '', // AE — Prioritar până la: scris de fluxul de abonament, după salvare
+    '', // AF — Alerte firme: scris după ce pleacă alertele pe județ
+    lead.bransament || '',   // AG — Branșament electric la locul instalării
   ]);
   return timestamp;
 }
@@ -317,6 +321,10 @@ export interface NewLead {
   // ține alertele idempotente: cererile rezervate îl primesc abia după ce
   // expiră fereastra, prin cronul zilnic.
   alerteTrimise: string;
+  // AG — branșament electric la locul instalării (da/nu/nu-stiu), obligatoriu
+  // din 18 aug 2026. Fără branșament nu se racordează nimic, deci firma vrea
+  // să știe înainte de primul telefon, nu după deplasare.
+  bransament: string;
 }
 
 export interface NewListing {
@@ -375,6 +383,7 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     poze: r[29] || '',
     prioritarPanaLa: r[30] || '',
     alerteTrimise: r[31] || '',
+    bransament: r[32] || '',
     ...readCrmFields(r),
   }));
 }
@@ -429,6 +438,9 @@ export interface PublicLead {
   stocare: string;
   wallbox: string;
   termen: string;
+  // Public intenționat, ca fazarea: nu identifică pe nimeni, dar decide dacă
+  // proiectul e de azi sau de peste șase luni.
+  bransament: string;
   // Doar semnal (există/nu există) — pozele în sine se trimit firmei, nu public.
   arePoze: boolean;
 }
@@ -495,6 +507,7 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       stocare: l.stocare,
       wallbox: l.wallbox,
       termen: l.termen,
+      bransament: l.bransament,
       arePoze: Boolean(l.poze.trim()),
     }))
     .reverse(); // cele mai noi primele

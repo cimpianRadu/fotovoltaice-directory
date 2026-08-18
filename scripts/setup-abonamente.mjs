@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Pregătește Sheet-ul pentru distribuția prioritară pe abonament:
- *   - scrie antetul coloanelor AE („Prioritar până la") și AF („Alerte firme")
- *     în tabul Leads;
+ * Pregătește Sheet-ul pentru coloanele și taburile adăugate în august 2026:
+ *   - scrie antetul coloanelor AE („Prioritar până la"), AF („Alerte firme")
+ *     și AG („Branșament") în tabul Leads;
  *   - creează tabul „Abonamente" cu antetul lui, dacă lipsește.
  *
  * Idempotent: rulat de două ori nu strică nimic. Read-only peste datele
@@ -50,7 +50,7 @@ const leads = meta.data.sheets.find((s) => s.properties.title === 'Leads');
 // deosebire de citiri, care se rotunjesc tăcut — de aceea coloanele se adaugă
 // aici, o dată, nu la prima cerere rezervată.
 const cols = leads.properties.gridProperties.columnCount;
-if (cols < 32) {
+if (cols < 33) {
   await sheets.spreadsheets.batchUpdate({
     spreadsheetId,
     requestBody: {
@@ -59,24 +59,24 @@ if (cols < 32) {
           appendDimension: {
             sheetId: leads.properties.sheetId,
             dimension: 'COLUMNS',
-            length: 32 - cols,
+            length: 33 - cols,
           },
         },
       ],
     },
   });
-  console.log(`Leads: ${32 - cols} coloane adăugate (erau ${cols}).`);
+  console.log(`Leads: ${33 - cols} coloane adăugate (erau ${cols}).`);
 } else {
   console.log(`Leads: are deja ${cols} coloane.`);
 }
 
 await sheets.spreadsheets.values.update({
   spreadsheetId,
-  range: 'Leads!AE1:AF1',
+  range: 'Leads!AE1:AG1',
   valueInputOption: 'RAW',
-  requestBody: { values: [['Prioritar până la', 'Alerte firme']] },
+  requestBody: { values: [['Prioritar până la', 'Alerte firme', 'Branșament']] },
 });
-console.log('Leads: antet AE/AF scris.');
+console.log('Leads: antet AE/AF/AG scris.');
 
 if (!titles.includes('Abonamente')) {
   await sheets.spreadsheets.batchUpdate({

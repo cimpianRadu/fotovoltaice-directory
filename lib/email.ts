@@ -234,6 +234,7 @@ interface ClaimNotificationData {
     fazareLabel: string;
     consumLunar: string;
     finantareLabel: string;
+    bransamentLabel: string;
   };
   claimCount: number; // inclusiv revendicarea curentă
   maxClaims: number;
@@ -274,6 +275,7 @@ export async function sendClaimNotification(data: ClaimNotificationData): Promis
         ${lead.acoperisLabel ? row('Acoperiș', escapeHtml(lead.acoperisLabel)) : ''}
         ${lead.fazareLabel ? row('Alimentare', escapeHtml(lead.fazareLabel)) : ''}
         ${lead.consumLunar ? row('Consum lunar', escapeHtml(lead.consumLunar)) : ''}
+        ${lead.bransamentLabel ? row('Branșament', escapeHtml(lead.bransamentLabel)) : ''}
         ${lead.finantareLabel ? row('Finanțare', `<strong>${escapeHtml(lead.finantareLabel)}</strong>`) : ''}
         ${row('Segment', escapeHtml(lead.segment))}
         ${row('Depus', escapeHtml(fmtDate(lead.timestamp)))}
@@ -595,6 +597,7 @@ export async function sendCountyLeadAlert(data: {
   putere: string;
   consumLunar: string;
   acoperisLabel: string;
+  bransamentLabel: string;
   finantareSlug: string;
   finantareLabel: string;
   termenLabel: string;
@@ -626,6 +629,7 @@ export async function sendCountyLeadAlert(data: {
         ${data.putere ? row('Putere', `${escapeHtml(data.putere)} kW`) : ''}
         ${data.consumLunar ? row('Consum lunar', escapeHtml(data.consumLunar)) : ''}
         ${data.acoperisLabel ? row('Acoperiș', escapeHtml(data.acoperisLabel)) : ''}
+        ${data.bransamentLabel ? row('Branșament', escapeHtml(data.bransamentLabel)) : ''}
         ${row('Județ', escapeHtml(data.judet))}
       </table>
       <div style="text-align:center;margin-top:20px">

@@ -19,6 +19,7 @@ export interface LeadCardData {
   mesaj: string;
   acoperisLabel: string;
   fazareLabel: string;
+  bransamentLabel: string;
   consumLunar: string;
   finantareLabel: string;
   finantareTone: FinancingTone;
@@ -138,6 +139,7 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
   const specs = [
     lead.acoperisLabel ? { label: 'Acoperiș', value: lead.acoperisLabel } : null,
     lead.fazareLabel ? { label: 'Alimentare', value: lead.fazareLabel } : null,
+    lead.bransamentLabel ? { label: 'Branșament', value: lead.bransamentLabel } : null,
     lead.consumLunar ? { label: 'Consum', value: lead.consumLunar } : null,
     lead.stocareLabel ? { label: 'Baterie', value: lead.stocareLabel } : null,
     lead.wallboxLabel ? { label: 'Stație auto', value: lead.wallboxLabel } : null,

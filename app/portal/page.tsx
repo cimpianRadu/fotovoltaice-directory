@@ -15,6 +15,7 @@ import {
 } from '@/lib/sheets';
 import {
   getCounties,
+  getConnectionShort,
   getProjectTypeLabel,
   getRoofTypeLabel,
   getPhaseLabel,
@@ -45,6 +46,7 @@ function specsFor(lead: NewLead | undefined): { label: string; value: string }[]
     lead.suprafata ? { label: 'Suprafață', value: `${lead.suprafata} mp` } : null,
     lead.tipAcoperis ? { label: 'Acoperiș', value: getRoofTypeLabel(lead.tipAcoperis) } : null,
     lead.fazare ? { label: 'Alimentare', value: getPhaseLabel(lead.fazare) } : null,
+    lead.bransament ? { label: 'Branșament', value: getConnectionShort(lead.bransament) } : null,
     lead.consumLunar ? { label: 'Consum', value: lead.consumLunar } : null,
     lead.finantare ? { label: 'Finanțare', value: getFinancingLabel(lead.finantare) } : null,
     lead.stocare ? { label: 'Baterie', value: getYesNoLabel(lead.stocare) } : null,

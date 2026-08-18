@@ -15,6 +15,7 @@ import {
 } from '@/lib/sheets';
 import { sendClaimNotification } from '@/lib/email';
 import {
+  getConnectionLabel,
   getFinancingLabel,
   getPhaseLabel,
   getProjectTypeLabel,
@@ -103,6 +104,7 @@ export async function POST(request: Request) {
         fazareLabel: lead.fazare ? getPhaseLabel(lead.fazare) : '',
         consumLunar: lead.consumLunar,
         finantareLabel: lead.finantare ? getFinancingLabel(lead.finantare) : '',
+        bransamentLabel: lead.bransament ? getConnectionLabel(lead.bransament) : '',
       },
       claimCount: allClaims.filter((c) => c.leadId === leadId).length + 1,
       maxClaims: MAX_CLAIMS_PER_LEAD,

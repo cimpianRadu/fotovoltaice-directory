@@ -195,6 +195,30 @@ export const PHASE_TYPES = [
   { value: 'nu-stiu', label: 'Nu știu' },
 ] as const;
 
+/**
+ * Branșamentul electric la locul instalării, cerut de instalatori pe 18 aug
+ * 2026: „unii pun cerere și nici măcar n-au branșament făcut". Fără el nu se
+ * poate racorda nimic, deci schimbă complet discuția și termenul, nu doar
+ * prețul. „Nu știu" e răspuns valid: pe o casă cumpărată recent chiar nu se
+ * știe fără să te uiți la contract.
+ */
+export const CONNECTION_OPTIONS = [
+  { value: 'da', label: 'Da, există branșament' },
+  { value: 'nu', label: 'Nu, trebuie făcut' },
+  { value: 'nu-stiu', label: 'Nu știu' },
+] as const;
+
+export function getConnectionLabel(slug: string): string {
+  return CONNECTION_OPTIONS.find((o) => o.value === slug)?.label ?? slug;
+}
+
+/** Varianta scurtă, pentru cardurile din feed și pastilele din portal. */
+export function getConnectionShort(slug: string): string {
+  if (slug === 'da') return 'Da';
+  if (slug === 'nu') return 'Nu, de făcut';
+  return 'Nu știe';
+}
+
 const ROOF_LABELS: Record<string, string> = Object.fromEntries(
   [...ROOF_TYPES_REZIDENTIAL, ...ROOF_TYPES_COMERCIAL].map((o) => [o.value, o.label]),
 );

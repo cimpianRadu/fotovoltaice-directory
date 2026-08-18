@@ -10,6 +10,7 @@ import {
 } from '@/lib/sheets';
 import { sendCountyLeadAlert } from '@/lib/email';
 import {
+  getConnectionLabel,
   getFinancingLabel,
   getProjectTypeLabel,
   getRoofTypeLabel,
@@ -67,14 +68,20 @@ export async function POST(request: Request) {
     // răspuns. Un formular vechi din cache poate trimite fără ele, de aceea
     // verificarea e și pe server, cu `field` pentru focus.
     const missingDetail =
-      (!body.finantare && 'finantare') || (!body.termen && 'termen') || null;
+      (!body.finantare && 'finantare') ||
+      (!body.termen && 'termen') ||
+      (!body.tipAcoperis && 'tipAcoperis') ||
+      (!body.bransament && 'bransament') ||
+      null;
     if (missingDetail) {
       return NextResponse.json(
         {
-          error:
-            missingDetail === 'finantare'
-              ? 'Alegeți cum finanțați investiția (sau „Nu știu încă").'
-              : 'Alegeți cât de repede vreți instalarea (sau „Deocamdată mă informez").',
+          error: {
+            finantare: 'Alegeți cum finanțați investiția (sau „Nu știu încă").',
+            termen: 'Alegeți cât de repede vreți instalarea (sau „Deocamdată mă informez").',
+            tipAcoperis: 'Alegeți tipul de acoperiș (sau „Altul / nu știu").',
+            bransament: 'Spuneți dacă există branșament electric (sau „Nu știu").',
+          }[missingDetail],
           field: missingDetail,
         },
         { status: 400 },
@@ -148,6 +155,7 @@ async function notifyCountyAlerts(body: Record<string, string>, leadId: string) 
     putere: (body.putere || '').trim(),
     consumLunar: (body.consumLunar || '').trim(),
     acoperisLabel: body.tipAcoperis ? getRoofTypeLabel(body.tipAcoperis.trim()) : '',
+    bransamentLabel: body.bransament ? getConnectionLabel(body.bransament.trim()) : '',
     finantareSlug: finantare,
     finantareLabel: finantare ? getFinancingLabel(finantare) : '',
     termenLabel: body.termen ? getTimelineLabel(body.termen.trim()) : '',

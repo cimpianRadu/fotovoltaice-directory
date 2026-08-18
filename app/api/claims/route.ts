@@ -17,6 +17,7 @@ import {
 import { isValidEmail, normalizeEmail } from '@/lib/portal-auth';
 import { sendClaimNotification } from '@/lib/email';
 import {
+  getConnectionLabel,
   getProjectTypeLabel,
   getRoofTypeLabel,
   getPhaseLabel,
@@ -152,6 +153,7 @@ export async function POST(request: Request) {
         fazareLabel: lead.fazare ? getPhaseLabel(lead.fazare) : '',
         consumLunar: lead.consumLunar,
         finantareLabel: lead.finantare ? getFinancingLabel(lead.finantare) : '',
+        bransamentLabel: lead.bransament ? getConnectionLabel(lead.bransament) : '',
       },
       claimCount,
       maxClaims: MAX_CLAIMS_PER_LEAD,

@@ -23,11 +23,16 @@ const getEnv = (k) => env.match(new RegExp(`^${k}=(.*)$`, 'm'))?.[1]?.trim().rep
 const FORMS = [
   {
     id: 'lead', label: 'Cere ofertă (/cere-oferta)', path: '/cere-oferta',
-    api: '/api/leads', formKey: 'tipProiect', sheet: 'Leads', emailCol: 3,
+    api: '/api/leads', sheet: 'Leads', emailCol: 3,
+    // Wizard în 4 pași din 17 aug 2026 (vezi LeadForm STEPS): proiect → zonă →
+    // contact → detalii, cu trimiterea abia pe ultimul. `formKey` n-ar avea ce
+    // aștepta la pasul 0 (tipul de proiect e card, nu input), deci ready-ul se
+    // face pe cardurile din formular.
+    wizard: true, ready: 'form button[type="button"]', formKey: null,
     // numeCompanie only exists in the "Firmă"/commercial segment (required there); harmless if absent in residential
-    // suprafata/putere are covered by the "Nu știu" checkboxes (fillForm ticks every checkbox)
     text: { numeCompanie: `ROUTINE TEST ${TOKEN}`, numeContact: 'ROUTINE TEST', email: `${TEST_EMAIL_PREFIX}${TOKEN}-lead@example.com`, telefon: '0712345678', localitate: 'ROUTINE TEST', mesaj: `E2E routine ${TOKEN} — auto, ștergeți` },
-    selects: [{ name: 'tipProiect' }, { name: 'judet' }, { name: 'termen' }, { name: 'tipAcoperis' }, { name: 'fazare' }, { name: 'stocare' }, { name: 'wallbox' }, { name: 'finantare' }],
+    // pasul 4 e integral opțional, dar îl completăm ca să testăm și dropdown-urile
+    selects: [{ name: 'judet', step: 1 }, { name: 'tipAcoperis', step: 3 }, { name: 'termen', step: 3 }, { name: 'finantare', step: 3 }, { name: 'bransament', step: 3 }],
   },
   {
     id: 'listing', label: 'Listare firmă (/listeaza-firma)', path: '/listeaza-firma',
@@ -75,15 +80,73 @@ async function fillForm(spec) {
     }
     return { ok: !!hidden.value, value: hidden.value, sample: hidden.value ? undefined : lastSample.slice(0, 4) };
   };
+  // SearchableSelect se închide pe mousedown pe document — altfel lista rămasă
+  // deschisă acoperă butonul de pe pasul următor.
+  const closeDropdowns = async () => {
+    document.body.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    await sleep(100);
+  };
+  const tickCheckboxes = (root) =>
+    root.querySelectorAll('input[type="checkbox"]').forEach((c) => { if (!c.checked) c.click(); });
+
   const missingText = [];
-  for (const [k, v] of Object.entries(spec.text)) if (!setText(k, v)) missingText.push(k);
   const selResults = {};
+
+  if (spec.wizard) {
+    const steps = [];
+    const form = document.querySelector('form');
+    const fillTexts = (keys) => {
+      for (const k of keys) if (k in spec.text && !setText(k, spec.text[k])) missingText.push(k);
+    };
+    const pickStep = async (n) => {
+      for (const s of spec.selects.filter((x) => x.step === n)) selResults[s.name] = await pick(s.name);
+    };
+    // „Continuă" avansează doar dacă pasul curent e valid; confirmăm cu un
+    // selector de pe pasul următor, ca să nu raportăm un pas trecut degeaba.
+    const next = async (expect) => {
+      await closeDropdowns();
+      const btn = [...form.querySelectorAll('button')].find((b) => b.textContent.trim().startsWith('Continuă'));
+      if (!btn) return false;
+      btn.click();
+      for (let i = 0; i < 25; i++) {
+        await sleep(100);
+        if (document.querySelector(expect)) return true;
+      }
+      return false;
+    };
+
+    // Pasul 1 — tipul de proiect e card, iar cardul avansează singur.
+    const card = [...form.querySelectorAll('button[type="button"]')][0];
+    if (!card) return { error: 'pasul 1: niciun card de tip proiect', missingText, selResults };
+    card.click();
+    for (let i = 0; i < 25 && !document.querySelector('input[name="localitate"]'); i++) await sleep(100);
+    if (!document.querySelector('input[name="localitate"]')) return { error: 'pasul 1 nu avansează', steps };
+    steps.push('proiect');
+
+    // Pasul 2 — zonă.
+    await pickStep(1);
+    fillTexts(['localitate']);
+    if (!(await next('input[name="telefon"]'))) return { error: 'pasul 2 (zonă) nu avansează', steps, missingText, selResults };
+    steps.push('zona');
+
+    // Pasul 3 — contact.
+    fillTexts(['numeCompanie', 'numeContact', 'telefon', 'email']);
+    if (!(await next('#gdpr'))) return { error: 'pasul 3 (contact) nu avansează', steps, missingText, selResults };
+    steps.push('contact');
+
+    // Pasul 4 — detalii opționale + GDPR (bifa obligatorie).
+    await pickStep(3);
+    fillTexts(['mesaj']);
+    await closeDropdowns();
+    tickCheckboxes(form);
+    steps.push('detalii');
+    return { steps, missingText, selResults };
+  }
+
+  for (const [k, v] of Object.entries(spec.text)) if (!setText(k, v)) missingText.push(k);
   for (const s of spec.selects) selResults[s.name] = await pick(s.name);
-  // close any lingering dropdown (SearchableSelect closes on document mousedown)
-  document.body.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
-  await sleep(100);
-  const form = document.querySelector(`[name="${spec.formKey}"]`).closest('form');
-  form.querySelectorAll('input[type="checkbox"]').forEach((c) => { if (!c.checked) c.click(); });
+  await closeDropdowns();
+  tickCheckboxes(document.querySelector(`[name="${spec.formKey}"]`).closest('form'));
   return { missingText, selResults };
 }
 
@@ -96,15 +159,17 @@ async function runBrowser() {
     try {
       const page = await ctx.newPage();
       await page.goto(TARGET + f.path, { waitUntil: 'networkidle', timeout: 45000 });
-      await page.waitForSelector(`[name="${f.formKey}"]`, { state: 'attached', timeout: 20000 });
+      await page.waitForSelector(f.ready || `[name="${f.formKey}"]`, { state: 'attached', timeout: 20000 });
       await page.waitForTimeout(1200); // let React hydrate before interacting (clicks are no-ops pre-hydration)
       r.fill = await page.evaluate(fillForm, f);
+      if (r.fill?.error) { r.error = r.fill.error; await page.close(); results[f.id] = r; continue; }
       const respP = page.waitForResponse(
         (resp) => resp.url().includes(f.api) && resp.request().method() === 'POST',
         { timeout: 20000 },
       );
       await page.evaluate((key) => {
-        document.querySelector(`[name="${key}"]`).closest('form').querySelector('button[type="submit"]').click();
+        const form = key ? document.querySelector(`[name="${key}"]`).closest('form') : document.querySelector('form');
+        form.querySelector('button[type="submit"]').click();
       }, f.formKey);
       const resp = await respP;
       r.apiStatus = resp.status();

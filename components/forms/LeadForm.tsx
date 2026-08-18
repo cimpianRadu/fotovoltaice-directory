@@ -9,6 +9,7 @@ import {
   getCounties,
   ROOF_TYPES_REZIDENTIAL,
   ROOF_TYPES_COMERCIAL,
+  CONNECTION_OPTIONS,
   PHASE_TYPES,
   FINANCING_REZIDENTIAL,
   FINANCING_COMERCIAL,
@@ -103,7 +104,14 @@ function focusField(el: unknown) {
 }
 
 // Pasul 4, trimis odată cu cererea.
-const STEP4_KEYS = ['tipAcoperis', 'putere', 'consumLunar', 'termen', 'finantare'] as const;
+const STEP4_KEYS = [
+  'tipAcoperis',
+  'putere',
+  'consumLunar',
+  'termen',
+  'finantare',
+  'bransament',
+] as const;
 
 // Detaliile secundare, strânse pe ecranul de confirmare lângă trimiterea pozelor.
 // Astea chiar merg prin /api/leads/enrich, pentru că vin după salvare.
@@ -579,7 +587,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
   }
 
   const step4Selects: FieldSpec[] = [
-    { name: 'tipAcoperis', label: 'Tip acoperiș', options: opts(roofTypes) },
+    { name: 'tipAcoperis', label: 'Tip acoperiș', options: opts(roofTypes), required: true },
     // Obligatorii din 18 aug 2026. Sunt primele două întrebări pe care le pune
     // firma care ofertează, iar o cerere fără ele ajunge pe /cereri ca un card
     // gol: județ, tip de casă și nimic din ce decide prețul. Ambele au ieșire
@@ -587,6 +595,15 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
     // pe nimeni să inventeze un răspuns.
     { name: 'termen', label: 'Cât de repede vreți instalarea', options: opts(TIMELINE_OPTIONS), required: true },
     { name: 'finantare', label: 'Cum finanțați investiția', options: opts(financingTypes), required: true },
+    // Cerut de instalatori pe 18 aug 2026: fără branșament nu se racordează
+    // nimic, iar ei aflau abia la fața locului.
+    {
+      name: 'bransament',
+      label: 'Branșament electric la locul instalării',
+      options: opts(CONNECTION_OPTIONS),
+      required: true,
+      hint: 'Adică există deja contor și contract de energie pe adresa aceea.',
+    },
   ];
 
   return (
