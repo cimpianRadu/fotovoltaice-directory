@@ -223,8 +223,8 @@
       "published": true,
       "publishedAt": "2026-02-26",
       "author": "Radu",
-      "title": "Subvenții Panouri Fotovoltaice 2026 - Ghid Complet Fonduri Nerambursabile",
-      "metaDescription": "Subvenții panouri fotovoltaice 2026: pentru firme (Electric UP, Fondul de Modernizare, facilități fiscale) și persoane fizice (Casa Verde). Ce e disponibil acum.",
+      "title": "Subvenții Panouri Fotovoltaice 2026: Ce E Deschis Acum",
+      "metaDescription": "Programele active în 2026 pentru firme și persoane fizice: Casa Verde Baterii, Electric Up, Fondul pentru Modernizare. Cu status verificat, nu promisiuni.",
       "heroDescription": "Toate programele de finanțare și facilitățile fiscale disponibile în 2026 pentru firmele care vor să instaleze panouri fotovoltaice: de la fonduri nerambursabile la amortizare super-accelerată.",
       "sections": [
         {
@@ -304,15 +304,16 @@
         "parcuri-logistice",
         "retail",
         "agricol"
-      ]
+      ],
+      "updatedAt": "2026-08-18"
     },
     {
       "slug": "electric-up-2026-ghid-aplicare",
       "published": true,
       "publishedAt": "2026-02-26",
       "author": "Radu",
-      "title": "Electric UP 2026 - Ghid Complet de Aplicare pentru Firme",
-      "metaDescription": "Ghid complet Electric UP 2026: condiții, documente, sume, proces de aplicare. Până la 150.000 EUR fonduri nerambursabile pentru panouri fotovoltaice și stații EV.",
+      "title": "Electric Up 2026: Se Mai Poate Aplica? Status și Condiții",
+      "metaDescription": "Ciclul 2 e în evaluare și nu se acceptă cereri noi, iar Ciclul 3 nu e anunțat. Cine e eligibil, ce cheltuieli intră și cum îți pregătești dosarul din timp.",
       "heroDescription": "Tot ce trebuie să știi despre programul Electric UP: de la eligibilitate și documente necesare, până la strategia de punctaj maxim și pașii concreți de aplicare.",
       "sections": [
         {
@@ -322,7 +323,7 @@
         },
         {
           "id": "status-2026",
-          "title": "Status Electric UP în februarie 2026",
+          "title": "Status Electric UP în august 2026",
           "content": "### Ciclul 2 — În evaluare\n\n| Detaliu | Informație |\n|---|---|\n| **Perioada de înscriere** | 14 octombrie – 16 decembrie 2024 |\n| **Cereri depuse** | 2.859 proiecte |\n| **Buget alocat** | 450–596 milioane RON |\n| **Status** | **În evaluare** — nu se acceptă cereri noi |\n| **Platformă** | granturi.imm.gov.ro |\n\n### Ciclul 3 — Neconfirmat, dar probabil\n\nNu există un anunț oficial pentru un Ciclu 3 în 2026. Totuși:\n\n- Cadrul legal (OUG 159/2020) prevede **cicluri multiple până în 2032**\n- Ediția 1 a avut mai multe sesiuni de depunere\n- Bugetul programului provine din alocări anuale de la bugetul de stat\n- Este rezonabil să așteptăm un nou apel după finalizarea evaluării Ciclului 2\n\n**Recomandare:** Monitorizează [energie.gov.ro/category/electricup/](https://energie.gov.ro/category/electricup/) pentru anunțuri. Între timp, **pregătește-ți documentația** — când se deschide un nou apel, fereastră de depunere este scurtă (în Ciclul 2 a fost doar 2 luni)."
         },
         {
@@ -397,7 +398,8 @@
         "cladiri-birouri",
         "retail",
         "agricol"
-      ]
+      ],
+      "updatedAt": "2026-08-18"
     },
     {
       "slug": "stocare-energie-baterii-firme",
@@ -779,8 +781,8 @@
       "published": true,
       "publishedAt": "2026-04-13",
       "author": "Radu",
-      "title": "Casa Verde Fotovoltaice 2026 — Ghid de Finanțare AFM: Înscrieri, Sumă, Condiții",
-      "metaDescription": "Ghid de finanțare Casa Verde fotovoltaice 2026: status oficial, sumă, condiții, documente, înscrieri pe afm.ro. Inclusiv programul Casa Verde Baterii (status iunie 2026).",
+      "title": "Casa Verde 2026: Ce Se Finanțează și Când Încep Înscrierile",
+      "metaDescription": "Ce finanțează AFM în 2026 (baterii de stocare, nu panouri noi), cine e eligibil, ce documente cere dosarul și calendarul real al programului Casa Verde.",
       "heroDescription": "Ghid complet de finanțare Casa Verde Fotovoltaice 2026: cum a funcționat sesiunea de panouri din 2024 (suma 30.000 lei), ce aduce ediția 2026 pentru bateriile de stocare, cine e eligibil, ce documente pregătești și cum aplici pe afm.ro.",
       "sections": [
         {
@@ -878,7 +880,8 @@
           "answer": "Casa Verde Fotovoltaice (AFM) este pentru persoane fizice, pentru locuințe. Electric Up (Ministerul Energiei) este pentru firme — IMM-uri și HoReCa — cu finanțare de până la 150.000 EUR (75% din costuri). Pentru panouri pe firmă aplici la Electric Up, nu la Casa Verde."
         }
       ],
-      "relatedSpecializations": []
+      "relatedSpecializations": [],
+      "updatedAt": "2026-08-18"
     },
     {
       "slug": "invertoare-fotovoltaice-comerciale",
@@ -1145,8 +1148,8 @@
       "published": true,
       "publishedAt": "2026-04-16",
       "author": "Radu",
-      "title": "Fonduri Nerambursabile Panouri Fotovoltaice IMM 2026 — Ghid Complet Finanțare",
-      "metaDescription": "Toate programele de fonduri nerambursabile pentru panouri fotovoltaice IMM în 2026: Fondul de Modernizare, PNRR, Electric UP, credite verzi și leasing. Ghid complet cu sume, eligibilitate și pași concreți.",
+      "title": "Fonduri Nerambursabile Panouri Fotovoltaice IMM 2026",
+      "metaDescription": "Ce finanțări poate accesa un IMM pentru panouri fotovoltaice în 2026: Fondul pentru Modernizare, PNRR, Electric Up, credite verzi. Sume, eligibilitate, pași.",
       "heroDescription": "Ghid complet cu toate opțiunile de finanțare pentru panouri fotovoltaice destinate firmelor în 2026: fonduri nerambursabile, credite verzi bancare și leasing — cu sume, eligibilitate și pași concreți de aplicare.",
       "sections": [
         {
@@ -1245,7 +1248,8 @@
         "retail",
         "parcuri-logistice",
         "agricol"
-      ]
+      ],
+      "updatedAt": "2026-08-18"
     },
     {
       "slug": "avize-autorizatii-instalare-fotovoltaice-firma",
@@ -1433,8 +1437,8 @@
       "published": true,
       "publishedAt": "2026-04-27",
       "author": "Radu",
-      "title": "Firme Autorizate ANRE Panouri Fotovoltaice 2026 — Lista Instalatorilor pentru Montaj și Instalare",
-      "metaDescription": "Firme autorizate ANRE pentru montaj și instalare panouri fotovoltaice 2026: lista top instalatori verificați (atestat C1A/C2A activ), diferența ANRE vs AFM, cum verifici autorizarea.",
+      "title": "Firme Autorizate ANRE 2026: Lista Instalatorilor Verificați",
+      "metaDescription": "Lista instalatorilor cu atestat ANRE C1A sau C2A activ, verificat direct în registrul oficial. Diferența dintre ANRE și AFM și cum verifici singur o firmă.",
       "heroDescription": "În registrul ANRE sunt peste 1.500 de societăți cu atestat activ pentru execuție de instalații electrice. Doar o parte fac efectiv panouri fotovoltaice. Ghidul ăsta separă firmele cu istoric și capacitate reală de cele care au atestat doar pe hârtie.",
       "sections": [
         {
@@ -1540,7 +1544,7 @@
         "agricol",
         "retail"
       ],
-      "updatedAt": "2026-07-28"
+      "updatedAt": "2026-08-18"
     },
     {
       "slug": "asigurare-panouri-fotovoltaice-comerciale",
@@ -1944,8 +1948,8 @@
       "published": true,
       "publishedAt": "2026-05-14",
       "author": "Radu",
-      "title": "Legea 160/2026 Prosumatori pentru Firmă — Compensare Lunară, Preț PZU, Termen ANRE",
-      "metaDescription": "Legea 160/2026 a modificat regimul prosumatorilor de la 26 iulie 2026 (MO nr. 603/23 iulie 2026). Ghid pentru firmă: compensare lunară ≤200 kW, preț PZU 200-400 kW, vânzare directă la barele centralei, termen ANRE ~24 septembrie 2026.",
+      "title": "Legea Prosumatorilor 2026 pentru Firme: Compensare și PZU",
+      "metaDescription": "Ce înseamnă Legea 160/2026 pentru firma ta: compensare lunară sub 200 kW, preț PZU la 200-400 kW, vânzare directă și termenul ANRE de ~24 septembrie.",
       "heroDescription": "Legea nr. 160/2026 a fost publicată în Monitorul Oficial nr. 603 din 23 iulie 2026 și e în vigoare de la 26 iulie 2026. Ghidul explică pentru firmă cele 5 modificări reale aduse Legii 123/2012: compensare cantitativă lunară sub 200 kW, preț mediu ponderat PZU pentru 200-400 kW, vânzare directă la barele centralei sub 400 kW, definiția extinsă de prosumator (stocare + vânzare), aplicabilitate retroactivă la contractele în derulare. Include ce trebuie modificat de ANRE în 60 de zile (Ordinul 15/2022, termen ~24 septembrie 2026).",
       "sections": [
         {
@@ -2053,7 +2057,7 @@
         "retail",
         "agricol"
       ],
-      "updatedAt": "2026-07-30"
+      "updatedAt": "2026-08-18"
     },
     {
       "slug": "top-firme-panouri-fotovoltaice-cluj-napoca-2026",
@@ -2466,8 +2470,8 @@
       "publishedAt": "2026-06-04",
       "published": true,
       "author": "Radu",
-      "title": "Casa Verde Baterii 2026: Program Stocare AFM (Status Real)",
-      "metaDescription": "Casa Verde Baterii 2026 — AFM a aprobat 21 mai 2026 buget 400 mil. lei pentru stocare. Ghid nepublicat încă. Status real, cum te pregătești ca prosumator.",
+      "title": "Casa Verde Baterii 2026: Când Încep Înscrierile",
+      "metaDescription": "Buget 400 mil. lei aprobat pe 21 mai. Ghidul AFM tot nepublicat, verificat pe afm.ro la 18 august 2026. Cine e eligibil și ce s-a confirmat oficial.",
       "heroDescription": "AFM a aprobat oficial pe 21 mai 2026 un buget de 400 milioane lei pentru un program de stocare a energiei cu baterii dedicat prosumatorilor. Ghidul de finanțare nu e publicat încă — iată ce știm, ce nu știm și cum te pregătești acum.",
       "sections": [
         {
@@ -2576,7 +2580,8 @@
       "relatedSpecializations": [
         "rezidential",
         "cladiri-birouri"
-      ]
+      ],
+      "updatedAt": "2026-08-18"
     },
     {
       "slug": "certificat-urbanism-autorizatie-construire-fotovoltaice-2026",
@@ -2951,8 +2956,8 @@
       "published": true,
       "publishedAt": "2026-06-18",
       "author": "Radu",
-      "title": "Kit Panouri Fotovoltaice 3, 5 și 10 kW: Preț 2026",
-      "metaDescription": "Cât costă un kit de panouri fotovoltaice de 3, 5 sau 10 kW în 2026: preț la cheie cu montaj, producție kWh/an, suprafață acoperiș și amortizare reală.",
+      "title": "Sistem Fotovoltaic 3, 5, 10 kW: Producție și Amortizare 2026",
+      "metaDescription": "Câți kWh produce anual un sistem de 3, 5 sau 10 kW, câtă suprafață de acoperiș cere și în câți ani se amortizează la consumul tău real.",
       "heroDescription": "Ghid comparativ pentru cele trei dimensiuni rezidențiale uzuale (3, 5 și 10 kW): cât plătești la cheie cu TVA și montaj, câți metri pătrați de acoperiș îți trebuie, câți kWh produce sistemul anual pe trei zone PVGIS din România și în câți ani se amortizează fără și cu subvenție.",
       "sections": [
         {
@@ -3066,7 +3071,7 @@
       "relatedSpecializations": [
         "rezidential"
       ],
-      "updatedAt": "2026-07-30"
+      "updatedAt": "2026-08-18"
     },
     {
       "slug": "sisteme-fotovoltaice-comerciale-2026-pillar-decident-firma",
@@ -3196,8 +3201,8 @@
       "published": true,
       "publishedAt": "2026-06-26",
       "author": "Radu, Specialist Instalatori Fotovoltaice",
-      "title": "1 An Liberalizare Energie 2026: Prețuri și Oferte Furnizori",
-      "metaDescription": "Bilanț la 1 an de liberalizare a pieței energiei: cum au evoluat prețurile, top oferte casnici și firme 2026, soluții pentru factură mică.",
+      "title": "Oferte Furnizori Energie 2026: Cum Compari Prețul pe kWh",
+      "metaDescription": "Cum citești prețul real pe factură, ce ofereau furnizorii pentru casă și firmă în iunie 2026 și cum schimbi furnizorul în 4 pași.",
       "heroDescription": "Pe 1 iulie 2026 se împlinește un an de la dispariția plafonării. Cum au evoluat prețurile la curent, cele mai bune oferte pe furnizor pentru casă și firmă, și soluția care taie factura cu 70-90%.",
       "sections": [
         {
@@ -3312,7 +3317,8 @@
         "rezidential",
         "hale-industriale",
         "cladiri-birouri"
-      ]
+      ],
+      "updatedAt": "2026-08-18"
     },
     {
       "slug": "amortizare-panouri-fotovoltaice-2026",
@@ -4222,8 +4228,8 @@
       "published": true,
       "publishedAt": "2026-07-27",
       "author": "Radu, Specialist Instalatori Fotovoltaice",
-      "title": "Legea 160/2026 Prosumatori: Ce Se Schimbă din 26 Iulie",
-      "metaDescription": "Legea 160/2026 pentru prosumatori intră în vigoare 26 iulie 2026. Facturare lunară, plata gazului din surplus PV, valabilitate până 2030. Ghid complet.",
+      "title": "Legea Prosumatorilor 2026: În Vigoare din 26 Iulie",
+      "metaDescription": "Legea 160/2026 e în vigoare din 26 iulie 2026, publicată în MO nr. 603 din 23 iulie. Facturare lunară, plata gazului din surplus, ce se schimbă concret.",
       "heroDescription": "Legea nr. 160/2026 publicată în MO nr. 603/23 iulie 2026 aduce facturare lunară, plata facturii de gaz din surplusul fotovoltaic pentru PF ≤27 kW, PZU pentru 200-400 kW și extinderea definiției de prosumator.",
       "image": "/images/guides/legea-160-2026-prosumatori-compensare-lunara-gaz-surplus.png",
       "sections": [
@@ -4341,7 +4347,8 @@
       "relatedSpecializations": [
         "rezidential",
         "hale-industriale"
-      ]
+      ],
+      "updatedAt": "2026-08-18"
     },
     {
       "slug": "kit-panouri-fotovoltaice-3-5-10-kw-pret-montaj-2026",
