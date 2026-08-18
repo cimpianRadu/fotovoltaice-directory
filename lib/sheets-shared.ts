@@ -132,7 +132,9 @@ export function deriveClaimStatus(
  * introducerea coloanei rămân goale — le tratăm ca `self` (fluxul singur
  * disponibil atunci).
  */
-export const CLAIM_SOURCES = ['self', 'manual'] as const;
+// `self` = revendicat din feedul public, `manual` = dat de noi telefonic,
+// `abonament` = preluat din portal, dintr-o cerere rezervată pe abonament.
+export const CLAIM_SOURCES = ['self', 'manual', 'abonament'] as const;
 export type ClaimSource = (typeof CLAIM_SOURCES)[number];
 
 /**

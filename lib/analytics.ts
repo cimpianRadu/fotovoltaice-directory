@@ -31,7 +31,9 @@ type EventName =
   | 'portal_note_added'
   | 'portal_status_set'
   | 'portal_filter_applied'
-  | 'portal_claim_released';
+  | 'portal_claim_released'
+  | 'portal_alerts_saved'
+  | 'portal_reserved_taken';
 
 type EventProps = Record<string, string | number | boolean>;
 

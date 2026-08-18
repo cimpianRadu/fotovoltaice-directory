@@ -75,10 +75,11 @@ async function readRows(sheetName: string): Promise<string[][]> {
     () =>
       sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        // A:AE, nu A:Z — coloanele de lead au trecut de Z în aug 2026 (Z–AD:
-        // localitate, stocare, wallbox, termen, poze). Celelalte taburi au mai
-        // puține coloane, range-ul mai lat nu le afectează.
-        range: `${sheetName}!A:AE`,
+        // A:AF, nu A:Z — coloanele de lead au trecut de Z în aug 2026 (Z–AD:
+        // localitate, stocare, wallbox, termen, poze; AE–AF: fereastra de
+        // prioritate și marcajul de alerte). Celelalte taburi au mai puține
+        // coloane, range-ul mai lat nu le afectează.
+        range: `${sheetName}!A:AF`,
       }),
     `read ${sheetName}`,
   );
@@ -206,6 +207,32 @@ export async function enrichLeadInSheet(
   return written;
 }
 
+/** Coloanele scrise de fluxul de alerte, pe cerere deja salvată. */
+async function setLeadCell(timestamp: string, column: 'AE' | 'AF', value: string) {
+  const { sheetRow } = await findLeadRow(timestamp);
+  const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+  await withRetry(
+    () =>
+      sheets.spreadsheets.values.update({
+        spreadsheetId: SPREADSHEET_ID,
+        range: `Leads!${column}${sheetRow}`,
+        valueInputOption: 'RAW',
+        requestBody: { values: [[value]] },
+      }),
+    `update lead ${column}`,
+  );
+}
+
+/** Rezervă cererea pentru abonatul pe județ, până la ISO-ul dat. */
+export async function markLeadPriorityUntil(timestamp: string, until: string) {
+  await setLeadCell(timestamp, 'AE', until);
+}
+
+/** Marchează că alertele către firmele cu județul bifat au plecat. */
+export async function markLeadAlertsSent(timestamp: string, at = new Date().toISOString()) {
+  await setLeadCell(timestamp, 'AF', at);
+}
+
 export async function saveListingToSheet(listing: {
   numeFirma: string;
   cui: string;
@@ -282,6 +309,14 @@ export interface NewLead {
   // AD — link Drive cu pozele trimise de client pe email (legate după ref din
   // subiect). Se lipește manual în Sheet; gol = fără poze.
   poze: string;
+  // AE — ISO până când cererea e rezervată abonatului pe județ: nu apare pe
+  // /cereri și nu poate fi revendicată de altcineva. Gol = fără rezervare.
+  // Golirea celulei eliberează cererea imediat, e pârghia manuală.
+  prioritarPanaLa: string;
+  // AF — ISO când au plecat alertele către firmele cu județul bifat. Marcajul
+  // ține alertele idempotente: cererile rezervate îl primesc abia după ce
+  // expiră fereastra, prin cronul zilnic.
+  alerteTrimise: string;
 }
 
 export interface NewListing {
@@ -338,6 +373,8 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     wallbox: r[27] || '',
     termen: r[28] || '',
     poze: r[29] || '',
+    prioritarPanaLa: r[30] || '',
+    alerteTrimise: r[31] || '',
     ...readCrmFields(r),
   }));
 }
@@ -428,12 +465,21 @@ function isOpenForClaims(l: NewLead): boolean {
   return isPubliclyVisible(l) && !isLeadClosed(l.crmStatus);
 }
 
+/**
+ * Ce vede feedul public: cererile deschise, MINUS cele aflate în fereastra de
+ * prioritate a unui abonat. Obligație contractuală, nu preferință de produs —
+ * în fereastra aia cererea nu se publică și nu se dă nimănui altcuiva.
+ */
+function isPubliclyClaimable(l: NewLead): boolean {
+  return isOpenForClaims(l) && !isPriorityHeld(l);
+}
+
 // Toate cererile, indiferent de vechime — la volumul actual feedul afișează
 // istoricul complet, cu filtru de vechime în UI. De restrâns când crește volumul.
 export async function getPublicLeads(): Promise<PublicLead[]> {
   const leads = await getLeadsSince(new Date(0));
   return leads
-    .filter(isOpenForClaims)
+    .filter(isPubliclyClaimable)
     .map((l) => ({
       id: l.timestamp,
       tipProiect: l.tipProiect,
@@ -871,6 +917,223 @@ export async function getPortalAccessEvents(): Promise<PortalAccessEvent[]> {
         method: method === 'link' || method === 'cod' ? method : '',
       } satisfies PortalAccessEvent;
     });
+}
+
+// ── Abonamente pe județ (distribuție prioritară) ───────────────────────────
+// Firma abonată primește cererile din județele ei înaintea tuturor, iar cererea
+// stă rezervată o fereastră de ore: nu se publică pe /cereri și nu poate fi
+// revendicată de altcineva. NU e exclusivitate — după fereastră cererea intră
+// în feed ca oricare alta și o poate lua orice firmă.
+//
+// Tab editabil de mână, fără deploy: adaugi un rând, abonamentul e activ de la
+// următoarea cerere. Fereastra se scrie în ore ca să poată fi coborâtă (48 → 24)
+// fără cod, dacă ține prea mult cererile departe de restul firmelor.
+
+const SUBSCRIPTIONS_SHEET = 'Abonamente';
+
+const SUBSCRIPTIONS_HEADER = [
+  'Firmă', // A — cum apare în revendicare
+  'Email', // B — contul de portal care primește cererile
+  'Contact', // C — persoana, pentru revendicarea creată din portal
+  'Telefon', // D — idem; fără el revendicarea n-ar avea pe cine suna
+  'Județe', // E — separate prin virgulă
+  'Ore fereastră', // F — cât stă cererea rezervată; gol = 48
+  'Activ', // G — „nu" oprește abonamentul fără să șteargă rândul
+  'De la', // H — YYYY-MM-DD, gol = fără început
+  'Până la', // I — YYYY-MM-DD inclusiv, gol = fără sfârșit
+  'Note', // J
+];
+
+export const DEFAULT_PRIORITY_WINDOW_HOURS = 48;
+
+export interface LeadSubscription {
+  firma: string;
+  email: string;
+  contact: string;
+  telefon: string;
+  counties: string[];
+  windowHours: number;
+  active: boolean;
+  from: string;
+  until: string;
+}
+
+export async function getLeadSubscriptions(): Promise<LeadSubscription[]> {
+  let rows: string[][];
+  try {
+    rows = await readRows(SUBSCRIPTIONS_SHEET);
+  } catch {
+    // Tabul nu există încă — niciun abonament, deci nicio rezervare.
+    return [];
+  }
+  return rows
+    .filter((r) => (r[1] || '').includes('@'))
+    .map((r) => ({
+      firma: (r[0] || '').trim(),
+      email: (r[1] || '').trim().toLowerCase(),
+      contact: (r[2] || '').trim(),
+      telefon: (r[3] || '').trim(),
+      counties: (r[4] || '')
+        .split(',')
+        .map((c) => c.trim())
+        .filter(Boolean),
+      windowHours: Number((r[5] || '').trim()) || DEFAULT_PRIORITY_WINDOW_HOURS,
+      active: (r[6] || '').trim().toLowerCase() !== 'nu',
+      from: (r[7] || '').trim(),
+      until: (r[8] || '').trim(),
+    }));
+}
+
+/**
+ * Abonamentul care acoperă județul cererii, dacă există. Perioada se compară pe
+ * zi calendaristică: „Până la" e inclusiv, ca într-un contract, nu ca într-un
+ * interval de cod.
+ */
+export function findSubscriptionForCounty(
+  subs: LeadSubscription[],
+  judet: string,
+  today = new Date().toISOString().slice(0, 10),
+): LeadSubscription | null {
+  const key = countyKey(judet || '');
+  if (!key) return null;
+  return (
+    subs.find(
+      (s) =>
+        s.active &&
+        (!s.from || s.from <= today) &&
+        (!s.until || s.until >= today) &&
+        s.counties.some((c) => countyKey(c) === key),
+    ) ?? null
+  );
+}
+
+/** Cererea e încă rezervată abonatului? Gol sau dată trecută = liberă. */
+export function isPriorityHeld(lead: { prioritarPanaLa: string }, now = Date.now()): boolean {
+  const until = Date.parse(lead.prioritarPanaLa || '');
+  return Number.isFinite(until) && until > now;
+}
+
+// ── Alerte pe județ ────────────────────────────────────────────────────────
+// Firma bifează în /portal județele în care lucrează, iar la fiecare cerere
+// nouă de acolo primește email cu detaliile ei. Filtrul e DOAR pe județ,
+// deliberat: din 19 cereri intrate după 4 august, 10 aveau termenul „mă
+// informez", deci un filtru pe urgență ar fi stins mai mult de jumătate din
+// alerte. Termenul, puterea și finanțarea se văd în email, nu decid cine
+// primește emailul.
+//
+// Un rând per email (upsert, nu jurnal): preferințele sunt starea curentă, iar
+// un istoric de bifări n-ar folosi nimănui.
+
+const ALERTS_SHEET = 'Alerte Județe';
+
+const ALERTS_HEADER = [
+  'Actualizat', // A — ISO
+  'Email', // B — identitatea firmei în portal
+  'Județe', // C — separate prin virgulă, scrise ca în data/counties.json
+  'Activ', // D — „nu" = oprit fără să piardă lista bifată
+];
+
+export interface CountyAlertPref {
+  email: string;
+  counties: string[];
+  active: boolean;
+  /** ISO. */
+  updatedAt: string;
+}
+
+/** Comparație de județe tolerantă la diacritice și spații, ca în lib/lead-match. */
+function countyKey(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim();
+}
+
+export async function getCountyAlertPrefs(): Promise<CountyAlertPref[]> {
+  let rows: string[][];
+  try {
+    rows = await readRows(ALERTS_SHEET);
+  } catch {
+    // Tabul nu există încă — prima salvare din portal îl creează.
+    return [];
+  }
+  return rows
+    .filter((r) => Number.isFinite(Date.parse(r[0] || '')) && (r[1] || '').trim())
+    .map((r) => ({
+      updatedAt: r[0] || '',
+      email: (r[1] || '').trim().toLowerCase(),
+      counties: (r[2] || '')
+        .split(',')
+        .map((c) => c.trim())
+        .filter(Boolean),
+      // Gol = activ: un rând scris de mână, fără coloana D, tot trebuie să meargă.
+      active: (r[3] || '').trim().toLowerCase() !== 'nu',
+    }));
+}
+
+export async function getCountyAlertPref(email: string): Promise<CountyAlertPref | null> {
+  const key = email.trim().toLowerCase();
+  const prefs = await getCountyAlertPrefs();
+  return prefs.find((p) => p.email === key) ?? null;
+}
+
+/** Upsert pe email. Lista goală = alerte oprite, dar rândul rămâne. */
+export async function saveCountyAlertPrefs(email: string, counties: string[]): Promise<void> {
+  const key = email.trim().toLowerCase();
+  if (!key) return;
+  const values = [
+    new Date().toISOString(),
+    key,
+    counties.join(', '),
+    counties.length ? 'da' : 'nu',
+  ];
+
+  let rows: string[][];
+  try {
+    rows = await readRows(ALERTS_SHEET);
+  } catch {
+    await createSheetTab(ALERTS_SHEET);
+    await appendRow(ALERTS_SHEET, ALERTS_HEADER);
+    await appendRow(ALERTS_SHEET, values);
+    return;
+  }
+
+  const index = rows.findIndex((r) => (r[1] || '').trim().toLowerCase() === key);
+  if (index === -1) {
+    await appendRow(ALERTS_SHEET, values);
+    return;
+  }
+
+  const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+  await withRetry(
+    () =>
+      sheets.spreadsheets.values.update({
+        spreadsheetId: SPREADSHEET_ID,
+        range: `${ALERTS_SHEET}!A${index + 1}:D${index + 1}`,
+        valueInputOption: 'RAW',
+        requestBody: { values: [values] },
+      }),
+    'update alerte judet',
+  );
+}
+
+/** Emailurile care au bifat județul, dintr-o listă deja citită (pentru cron). */
+export function filterCountyAlertRecipients(
+  prefs: CountyAlertPref[],
+  judet: string,
+): string[] {
+  const key = countyKey(judet || '');
+  if (!key) return [];
+  return prefs
+    .filter((p) => p.active && p.counties.some((c) => countyKey(c) === key))
+    .map((p) => p.email);
+}
+
+/** Emailurile care au bifat județul cererii. Lista e mică, se citește la fiecare cerere. */
+export async function getCountyAlertRecipients(judet: string): Promise<string[]> {
+  if (!judet.trim()) return [];
+  return filterCountyAlertRecipients(await getCountyAlertPrefs(), judet);
 }
 
 export async function saveWaitlistToSheet(email: string) {

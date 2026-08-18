@@ -121,7 +121,7 @@ const EMPTY_STEP4 = Object.fromEntries(STEP4_KEYS.map((k) => [k, ''])) as Record
 const EMPTY_PANEL = Object.fromEntries(PANEL_KEYS.map((k) => [k, ''])) as Record<PanelKey, string>;
 
 type Option = { value: string; label: string };
-type FieldSpec = { name: string; label: string; options: Option[]; hint?: string };
+type FieldSpec = { name: string; label: string; options: Option[]; hint?: string; required?: boolean };
 
 const opts = (list: readonly { value: string; label: string }[]): Option[] =>
   list.map((o) => ({ value: o.value, label: o.label }));
@@ -200,6 +200,7 @@ function SelectField({
         label={field.label}
         name={field.name}
         options={field.options}
+        required={field.required}
         value={value}
         onValueChange={(v) => onChange(field.name, v)}
       />
@@ -219,6 +220,7 @@ function NumberWithUnknown({
   onToggle,
   unknownLabel,
   free = false,
+  required = false,
 }: {
   name: UnknownKey;
   label: string;
@@ -229,6 +231,8 @@ function NumberWithUnknown({
   onToggle: (key: UnknownKey) => void;
   unknownLabel: string;
   free?: boolean;
+  /** Cere o cifră SAU bifa. Bifa dezactivează inputul, deci iese din validare. */
+  required?: boolean;
 }) {
   return (
     <div>
@@ -240,6 +244,7 @@ function NumberWithUnknown({
         placeholder={placeholder}
         value={value}
         disabled={unknown}
+        required={required && !unknown}
         onChange={(e) => onChange(name, e.target.value)}
       />
       <label className="mt-1.5 flex items-center gap-2 text-xs text-gray-600 cursor-pointer">
@@ -387,6 +392,10 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         body: JSON.stringify({
           ...values,
           ...details,
+          // Bifa nu ajunge în Sheet (acolo „nu știu" = celulă goală), dar
+          // serverul are nevoie de ea ca să deosebească „n-a răspuns" de
+          // „a răspuns că nu știe". Vezi validarea din /api/leads.
+          putereNecunoscuta: unknown.putere ? 'on' : '',
           gdpr: gdpr ? 'on' : '',
           sourcePage: src(),
           preselectedCompany,
@@ -571,8 +580,13 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
 
   const step4Selects: FieldSpec[] = [
     { name: 'tipAcoperis', label: 'Tip acoperiș', options: opts(roofTypes) },
-    { name: 'termen', label: 'Cât de repede vreți instalarea', options: opts(TIMELINE_OPTIONS) },
-    { name: 'finantare', label: 'Cum finanțați investiția', options: opts(financingTypes) },
+    // Obligatorii din 18 aug 2026. Sunt primele două întrebări pe care le pune
+    // firma care ofertează, iar o cerere fără ele ajunge pe /cereri ca un card
+    // gol: județ, tip de casă și nimic din ce decide prețul. Ambele au ieșire
+    // onestă în listă („Deocamdată mă informez", „Nu știu încă"), deci nu forțăm
+    // pe nimeni să inventeze un răspuns.
+    { name: 'termen', label: 'Cât de repede vreți instalarea', options: opts(TIMELINE_OPTIONS), required: true },
+    { name: 'finantare', label: 'Cum finanțați investiția', options: opts(financingTypes), required: true },
   ];
 
   return (
@@ -702,8 +716,9 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
           <div className="space-y-4">
             <p className="text-sm text-gray-600 leading-relaxed">
               Ultimul pas. Instalatorii întreabă oricum astea la primul telefon, iar un răspuns aici
-              vă aduce o ofertă mai apropiată de prețul final. Puteți răspunde
-              &bdquo;nu știu&rdquo; oriunde, nimic de aici nu e obligatoriu.
+              vă aduce o ofertă mai apropiată de prețul final. Unde nu știți, alegeți
+              &bdquo;nu știu&rdquo; sau bifați căsuța: e un răspuns bun, spune firmei de unde
+              să pornească discuția.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -725,6 +740,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
                 onChange={setDetail}
                 onToggle={toggleUnknown}
                 unknownLabel="Nu știu, aștept recomandarea instalatorului"
+                required
               />
               <NumberWithUnknown
                 name="consumLunar"

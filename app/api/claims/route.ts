@@ -5,9 +5,12 @@ import {
   MAX_CLAIMS_PER_LEAD,
   claimsHeldForLead,
   countActiveClaimsForFirm,
+  findSubscriptionForCounty,
   getClaims,
   getFullLeadById,
+  getLeadSubscriptions,
   isLeadClosed,
+  isPriorityHeld,
   isSameFirm,
   saveClaimToSheet,
 } from '@/lib/sheets';
@@ -58,6 +61,19 @@ export async function POST(request: Request) {
         { error: 'Clientul și-a rezolvat deja proiectul. Cererea a fost închisă.' },
         { status: 409 },
       );
+    }
+
+    // Cererea rezervată unui abonat nu apare pe /cereri, dar id-ul ei poate fi
+    // ghicit (e timestampul) sau reținut dintr-un feed vechi din cache. Fereastra
+    // e obligație contractuală, deci se apără și pe server, nu doar prin feed.
+    if (isPriorityHeld(lead)) {
+      const sub = findSubscriptionForCounty(await getLeadSubscriptions(), lead.judet);
+      if (!sub || sub.email !== normalizeEmail(email)) {
+        return NextResponse.json(
+          { error: 'Cererea nu e disponibilă acum. Revino în câteva ore.' },
+          { status: 409 },
+        );
+      }
     }
 
     const allClaims = await getClaims();

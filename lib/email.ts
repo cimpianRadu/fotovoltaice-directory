@@ -572,3 +572,104 @@ export async function sendClaimApprovedEmail(data: {
     console.warn('[email] Claim approved email not sent:', result.reason);
   }
 }
+
+/**
+ * Alerta de județ: o cerere nouă a intrat într-un județ pe care firma l-a bifat
+ * în portal. Trimis la creare, nu într-un digest — o cerere de fotovoltaice se
+ * răcește în ore, iar plafonul de 3 revendicări active face oricum ordinea.
+ *
+ * Ce NU pleacă în email: datele de contact ale clientului (rămân în spatele
+ * apelului nostru de confirmare) și mesajul liber. Mesajul se vede pe /cereri,
+ * unde îl putem ascunde dacă omul și-a scris telefonul în el; un email trimis
+ * nu se mai retrage.
+ *
+ * Ordinea informației e cerută de instalatorii care ofertează: finanțarea și
+ * termenul întâi, puterea imediat după. Câmpurile goale se omit, nu se scriu
+ * „nespecificat" — o cerere fără putere e tot ofertabilă la telefon.
+ */
+export async function sendCountyLeadAlert(data: {
+  to: string;
+  judet: string;
+  tipProiectLabel: string;
+  segment: string;
+  putere: string;
+  consumLunar: string;
+  acoperisLabel: string;
+  finantareSlug: string;
+  finantareLabel: string;
+  termenLabel: string;
+  /** ISO — doar către abonat: până când cererea e rezervată numai pentru el. */
+  reservedUntil?: string;
+  /** Către restul firmelor, după ce a expirat rezervarea unui abonat. */
+  unlocked?: boolean;
+}): Promise<{ ok: boolean; reason?: string }> {
+  const rezidential = data.segment === 'rezidential';
+  const reserved = Boolean(data.reservedUntil);
+  const finantareColor = FINANCING_EMAIL_COLOR[getFinancingTone(data.finantareSlug)];
+
+  const row = (label: string, value: string) =>
+    `<tr><td style="padding:6px 12px 6px 0;color:#6b7280;font-size:13px;vertical-align:top;white-space:nowrap">${label}</td><td style="padding:6px 0;font-size:14px;color:#111827">${value}</td></tr>`;
+
+  const html = `<!DOCTYPE html>
+<html>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
+  <div style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
+    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#fffbeb">
+      <div style="font-size:12px;color:#92400e;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">${reserved ? 'Rezervată pentru tine' : data.unlocked ? 'Cerere deblocată' : 'Cerere nouă'} · ${escapeHtml(data.judet)}</div>
+      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${escapeHtml(data.tipProiectLabel)}</h1>
+      <div style="margin-top:8px">${segmentBadge(rezidential ? 'rezidential' : 'comercial')}</div>
+    </div>
+    <div style="padding:20px 24px">
+      <table style="border-collapse:collapse;width:100%">
+        ${data.finantareLabel ? row('Finanțare', `<strong style="color:${finantareColor}">${escapeHtml(data.finantareLabel)}</strong>`) : ''}
+        ${data.termenLabel ? row('Vrea instalarea', `<strong>${escapeHtml(data.termenLabel)}</strong>`) : ''}
+        ${data.putere ? row('Putere', `${escapeHtml(data.putere)} kW`) : ''}
+        ${data.consumLunar ? row('Consum lunar', escapeHtml(data.consumLunar)) : ''}
+        ${data.acoperisLabel ? row('Acoperiș', escapeHtml(data.acoperisLabel)) : ''}
+        ${row('Județ', escapeHtml(data.judet))}
+      </table>
+      <div style="text-align:center;margin-top:20px">
+        <a href="${PORTAL_BASE_URL}${reserved ? '/portal' : '/cereri'}" style="display:inline-block;padding:12px 24px;background:#f59e0b;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">${reserved ? 'Preia cererea din portal' : 'Vezi cererea și revendic-o'}</a>
+      </div>
+      <p style="font-size:13px;color:#6b7280;margin:16px 0 0;text-align:center;line-height:1.5">
+        ${
+          reserved
+            ? `Cererea e numai a ta până pe <strong>${escapeHtml(fmtDate(data.reservedUntil || ''))}</strong>: nu apare pe /cereri și n-o primește nicio altă firmă. După, intră în feed ca oricare alta.`
+            : data.unlocked
+              ? 'Cererea a fost rezervată unei firme abonate, iar rezervarea a expirat fără ca ea s-o preia. Acum e liberă, primul venit.'
+              : 'Cererea se ia de pe /cereri, primul venit. Datele clientului se deblochează după apelul nostru de confirmare.'
+        }
+      </p>
+    </div>
+    <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280;line-height:1.5">
+      Primești emailul pentru că ai bifat județul ${escapeHtml(data.judet)} la alertele din
+      <a href="${PORTAL_BASE_URL}/portal" style="color:#2563eb">portal</a>. Tot de acolo le
+      schimbi sau le oprești.
+    </div>
+  </div>
+</body>
+</html>`;
+
+  const subjectBits = [
+    data.finantareLabel ? getFinancingShort(data.finantareSlug) : '',
+    data.putere ? `${data.putere} kW` : '',
+    data.termenLabel,
+  ].filter(Boolean);
+
+  const prefix = reserved
+    ? `Rezervată pentru tine în ${data.judet}`
+    : data.unlocked
+      ? `Cerere deblocată în ${data.judet}`
+      : `Cerere nouă în ${data.judet}`;
+
+  const result = await sendEmail({
+    to: data.to,
+    subject: `${prefix}${subjectBits.length ? `: ${subjectBits.join(' · ')}` : ''}`,
+    html,
+  });
+
+  if (!result.ok) {
+    console.warn('[email] County alert not sent:', result.reason);
+  }
+  return result;
+}

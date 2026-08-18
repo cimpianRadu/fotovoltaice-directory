@@ -2,8 +2,19 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getPortalEmail } from '@/lib/portal-session';
-import { getClaims, getLeadsSince, type NewLead } from '@/lib/sheets';
 import {
+  findSubscriptionForCounty,
+  getClaims,
+  getCountyAlertPref,
+  getLeadSubscriptions,
+  getLeadsSince,
+  isLeadClosed,
+  isPriorityHeld,
+  sanitizeMesajPublic,
+  type NewLead,
+} from '@/lib/sheets';
+import {
+  getCounties,
   getProjectTypeLabel,
   getRoofTypeLabel,
   getPhaseLabel,
@@ -14,6 +25,8 @@ import {
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { type PortalClaim } from './PortalClaimCard';
 import PortalClaimList from './PortalClaimList';
+import PortalCountyAlerts from './PortalCountyAlerts';
+import PortalReservedLeads, { type ReservedLead } from './PortalReservedLeads';
 import LogoutButton from './LogoutButton';
 
 // Datele firmei logate nu au voie în cache-ul static — mereu proaspete, per sesiune.
@@ -47,10 +60,46 @@ export default async function PortalPage() {
 
   let mine: PortalClaim[] = [];
   let loadError = false;
+  // Preferințele de alerte se citesc separat de revendicări: dacă tabul lor
+  // lipsește sau pică, portalul trebuie să-și arate cererile mai departe.
+  let alertCounties: string[] = [];
+
+  try {
+    alertCounties = (await getCountyAlertPref(email))?.counties ?? [];
+  } catch (err) {
+    console.error('[portal] failed to load county alerts:', err);
+  }
+
+  let reserved: ReservedLead[] = [];
 
   try {
     const [claims, leads] = await Promise.all([getClaims(), getLeadsSince(new Date(0))]);
     const leadById = new Map(leads.map((l) => [l.timestamp, l]));
+
+    // Cererile ținute pentru abonamentul firmei: încă în fereastră, încă
+    // deschise și nepreluate de ea. Feedul public nu le arată nimănui, deci
+    // ăsta e singurul loc din care abonatul le poate lua.
+    const subs = await getLeadSubscriptions();
+    const claimedByMe = new Set(claims.filter((c) => c.email === email).map((c) => c.leadId));
+    reserved = leads
+      .filter(
+        (l) =>
+          isPriorityHeld(l) &&
+          !isLeadClosed(l.crmStatus) &&
+          l.status !== 'Ascuns' &&
+          !claimedByMe.has(l.timestamp) &&
+          findSubscriptionForCounty(subs, l.judet)?.email === email,
+      )
+      .map((l) => ({
+        id: l.timestamp,
+        tipLabel: getProjectTypeLabel(l.tipProiect),
+        judet: l.judet,
+        segment: l.segment,
+        specs: specsFor(l),
+        mesaj: l.mesajAscuns ? '' : sanitizeMesajPublic(l.mesaj),
+        until: l.prioritarPanaLa,
+      }))
+      .reverse();
 
     mine = claims
       .filter((c) => c.email === email)
@@ -109,6 +158,10 @@ export default async function PortalPage() {
         Conectat ca <strong>{email}</strong>. Aici vezi cererile revendicate cu acest email,
         lași note și eliberezi locurile la care renunți.
       </p>
+
+      {reserved.length > 0 && <PortalReservedLeads leads={reserved} />}
+
+      <PortalCountyAlerts counties={getCounties()} initial={alertCounties} />
 
       {loadError && (
         <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 mb-6">
