@@ -101,6 +101,12 @@ export async function POST(request: Request) {
     // Versiunea textului de consimțământ acceptat — dovadă GDPR per lead.
     const id = await saveLeadToSheet({ ...body, gdprConsent: `da (${CONSENT_VERSION})` });
 
+    // Feedul /cereri are ISR de 5 minute, deci fără invalidare cererea abia
+    // trimisă nu apare imediat nici după un reload forțat (cache-ul e pe
+    // server, nu în browser). La 5-7 cereri pe săptămână, invalidarea costă o
+    // regenerare per cerere și scutește firmele de așteptare.
+    revalidatePath('/cereri');
+
     // Alertele pe județ pleacă DUPĂ răspuns: cererea e deja salvată, iar
     // clientul n-are de ce să aștepte după Sheets și Resend. Eșecul lor nu
     // atinge cererea, ca la restul notificărilor.
