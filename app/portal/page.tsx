@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import { getPortalEmail } from '@/lib/portal-session';
 import {
   findSubscriptionForCounty,
@@ -27,16 +26,20 @@ import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { type PortalClaim } from './PortalClaimCard';
 import PortalClaimList from './PortalClaimList';
 import PortalCountyAlerts from './PortalCountyAlerts';
+import PortalLanding from './PortalLanding';
 import PortalReservedLeads, { type ReservedLead } from './PortalReservedLeads';
 import LogoutButton from './LogoutButton';
 
 // Datele firmei logate nu au voie în cache-ul static — mereu proaspete, per sesiune.
 export const dynamic = 'force-dynamic';
 
+// Metadata descrie pagina publică, nu tabloul de bord: Google vede mereu
+// varianta delogată, iar firma logată se uită la conținut, nu la titlul din tab.
 export const metadata: Metadata = {
-  title: 'Portal Instalatori - Cererile firmei tale',
-  description: 'Gestionează cererile revendicate: datele clienților, note și renunțări.',
-  robots: { index: false },
+  title: 'Portal Instalatori: alerte pe județ și cererile firmei tale',
+  description:
+    'Bifezi județele în care lucrezi și primești pe email fiecare cerere nouă de panouri fotovoltaice de acolo. Plus cererile revendicate, într-un singur loc. Gratuit, fără parolă.',
+  alternates: { canonical: 'https://instalatori-fotovoltaice.ro/portal' },
 };
 
 function specsFor(lead: NewLead | undefined): { label: string; value: string }[] {
@@ -56,9 +59,10 @@ function specsFor(lead: NewLead | undefined): { label: string; value: string }[]
 }
 
 export default async function PortalPage() {
-  // Middleware-ul păzește ruta, dar dubla verificare e ieftină și explicită.
+  // Fără sesiune ruta nu mai redirectează spre login, ci își arată fața
+  // publică: /portal e adresa pe care o aud firmele în afara site-ului.
   const email = await getPortalEmail();
-  if (!email) redirect('/portal/login');
+  if (!email) return <PortalLanding />;
 
   let mine: PortalClaim[] = [];
   let loadError = false;

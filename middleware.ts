@@ -7,7 +7,10 @@ import { PORTAL_COOKIE, verifyToken } from '@/lib/portal-auth';
 const OPEN_PATHS = new Set(['/admin/login', '/api/admin/login', '/api/admin/logout']);
 
 // Fluxul de login al portalului: cerere de cod, verificare link/cod, logout.
+// Plus /portal însuși: pagina decide singură ce arată, tablou de bord cu
+// sesiune sau prezentarea publică fără. Restul rutelor rămân păzite aici.
 const PORTAL_OPEN_PATHS = new Set([
+  '/portal',
   '/portal/login',
   '/api/portal/auth/request',
   '/api/portal/auth/code',

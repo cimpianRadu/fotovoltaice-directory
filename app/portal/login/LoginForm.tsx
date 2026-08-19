@@ -83,7 +83,7 @@ export default function LoginForm() {
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            hint="Folosește emailul cu care ai revendicat cererile pe /cereri."
+            hint="Orice email de firmă merge. Dacă ai revendicat deja cereri, folosește-l pe cel din revendicare."
           />
           {error && <p className="text-xs text-red-600">{error}</p>}
           <Button type="submit" variant="primary" disabled={busy} className="w-full">

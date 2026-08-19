@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/publicitate`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.7 },
     { url: `${BASE_URL}/cere-oferta`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
     { url: `${BASE_URL}/cereri`, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 0.6 },
+    { url: `${BASE_URL}/portal`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
     { url: `${BASE_URL}/intrebari-frecvente`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.7 },
     { url: `${BASE_URL}/despre`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.5 },
     { url: `${BASE_URL}/verificare-anre`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.7 },

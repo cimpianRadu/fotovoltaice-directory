@@ -26,6 +26,7 @@ const moreLinks = [
   { href: '/verificare-anre', label: 'Verificare ANRE' },
   { href: '/clasament', label: 'Clasament' },
   { href: '/listeaza-firma', label: 'Listează-ți firma' },
+  { href: '/portal', label: 'Portal Instalatori' },
   { href: '/publicitate', label: 'Publicitate' },
   { href: '/intrebari-frecvente', label: 'Întrebări frecvente' },
   { href: '/despre', label: 'Despre noi' },
