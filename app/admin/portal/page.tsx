@@ -4,6 +4,8 @@ import {
   getClaims,
   getCrmFirms,
   getLeadsSince,
+  getCountyAlertPrefs,
+  type CountyAlertPref,
   claimsHeldForLead,
   isLeadClosed,
   isSameFirm,
@@ -69,6 +71,8 @@ interface PortalAccount {
   untouched: number;
   company: Company | undefined;
   crmFirm: CrmFirm | undefined;
+  /** Județele bifate pentru alerte pe email, dacă firma a intrat vreodată pe secțiunea aia. */
+  alerts: CountyAlertPref | null;
   /** Cui se scrie revendicarea când îi dau o cerere de aici. */
   giveFirm: GiveLeadFirm | null;
   /** Cereri deschise pe care i le pot da, cele mai potrivite primele. */
@@ -125,7 +129,13 @@ const FILTERS: { key: string; label: string; state?: AccountState }[] = [
   { key: 'blocati', label: 'N-au intrat', state: 'blocat' },
   { key: 'necunoscut', label: 'Jurnalul nu știe', state: 'necunoscut' },
   { key: 'goi', label: 'Portal gol' },
+  { key: 'fara-judete', label: 'Fără județe bifate' },
 ];
+
+/** Are alerte pornite pe cel puțin un județ. */
+function hasCountyAlerts(a: PortalAccount): boolean {
+  return Boolean(a.alerts?.active && a.alerts.counties.length > 0);
+}
 
 function Stat({ label, value, tone }: { label: string; value: number; tone?: 'alert' | 'action' }) {
   const color =
@@ -210,6 +220,37 @@ function accessLine(account: PortalAccount): React.ReactNode {
   );
 }
 
+/**
+ * Județele de interes, bifate de firmă în /portal. Trei cazuri distincte, pe
+ * care nu le amestec: n-a bifat niciodată (rândul nu există în „Alerte Județe"),
+ * a bifat și apoi a golit lista (rând cu Activ = nu, deci a văzut secțiunea și
+ * a renunțat) și lista curentă. Primul e „încă n-a ajuns acolo", al doilea e un
+ * răspuns, iar diferența contează la telefon.
+ */
+function alertsLine(alerts: CountyAlertPref | null): React.ReactNode {
+  if (!alerts) {
+    return <span className="text-slate-400">n-a bifat niciun județ</span>;
+  }
+  if (!alerts.active || alerts.counties.length === 0) {
+    return (
+      <span className="text-amber-700">
+        oprite — a bifat cândva, acum lista e goală
+        {alerts.updatedAt && <> · {fmtDateTime(alerts.updatedAt)}</>}
+      </span>
+    );
+  }
+  return (
+    <>
+      <span className="text-slate-900">{alerts.counties.join(', ')}</span>
+      <span className="text-slate-400">
+        {' '}
+        ({alerts.counties.length})
+        {alerts.updatedAt && <> · {fmtDateTime(alerts.updatedAt)}</>}
+      </span>
+    </>
+  );
+}
+
 function AccountCard({
   account,
   leadById,
@@ -278,6 +319,13 @@ function AccountCard({
 
       <div className="border-b border-slate-100 px-4 py-2 text-xs text-slate-600">
         {accessLine(account)}
+      </div>
+
+      <div className="border-b border-slate-100 px-4 py-2 text-xs text-slate-600">
+        <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+          Alerte pe județ ·{' '}
+        </span>
+        {alertsLine(account.alerts)}
       </div>
 
       <div className="px-4 py-3">
@@ -354,12 +402,14 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   let claims: LeadClaim[];
   let firms: CrmFirm[];
   let leads: NewLead[];
+  let alertPrefs: CountyAlertPref[];
   try {
-    [events, claims, firms, leads] = await Promise.all([
+    [events, claims, firms, leads, alertPrefs] = await Promise.all([
       getPortalAccessEvents(),
       getClaims(),
       getCrmFirms(),
       getLeadsSince(new Date(0)),
+      getCountyAlertPrefs(),
     ]);
   } catch (err) {
     return (
@@ -371,6 +421,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
 
   const companies = getCompanies();
   const leadById = new Map(leads.map((l) => [l.timestamp, l]));
+  const alertsByEmail = new Map(alertPrefs.map((p) => [p.email, p]));
 
   const eventsByEmail = new Map<string, PortalAccessEvent[]>();
   for (const e of events) {
@@ -386,6 +437,9 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   // cererile, iar aprobarea e jumătate din motivul paginii.
   const emails = new Set(eventsByEmail.keys());
   for (const c of claims) if (c.email) emails.add(c.email);
+  // Și cine și-a bifat județele: bifa se poate pune doar din portal, deci
+  // emailul are portal chiar dacă n-are nici revendicare, nici eveniment.
+  for (const p of alertPrefs) emails.add(p.email);
 
   // Cererile pe care le pot da: deschise (nu ascunse, nu închise din CRM) și
   // cu loc liber. Potrivirea firmă→cerere se calculează o dată per cerere, nu
@@ -478,6 +532,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       ).length,
       company,
       crmFirm: identity ? firms.find((f) => isSameFirm(f, identity)) : undefined,
+      alerts: alertsByEmail.get(email) ?? null,
       giveFirm,
       giveOptions,
     };
@@ -504,11 +559,16 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         ? accounts.filter((a) => a.untouched > 0)
         : activeFilter.key === 'goi'
           ? accounts.filter((a) => a.claims.length === 0)
-          : accounts;
+          : // Doar conturile confirmate: pe cine n-a intrat niciodată în portal
+            // n-are sens să-l numeri drept „n-a bifat", n-a avut de unde.
+            activeFilter.key === 'fara-judete'
+            ? accounts.filter((a) => stateOf(a) === 'cont' && !hasCountyAlerts(a))
+            : accounts;
 
   const pendingTotal = accounts.reduce((s, a) => s + a.pending, 0);
   const untouchedTotal = accounts.reduce((s, a) => s + a.untouched, 0);
   const withAccount = accounts.filter((a) => stateOf(a) === 'cont').length;
+  const withCountyAlerts = accounts.filter(hasCountyAlerts).length;
 
   return (
     <div>
@@ -521,7 +581,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         despre care jurnalul nu știe nimic, blocați la intrare) sunt pe filtrele de mai jos.
       </p>
 
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         <Stat label="Emailuri cu portal posibil" value={accounts.length} />
         <Stat label="Conturi confirmate" value={withAccount} />
         <Stat label="Revendicări de aprobat" value={pendingTotal} tone="action" />
@@ -531,6 +591,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
           value={accounts.filter((a) => stateOf(a) === 'blocat').length}
           tone="alert"
         />
+        <Stat label="Cu județe bifate" value={withCountyAlerts} />
       </div>
 
       <div className="mt-6 flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3">
