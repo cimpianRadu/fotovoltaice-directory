@@ -10,7 +10,17 @@ import InstallerCta from '@/components/InstallerCta';
 import Markdown from '@/components/ui/Markdown';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
+import BatteryWidget from '@/components/BatteryWidget';
 import { GUIDE_CTA } from '@/lib/guide-cta';
+
+/**
+ * Ghidurile care primesc un widget interactiv, cu secțiunea după care apare.
+ * Widgetul stă lângă textul pe care îl pune în practică, nu la finalul paginii:
+ * cine citește formula de punctaj vrea să o încerce pe cifrele lui imediat.
+ */
+const GUIDE_WIDGET: Record<string, string> = {
+  'casa-verde-baterii-2026-program-stocare-afm': 'punctaj',
+};
 import { existsSync } from 'fs';
 import { join } from 'path';
 import guidesData from '@/data/guides.json';
@@ -193,6 +203,11 @@ export default async function GuidePage({ params }: Props) {
               </section>
               {/* CTA după prima secțiune — puțini ajung la finalul articolului */}
               {i === 0 && ctaBlock}
+              {/* Widget interactiv, montat imediat după secțiunea pe care o pune în
+                  practică. Vezi GUIDE_WIDGET pentru maparea slug -> secțiune. */}
+              {GUIDE_WIDGET[guide.slug] === section.id && (
+                <BatteryWidget sursa={`ghid/${guide.slug}#widget`} />
+              )}
             </Fragment>
           ))}
         </div>
