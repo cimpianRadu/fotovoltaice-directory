@@ -8,22 +8,25 @@ import InstallerCta from '@/components/InstallerCta';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 
 export const metadata: Metadata = {
-  title: 'Calculator Amortizare Panouri Fotovoltaice 2026 — Cost și Producție',
+  // Substantivul căutat e „calculator panouri fotovoltaice" (140/lună), nu
+  // „calculator amortizare panouri fotovoltaice", care n-are volum măsurabil.
+  // Amortizarea rămâne în titlu, dar după termenul pe care îl caută oamenii.
+  title: 'Calculator Panouri Fotovoltaice 2026: Cost și Amortizare',
   description:
-    'Calculator gratuit pentru firme: estimează cât costă, cât produce și în câți ani se amortizează un sistem fotovoltaic. Date pe județ, prețuri 2026, cotă de autoconsum configurabilă.',
+    'Calculator panouri fotovoltaice: cât costă, cât produce și în câți ani se amortizează. Producție pe județ, prețuri reale cu montaj 2026, autoconsum configurabil.',
   alternates: { canonical: '/calculator-panouri-fotovoltaice' },
   openGraph: {
     type: 'website',
     url: '/calculator-panouri-fotovoltaice',
-    title: 'Calculator Amortizare Panouri Fotovoltaice 2026',
+    title: 'Calculator Panouri Fotovoltaice 2026: Cost și Amortizare',
     description:
-      'Estimează cost, producție și amortizare pentru sistemul fotovoltaic al firmei tale. Date pe județ, autoconsum configurabil.',
+      'Cât costă, cât produce și în câți ani se amortizează un sistem fotovoltaic. Producție pe județ, autoconsum configurabil.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Calculator Amortizare Panouri Fotovoltaice',
+        alt: 'Calculator Panouri Fotovoltaice',
       },
     ],
   },
@@ -81,10 +84,10 @@ export default function CalculatorPage() {
     <>
       <JsonLd data={faqJsonLd} />
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <Breadcrumbs items={[{ label: 'Calculator Amortizare' }]} />
+        <Breadcrumbs items={[{ label: 'Calculator panouri fotovoltaice' }]} />
 
         <h1 className="text-3xl sm:text-4xl font-bold text-secondary-dark mt-4 mb-3">
-          Calculator Cost și Amortizare Sistem Fotovoltaic
+          Calculator panouri fotovoltaice: cost, producție și amortizare
         </h1>
         <p className="text-gray-600 mb-8 text-lg">
           {/* Pagina se randează pe server, deci intro-ul nu poate urma segmentul
