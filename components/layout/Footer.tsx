@@ -138,6 +138,17 @@ export default function Footer() {
           <p className="text-xs text-gray-400">
             Informațiile de pe acest site sunt cu caracter informativ.
           </p>
+          <p className="text-xs text-gray-400">
+            Platformă construită de{' '}
+            <a
+              href="https://digitalu.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-amber-400 transition-colors"
+            >
+              digitalu.io
+            </a>
+          </p>
         </div>
       </div>
     </footer>
