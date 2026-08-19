@@ -20,6 +20,7 @@ import JsonLd from '@/components/seo/JsonLd';
 import HomeSegmentHero from '@/components/home/HomeSegmentHero';
 import HomeOfertaBand from '@/components/home/HomeOfertaBand';
 import QuickEstimateWidget from '@/components/home/QuickEstimateWidget';
+import BatteryWidget from '@/components/BatteryWidget';
 import { getKitPriceCurve } from '@/lib/kit-price-curve';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
@@ -165,6 +166,13 @@ export default async function HomePage() {
             nu are ce căuta în bundle-ul clientului. */}
         <div className="mb-10">
           <QuickEstimateWidget priceCurve={getKitPriceCurve()} sursa="home" />
+        </div>
+
+        {/* Același widget ca în ghidul de baterii, cu link înapoi spre el: pe home
+            page omul ajunge la calculator fără să fi citit despre program, deci are
+            nevoie de o ieșire spre explicații. */}
+        <div className="mb-10">
+          <BatteryWidget sursa="home-baterii" guideHref="/ghid/casa-verde-baterii-2026-program-stocare-afm" />
         </div>
 
         {hasPremium ? (

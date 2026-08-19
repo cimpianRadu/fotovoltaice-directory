@@ -46,9 +46,14 @@ const pts = (n: number) => (Number.isInteger(n) ? String(n) : num(n, 1));
 interface Props {
   /** Ajunge în /cere-oferta?sursa=… și de acolo în Sheet, ca să știm ce produce widgetul. */
   sursa?: string;
+  /**
+   * Link către ghidul care explică programul. Se dă pe home page, unde widgetul
+   * apare fără context; în ghid se omite, ca să nu trimită pagina spre ea însăși.
+   */
+  guideHref?: string;
 }
 
-export default function BatteryWidget({ sursa = 'widget-baterie' }: Props) {
+export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: Props) {
   const [consum, setConsum] = useState('300');
   const [unit, setUnit] = useState<'kwh' | 'lei'>('kwh');
   const [kwp, setKwp] = useState('5');
@@ -473,11 +478,22 @@ export default function BatteryWidget({ sursa = 'widget-baterie' }: Props) {
           onClick={() => trackUmami('baterie-widget-cta', { capacitate: cap, punctaj: Math.round(step2.score.total) })}
           className="mt-5 block rounded-xl bg-primary px-4 py-3.5 text-center text-base font-bold text-white transition-colors hover:bg-primary-dark"
         >
-          Cere ofertă pentru bateria de {cap} kWh
+          Cere o ofertă pentru baterii
         </a>
         <p className="mt-2 text-center text-xs text-gray-500">
-          Primești oferte de la instalatori cu atestat ANRE din județul tău.
+          Pentru bateria de {cap} kWh, de la instalatori cu atestat ANRE din județul tău.
         </p>
+        {guideHref && (
+          <p className="mt-3 text-center text-sm">
+            <a
+              href={guideHref}
+              onClick={() => trackUmami('baterie-widget-spre-ghid', { sursa })}
+              className="font-semibold text-primary-dark hover:underline"
+            >
+              Citește ghidul complet Casa Verde Baterii 2026 &rarr;
+            </a>
+          </p>
+        )}
 
         <p className="mt-4 border-t border-border pt-3 text-xs leading-relaxed text-gray-500">
           Punctajul se calculează pe ce declari la înscriere. Dacă documentele nu susțin declarația, dosarul se respinge
