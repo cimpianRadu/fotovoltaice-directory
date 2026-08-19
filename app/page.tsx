@@ -19,8 +19,7 @@ import FAQ from '@/components/seo/FAQ';
 import JsonLd from '@/components/seo/JsonLd';
 import HomeSegmentHero from '@/components/home/HomeSegmentHero';
 import HomeOfertaBand from '@/components/home/HomeOfertaBand';
-import QuickEstimateWidget from '@/components/home/QuickEstimateWidget';
-import BatteryWidget from '@/components/BatteryWidget';
+import CalculatorTabs from '@/components/home/CalculatorTabs';
 import { getKitPriceCurve } from '@/lib/kit-price-curve';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
@@ -161,18 +160,16 @@ export default async function HomePage() {
           <SponsorBanner position="homepage" />
         </div>
 
-        {/* Estimarea rapidă stă sub bannerul plătit, nu deasupra lui: slotul de
-            sus e vândut. Curba de preț se citește pe server, fișierul de scrape
-            nu are ce căuta în bundle-ul clientului. */}
+        {/* Calculatoarele stau sub bannerul plătit, nu deasupra lui: slotul de sus
+            e vândut. Două taburi în loc de două carduri stivuite. Curba de preț se
+            citește pe server, fișierul de scrape nu are ce căuta în bundle-ul
+            clientului. Widgetul de baterii primește linkul spre ghid, fiindcă aici
+            omul dă peste el fără să fi citit despre program. */}
         <div className="mb-10">
-          <QuickEstimateWidget priceCurve={getKitPriceCurve()} sursa="home" />
-        </div>
-
-        {/* Același widget ca în ghidul de baterii, cu link înapoi spre el: pe home
-            page omul ajunge la calculator fără să fi citit despre program, deci are
-            nevoie de o ieșire spre explicații. */}
-        <div className="mb-10">
-          <BatteryWidget sursa="home-baterii" guideHref="/ghid/casa-verde-baterii-2026-program-stocare-afm" />
+          <CalculatorTabs
+            priceCurve={getKitPriceCurve()}
+            batteryGuideHref="/ghid/casa-verde-baterii-2026-program-stocare-afm"
+          />
         </div>
 
         {hasPremium ? (
