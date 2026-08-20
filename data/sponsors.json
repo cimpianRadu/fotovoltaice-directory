@@ -10,6 +10,10 @@
       "logo": "/logos/rca-non-stop.png",
       "baseUrl": "https://www.safetyleasing.ro",
       "active": true,
+      "run": {
+        "start": "2026-08-19",
+        "days": 65
+      },
       "positions": "all",
       "messages": {
         "client": "Leasing și finanțare pentru sistemul tău fotovoltaic, până la 60 de luni",

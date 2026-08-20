@@ -2,12 +2,21 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   SPONSOR_POSITIONS,
   SPONSOR_POSITION_LABELS,
   type SponsorPosition,
 } from '@/lib/sponsor-positions';
+import {
+  RUN_MAX_DAYS,
+  formatRunDate,
+  runLastDay,
+  runStatus,
+  todayRunStart,
+  type RunStatus,
+  type SponsorRun,
+} from '@/lib/sponsor-run';
 // Doar tipurile: importul de tip se șterge la compilare, deci garda
 // `server-only` din modul nu se declanșează în bundle-ul client.
 import type {
@@ -89,6 +98,131 @@ function ActiveToggle({
   );
 }
 
+const RUN_PILL: Record<'upcoming' | 'running' | 'ended', string> = {
+  upcoming: 'border-sky-200 bg-sky-50 text-sky-800',
+  running: 'border-emerald-200 bg-emerald-50 text-emerald-800',
+  ended: 'border-rose-200 bg-rose-50 text-rose-800',
+};
+
+function runLabel(status: RunStatus): string {
+  if (status.phase === 'upcoming')
+    return status.days <= 1 ? 'Începe mâine' : `Începe peste ${status.days} zile`;
+  if (status.phase === 'running')
+    return status.days <= 1 ? 'Azi e ultima zi' : `Mai are ${status.days} zile`;
+  if (status.days === 0) return 'S-a încheiat azi';
+  if (status.days === 1) return 'S-a încheiat ieri';
+  return `Încheiat de ${status.days} zile`;
+}
+
+const presetCls =
+  'rounded border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-600 ' +
+  'transition hover:border-slate-400 hover:text-slate-900 disabled:opacity-50';
+
+/**
+ * Perioada contractată a unui partener. Există ca pachetele vândute pe termen
+ * fix (o promovare de 60 de zile, un test de o lună) să se stingă singure în
+ * ziua de după ultima zi plătită, în loc să depindă de memoria ta.
+ *
+ * `active` rămâne separat și rămâne deasupra: e oprirea manuală, care merge
+ * oricând, indiferent de perioadă. Perioada nu îl atinge — un partener cu
+ * promovarea încheiată rămâne `activ` în fișier, doar că nu se mai afișează.
+ * Așa reînnoirea e o singură dată schimbată, nu o repornire.
+ */
+function RunRow({
+  run,
+  onChange,
+  disabled,
+  now,
+}: {
+  run: SponsorRun | undefined;
+  onChange: (run: SponsorRun | undefined) => void;
+  disabled?: boolean;
+  /** `null` până la mount: statusul se calculează pe ceasul browserului. */
+  now: Date | null;
+}) {
+  const lastDay = run ? runLastDay(run) : null;
+  const status = run && now ? runStatus(run, now) : null;
+
+  return (
+    <div className="rounded border border-slate-200 bg-slate-50/70 p-3">
+      <label className="flex items-center gap-2 text-xs font-medium text-slate-700">
+        <input
+          type="checkbox"
+          checked={Boolean(run)}
+          onChange={(e) =>
+            onChange(e.target.checked ? { start: todayRunStart(), days: 30 } : undefined)
+          }
+          disabled={disabled}
+          className="h-3.5 w-3.5"
+        />
+        Rulează pe perioadă determinată
+      </label>
+
+      {!run ? (
+        <p className="mt-1 text-[11px] leading-relaxed text-slate-400">
+          Nebifat = rulează cât timp comutatorul e pe „Activ”, fără dată de final. Așa arată un
+          abonament lunar care se prelungește automat.
+        </p>
+      ) : (
+        <div className="mt-2.5 flex flex-wrap items-end gap-x-3 gap-y-2">
+          <label className="block text-xs">
+            <span className="font-medium text-slate-600">Prima zi</span>
+            <input
+              type="date"
+              value={run.start}
+              onChange={(e) => onChange({ ...run, start: e.target.value })}
+              disabled={disabled}
+              className={`${inputCls} w-40`}
+            />
+          </label>
+          <label className="block text-xs">
+            <span className="font-medium text-slate-600">Durată (zile)</span>
+            <input
+              type="number"
+              min={1}
+              max={RUN_MAX_DAYS}
+              value={run.days}
+              onChange={(e) => onChange({ ...run, days: Number(e.target.value) })}
+              disabled={disabled}
+              className={`${inputCls} w-24`}
+            />
+          </label>
+          <div className="flex gap-1 pb-1.5">
+            {[30, 60, 90].map((d) => (
+              <button
+                key={d}
+                type="button"
+                onClick={() => onChange({ ...run, days: d })}
+                disabled={disabled}
+                className={presetCls}
+              >
+                {d}z
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-2 pb-1.5 text-[11px]">
+            {lastDay ? (
+              <span className="text-slate-500">
+                Ultima zi:{' '}
+                <strong className="font-semibold text-slate-800">{formatRunDate(lastDay)}</strong>
+              </span>
+            ) : (
+              <span className="font-medium text-amber-700">Completează o dată validă</span>
+            )}
+            {status && status.phase !== 'none' && (
+              <span
+                className={`rounded-full border px-2 py-0.5 font-semibold ${RUN_PILL[status.phase]}`}
+              >
+                {runLabel(status)}
+              </span>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function CardHeader({
   logo,
   name,
@@ -144,6 +278,12 @@ export default function SponsorControls({
   const [result, setResult] = useState<{ kind: 'ok' | 'err'; text: string; url?: string } | null>(
     null,
   );
+
+  // Statusul perioadei se calculează abia după mount: pagina e `force-dynamic`,
+  // deci serverul randează la cerere, iar un `new Date()` în render ar putea
+  // cădea de partea cealaltă a miezului nopții față de hidratare.
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => setNow(new Date()), []);
 
   const dirty = useMemo(
     () => JSON.stringify(data) !== JSON.stringify(baseline),
@@ -252,6 +392,12 @@ export default function SponsorControls({
               active={s.active}
               onToggle={() => patchSponsor(s.slug, { active: !s.active })}
               disabled={!writable}
+            />
+            <RunRow
+              run={s.run}
+              onChange={(run) => patchSponsor(s.slug, { run })}
+              disabled={!writable}
+              now={now}
             />
             <div className="grid gap-3 sm:grid-cols-2">
               <Field

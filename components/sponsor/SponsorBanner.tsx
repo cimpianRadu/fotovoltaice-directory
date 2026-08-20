@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import sponsorsData from '@/data/sponsors.json';
 import { type SponsorPosition } from '@/lib/sponsor-positions';
+import { isRunning, type SponsorRun } from '@/lib/sponsor-run';
 
 declare global {
   interface Window {
@@ -74,6 +75,8 @@ interface Sponsor {
   logo: string;
   baseUrl: string;
   active: boolean;
+  /** Perioada contractată. Lipsă = rulează nelimitat, doar pe `active`. */
+  run?: SponsorRun;
   /** `"all"` = pachet Premium, apare pe toate plasările. */
   positions: string[] | 'all';
   messages: Record<string, string>;
@@ -98,6 +101,24 @@ const WHATSAPP_PREFILL =
 
 const ALL_SPONSORS = sponsorsData.sponsors as Sponsor[];
 const LIVE_SPONSORS = ALL_SPONSORS.filter((s) => s.active);
+
+/**
+ * Ceasul, luat după mount. `data/sponsors.json` intră static în bundle, deci un
+ * `new Date()` la nivel de modul ar fi înghețat la momentul build-ului pe HTML-ul
+ * prerandat și ar diferi de browser — adică fix o nepotrivire de hidratare pe
+ * slotul plătit. Primul render (server + prima trecere în client) ignoră
+ * fereastra și arată tot ce e `active`, deci e identic în ambele părți; imediat
+ * după mount se aplică perioada, cu ceasul vizitatorului.
+ *
+ * Consecința asumată: în zilele dintre expirarea unei promovări și următorul
+ * deploy, bannerul apare în HTML și dispare la hidratare. E preferabil variantei
+ * inverse, în care un partener plătit lipsește din prima pictură a paginii.
+ */
+function useNow(): Date | null {
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => setNow(new Date()), []);
+  return now;
+}
 
 /**
  * Previzualizare pentru un partener care încă nu e live: `?preview=<slug>` pe
@@ -167,12 +188,16 @@ export default function SponsorBanner({
 }) {
   const audience = POSITION_AUDIENCE[position];
   const previewSlug = usePreviewSlug();
+  const now = useNow();
 
   // Memoizat: fără asta lista are altă identitate la fiecare render, iar efectul
   // de mai jos ar reconstrui observerul la nesfârșit.
   const sponsors = useMemo(() => {
     const live = LIVE_SPONSORS.filter(
-      (s) => s.positions === 'all' || s.positions.includes(position),
+      (s) =>
+        (s.positions === 'all' || s.positions.includes(position)) &&
+        // `now === null` = încă nu s-a montat; vezi `useNow`.
+        (now === null || isRunning(s.run, now)),
     );
     // Premium (`positions: "all"`) stă mereu primul: plătește pachetul cel mai
     // mare, deci ia și primul loc când slotul afișează mai mulți parteneri.
@@ -183,7 +208,7 @@ export default function SponsorBanner({
     if (!pending) return live;
     if (!(pending.positions === 'all' || pending.positions.includes(position))) return live;
     return [pending, ...live];
-  }, [position, previewSlug]);
+  }, [position, previewSlug, now]);
 
   const isPreview = Boolean(previewSlug) && sponsors.some((s) => s.slug === previewSlug);
 

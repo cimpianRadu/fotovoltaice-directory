@@ -4,6 +4,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import bundledSponsors from '@/data/sponsors.json';
 import { SPONSOR_POSITIONS, type SponsorPosition } from './sponsor-positions';
+import { RUN_MAX_DAYS, isValidRunStart, type SponsorRun } from './sponsor-run';
 
 /**
  * Sursa adevărului pentru parteneri e un singur fișier JSON din repo
@@ -39,6 +40,12 @@ export interface BannerSponsor {
   logo: string;
   baseUrl: string;
   active: boolean;
+  /**
+   * Perioada contractată, opțională. Lipsa ei = rulare nelimitată, oprită doar
+   * din `active` (abonamentele lunare cu prelungire automată). Vezi
+   * `lib/sponsor-run.ts` pentru semantica ferestrei.
+   */
+  run?: SponsorRun;
   positions: SponsorPosition[] | 'all';
   messages: { client: string; instalator?: string };
   /** Rândul amber din popup-ul dreapta-jos; bannerul nu îl afișează. */
@@ -236,6 +243,23 @@ function validateAndNormalize(input: SponsorData, current: SponsorData): Sponsor
     const facebook = clean(raw.facebook);
     if (facebook && !isHttpUrl(facebook)) issues.push(`${where}: linkul de Facebook trebuie să fie URL complet`);
 
+    // Perioada e opțională, dar dacă există trebuie să fie întreagă: o dată de
+    // start fără durată (sau invers) ar produce o fereastră pe care nimeni nu o
+    // poate citi, exact pe slotul care aduce bani.
+    let run: SponsorRun | undefined;
+    const rawRun = (raw as { run?: Partial<SponsorRun> | null }).run;
+    if (rawRun != null) {
+      const start = clean(rawRun.start);
+      const days = Number(rawRun.days);
+      if (!isValidRunStart(start)) {
+        issues.push(`${where}: data de început a promovării trebuie să fie o dată reală (AAAA-LL-ZZ)`);
+      } else if (!Number.isInteger(days) || days < 1 || days > RUN_MAX_DAYS) {
+        issues.push(`${where}: durata promovării trebuie să fie un întreg între 1 și ${RUN_MAX_DAYS} de zile`);
+      } else {
+        run = { start, days };
+      }
+    }
+
     let positions: BannerSponsor['positions'];
     if (raw.positions === 'all') {
       positions = 'all';
@@ -266,6 +290,7 @@ function validateAndNormalize(input: SponsorData, current: SponsorData): Sponsor
       logo: cur.logo, // logo-ul cere fișier în repo, se schimbă din cod
       baseUrl,
       active: Boolean(raw.active),
+      ...(run ? { run } : {}),
       positions,
       // Mesajul de instalatori gol dispare din fișier de tot: componenta cade
       // atunci pe mesajul de clienți, pe când un string gol s-ar afișa gol.

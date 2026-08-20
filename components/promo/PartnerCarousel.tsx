@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import sponsorsData from '@/data/sponsors.json';
+import { isRunning, type SponsorRun } from '@/lib/sponsor-run';
 
 declare global {
   interface Window {
@@ -25,6 +26,8 @@ type Sponsor = {
   logo: string;
   baseUrl: string;
   active: boolean;
+  /** Perioada contractată. Lipsă = rulează nelimitat, doar pe `active`. */
+  run?: SponsorRun;
   positions: string[] | 'all';
   messages: Record<string, string>;
   cta?: string;
@@ -81,7 +84,11 @@ export default function PartnerCarousel() {
     const pending = previewSlug
       ? ALL_SPONSORS.find((s) => s.slug === previewSlug && !s.active && inPopup(s))
       : undefined;
-    const list = pending ? [pending, ...ACTIVE_PARTNERS] : ACTIVE_PARTNERS;
+    // Perioada contractată se verifică aici, nu la nivel de modul: fișierul e
+    // bundle-uit la build, iar în efect avem ceasul vizitatorului. Popup-ul nu
+    // se pictează până la `visible`, deci nu apare niciun partener expirat.
+    const running = ACTIVE_PARTNERS.filter((s) => isRunning(s.run, new Date()));
+    const list = pending ? [pending, ...running] : running;
     const isPreview = Boolean(pending);
 
     setPartners(list);
