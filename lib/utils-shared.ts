@@ -321,6 +321,21 @@ export const TIMELINE_OPTIONS = [
   { value: 'ma-informez', label: 'Deocamdată mă informez' },
 ] as const;
 
+// Intervalul în care clientul vrea să fie sunat (aug 2026). Nu e un detaliu de
+// proiect, e singura variabilă din formular care atinge direct problema
+// măsurată: din cei 7 clienți întrebați dacă i-a sunat vreo firmă, 5 au spus nu.
+// Un om sunat când poate răspunde e un om care răspunde.
+export const CALL_WINDOW_OPTIONS = [
+  { value: 'dimineata', label: 'Dimineața (9-12)' },
+  { value: 'dupa-amiaza', label: 'După-amiaza (12-17)' },
+  { value: 'seara', label: 'Seara (17-20)' },
+  { value: 'oricand', label: 'Oricând' },
+] as const;
+
+export function getCallWindowLabel(slug: string): string {
+  return CALL_WINDOW_OPTIONS.find((o) => o.value === slug)?.label ?? slug;
+}
+
 const YES_NO_LABELS: Record<string, string> = {
   da: 'Da',
   nu: 'Nu',

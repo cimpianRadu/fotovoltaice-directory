@@ -26,6 +26,7 @@ export interface LeadCardData {
   stocareLabel: string;
   wallboxLabel: string;
   termenLabel: string;
+  intervalApelLabel: string;
   arePoze: boolean;
 }
 
@@ -144,6 +145,7 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
     lead.stocareLabel ? { label: 'Baterie', value: lead.stocareLabel } : null,
     lead.wallboxLabel ? { label: 'Stație auto', value: lead.wallboxLabel } : null,
     lead.termenLabel ? { label: 'Termen', value: lead.termenLabel } : null,
+    lead.intervalApelLabel ? { label: 'Sunați', value: lead.intervalApelLabel } : null,
   ].filter(Boolean) as { label: string; value: string }[];
 
   return (

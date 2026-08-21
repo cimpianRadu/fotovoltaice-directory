@@ -75,11 +75,12 @@ async function readRows(sheetName: string): Promise<string[][]> {
     () =>
       sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        // A:AG, nu A:Z — coloanele de lead au trecut de Z în aug 2026 (Z–AD:
-        // localitate, stocare, wallbox, termen, poze; AE–AF: fereastra de
-        // prioritate și marcajul de alerte; AG: branșament). Celelalte taburi
-        // au mai puține coloane, range-ul mai lat nu le afectează.
-        range: `${sheetName}!A:AG`,
+        // Range lat deliberat, cu rezervă peste ultima coloană folosită (AK).
+        // Când s-au adăugat AH-AJ (atribuirea) range-ul a rămas la A:AG, așa că
+        // acele coloane se scriau dar se citeau mereu goale. Celelalte taburi au
+        // mai puține coloane, un range mai lat nu le afectează: rândurile vin
+        // pur și simplu mai scurte.
+        range: `${sheetName}!A:AR`,
       }),
     `read ${sheetName}`,
   );
@@ -113,6 +114,7 @@ export async function saveLeadToSheet(lead: {
   canal?: string;
   campanie?: string;
   paginaIntrare?: string;
+  intervalApel?: string;
 }): Promise<string> {
   const timestamp = new Date().toISOString();
   await appendRow('Leads', [
@@ -158,6 +160,10 @@ export async function saveLeadToSheet(lead: {
     lead.canal || '',          // AH — Canal de intrare (utm_source / referrer)
     lead.campanie || '',       // AI — utm_campaign, separă plătit de organic
     lead.paginaIntrare || '',  // AJ — Prima pagină din sesiune
+    // AK — intervalul în care clientul vrea să fie sunat. Spre deosebire de
+    // atribuire, ASTA merge în feedul public: e exact informația de care are
+    // nevoie firma înainte să revendice, nu după.
+    lead.intervalApel || '',   // AK — Interval preferat pentru apel
   ]);
   return timestamp;
 }
@@ -341,6 +347,8 @@ export interface NewLead {
   canal: string;
   campanie: string;
   paginaIntrare: string;
+  // AK — intervalul preferat pentru apel (aug 2026).
+  intervalApel: string;
 }
 
 export interface NewListing {
@@ -403,6 +411,7 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     canal: r[33] || '',
     campanie: r[34] || '',
     paginaIntrare: r[35] || '',
+    intervalApel: r[36] || '',
     ...readCrmFields(r),
   }));
 }
@@ -462,6 +471,9 @@ export interface PublicLead {
   bransament: string;
   // Doar semnal (există/nu există) — pozele în sine se trimit firmei, nu public.
   arePoze: boolean;
+  // Public intenționat: firma decide dacă revendică și în funcție de faptul că
+  // omul poate vorbi abia seara. Nu identifică pe nimeni.
+  intervalApel: string;
 }
 
 // Redactare pentru afișarea publică a mesajului: emailuri, URL-uri și șiruri
@@ -528,6 +540,7 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       termen: l.termen,
       bransament: l.bransament,
       arePoze: Boolean(l.poze.trim()),
+      intervalApel: l.intervalApel,
     }))
     .reverse(); // cele mai noi primele
 }

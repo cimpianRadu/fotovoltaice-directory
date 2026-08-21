@@ -601,6 +601,8 @@ export async function sendCountyLeadAlert(data: {
   finantareSlug: string;
   finantareLabel: string;
   termenLabel: string;
+  /** Intervalul cerut de client pentru apel; gol dacă n-a ales. */
+  intervalApelLabel: string;
   /** ISO — doar către abonat: până când cererea e rezervată numai pentru el. */
   reservedUntil?: string;
   /** Către restul firmelor, după ce a expirat rezervarea unui abonat. */
@@ -630,6 +632,7 @@ export async function sendCountyLeadAlert(data: {
         ${data.consumLunar ? row('Consum lunar', escapeHtml(data.consumLunar)) : ''}
         ${data.acoperisLabel ? row('Acoperiș', escapeHtml(data.acoperisLabel)) : ''}
         ${data.bransamentLabel ? row('Branșament', escapeHtml(data.bransamentLabel)) : ''}
+        ${data.intervalApelLabel ? row('Sunați-l', `<strong>${escapeHtml(data.intervalApelLabel)}</strong>`) : ''}
         ${row('Județ', escapeHtml(data.judet))}
       </table>
       <div style="text-align:center;margin-top:20px">

@@ -18,7 +18,7 @@ import {
 } from '@/lib/sheets';
 import { getCompanies } from '@/lib/utils';
 import { matchFirmsForLead, type FirmMatch } from '@/lib/lead-match';
-import { getFinancingShort, getFinancingTone, type FinancingTone } from '@/lib/utils-shared';
+import { getCallWindowLabel, getFinancingShort, getFinancingTone, type FinancingTone } from '@/lib/utils-shared';
 import ClaimList, { type ClaimRow } from './ClaimList';
 import LeadCrm from './LeadCrm';
 import MessagePreview from './MessagePreview';
@@ -243,6 +243,9 @@ function LeadCard({
               <a href={`tel:${lead.telefon}`} className="block text-slate-500 hover:text-slate-900">
                 {lead.telefon}
               </a>
+            )}
+            {lead.intervalApel && (
+              <div className="text-emerald-700">sună: {getCallWindowLabel(lead.intervalApel)}</div>
             )}
           </div>
           {lead.preselectedCompany && (

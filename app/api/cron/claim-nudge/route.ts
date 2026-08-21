@@ -25,6 +25,7 @@ import {
   getFinancingLabel,
   getProjectTypeLabel,
   getRoofTypeLabel,
+  getCallWindowLabel,
   getTimelineLabel,
 } from '@/lib/utils-shared';
 
@@ -208,6 +209,7 @@ async function announceUnlockedLeads(
           finantareSlug: lead.finantare,
           finantareLabel: lead.finantare ? getFinancingLabel(lead.finantare) : '',
           termenLabel: lead.termen ? getTimelineLabel(lead.termen) : '',
+          intervalApelLabel: lead.intervalApel ? getCallWindowLabel(lead.intervalApel) : '',
           unlocked: true,
         }),
       ),

@@ -20,6 +20,7 @@ import {
   getPhaseLabel,
   getFinancingLabel,
   getYesNoLabel,
+  getCallWindowLabel,
   getTimelineLabel,
 } from '@/lib/utils-shared';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
@@ -102,6 +103,7 @@ export default async function PortalPage() {
         judet: l.judet,
         segment: l.segment,
         specs: specsFor(l),
+        intervalApel: l.intervalApel ? getCallWindowLabel(l.intervalApel) : '',
         mesaj: l.mesajAscuns ? '' : sanitizeMesajPublic(l.mesaj),
         until: l.prioritarPanaLa,
       }))
@@ -131,6 +133,9 @@ export default async function PortalPage() {
           judet: lead?.judet || '',
           segment: lead?.segment || 'comercial',
           specs: specsFor(lead),
+          // Separat de `specs`: nu e o caracteristică a proiectului, ci
+          // instrucțiunea de apel. Se randează lângă butonul de sunat.
+          intervalApel: lead?.intervalApel ? getCallWindowLabel(lead.intervalApel) : '',
           mesaj: lead && !lead.mesajAscuns ? lead.mesaj : '',
           // Datele de contact ale clientului pleacă spre client DOAR pe
           // revendicările aprobate — gate-ul telefonic din /admin/crm.

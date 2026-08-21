@@ -20,6 +20,7 @@ import {
   getFinancingShort,
   getFinancingTone,
   getYesNoLabel,
+  getCallWindowLabel,
   getTimelineLabel,
 } from '@/lib/utils-shared';
 import { type LeadCardData } from './LeadCard';
@@ -78,6 +79,7 @@ export default async function CereriPage() {
       stocareLabel: l.stocare ? getYesNoLabel(l.stocare) : '',
       wallboxLabel: l.wallbox ? getYesNoLabel(l.wallbox) : '',
       termenLabel: l.termen ? getTimelineLabel(l.termen) : '',
+      intervalApelLabel: l.intervalApel ? getCallWindowLabel(l.intervalApel) : '',
       arePoze: l.arePoze,
     };
   });

@@ -14,6 +14,7 @@ import {
   getFinancingLabel,
   getProjectTypeLabel,
   getRoofTypeLabel,
+  getCallWindowLabel,
   getTimelineLabel,
 } from '@/lib/utils-shared';
 
@@ -159,6 +160,7 @@ async function notifyCountyAlerts(body: Record<string, string>, leadId: string) 
     finantareSlug: finantare,
     finantareLabel: finantare ? getFinancingLabel(finantare) : '',
     termenLabel: body.termen ? getTimelineLabel(body.termen.trim()) : '',
+    intervalApelLabel: body.intervalApel ? getCallWindowLabel(body.intervalApel.trim()) : '',
   };
 
   // Abonamentul pe județ ia cererea primul, singur, pentru fereastra lui.

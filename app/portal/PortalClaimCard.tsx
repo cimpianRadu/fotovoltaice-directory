@@ -32,6 +32,8 @@ export interface PortalClaim {
   judet: string;
   segment: string;
   specs: { label: string; value: string }[];
+  /** Intervalul cerut de client pentru apel. Gol pe cererile de dinainte de 21 aug 2026. */
+  intervalApel: string;
   mesaj: string;
   /** Doar pe revendicările aprobate — altfel null, datele nu pleacă spre browser. */
   client: {
@@ -322,6 +324,14 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
               </svg>
               Sună {claim.client.telefon}
             </a>
+
+            {/* Sub buton, nu în lista de specificații: e ultima informație pe
+                care o vrei citită înainte de a apăsa. */}
+            {claim.intervalApel && (
+              <p className="mt-1.5 text-xs font-medium text-emerald-700">
+                Clientul a cerut să fie sunat: {claim.intervalApel}
+              </p>
+            )}
 
             <p className="pt-1">
               <a

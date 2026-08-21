@@ -16,6 +16,7 @@ import {
   STORAGE_OPTIONS,
   WALLBOX_OPTIONS,
   TIMELINE_OPTIONS,
+  CALL_WINDOW_OPTIONS,
 } from '@/lib/utils-shared';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
@@ -288,6 +289,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
     telefon: '',
     email: '',
     mesaj: '',
+    intervalApel: '',
   });
   const [details, setDetails] = useState<Record<Step4Key, string>>(EMPTY_STEP4);
   const [gdpr, setGdpr] = useState(false);
@@ -406,6 +408,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
           // „a răspuns că nu știe". Vezi validarea din /api/leads.
           putereNecunoscuta: unknown.putere ? 'on' : '',
           gdpr: gdpr ? 'on' : '',
+          intervalApel: values.intervalApel,
           sourcePage: src(),
           // Canalul reținut la intrarea în sesiune, nu ce e în URL acum: la pasul
           // 4 al formularului parametrii de campanie au dispărut demult.
@@ -730,6 +733,38 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
                 onChange={(e) => set('email', e.target.value)}
               />
             </div>
+
+            {/* Opțional deliberat: un câmp obligatoriu în plus pe pasul de contact
+                costă mai mult decât aduce. Cine îl completează primește un apel
+                când poate răspunde, cine nu, e sunat ca până acum. */}
+            <fieldset>
+              <legend className="block text-sm font-medium text-gray-700">
+                Când vă putem suna? <span className="text-gray-400">(opțional)</span>
+              </legend>
+              <p className="mt-1 text-xs text-gray-500">
+                Instalatorul vede intervalul înainte să vă sune.
+              </p>
+              <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {CALL_WINDOW_OPTIONS.map((o) => {
+                  const on = values.intervalApel === o.value;
+                  return (
+                    <button
+                      key={o.value}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => set('intervalApel', on ? '' : o.value)}
+                      className={`rounded-lg border px-3 py-2 text-sm transition-colors ${
+                        on
+                          ? 'border-primary bg-primary/10 font-semibold text-secondary-dark'
+                          : 'border-border bg-white text-gray-600 hover:border-primary/40'
+                      }`}
+                    >
+                      {o.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
           </div>
         )}
 
