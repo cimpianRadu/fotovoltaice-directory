@@ -44,7 +44,27 @@ export default function CalculatorTabs({ priceCurve, batteryGuideHref }: Props) 
   // situația în care omul e deja pe home și a comutat pe tabul de sistem.
   useEffect(() => {
     const sync = () => {
-      if (window.location.hash === '#calculator-baterie') setActive('baterie');
+      if (window.location.hash !== '#calculator-baterie') return;
+      setActive('baterie');
+      // Ancorarea nativă ratează: la încărcare browserul derulează înainte ca
+      // ce e deasupra (hero, banda de sponsor, imaginile) să-și fi luat
+      // înălțimea finală, și rămâne la zero. Verificat: cu hash în URL,
+      // scrollY era 0 iar ancora la 1341px.
+      // Instant, nu lin: cine deschide linkul vrea să fie deja acolo, nu să se
+      // uite la o derulare de 1.300px. `instant` e și explicit necesar, fiindcă
+      // `html` are `scroll-behavior: smooth`, care altfel ar prelua controlul.
+      // De două ori, nu din superstiție: o dată acum, pentru cazul obișnuit, și
+      // o dată după ce se golește coada de task-uri, fiindcă banda de sponsor și
+      // imaginile de deasupra își iau înălțimea finală după prima pictare și ar
+      // muta ancora de sub noi. `setTimeout`, nu `requestAnimationFrame`: rAF nu
+      // rulează în contexte cu animațiile oprite (l-am prins într-un preview
+      // headless, unde tot codul din el era mort).
+      const jump = () =>
+        document
+          .getElementById('calculator-baterie')
+          ?.scrollIntoView({ behavior: 'instant', block: 'start' });
+      jump();
+      setTimeout(jump, 0);
     };
     sync();
     window.addEventListener('hashchange', sync);
@@ -52,7 +72,7 @@ export default function CalculatorTabs({ priceCurve, batteryGuideHref }: Props) 
   }, []);
 
   return (
-    <div id="calculator-baterie" className="scroll-mt-24">
+    <div id="calculator-baterie" className="scroll-mt-32 md:scroll-mt-24">
       {/* Taburi pastilă, detașate de card: cardurile au colțuri rotunjite pe toate
           laturile, iar un tab „lipit" de ele ar lăsa o crestătură vizibilă. */}
       <div role="tablist" aria-label="Calculatoare" className="mb-3 flex gap-2">

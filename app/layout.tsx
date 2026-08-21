@@ -81,6 +81,10 @@ export default function RootLayout({
         <SegmentProvider>
           <PublicChrome>
             <Header />
+            {/* Imediat sub header: banda de pe mobil e `sticky`, deci trebuie să
+                stea în flux ca să ocupe spațiu real și să nu acopere textul.
+                Pastila de pe desktop e `fixed`, poziția ei în DOM nu contează. */}
+            <BatteryFab />
           </PublicChrome>
           <main className="min-h-screen">{children}</main>
           <PublicChrome>
@@ -88,7 +92,6 @@ export default function RootLayout({
             <PartnerCarousel />
             <FloatingSegmentToggle />
             <CtaPopup />
-            <BatteryFab />
           </PublicChrome>
         </SegmentProvider>
       </body>
