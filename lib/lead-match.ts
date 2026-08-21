@@ -10,6 +10,8 @@ import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
   claimHoldsFirmSlot,
   isSameFirm,
+  normalizeFirmName,
+  parseRequestedFirms,
   type ClaimStatus,
   type FirmStatus,
 } from './sheets-shared';
@@ -19,6 +21,11 @@ export interface MatchLead {
   segment: string;
   /** kW, text liber din formular („10", „10 kW"). Gol pe multe cereri. */
   putere: string;
+  /**
+   * Coloana L: firmele cerute explicit de client, „; " între ele. Opțional ca
+   * să nu forțăm câmpul pe apelanții care potrivesc doar pe județ și putere.
+   */
+  preselectedCompany?: string;
 }
 
 export interface MatchClaim {
@@ -83,6 +90,10 @@ export function matchFirmsForLead(
   const leadCounty = norm(lead.judet);
   const kw = parseKw(lead.putere);
   const rezidential = (lead.segment || 'comercial') === 'rezidential';
+  // Firmele pe care clientul le-a cerut cu numele. Nu le potrivim noi, le-a
+  // ales el: urcă primele pe listă și trec de poarta geografică (dacă a cerut o
+  // firmă din alt județ, tot ea e prima de sunat, ea decide dacă se deplasează).
+  const requested = new Set(parseRequestedFirms(lead.preselectedCompany).map(normalizeFirmName));
 
   const out: FirmMatch[] = [];
 
@@ -96,6 +107,12 @@ export function matchFirmsForLead(
     const warnings: string[] = [];
     let score = 0;
 
+    const askedByClient = requested.size > 0 && requested.has(normalizeFirmName(c.name));
+    if (askedByClient) {
+      score += 10;
+      reasons.push('cerută de client');
+    }
+
     // Geografia e poartă, nu doar punctaj: o firmă care nici nu acoperă
     // județul nu are ce căuta pe lista de apeluri.
     if (leadCounty) {
@@ -108,6 +125,8 @@ export function matchFirmsForLead(
       } else if (c.tags?.some((t) => NATIONAL_TAGS.includes(t))) {
         score += 1;
         reasons.push('acoperire națională');
+      } else if (askedByClient) {
+        warnings.push('nu acoperă județul în director');
       } else {
         continue;
       }

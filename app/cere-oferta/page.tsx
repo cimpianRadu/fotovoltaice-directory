@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
-import LeadForm from '@/components/forms/LeadForm';
+import LeadForm, { type FirmPick } from '@/components/forms/LeadForm';
 import SegmentNotice from './SegmentNotice';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 import companiesData from '@/data/companies.json';
+import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 
 export const metadata: Metadata = {
   title: 'Cere Oferte Gratuit - Instalatori Fotovoltaice Verificați',
@@ -23,6 +24,21 @@ export default async function CereOfertaPage({
   const preselected = companySlug
     ? companiesData.companies.find((c) => c.slug === companySlug)
     : undefined;
+
+  // Lista pentru blocul „firme anume" din formular: doar ce-i trebuie ca să
+  // filtreze pe județ și să afișeze numele (~185 firme, câteva zeci de KB în
+  // payload, nu în bundle). Sediul + județele declarate ca acoperite, ca în
+  // lib/lead-match. Nu trece prin lib/utils: formularul e client, iar pagina
+  // server citește JSON-ul direct.
+  const firms: FirmPick[] = companiesData.companies
+    .map((c) => ({
+      slug: c.slug,
+      name: c.name,
+      city: c.location.city,
+      county: c.location.county,
+      coverage: (c.coverage ?? []).filter((j) => j !== c.location.county),
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'ro'));
 
   return (
     <>
@@ -50,12 +66,13 @@ export default async function CereOfertaPage({
         {preselected && (
           <div className="mb-4 rounded-lg bg-primary/5 border border-primary/20 px-4 py-3 text-sm text-gray-700">
             Cerere pentru <span className="font-semibold text-gray-900">{preselected.name}</span>
-            {preselected.location?.county ? ` (${preselected.location.county})` : ''}. Vei putea primi oferte și de la alți instalatori potriviți din zona ta.
+            {preselected.location?.county ? ` (${preselected.location.county})` : ''}. La pasul „Zonă" mai poți alege
+            până la {MAX_REQUESTED_FIRMS - 1} firme, dintr-o singură cerere; primești oferte și de la alți instalatori potriviți din zona ta.
           </div>
         )}
 
         <div className="bg-white rounded-xl border border-border p-6">
-          <LeadForm preselectedCompany={preselected?.name} />
+          <LeadForm firms={firms} preselectedSlug={preselected?.slug} />
         </div>
 
         <div className="mt-6 bg-surface rounded-xl p-5 border border-border">

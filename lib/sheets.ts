@@ -7,6 +7,7 @@ import {
   deriveClaimStatus,
   isLeadClosed,
   isSameFirm,
+  joinRequestedFirms,
   type LeadStatus,
   type ContactState,
   type LeadNote,
@@ -99,7 +100,8 @@ export async function saveLeadToSheet(lead: {
   putere?: string;
   mesaj?: string;
   sourcePage?: string;
-  preselectedCompany?: string;
+  /** Firmele cerute explicit de client, 0..MAX_REQUESTED_FIRMS. Coloana L. */
+  firmeSolicitate?: string[];
   segment?: string;
   gdprConsent?: string;
   tipAcoperis?: string;
@@ -129,13 +131,17 @@ export async function saveLeadToSheet(lead: {
     lead.putere || '',
     lead.mesaj || '',
     lead.sourcePage || 'cere-oferta',
-    lead.preselectedCompany || '',
+    // L — firmele cerute de client, „; " între ele (vezi parseRequestedFirms).
+    // Până pe 21 aug 2026 aici intra o singură firmă, cea de pe pagina de start.
+    joinRequestedFirms(lead.firmeSolicitate || []),
     'Nou', // coloana Status
     lead.segment || 'comercial', // N — Segment (trailing — nu mută coloanele existente)
     '', // O — „Email trimis", marcaj rezervat scripts/outreach.mjs. NU scrie aici:
     //     orice text non-gol face scriptul să creadă că leadul e deja procesat.
     '', // P — Mesaj ascuns (completat separat, vezi getLeadsSince)
-    '', // Q — liber
+    '', // Q — Duplicat al: timestamp-ul cererii canonice, scris de
+    //     scripts/merge-leads.mjs când rândul e o retrimitere a aceleiași
+    //     cereri. Non-gol = rândul nu se mai arată nicăieri (vezi isLeadHidden).
     lead.gdprConsent || '', // R — Consimțământ GDPR
     lead.tipAcoperis || '',  // S — Tip acoperiș
     lead.fazare || '',       // T — Alimentare (mono/trifazat)
@@ -301,6 +307,8 @@ export interface NewLead {
   putere: string;
   mesaj: string;
   sourcePage: string;
+  // L — firmele cerute explicit de client, „; " între ele; citește cu
+  // parseRequestedFirms. O singură firmă pe cererile de dinainte de 21 aug 2026.
   preselectedCompany: string;
   status: string;
   segment: string;
@@ -308,6 +316,10 @@ export interface NewLead {
   // public /cereri (fără să ascundă cererea) — override manual pentru mesaje
   // cu date personale pe care redactarea automată nu le prinde.
   mesajAscuns: string;
+  // Coloana Q: timestamp-ul cererii canonice când rândul ăsta e o retrimitere
+  // comasată (scripts/merge-leads.mjs). Non-gol = rândul iese din toate listele,
+  // firmele lui cerute s-au mutat pe cererea canonică. Gol pe cererile normale.
+  duplicatAl: string;
   // S/T/U — detalii de ofertare cerute de instalatori (iulie 2026). Goale pe
   // toate cererile de dinainte de adăugarea câmpurilor în formular.
   tipAcoperis: string;
@@ -396,6 +408,7 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     segment: r[13] || 'comercial',
     // r[14] = marcaj „Email trimis" (scripts/outreach.mjs), r[17] = consimțământ GDPR
     mesajAscuns: r[15] || '',
+    duplicatAl: r[16] || '',
     tipAcoperis: r[18] || '',
     fazare: r[19] || '',
     consumLunar: r[20] || '',
@@ -496,10 +509,18 @@ export function sanitizeMesajPublic(mesaj: string): string {
   return out;
 }
 
+/**
+ * Rândul nu mai reprezintă o cerere de dat: status „Ascuns" în coloana M (scos
+ * manual: vândut exclusiv, spam, test) sau retrimitere comasată în alta
+ * (coloana Q). Un singur loc pentru regulă, ca feedul public, portalul, adminul
+ * și cronurile să ascundă aceleași rânduri.
+ */
+export function isLeadHidden(l: Pick<NewLead, 'status' | 'duplicatAl'>): boolean {
+  return l.status === 'Ascuns' || l.duplicatAl.trim() !== '';
+}
+
 function isPubliclyVisible(l: NewLead): boolean {
-  // Status „Ascuns" în sheet = scos manual din feedul public (lead vândut
-  // exclusiv, spam, test). Orice alt status rămâne vizibil.
-  return l.status !== 'Ascuns';
+  return !isLeadHidden(l);
 }
 
 // Vizibil ȘI încă de dat: statusul de CRM (coloana V) scoate din feed cererile

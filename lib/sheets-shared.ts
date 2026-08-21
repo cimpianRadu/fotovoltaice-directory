@@ -559,3 +559,49 @@ export function firmMentionedIn(text: string, firmName: string): boolean {
   if (first === name || first.length < 3 || GENERIC_NAME_WORDS.has(first)) return false;
   return hay.includes(` ${first} `);
 }
+
+// ── Firmele cerute explicit de client ──────────────────────────────────────
+// Coloana L din Leads. Până pe 21 aug 2026 ținea o singură firmă (cea de pe
+// pagina de unde pornea cererea); acum ține până la MAX_REQUESTED_FIRMS, pentru
+// că un client din Sibiu a trimis 3 cereri identice doar ca să ceară 3 firme
+// diferite. Separatorul e deliberat „; ": numele firmelor nu conțin punct și
+// virgulă, iar celula rămâne lizibilă pentru un om în Sheet.
+export const MAX_REQUESTED_FIRMS = 4;
+const REQUESTED_FIRMS_SEP = '; ';
+
+export function parseRequestedFirms(cell: string | undefined | null): string[] {
+  return (cell || '')
+    .split(';')
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+export function joinRequestedFirms(names: readonly string[]): string {
+  // Deduplicare pe nume normalizat: la comasarea a două cereri aceeași firmă
+  // poate veni scrisă de două ori.
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const raw of names) {
+    const n = raw.trim();
+    const key = normalizeFirmName(n);
+    if (!n || !key || seen.has(key)) continue;
+    seen.add(key);
+    out.push(n);
+  }
+  return out.join(REQUESTED_FIRMS_SEP);
+}
+
+/**
+ * Două cereri sunt de la același om dacă au același telefon (normalizat) sau
+ * același email. Semnal pentru /admin/crm și pentru scripts/merge-leads.mjs,
+ * nu regulă automată: decizia de comasare rămâne la om.
+ */
+export function isSameClient(
+  a: { telefon: string; email: string },
+  b: { telefon: string; email: string },
+): boolean {
+  const phoneA = normalizePhone(a.telefon);
+  if (phoneA && phoneA === normalizePhone(b.telefon)) return true;
+  const emailA = a.email.trim().toLowerCase();
+  return emailA !== '' && emailA === b.email.trim().toLowerCase();
+}

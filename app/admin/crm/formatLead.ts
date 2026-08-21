@@ -1,4 +1,5 @@
 import type { NewLead } from '@/lib/sheets';
+import { parseRequestedFirms } from '@/lib/sheets-shared';
 import {
   getFinancingLabel, getYesNoLabel, getTimelineLabel, getRoofTypeLabel, getPhaseLabel,
   getConnectionLabel,
@@ -80,8 +81,14 @@ export function formatLeadForShare(lead: NewLead): string {
     parts.push('', 'Contact:', ...contactLines);
   }
 
-  if (lead.preselectedCompany?.trim()) {
-    parts.push('', `Firma solicitată inițial: ${lead.preselectedCompany.trim()}`);
+  // Una sau mai multe (din 21 aug 2026 clientul poate cere până la 4 firme
+  // într-o singură cerere). Firma care primește mesajul vede că a fost cerută
+  // cu numele, sau că e una dintre cele cerute.
+  const requested = parseRequestedFirms(lead.preselectedCompany);
+  if (requested.length === 1) {
+    parts.push('', `Firma solicitată de client: ${requested[0]}`);
+  } else if (requested.length > 1) {
+    parts.push('', `Firme solicitate de client: ${requested.join(', ')}`);
   }
 
   if (lead.mesaj?.trim()) {

@@ -8,6 +8,7 @@ import {
   getLeadSubscriptions,
   getLeadsSince,
   isLeadClosed,
+  isLeadHidden,
   isPriorityHeld,
   sanitizeMesajPublic,
   type NewLead,
@@ -93,7 +94,7 @@ export default async function PortalPage() {
         (l) =>
           isPriorityHeld(l) &&
           !isLeadClosed(l.crmStatus) &&
-          l.status !== 'Ascuns' &&
+          !isLeadHidden(l) &&
           !claimedByMe.has(l.timestamp) &&
           findSubscriptionForCounty(subs, l.judet)?.email === email,
       )

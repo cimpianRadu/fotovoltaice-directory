@@ -17,6 +17,7 @@ import {
   type CrmFirm,
 } from '@/lib/sheets';
 import { getCompanies } from '@/lib/utils';
+import { isSameClient, parseRequestedFirms } from '@/lib/sheets-shared';
 import { matchFirmsForLead, type FirmMatch } from '@/lib/lead-match';
 import { getCallWindowLabel, getFinancingShort, getFinancingTone, type FinancingTone } from '@/lib/utils-shared';
 import ClaimList, { type ClaimRow } from './ClaimList';
@@ -162,11 +163,17 @@ function LeadCard({
   claims,
   firms,
   matches,
+  merged,
+  sameClient,
 }: {
   lead: NewLead;
   claims: ClaimRow[];
   firms: FirmOption[];
   matches: FirmMatch[] | null;
+  /** Câte retrimiteri ale aceleiași cereri s-au comasat în asta (coloana Q). */
+  merged: number;
+  /** Alte cereri deschise cu același telefon sau email: candidate la comasare. */
+  sameClient: NewLead[];
 }) {
   // Formularul cere putere în kW și suprafață în mp, dar salvează cifra goală.
   const specs = [lead.putere && `${lead.putere} kW`, lead.suprafata && `${lead.suprafata} mp`]
@@ -174,6 +181,7 @@ function LeadCard({
     .join(' · ');
   const full = claims.length >= MAX_CLAIMS_PER_LEAD;
   const shareText = formatLeadForShare(lead);
+  const requested = parseRequestedFirms(lead.preselectedCompany);
 
   return (
     // id-ul e timestampul cererii: fișele din /admin/firme leagă „vezi cererea"
@@ -248,8 +256,32 @@ function LeadCard({
               <div className="text-emerald-700">sună: {getCallWindowLabel(lead.intervalApel)}</div>
             )}
           </div>
-          {lead.preselectedCompany && (
-            <div className="text-slate-400">a cerut: {lead.preselectedCompany}</div>
+          {/* Una sau mai multe: din 21 aug 2026 formularul lasă clientul să
+              ceară până la 4 firme deodată. Aceleași nume urcă primele și în
+              lista de potriviri de mai jos. */}
+          {requested.length > 0 && (
+            <div className="text-slate-400">a cerut: {requested.join(' · ')}</div>
+          )}
+          {merged > 0 && (
+            <div className="text-slate-400">
+              +{merged} {merged === 1 ? 'retrimitere comasată' : 'retrimiteri comasate'}
+            </div>
+          )}
+          {/* Același om, altă cerere deschisă: ori a cerut altă firmă de pe altă
+              pagină (cazul Sibiu, 21 aug), ori chiar are două proiecte. Decide
+              omul; scriptul face comasarea. */}
+          {sameClient.length > 0 && (
+            <div className="text-amber-600">
+              același telefon/email ca{' '}
+              {sameClient.map((o, i) => (
+                <span key={o.timestamp}>
+                  {i > 0 && ', '}
+                  <a href={`#${o.timestamp}`} className="underline hover:text-amber-800">
+                    cererea din {fmtDateTime(o.timestamp)}
+                  </a>
+                </span>
+              ))}
+            </div>
           )}
           {/* Coloana M, veche: „Nou" e valoarea implicită și nu spune nimic.
               Se afișează doar când conține text scris manual. */}
@@ -402,6 +434,26 @@ export default async function CrmPage({ searchParams }: Props) {
         Nu am putut citi din Google Sheets: {err instanceof Error ? err.message : String(err)}
       </div>
     );
+  }
+
+  // Retrimiterile comasate (coloana Q, scrisă de scripts/merge-leads.mjs) nu
+  // sunt cereri, sunt același om apăsând „Trimite" de mai multe ori: ies din
+  // listă și din cifre, iar cardul canonic arată câte au fost.
+  const mergedInto = new Map<string, number>();
+  for (const l of leads) {
+    if (l.duplicatAl) mergedInto.set(l.duplicatAl, (mergedInto.get(l.duplicatAl) ?? 0) + 1);
+  }
+  leads = leads.filter((l) => !l.duplicatAl);
+
+  // Candidate la comasare: cereri deschise de la același om (telefon sau email).
+  // Semnal, nu regulă: un om poate avea chiar două proiecte.
+  const sameClientOf = new Map<string, NewLead[]>();
+  for (const a of leads) {
+    if (isLeadClosed(a.crmStatus)) continue;
+    const others = leads.filter(
+      (b) => b.timestamp !== a.timestamp && !isLeadClosed(b.crmStatus) && isSameClient(a, b),
+    );
+    if (others.length) sameClientOf.set(a.timestamp, others);
   }
 
   // Revendicările sunt legate de lead prin timestamp-ul rândului (vezi getFullLeadById).
@@ -594,6 +646,19 @@ export default async function CrmPage({ searchParams }: Props) {
 
       <p className="mt-4 text-xs text-slate-500">
         {visible.length} {visible.length === 1 ? 'cerere afișată' : 'cereri afișate'}
+        {sameClientOf.size > 0 && (
+          <>
+            {' · '}
+            <span className="text-amber-600">
+              {sameClientOf.size} cu același telefon/email ca alta
+            </span>{' '}
+            — comasează local cu{' '}
+            <code className="rounded bg-slate-100 px-1 py-0.5 text-[10px] text-slate-600">
+              node scripts/merge-leads.mjs
+            </code>{' '}
+            (fără argumente listează grupurile)
+          </>
+        )}
       </p>
 
       <div className="mt-2 grid items-start gap-3 xl:grid-cols-2">
@@ -603,6 +668,8 @@ export default async function CrmPage({ searchParams }: Props) {
             lead={lead}
             claims={claimsByLead.get(lead.timestamp) ?? []}
             firms={firms}
+            merged={mergedInto.get(lead.timestamp) ?? 0}
+            sameClient={sameClientOf.get(lead.timestamp) ?? []}
             // Potrivirile se calculează doar pe cererile deschise: pentru una
             // închisă nu mai sun pe nimeni, secțiunea ar fi zgomot.
             matches={

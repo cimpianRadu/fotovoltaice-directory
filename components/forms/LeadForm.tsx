@@ -18,6 +18,7 @@ import {
   TIMELINE_OPTIONS,
   CALL_WINDOW_OPTIONS,
 } from '@/lib/utils-shared';
+import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { trackEvent } from '@/lib/analytics';
@@ -42,8 +43,21 @@ const residentialProjectTypes = [
   { value: 'altele', label: 'Altele' },
 ];
 
+/** O firmă din director, strict cât îi trebuie formularului ca s-o dea la ales. */
+export interface FirmPick {
+  slug: string;
+  name: string;
+  city: string;
+  county: string;
+  /** Județele declarate ca acoperite, pe lângă cel al sediului. */
+  coverage: string[];
+}
+
 interface LeadFormProps {
-  preselectedCompany?: string;
+  /** Lista din director, dată de pagina server. Fără ea, blocul de firme lipsește. */
+  firms?: FirmPick[];
+  /** Slug-ul firmei de pe a cărei pagină a pornit cererea (`/cere-oferta?company=`). */
+  preselectedSlug?: string;
   sourcePage?: string;
 }
 
@@ -270,7 +284,107 @@ function NumberWithUnknown({
   );
 }
 
-export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta' }: LeadFormProps) {
+/**
+ * Firmele pe care clientul le vrea cu numele, până la MAX_REQUESTED_FIRMS.
+ * Există pentru că pe 21 aug 2026 un client din Sibiu a trimis trei cereri
+ * identice, câte una de pe pagina fiecărei firme: singura cale de a cere trei
+ * firme era să apese de trei ori. Opțional și strâns implicit, ca să nu lungească
+ * pasul; se deschide la cerere sau când cererea a pornit de pe pagina unei firme.
+ */
+function FirmPicker({
+  firms,
+  judet,
+  selected,
+  onToggle,
+}: {
+  firms: FirmPick[];
+  judet: string;
+  selected: string[];
+  onToggle: (slug: string) => void;
+}) {
+  const [open, setOpen] = useState(selected.length > 0);
+  const [showAll, setShowAll] = useState(false);
+
+  const j = judet.trim();
+  const inCounty = j ? firms.filter((f) => f.county === j || f.coverage.includes(j)) : [];
+  // Sediul în județ primele, apoi alfabetic: firma locală e alegerea cea mai probabilă.
+  inCounty.sort(
+    (a, b) => Number(b.county === j) - Number(a.county === j) || a.name.localeCompare(b.name, 'ro'),
+  );
+  // Ce e deja bifat rămâne la vedere chiar dacă nu acoperă județul ales: cererea
+  // a pornit de pe pagina firmei, iar omul a ales apoi alt județ. Debifează el.
+  const pinned = firms.filter((f) => selected.includes(f.slug) && !inCounty.includes(f));
+  const candidates = [...pinned, ...inCounty];
+  if (candidates.length === 0) return null;
+
+  const LIMIT = 8;
+  const shown = showAll ? candidates : candidates.slice(0, LIMIT);
+  const full = selected.length >= MAX_REQUESTED_FIRMS;
+
+  if (!open) {
+    return (
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="text-sm font-medium text-primary-dark hover:underline"
+      >
+        + Vreau oferte de la anumite firme (opțional)
+      </button>
+    );
+  }
+
+  return (
+    <fieldset>
+      <legend className="block text-sm font-medium text-gray-700">
+        Firme anume <span className="text-gray-400">(opțional)</span>
+      </legend>
+      <p className="mt-1 text-xs text-gray-500">
+        Alegeți până la {MAX_REQUESTED_FIRMS}. Cererea ajunge oricum și la alți instalatori care
+        acoperă județul.
+      </p>
+      <div className="mt-2 flex flex-wrap gap-2">
+        {shown.map((f) => {
+          const on = selected.includes(f.slug);
+          const blocked = !on && full;
+          return (
+            <button
+              key={f.slug}
+              type="button"
+              aria-pressed={on}
+              disabled={blocked}
+              onClick={() => onToggle(f.slug)}
+              className={`rounded-lg border px-3 py-2 text-left text-sm transition-colors ${
+                on
+                  ? 'border-primary bg-primary/10 font-semibold text-secondary-dark'
+                  : blocked
+                    ? 'border-border bg-gray-50 text-gray-400 cursor-not-allowed'
+                    : 'border-border bg-white text-gray-700 hover:border-primary/40'
+              }`}
+            >
+              {on && <span aria-hidden="true">✓ </span>}
+              {f.name}
+              <span className={on ? 'text-secondary-dark/60' : 'text-gray-400'}> · {f.city}</span>
+            </button>
+          );
+        })}
+      </div>
+      {candidates.length > LIMIT && !showAll && (
+        <button
+          type="button"
+          onClick={() => setShowAll(true)}
+          className="mt-2 text-xs text-gray-500 hover:text-gray-900"
+        >
+          Arată toate ({candidates.length})
+        </button>
+      )}
+      <p className="mt-1.5 text-[11px] text-gray-400">
+        {selected.length} din {MAX_REQUESTED_FIRMS} alese{full ? ', maximul' : ''}
+      </p>
+    </fieldset>
+  );
+}
+
+export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'cere-oferta' }: LeadFormProps) {
   // Rezolvată la fiecare folosire, nu memoizată: toate apelurile vin din handlere.
   const src = () => resolveSource(sourcePage);
   const [step, setStep] = useState(0);
@@ -292,6 +406,10 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
     intervalApel: '',
   });
   const [details, setDetails] = useState<Record<Step4Key, string>>(EMPTY_STEP4);
+  // Slug-urile firmelor cerute cu numele; serverul le traduce în nume din director.
+  const [firme, setFirme] = useState<string[]>(() =>
+    preselectedSlug && firms.some((f) => f.slug === preselectedSlug) ? [preselectedSlug] : [],
+  );
   const [gdpr, setGdpr] = useState(false);
   const [extra, setExtra] = useState<Record<PanelKey, string>>(EMPTY_PANEL);
   const [unknown, setUnknown] = useState<Record<UnknownKey, boolean>>({
@@ -318,6 +436,14 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
   function setDetail(key: string, value: string) {
     markStarted();
     setDetails((d) => ({ ...d, [key]: value }));
+  }
+
+  function toggleFirm(slug: string) {
+    markStarted();
+    setFirme((list) => {
+      if (list.includes(slug)) return list.filter((s) => s !== slug);
+      return list.length < MAX_REQUESTED_FIRMS ? [...list, slug] : list;
+    });
   }
 
   function toggleUnknown(key: UnknownKey) {
@@ -413,7 +539,9 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
           // Canalul reținut la intrarea în sesiune, nu ce e în URL acum: la pasul
           // 4 al formularului parametrii de campanie au dispărut demult.
           ...getAttribution(),
-          preselectedCompany,
+          // Slug-uri, nu nume: numele se rezolvă pe server din director, ca în
+          // Sheet să nu intre text liber din browser.
+          firme,
           segment,
         }),
       });
@@ -436,6 +564,7 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         segment,
         source_page: src(),
         details_filled: STEP4_KEYS.filter((k) => details[k].trim()).length,
+        firms_requested: firme.length,
       });
 
       setLeadRef(typeof json.id === 'string' ? json.id : null);
@@ -507,6 +636,8 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
       'Atașez pozele cu acoperișul și cu tabloul electric.\n\n(Nu ștergeți referința din subiect, după ea legăm pozele de cererea dumneavoastră.)',
     )}`;
 
+    const chosenFirms = firms.filter((f) => firme.includes(f.slug)).map((f) => f.name);
+
     const panelSelects: FieldSpec[] = [
       {
         name: 'fazare',
@@ -523,6 +654,11 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-5">
           <h3 className="font-bold text-emerald-900">Cererea a fost trimisă ✓</h3>
           <p className="mt-1 text-sm text-emerald-800">
+            {chosenFirms.length > 0 && (
+              <>
+                Am notat că doriți oferte de la {chosenFirms.join(', ')}.{' '}
+              </>
+            )}
             Vă contactăm în cel mai scurt timp cu oferte de la firme care acoperă zona
             dumneavoastră. Mai jos puteți completa câteva detalii, dar nu e obligatoriu.
           </p>
@@ -671,6 +807,12 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
                 Orașul sau comuna. Firmele estimează deplasarea înainte să vă sune.
               </p>
             </div>
+            {/* Aici, nu pe pasul de contact: lista depinde de județ, iar omul
+                tocmai l-a ales. Lipsește cu totul când pagina nu dă lista
+                (formularul de pe /despre). */}
+            {firms.length > 0 && (
+              <FirmPicker firms={firms} judet={values.judet} selected={firme} onToggle={toggleFirm} />
+            )}
           </div>
         )}
 

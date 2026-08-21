@@ -8,6 +8,7 @@ import {
   type CountyAlertPref,
   claimsHeldForLead,
   isLeadClosed,
+  isLeadHidden,
   isSameFirm,
   MAX_CLAIMS_PER_LEAD,
   type PortalAccessEvent,
@@ -445,7 +446,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   // cu loc liber. Potrivirea firmă→cerere se calculează o dată per cerere, nu
   // per firmă, și se citește apoi din map — altfel scorul s-ar recalcula peste
   // tot directorul pentru fiecare card.
-  const openLeads = leads.filter((l) => l.status !== 'Ascuns' && !isLeadClosed(l.crmStatus));
+  const openLeads = leads.filter((l) => !isLeadHidden(l) && !isLeadClosed(l.crmStatus));
   const heldByLead = new Map(
     openLeads.map((l) => [l.timestamp, claimsHeldForLead(claims, l.timestamp)]),
   );

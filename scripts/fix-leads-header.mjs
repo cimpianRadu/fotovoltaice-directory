@@ -51,12 +51,12 @@ const HEADERS = [
   'Putere (kW)', // I
   'Mesaj', // J
   'Sursa', // K
-  'Firmă preselectată', // L
+  'Firme solicitate', // L — una sau mai multe, „; " între ele (din 21 aug 2026)
   'Status', // M — „Ascuns" scoate cererea din feedul public /cereri
   'Segment', // N
   'Email trimis', // O — marcaj outreach.mjs. NU scrie manual aici.
   'Mesaj ascuns', // P — orice text scoate mesajul din feedul public
-  '(liber)', // Q
+  'Duplicat al', // Q — timestamp-ul cererii canonice, scris de scripts/merge-leads.mjs
   'Consimțământ GDPR', // R
   'Tip acoperiș', // S
   'Alimentare (fazare)', // T

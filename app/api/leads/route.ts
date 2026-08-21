@@ -9,6 +9,8 @@ import {
   saveLeadToSheet,
 } from '@/lib/sheets';
 import { sendCountyLeadAlert } from '@/lib/email';
+import { getCompanies } from '@/lib/utils';
+import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 import {
   getConnectionLabel,
   getFinancingLabel,
@@ -29,6 +31,29 @@ import {
 // domeniul lor mai îngust. Consimțământul nu se extinde retroactiv, de aceea
 // versiunea se scrie per cerere în coloana R. Filtrul e în lib/consent.ts.
 const CONSENT_VERSION = 'v4-2026-08-17';
+
+/**
+ * Firmele cerute de client, ca nume din director. Formularul trimite slug-uri
+ * (`firme`), din 21 aug 2026 până la MAX_REQUESTED_FIRMS deodată: până atunci
+ * singura cale de a cere trei firme era să trimiți trei cereri, iar un client din
+ * Sibiu exact asta a făcut. Numele se rezolvă aici, nu în browser, ca în Sheet
+ * să nu intre niciodată text liber. Un formular vechi din cache mai poate
+ * trimite `preselectedCompany` ca nume: îl acceptăm doar dacă e în director.
+ */
+function resolveRequestedFirms(body: { firme?: unknown; preselectedCompany?: unknown }): string[] {
+  const companies = getCompanies();
+  const slugs = Array.isArray(body.firme)
+    ? body.firme.filter((s): s is string => typeof s === 'string').slice(0, MAX_REQUESTED_FIRMS)
+    : [];
+  const names = slugs
+    .map((slug) => companies.find((c) => c.slug === slug)?.name)
+    .filter((n): n is string => Boolean(n));
+  if (!names.length && typeof body.preselectedCompany === 'string') {
+    const legacy = body.preselectedCompany.trim();
+    if (companies.some((c) => c.name === legacy)) names.push(legacy);
+  }
+  return names;
+}
 
 export async function POST(request: Request) {
   try {
@@ -107,7 +132,11 @@ export async function POST(request: Request) {
     }
 
     // Versiunea textului de consimțământ acceptat — dovadă GDPR per lead.
-    const id = await saveLeadToSheet({ ...body, gdprConsent: `da (${CONSENT_VERSION})` });
+    const id = await saveLeadToSheet({
+      ...body,
+      firmeSolicitate: resolveRequestedFirms(body),
+      gdprConsent: `da (${CONSENT_VERSION})`,
+    });
 
     // Feedul /cereri are ISR de 5 minute, deci fără invalidare cererea abia
     // trimisă nu apare imediat nici după un reload forțat (cache-ul e pe

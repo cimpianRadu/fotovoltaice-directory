@@ -13,6 +13,7 @@ import {
   claimReminderDue,
   isBusinessDay,
   isLeadClosed,
+  isLeadHidden,
   isPriorityHeld,
   markClaimReminded,
   markLeadAlertsSent,
@@ -171,7 +172,7 @@ async function announceUnlockedLeads(
 
     // Preluată de abonat, închisă sau ascunsă: nu mai e nimic de anunțat, dar
     // marcăm ca să nu revenim pe ea mâine.
-    if (claimedLeads.has(lead.timestamp) || isLeadClosed(lead.crmStatus) || lead.status === 'Ascuns') {
+    if (claimedLeads.has(lead.timestamp) || isLeadClosed(lead.crmStatus) || isLeadHidden(lead)) {
       if (!dry) await markLeadAlertsSent(lead.timestamp);
       skipped.push(`${label} (preluată sau închisă)`);
       continue;
