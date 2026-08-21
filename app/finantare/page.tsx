@@ -145,7 +145,7 @@ export default function FinantarePage() {
           sursa={SURSA}
           title="Aflați întâi cât costă sistemul dumneavoastră"
           description="Înainte de orice discuție despre rate, aveți nevoie de o ofertă concretă. Spuneți-ne ce aveți nevoie și primiți oferte de la instalatori atestați ANRE din zona dumneavoastră."
-          ctaLabel="Cere ofertă gratuit"
+          ctaLabel="Cere oferte gratuit"
         />
 
         <section className="mb-10">
@@ -230,7 +230,7 @@ export default function FinantarePage() {
           sursa={SURSA}
           title="Gata să cereți oferte?"
           description="Primiți oferte de la instalatori atestați ANRE din județul dumneavoastră. La pasul de detalii puteți spune ce rută de finanțare vă interesează, iar cererea ajunge la firmele potrivite situației."
-          ctaLabel="Cere ofertă gratuit"
+          ctaLabel="Cere oferte gratuit"
         />
 
         <div className="border-t border-border pt-8">

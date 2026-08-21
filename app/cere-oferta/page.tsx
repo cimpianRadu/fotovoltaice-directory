@@ -8,9 +8,9 @@ import { generateBreadcrumbJsonLd } from '@/lib/seo';
 import companiesData from '@/data/companies.json';
 
 export const metadata: Metadata = {
-  title: 'Cere Ofertă Gratuită - Instalatori Fotovoltaice',
+  title: 'Cere Oferte Gratuit - Instalatori Fotovoltaice Verificați',
   description:
-    'Completează formularul și primești oferte personalizate de la instalatori verificați de panouri fotovoltaice comerciale din zona ta.',
+    'Completează formularul o dată și primești oferte de la instalatori verificați de panouri fotovoltaice, pentru casă sau pentru firmă, din zona ta.',
   alternates: { canonical: '/cere-oferta' },
 };
 
@@ -29,19 +29,19 @@ export default async function CereOfertaPage({
       <JsonLd
         data={generateBreadcrumbJsonLd([
           { name: 'Acasă', url: '/' },
-          { name: 'Cere Ofertă', url: '/cere-oferta' },
+          { name: 'Cere Oferte', url: '/cere-oferta' },
         ])}
       />
 
       <div className="max-w-3xl mx-auto px-4 py-6">
-        <Breadcrumbs items={[{ label: 'Cere Ofertă' }]} />
+        <Breadcrumbs items={[{ label: 'Cere Oferte' }]} />
 
         <div className="mt-6 mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            Cere Ofertă Gratuită
+            Cere Oferte Gratuit
           </h1>
           <p className="text-gray-500 mt-2">
-            Completează formularul de mai jos, iar noi trimitem cererea ta către instalatorii verificați din zona ta. Serviciul este gratuit și fără obligații.
+            Completează formularul o dată, iar cererea ta ajunge la instalatorii verificați din zona ta, pentru casă sau pentru firmă. Gratuit și fără obligații.
           </p>
         </div>
 

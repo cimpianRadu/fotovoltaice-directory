@@ -112,11 +112,12 @@ export default function HomeSegmentHero({
       <section className="bg-gradient-to-br from-secondary-dark via-secondary to-secondary-light text-white">
         <div className="max-w-5xl mx-auto px-4 py-8 sm:py-12 text-center">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-2 sm:mb-3 leading-tight">
-            Instalatori Panouri Fotovoltaice
-            <span className="text-primary-light"> Autorizați în România</span>
+            Primești oferte pentru panouri fotovoltaice
+            <span className="text-primary-light"> de la instalatori verificați</span>
           </h1>
           <p className="text-sm sm:text-lg text-gray-300 mb-5 sm:mb-6 max-w-2xl mx-auto">
-            Găsește unul verificat lângă tine — date reale din registrele oficiale.
+            Spui o dată ce ai nevoie, pentru casă sau pentru firmă, și cererea ajunge la instalatori
+            cu atestat ANRE din județul tău. Gratuit, fără obligații.
           </p>
 
           {/* Fuzzy search — by firm name, with county fallback (routes to indexable pages) */}

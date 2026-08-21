@@ -494,7 +494,7 @@ export default function CalculatorClient({ priceCurve }: { priceCurve: KitPriceC
               data-umami-event-kwp={String(result.kwp)}
               className="flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-5 py-3 rounded-lg transition-colors"
             >
-              Cere ofertă personalizată →
+              Cere oferte personalizate →
             </Link>
             <Link
               href={`/firme/judet/${slugifyCounty(judet)}`}

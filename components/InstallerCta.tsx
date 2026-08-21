@@ -27,7 +27,7 @@ export default function InstallerCta({
   sursa,
   title = 'Cauți un instalator pentru proiectul tău?',
   description = 'Spuneți-ne ce aveți nevoie și primiți oferte gratuite de la mai mulți instalatori atestați ANRE din zona dumneavoastră.',
-  ctaLabel = 'Cere ofertă gratuit',
+  ctaLabel = 'Cere oferte gratuit',
 }: InstallerCtaProps) {
   const href = sursa ? `/cere-oferta?sursa=${encodeURIComponent(sursa)}` : '/cere-oferta';
 

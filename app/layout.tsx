@@ -7,6 +7,8 @@ import PartnerCarousel from '@/components/promo/PartnerCarousel';
 import { SegmentProvider } from '@/components/segment/SegmentProvider';
 import FloatingSegmentToggle from '@/components/segment/FloatingSegmentToggle';
 import CtaPopup from '@/components/CtaPopup';
+import BatteryFab from '@/components/BatteryFab';
+import AttributionCapture from '@/components/AttributionCapture';
 import PublicChrome from '@/components/layout/PublicChrome';
 import { getCompanies, getCoveredCounties } from '@/lib/utils';
 import './globals.css';
@@ -21,10 +23,10 @@ const COUNTY_COUNT = getCoveredCounties().length;
 
 export const metadata: Metadata = {
   title: {
-    default: `Instalatori Panouri Fotovoltaice Autorizați ANRE | ${COMPANY_COUNT} Firme România 2026`,
+    default: `Oferte Panouri Fotovoltaice 2026 | ${COMPANY_COUNT} Instalatori ANRE`,
     template: '%s | Instalatori Fotovoltaice România',
   },
-  description: `Găsește instalatori autorizați de panouri fotovoltaice în România. ${COMPANY_COUNT} firme verificate cu atestat ANRE, date financiare reale și acoperire în ${COUNTY_COUNT} județe. Compară și cere ofertă gratuită.`,
+  description: `Descrie proiectul o dată și primești oferte de la instalatori verificați de panouri fotovoltaice, cu atestat ANRE și date financiare reale, din ${COUNTY_COUNT} județe. Gratuit.`,
   metadataBase: new URL('https://instalatori-fotovoltaice.ro'),
   robots: {
     index: true,
@@ -75,6 +77,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${geistSans.variable} antialiased`}>
+        <AttributionCapture />
         <SegmentProvider>
           <PublicChrome>
             <Header />
@@ -85,6 +88,7 @@ export default function RootLayout({
             <PartnerCarousel />
             <FloatingSegmentToggle />
             <CtaPopup />
+            <BatteryFab />
           </PublicChrome>
         </SegmentProvider>
       </body>

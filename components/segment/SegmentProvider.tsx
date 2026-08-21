@@ -12,7 +12,11 @@ import {
 export type SegmentView = 'comercial' | 'rezidential';
 
 const COOKIE_NAME = 'segment';
-const DEFAULT_SEGMENT: SegmentView = 'comercial';
+// Implicit rezidențial: 40 din 54 de cereri primite sunt pentru casă (32 casă
+// individuală, 7 vilă, 1 apartament), iar traficul organic vine pe ghidurile de
+// Casa Verde, adică tot rezidențial. Cu comercialul implicit, formularul de pe
+// /cere-oferta arăta unui om cu casă doar hală, birouri, parc logistic și retail.
+const DEFAULT_SEGMENT: SegmentView = 'rezidential';
 const ONE_YEAR = 60 * 60 * 24 * 365;
 
 interface SegmentContextValue {

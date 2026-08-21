@@ -163,7 +163,7 @@ export default function QuickEstimateWidget({
             }
             className="flex-1 text-center rounded-lg bg-primary px-4 py-3 font-semibold text-secondary-dark hover:bg-primary-dark transition-colors"
           >
-            Cere ofertă gratuit
+            Cere oferte gratuit
           </Link>
           <Link
             href={linkCalculator}

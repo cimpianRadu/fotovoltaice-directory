@@ -10,7 +10,7 @@
 // Bara de taburi stă în afara cardurilor, nu în interiorul lor: fiecare widget
 // își păstrează propriul chenar, iar un card în card ar arăta ca o greșeală.
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import QuickEstimateWidget from '@/components/home/QuickEstimateWidget';
 import BatteryWidget from '@/components/BatteryWidget';
 import type { KitPriceCurve } from '@/lib/kit-price-curve';
@@ -35,10 +35,24 @@ interface Props {
 }
 
 export default function CalculatorTabs({ priceCurve, batteryGuideHref }: Props) {
-  const [active, setActive] = useState<TabId>('sistem');
+  // Bateria e tabul implicit: e subiectul cu cerere acum (Casa Verde Baterii și
+  // apelul de 150 mil. EUR) și ținta butonului flotant.
+  const [active, setActive] = useState<TabId>('baterie');
+
+  // Butonul flotant trimite spre #calculator-baterie. La navigarea dintr-o altă
+  // pagină, tabul implicit rezolvă deja cazul; ascultătorul de aici acoperă
+  // situația în care omul e deja pe home și a comutat pe tabul de sistem.
+  useEffect(() => {
+    const sync = () => {
+      if (window.location.hash === '#calculator-baterie') setActive('baterie');
+    };
+    sync();
+    window.addEventListener('hashchange', sync);
+    return () => window.removeEventListener('hashchange', sync);
+  }, []);
 
   return (
-    <div>
+    <div id="calculator-baterie" className="scroll-mt-24">
       {/* Taburi pastilă, detașate de card: cardurile au colțuri rotunjite pe toate
           laturile, iar un tab „lipit" de ele ar lăsa o crestătură vizibilă. */}
       <div role="tablist" aria-label="Calculatoare" className="mb-3 flex gap-2">
