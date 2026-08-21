@@ -5,6 +5,7 @@ import CalculatorClient from './CalculatorClient';
 import { getKitPriceCurve } from '@/lib/kit-price-curve';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
 import InstallerCta from '@/components/InstallerCta';
+import OfferChecklist from '@/components/OfferChecklist';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 
 export const metadata: Metadata = {
@@ -99,6 +100,10 @@ export default function CalculatorPage() {
         </p>
 
         <CalculatorClient priceCurve={getKitPriceCurve()} />
+
+        {/* Imediat sub rezultat: acolo omul tocmai a aflat o cifră și urmează să
+            ceară oferte. Lista îi spune cu ce să le compare. */}
+        <OfferChecklist />
 
         {/* Partenerul plătitor stă imediat sub rezultat, unde omul tocmai a aflat
             cât costă sistemul și întrebarea „cum plătesc" e deschisă. Anunțul
