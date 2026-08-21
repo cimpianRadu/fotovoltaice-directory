@@ -202,6 +202,16 @@ function LeadCard({
             {lead.judet}
             {specs && ` · ${specs}`}
           </p>
+          {/* Proveniența, două lucruri diferite pe același rând: canalul care a
+              adus omul pe site (AH, first-touch) și pagina care a produs cererea
+              (K). Un ghid poate produce cererea, dar omul să fi venit din bio de
+              Instagram. Canalul e gol pe cererile de dinainte de 19 aug 2026. */}
+          {(lead.canal || lead.sourcePage) && (
+            <p className="mt-0.5 truncate text-[11px] text-slate-400">
+              {lead.canal || 'canal necunoscut'}
+              {lead.sourcePage && ` → ${lead.sourcePage}`}
+            </p>
+          )}
           {/* Goală pe cererile de dinainte de 29 iul 2026. */}
           {lead.finantare && (
             <span

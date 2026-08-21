@@ -20,6 +20,7 @@ import {
 import { useSegment } from '@/components/segment/SegmentProvider';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { trackEvent } from '@/lib/analytics';
+import { getAttribution } from '@/lib/attribution';
 
 const commercialProjectTypes = [
   { value: 'hala-industriala', label: 'Hală industrială' },
@@ -406,6 +407,9 @@ export default function LeadForm({ preselectedCompany, sourcePage = 'cere-oferta
           putereNecunoscuta: unknown.putere ? 'on' : '',
           gdpr: gdpr ? 'on' : '',
           sourcePage: src(),
+          // Canalul reținut la intrarea în sesiune, nu ce e în URL acum: la pasul
+          // 4 al formularului parametrii de campanie au dispărut demult.
+          ...getAttribution(),
           preselectedCompany,
           segment,
         }),

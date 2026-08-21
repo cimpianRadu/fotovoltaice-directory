@@ -110,6 +110,9 @@ export async function saveLeadToSheet(lead: {
   wallbox?: string;
   termen?: string;
   bransament?: string;
+  canal?: string;
+  campanie?: string;
+  paginaIntrare?: string;
 }): Promise<string> {
   const timestamp = new Date().toISOString();
   await appendRow('Leads', [
@@ -148,6 +151,13 @@ export async function saveLeadToSheet(lead: {
     '', // AE — Prioritar până la: scris de fluxul de abonament, după salvare
     '', // AF — Alerte firme: scris după ce pleacă alertele pe județ
     lead.bransament || '',   // AG — Branșament electric la locul instalării
+    // AH-AJ — atribuirea pe canal, first-touch (vezi lib/attribution.ts). Coloana
+    // K răspunde la „ce pagină a produs cererea", astea la „de unde a venit omul
+    // pe site". Sunt lucruri diferite: un ghid poate produce cererea, dar omul să
+    // fi ajuns la el din bio de Instagram.
+    lead.canal || '',          // AH — Canal de intrare (utm_source / referrer)
+    lead.campanie || '',       // AI — utm_campaign, separă plătit de organic
+    lead.paginaIntrare || '',  // AJ — Prima pagină din sesiune
   ]);
   return timestamp;
 }
@@ -325,6 +335,12 @@ export interface NewLead {
   // din 18 aug 2026. Fără branșament nu se racordează nimic, deci firma vrea
   // să știe înainte de primul telefon, nu după deplasare.
   bransament: string;
+  // AH-AJ — atribuirea pe canal, first-touch (lib/attribution.ts). NU se pun în
+  // PublicLead: firma care revendică n-are ce face cu ele, iar feedul public e
+  // singurul loc unde o scăpare de date chiar se vede.
+  canal: string;
+  campanie: string;
+  paginaIntrare: string;
 }
 
 export interface NewListing {
@@ -384,6 +400,9 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     prioritarPanaLa: r[30] || '',
     alerteTrimise: r[31] || '',
     bransament: r[32] || '',
+    canal: r[33] || '',
+    campanie: r[34] || '',
+    paginaIntrare: r[35] || '',
     ...readCrmFields(r),
   }));
 }
