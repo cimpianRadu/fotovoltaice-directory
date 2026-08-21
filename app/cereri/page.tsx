@@ -25,6 +25,7 @@ import {
 } from '@/lib/utils-shared';
 import { type LeadCardData } from './LeadCard';
 import LeadFeed from './LeadFeed';
+import HowItWorks from './HowItWorks';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 
 // Feedul se regenerează la cel mult 5 minute — destul de proaspăt pentru
@@ -98,69 +99,28 @@ export default async function CereriPage() {
       <div className="max-w-5xl mx-auto px-4 py-6">
         <Breadcrumbs items={[{ label: 'Cereri Clienți' }]} />
 
-        <div className="mt-6 mb-8 max-w-3xl">
+        <div className="mt-6 mb-6 sm:mb-8 max-w-3xl">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
             Cereri de Ofertă Active
           </h1>
+          {/* Scurt intenționat: pașii, plafonul de firme și condiția de acces
+              sunt în caseta de mai jos, iar pe telefon intro-ul e singurul text
+              care se vede până la prima cerere. */}
           <p className="text-gray-500 mt-2">
-            Cereri reale de instalare panouri fotovoltaice, primite prin formularul{' '}
+            Cereri reale din formularul{' '}
             <Link href="/cere-oferta" className="text-primary-dark underline hover:no-underline">
               Cere Ofertă
             </Link>
-            . Datele de contact ale clientului nu sunt publice: revendici cererea, te sunăm
-            pentru confirmare, apoi primești datele complete. Maxim {MAX_CLAIMS_PER_LEAD} firme
-            per cerere, iar revendicarea este rezervată firmelor de instalare fotovoltaice.
+            . Revendici una, te sunăm, primești contactul.
           </p>
         </div>
 
-        <div className="mb-8 bg-surface rounded-xl p-5 border border-border">
-          <h2 className="font-semibold text-gray-900 mb-4">Cum funcționează pentru instalatori?</h2>
-          <ol className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-gray-600">
-            <li className="flex gap-3">
-              <span className="shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary-dark font-bold text-sm inline-flex items-center justify-center">1</span>
-              <span>Apeși „Vreau această cerere" și lași datele firmei tale (30 de secunde)</span>
-            </li>
-            <li className="flex gap-3">
-              <span className="shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary-dark font-bold text-sm inline-flex items-center justify-center">2</span>
-              <span>
-                Te sunăm pentru confirmare (revendicarea este rezervată firmelor de instalare),
-                apoi datele complete ale clientului apar în Portalul Instalatorilor
-              </span>
-            </li>
-            <li className="flex gap-3">
-              <span className="shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary-dark font-bold text-sm inline-flex items-center justify-center">3</span>
-              <span>
-                Fiecare cerere merge la maxim {MAX_CLAIMS_PER_LEAD} firme, ca să aibă toată lumea o
-                șansă reală de închidere
-              </span>
-            </li>
-          </ol>
-          <p className="text-sm text-gray-600 mt-4 pt-4 border-t border-border">
-            Ai revendicat deja cereri? Intră în{' '}
-            <Link href="/portal" className="text-primary-dark underline hover:no-underline">
-              Portalul Instalatorilor
-            </Link>{' '}
-            cu emailul firmei (fără parolă) ca să-ți vezi cererile, să lași note și să
-            eliberezi locurile la care renunți. Vrei să primești cererile direct, înainte să
-            apară aici?{' '}
-            <Link href="/listeaza-firma" className="text-primary-dark underline hover:no-underline">
-              Listează-ți firma gratuit
-            </Link>{' '}
-            sau scrie-ne la{' '}
-            <a
-              href="mailto:contact@instalatori-fotovoltaice.ro"
-              className="text-primary-dark underline hover:no-underline"
-            >
-              contact@instalatori-fotovoltaice.ro
-            </a>
-            .
-          </p>
-        </div>
+        <HowItWorks maxClaims={MAX_CLAIMS_PER_LEAD} />
 
         {/* Singura pagină cu audiență de instalatori, deci partenerii apar aici
             cu mesajul lor B2B. Sus, imediat după explicație: jos, sub feed, nu
             ajungea nimeni la el. */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <SponsorBanner position="cereri" title="Parteneri pentru instalatori" />
         </div>
 
