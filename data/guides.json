@@ -5099,6 +5099,108 @@
         "mysmis"
       ],
       "updatedAt": "2026-08-20"
+    },
+    {
+      "slug": "baterie-huawei-luna2000-modele-capacitati-casa-verde-2026",
+      "published": true,
+      "publishedAt": "2026-08-21",
+      "author": "Radu, Specialist Instalatori Fotovoltaice",
+      "title": "Baterie Huawei LUNA2000 2026: Ce Model Intră în Casa Verde",
+      "metaDescription": "Configurațiile LUNA2000 S1 și S0, capacitatea reală utilizabilă și care trec pragul de 12 kWh din Casa Verde Baterii 2026. Din fișa oficială Huawei.",
+      "heroDescription": "Huawei nu vinde o singură baterie LUNA2000, ci nouă configurații cu capacități diferite, iar numele comercial al modulelor nu spune adevărul despre energia utilizabilă. Am luat fișa tehnică oficială și am pus-o peste condițiile din proiectul de ghid Casa Verde Baterii 2026. Rezultă două capcane pe care nu le semnalează nimeni: configurația de 5+7 module ratează pragul de 12 kWh cu exact 0,1 kWh, iar cea mai vândută variantă din generația veche, LUNA2000-10-S0, nu este eligibilă deloc.",
+      "image": "/images/guides/baterie-huawei-luna2000-modele-capacitati-casa-verde-2026.png",
+      "sections": [
+        {
+          "id": "cum-se-citeste-codul",
+          "title": "Cum se citește un cod LUNA2000",
+          "content": "Huawei nu vinde „o baterie LUNA2000\". Vinde un sistem format din **un modul de putere** și **unul până la trei module de baterie**, iar numele comercial se schimbă în funcție de câte module pui. De aici vine jumătate din confuzia de pe piață.\n\nSunt două generații în casele din România:\n\n| Generație | Modul de putere | Module de baterie | Capacități de sistem |\n|---|---|---|---|\n| **S0** (mai veche, montată masiv 2021-2023) | LUNA2000-5KW-C0 | LUNA2000-5-E0, câte 5 kWh | 5 / 10 / 15 kWh |\n| **S1** (actuală) | LUNA2000-10KW-C1 | LUNA2000-5-E1 (5 kWh) și LUNA2000-7-E1 (6,9 kWh) | nouă combinații, de la 5 la 20,7 kWh |\n\nDiferența practică: la S0 toate modulele sunt de 5 kWh, deci capacitățile vin din trei în trei trepte rotunde. La S1 se pot amesteca module de 5 și de 6,9 kWh, deci apar capacități care nu mai sunt rotunde deloc. Iar una dintre ele ratează pragul programului la mustață.\n\nUn detaliu care contează la ofertare: **6,9 kWh, nu 7**. Numele comercial al modulului este LUNA2000-**7**-E1, dar energia utilizabilă din fișa tehnică Huawei este de 6,9 kWh. Cine face socoteala după numele produsului, greșește."
+        },
+        {
+          "id": "configuratii-s1",
+          "title": "Configurațiile S1 și câtă energie dau, de fapt",
+          "content": "Toate cele nouă combinații posibile, direct din fișa de specificații Huawei, cu energia utilizabilă măsurată la 100% adâncime de descărcare:\n\n| Module | Energie utilizabilă | Putere maximă de încărcare și descărcare |\n|---|---|---|\n| 1×5 | 5 kWh | 3,5 kW |\n| 1×7 | 6,9 kWh | 3,5 kW |\n| 5+5 | 10 kWh | 7 kW |\n| 5+7 | **11,9 kWh** | 7 kW |\n| 7+7 | 13,8 kWh | 7 kW |\n| 5+5+5 | 15 kWh | 10,5 kW |\n| 5+5+7 | 16,9 kWh | 10,5 kW |\n| 5+7+7 | 18,8 kWh | 10,5 kW |\n| 7+7+7 | 20,7 kWh | 10,5 kW |\n\nRestul datelor din fișa oficială, pe scurt: celule **LiFePO4**, grad de protecție **IP66**, funcționare între **-20°C și +55°C**, răcire prin convecție naturală, zgomot sub 29 dB, montaj pe picior (standard) sau pe perete (opțional). Un modul de baterie cântărește 68 kg, iar sistemul complet ajunge la 80 kg cu un modul, 148 kg cu două și 216 kg cu trei. Greutatea nu e un detaliu: la montaj pe perete, structura trebuie să o susțină.\n\nCu invertoarele din seria MB0 se pot lega **până la patru sisteme în paralel**. Cu celelalte, nu."
+        },
+        {
+          "id": "capcana-de-01-kwh",
+          "title": "Capcana de 0,1 kWh: configurația 5+7 nu intră în Casa Verde Baterii",
+          "content": "Proiectul de ghid al programului cere o capacitate de **minimum 12 kWh** (art. 16 alin. 2). Uitați-vă din nou la tabelul de mai sus.\n\nConfigurația **5+7 dă 11,9 kWh utilizabili**. Ratează pragul cu **0,1 kWh**.\n\nE cea mai ușoară greșeală de făcut din tot programul, pentru că pe hârtie combinația arată ca „5 plus 7 fac 12\". Nu fac. Modulul de 7 are 6,9 kWh utilizabili, iar suma este 11,9. Un dosar depus pe această configurație este neeligibil, iar bateria e deja cumpărată.\n\n**Prima configurație LUNA2000 care trece pragul este 7+7, adică 13,8 kWh.**\n\nDacă cineva vă propune „un LUNA2000 de 12 kWh pentru Casa Verde\", cereți să vă scrie în ofertă componența exactă (câte module și de ce fel) și energia utilizabilă din fișa tehnică, nu din numele comercial. Dacă în ofertă scrie 5-E1 plus 7-E1, dosarul pică."
+        },
+        {
+          "id": "cat-iei-de-la-afm",
+          "title": "Cât iei de la AFM pentru fiecare configurație eligibilă",
+          "content": "Programul aplică **trei plafoane simultan**: maximum 75% din valoarea proiectului, maximum 15.000 lei în sumă absolută și maximum 1.250 lei pentru fiecare kWh instalat. Detaliile complete sunt în [ghidul programului Casa Verde Baterii 2026](/ghid/casa-verde-baterii-2026-program-stocare-afm).\n\nAplicate pe configurațiile LUNA2000 eligibile, arată așa:\n\n| Configurație | kWh utilizabili | Bază eligibilă (kWh × 1.250) | Finanțare AFM (75%) |\n|---|---|---|---|\n| 7+7 | 13,8 | 17.250 lei | **12.937,50 lei** |\n| 5+5+5 | 15 | 18.750 lei | **14.062,50 lei** |\n| 5+5+7 | 16,9 | 21.125 lei | **15.000 lei** (plafonat) |\n| 5+7+7 | 18,8 | 23.500 lei | **15.000 lei** (plafonat) |\n| 7+7+7 | 20,7 | 25.875 lei | **15.000 lei** (plafonat) |\n\nDouă lucruri de citit din tabel:\n\n**Cea mai mică configurație LUNA2000 care scoate toți cei 15.000 de lei este 5+5+7, adică 16,9 kWh.** Sub ea, plafonul absolut nu se atinge niciodată, oricât de mare ar fi factura. Peste ea, kilowattorii în plus nu mai aduc niciun leu de la AFM.\n\n**Saltul de la 15 la 16,9 kWh aduce încă 937,50 lei de subvenție** pentru 1,9 kWh în plus. Dacă diferența de preț dintre un modul de 5 și unul de 7 este mai mică decât atât, treapta se plătește singură. Dacă e mai mare, nu.\n\nAtenție la o subtilitate: cele 75% se aplică la valoarea **reală** a proiectului, nu la baza teoretică. Dacă proiectul costă mai puțin decât kWh × 1.250, primiți 75% din cât costă efectiv. Baza din tabel este un maxim, nu o garanție."
+        },
+        {
+          "id": "ai-deja-un-luna2000",
+          "title": "Ai deja un LUNA2000? Verifică întâi ce generație și ce capacitate",
+          "content": "Foarte multe sisteme montate în România între 2021 și 2023 au un LUNA2000 din generația **S0**, unde toate modulele sunt de 5 kWh. Capacitățile posibile sunt 5, 10 sau 15 kWh.\n\nAici e a doua capcană: **LUNA2000-10-S0, cea mai vândută variantă din acea perioadă, are 10 kWh și nu trece pragul de 12 kWh.**\n\nDacă vă aflați în situația asta, aveți de ales între:\n\n1. **Adăugarea unui al treilea modul** LUNA2000-5-E0, care duce sistemul la 15 kWh. Sistemul S0 acceptă maximum trei module, iar două turnuri se pot lega în paralel pentru 30 kWh.\n2. **Un sistem nou**, dacă modulele vechi nu mai sunt disponibile sau dacă vreți să treceți pe S1.\n\nÎnainte de orice, verificați ce aveți efectiv: capacitatea reală apare în aplicația FusionSolar și pe eticheta modulului de putere. Nu vă bazați pe ce scrie în contractul de acum trei ani.\n\nO precizare importantă despre program: sunt eligibile **numai cheltuielile făcute după aprobarea finanțării**. Nu cumpărați bateria sau modulul suplimentar înainte, oricât de bună ar părea oferta."
+        },
+        {
+          "id": "compatibilitate-invertoare",
+          "title": "Cu ce invertoare este compatibilă",
+          "content": "Bateria LUNA2000 nu funcționează cu orice invertor. Lista oficială de compatibilitate pentru seria S1, din fișa Huawei:\n\n- SUN2000-2/3/3.68/4/4.6/5/6KTL-L1\n- SUN2000-3/3.68/4/4.6/5/6K-LB0\n- SUN2000-8/10K-LC0\n- SUN2000-3/4/5/6/8/10KTL-M1\n- SUN2000-5/6/8/10/12K-MAP0\n- SUN2000-12/15/17/20/25K-MB0\n- SUN5000-8/12K-MAP0, SUN5000-17/25K-MB0, SUN5000-3/6K-LB0\n\nDacă invertorul dumneavoastră nu e în listă, aveți două variante: schimbarea invertorului cu unul hibrid compatibil, sau o soluție de cuplare pe partea de curent alternativ, cu un al doilea invertor dedicat bateriei. A doua variantă e motivul pentru care există pe piață produse de tip AC coupled de la alți producători.\n\nVestea bună pentru program: **invertorul hibrid este cheltuială eligibilă**. Dacă aveți un invertor pur on-grid dintr-o instalație veche, proiectul poate include și înlocuirea lui, iar montajul se poate face până la data punerii în funcțiune a sistemului de stocare."
+        },
+        {
+          "id": "ce-nu-scrie-in-fisa",
+          "title": "Ce cere programul și nu găsiți în fișa publică",
+          "content": "Programul impune patru condiții tehnice minime: **12 kWh** capacitate, tehnologie **fără plumb** (Li-Ion, LiFePO4, Na-Ion), **minimum 5 ani** garanție și **minimum 3.000 de cicluri**. În plus, componentele trebuie certificate de un organism acreditat conform **SR EN/ISO 17065**.\n\nPrimele două se verifică imediat din fișa Huawei: capacitățile sunt în tabelul de mai sus, iar celulele sunt LiFePO4.\n\n**Numărul de cicluri nu apare pe pagina publică de specificații.** Fișa listează certificările produsului (CE, RCM, CEC, VDE2510-50, IEC62619, UN38.3, ISO13849, REACH, RoHS), dar nu și durata de viață în cicluri. Asta nu înseamnă că bateria nu îndeplinește pragul, înseamnă că nu îl puteți demonstra dintr-o pagină de internet.\n\nCe cereți instalatorului, în scris, înainte de comandă:\n\n- fișa tehnică completă a modulului, cu numărul de cicluri\n- certificatul de garanție, cu durata exactă\n- certificatul de conformitate emis conform ISO 17065\n\nRegula se aplică oricărei mărci, nu doar Huawei. Un furnizor care nu poate produce aceste trei documente în două zile lucrătoare este un furnizor care vă pune dosarul în pericol."
+        },
+        {
+          "id": "alternative",
+          "title": "Când merită să vă uitați și la altceva",
+          "content": "LUNA2000 nu e singura opțiune, iar pentru unele situații nici măcar cea mai potrivită. Câteva repere, fără să vă vindem pe nimeni:\n\n**Dacă aveți deja invertor Huawei compatibil**, LUNA2000 este alegerea cu cea mai mică bătaie de cap: totul se configurează în FusionSolar, iar instalatorul nu are de integrat două ecosisteme.\n\n**Dacă aveți un invertor on-grid care nu acceptă baterie**, o soluție de tip AC coupled (categorie în care intră, printre altele, sistemele Livoltek) poate fi mai ieftină decât înlocuirea invertorului, pentru că aduce propriul invertor de baterie într-un singur echipament. Randamentul e ceva mai mic decât la cuplarea pe curent continuu, dar costul total al retrofitului poate fi decisiv.\n\n**Dacă vă interesează strict prețul pe kWh**, mărci precum Dyness, Pylontech sau Deye sunt frecvent mai accesibile. Aici verificarea documentelor devine cu atât mai importantă, pentru că diferența de preț vine uneori din specificații pe care programul le respinge.\n\nIndiferent de marcă, filtrul e același și e scurt: **cel puțin 12 kWh utilizabili, chimie fără plumb, minimum 3.000 de cicluri, minimum 5 ani garanție și certificat ISO 17065**. Orice produs care trece de aceste cinci condiții este eligibil. Orice produs care nu trece, nu este, oricât de bine ar arăta oferta.\n\nCa să vedeți ce capacitate vi se potrivește și ce punctaj obțineți, folosiți [calculatorul de baterii](/#calculator-baterie)."
+        },
+        {
+          "id": "de-ce-fara-pret",
+          "title": "De ce nu găsiți un preț în acest ghid",
+          "content": "Pentru că un preț publicat aici ar fi, cel mai probabil, greșit.\n\nMagazinele din România afișează prețurile pe baze de TVA diferite: unele fără TVA, altele cu o cotă redusă, altele cu cota standard. Puse unul lângă altul fără normalizare, numerele par comparabile și nu sunt. Am verificat lucrul ăsta pe prețurile de kituri fotovoltaice și diferențele sunt de ordinul miilor de lei pe același produs.\n\nÎn plus, prețul unui sistem de stocare depinde de lucruri care nu se văd într-o listă: dacă e nevoie de invertor hibrid nou, de tablou nou, de priză de împământare, cât are de mers echipa până la dumneavoastră și dacă montajul se face pe perete sau pe picior.\n\nReperul onest pe care îl puteți folosi este chiar cel din program: **standardul de cost al AFM, 1.250 lei pentru fiecare kWh instalat, cu TVA inclusă**. Este suma până la care statul recunoaște cheltuiala. O ofertă mult peste acest nivel merită întrebată de ce, iar una mult sub el merită verificată la capitolul specificații.\n\nCa să comparați corect, cereți **cel puțin trei oferte** pentru aceeași configurație, cu aceeași componență de module scrisă explicit. Puteți [cere oferte de la instalatori verificați](/cere-oferta) din județul dumneavoastră."
+        }
+      ],
+      "faq": [
+        {
+          "question": "Câți kWh are, de fapt, o baterie Huawei LUNA2000?",
+          "answer": "Depinde de câte module montați. Generația S1 acoperă nouă capacități: 5, 6,9, 10, 11,9, 13,8, 15, 16,9, 18,8 și 20,7 kWh utilizabili. Generația S0, mai veche, are doar 5, 10 sau 15 kWh. Modulele S1 sunt de 5 kWh și de 6,9 kWh, iar cel din urmă se numește comercial LUNA2000-7-E1, deși dă 6,9 kWh."
+        },
+        {
+          "question": "Configurația LUNA2000 de 12 kWh intră în Casa Verde Baterii 2026?",
+          "answer": "Nu există o configurație LUNA2000 de exact 12 kWh. Combinația care se apropie, un modul de 5 plus unul de 7, dă 11,9 kWh utilizabili și ratează pragul de 12 kWh cerut de program. Prima configurație eligibilă este 7+7, adică 13,8 kWh."
+        },
+        {
+          "question": "Ce capacitate LUNA2000 îmi aduce toată subvenția de 15.000 de lei?",
+          "answer": "Cea mai mică este 5+5+7, adică 16,9 kWh. Sub ea, cele trei plafoane ale programului nu permit atingerea sumei maxime: la 15 kWh finanțarea se oprește la 14.062,50 lei, iar la 13,8 kWh la 12.937,50 lei."
+        },
+        {
+          "question": "Am un LUNA2000 de 10 kWh. Pot aplica la program?",
+          "answer": "Nu cu capacitatea actuală, pentru că programul cere minimum 12 kWh. Puteți adăuga un al treilea modul de 5 kWh, ceea ce duce sistemul S0 la 15 kWh. Atenție însă: sunt eligibile numai cheltuielile făcute după aprobarea finanțării, deci nu cumpărați modulul înainte."
+        },
+        {
+          "question": "Cu ce invertoare merge bateria LUNA2000?",
+          "answer": "Cu invertoarele Huawei din seriile SUN2000 KTL-L1, K-LB0, K-LC0, KTL-M1, K-MAP0 și K-MB0, plus seriile SUN5000. Lista completă este în fișa tehnică oficială. Dacă aveți un invertor on-grid care nu acceptă baterie, programul permite includerea unui invertor hibrid nou în proiect, ca și cheltuială eligibilă."
+        },
+        {
+          "question": "Câte cicluri are bateria Huawei LUNA2000?",
+          "answer": "Pagina publică de specificații Huawei nu publică numărul de cicluri, deși programul cere minimum 3.000. Cereți instalatorului fișa tehnică completă a modulului și certificatul de garanție înainte de comandă. Fără aceste documente nu puteți demonstra îndeplinirea condiției în dosar."
+        },
+        {
+          "question": "Cât costă o baterie Huawei LUNA2000 în România?",
+          "answer": "Prețurile afișate de magazine nu sunt direct comparabile, pentru că folosesc baze de TVA diferite, iar costul final depinde de invertor, tablou, împământare și deplasarea echipei. Reperul util este standardul de cost din program: 1.250 lei pe kWh instalat, cu TVA inclusă. Cereți cel puțin trei oferte pentru aceeași componență de module."
+        },
+        {
+          "question": "LUNA2000 sau o baterie mai ieftină de la alt producător?",
+          "answer": "Dacă aveți deja invertor Huawei compatibil, LUNA2000 este integrarea cea mai simplă. Dacă aveți invertor on-grid, o soluție de tip AC coupled poate ieși mai ieftin decât înlocuirea invertorului. Indiferent de marcă, filtrul programului rămâne același: minimum 12 kWh utilizabili, chimie fără plumb, minimum 3.000 de cicluri, minimum 5 ani garanție și certificare ISO 17065."
+        }
+      ],
+      "relatedSpecializations": [
+        "rezidential"
+      ],
+      "tags": [
+        "baterie-huawei",
+        "luna2000",
+        "stocare-baterii",
+        "casa-verde-baterii",
+        "rezidential"
+      ],
+      "updatedAt": "2026-08-21"
     }
   ]
 }
