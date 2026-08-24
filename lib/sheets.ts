@@ -181,6 +181,9 @@ export async function saveLeadToSheet(lead: {
 const LEAD_ENRICH_COLUMNS = {
   suprafata: 'H',
   putere: 'I',
+  // J — mesajul liber. Din 24 aug 2026 se scrie la pasul 5, după trimitere,
+  // împreună cu consumul; în POST-ul inițial pleacă gol.
+  mesaj: 'J',
   tipAcoperis: 'S',
   fazare: 'T',
   consumLunar: 'U',

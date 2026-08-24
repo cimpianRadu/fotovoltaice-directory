@@ -24,14 +24,16 @@ const FORMS = [
   {
     id: 'lead', label: 'Cere ofertă (/cere-oferta)', path: '/cere-oferta',
     api: '/api/leads', sheet: 'Leads', emailCol: 3,
-    // Wizard în 4 pași din 17 aug 2026 (vezi LeadForm STEPS): proiect → zonă →
-    // contact → detalii, cu trimiterea abia pe ultimul. `formKey` n-ar avea ce
-    // aștepta la pasul 0 (tipul de proiect e card, nu input), deci ready-ul se
-    // face pe cardurile din formular.
+    // Wizard în 5 pași din 24 aug 2026 (vezi LeadForm STEPS): proiect → zonă →
+    // contact → detalii, cu trimiterea la „detalii"; pasul 5 (consum + mesaj) e
+    // ecran post-trimitere și nu intră în testul de submit. `formKey` n-ar avea
+    // ce aștepta la pasul 0 (tipul de proiect e card, nu input), deci ready-ul
+    // se face pe cardurile din formular.
     wizard: true, ready: 'form button[type="button"]', formKey: null,
     // numeCompanie only exists in the "Firmă"/commercial segment (required there); harmless if absent in residential
-    text: { numeCompanie: `ROUTINE TEST ${TOKEN}`, numeContact: 'ROUTINE TEST', email: `${TEST_EMAIL_PREFIX}${TOKEN}-lead@example.com`, telefon: '0712345678', localitate: 'ROUTINE TEST', mesaj: `E2E routine ${TOKEN} — auto, ștergeți` },
-    // pasul 4 e integral opțional, dar îl completăm ca să testăm și dropdown-urile
+    text: { numeCompanie: `ROUTINE TEST ${TOKEN}`, numeContact: 'ROUTINE TEST', email: `${TEST_EMAIL_PREFIX}${TOKEN}-lead@example.com`, telefon: '0712345678', localitate: 'ROUTINE TEST' },
+    // dropdown-urile pasului 4 sunt obligatorii (au „nu știu" în listă); le
+    // completăm și ca să testăm componenta SearchableSelect
     selects: [{ name: 'judet', step: 1 }, { name: 'tipAcoperis', step: 3 }, { name: 'termen', step: 3 }, { name: 'finantare', step: 3 }, { name: 'bransament', step: 3 }],
   },
   {
@@ -134,9 +136,9 @@ async function fillForm(spec) {
     if (!(await next('#gdpr'))) return { error: 'pasul 3 (contact) nu avansează', steps, missingText, selResults };
     steps.push('contact');
 
-    // Pasul 4 — detalii opționale + GDPR (bifa obligatorie).
+    // Pasul 4 — detaliile obligatorii + GDPR; consum și mesaj sunt pe pasul 5,
+    // post-trimitere, deci nu se completează aici.
     await pickStep(3);
-    fillTexts(['mesaj']);
     await closeDropdowns();
     tickCheckboxes(form);
     steps.push('detalii');

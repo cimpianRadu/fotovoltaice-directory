@@ -11,6 +11,9 @@ import { enrichLeadInSheet, LEAD_ENRICH_FIELDS, type LeadEnrichField } from '@/l
 // sunt ignorate, deci nimeni nu poate șterge cu ea o cerere completată.
 
 const MAX_VALUE_LENGTH = 120;
+// Mesajul e text liber, nu o valoare de listă; 120 de caractere l-ar reteza la
+// mijloc de propoziție. Restul câmpurilor rămân scurte.
+const MAX_MESSAGE_LENGTH = 1000;
 
 export async function POST(request: Request) {
   try {
@@ -25,7 +28,7 @@ export async function POST(request: Request) {
     for (const field of LEAD_ENRICH_FIELDS) {
       const raw = body[field];
       if (typeof raw !== 'string') continue;
-      const value = raw.trim().slice(0, MAX_VALUE_LENGTH);
+      const value = raw.trim().slice(0, field === 'mesaj' ? MAX_MESSAGE_LENGTH : MAX_VALUE_LENGTH);
       if (value) fields[field] = value;
     }
 

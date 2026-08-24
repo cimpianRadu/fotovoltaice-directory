@@ -166,9 +166,9 @@ export async function POST(request: Request) {
 /**
  * Emailul „a intrat o cerere în județul tău" către firmele care au bifat județul
  * în /portal. Datele trimise sunt cele din pasul 4 al formularului (putere,
- * consum, acoperiș, finanțare, termen) — restul (suprafață, fazare, baterie)
- * vin prin /api/leads/enrich, adică după ce alerta a plecat deja, și se văd pe
- * /cereri. Alerta e un semnal de „intră și uită-te", nu fișa completă.
+ * acoperiș, finanțare, termen) — restul (consum, mesaj, suprafață, fazare,
+ * baterie) vine prin /api/leads/enrich, adică după ce alerta a plecat deja, și
+ * se vede pe /cereri. Alerta e un semnal de „intră și uită-te", nu fișa completă.
  */
 async function notifyCountyAlerts(body: Record<string, string>, leadId: string) {
   // Cererile de test ale rutinei de sănătate (scripts/e2e-forms.mjs) intră pe

@@ -80,22 +80,30 @@ function resolveSource(fallback: string): string {
   return clean || fallback;
 }
 
-// Patru pași, iar cererea pleacă la ultimul. Ordinea nu e cea clasică
+// Cinci pași, iar cererea pleacă la al patrulea. Ordinea nu e cea clasică
 // („contactul la final"): datele de contact stau al treilea, înaintea detaliilor
 // tehnice, ca omul să fi trecut deja de partea grea când ajunge la ele.
 //
-// Pasul 4 conține exact ce cer instalatorii la primul telefon și e integral
-// opțional: fiecare câmp are „nu știu", iar butonul de trimitere e activ
-// indiferent ce se completează acolo. Așa cererea pleacă mai bogată, fără ca
-// vreo întrebare tehnică să poată bloca trimiterea.
+// Pasul 4 conține exact ce cer instalatorii la primul telefon; fiecare întrebare
+// are ieșire onestă („nu știu"), deci nimic tehnic nu blochează trimiterea.
+//
+// Pasul 5 vine DUPĂ ce cererea a plecat: consum și mesaj, ambele opționale.
+// Din Umami (17-24 aug 2026): 27 de completări ale pasului de contact au dat 14
+// trimiteri, aproape jumătate abandonau cu telefonul deja scris, la fel pe mobil
+// și pe desktop. Ce era opțional pe ecranul de detalii s-a mutat după trimitere,
+// ca un abandon la pasul 5 să nu mai coste cererea.
 const STEPS = [
   { id: 'proiect', label: 'Proiect' },
   { id: 'zona', label: 'Zonă' },
   { id: 'contact', label: 'Contact' },
   { id: 'detalii', label: 'Detalii' },
+  { id: 'extra', label: 'Opțional' },
 ] as const;
 
-const SUBMIT_STEP = STEPS.length - 1;
+// Cererea se trimite la „detalii"; „extra" e ecran post-trimitere, nu pas de
+// formular — navigarea (goNext) nu poate ajunge la el.
+const SUBMIT_STEP = STEPS.findIndex((s) => s.id === 'detalii');
+const EXTRA_STEP = STEPS.findIndex((s) => s.id === 'extra');
 
 // iOS Safari focusează primul câmp invalid la submit, dar nu scrollează fiabil
 // până la el: pe telefon, apăsarea butonului părea că nu face nimic. Scrollăm
@@ -119,7 +127,9 @@ function focusField(el: unknown) {
   }
 }
 
-// Pasul 4, trimis odată cu cererea.
+// Detaliile din state-ul `details`, trimise în corpul cererii. `consumLunar` se
+// completează însă abia la pasul 5, după trimitere: la POST pleacă gol și
+// ajunge în Sheet prin /api/leads/enrich, ca restul detaliilor târzii.
 const STEP4_KEYS = [
   'tipAcoperis',
   'putere',
@@ -417,6 +427,10 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     consumLunar: false,
   });
   const [enrichStatus, setEnrichStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  // Pasul 5 e post-trimitere: cererea există deja în Sheet, ecranul doar mai
+  // strânge consumul și mesajul. `extraDone` desparte pasul 5 de confirmare.
+  const [extraDone, setExtraDone] = useState(false);
+  const [extraStatus, setExtraStatus] = useState<'idle' | 'saving'>('idle');
   const startedRef = useRef(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reportedFields = useRef(0);
@@ -568,6 +582,8 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
       });
 
       setLeadRef(typeof json.id === 'string' ? json.id : null);
+      // Pasul 5 începe de sus, ca orice pas; scrollăm cât formularul mai există.
+      scrollToForm();
       setStatus('success');
     } catch (err) {
       setStatus('error');
@@ -626,6 +642,102 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
       scheduleSave(next);
       return next;
     });
+  }
+
+  // Salvarea pasului 5, pe aceeași rută ca panoul de confirmare: cererea e deja
+  // în Sheet, aici doar completăm consumul (col. U) și mesajul (col. J). Un eșec
+  // nu blochează nimic — omul merge mai departe, cererea lui există.
+  async function saveExtraStep() {
+    const consumLunar = unknown.consumLunar ? '' : details.consumLunar.trim();
+    const mesaj = values.mesaj.trim();
+    if (!leadRef || (!consumLunar && !mesaj)) {
+      setExtraDone(true);
+      return;
+    }
+    setExtraStatus('saving');
+    try {
+      const res = await fetch('/api/leads/enrich', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: leadRef, consumLunar, mesaj }),
+      });
+      if (!res.ok) throw new Error('enrich failed');
+      // Doar la salvare reușită, nu la „sar peste": raportul dintre `extra` și
+      // `detalii` din Umami spune câți acceptă pasul opțional.
+      completeStep(EXTRA_STEP);
+    } catch {
+      // Fără toast de eroare: cererea e trimisă, iar un mesaj roșu aici l-ar
+      // face pe om să creadă că s-a pierdut tot.
+    }
+    setExtraStatus('idle');
+    setExtraDone(true);
+  }
+
+  // Pasul 5, după trimitere: opțional prin construcție — cererea a plecat la
+  // pasul 4, deci cine închide pagina aici nu mai pierde nimic. Două câmpuri și
+  // atât; restul detaliilor rămân pe ecranul de confirmare, cu salvare automată.
+  if (status === 'success' && !extraDone) {
+    return (
+      <div className="space-y-5">
+        <StepBar step={EXTRA_STEP} />
+
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 leading-relaxed">
+          <span className="font-semibold text-emerald-900">Cererea a fost trimisă ✓</span> Mai
+          aveți un pas, opțional: consumul și un mesaj scurt cresc șansele să fiți contactat de
+          firme.
+        </div>
+
+        <div className="rounded-xl border border-border bg-white p-5 sm:p-6 space-y-4">
+          <NumberWithUnknown
+            name="consumLunar"
+            label="Consum lunar mediu"
+            placeholder="ex: 350 lei sau 250 kWh"
+            value={details.consumLunar}
+            unknown={unknown.consumLunar}
+            onChange={setDetail}
+            onToggle={toggleUnknown}
+            free
+            unknownLabel="Nu știu, nu am factura la îndemână"
+          />
+
+          <div>
+            <Input
+              label="Mesaj pentru instalatori"
+              name="mesaj"
+              type="textarea"
+              placeholder={
+                isRezidential
+                  ? 'Alte detalii utile (ex: acoperiș în două ape, umbrire parțială după-amiaza)...'
+                  : 'Descrieți pe scurt proiectul...'
+              }
+              value={values.mesaj}
+              onChange={(e) => set('mesaj', e.target.value)}
+            />
+            <p className="mt-1 text-[11px] text-gray-400">
+              Nu includeți date de contact în mesaj, le avem deja din pasul anterior.
+            </p>
+          </div>
+
+          <Button
+            type="button"
+            variant="primary"
+            size="lg"
+            disabled={extraStatus === 'saving'}
+            onClick={() => void saveExtraStep()}
+            className="w-full"
+          >
+            {extraStatus === 'saving' ? 'Se salvează...' : 'Salvează și încheie'}
+          </Button>
+          <button
+            type="button"
+            onClick={() => setExtraDone(true)}
+            className="block w-full text-center text-sm text-gray-500 hover:text-gray-900 transition-colors"
+          >
+            Sar peste acest pas
+          </button>
+        </div>
+      </div>
+    );
   }
 
   // Uploadul de poze vine DUPĂ trimitere, intenționat: pe mobil un câmp de fișier
@@ -752,7 +864,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   return (
     <>
       {/* Progres. Pe un formular scurt bara nu e decor: spune din start că sunt
-          patru pași, nu cincisprezece câmpuri. */}
+          cinci pași scurți, nu cincisprezece câmpuri. */}
       <div className="mb-5">
         <StepBar step={step} onBack={step > 0 ? goBack : undefined} />
       </div>
@@ -913,7 +1025,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
         {step === 3 && (
           <div className="space-y-4">
             <p className="text-sm text-gray-600 leading-relaxed">
-              Ultimul pas. Instalatorii întreabă oricum astea la primul telefon, iar un răspuns aici
+              Instalatorii întreabă oricum astea la primul telefon, iar un răspuns aici
               vă aduce o ofertă mai apropiată de prețul final. Unde nu știți, alegeți
               &bdquo;nu știu&rdquo; sau bifați căsuța: e un răspuns bun, spune firmei de unde
               să pornească discuția.
@@ -940,35 +1052,6 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
                 unknownLabel="Nu știu, aștept recomandarea instalatorului"
                 required
               />
-              <NumberWithUnknown
-                name="consumLunar"
-                label="Consum lunar mediu"
-                placeholder="ex: 350 lei sau 250 kWh"
-                value={details.consumLunar}
-                unknown={unknown.consumLunar}
-                onChange={setDetail}
-                onToggle={toggleUnknown}
-                free
-                unknownLabel="Nu știu, nu am factura la îndemână"
-              />
-            </div>
-
-            <div>
-              <Input
-                label="Mesaj (opțional)"
-                name="mesaj"
-                type="textarea"
-                placeholder={
-                  isRezidential
-                    ? 'Alte detalii utile (ex: acoperiș în două ape, umbrire parțială după-amiaza)...'
-                    : 'Descrieți pe scurt proiectul...'
-                }
-                value={values.mesaj}
-                onChange={(e) => set('mesaj', e.target.value)}
-              />
-              <p className="mt-1 text-[11px] text-gray-400">
-                Nu includeți date de contact în mesaj, le colectăm separat în câmpurile de mai sus.
-              </p>
             </div>
 
             <div className="flex items-start gap-2">
