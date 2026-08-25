@@ -156,7 +156,7 @@ export async function saveLeadToSheet(lead: {
     lead.stocare || '',      // AA — Baterie de stocare (da/nu/nu-stiu)
     lead.wallbox || '',      // AB — Stație de încărcare auto (da/nu/nu-stiu)
     lead.termen || '',       // AC — Termen dorit de instalare
-    '', // AD — Poze: link Drive lipit manual (pozele vin pe email, după ref din
+    '', // AD — Poze: completat manual (pozele vin pe email, după ref din
     //     subiect). Rândul trece prin ea doar ca să ajungă la coloanele de după.
     '', // AE — Prioritar până la: scris de fluxul de abonament, după salvare
     '', // AF — Alerte firme: scris după ce pleacă alertele pe județ
@@ -353,8 +353,10 @@ export interface NewLead {
   stocare: string;
   wallbox: string;
   termen: string;
-  // AD — link Drive cu pozele trimise de client pe email (legate după ref din
-  // subiect). Se lipește manual în Sheet; gol = fără poze.
+  // AD — pozele trimise de client pe email (legate după ref din subiect). Se
+  // completează manual: ideal linkul Drive, dar orice marcaj („da") aprinde
+  // semnalul de pe /cereri până apuci să le urci. Vezi `isPozeLink`: doar un URL
+  // ajunge link în portal, restul rămâne doar semnal. Gol = fără poze.
   poze: string;
   // AE — ISO până când cererea e rezervată abonatului pe județ: nu apare pe
   // /cereri și nu poate fi revendicată de altcineva. Gol = fără rezervare.

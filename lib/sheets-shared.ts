@@ -605,3 +605,13 @@ export function isSameClient(
   const emailA = a.email.trim().toLowerCase();
   return emailA !== '' && emailA === b.email.trim().toLowerCase();
 }
+
+/**
+ * Coloana AD ține pozele clientului. Firma o primește în portal ca link, deci
+ * acolo are voie doar un URL; pe /cereri contează doar că există ceva. Separarea
+ * există ca semnalul „are poze" să poată fi aprins imediat ce pozele ajung pe
+ * email, fără să aștepte urcarea lor în Drive.
+ */
+export function isPozeLink(poze: string): boolean {
+  return /^https?:\/\//i.test(poze.trim());
+}

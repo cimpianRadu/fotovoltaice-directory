@@ -13,6 +13,7 @@ import {
   sanitizeMesajPublic,
   type NewLead,
 } from '@/lib/sheets';
+import { isPozeLink } from '@/lib/sheets-shared';
 import {
   getCounties,
   getConnectionShort,
@@ -105,7 +106,7 @@ export default async function PortalPage() {
         segment: l.segment,
         specs: specsFor(l),
         intervalApel: l.intervalApel ? getCallWindowLabel(l.intervalApel) : '',
-        mesaj: l.mesajAscuns ? '' : sanitizeMesajPublic(l.mesaj),
+        mesaj: l.mesajAscuns ? '' : sanitizeMesajPublic(l.mesaj, l),
         until: l.prioritarPanaLa,
       }))
       .reverse();
@@ -147,7 +148,7 @@ export default async function PortalPage() {
                 telefon: lead.telefon,
                 email: lead.email,
                 localitate: [lead.localitate, lead.judet].filter(Boolean).join(', '),
-                poze: lead.poze.trim(),
+                poze: isPozeLink(lead.poze) ? lead.poze.trim() : '',
               }
             : null,
         };
