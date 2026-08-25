@@ -26,7 +26,7 @@ import {
   isRetrofit,
 } from '@/lib/utils-shared';
 import { mountingForRoof, parseConsumLunar, sizeKwp } from '@/lib/pv-estimate';
-import { bracketFor } from '@/lib/battery-sizing';
+import { PROGRAM, bracketFor } from '@/lib/battery-sizing';
 import { type LeadCardData } from './LeadCard';
 import LeadFeed from './LeadFeed';
 import HowItWorks from './HowItWorks';
@@ -85,8 +85,15 @@ export default async function CereriPage() {
     const kwpEstimat = !retrofit && !l.putere && consum
       ? sizeKwp(consum.kwhLunar, l.judet, mountingForRoof(l.tipAcoperis))
       : null;
+    // Capacitatea de afișat la „doar baterie". Necesarul tehnic decide singur
+    // doar pe fonduri proprii. Pe Casa Verde Baterii nu: programul finanțează de
+    // la 12 kWh în sus, deci aia e capacitatea pe care omul o va cumpăra, oricât
+    // de mic i-ar fi consumul. Prosumatorul din București scrisese „15" în
+    // formular exact ca să prindă pragul, iar un card care i-ar fi arătat firmei
+    // „5-7 kWh" ar fi ratat singurul număr care contează la el.
     const baterie = l.tipLucrare === 'doar-baterie' && consum ? bracketFor(consum.kwhLunar) : null;
     const [bMin, bMax] = baterie ? baterie.capacity : [0, 0];
+    const subPragAfm = l.finantare === 'afm-baterii' && bMax < PROGRAM.minKwh;
     return {
       id: l.id,
       tipLabel: getProjectTypeLabel(l.tipProiect),
@@ -96,7 +103,11 @@ export default async function CereriPage() {
         : kwpEstimat
           ? `≈${formatKw(kwpEstimat)} kW estimat`
           : '',
-      bateriaLabel: baterie ? `≈${bMin === bMax ? bMin : `${bMin}-${bMax}`} kWh necesar` : '',
+      bateriaLabel: !baterie
+        ? ''
+        : subPragAfm
+          ? `baterie min. ${PROGRAM.minKwh} kWh (prag AFM)`
+          : `baterie ≈${bMin === bMax ? bMin : `${bMin}-${bMax}`} kWh`,
       tipLucrare: l.tipLucrare,
       tipLucrareLabel: l.tipLucrare ? getWorkTypeShort(l.tipLucrare) : '',
       suprafata: l.suprafata,
