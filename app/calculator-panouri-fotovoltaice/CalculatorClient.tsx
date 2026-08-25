@@ -7,6 +7,7 @@ import { useSegment } from '@/components/segment/SegmentProvider';
 import { formatCurrency, formatNumber, slugifyCounty } from '@/lib/utils-shared';
 import type { KitPriceCurve } from '@/lib/kit-price-curve';
 import {
+  MONTH_LABELS,
   SCRAPED_DATA_MAX_KWP,
   SYSTEM_LIFETIME_YEARS,
   estimate,
@@ -17,6 +18,11 @@ import countiesData from '@/data/counties.json';
 // Casa Verde Fotovoltaice (AFM) acoperă până la 90% din costul sistemului,
 // beneficiarul pune întotdeauna minim 10%. Sursa: regulile programului, afm.ro.
 const CASA_VERDE_MAX_COVERAGE = 0.90;
+
+const MONTH_FULL = [
+  'ianuarie', 'februarie', 'martie', 'aprilie', 'mai', 'iunie',
+  'iulie', 'august', 'septembrie', 'octombrie', 'noiembrie', 'decembrie',
+] as const;
 
 const MOUNTING_OPTIONS: { value: Mounting; label: string; hint: string }[] = [
   { value: 'inclinat', label: 'Acoperiș înclinat', hint: '~30°, orientare sud' },
@@ -47,6 +53,9 @@ export default function CalculatorClient({ priceCurve }: { priceCurve: KitPriceC
   const [subventie, setSubventie] = useState<string>('0');
   const [pretSurplus, setPretSurplus] = useState<string>('0.30');
   const [showResult, setShowResult] = useState<boolean>(false);
+  // Luna curentă, pentru evidențierea din graficul lunar. Blocul de rezultate nu
+  // se randează decât după `showResult`, deci nu există nepotrivire de hidratare.
+  const [currentMonth] = useState<number>(() => new Date().getMonth());
 
   // When the visitor is in residential mode, apply home-appropriate defaults once
   // (lower consumption + lower daytime self-consumption). Skipped for commercial.
@@ -478,6 +487,62 @@ export default function CalculatorClient({ priceCurve }: { priceCurve: KitPriceC
                 Calculat cu o degradare a panourilor de 0,5% pe an. Nu include înlocuirea invertorului (necesară la 10–12 ani, aproximativ 5–8% din investiția inițială).
               </p>
             </div>
+          </div>
+
+          {/* Producția lună de lună. Totalul anual singur lasă loc celei mai
+              scumpe neînțelegeri de pe piață: omul se uită la o zi de vară, o
+              înmulțește cu 365, sau se uită la una de noiembrie și renunță.
+              Forma curbei vine din PVGIS pe județ, totalul rămâne cel de mai sus. */}
+          <div className="bg-surface rounded-xl border border-border p-5">
+            <div className="flex flex-wrap items-baseline justify-between gap-2 mb-4">
+              <p className="text-sm font-semibold text-secondary-dark">Producția lună de lună</p>
+              <p className="text-xs text-gray-500">kWh, sistem de {String(result.kwp).replace('.', ',')} kW în {judet}</p>
+            </div>
+
+            <div className="flex items-end gap-1 sm:gap-2 h-32">
+              {result.productieLunara.map((kwh, i) => {
+                const max = Math.max(...result.productieLunara);
+                const current = i === currentMonth;
+                return (
+                  <div key={MONTH_LABELS[i]} className="flex-1 flex flex-col items-center justify-end h-full gap-1">
+                    {/* Sub `sm` nu încap: la 12 coloane pe un ecran de telefon
+                        rămân ~21px de coloană, iar o lună de 1.506 kWh scrisă cu
+                        separator cere mai mult. Se ascund toate, nu doar unele,
+                        altfel coloanele cu etichetă s-ar strânge diferit și
+                        graficul ar minți despre raporturi. Cifra lunii curente
+                        rămâne oricum în fraza de dedesubt. */}
+                    <span className={`hidden sm:block text-[10px] tabular-nums ${current ? 'font-bold text-secondary-dark' : 'text-gray-500'}`}>
+                      {formatNumber(kwh)}
+                    </span>
+                    <div
+                      className={`w-full rounded-t ${current ? 'bg-primary' : 'bg-primary/30'}`}
+                      style={{ height: `${Math.max(4, (kwh / max) * 100)}%` }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex gap-1 sm:gap-2 mt-1">
+              {MONTH_LABELS.map((label, i) => (
+                <span
+                  key={label}
+                  className={`flex-1 text-center text-[10px] ${i === currentMonth ? 'font-bold text-secondary-dark' : 'text-gray-500'}`}
+                >
+                  {label}
+                </span>
+              ))}
+            </div>
+
+            <p className="text-sm text-gray-600 mt-4 leading-relaxed">
+              În {MONTH_FULL[currentMonth]}, sistemul produce în jur de{' '}
+              <strong className="text-secondary-dark">{formatNumber(result.productieLunara[currentMonth])} kWh</strong>, adică de{' '}
+              {(result.productieLunara[currentMonth] / Math.min(...result.productieLunara)).toFixed(1).replace('.', ',')} ori
+              cât în {MONTH_FULL[result.productieLunara.indexOf(Math.min(...result.productieLunara))]}, luna cea mai slabă a anului.
+              De asta sistemul se dimensionează pe consumul unui an întreg, nu pe luna în care vă uitați la el.
+            </p>
+            <p className="text-xs text-gray-500 mt-2">
+              Repartiția pe luni vine din PVGIS (Comisia Europeană) pentru {judet}; totalul anual este cel de mai sus.
+            </p>
           </div>
 
           <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">

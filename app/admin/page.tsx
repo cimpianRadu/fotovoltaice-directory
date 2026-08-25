@@ -2,6 +2,11 @@ import Link from 'next/link';
 
 const SECTIONS = [
   {
+    href: '/admin/azi',
+    label: 'Azi',
+    desc: 'Agenda zilei: cereri de calificat, reveniri promise, firme de sunat, clienți de întrebat, plus sarcinile scrise de mână.',
+  },
+  {
     href: '/admin/crm',
     label: 'CRM',
     desc: 'Cereri, listări și revendicări din Sheets, într-un singur loc.',

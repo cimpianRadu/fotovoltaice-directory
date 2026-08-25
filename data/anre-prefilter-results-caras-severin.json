@@ -1,0 +1,241 @@
+[
+  {
+    "cui": "14921595",
+    "name": "ELECTRO EUROSTAR",
+    "judet": "Caras Severin",
+    "localitate": "Resita",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 24y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://electroeurostar.ro/",
+    "revenue_2024": 5810003,
+    "profit_2024": 475654,
+    "employees": 19,
+    "year_founded": 2002,
+    "status": "functiune",
+    "address": "Jud. Caras-Severin, Mun. Resita, Str. Timisoarei, Nr.2a",
+    "error": null,
+    "pvContentHits": 3,
+    "pvContentSample": [
+      "im soluţii pentru instalarea de sisteme fotovoltaice. It's often the small details that make a big difference. LIGHT CON",
+      "PENTRU CONSTRUCȚII SISTEME ANTIINCENDIU PANOURI FOTOVOLTAICE INDUSTRIAL PANOURI FOTOVOLTAICE REZIDENTIAL Electro Euro-St"
+    ],
+    "pvGate": "pass"
+  },
+  {
+    "cui": "8433921",
+    "name": "ELECTRO-CONSULT CARAS",
+    "judet": "Caras Severin",
+    "localitate": "Resita",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 30y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://www.electroconsultcaras.ro/",
+    "revenue_2024": 18382150,
+    "profit_2024": 2295078,
+    "employees": 47,
+    "year_founded": 1996,
+    "status": "functiune",
+    "address": "Jud. Caras-Severin, Mun. Resita, Bld. Alexandru Ioan Cuza, Nr.53",
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail"
+  },
+  {
+    "cui": "21631160",
+    "name": "PRO-ELECTRO-CONS",
+    "judet": "Caras Severin",
+    "localitate": "Resita",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 19y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://proelectrocons.ro/",
+    "revenue_2024": 16849216,
+    "profit_2024": 1775034,
+    "employees": 9,
+    "year_founded": 2007,
+    "status": "functiune",
+    "address": "Jud. Caras-Severin, Mun. Resita, Str. Birzavitei, Nr.1",
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail"
+  },
+  {
+    "cui": "16518999",
+    "name": "MULTITASK_ING",
+    "judet": "Caras Severin",
+    "localitate": "Buchin",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 22y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 580106,
+    "profit_2024": -117721,
+    "employees": 2,
+    "year_founded": 2004,
+    "status": "functiune",
+    "address": "Jud. Caras-Severin, Sat Buchin Com. Buchin, Fs, Nr.42",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "47343811",
+    "name": "ACD HELIOS GREEN SOLUTIONS",
+    "judet": "Caras Severin",
+    "localitate": "DOMAN",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4222",
+    "caen_label": "Lucrari de constructii a proiectelor utilitare pentru electricitate si telecomunicatii",
+    "website": "",
+    "revenue_2024": 2399019,
+    "profit_2024": 154770,
+    "employees": 4,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Caras-Severin, Loc. Doman Mun. Resita, G, Nr.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "31846060",
+    "name": "CHRIS SKETCH ART",
+    "judet": "Caras Severin",
+    "localitate": "Resita",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 13y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4100",
+    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
+    "website": "",
+    "revenue_2024": 21032819,
+    "profit_2024": 1700094,
+    "employees": 37,
+    "year_founded": 2013,
+    "status": "functiune",
+    "address": "Jud. Caras-Severin, Mun. Resita, Str. Birzavitei, Nr.3, Corp B. Birou Nr 2, Et.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "41331060",
+    "name": "SOLIVET REAL LOGISTIC",
+    "judet": "Caras Severin",
+    "localitate": "Resita",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 7y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4399",
+    "caen_label": "Alte lucrari speciale de constructii n.c.a.",
+    "website": "",
+    "revenue_2024": 3198690,
+    "profit_2024": 20752,
+    "employees": 6,
+    "year_founded": 2019,
+    "status": "functiune",
+    "address": "Jud. Caras-Severin, Mun. Resita, Str. Nera, Nr.11a",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "20685219",
+    "name": "BANAT CONSULTING",
+    "judet": "Caras Severin",
+    "localitate": "Resita",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 4,
+    "reasons": [
+      "website (+2)",
+      "revenue ≥500k (+1)",
+      "age 19y (+1)"
+    ],
+    "caen_code": "7020",
+    "caen_label": "Activitati de consultanta in afaceri si management",
+    "website": "https://banatconsulting.ro/",
+    "revenue_2024": 778070,
+    "profit_2024": 347628,
+    "employees": 1,
+    "year_founded": 2007,
+    "status": "functiune",
+    "address": "Jud. Caras-Severin, Mun. Resita, Str. Corvin Ion, Bl.5, Sc.2, Ap.2",
+    "error": null,
+    "pvGate": "skip"
+  }
+]

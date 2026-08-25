@@ -2088,28 +2088,6 @@
    "tipTarifRaw": "Tarif C1A"
   }
  ],
- "ELECTRO METERING|Maramures": [
-  {
-   "code": "C2A",
-   "variant": null,
-   "nrAtestat": "19218",
-   "dataEmitere": "24/03/2023",
-   "dataExpirare": "24/03/2028",
-   "stare": "Atestat",
-   "isActive": true,
-   "tipTarifRaw": "Tarif C2A"
-  },
-  {
-   "code": "C1A",
-   "variant": null,
-   "nrAtestat": "19217",
-   "dataEmitere": "24/03/2023",
-   "dataExpirare": "24/03/2028",
-   "stare": "Atestat",
-   "isActive": true,
-   "tipTarifRaw": "Tarif C1A"
-  }
- ],
  "DIACOM PRESTCOM|Hunedoara": [
   {
    "code": "C2A",

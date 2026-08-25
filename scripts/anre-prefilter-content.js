@@ -53,6 +53,20 @@ const PV_KEYWORDS = [
   /\bpompe?\s+de\s+c[aă]ldur[aă]/i, // heat pumps often signal PV crossover
 ];
 
+// Residential signals — does the firm actually serve houses / persoane fizice?
+const REZ_KEYWORDS = [
+  /\breziden[tț]ial\w*/i,
+  /\bcasa\s+verde\b/i,
+  /\bpersoan[eă]\s+fizic/i,
+  /\bclien[tț]i\s+casnici\b/i,
+  /\bconsumator(i)?\s+casnic/i,
+  /\blocuin[tț]\w*/i,
+  /\bcas[ăa]\s+(individual|de\s+vacan)/i,
+  /\bacoperi[sș]\s+(de\s+)?cas[ăa]/i,
+  /\bkit(uri)?\s+fotovoltaic/i,
+  /\bvil[ăa]\b/i,
+];
+
 const EXTRA_PAGES = ['/servicii', '/despre-noi', '/despre', '/about', '/portofoliu', '/proiecte'];
 
 function stripHtml(html) {
@@ -91,9 +105,9 @@ async function fetchText(url) {
   }
 }
 
-function countHits(text) {
+function countHits(text, patterns = PV_KEYWORDS) {
   const hits = [];
-  for (const re of PV_KEYWORDS) {
+  for (const re of patterns) {
     const m = text.match(re);
     if (m) {
       const idx = m.index ?? 0;
@@ -112,7 +126,7 @@ function gate(hitCount) {
 
 async function checkFirm(firm) {
   if (!firm.website) {
-    return { ...firm, pvContentHits: 0, pvContentSample: [], pvGate: 'no-site' };
+    return { ...firm, pvContentHits: 0, pvContentSample: [], pvGate: 'no-site', rezHits: 0, rezSample: [] };
   }
 
   const base = firm.website.replace(/\/+$/, '');
@@ -134,17 +148,22 @@ async function checkFirm(firm) {
         pvContentHits: 0,
         pvContentSample: [],
         pvGate: 'dead-site',
+        rezHits: 0,
+        rezSample: [],
         pvError: `home ${r.status} ${r.error || ''}`.trim(),
       };
     }
   }
 
   const hits = countHits(combined);
+  const rez = countHits(combined, REZ_KEYWORDS);
   return {
     ...firm,
     pvContentHits: hits.length,
     pvContentSample: hits.slice(0, 2).map((h) => h.sample),
     pvGate: gate(hits.length),
+    rezHits: rez.length,
+    rezSample: rez.slice(0, 2).map((h) => h.sample),
   };
 }
 
@@ -170,7 +189,7 @@ async function main() {
     const checked = await checkFirm(firm);
     updated.push(checked);
     const mark = checked.pvGate === 'pass' ? 'PASS' : checked.pvGate === 'weak' ? 'weak' : checked.pvGate === 'fail' ? 'FAIL' : checked.pvGate.toUpperCase();
-    console.log(`${mark} (${checked.pvContentHits} hits)`);
+    console.log(`${mark} (${checked.pvContentHits} PV hits, ${checked.rezHits ?? 0} rez)`);
   }
 
   fs.writeFileSync(resultsPath, JSON.stringify(updated, null, 2));
@@ -200,11 +219,11 @@ async function main() {
       `Generated: ${new Date().toISOString().slice(0, 10)} via targetare.ro + PV content check`,
       `Total: ${updated.length} • Score ≥6: ${updated.filter((r) => r.score >= 6).length} • PV gate PASS: ${counts.pass || 0} • WEAK: ${counts.weak || 0} • FAIL: ${counts.fail || 0}`,
       '',
-      '| Score | PV | Hits | Firm | CUI | CAEN | Revenue | Site | Notes |',
-      '|-------|----|------|------|-----|------|---------|------|-------|',
+      '| Score | PV | Hits | Rez | Firm | CUI | CAEN | Revenue | Site | Notes |',
+      '|-------|----|------|-----|------|-----|------|---------|------|-------|',
       ...updated.map((r) => {
         const notes = r.pvError || (r.reasons || []).join(', ');
-        return `| ${r.score} | ${gateIcon(r.pvGate)} | ${r.pvContentHits ?? '—'} | ${r.name} | ${r.cui} | ${r.caen_code || '—'} | ${formatRon(r.revenue_2024)} | ${r.website ? '✓' : '—'} | ${notes} |`;
+        return `| ${r.score} | ${gateIcon(r.pvGate)} | ${r.pvContentHits ?? '—'} | ${r.rezHits ?? '—'} | ${r.name} | ${r.cui} | ${r.caen_code || '—'} | ${formatRon(r.revenue_2024)} | ${r.website ? '✓' : '—'} | ${notes} |`;
       }),
     ];
     fs.writeFileSync(mdPath, mdLines.join('\n') + '\n');

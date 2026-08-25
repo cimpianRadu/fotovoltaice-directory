@@ -221,7 +221,10 @@ if __name__ == '__main__':
         render_case(out)
 
     if '--doar-caz' not in args:
-        out = ROOT / 'social' / '2026-08-w3-17-23' / '2026-08-17-rezumat-10-16-aug'
+        # --out e folderul ediției curente; fără el s-ar scrie peste ediția veche
+        # (așa s-au pierdut posterele din 17 aug pe 24 aug, regenerate apoi).
+        out = ROOT / flag('out') if flag('out') else \
+            ROOT / 'social' / '2026-08-w3-17-23' / '2026-08-17-rezumat-10-16-aug'
         out.mkdir(parents=True, exist_ok=True)
         print('Rezumatul săptămânal:')
         render_weekly(out, flag('de'), flag('pana'))

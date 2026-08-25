@@ -1,5 +1,555 @@
 [
   {
+    "cui": "13366535",
+    "name": "ELECTROCENTER DUE",
+    "judet": "Maramures",
+    "localitate": "Baia Mare",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 9,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 26y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://www.electrocenterdue.ro/",
+    "revenue_2024": 65006828,
+    "profit_2024": 5421045,
+    "employees": 72,
+    "year_founded": 2000,
+    "status": "functiune",
+    "address": "Jud. Maramures, Mun. Baia Mare, Str. Pasunii, Nr.1b, Ap.59",
+    "error": null
+  },
+  {
+    "cui": "44792700",
+    "name": "BLUE PREST ELECTRIC",
+    "judet": "Maramures",
+    "localitate": "Satu Nou de Jos [MM]",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 5y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 12671817,
+    "profit_2024": 267587,
+    "employees": 12,
+    "year_founded": 2021,
+    "status": "functiune",
+    "address": "Jud. Maramures, Sat Satu Nou De Jos Com. Grosi, Str. Scolii, Nr.13",
+    "error": null
+  },
+  {
+    "cui": "16233142",
+    "name": "EL-FLUX",
+    "judet": "Maramures",
+    "localitate": "Baia Mare",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 22y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2386703,
+    "profit_2024": 113316,
+    "employees": 6,
+    "year_founded": 2004,
+    "status": "functiune",
+    "address": "Jud. Maramures, Mun. Baia Mare, Str. Anton Pann, Nr.16, Et.3, Ap.19",
+    "error": null
+  },
+  {
+    "cui": "31225178",
+    "name": "ELECTRONET CONCEPT",
+    "judet": "Maramures",
+    "localitate": "Baia Mare",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 13y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 28313845,
+    "profit_2024": 893296,
+    "employees": 74,
+    "year_founded": 2013,
+    "status": "functiune",
+    "address": "Jud. Maramures, Mun. Baia Mare, Bld. Unirii, Nr.53",
+    "error": null
+  },
+  {
+    "cui": "6983899",
+    "name": "BUDA-ETAP",
+    "judet": "Maramures",
+    "localitate": "Lapus",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 31y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 642786,
+    "profit_2024": 26802,
+    "employees": 5,
+    "year_founded": 1995,
+    "status": "functiune",
+    "address": "Jud. Maramures, Sat Lapus Com. Lapus, Nr.848",
+    "error": null
+  },
+  {
+    "cui": "23298667",
+    "name": "CRISBEL",
+    "judet": "Maramures",
+    "localitate": "Borsa [MM]",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 18y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 639570,
+    "profit_2024": 6527,
+    "employees": 4,
+    "year_founded": 2008,
+    "status": "functiune",
+    "address": "Jud. Maramures, Ors. Borsa, Str. Izvorului, Nr.32a",
+    "error": null
+  },
+  {
+    "cui": "32819470",
+    "name": "DGM GRAD ELECTRIC",
+    "judet": "Maramures",
+    "localitate": "Targu Lapus",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 12y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 990842,
+    "profit_2024": 14387,
+    "employees": 10,
+    "year_founded": 2014,
+    "status": "functiune",
+    "address": "Jud. Maramures, Ors. Targu Lapus, Str. Liliacului, Nr.3",
+    "error": null
+  },
+  {
+    "cui": "32259675",
+    "name": "ELECTRO MEGAWAT",
+    "judet": "Maramures",
+    "localitate": "Lapus",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 13y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1632684,
+    "profit_2024": 123544,
+    "employees": 5,
+    "year_founded": 2013,
+    "status": "functiune",
+    "address": "Jud. Maramures, Sat Lapus Com. Lapus, Lapus, Nr.558",
+    "error": null
+  },
+  {
+    "cui": "16205614",
+    "name": "ELECTRO POL CITY",
+    "judet": "Maramures",
+    "localitate": "Baia Mare",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 22y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1152067,
+    "profit_2024": 208926,
+    "employees": 3,
+    "year_founded": 2004,
+    "status": "functiune",
+    "address": "Jud. Maramures, Mun. Baia Mare, Str. Olteniei, Nr.3, Ap.38",
+    "error": null
+  },
+  {
+    "cui": "24551090",
+    "name": "ELECTRO-CONSTRUCTII-PARCHET",
+    "judet": "Maramures",
+    "localitate": "Ulmeni (MM)",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 18y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1375227,
+    "profit_2024": 240793,
+    "employees": 2,
+    "year_founded": 2008,
+    "status": "functiune",
+    "address": "Jud. Maramures, Sat Ulmeni Ors. Ulmeni, Str. Garii, Nr.2",
+    "error": null
+  },
+  {
+    "cui": "27734025",
+    "name": "ENERGOGRAL",
+    "judet": "Maramures",
+    "localitate": "Baia Mare",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 16y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 957402,
+    "profit_2024": 178595,
+    "employees": 1,
+    "year_founded": 2010,
+    "status": "functiune",
+    "address": "Jud. Maramures, Mun. Baia Mare, Str. Gheorghe Doja, Nr.2",
+    "error": null
+  },
+  {
+    "cui": "37509349",
+    "name": "B.H.T. SMART CONCEPT",
+    "judet": "Maramures",
+    "localitate": "Tulghies",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 9y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 437956,
+    "profit_2024": 73891,
+    "employees": 5,
+    "year_founded": 2017,
+    "status": "functiune",
+    "address": "Jud. Maramures, Sat Tulghies Com. Miresu Mare, Tulghies, Nr.115",
+    "error": null
+  },
+  {
+    "cui": "47567266",
+    "name": "DGM ELECTRIC AD",
+    "judet": "Maramures",
+    "localitate": "Targu Lapus",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 3y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 2023,
+    "status": "functiune",
+    "address": "Jud. Maramures, Ors. Targu Lapus, Str. Liliacului, Nr.3",
+    "error": null
+  },
+  {
+    "cui": "25073067",
+    "name": "BYG EUROHAZARD",
+    "judet": "Maramures",
+    "localitate": "Viseu de Jos",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 17y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "8020",
+    "caen_label": "Activitati de servicii privind sistemele de securizare",
+    "website": "",
+    "revenue_2024": 2642160,
+    "profit_2024": 51790,
+    "employees": 4,
+    "year_founded": 2009,
+    "status": "functiune",
+    "address": "Jud. Maramures, Sat Viseu De Jos Com. Viseu De Jos, Nr.123",
+    "error": null
+  },
+  {
+    "cui": "41521260",
+    "name": "CONPREST EDILITAR",
+    "judet": "Maramures",
+    "localitate": "Baia Mare",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 7y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4100",
+    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
+    "website": "",
+    "revenue_2024": 4549335,
+    "profit_2024": 895387,
+    "employees": 13,
+    "year_founded": 2019,
+    "status": "functiune",
+    "address": "Jud. Maramures, Mun. Baia Mare, Str. Victoriei, Nr.59a, Et.1, Ap.18",
+    "error": null
+  },
+  {
+    "cui": "11611514",
+    "name": "ECOCENTER SERV",
+    "judet": "Maramures",
+    "localitate": "Sighetu Marmatiei",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 27y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4759",
+    "caen_label": "Comert cu amanuntul al mobilei, al articolelor de iluminat si al articole de uz casnic n.c.a., in magazine specializate",
+    "website": "",
+    "revenue_2024": 5155622,
+    "profit_2024": 91949,
+    "employees": 18,
+    "year_founded": 1999,
+    "status": "functiune",
+    "address": "Jud. Maramures, Mun. Sighetu Marmatiei, Str. Traian, Nr.29, Ap.58",
+    "error": null
+  },
+  {
+    "cui": "50277360",
+    "name": "ELECTROMEDIA SERV",
+    "judet": "Maramures",
+    "localitate": "Târgu Lapus",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 172571,
+    "profit_2024": 43867,
+    "employees": 1,
+    "year_founded": 2024,
+    "status": "functiune",
+    "address": "Jud. Maramures, Sat Libotin Com. Cupseni, , Nr.351",
+    "error": null
+  },
+  {
+    "cui": "50045491",
+    "name": "EXPERT AVANTAJ ELECTRIC",
+    "judet": "Maramures",
+    "localitate": "Baia Mare",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 386883,
+    "profit_2024": 116541,
+    "employees": 0,
+    "year_founded": 2024,
+    "status": "functiune",
+    "address": "Jud. Maramures, Mun. Baia Mare, Bld. Regele Ferdinand, Nr.102, Ap.17",
+    "error": null
+  },
+  {
+    "cui": "36782250",
+    "name": "ALPESIRAL",
+    "judet": "Maramures",
+    "localitate": "Baia Mare",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 3,
+    "reasons": [
+      "revenue ≥500k (+1)",
+      "age 10y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4100",
+    "caen_label": "Lucrari de constructii a cladirilor rezidentiale si nerezidentiale",
+    "website": "",
+    "revenue_2024": 583726,
+    "profit_2024": 73535,
+    "employees": 1,
+    "year_founded": 2016,
+    "status": "functiune",
+    "address": "Jud. Maramures, Mun. Baia Mare, Str. Margeanului, Nr.7",
+    "error": null
+  },
+  {
+    "cui": "15360202",
+    "name": "CPG TUR",
+    "judet": "Maramures",
+    "localitate": "Cavnic [MM]",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 3,
+    "reasons": [
+      "revenue ≥500k (+1)",
+      "age 23y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "0145",
+    "caen_label": "Cresterea ovinelor si caprinelor",
+    "website": "",
+    "revenue_2024": 1205776,
+    "profit_2024": 10853,
+    "employees": 8,
+    "year_founded": 2003,
+    "status": "functiune",
+    "address": "Jud. Maramures, Ors. Cavnic, Str. Rotunda, Nr.26/17",
+    "error": null
+  },
+  {
     "cui": "16676956",
     "name": "INTERAMPER-MM",
     "judet": "Maramures",

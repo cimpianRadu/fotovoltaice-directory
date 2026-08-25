@@ -95,7 +95,8 @@ const leads = leadRows
   }))
   .filter((l) => !l.ascuns);
 
-// Coloanele contractuale: J = renunțat la, M = aprobat la, N = ofertat la.
+// Coloanele contractuale: F = statusul firmei, J = renunțat la, M = aprobat la,
+// N = ofertat la.
 const claims = claimRows
   .slice(1)
   .filter((r) => r[0])
@@ -104,6 +105,7 @@ const claims = claimRows
     zi: roDay(r[0]),
     leadId: r[1],
     firma: (r[2] || '').trim(),
+    firmStatus: (r[5] || '').trim(),
     releasedAt: r[9] || '',
     offeredAt: r[13] || '',
   }));
@@ -111,7 +113,11 @@ const claims = claimRows
 const inWeek = (zi) => zi >= from && zi <= to;
 
 const cereriSaptamana = leads.filter((l) => inWeek(l.zi));
-const activeClaimsFor = (leadId) => claims.filter((c) => c.leadId === leadId && !c.releasedAt);
+// Aceeași regulă ca claimOccupiesLeadSlot din lib/sheets-shared.ts: pe lângă
+// renunțare, și statusul „pierdut" eliberează locul. Fără el, starea de moment
+// dădea cu 1 mai puțin decât „încă disponibile" de pe /cereri (prins 24 aug).
+const activeClaimsFor = (leadId) =>
+  claims.filter((c) => c.leadId === leadId && !c.releasedAt && c.firmStatus !== 'pierdut');
 
 // Bilanțul săptămânii se închide duminică seara, nu „acum". Altfel raportul se
 // rescrie singur: pe 17 august, la 40 de minute distanță, aceeași săptămână a dat

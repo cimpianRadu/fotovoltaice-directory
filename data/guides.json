@@ -5331,6 +5331,121 @@
         "rezidential",
         "preturi"
       ]
+    },
+    {
+      "slug": "casa-verde-baterii-2026-cine-nu-poate-aplica-intrebari",
+      "publishedAt": "2026-08-25",
+      "published": true,
+      "author": "Radu, Specialist Instalatori Fotovoltaice",
+      "title": "Casa Verde Baterii 2026: Cine Nu Poate Aplica. 5 Întrebări",
+      "metaDescription": "Ai panouri prin Casa Verde? Poți lua baterie. Ai deja o baterie? Ghidul AFM te scoate din program. 5 întrebări, cu articolul din proiect lângă fiecare.",
+      "heroDescription": "Cele mai frecvente cinci întrebări ale prosumatorilor despre programul de baterii al AFM, cu răspunsul citit direct din proiectul de ghid pus în consultare pe 18 august 2026. Panourile luate prin Casa Verde nu te încurcă la nimic. Bateria pe care o ai deja montată, în schimb, te scoate din program printr-un singur alineat.",
+      "image": "/images/guides/casa-verde-baterii-2026-cine-nu-poate-aplica-intrebari.jpg",
+      "sections": [
+        {
+          "id": "raspunsurile-pe-scurt",
+          "title": "Răspunsurile pe scurt",
+          "content": "Proiectul de ghid pentru programul de baterii al AFM, pus în consultare publică pe 18 august 2026, are 5 întrebări care se repetă în discuțiile prosumatorilor. La patru dintre ele răspunsul din document nu e cel la care se așteaptă lumea.\n\n| Întrebarea | Răspunsul din proiect | Unde scrie |\n|---|---|---|\n| Am panouri luate prin Casa Verde. Mai pot lua bani de baterie? | **Da.** Ghidul nu întreabă niciodată din ce bani ai pus panourile | art. 5 alin. (1), art. 15 alin. (1) |\n| Am deja o baterie. Pot lua una mai mare? | **Nu.** Bateria existentă la adresa de implementare te scoate din program | art. 15 alin. (2) lit. a) |\n| Cât la sută pun din banii mei? | **Minimum 25%.** Dar 25% îți aduce doar 10 puncte din cele 40 posibile | art. 5 alin. (2), art. 19 alin. (4) lit. a) |\n| Îmi trebuie invertor hibrid nou? | Dacă nu ai, **proiectul trebuie să îl includă**, iar costul lui este eligibil | art. 16 alin. (1) lit. e), art. 6 alin. (2) |\n| Ajută dacă mă înscriu în prima zi? | **Aproape deloc.** Data și ora sunt ultimul criteriu de departajare | art. 19 alin. (6) lit. d) |\n\nToate trimiterile de mai jos sunt la textul proiectului de ghid publicat de Ministerul Mediului, Apelor și Pădurilor pe [mmediu.ro](https://mmediu.ro/en/transparenta/proiecte-acte-normative/ministerul-mediului-apelor-si-padurilor-supune-consultarii-publice-proiectul-de-ordin-al-ministrului-mediului-apelor-si-padurilor-pentru-aprobarea-ghidului-de-finantare-a-programului-privind-instala/), nu la relatări de presă. Documentul este încă **proiect în consultare**, iar articolele se pot schimba până la ordinul final."
+        },
+        {
+          "id": "am-panouri-prin-casa-verde",
+          "title": "„Am panouri luate prin Casa Verde. Mai pot primi bani pentru baterie?”",
+          "content": "Da, și nu e nevoie de nicio precauție specială legată de finanțarea panourilor.\n\nArticolul 5 alineatul (1) spune tot: *„Este eligibil în cadrul programului solicitantul, persoană fizică, care are calitatea de prosumator.”* Atât. Nu apare nicăieri o condiție despre sursa banilor cu care ai montat sistemul fotovoltaic. Articolul 15, cel care listează criteriile de eligibilitate ale solicitantului, cere trei lucruri: să ai calitatea de prosumator, să nu ai la adresa respectivă sediul unei firme care desfășoară activitate economică (cu excepția cazului în care consumul e contorizat separat) și să nu ai datorii la bugetul de stat sau la bugetul local.\n\nConfuzia vine de la declarația pe care o semnezi în cererea de finanțare, anexa 3 la ghid: *„cheltuielile eligibile pentru care solicit finanţarea prin Program (…) nu fac obiectul unui alt program de finanţare”*. Formularea se referă la **cheltuielile pe care le ceri acum**, adică bateria, montajul ei și, dacă e cazul, invertorul hibrid. Panourile montate în 2021 prin Casa Verde nu sunt cheltuieli eligibile în proiectul de baterie, deci nu intră în acea declarație.\n\nPractic: dacă ai prins o sesiune Casa Verde Fotovoltaice între 2019 și 2023, ai primit până la 20.000 de lei pentru panouri, fără baterie. Ești exact profilul pe care programul de acum îl țintește.\n\nExistă însă o categorie de beneficiari Casa Verde care **nu** trece de filtru, și nu din cauza banilor primiți atunci. Vezi întrebarea următoare."
+        },
+        {
+          "id": "bateria-pe-care-o-ai-deja",
+          "title": "„Am deja o baterie mică. Pot să iau una mai mare prin program?”",
+          "content": "Nu, în forma actuală a proiectului. Aceasta este prevederea pe care presa nu a preluat-o, iar ea răstoarnă răspunsul pentru oricine are deja o baterie montată.\n\nArticolul 15 alineatul (2) litera a): *„Nu este eligibil solicitantul care: are instalat un sistem de stocare a energiei electrice la locul de implementare declarat.”*\n\nNu se face nicio distincție după capacitate. O baterie de 5 kWh montată acum doi ani te descalifică la fel de complet ca una de 15 kWh. Nu există prevedere de înlocuire, de completare sau de extindere a unui sistem existent.\n\nConsecința care surprinde: **beneficiarii sesiunii Casa Verde din 2024 sunt cei care rămân pe dinafară.** Acea sesiune a ridicat finanțarea la 30.000 de lei tocmai pentru că a impus, pe lângă panourile de minimum 3 kW, și o baterie de stocare de minimum 5 kWh. Cine a prins tranșa din septembrie 2024 are, prin definiție, un sistem de stocare instalat la adresa de implementare. Articolul 15 alineatul (2) litera a) i se aplică direct.\n\nDeci întrebarea corectă nu e „cum mi-am finanțat panourile”, ci „am sau nu am deja o baterie la adresa aceea”. Prima nu contează deloc, a doua decide totul.\n\nPunctul acesta a fost contestat în consultare. Specialiștii audiați de [Adevărul](https://adevarul.ro/economie/casa-verde-baterii-pus-sub-lupa-de-specialisti-2550870.html) au reclamat explicit excluderea persoanelor care dețin deja baterii și au cerut includerea lor. Este una dintre modificările plauzibile până la forma finală, dar până când apare ordinul aprobat, textul care contează este cel de mai sus."
+        },
+        {
+          "id": "cat-la-suta-din-banii-mei",
+          "title": "„Cât la sută trebuie să pun din banii mei?”",
+          "content": "Minimum 25%. Articolul 5 alineatul (2): finanțarea AFM este de maximum 75% din valoarea totală a proiectului, dar nu mai mult de 15.000 de lei cu TVA. Diferența până la valoarea totală este contribuția ta.\n\nNumai că 25% e pragul de eligibilitate, nu pragul care câștigă. Selecția se face pe punctaj, iar contribuția proprie e criteriul cu cea mai mare pondere: 40 de puncte din 100. Formula din articolul 19 alineatul (4) litera a) este:\n\n**Punctaj contribuție = 80 × (contribuția proprie ÷ valoarea totală a proiectului) − 10**, plafonat la 40 de puncte.\n\nPusă în cifre, formula arată așa:\n\n| Contribuția ta | Punctaj obținut | Din 40 posibile |\n|---|---|---|\n| 25% (minimul legal) | 10 puncte | un sfert |\n| 30% | 14 puncte | |\n| 40% | 22 puncte | |\n| 50% | 30 puncte | |\n| **62,5%** | **40 puncte** | maximul |\n\nCa să iei toate cele 40 de puncte trebuie să ceri de la AFM doar 37,5% din proiect, adică jumătate din cât ai avea dreptul. Criteriul îl răsplătește pe cel care cere mai puțin, ceea ce e coerent cu un buget fix de 400 de milioane de lei împărțit la cât mai mulți oameni, dar contraintuitiv pentru cine completează formularul.\n\nCelelalte 60 de puncte: capacitatea sistemului de stocare aduce **1 punct pe kWh**, plafonat la 40 de puncte, iar puterea instalată a sistemului fotovoltaic aduce **1 punct pe kW**, plafonat la 20 de puncte."
+        },
+        {
+          "id": "unde-se-castiga-punctele",
+          "title": "Unde se câștigă punctele cel mai ieftin",
+          "content": "Aici e calculul pe care merită să îl faci înainte să declari ceva în cerere. Am folosit un preț al bateriei fix la standardul de cost din ghid, 1.250 de lei pe kWh cu TVA, tocmai pentru ca ambele lecturi posibile ale articolului 5 alineatul (2) să dea același rezultat. Sistem fotovoltaic de 5 kW în toate liniile, fără invertor hibrid de cumpărat.\n\n| Baterie | Valoare proiect | AFM plătește | Tu plătești | Punctaj total |\n|---|---|---|---|---|\n| 12 kWh (minimul) | 15.000 lei | 11.250 lei | 3.750 lei (25%) | **27** |\n| 16 kWh | 20.000 lei | 15.000 lei | 5.000 lei (25%) | **31** |\n| 20 kWh | 25.000 lei | 15.000 lei | 10.000 lei (40%) | **47** |\n\nCitirea tabelului, linie cu linie:\n\n**La 12 kWh**, capacitatea minimă acceptată, primești 11.250 de lei, nu 15.000. Plafonul de 1.250 de lei pe kWh limitează baza la 15.000 de lei, iar 75% din ea înseamnă 11.250. Suma maximă de 15.000 de lei se atinge abia de la 16 kWh în sus. Punctajul, 27 din 100, este profilul tipic al unui prosumator rezidențial care ia strict minimul.\n\n**La 20 kWh se întâmplă ceva ce nu e evident.** Finanțarea rămâne blocată la 15.000 de lei, deci contribuția ta urcă automat la 40% din proiect. Iar 40% înseamnă 22 de puncte în loc de 10, la care se adaugă cele 20 de puncte de capacitate. Punctajul sare de la 27 la 47 fără să fi făcut vreun gest „strategic”: plafonul de 15.000 de lei îți urcă singur procentul de contribuție.\n\nComparativ cu linia de 12 kWh, la 20 kWh scoți din buzunar 6.250 de lei în plus, primești 3.750 de lei în plus de la AFM și urci cu 20 de puncte. Rămâi cu 8 kWh de stocare în plus, cumpărați la un preț mixt bun.\n\nAlternativa de a rămâne la 12 kWh și a declara voluntar o contribuție de 62,5% ca să prinzi cele 40 de puncte iese prost: ai lua doar 5.625 de lei de la AFM, cu 5.625 mai puțin, pentru 10 puncte în plus față de varianta cu 20 kWh. Capacitatea e punctul ieftin, contribuția declarată artificial este punctul scump.\n\nO precizare necesară: dacă bateria ta costă mai mult de 1.250 de lei pe kWh, standardul de cost taie baza eligibilă, iar cifrele de mai sus se schimbă. Preţurile de piaţă pe capacitate sunt în [ghidul de preţuri pe kit-uri cu baterii](/ghid/kit-panouri-fotovoltaice-cu-baterii-pret-capacitate-2026)."
+        },
+        {
+          "id": "invertorul-hibrid",
+          "title": "„Îmi trebuie invertor hibrid nou? Cine îl plătește?”",
+          "content": "Dacă sistemul tău are invertor on-grid clasic, ai nevoie de unul hibrid, iar programul îl acoperă.\n\nArticolul 16 alineatul (1) litera e) cere ca sistemul fotovoltaic să fie prevăzut cu invertor hibrid compatibil cu bateria *„sau, în cazul în care acesta nu este prevăzut cu un astfel de invertor, proiectul include achiziționarea și instalarea acestuia”*. Articolul 6 alineatul (2) lasă termen: invertorul poate fi instalat ulterior, până la data punerii în funcțiune a sistemului de stocare.\n\nDetaliul care contează la punctaj: definiția din ghid a „valorii totale a proiectului” include explicit cheltuielile cu achiziția și montajul invertorului hibrid. Un invertor în plus urcă valoarea totală, iar finanțarea rămâne plafonată la 15.000 de lei. Contribuția ta procentuală crește, deci crește și punctajul pe primul criteriu. Nu este un truc, e o consecință aritmetică a plafonului."
+        },
+        {
+          "id": "cand-se-deschide",
+          "title": "„Când se deschide și mă ajută dacă mă înscriu în prima zi?”",
+          "content": "Nu există dată de deschidere anunțată, și graba nu e avantajul pe care îl crede lumea.\n\nUnde suntem în proces: proiectul de ordin a intrat în transparență decizională pe 18 august 2026, cu termen de 10 zile lucrătoare pentru propuneri. Ministerul a organizat o dezbatere publică pe 26 august 2026, la sediul din Bd. Libertății nr. 12, în format hibrid. Propunerile se trimit la veronica.alecu@afm.ro. După consultare urmează ordinul de ministru aprobat, apoi o dispoziție a președintelui AFM care fixează efectiv data deschiderii sesiunii, conform articolului 17 alineatul (1). Niciunul dintre acești doi pași nu are calendar public.\n\nCât despre graba din prima zi: programul nu funcționează pe principiul primul venit, primul servit, spre deosebire de sesiunile Casa Verde de dinainte, unde tranșele s-au epuizat în câteva minute. Articolul 19 alineatul (5) spune că proiectele se selectează în ordinea descrescătoare a punctajului, după închiderea sesiunii. Data și ora înscrierii apar abia ca al patrulea criteriu de departajare, în articolul 19 alineatul (6), după valoarea absolută a contribuției proprii, după capacitatea de stocare și după puterea instalată a sistemului fotovoltaic. Contează doar între dosare cu punctaj identic și cu primele trei departajări egale.\n\nCe merită pregătit din timp sunt documentele din articolul 18: actul de identitate, certificatele de atestare fiscală de la ANAF și de la primărie, contractul de prosumator pe numele tău și o factură de energie electrică mai veche de cel mult 3 luni la data depunerii. Certificatele fiscale au termen de valabilitate, deci se scot aproape de înscriere, nu cu luni înainte."
+        },
+        {
+          "id": "cine-poate-monta",
+          "title": "„Cine are voie să monteze bateria?”",
+          "content": "Nu orice firmă de fotovoltaice, și nu tu direct. Articolul 10 cere instalatorului, cumulativ: să fie persoană juridică, să aibă CAEN 4321 (lucrări de instalații electrice) autorizat, să nu fie în insolvență, să nu aibă datorii la buget și, criteriul care taie cel mai mult, să dețină **atestat ANRE de tip B valabil, cu o vechime de minimum 12 luni** la data depunerii cererii de validare. În plus, instalatorul se angajează să **nu subcontracteze** lucrările de instalare a bateriei și a invertorului.\n\nMecanismul de plată explică de ce contează atât de mult alegerea firmei. Articolul 20 alineatul (10): AFM **nu încheie contract de finanțare cu persoana fizică**. Banii merg la instalatorul validat, pe baza cererii lui de decontare, iar pe factură trebuie să apară distinct valoarea totală, contribuția ta, suma suportată de AFM și un cod QR cu datele certificatului de racordare.\n\nTermenele care curg după aprobare: **90 de zile** de la publicarea listei ca să selectezi un instalator validat, altfel se consideră că ai renunțat (articolul 22). După selectare ai dreptul să te transferi la alt instalator de cel mult două ori, în 90 de zile (articolul 23). Implementarea trebuie făcută în **12 luni**, sau 18 luni dacă ai cerut deja actualizarea certificatului de racordare în interiorul primului termen (articolul 24).\n\nÎncă un pas pe care mulți îl află târziu: articolul 24 alineatul (1) include în implementare **solicitarea actualizării certificatului de racordare** prin înscrierea capacității de stocare și reemiterea lui de către operatorul de distribuție. Bateria se declară la rețea, nu se montează discret în garaj.\n\nPoți verifica atestatul ANRE al oricărei firme, gratuit, în [verificatorul de atestate](/verificare-anre), iar firmele cu atestat valabil sunt listate pe [județe](/firme)."
+        },
+        {
+          "id": "ce-se-poate-schimba",
+          "title": "Ce se poate schimba până la forma finală",
+          "content": "Textul comentat aici este proiect în consultare publică, nu ghid aprobat. Ce s-a cerut public să fie modificat, în dezbaterea din 26 august și în consultare:\n\n- **Pragul de 12 kWh.** Argumentul, formulat de Dorin Chisăliță: pentru unele gospodării 12 kWh e potrivit, pentru altele o baterie mai mică ar fi suficientă, iar pragul împinge lumea să cumpere capacitate peste necesar doar ca să fie eligibilă.\n- **Excluderea celor care au deja baterii**, exact prevederea din articolul 15 alineatul (2) litera a) discutată mai sus.\n- **Dezavantajarea sistemelor mici.** Dan Tudose a arătat că punctajul pe putere instalată favorizează instalațiile trifazate mari, în timp ce sistemele monofazate de 3 până la 8 kWp pornesc cu handicap.\n- **Cerințe tehnice mai stricte**, minimum 6.000 de cicluri și garanție de 10 ani, față de cele 3.000 de cicluri și 5 ani din proiect.\n\nNiciuna dintre aceste propuneri nu este adoptată la data acestui articol. Până la publicarea ordinului în Monitorul Oficial, singurul text cu valoare este proiectul.\n\nCe nu se schimbă indiferent de forma finală: ai nevoie de calitatea de prosumator, de un instalator cu atestat ANRE tip B și de un invertor hibrid compatibil. Astea trei sunt structura programului, nu parametri de negociat."
+        }
+      ],
+      "faq": [
+        {
+          "question": "Am luat panouri prin Casa Verde. Pot aplica la programul de baterii al AFM?",
+          "answer": "Da. Proiectul de ghid publicat pe 18 august 2026 nu conține nicio condiție legată de sursa de finanțare a panourilor. Articolul 5 alineatul (1) cere doar calitatea de prosumator, iar articolul 15 adaugă lipsa datoriilor fiscale și absența unei activități economice necontorizate separat la adresa de implementare. Declarația din cererea de finanțare privind lipsa dublei finanțări se referă la cheltuielile eligibile solicitate acum, adică bateria și montajul ei, nu la panourile finanțate în trecut. Singura situație în care un fost beneficiar Casa Verde este exclus este cea în care are deja o baterie instalată la acea adresă."
+        },
+        {
+          "question": "De ce nu pot aplica dacă am prins Casa Verde 2024?",
+          "answer": "Pentru că sesiunea din 2024 a condiționat finanțarea de 30.000 de lei de montarea unei baterii de stocare de minimum 5 kWh alături de panourile de minimum 3 kW. Cine a prins acea tranșă are, prin definiție, un sistem de stocare instalat la locul de implementare, iar articolul 15 alineatul (2) litera a) din proiectul actual spune că nu este eligibil solicitantul care are instalat un sistem de stocare a energiei electrice la locul de implementare declarat. Nu contează capacitatea bateriei existente și nu există prevedere de extindere sau înlocuire. Excluderea a fost contestată în consultarea publică, deci se poate schimba până la ordinul final."
+        },
+        {
+          "question": "Cât la sută din valoarea proiectului trebuie să plătesc eu?",
+          "answer": "Minimum 25%, pentru că AFM finanțează maximum 75% din valoarea totală a proiectului și nu mai mult de 15.000 de lei cu TVA, conform articolului 5 alineatul (2). Acesta este însă doar pragul de eligibilitate. La punctaj, contribuția proprie valorează 40 de puncte din 100 și se calculează cu formula 80 înmulțit cu raportul dintre contribuția proprie și valoarea totală, minus 10. O contribuție de 25% dă 10 puncte, una de 40% dă 22 de puncte, iar cele 40 de puncte maxime se ating abia la o contribuție de 62,5%, adică atunci când ceri de la AFM doar 37,5% din proiect."
+        },
+        {
+          "question": "Câți bani primesc pentru o baterie de 12 kWh?",
+          "answer": "11.250 de lei, nu 15.000. Standardul de cost din articolul 5 alineatul (4) este de 1.250 de lei pe kWh cu TVA inclus, deci o baterie de 12 kWh dă o bază eligibilă de 15.000 de lei, iar 75% din ea înseamnă 11.250 de lei. Plafonul de 15.000 de lei se atinge abia de la 16 kWh în sus, unde baza eligibilă ajunge la 20.000 de lei. Este cifra pe care relatările de presă au ratat-o cel mai des, pentru că au preluat suma maximă fără standardul de cost care o condiționează."
+        },
+        {
+          "question": "Ce capacitate de baterie îmi aduce cel mai bun punctaj?",
+          "answer": "Capacitatea mai mare, pentru că plafonul de 15.000 de lei lucrează în favoarea punctajului. La 12 kWh cu un sistem fotovoltaic de 5 kW ajungi la 27 de puncte din 100. La 20 kWh, finanțarea rămâne 15.000 de lei, deci contribuția ta urcă automat la 40% din proiect, ceea ce înseamnă 22 de puncte în loc de 10, plus 20 de puncte de capacitate. Total 47 de puncte. Calculul presupune un preț al bateriei exact la standardul de 1.250 de lei pe kWh. Dacă bateria costă mai mult, standardul taie baza eligibilă și cifrele se schimbă."
+        },
+        {
+          "question": "Ajută dacă mă înscriu în prima zi a sesiunii?",
+          "answer": "Aproape deloc. Spre deosebire de sesiunile Casa Verde anterioare, unde tranșele se epuizau în câteva minute, aici selecția se face pe punctaj după închiderea sesiunii, conform articolului 19 alineatul (5). Data și ora înscrierii sunt abia al patrulea criteriu de departajare, după valoarea absolută a contribuției proprii, capacitatea de stocare și puterea instalată a sistemului fotovoltaic. Contează doar între dosare care au punctaj total identic și sunt egale și la primele trei departajări."
+        },
+        {
+          "question": "Când se deschid înscrierile la programul de baterii al AFM?",
+          "answer": "Nu există dată anunțată. Proiectul de ghid a intrat în consultare publică pe 18 august 2026, cu dezbatere publică pe 26 august la sediul Ministerului Mediului. După consultare urmează ordinul de ministru aprobat și publicat în Monitorul Oficial, iar data efectivă a sesiunii se stabilește ulterior prin dispoziție a președintelui AFM, conform articolului 17 alineatul (1). Niciunul dintre acești pași nu are calendar public la data acestui articol."
+        },
+        {
+          "question": "Trebuie să îmi schimb invertorul ca să pot lua bateria prin program?",
+          "answer": "Dacă ai invertor on-grid clasic, da, ai nevoie de unul hibrid, iar costul lui este acoperit. Articolul 16 alineatul (1) litera e) cere ca proiectul să includă achiziționarea și instalarea invertorului hibrid atunci când sistemul nu are deja unul, iar articolul 6 alineatul (2) permite montarea lui până la punerea în funcțiune a bateriei. Invertorul intră în valoarea totală a proiectului conform definiției din ghid, ceea ce îți crește procentul de contribuție proprie și, implicit, punctajul pe primul criteriu."
+        },
+        {
+          "question": "Ce fel de baterie este acceptată în program?",
+          "answer": "Sistemul de stocare trebuie să fie nou, cu o capacitate de minimum 12 kWh, compatibil tehnic cu sistemul fotovoltaic pe care îl deservește. Tehnologia trebuie să fie Li-Ion, LiFePO4, Na-Ion sau echivalentă fără plumb, iar acumulatorii cu plumb-acid sunt excluși indiferent de construcție. Garanția minimă este de 5 ani, numărul minim de cicluri este 3.000, iar componentele trebuie certificate de un organism acreditat conform SR EN ISO 17065. În consultare s-a cerut ridicarea pragurilor la 6.000 de cicluri și 10 ani de garanție."
+        },
+        {
+          "question": "Cine poate monta bateria finanțată prin program?",
+          "answer": "Doar un instalator validat de AFM. Criteriile din articolul 10 cer persoană juridică cu CAEN 4321 autorizat, fără insolvență și fără datorii la buget, iar condiția care taie cel mai mult este atestatul ANRE de tip B valabil, cu vechime de minimum 12 luni la data cererii de validare. Instalatorul se angajează să nu subcontracteze lucrarea. AFM nu încheie contract cu persoana fizică, conform articolului 20 alineatul (10), iar banii merg direct la instalator pe baza cererii lui de decontare."
+        },
+        {
+          "question": "Trebuie să anunț distribuitorul că mi-am montat baterie?",
+          "answer": "Da, este parte obligatorie din implementarea proiectului. Articolul 24 alineatul (1) include solicitarea actualizării certificatului de racordare prin înscrierea capacității de stocare și reemiterea lui de către operatorul de distribuție. Termenul de implementare este de 12 luni de la publicarea listei celor aprobați, sau 18 luni dacă ai realizat investiția și faci dovada la instalator că ai cerut actualizarea certificatului în interiorul primelor 12 luni."
+        }
+      ],
+      "relatedSpecializations": [
+        "rezidential"
+      ],
+      "tags": [
+        "casa-verde-baterii",
+        "afm",
+        "baterie-stocare",
+        "prosumator",
+        "rezidential",
+        "finantare"
+      ],
+      "updatedAt": "2026-08-25"
     }
   ]
 }

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 const TABS = [
+  { href: '/admin/azi', label: 'Azi' },
   { href: '/admin/crm', label: 'CRM' },
   { href: '/admin/firme', label: 'Instalatori' },
   { href: '/admin/portal', label: 'Portal' },

@@ -1,0 +1,1140 @@
+[
+  {
+    "cui": "33108921",
+    "name": "SECURISTIKA",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 8,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥500k (+1)",
+      "age 12y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://www.broasca.ro/",
+    "revenue_2024": 1357915,
+    "profit_2024": 432344,
+    "employees": 3,
+    "year_founded": 2014,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Str. Oglinzilor, Nr.25, Camera 2, Bl.32, Sc.b, Ap.1",
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail",
+    "rezHits": 0,
+    "rezSample": []
+  },
+  {
+    "cui": "3044753",
+    "name": "GAUSS",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 8,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 33y (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "https://www.gauss.ro/",
+    "revenue_2024": 181461211,
+    "profit_2024": 9300759,
+    "employees": 192,
+    "year_founded": 1993,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Cal. Martirilor 1989, Nr.1-3-5, Corp D",
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail",
+    "rezHits": 0,
+    "rezSample": []
+  },
+  {
+    "cui": "40209376",
+    "name": "GTX ELECTRIC SOLUTIONS",
+    "judet": "Timis",
+    "localitate": "Liebling",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 8,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 8y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "https://gtxelectric.ro/",
+    "revenue_2024": 2221137,
+    "profit_2024": 96216,
+    "employees": 12,
+    "year_founded": 2018,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Liebling Com. Liebling, Nr.163, 170",
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail",
+    "rezHits": 0,
+    "rezSample": []
+  },
+  {
+    "cui": "45974077",
+    "name": "A-B HIBRID ELECTRIC",
+    "judet": "Timis",
+    "localitate": "Sacalaz",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 6076113,
+    "profit_2024": 848774,
+    "employees": 9,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Sacalaz Com. Sacalaz, Str. Orhideelor, Nr.24a, Camera 1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "29199239",
+    "name": "A&A ELECTRIC",
+    "judet": "Timis",
+    "localitate": "Giroc",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 15y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2936410,
+    "profit_2024": 619634,
+    "employees": 12,
+    "year_founded": 2011,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Giroc Com. Giroc, Str. Naturii, Nr.12",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "18187018",
+    "name": "AKT INVEST",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 21y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 4723680,
+    "profit_2024": -527304,
+    "employees": 13,
+    "year_founded": 2005,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Str. Somes, Nr.4, Ap.2",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "15512823",
+    "name": "B.A. ELECTRIC",
+    "judet": "Timis",
+    "localitate": "Lugoj",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 23y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 3857186,
+    "profit_2024": 541596,
+    "employees": 13,
+    "year_founded": 2003,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Lugoj, Str. Poet Andrei Muresanu, Nr.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "33372272",
+    "name": "BANAT ELECTRIC COMPANY",
+    "judet": "Timis",
+    "localitate": "Sandra",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 12y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 4610243,
+    "profit_2024": 1768900,
+    "employees": 9,
+    "year_founded": 2014,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Sandra Com. Sandra, Nr.426",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "45489951",
+    "name": "CONSENEL TIM",
+    "judet": "Timis",
+    "localitate": "Sag",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 9936702,
+    "profit_2024": 833424,
+    "employees": 7,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Sag Com. Sag, Str. Xlviii, Nr.3, Camera 2",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "46554705",
+    "name": "CRC NEW ENERGY",
+    "judet": "Timis",
+    "localitate": "Ghiroda",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 3511 (+3)",
+      "revenue ≥2M (+2)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "3511",
+    "caen_label": "Productia de energie electrica",
+    "website": "",
+    "revenue_2024": 14364545,
+    "profit_2024": 480272,
+    "employees": 6,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Ghiroda Com. Ghiroda, Cal. Lugojului, Nr.67, Etaj. Birou 108",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "14682285",
+    "name": "DANNYS-M.D.",
+    "judet": "Timis",
+    "localitate": "Lugoj",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 24y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 3664593,
+    "profit_2024": 748503,
+    "employees": 15,
+    "year_founded": 2002,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Lugoj, Str. Episcop Dr. Ioan Balan, Nr.24, Ap.3",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "27871774",
+    "name": "ELECTRO ESTETIC",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 15y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 10279799,
+    "profit_2024": 2876788,
+    "employees": 15,
+    "year_founded": 2011,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Int. Curcubeului, Nr.2, Sc.c, Et.2, Ap.12",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "15915460",
+    "name": "INATIM ELC.",
+    "judet": "Timis",
+    "localitate": "Dumbravita [TM]",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 23y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 3589546,
+    "profit_2024": 1129819,
+    "employees": 10,
+    "year_founded": 2003,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Dumbravita Com. Dumbravita, Str. Budapesta, Nr.24",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "43200339",
+    "name": "KA ELECTRIC INTELLIGENCE",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 6y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 2545065,
+    "profit_2024": 874299,
+    "employees": 0,
+    "year_founded": 2020,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Str. Drubeta, Nr.74, Cam. 2, Et.2, Ap.9",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "41951062",
+    "name": "KNG ELECTRIC FUTURE",
+    "judet": "Timis",
+    "localitate": "Silagiu",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 7y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 4931212,
+    "profit_2024": 1120508,
+    "employees": 5,
+    "year_founded": 2019,
+    "status": "functiune",
+    "address": "Jud. Timis, Loc. Silagiu Ors. Buzias, Nr.289, Camera 2",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "23417334",
+    "name": "N & T INSTALL SERVICES",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 18y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 5013288,
+    "profit_2024": 696913,
+    "employees": 12,
+    "year_founded": 2008,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Str. Ardealului, Nr.2/6, Bl.a2, Sc.a, Et.3, Ap.9",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "14955555",
+    "name": "O.T.C. ELECTRICAL",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 24y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 3740532,
+    "profit_2024": 341537,
+    "employees": 12,
+    "year_founded": 2002,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Str. Oglinzilor, Nr.34, Sc.b, Et.p, Ap.2",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "26129956",
+    "name": "T & M ELECTROSTART 2009",
+    "judet": "Timis",
+    "localitate": "Sannicolau Mare",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 17y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 3922200,
+    "profit_2024": 25084,
+    "employees": 12,
+    "year_founded": 2009,
+    "status": "functiune",
+    "address": "Jud. Timis, Ors. Sannicolau Mare, Str. Garii, Nr.12b, Et.p",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "30354808",
+    "name": "TRIPOL ELECTRIC",
+    "judet": "Timis",
+    "localitate": "Sanandrei (TM)",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 14y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 3067566,
+    "profit_2024": 340898,
+    "employees": 6,
+    "year_founded": 2012,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Sanandrei Com. Sanandrei, Str. Macilor, Nr.53, Camera 1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "30648102",
+    "name": "XELA - INSTAL",
+    "judet": "Timis",
+    "localitate": "Mosnita Noua",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 7,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥2M (+2)",
+      "age 14y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 11201378,
+    "profit_2024": 2576801,
+    "employees": 15,
+    "year_founded": 2012,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Mosnita Noua Com. Mosnita Noua, Nr.792",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "38174586",
+    "name": "FIRST BUSINESS PROTECT",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 9y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "7499",
+    "caen_label": "Alte activitati profesionale, stiintifice si tehnice n.c.a.",
+    "website": "https://timisoara-protectia-muncii.ro/",
+    "revenue_2024": 2040878,
+    "profit_2024": 191098,
+    "employees": 9,
+    "year_founded": 2017,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Remetea Mare Com. Remetea Mare, , Nr.369",
+    "error": null,
+    "pvContentHits": 0,
+    "pvContentSample": [],
+    "pvGate": "fail",
+    "rezHits": 0,
+    "rezSample": []
+  },
+  {
+    "cui": "43788655",
+    "name": "PAC & CO ELECTRIC SOLUTION",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 5y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1420040,
+    "profit_2024": 51671,
+    "employees": 2,
+    "year_founded": 2021,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Str. Giorgio Ostrogovich, Nr.16, Camera 1, Et.4, Ap.14",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "46183208",
+    "name": "SGROM SERVICE",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 6,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1242678,
+    "profit_2024": 185606,
+    "employees": 4,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Str. Albinelor, Nr.11b",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "30538568",
+    "name": "HELIOPOLISRO ENERGY & ENGINEERING",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 6,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "revenue ≥2M (+2)",
+      "age 14y (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 21672873,
+    "profit_2024": 22654044,
+    "employees": 11,
+    "year_founded": 2012,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Bld. Revolutiei 1989, Nr.20, Et.subsol, Ap.sad1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "35831851",
+    "name": "MA PA CO BUSINESS VEST",
+    "judet": "Timis",
+    "localitate": "Dumbravita [TM]",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 10y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 51838,
+    "profit_2024": -4115,
+    "employees": 1,
+    "year_founded": 2016,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Dumbravita Com. Dumbravita, Str. Gabor Aron, Nr.2a, Ap.2",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "21212545",
+    "name": "POGEMAR",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 19y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 314921,
+    "profit_2024": 26220,
+    "employees": 3,
+    "year_founded": 2007,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Str. Gelu, Nr.28, Ap.3",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "46485028",
+    "name": "RPP ELECTRO",
+    "judet": "Timis",
+    "localitate": "Faget",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": -6479,
+    "employees": 1,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Timis, Ors. Faget, Aleea Stadionului, Nr.4",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "38472450",
+    "name": "AXC MADOX",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 9y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1734522,
+    "profit_2024": 104181,
+    "employees": 9,
+    "year_founded": 2017,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Str. Gheorghe Doja, Nr.15, Camera 2, Et.p, Ap.1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "1816318",
+    "name": "ELBA",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 5,
+    "reasons": [
+      "website (+2)",
+      "revenue ≥2M (+2)",
+      "age 34y (+1)"
+    ],
+    "caen_code": "2740",
+    "caen_label": "Fabricarea de echipamente electrice de iluminat",
+    "website": "https://www.elbalighting.com/",
+    "revenue_2024": 254861001,
+    "profit_2024": 14537055,
+    "employees": 638,
+    "year_founded": 1992,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Str. Paul Morand, Nr.135",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "23514744",
+    "name": "ELECTRIC EYE",
+    "judet": "Timis",
+    "localitate": "Ghiroda",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 5,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "revenue ≥500k (+1)",
+      "age 18y (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 1684321,
+    "profit_2024": 570408,
+    "employees": 3,
+    "year_founded": 2008,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Giarmata-Vii Com. Ghiroda, Int. Rozelor, Nr.6-8, Camera 1",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "40482936",
+    "name": "ELECTRO ENFA",
+    "judet": "Timis",
+    "localitate": "Giroc",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 5,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "revenue ≥500k (+1)",
+      "age 7y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 1984755,
+    "profit_2024": 259256,
+    "employees": 5,
+    "year_founded": 2019,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Giroc Com. Giroc, Str. Trandafirilor, Nr.61, Ap.4",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "16855323",
+    "name": "TERA PROFIL",
+    "judet": "Timis",
+    "localitate": "Dudestii Noi",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 4,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 22y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "2599",
+    "caen_label": "Fabricarea altor articole din metal n.c.a.",
+    "website": "",
+    "revenue_2024": 3787368,
+    "profit_2024": 205267,
+    "employees": 12,
+    "year_founded": 2004,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Dudestii Noi Com. Dudestii Noi, Fostul C.a.p.",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "16444603",
+    "name": "ELDD",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 4,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "age 22y (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 498224,
+    "profit_2024": 61992,
+    "employees": 1,
+    "year_founded": 2004,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Str. Magnoliei, Nr.45, Camera 1, Ap.2",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "45074229",
+    "name": "ELECTRODESK DESIGN",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 4,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 5y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": -2255,
+    "employees": 0,
+    "year_founded": 2021,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Str. 1 Decembrie, Nr.12, Camera 1, Ap.5",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "18630939",
+    "name": "ELECTROPROIECT H.K.",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 4,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "age 20y (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 96283,
+    "profit_2024": -34524,
+    "employees": 1,
+    "year_founded": 2006,
+    "status": "functiune",
+    "address": "Jud. Timis, Mun. Timisoara, Str. Cosminului, Nr.36, Sc.a, Ap.6",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "34152674",
+    "name": "FARA MIHAI PERSOANA FIZICA AUTORIZATA",
+    "judet": "Timis",
+    "localitate": "Buzias [TM]",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 4,
+    "reasons": [
+      "CAEN 7112 (+3)",
+      "age 11y (+1)"
+    ],
+    "caen_code": "7112",
+    "caen_label": "Activitati de inginerie si consultanta tehnica legate de acestea",
+    "website": "",
+    "revenue_2024": 0,
+    "profit_2024": 0,
+    "employees": 0,
+    "year_founded": 2015,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Bacova Ors. Buzias, Nr.374",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "40604626",
+    "name": "G-ECO GREEN ECONOMY",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 4,
+    "reasons": [
+      "CAEN 4321 (+3)",
+      "age 7y (+1)"
+    ],
+    "caen_code": "4321",
+    "caen_label": "Lucrari de instalatii electrice",
+    "website": "",
+    "revenue_2024": 5832,
+    "profit_2024": -327147,
+    "employees": 1,
+    "year_founded": 2019,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Dumbravita Com. Dumbravita, Str. Conac, Nr.60, Spatiul Nr.20, Camera 7-8, Et.3",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "46508296",
+    "name": "ENERGEST ONE MANAGEMENT",
+    "judet": "Timis",
+    "localitate": "Ghiroda",
+    "codes": [
+      "C2A"
+    ],
+    "hasBoth": false,
+    "score": 3,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 4y (+1)"
+    ],
+    "caen_code": "3314",
+    "caen_label": "Repararea echipamentelor electrice",
+    "website": "",
+    "revenue_2024": 3101108,
+    "profit_2024": 96289,
+    "employees": 21,
+    "year_founded": 2022,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Ghiroda Com. Ghiroda, Cal. Lugoj, Nr.48/b, Mezanin. Birou 2. Camera 3",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "29264655",
+    "name": "ESAPRO RO",
+    "judet": "Timis",
+    "localitate": "Ghiroda",
+    "codes": [
+      "C1A"
+    ],
+    "hasBoth": false,
+    "score": 3,
+    "reasons": [
+      "revenue ≥2M (+2)",
+      "age 15y (+1)"
+    ],
+    "caen_code": "4222",
+    "caen_label": "Lucrari de constructii a proiectelor utilitare pentru electricitate si telecomunicatii",
+    "website": "",
+    "revenue_2024": 3791084,
+    "profit_2024": 102468,
+    "employees": 13,
+    "year_founded": 2011,
+    "status": "functiune",
+    "address": "Jud. Timis, Sat Ghiroda Com. Ghiroda, Cal. Lugojului, Dn 6 Km 551.6 Stanga. Etaj 1. Birou Nr.6",
+    "error": null,
+    "pvGate": "skip"
+  },
+  {
+    "cui": "45632988",
+    "name": "DUPA PATRU",
+    "judet": "Timis",
+    "localitate": "Timisoara",
+    "codes": [
+      "C1A",
+      "C2A"
+    ],
+    "hasBoth": true,
+    "score": 2,
+    "reasons": [
+      "age 4y (+1)",
+      "C1A+C2A (+1)"
+    ],
+    "caen_code": "3314",
+    "caen_label": "Repararea echipamentelor electrice",
+    "website": "",
+    "revenue_2024": 211480,
+    "profit_2024": 16702,
+    "employees": 1,
+    "year_founded": 2022,
+    "status": "inactiva",
+    "address": "Jud. Timis, Mun. Timisoara, Aleea Martir Nagy Eugen, Nr.2, Ap.3",
+    "error": null,
+    "pvGate": "skip"
+  }
+]

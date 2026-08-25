@@ -79,6 +79,41 @@ când cineva întreabă de unde vine o formulare.
   între ultima informație și CTA; disclaimerele stau în caption.
 - Fără em dash-uri. Fără reproșuri către instalatori, nici implicite.
 
+## Pasul 2.5. Proba de rostire (obligatorie, înainte de voce)
+
+Adăugat pe 20 august 2026, după reelul „soare-judete", pe care userul l-a ascultat
+și a spus că sună rău. Patru propoziții din cinci erau corecte gramatical și
+imposibil de rostit firesc. Nu vocea era de vină, scriptul era scris pentru citit.
+
+Două verificări, în ordinea asta:
+
+**a. Mecanic.**
+
+```bash
+node scripts/check-reel-script.mjs "social/<săptămână>/<reel>/script.txt"
+```
+
+Pe lângă filtrul editorial de dinainte, checkerul prinde acum aglomerarea de
+numerale (un număr scris în litere ocupă patru-șase cuvinte, două în aceeași
+propoziție înseamnă că primul e pierdut), cuvântul de conținut repetat la mai
+puțin de opt cuvinte distanță, coada scurtă și fără verb după ultima virgulă,
+propoziția lungă fără nicio virgulă, cliticele lipite, „în cam" în loc de „cam
+în", și unitatea ruptă în două („kilowați oră").
+
+**b. Agentul `corector-ro`.** Îi dai calea către `script.txt` și **nimic
+altceva**. Nu-i spui subiectul reelului, nu-i spui ce vrei să demonstrezi, nu-i
+dai `cifre.md`. Ăsta e tot rostul lui: cine a scris propoziția o aude cum a
+gândit-o, nu cum sună. Agentul n-are contextul, deci aude ce aude omul care
+derulează.
+
+Întoarce TRECE / PICĂ pe fiecare propoziție, cu rescriere la fiecare picată.
+Rescrierile nu se acceptă automat: dacă schimbă o cifră sau adaugă informație,
+se refuză și se rescrie de mână.
+
+Abia după ce trec amândouă se trimite scriptul userului, și abia după aprobarea
+lui se generează vocea. Motivul e bani și timp: vocea și render-ul costă, textul
+nu.
+
 ## Pasul 3. Capturile de ecran
 
 Capturile se fac cu `social/remotion/capture-shots.mjs`, care rulează Playwright

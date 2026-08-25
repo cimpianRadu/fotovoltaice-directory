@@ -1,57 +1,37 @@
-# ANRE Prefilter — Bucuresti
-
-Generated: 2026-05-23 via targetare.ro + PV content check
-Total: 50 • Score ≥6: 19 • PV gate PASS: 0 • WEAK: 0 • FAIL: 6
-
-| Score | PV | Hits | Firm | CUI | CAEN | Revenue | Site | Notes |
-|-------|----|------|------|-----|------|---------|------|-------|
-| 9 | ❌ | 0 | BP GENERAL SOLUTIONS | 35203911 | 4321 | 2.32M | ✓ | CAEN 4321 (+3), website (+2), revenue ≥2M (+2), age 11y (+1), C1A+C2A (+1) |
-| 9 | ❌ | 0 | CIUCHEANU SERVICE | 8523129 | 4321 | 2.89M | ✓ | CAEN 4321 (+3), website (+2), revenue ≥2M (+2), age 30y (+1), C1A+C2A (+1) |
-| 9 | — | — | ECI SOLAR | 47994763 | 4321 | 1.34M | — | CAEN 4321 (+3), solar/PV în nume/CAEN (+3), revenue ≥500k (+1), age 3y (+1), C1A+C2A (+1) |
-| 9 | ❌ | 0 | ELECTRICAL INTEGRATION SYSTEMS | 35314596 | 4321 | 38.15M | ✓ | CAEN 4321 (+3), website (+2), revenue ≥2M (+2), age 11y (+1), C1A+C2A (+1) |
-| 7 | — | — | ALERION SERVICE RO | 47938542 | 7112 | 17.99M | — | CAEN 7112 (+3), revenue ≥2M (+2), age 3y (+1), C1A+C2A (+1) |
-| 7 | — | — | ARTEON AUTOMATIZATION GROUP | 42046674 | 4321 | 2.05M | — | CAEN 4321 (+3), revenue ≥2M (+2), age 7y (+1), C1A+C2A (+1) |
-| 7 | — | — | AXA ELECTRIC | 33161992 | 4321 | 2.83M | — | CAEN 4321 (+3), revenue ≥2M (+2), age 12y (+1), C1A+C2A (+1) |
-| 7 | — | — | CLAR ELECTRIC | 33522345 | 4321 | 2.00M | — | CAEN 4321 (+3), revenue ≥2M (+2), age 12y (+1), C1A+C2A (+1) |
-| 7 | — | — | CONELECTRO TEHNIC | 44475451 | 4321 | 7.14M | — | CAEN 4321 (+3), revenue ≥2M (+2), age 5y (+1), C1A+C2A (+1) |
-| 7 | — | — | DALIX ELECTRIC SERV | 33453571 | 4321 | 7.90M | — | CAEN 4321 (+3), revenue ≥2M (+2), age 12y (+1), C1A+C2A (+1) |
-| 7 | — | — | ELBI ENERGY PROJECTS | 41166842 | 4321 | 157.42M | — | CAEN 4321 (+3), revenue ≥2M (+2), age 7y (+1), C1A+C2A (+1) |
-| 7 | — | — | ELECTRIC TRIUMF INSTALL SERVICE | 30278670 | 4321 | 2.86M | — | CAEN 4321 (+3), revenue ≥2M (+2), age 14y (+1), C1A+C2A (+1) |
-| 7 | — | — | ELECTRO CAM ELITE | 48548831 | 4321 | 2.93M | — | CAEN 4321 (+3), revenue ≥2M (+2), age 3y (+1), C1A+C2A (+1) |
-| 6 | ❌ | 0 | BMF GRUP SOLUTII INTEGRATE | 31238674 | 8110 | 162.76M | ✓ | website (+2), revenue ≥2M (+2), age 13y (+1), C1A+C2A (+1) |
-| 6 | — | — | CONAV ELECTRIC | 25039650 | 4321 | 1.16M | — | CAEN 4321 (+3), revenue ≥500k (+1), age 17y (+1), C1A+C2A (+1) |
-| 6 | ❌ | 0 | CRISTALIN PROJECT MANAGEMENT | 25028465 | 4222 | 8.80M | ✓ | website (+2), revenue ≥2M (+2), age 17y (+1), C1A+C2A (+1) |
-| 6 | — | — | CXB CONSULTING & TECHNICAL SUPPORT | 25837539 | 7112 | 1.10M | — | CAEN 7112 (+3), revenue ≥500k (+1), age 17y (+1), C1A+C2A (+1) |
-| 6 | ❌ | 0 | DIGI ROMANIA | 5888716 | 6110 | 5511.48M | ✓ | website (+2), revenue ≥2M (+2), age 32y (+1), C1A+C2A (+1) |
-| 6 | — | — | ELECTRIC & LIGHTING PROJECTS | 45811983 | 7112 | 1.18M | — | CAEN 7112 (+3), revenue ≥500k (+1), age 4y (+1), C1A+C2A (+1) |
-| 5 | — | — | 4 Alternative Electric Energy  (4 A.E.E.) | 5287520 | 4321 | 0.33M | — | CAEN 4321 (+3), age 32y (+1), C1A+C2A (+1) |
-| 5 | — | — | AEP SYSTEMS | 36024981 | 4321 | 0.31M | — | CAEN 4321 (+3), age 10y (+1), C1A+C2A (+1) |
-| 5 | — | — | ANDALEX SPY | 33207623 | 4321 | 0.02M | — | CAEN 4321 (+3), age 12y (+1), C1A+C2A (+1) |
-| 5 | — | — | ANSEBO ELECTRIC | 36730936 | 4321 | 0.25M | — | CAEN 4321 (+3), age 10y (+1), C1A+C2A (+1) |
-| 5 | — | — | ARCOM ENERGY | 42355130 | 4321 | 0.19M | — | CAEN 4321 (+3), age 6y (+1), C1A+C2A (+1) |
-| 5 | — | — | CO CRI PRODSERV | 9527188 | 4321 | 0.19M | — | CAEN 4321 (+3), age 29y (+1), C1A+C2A (+1) |
-| 5 | — | — | DELARAD COM | 9144735 | 4321 | 0.32M | — | CAEN 4321 (+3), age 29y (+1), C1A+C2A (+1) |
-| 5 | — | — | ELECTRIC GREEN IMPULSE | 47487841 | 4321 | 0.37M | — | CAEN 4321 (+3), age 3y (+1), C1A+C2A (+1) |
-| 4 | — | — | 66 PRO | 8587114 | 4711 | 3.26M | — | revenue ≥2M (+2), age 30y (+1), C1A+C2A (+1) |
-| 4 | — | — | AFTERNET | 21584069 | 6190 | 2.55M | — | revenue ≥2M (+2), age 19y (+1), C1A+C2A (+1) |
-| 4 | — | — | ANANDA ELECTRIC | 51454109 | 4321 | — | — | CAEN 4321 (+3), C1A+C2A (+1) |
-| 4 | — | — | AUDIOTECH MULTIMEDIA GROUP | 17867768 | 4100 | 33.34M | — | revenue ≥2M (+2), age 21y (+1), C1A+C2A (+1) |
-| 4 | — | — | AUTOCASA | 13255626 | 4532 | 7.10M | — | revenue ≥2M (+2), age 26y (+1), C1A+C2A (+1) |
-| 4 | — | — | BAICULESCU CONSTRUCT | 42825119 | 4100 | 76.79M | — | revenue ≥2M (+2), age 6y (+1), C1A+C2A (+1) |
-| 4 | — | — | CARMIN POPSTAR PROD | 32814503 | 4100 | 192.33M | — | revenue ≥2M (+2), age 12y (+1), C1A+C2A (+1) |
-| 4 | — | — | COMPAS SMART TECH INSTAL | 43959984 | 4791 | 2.14M | — | revenue ≥2M (+2), age 5y (+1), C1A+C2A (+1) |
-| 4 | — | — | CONSTRUCTII ERBASU | 430008 | 4100 | 2268.41M | — | revenue ≥2M (+2), age 34y (+1), C1A+C2A (+1) |
-| 4 | — | — | DAMINO PRODCOM | 5349452 | 4322 | 5.64M | — | revenue ≥2M (+2), age 32y (+1), C1A+C2A (+1) |
-| 4 | — | — | EDIL VAL CONSTRUCT | 18154711 | 4100 | 32.77M | — | revenue ≥2M (+2), age 21y (+1), C1A+C2A (+1) |
-| 4 | — | — | ELBI ELECTRIC & LIGHTING | 17412685 | 4643 | 398.02M | — | revenue ≥2M (+2), age 21y (+1), C1A+C2A (+1) |
-| 3 | — | — | BND WERT | 38798970 | 7021 | 0.74M | — | revenue ≥500k (+1), age 8y (+1), C1A+C2A (+1) |
-| 3 | — | — | CDI ELECTRIC WORLD | 48675720 | 4100 | 0.82M | — | revenue ≥500k (+1), age 3y (+1), C1A+C2A (+1) |
-| 2 | — | — | ALSIM ALARKO SANAYI TESISLERI VE TICARET ANONIM SIRKETI ISTANBUL - SUCURSALA BUCURESTI M6 METRO | 45662709 | 4211 | — | — | age 4y (+1), C1A+C2A (+1) |
-| 2 | — | — | ARVINSTAL ENGINEERING | 43236766 | 4312 | 0.34M | — | age 6y (+1), C1A+C2A (+1) |
-| 2 | — | — | AVANTAJ REAL CONSTRUCT | 37592173 | 4120 | 0.31M | — | age 9y (+1), C1A+C2A (+1) |
-| 2 | — | — | DEFA SERV | 42772782 | 4322 | 0.15M | — | age 6y (+1), C1A+C2A (+1) |
-| 2 | — | — | DUMIAN | 8928130 | 4941 | — | — | age 30y (+1), C1A+C2A (+1) |
-| 1 | — | — | CONSTRUCTION ART ELECTRIC PROJECT | 50908037 | 4222 | — | — | C1A+C2A (+1) |
-| 0 | — | — | ACIM | 2534480 | — | — | — |  |
-| 0 | — | — | AVI PROD GRUP | 18690809 | — | — | — |  |
-| 0 | — | — | BOGDAN ELECTRIC | 18126673 | — | — | — |  |
+# ANRE Prefilter — Maramures
+Generated: 2026-08-21 via targetare.ro API
+Total: 31 firms • Ready for research (≥6): 10
+Remaining API credits: 172
+| Score | Firm | CUI | CAEN | Revenue | Emp | Site | Founded | C1/C2 | Notes |
+|-------|------|-----|------|---------|-----|------|---------|-------|-------|
+| 8 | INTERAMPER-MM | 16676956 | 4321 | 0.96M | 7 | ✓ | 2004 | ✓ | CAEN 4321 (+3), website (+2), revenue ≥500k (+1), age 22y (+1), C1A+C2A (+1) |
+| 8 | ELECTRO S.N. | 24570572 | 4321 | 3.28M | 9 | ✓ | 2008 | C2A | CAEN 4321 (+3), website (+2), revenue ≥2M (+2), age 18y (+1) |
+| 7 | FLOMARTEO INSTAL | 32501379 | 4321 | 4.14M | 10 | — | 2013 | ✓ | CAEN 4321 (+3), revenue ≥2M (+2), age 13y (+1), C1A+C2A (+1) |
+| 7 | GOOD WATCOM | 43933011 | 4321 | 2.20M | 4 | — | 2021 | ✓ | CAEN 4321 (+3), revenue ≥2M (+2), age 5y (+1), C1A+C2A (+1) |
+| 7 | IANFER ELECTRIC | 43502493 | 4321 | 6.24M | 7 | — | 2020 | ✓ | CAEN 4321 (+3), revenue ≥2M (+2), age 6y (+1), C1A+C2A (+1) |
+| 7 | RGB ENERGY TEAM | 36672487 | 4321 | 7.32M | 12 | — | 2016 | ✓ | CAEN 4321 (+3), revenue ≥2M (+2), age 10y (+1), C1A+C2A (+1) |
+| 6 | MCG ELECTRICAL SOLUTIONS | 37487453 | 4321 | 0.57M | 2 | — | 2017 | ✓ | CAEN 4321 (+3), revenue ≥500k (+1), age 9y (+1), C1A+C2A (+1) |
+| 6 | PROF CON INVEST | 35758327 | 4120 | 105.85M | 14 | ✓ | 2016 | ✓ | website (+2), revenue ≥2M (+2), age 10y (+1), C1A+C2A (+1) |
+| 6 | ROLY & DENY ELECTRIC | 30323445 | 4321 | 1.64M | 8 | — | 2012 | ✓ | CAEN 4321 (+3), revenue ≥500k (+1), age 14y (+1), C1A+C2A (+1) |
+| 6 | ELEWATUL SERV | 9858440 | 4321 | 9.71M | 25 | — | 1997 | C1A | CAEN 4321 (+3), revenue ≥2M (+2), age 29y (+1) |
+| 5 | FS GREEN CONSTRUCT | 44402107 | 4391 | 0.51M | 3 | ✓ | 2021 | ✓ | website (+2), revenue ≥500k (+1), age 5y (+1), C1A+C2A (+1) |
+| 5 | GEO SALES | 45676356 | 4321 | — | — | — | 2022 | ✓ | CAEN 4321 (+3), age 4y (+1), C1A+C2A (+1) |
+| 5 | GREEN INVEST ELECTRICS | 46557442 | 4321 | 0.15M | 3 | — | 2022 | ✓ | CAEN 4321 (+3), age 4y (+1), C1A+C2A (+1) |
+| 5 | GREENSTAR ELECTRICAL | 46284695 | 4321 | 0.10M | 2 | — | 2022 | ✓ | CAEN 4321 (+3), age 4y (+1), C1A+C2A (+1) |
+| 5 | OAN ELECTRIC | 43128101 | 4321 | 0.23M | 1 | — | 2020 | ✓ | CAEN 4321 (+3), age 6y (+1), C1A+C2A (+1) |
+| 5 | P.C. - LUMEX - F.I. | 18300868 | 4321 | 0.45M | 6 | — | 2006 | ✓ | CAEN 4321 (+3), age 20y (+1), C1A+C2A (+1) |
+| 5 | REVOLUT ELECTRIC | 47146062 | 4321 | — | — | — | 2022 | ✓ | CAEN 4321 (+3), age 4y (+1), C1A+C2A (+1) |
+| 5 | URBAN BUILDSKILL | 41452194 | 4100 | 0.78M | 2 | ✓ | 2019 | ✓ | website (+2), revenue ≥500k (+1), age 7y (+1), C1A+C2A (+1) |
+| 5 | VOLTELECT LINE | 31237334 | 4321 | 0.26M | 3 | — | 2013 | ✓ | CAEN 4321 (+3), age 13y (+1), C1A+C2A (+1) |
+| 5 | ROXAMPER | 21100134 | 4321 | 0.69M | 4 | — | 2007 | C2A | CAEN 4321 (+3), revenue ≥500k (+1), age 19y (+1) |
+| 4 | IERDAN | 17530389 | 4100 | 8.21M | 11 | — | 2005 | ✓ | revenue ≥2M (+2), age 21y (+1), C1A+C2A (+1) |
+| 4 | BARSAN ELECTRIC | 19200476 | 4321 | 0.27M | 3 | — | 2006 | C2A | CAEN 4321 (+3), age 20y (+1) |
+| 4 | VEST-ENERGOLUX | 12993560 | 7112 | 0.49M | 1 | — | 2000 | C1A | CAEN 7112 (+3), age 26y (+1) |
+| 3 | ANTREPRIZA MONTAJ INSTALATII | 2196150 | 4221 | 49.47M | 154 | — | 1992 | C2A | revenue ≥2M (+2), age 34y (+1) |
+| 2 | FAM MOB DESIGN | 44716207 | 3109 | — | — | — | 2021 | ✓ | age 5y (+1), C1A+C2A (+1) |
+| 2 | MAXBUILD | 51542910 | 4100 | 0.85M | 2 | — | 2025 | ✓ | revenue ≥500k (+1), C1A+C2A (+1) |
+| 2 | S.I.V.A. TENTEA | 37157200 | 4332 | 0.08M | 6 | — | 2017 | ✓ | age 9y (+1), C1A+C2A (+1) |
+| 2 | SGC SMARTSERV NOVIS | 37605680 | 3314 | 0.10M | 2 | — | 2017 | ✓ | age 9y (+1), C1A+C2A (+1) |
+| 2 | VILLER | 23452056 | 4781 | 0.49M | 1 | — | 2008 | ✓ | age 18y (+1), C1A+C2A (+1) |
+| 1 | TRANSLEA ELECTRO | 39788371 | 4222 | 0.01M | — | — | 2018 | C2A | age 8y (+1) |
+| 0 | TEHNOPLUS | 4151545 | — | — | — | — | — | C1A | ERR: 404 Not Found — /companies/4151545 — {"success":false,"error |

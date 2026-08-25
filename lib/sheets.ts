@@ -487,6 +487,13 @@ export interface PublicLead {
   bransament: string;
   // Doar semnal (există/nu există) — pozele în sine se trimit firmei, nu public.
   arePoze: boolean;
+  /**
+   * Am vorbit noi cu clientul la telefon și cererea stă în picioare. E singurul
+   * lucru pe care o firmă nu poate să-l afle uitându-se la card, și exact ce
+   * lipsea din propunerea de valoare: până acum feedul arăta la fel o cerere
+   * verificată și una intrată acum zece minute. Vine din coloana V.
+   */
+  verificata: boolean;
   // Public intenționat: firma decide dacă revendică și în funcție de faptul că
   // omul poate vorbi abia seara. Nu identifică pe nimeni.
   intervalApel: string;
@@ -564,6 +571,9 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       termen: l.termen,
       bransament: l.bransament,
       arePoze: Boolean(l.poze.trim()),
+      // „ofertare" înseamnă tot că am vorbit cu el; stările închise nu ajung
+      // până aici, sunt filtrate de `isOpenForClaims`.
+      verificata: l.crmStatus === 'valida' || l.crmStatus === 'ofertare',
       intervalApel: l.intervalApel,
     }))
     .reverse(); // cele mai noi primele
@@ -1705,4 +1715,104 @@ export async function updateCrmFirm(
   }
 
   return readFirmRow(row);
+}
+
+// ── Todo: sarcinile de mână ale zilei, pentru /admin/azi ────────────────────
+// Tot ce se poate deduce din Sheet (cereri de calificat, „revin" scadente,
+// follow-up-uri pe firme, revendicări de verificat) se calculează în
+// lib/daily-agenda.ts și NU se stochează. Aici stau doar sarcinile care nu
+// rezultă din date: „trimite factura", „follow-up Voltech pe abonament".
+
+const TODO_SHEET = 'Todo';
+const TODO_HEADER = ['Timestamp', 'Text', 'Scadent', 'Făcut la', 'Legat de'];
+const TODO_TEXT_COL = 1; // B
+const TODO_DUE_COL = 2; // C
+const TODO_DONE_COL = 3; // D
+
+export interface TodoItem {
+  /** ISO — cheia rândului, ca la Leads și CRM Firme. */
+  timestamp: string;
+  text: string;
+  /** YYYY-MM-DD — ziua în care trebuie făcută. */
+  due: string;
+  /** ISO când a fost bifată. Gol = deschisă. */
+  doneAt: string;
+  /** Opțional: un link (admin, firmă, cerere) de deschis lângă sarcină. */
+  link: string;
+}
+
+function readTodoRow(r: string[]): TodoItem {
+  return {
+    timestamp: r[0] || '',
+    text: r[TODO_TEXT_COL] || '',
+    due: r[TODO_DUE_COL] || '',
+    doneAt: r[TODO_DONE_COL] || '',
+    link: r[4] || '',
+  };
+}
+
+export async function getTodos(): Promise<TodoItem[]> {
+  let rows: string[][];
+  try {
+    rows = await readRows(TODO_SHEET);
+  } catch {
+    // Tabul nu există încă (prima sarcină îl creează).
+    return [];
+  }
+  return rows
+    .filter((r) => Number.isFinite(Date.parse(r[0] || '')))
+    .map(readTodoRow);
+}
+
+export async function addTodo(todo: { text: string; due: string; link?: string }): Promise<TodoItem> {
+  const timestamp = new Date().toISOString();
+  const values = [timestamp, todo.text, todo.due, '', todo.link || ''];
+  try {
+    await appendRow(TODO_SHEET, values);
+  } catch {
+    // Tabul „Todo" nu există încă — îl creăm cu header și reîncercăm o dată.
+    await createSheetTab(TODO_SHEET);
+    await appendRow(TODO_SHEET, TODO_HEADER);
+    await appendRow(TODO_SHEET, values);
+  }
+  return readTodoRow(values);
+}
+
+export async function updateTodo(
+  timestamp: string,
+  changes: { done?: boolean; due?: string; text?: string },
+): Promise<TodoItem> {
+  const rows = await readRows(TODO_SHEET);
+  const index = rows.findIndex((r, i) => i > 0 && r[0] === timestamp);
+  if (index === -1) throw new Error('Sarcina nu există în tabul Todo.');
+  const row = rows[index];
+  const sheetRow = index + 1;
+  const data: { range: string; values: string[][] }[] = [];
+
+  if (changes.done !== undefined) {
+    const doneAt = changes.done ? new Date().toISOString() : '';
+    data.push({ range: `${TODO_SHEET}!D${sheetRow}`, values: [[doneAt]] });
+    row[TODO_DONE_COL] = doneAt;
+  }
+  if (changes.due !== undefined) {
+    data.push({ range: `${TODO_SHEET}!C${sheetRow}`, values: [[changes.due]] });
+    row[TODO_DUE_COL] = changes.due;
+  }
+  if (changes.text !== undefined) {
+    data.push({ range: `${TODO_SHEET}!B${sheetRow}`, values: [[changes.text]] });
+    row[TODO_TEXT_COL] = changes.text;
+  }
+
+  if (data.length) {
+    const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+    await withRetry(
+      () =>
+        sheets.spreadsheets.values.batchUpdate({
+          spreadsheetId: SPREADSHEET_ID,
+          requestBody: { valueInputOption: 'RAW', data },
+        }),
+      'update Todo',
+    );
+  }
+  return readTodoRow(row);
 }

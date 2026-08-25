@@ -23,6 +23,7 @@ import {
   getCallWindowLabel,
   getTimelineLabel,
 } from '@/lib/utils-shared';
+import { mountingForRoof, parseConsumLunar, sizeKwp } from '@/lib/pv-estimate';
 import { type LeadCardData } from './LeadCard';
 import LeadFeed from './LeadFeed';
 import HowItWorks from './HowItWorks';
@@ -39,6 +40,12 @@ export const metadata: Metadata = {
   alternates: { canonical: '/cereri' },
 };
 
+
+// Zecimala are sens doar la sistemele mici, unde 0,5 kW chiar schimbă oferta.
+// Peste 10 kW „≈155,2 kW" ar sugera o precizie pe care estimarea nu o are.
+function formatKw(kwp: number): string {
+  return kwp >= 10 ? String(Math.round(kwp)) : String(kwp).replace('.', ',');
+}
 
 export default async function CereriPage() {
   let leads: PublicLead[] = [];
@@ -61,11 +68,21 @@ export default async function CereriPage() {
 
   const cards: LeadCardData[] = leads.map((l) => {
     const ageDays = calendarAgeDays(l.id);
+    // 57% dintre cererile de după 18 aug 2026 vin fără putere: omul bifează „nu
+    // știu, aștept recomandarea instalatorului", ceea ce e un răspuns corect,
+    // dar lasă cardul fără niciun reper de dimensionare. Consumul îl completează
+    // mai des, așa că de acolo scoatem puterea orientativă — aceeași formulă ca
+    // în calculator (`sizeKwp`), marcată vizibil ca estimare.
+    const consum = parseConsumLunar(l.consumLunar);
+    const kwpEstimat = !l.putere && consum
+      ? sizeKwp(consum.kwhLunar, l.judet, mountingForRoof(l.tipAcoperis))
+      : null;
     return {
       id: l.id,
       tipLabel: getProjectTypeLabel(l.tipProiect),
       judet: l.judet,
       putere: l.putere,
+      putereEstimataLabel: kwpEstimat ? `≈${formatKw(kwpEstimat)} kW estimat` : '',
       suprafata: l.suprafata,
       segment: l.segment,
       postedLabel: cerereAgeLabel(ageDays),
@@ -74,7 +91,7 @@ export default async function CereriPage() {
       acoperisLabel: l.tipAcoperis ? getRoofTypeLabel(l.tipAcoperis) : '',
       fazareLabel: l.fazare ? getPhaseLabel(l.fazare) : '',
       bransamentLabel: l.bransament ? getConnectionShort(l.bransament) : '',
-      consumLunar: l.consumLunar,
+      consumLunar: consum ? consum.label : l.consumLunar,
       finantareLabel: l.finantare ? getFinancingShort(l.finantare) : '',
       finantareTone: getFinancingTone(l.finantare),
       stocareLabel: l.stocare ? getYesNoLabel(l.stocare) : '',
@@ -82,6 +99,7 @@ export default async function CereriPage() {
       termenLabel: l.termen ? getTimelineLabel(l.termen) : '',
       intervalApelLabel: l.intervalApel ? getCallWindowLabel(l.intervalApel) : '',
       arePoze: l.arePoze,
+      verificata: l.verificata,
     };
   });
 

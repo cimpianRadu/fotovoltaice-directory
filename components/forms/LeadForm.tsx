@@ -146,9 +146,10 @@ const PANEL_KEYS = ['suprafata', 'fazare', 'stocare', 'wallbox'] as const;
 type Step4Key = (typeof STEP4_KEYS)[number];
 type PanelKey = (typeof PANEL_KEYS)[number];
 
-// `putere` și `consumLunar` sunt câmpuri libere, deci n-au opțiune „Nu știu" în
-// listă ca dropdown-urile. Bifa o ține local: în Sheet tot celulă goală se
-// scrie, fiindcă „nu știu" înseamnă lipsa cifrei, nu un text în coloană.
+// `putere` și `consumLunar` cer o cifră, nu o opțiune dintr-o listă, deci n-au
+// cum să aibă un „Nu știu" printre valori ca dropdown-urile. Bifa o ține local:
+// în Sheet tot celulă goală se scrie, fiindcă „nu știu" înseamnă lipsa cifrei,
+// nu un text în coloană.
 type UnknownKey = 'putere' | 'consumLunar';
 
 const EMPTY_STEP4 = Object.fromEntries(STEP4_KEYS.map((k) => [k, ''])) as Record<Step4Key, string>;
@@ -253,7 +254,6 @@ function NumberWithUnknown({
   onChange,
   onToggle,
   unknownLabel,
-  free = false,
   required = false,
 }: {
   name: UnknownKey;
@@ -264,7 +264,6 @@ function NumberWithUnknown({
   onChange: (key: string, value: string) => void;
   onToggle: (key: UnknownKey) => void;
   unknownLabel: string;
-  free?: boolean;
   /** Cere o cifră SAU bifa. Bifa dezactivează inputul, deci iese din validare. */
   required?: boolean;
 }) {
@@ -273,8 +272,8 @@ function NumberWithUnknown({
       <Input
         label={label}
         name={name}
-        type={free ? 'text' : 'number'}
-        inputMode={free ? 'text' : 'numeric'}
+        type="number"
+        inputMode="numeric"
         placeholder={placeholder}
         value={value}
         disabled={unknown}
@@ -289,6 +288,92 @@ function NumberWithUnknown({
           className="w-3.5 h-3.5 rounded border-gray-300 text-primary focus:ring-primary"
         />
         {unknownLabel}
+      </label>
+    </div>
+  );
+}
+
+export type ConsumUnit = 'lei' | 'kWh';
+
+/**
+ * Consumul lunar: cifră plus unitatea aleasă explicit, nu text liber. Până pe
+ * 25 aug 2026 câmpul era liber, iar în Sheet ajungeau alături „300kw", „500 lei
+ * lunar", „170kwh" și „30" — firma care citea cardul nu putea spune dacă e lunar
+ * sau anual, în kWh sau în lei, deci nu putea folosi cifra la nimic.
+ *
+ * Cu unitatea știută, consumul devine singurul reper de dimensionare pe cererile
+ * unde omul bifează „nu știu" la putere (57% dintre cele intrate după 18 aug
+ * 2026), fiindcă din el iese puterea orientativă de pe cardul din /cereri.
+ */
+function ConsumField({
+  valoare,
+  unit,
+  unknown,
+  onValoare,
+  onUnit,
+  onToggle,
+}: {
+  valoare: string;
+  unit: ConsumUnit;
+  unknown: boolean;
+  onValoare: (value: string) => void;
+  onUnit: (unit: ConsumUnit) => void;
+  onToggle: () => void;
+}) {
+  // kWh primul și implicit, ca în widgetul de baterii de pe prima pagină: e
+  // cifra exactă de pe factură, în timp ce leii trec printr-o ipoteză de tarif.
+  const units: { value: ConsumUnit; label: string; placeholder: string; hint: string }[] = [
+    { value: 'kWh', label: 'kWh / lună', placeholder: 'ex: 190', hint: 'Cifra de pe factură.' },
+    { value: 'lei', label: 'lei / lună', placeholder: 'ex: 250', hint: 'Convertim la 1,30 lei/kWh.' },
+  ];
+  const active = units.find((u) => u.value === unit) ?? units[0];
+
+  return (
+    <div>
+      <label htmlFor="consumLunar" className="block text-sm font-medium text-gray-700 mb-1">
+        Consum lunar mediu
+      </label>
+      <div className="flex gap-2">
+        <input
+          id="consumLunar"
+          name="consumLunar"
+          type="number"
+          inputMode="numeric"
+          min="0"
+          placeholder={active.placeholder}
+          value={valoare}
+          disabled={unknown}
+          onChange={(e) => onValoare(e.target.value)}
+          className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed"
+        />
+        <div className="flex shrink-0 rounded-lg border border-gray-300 overflow-hidden">
+          {units.map((u) => (
+            <button
+              key={u.value}
+              type="button"
+              disabled={unknown}
+              aria-pressed={u.value === unit}
+              onClick={() => onUnit(u.value)}
+              className={`px-3 text-xs font-medium transition-colors disabled:cursor-not-allowed disabled:text-gray-300 ${
+                u.value === unit
+                  ? 'bg-primary text-white'
+                  : 'bg-white text-gray-600 hover:bg-gray-50'
+              }`}
+            >
+              {u.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <p className="mt-1 text-[11px] text-gray-400">{active.hint}</p>
+      <label className="mt-1.5 flex items-center gap-2 text-xs text-gray-600 cursor-pointer">
+        <input
+          type="checkbox"
+          checked={unknown}
+          onChange={onToggle}
+          className="w-3.5 h-3.5 rounded border-gray-300 text-primary focus:ring-primary"
+        />
+        Nu știu, nu am factura la îndemână
       </label>
     </div>
   );
@@ -426,6 +511,10 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     putere: false,
     consumLunar: false,
   });
+  // `details.consumLunar` ține doar cifra; unitatea stă separat și se lipește de
+  // ea la salvare, ca în coloana U să intre „250 lei" sau „190 kWh", nu un număr
+  // gol pe care nimeni nu-l poate interpreta.
+  const [consumUnit, setConsumUnit] = useState<ConsumUnit>('kWh');
   const [enrichStatus, setEnrichStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   // Pasul 5 e post-trimitere: cererea există deja în Sheet, ecranul doar mai
   // strânge consumul și mesajul. `extraDone` desparte pasul 5 de confirmare.
@@ -648,7 +737,8 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   // în Sheet, aici doar completăm consumul (col. U) și mesajul (col. J). Un eșec
   // nu blochează nimic — omul merge mai departe, cererea lui există.
   async function saveExtraStep() {
-    const consumLunar = unknown.consumLunar ? '' : details.consumLunar.trim();
+    const consumValoare = unknown.consumLunar ? '' : details.consumLunar.trim();
+    const consumLunar = consumValoare ? `${consumValoare} ${consumUnit}` : '';
     const mesaj = values.mesaj.trim();
     if (!leadRef || (!consumLunar && !mesaj)) {
       setExtraDone(true);
@@ -688,16 +778,13 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
         </div>
 
         <div className="rounded-xl border border-border bg-white p-5 sm:p-6 space-y-4">
-          <NumberWithUnknown
-            name="consumLunar"
-            label="Consum lunar mediu"
-            placeholder="ex: 350 lei sau 250 kWh"
-            value={details.consumLunar}
+          <ConsumField
+            valoare={details.consumLunar}
+            unit={consumUnit}
             unknown={unknown.consumLunar}
-            onChange={setDetail}
-            onToggle={toggleUnknown}
-            free
-            unknownLabel="Nu știu, nu am factura la îndemână"
+            onValoare={(v) => setDetail('consumLunar', v)}
+            onUnit={setConsumUnit}
+            onToggle={() => toggleUnknown('consumLunar')}
           />
 
           <div>

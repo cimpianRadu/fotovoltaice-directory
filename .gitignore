@@ -61,3 +61,14 @@ next-env.d.ts
 # python bytecode (scripturile de reel din social/)
 __pycache__/
 *.pyc
+
+# Contracte și date de client (repo public)
+clienti/
+
+# Documente de business (repo public). Se păstrează local, nu se comit.
+# În docs/ rămân doar template-urile și referințele tehnice.
+docs/*
+!docs/contract-publicitate-template.md
+!docs/anre-api-reference.md
+STRATEGIE.md
+facebook-posts-batch-1.md

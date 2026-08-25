@@ -549,5 +549,12 @@
     "judet": "Satu Mare",
     "cui": "28169736",
     "reason": "Lead inbound prin formularul /listeaza-firma, dar firmă de medicină veterinară (obiect secundar activități sanitar-veterinare, contactul declară explicit că este medic veterinar). ANRE not-found, fără niciun serviciu fotovoltaic. Respins."
+  },
+  {
+    "societate": "ELECTRO METERING",
+    "judet": "Maramures",
+    "cui": "42988183",
+    "reason": "Nu mai execută instalări fotovoltaice (confirmat direct, 2026-08-21). Fusese listată din mai 2026.",
+    "rejectedAt": "2026-08-21"
   }
 ]

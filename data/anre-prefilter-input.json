@@ -1,652 +1,397 @@
 [
   {
-    "societate": "4 Alternative Electric Energy  (4 A.E.E.)",
-    "judet": "Brasov",
-    "cui": "5287520",
+    "societate": "FAM MOB DESIGN",
+    "judet": "Maramures",
+    "cui": "44716207",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0368348786, 0726780253",
-    "sediu": "Str. Florilor, nr. 20 , bl. 7, sc C, ap 6, cp 500246",
-    "localitate": "Brasov"
+    "telefon": "0743843586",
+    "sediu": "175",
+    "localitate": "COPALNIC-MANASTUR"
   },
   {
-    "societate": "66 PRO",
-    "judet": "Brasov",
-    "cui": "8587114",
+    "societate": "FLOMARTEO INSTAL",
+    "judet": "Maramures",
+    "cui": "32501379",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0722320699 0268220011",
-    "sediu": "str Vanatorilor nr 86, CP 507160",
-    "localitate": "Poiana Marului (BV)"
+    "telefon": "0742992569 0362816843",
+    "sediu": "Com Miresu Mare, nr 297,",
+    "localitate": "Miresu Mare (MM)"
   },
   {
-    "societate": "ACIM",
-    "judet": "Bucuresti",
-    "cui": "2534480",
+    "societate": "FS GREEN CONSTRUCT",
+    "judet": "Maramures",
+    "cui": "44402107",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0745071000",
-    "sediu": "B-dul BASARABIA   256  Sector 3",
-    "localitate": "Bucuresti"
+    "telefon": "0755222439",
+    "sediu": "Str. Rozelor  nr  4",
+    "localitate": "Mocira"
   },
   {
-    "societate": "AEP SYSTEMS",
-    "judet": "Cluj",
-    "cui": "36024981",
+    "societate": "GEO SALES",
+    "judet": "Maramures",
+    "cui": "45676356",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0742379405",
-    "sediu": "MAGURI-RACATAU   147",
-    "localitate": "Maguri-Racatau"
+    "telefon": "0731551967",
+    "sediu": "Str. Seinel nr. 49A",
+    "localitate": "Seini"
   },
   {
-    "societate": "AFTERNET",
-    "judet": "Brasov",
-    "cui": "21584069",
+    "societate": "GOOD WATCOM",
+    "judet": "Maramures",
+    "cui": "43933011",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0722513051",
-    "sediu": "Str. Molidului nr 43B  Et:10  Ap:138",
-    "localitate": "Brasov"
+    "telefon": "0740131425",
+    "sediu": "B-dul Independentei nr 57M",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "ALERION SERVICE RO",
-    "judet": "Bucuresti",
-    "cui": "47938542",
+    "societate": "GREEN INVEST ELECTRICS",
+    "judet": "Maramures",
+    "cui": "46557442",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0747055436",
-    "sediu": "Calea FLOREASCA   175         Et:3      PARTEA B",
-    "localitate": "Bucuresti"
+    "telefon": "0770729579",
+    "sediu": "Str. ZAVOIULUI   20",
+    "localitate": "Viseu de Sus"
   },
   {
-    "societate": "ALSIM ALARKO SANAYI TESISLERI VE TICARET ANONIM SIRKETI ISTANBUL - SUCURSALA BUCURESTI M6 METRO",
-    "judet": "Bucuresti",
-    "cui": "45662709",
+    "societate": "GREENSTAR ELECTRICAL",
+    "judet": "Maramures",
+    "cui": "46284695",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0724323266, 0731000015",
-    "sediu": "Bd. Doina Cornea nr. 2P, et. 2, sect. 6",
-    "localitate": "Bucuresti"
+    "telefon": "0727600009",
+    "sediu": "UNGURENI   278",
+    "localitate": "UNGURENI"
   },
   {
-    "societate": "ANANDA ELECTRIC",
-    "judet": "Ilfov",
-    "cui": "51454109",
+    "societate": "IANFER ELECTRIC",
+    "judet": "Maramures",
+    "cui": "43502493",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0731039377",
-    "sediu": "Str Biruin?ei   71C   spatiu birou.parter si etaj 1.   Popesti Leordeni",
-    "localitate": "Popesti-Leordeni"
+    "telefon": "0746882445",
+    "sediu": "Str. CRISTIAN   5D     Ap:4",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "ANDALEX SPY",
-    "judet": "Brasov",
-    "cui": "33207623",
+    "societate": "IERDAN",
+    "judet": "Maramures",
+    "cui": "17530389",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0735130859",
-    "sediu": "Str Riului nr 74",
-    "localitate": "Zarnesti (BV)"
+    "telefon": "0740 180845, 0262 480775 0262 480775",
+    "sediu": "Str. Principala,  nr. 22 cp 437370",
+    "localitate": "Valea Chioarului"
   },
   {
-    "societate": "ANSEBO ELECTRIC",
-    "judet": "Brasov",
-    "cui": "36730936",
+    "societate": "INTERAMPER-MM",
+    "judet": "Maramures",
+    "cui": "16676956",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0727705485",
-    "sediu": "Str. EGRETEI   29    Ap:70   cam.2",
-    "localitate": "Brasov"
+    "telefon": "0724230177",
+    "sediu": "Sat Lapusel nr. 199",
+    "localitate": "Recea (MM)"
   },
   {
-    "societate": "ARCOM ENERGY",
-    "judet": "Cluj",
-    "cui": "42355130",
+    "societate": "MAXBUILD",
+    "judet": "Maramures",
+    "cui": "51542910",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0758532697 /0744309258",
-    "sediu": "Pta Timotetei Ciparu, nr 9, ap 67/2",
-    "localitate": "Cluj-Napoca"
+    "telefon": "0745102308 / 0745001845",
+    "sediu": "Pta CUZA VODA   7  -   Sighetu Marmatiei",
+    "localitate": "Sighetu Marmatiei"
   },
   {
-    "societate": "ARTEON AUTOMATIZATION GROUP",
-    "judet": "Ilfov",
-    "cui": "42046674",
+    "societate": "MCG ELECTRICAL SOLUTIONS",
+    "judet": "Maramures",
+    "cui": "37487453",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0775521840",
-    "sediu": "Drm FERMEI   112   Bl:3         Ap:6   Demisol. Camera 2",
-    "localitate": "Popesti-Leordeni"
+    "telefon": "0764163612, 0756878036",
+    "sediu": "Sat Fanate nr. 193A",
+    "localitate": "Cernesti"
   },
   {
-    "societate": "ARVINSTAL ENGINEERING",
-    "judet": "Cluj",
-    "cui": "43236766",
+    "societate": "OAN ELECTRIC",
+    "judet": "Maramures",
+    "cui": "43128101",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0732934938",
-    "sediu": "Str. SOPORULUI   17  Sc:B   Et:1   Ap:13",
-    "localitate": "Cluj-Napoca"
+    "telefon": "0769276983",
+    "sediu": "Str. Dimitrie Cantemir nr. 6, ap. 106",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "AUDIOTECH MULTIMEDIA GROUP",
-    "judet": "Bucuresti",
-    "cui": "17867768",
+    "societate": "P.C. - LUMEX - F.I.",
+    "judet": "Maramures",
+    "cui": "18300868",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0744484841",
-    "sediu": "Str. CETATEA VECHE   4   Bl:39   Sc:2   Et:2   Ap:32   CAM. 2 sector 4",
-    "localitate": "Bucuresti"
+    "telefon": "0726 218529 0362 415853",
+    "sediu": "Bd. Bucuresti nr. 35, ap. 47, cp 430051",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "AUTOCASA",
-    "judet": "Cluj",
-    "cui": "13255626",
+    "societate": "PROF CON INVEST",
+    "judet": "Maramures",
+    "cui": "35758327",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0751068582 sau 0744 566183 0264 312102, 0264314701",
-    "sediu": "Str. Dr. I. Ratiu nr. 5, bl. P1, sc. D, ap. 38,",
-    "localitate": "Turda"
+    "telefon": "0748147907",
+    "sediu": "str. Vasile Lucaciu, nr. 162",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "AVANTAJ REAL CONSTRUCT",
-    "judet": "Cluj",
-    "cui": "37592173",
+    "societate": "REVOLUT ELECTRIC",
+    "judet": "Maramures",
+    "cui": "47146062",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0745598829",
-    "sediu": "Str. Dinu Lipatti nr. 33",
-    "localitate": "Cluj-Napoca"
+    "telefon": "0752757624, 0745287527",
+    "sediu": "Str. GRANICERILOR   102    Ap:17",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "AVI PROD GRUP",
-    "judet": "Bucuresti",
-    "cui": "18690809",
+    "societate": "RGB ENERGY TEAM",
+    "judet": "Maramures",
+    "cui": "36672487",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "021/256.81.10, 0742091275 021/256.80.18",
-    "sediu": "str. Popa Lazar, nr. 8, sector 2.",
-    "localitate": "Bucuresti"
+    "telefon": "0745102308",
+    "sediu": "P-ta Cuza Voda nr. 7",
+    "localitate": "Sighetu Marmatiei"
   },
   {
-    "societate": "AXA ELECTRIC",
-    "judet": "Ilfov",
-    "cui": "33161992",
+    "societate": "ROLY & DENY ELECTRIC",
+    "judet": "Maramures",
+    "cui": "30323445",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0723043937",
-    "sediu": "Sos Giurgiului, nr 156, Cam 1 si 2, Et 1,",
-    "localitate": "Jilava"
+    "telefon": "0745107276",
+    "sediu": "Str. Rodnei nr. 2A",
+    "localitate": "Viseu de Sus"
   },
   {
-    "societate": "BAICULESCU CONSTRUCT",
-    "judet": "Bucuresti",
-    "cui": "42825119",
+    "societate": "S.I.V.A. TENTEA",
+    "judet": "Maramures",
+    "cui": "37157200",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0726.335.353",
-    "sediu": "soseaua Colentina, nr. 2D, camera 1, bl. 5, sc.B, et. 8, ap. 68",
-    "localitate": "Bucuresti"
+    "telefon": "0744977052",
+    "sediu": "Str. ALEXANDRU IOAN CUZA   174A",
+    "localitate": "Borsa [MM]"
   },
   {
-    "societate": "BMF GRUP SOLUTII INTEGRATE",
-    "judet": "Bucuresti",
-    "cui": "31238674",
+    "societate": "SGC SMARTSERV NOVIS",
+    "judet": "Maramures",
+    "cui": "37605680",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0371107478; 0736365171< 0727699999",
-    "sediu": "Calea Vitan nr 289, et. 1, cam.13, sector 3",
-    "localitate": "Bucuresti"
+    "telefon": "0748794289",
+    "sediu": "Str. Dragos Voda nr. 75",
+    "localitate": "Viseu de Sus"
   },
   {
-    "societate": "BND WERT",
-    "judet": "Ilfov",
-    "cui": "38798970",
+    "societate": "URBAN BUILDSKILL",
+    "judet": "Maramures",
+    "cui": "41452194",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0765174022",
-    "sediu": "B-dul Pipera nr  150F  Et:1   Cam 1",
-    "localitate": "Voluntari"
+    "telefon": "07459962337",
+    "sediu": "Str. Liliacului nr 17D/1",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "BOGDAN ELECTRIC",
-    "judet": "Brasov",
-    "cui": "18126673",
+    "societate": "VILLER",
+    "judet": "Maramures",
+    "cui": "23452056",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0769047920",
-    "sediu": "Rucar nr 53 A",
-    "localitate": "Rucar"
+    "telefon": "0755900494",
+    "sediu": "Str Grivitei nr 49",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "BP GENERAL SOLUTIONS",
-    "judet": "Bucuresti",
-    "cui": "35203911",
+    "societate": "VOLTELECT LINE",
+    "judet": "Maramures",
+    "cui": "31237334",
     "codes": [
       "C1A",
       "C2A"
     ],
     "hasBoth": true,
-    "telefon": "0725632750; 0314228649 0314228649",
-    "sediu": "Str. Bacia, nr.14  sect 4",
-    "localitate": "Bucuresti"
+    "telefon": "0362089961",
+    "sediu": "Str Stadionului nr 7.  mARAMURES",
+    "localitate": "Recea (MM)"
   },
   {
-    "societate": "CARMIN POPSTAR PROD",
-    "judet": "Bucuresti",
-    "cui": "32814503",
+    "societate": "ANTREPRIZA MONTAJ INSTALATII",
+    "judet": "Maramures",
+    "cui": "2196150",
     "codes": [
-      "C1A",
       "C2A"
     ],
-    "hasBoth": true,
-    "telefon": "0723566411",
-    "sediu": "Str. Ciucea nr. 8, cam. 2, bl. L18, sc. 2, et. 2, ap. 69, sect. 3",
-    "localitate": "Bucuresti"
+    "hasBoth": false,
+    "telefon": "0262/216525, 0744516040 0262 215015,0262 212862",
+    "sediu": "Aleea Electrolizei nr 1, cp 430392",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "CDI ELECTRIC WORLD",
-    "judet": "Cluj",
-    "cui": "48675720",
+    "societate": "BARSAN ELECTRIC",
+    "judet": "Maramures",
+    "cui": "19200476",
     "codes": [
-      "C1A",
       "C2A"
     ],
-    "hasBoth": true,
-    "telefon": "",
-    "sediu": "G GILAU   1330A     Biroul 1   Gilau",
-    "localitate": "Gilau"
+    "hasBoth": false,
+    "telefon": "0740732071, 0768529585",
+    "sediu": "Str. Principala, nr 709",
+    "localitate": "BARSANA"
   },
   {
-    "societate": "CIUCHEANU SERVICE",
-    "judet": "Brasov",
-    "cui": "8523129",
+    "societate": "ELECTRO S.N.",
+    "judet": "Maramures",
+    "cui": "24570572",
     "codes": [
-      "C1A",
       "C2A"
     ],
-    "hasBoth": true,
-    "telefon": "0722 430 701, 0368 405221 0368 405221",
-    "sediu": "Calea Bucuresti nr.94, bl.1, sc.A, ap.43",
-    "localitate": "Brasov"
+    "hasBoth": false,
+    "telefon": "0262 228001, 0733086623; 0733978749 0262 228001",
+    "sediu": "Bd Unirii nr 20, Spatiul Comercial nr 2",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "CLAR ELECTRIC",
-    "judet": "Bucuresti",
-    "cui": "33522345",
+    "societate": "ELEWATUL SERV",
+    "judet": "Maramures",
+    "cui": "9858440",
     "codes": [
-      "C1A",
-      "C2A"
+      "C1A"
     ],
-    "hasBoth": true,
-    "telefon": "0212411273, 0722325327 0212411273",
-    "sediu": "Str. Brigadier Dumitrescu Tanase nr. 5",
-    "localitate": "Bucuresti"
+    "hasBoth": false,
+    "telefon": "0744 579241, 0262215231 0262 215231",
+    "sediu": "Str. Fabricii  nr. 29A",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "CO CRI PRODSERV",
-    "judet": "Cluj",
-    "cui": "9527188",
+    "societate": "ROXAMPER",
+    "judet": "Maramures",
+    "cui": "21100134",
     "codes": [
-      "C1A",
       "C2A"
     ],
-    "hasBoth": true,
-    "telefon": "0745 607987, 0745 637374, 0264 4418",
-    "sediu": "Str. Vanatorului,  nr. 29",
-    "localitate": "Baciu"
+    "hasBoth": false,
+    "telefon": "0740265657 0262348170",
+    "sediu": "Sat Moisei nr. 591B, cp 437195",
+    "localitate": "Moisei"
   },
   {
-    "societate": "COMPAS SMART TECH INSTAL",
-    "judet": "Cluj",
-    "cui": "43959984",
+    "societate": "TEHNOPLUS",
+    "judet": "Maramures",
+    "cui": "4151545",
     "codes": [
-      "C1A",
-      "C2A"
+      "C1A"
     ],
-    "hasBoth": true,
-    "telefon": "0745275782",
-    "sediu": "Str. PRIMAVERII   8      Sc:8   Et:1   Ap:271",
-    "localitate": "Cluj-Napoca"
+    "hasBoth": false,
+    "telefon": "0362407489;0735804913 0362407489",
+    "sediu": "Bd. Unirii nr. 53",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "CONAV ELECTRIC",
-    "judet": "Brasov",
-    "cui": "25039650",
+    "societate": "TRANSLEA ELECTRO",
+    "judet": "Maramures",
+    "cui": "39788371",
     "codes": [
-      "C1A",
       "C2A"
     ],
-    "hasBoth": true,
-    "telefon": "0736 370537 0722 353695",
-    "sediu": "Sat Poiana Marului nr. 1062, Zona Varf, Cam. 2",
-    "localitate": "Poiana Marului (BV)"
+    "hasBoth": false,
+    "telefon": "0722260127 0262224302",
+    "sediu": "Str. Petofi Sandor nr 30A",
+    "localitate": "Baia Mare"
   },
   {
-    "societate": "CONELECTRO TEHNIC",
-    "judet": "Ilfov",
-    "cui": "44475451",
+    "societate": "VEST-ENERGOLUX",
+    "judet": "Maramures",
+    "cui": "12993560",
     "codes": [
-      "C1A",
-      "C2A"
+      "C1A"
     ],
-    "hasBoth": true,
-    "telefon": "0744351579",
-    "sediu": "Sos. PRELUNGIREA GIURGIULUI   29               CORP C8",
-    "localitate": "Jilava"
-  },
-  {
-    "societate": "CONSTRUCTII ERBASU",
-    "judet": "Bucuresti",
-    "cui": "430008",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "021.232.35.45,0746224654 021.232.35.05",
-    "sediu": "Str. Nicolae Caranfil, nr 72, bl.XXIIA, parter, ap.1, sector 1",
-    "localitate": "Bucuresti"
-  },
-  {
-    "societate": "CONSTRUCTION ART ELECTRIC PROJECT",
-    "judet": "Bucuresti",
-    "cui": "50908037",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0723286605",
-    "sediu": "Str. Principatele Unite nr. 18, Parter, cam. 1, sect. 4",
-    "localitate": "Bucuresti"
-  },
-  {
-    "societate": "CRISTALIN PROJECT MANAGEMENT",
-    "judet": "Bucuresti",
-    "cui": "25028465",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0752023610, 0216685572,0213136026 0213136026",
-    "sediu": "Str. Berveni nr. 2, cam. 1, sect 1",
-    "localitate": "Bucuresti"
-  },
-  {
-    "societate": "CXB CONSULTING & TECHNICAL SUPPORT",
-    "judet": "Bucuresti",
-    "cui": "25837539",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0730110000",
-    "sediu": "Str. Romulus Ruslan, nr. 27, Camera 2, Etaj 3, Ap. 4",
-    "localitate": "Bucuresti"
-  },
-  {
-    "societate": "DALIX ELECTRIC SERV",
-    "judet": "Ilfov",
-    "cui": "33453571",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0752319880",
-    "sediu": "Strada GARII, Nr. 91",
-    "localitate": "Jilava"
-  },
-  {
-    "societate": "DAMINO PRODCOM",
-    "judet": "Bucuresti",
-    "cui": "5349452",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0722471613",
-    "sediu": "Bdul. Gheorghe Sincai, nr.15, bl.5A, ap.66",
-    "localitate": "Bucuresti"
-  },
-  {
-    "societate": "DEFA SERV",
-    "judet": "Cluj",
-    "cui": "42772782",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0770384585",
-    "sediu": "Intr. GLADIOLEI   3",
-    "localitate": "Turda"
-  },
-  {
-    "societate": "DELARAD COM",
-    "judet": "Cluj",
-    "cui": "9144735",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0743468819",
-    "sediu": "Str. Zambilelor nr. 10, bl. V4, sc. C, et. 2, ap. 28",
-    "localitate": "Turda"
-  },
-  {
-    "societate": "DIGI ROMANIA",
-    "judet": "Bucuresti",
-    "cui": "5888716",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "031.4004440 031.4004441; 031.4004442",
-    "sediu": "Str.Dr.N.Staicovici nr 75",
-    "localitate": "Bucuresti"
-  },
-  {
-    "societate": "DUMIAN",
-    "judet": "Brasov",
-    "cui": "8928130",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0767675782, 0730746788",
-    "sediu": "Str. Paraului nr. 1C, cp 500260",
-    "localitate": "Brasov"
-  },
-  {
-    "societate": "ECI SOLAR",
-    "judet": "Ilfov",
-    "cui": "47994763",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0725107411",
-    "sediu": "Str. EMIL RACOVITA   70  Vila.84A1   Oras Voluntari",
-    "localitate": "Voluntari"
-  },
-  {
-    "societate": "EDIL VAL CONSTRUCT",
-    "judet": "Bucuresti",
-    "cui": "18154711",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0727808077",
-    "sediu": "Str. Caltunasi   2   Bl:174   Sc:B   Et:1   Ap:23 Sect 4",
-    "localitate": "Bucuresti"
-  },
-  {
-    "societate": "ELBI ELECTRIC & LIGHTING",
-    "judet": "Ilfov",
-    "cui": "17412685",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0751789874",
-    "sediu": "str Italia nr 1-7, P3, Bucharest A1 Logistic Park, Depozitul 3",
-    "localitate": "Chiajna"
-  },
-  {
-    "societate": "ELBI ENERGY PROJECTS",
-    "judet": "Bucuresti",
-    "cui": "41166842",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0751789874 0374092431",
-    "sediu": "Sos. Alexandriei nr 203 A  cam. 2 sect 5",
-    "localitate": "Bucuresti"
-  },
-  {
-    "societate": "ELECTRIC & LIGHTING PROJECTS",
-    "judet": "Bucuresti",
-    "cui": "45811983",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0722607766",
-    "sediu": "Intr. Pitulicii nr. 5, b. P26, sc. 3, et. 2, ap. 37, sect. 6",
-    "localitate": "Bucuresti"
-  },
-  {
-    "societate": "ELECTRIC GREEN IMPULSE",
-    "judet": "Bucuresti",
-    "cui": "47487841",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0731039377",
-    "sediu": "Str. VLAHITA   1   Bl:PM18bis   Sc:B   Et:9   Ap:123",
-    "localitate": "Bucuresti"
-  },
-  {
-    "societate": "ELECTRIC TRIUMF INSTALL SERVICE",
-    "judet": "Bucuresti",
-    "cui": "30278670",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0735033254/ 0720053450 0311373937",
-    "sediu": "Str. Aurel persu, nr 85, bl 3, sc 1, parter, ap 2, camera3",
-    "localitate": "Bucuresti"
-  },
-  {
-    "societate": "ELECTRICAL INTEGRATION SYSTEMS",
-    "judet": "Bucuresti",
-    "cui": "35314596",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0722298044",
-    "sediu": "Str. Dumitru Florescu nr  32  Et:1  Cam 21    sect 1",
-    "localitate": "Bucuresti"
-  },
-  {
-    "societate": "ELECTRO CAM ELITE",
-    "judet": "Ilfov",
-    "cui": "48548831",
-    "codes": [
-      "C1A",
-      "C2A"
-    ],
-    "hasBoth": true,
-    "telefon": "0725037852",
-    "sediu": "Str. Slt. PETRE IONEL nr  36",
-    "localitate": "Branesti (IF)"
+    "hasBoth": false,
+    "telefon": "0748296838, 0745107395 0362809288",
+    "sediu": "Str. Stefan Luchian nr. 12",
+    "localitate": "Baia Mare"
   }
 ]

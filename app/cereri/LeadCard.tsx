@@ -12,6 +12,8 @@ export interface LeadCardData {
   tipLabel: string;
   judet: string;
   putere: string;
+  /** „≈2,3 kW estimat" — derivat din consum când clientul n-a dat puterea. */
+  putereEstimataLabel: string;
   suprafata: string;
   segment: string;
   postedLabel: string;
@@ -28,6 +30,7 @@ export interface LeadCardData {
   termenLabel: string;
   intervalApelLabel: string;
   arePoze: boolean;
+  verificata: boolean;
 }
 
 interface LeadCardProps {
@@ -131,7 +134,7 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
 
   const details = [
     lead.judet,
-    lead.putere ? `${lead.putere} kW` : null,
+    lead.putere ? `${lead.putere} kW` : lead.putereEstimataLabel || null,
     lead.suprafata ? `${lead.suprafata} mp` : null,
   ].filter(Boolean);
 
@@ -158,6 +161,16 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
           {lead.arePoze && (
             <span className="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold bg-sky-50 text-sky-700">
               Cu poze
+            </span>
+          )}
+          {/* Amber, nu verde: verdele e deja luat de segment, iar ăsta trebuie
+              să fie primul lucru pe care ochiul îl prinde pe card. */}
+          {lead.verificata && (
+            <span
+              title="Am sunat clientul și ne-a confirmat că vrea ofertă."
+              className="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 text-amber-800"
+            >
+              Verificată telefonic
             </span>
           )}
         </div>
