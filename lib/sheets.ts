@@ -118,6 +118,7 @@ export async function saveLeadToSheet(lead: {
   paginaIntrare?: string;
   intervalApel?: string;
   tipLucrare?: string;
+  capacitateBaterie?: string;
 }): Promise<string> {
   const timestamp = new Date().toISOString();
   await appendRow('Leads', [
@@ -175,6 +176,11 @@ export async function saveLeadToSheet(lead: {
     // Fără ea, un prosumator care voia doar o baterie n-avea unde să spună asta
     // și scria o cifră inventată în „Putere", iar feedul o arăta ca sistem nou.
     lead.tipLucrare || '',     // AL — Tip lucrare
+    // AM — capacitatea de baterie cerută de client, în kWh. Separată de „Putere"
+    // fiindcă la retrofit sunt două numere diferite: ce are montat și ce vrea.
+    // Până acum încăpea unul singur, iar clientul scria bateria în câmpul de
+    // putere ca să aibă unde („15" al prosumatorului din București).
+    lead.capacitateBaterie || '', // AM — Capacitate baterie (kWh)
   ]);
   return timestamp;
 }
@@ -192,6 +198,7 @@ const LEAD_ENRICH_COLUMNS = {
   tipAcoperis: 'S',
   fazare: 'T',
   consumLunar: 'U',
+  capacitateBaterie: 'AM',
   finantare: 'Y',
   localitate: 'Z',
   stocare: 'AA',
@@ -371,6 +378,8 @@ export interface NewLead {
   intervalApel: string;
   // AL — sistem nou / doar baterie / extindere (25 aug 2026).
   tipLucrare: string;
+  // AM — capacitatea de baterie cerută, în kWh. Cifra clientului, nu una calculată.
+  capacitateBaterie: string;
 }
 
 export interface NewListing {
@@ -436,6 +445,7 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     paginaIntrare: r[35] || '',
     intervalApel: r[36] || '',
     tipLucrare: r[37] || '',
+    capacitateBaterie: r[38] || '',
     ...readCrmFields(r),
   }));
 }
@@ -498,6 +508,8 @@ export interface PublicLead {
    * firma, iar fără el o cerere de retrofit arăta identic cu una de sistem nou.
    */
   tipLucrare: string;
+  /** kWh ceruți de client. Bate orice estimare: e singurul lucru pe care l-a spus el. */
+  capacitateBaterie: string;
   // Doar semnal (există/nu există) — pozele în sine se trimit firmei, nu public.
   arePoze: boolean;
   /**
@@ -512,19 +524,80 @@ export interface PublicLead {
   intervalApel: string;
 }
 
-// Redactare pentru afișarea publică a mesajului: emailuri, URL-uri și șiruri
-// de 8+ cifre (telefoane, CNP) sunt eliminate; numele/adresele scrise în text
-// liber NU pot fi prinse aici — pentru ele există coloana MesajAscuns.
+// Redactare pentru afișarea publică a mesajului: emailuri, URL-uri, șiruri de
+// 8+ cifre (telefoane, CNP), coordonate geografice și numele clientului.
+// Trunchierea la 200 de caractere rămâne, dar NU e o măsură de confidențialitate:
+// ce nu vrem public trebuie scos, nu împins după puncte-puncte — cererea din
+// 25 aug 2026 avea numele firmei în primele 200 de caractere.
+const MESAJ_PUBLIC_MAX = 200;
+
 const REDACT_PATTERNS: RegExp[] = [
   /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g,
   /(?:https?:\/\/|www\.)\S+/gi,
+  // Coordonatele intră ÎNAINTEA tiparului de telefon: „45.7912 N / 22.9180 E"
+  // n-are 8 cifre legate, deci tiparul de telefon îl rata, iar un punct pe
+  // hartă identifică hala la fel de exact ca numele scris pe ea.
+  /\d{1,3}\s*°\s*\d{1,2}\s*['′][^,;/]{0,12}?[NSEWVnsewv]/g,
+  /\d{1,3}[.,]\d{3,}\s*°?\s*[NSns]?\s*[,;/]\s*\d{1,3}[.,]\d{3,}\s*°?\s*[EWVewv]?/g,
   /\+?\d(?:[\s.\-()]*\d){7,}/g,
 ];
-const MESAJ_PUBLIC_MAX = 200;
 
-export function sanitizeMesajPublic(mesaj: string): string {
+/**
+ * Cuvintele care apar în sute de denumiri de firme românești. Fără lista asta,
+ * o cerere de la „Solar Energy SRL" ar rămâne fără cuvântul „solar" în tot
+ * mesajul. Redactăm doar ce e distinctiv, adică marca.
+ */
+const GENERIC_NAME_WORDS = new Set([
+  'srl', 'srls', 'sa', 'pfa', 'ii', 'if', 'snc', 'scs', 'societatea', 'company',
+  'solar', 'solaris', 'energy', 'energie', 'energia', 'energo', 'power', 'electric',
+  'electro', 'electrica', 'instal', 'instalatii', 'construct', 'constructii',
+  'proiect', 'proiectare', 'montaj', 'montage', 'service', 'servicii', 'tehnic',
+  'tehnica', 'technic', 'sistem', 'sisteme', 'system', 'systems', 'grup', 'group',
+  'invest', 'investment', 'prod', 'product', 'com', 'comert', 'trans', 'impex',
+  'panouri', 'fotovoltaice', 'romania', 'roman', 'romana', 'international',
+  'industrial', 'industriale', 'green', 'eco', 'total', 'general', 'expert',
+]);
+
+export interface MesajIdentity {
+  numeCompanie: string;
+  numeContact: string;
+}
+
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * Numele pe care clientul le-a scris singur în mesaj. Tiparele de mai sus nu
+ * au cum să le prindă (nu au formă), dar le știm din coloanele B și C ale
+ * ACELEIAȘI cereri, deci le scoatem după valoare. Cererea din 25 aug 2026 a
+ * arătat de ce: omul a semnat „(Vibroblast Hunedoara)" în mesaj, iar feedul
+ * public spunea oricui pe cine să sune direct.
+ *
+ * Rămâne descoperit cazul în care clientul scrie un nume pe care nu-l avem în
+ * rând (o firmă-soră, un vecin). Pentru el există în continuare coloana P.
+ */
+function identityTokens(identity: MesajIdentity): string[] {
+  const raw = `${identity.numeCompanie} ${identity.numeContact}`;
+  return [
+    ...new Set(
+      raw
+        .split(/[^\p{L}\p{N}]+/u)
+        .map((w) => w.trim())
+        .filter((w) => w.length >= 4)
+        .filter((w) => !GENERIC_NAME_WORDS.has(w.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''))),
+    ),
+  ];
+}
+
+export function sanitizeMesajPublic(mesaj: string, identity?: MesajIdentity): string {
   let out = mesaj;
   for (const p of REDACT_PATTERNS) out = out.replace(p, '[eliminat]');
+  if (identity) {
+    for (const token of identityTokens(identity)) {
+      out = out.replace(new RegExp(escapeRegExp(token), 'gi'), '[eliminat]');
+    }
+  }
   out = out.replace(/\s+/g, ' ').trim();
   if (out.length > MESAJ_PUBLIC_MAX) {
     out = `${out.slice(0, MESAJ_PUBLIC_MAX).replace(/\s+\S*$/, '')}…`;
@@ -574,7 +647,7 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       suprafata: l.suprafata,
       putere: l.putere,
       segment: l.segment,
-      mesaj: l.mesajAscuns ? '' : sanitizeMesajPublic(l.mesaj),
+      mesaj: l.mesajAscuns ? '' : sanitizeMesajPublic(l.mesaj, l),
       tipAcoperis: l.tipAcoperis,
       fazare: l.fazare,
       consumLunar: l.consumLunar,
@@ -584,6 +657,7 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       termen: l.termen,
       bransament: l.bransament,
       tipLucrare: l.tipLucrare,
+      capacitateBaterie: l.capacitateBaterie,
       arePoze: Boolean(l.poze.trim()),
       // „ofertare" înseamnă tot că am vorbit cu el; stările închise nu ajung
       // până aici, sunt filtrate de `isOpenForClaims`.

@@ -134,6 +134,7 @@ function focusField(el: unknown) {
 // ajunge în Sheet prin /api/leads/enrich, ca restul detaliilor târzii.
 const STEP4_KEYS = [
   'tipLucrare',
+  'capacitateBaterie',
   'tipAcoperis',
   'putere',
   'consumLunar',
@@ -153,7 +154,7 @@ type PanelKey = (typeof PANEL_KEYS)[number];
 // cum să aibă un „Nu știu" printre valori ca dropdown-urile. Bifa o ține local:
 // în Sheet tot celulă goală se scrie, fiindcă „nu știu" înseamnă lipsa cifrei,
 // nu un text în coloană.
-type UnknownKey = 'putere' | 'consumLunar';
+type UnknownKey = 'putere' | 'consumLunar' | 'capacitateBaterie';
 
 const EMPTY_STEP4 = Object.fromEntries(STEP4_KEYS.map((k) => [k, ''])) as Record<Step4Key, string>;
 const EMPTY_PANEL = Object.fromEntries(PANEL_KEYS.map((k) => [k, ''])) as Record<PanelKey, string>;
@@ -513,6 +514,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   const [unknown, setUnknown] = useState<Record<UnknownKey, boolean>>({
     putere: false,
     consumLunar: false,
+    capacitateBaterie: false,
   });
   // `details.consumLunar` ține doar cifra; unitatea stă separat și se lipește de
   // ea la salvare, ca în coloana U să intre „250 lei" sau „190 kWh", nu un număr
@@ -1156,6 +1158,23 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
                 }
                 required
               />
+
+              {/* Numai la „doar baterie". Are propriul câmp fiindcă e al doilea
+                  număr al cererii, iar până acum clientul îl scria în „Putere",
+                  singurul loc liber: un prosumator din București a trecut acolo
+                  15, adică bateria pe care o vrea, nu puterea panourilor. */}
+              {details.tipLucrare === 'doar-baterie' && (
+                <NumberWithUnknown
+                  name="capacitateBaterie"
+                  label="Ce capacitate de baterie vreți (kWh)"
+                  placeholder="ex: 15"
+                  value={details.capacitateBaterie}
+                  unknown={unknown.capacitateBaterie}
+                  onChange={setDetail}
+                  onToggle={toggleUnknown}
+                  unknownLabel="Nu știu, aștept recomandarea instalatorului"
+                />
+              )}
             </div>
 
             <div className="flex items-start gap-2">

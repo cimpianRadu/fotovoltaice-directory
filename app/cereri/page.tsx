@@ -91,7 +91,8 @@ export default async function CereriPage() {
     // de mic i-ar fi consumul. Prosumatorul din București scrisese „15" în
     // formular exact ca să prindă pragul, iar un card care i-ar fi arătat firmei
     // „5-7 kWh" ar fi ratat singurul număr care contează la el.
-    const baterie = l.tipLucrare === 'doar-baterie' && consum ? bracketFor(consum.kwhLunar) : null;
+    const doarBaterie = l.tipLucrare === 'doar-baterie';
+    const baterie = doarBaterie && consum ? bracketFor(consum.kwhLunar) : null;
     const [bMin, bMax] = baterie ? baterie.capacity : [0, 0];
     const subPragAfm = l.finantare === 'afm-baterii' && bMax < PROGRAM.minKwh;
     return {
@@ -103,11 +104,16 @@ export default async function CereriPage() {
         : kwpEstimat
           ? `≈${formatKw(kwpEstimat)} kW estimat`
           : '',
-      bateriaLabel: !baterie
-        ? ''
-        : subPragAfm
-          ? `baterie min. ${PROGRAM.minKwh} kWh (prag AFM)`
-          : `baterie ≈${bMin === bMax ? bMin : `${bMin}-${bMax}`} kWh`,
+      // Cifra clientului bate orice calcul de-al nostru: dacă a spus câți kWh
+      // vrea, aia e cererea. Estimarea intră doar când n-a spus, iar la AFM
+      // pornește de la pragul programului, nu de la necesarul din consum.
+      bateriaLabel: doarBaterie && l.capacitateBaterie
+        ? `baterie ${l.capacitateBaterie} kWh`
+        : !baterie
+          ? ''
+          : subPragAfm
+            ? `baterie ≈${PROGRAM.minKwh} kWh (pragul AFM)`
+            : `baterie ≈${bMin === bMax ? bMin : `${bMin}-${bMax}`} kWh`,
       tipLucrare: l.tipLucrare,
       tipLucrareLabel: l.tipLucrare ? getWorkTypeShort(l.tipLucrare) : '',
       suprafata: l.suprafata,
