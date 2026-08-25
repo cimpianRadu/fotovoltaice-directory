@@ -594,6 +594,8 @@ export async function sendCountyLeadAlert(data: {
   judet: string;
   tipProiectLabel: string;
   segment: string;
+  /** „Doar baterie" / „Extindere sistem"; gol la sistem nou. */
+  tipLucrareLabel: string;
   putere: string;
   consumLunar: string;
   acoperisLabel: string;
@@ -628,7 +630,8 @@ export async function sendCountyLeadAlert(data: {
       <table style="border-collapse:collapse;width:100%">
         ${data.finantareLabel ? row('Finanțare', `<strong style="color:${finantareColor}">${escapeHtml(data.finantareLabel)}</strong>`) : ''}
         ${data.termenLabel ? row('Vrea instalarea', `<strong>${escapeHtml(data.termenLabel)}</strong>`) : ''}
-        ${data.putere ? row('Putere', `${escapeHtml(data.putere)} kW`) : ''}
+        ${data.tipLucrareLabel ? row('Lucrare', `<strong>${escapeHtml(data.tipLucrareLabel)}</strong>`) : ''}
+        ${data.putere ? row(data.tipLucrareLabel ? 'Are montat' : 'Putere', `${escapeHtml(data.putere)} kW`) : ''}
         ${data.consumLunar ? row('Consum lunar', escapeHtml(data.consumLunar)) : ''}
         ${data.acoperisLabel ? row('Acoperiș', escapeHtml(data.acoperisLabel)) : ''}
         ${data.bransamentLabel ? row('Branșament', escapeHtml(data.bransamentLabel)) : ''}
@@ -659,7 +662,9 @@ export async function sendCountyLeadAlert(data: {
 
   const subjectBits = [
     data.finantareLabel ? getFinancingShort(data.finantareSlug) : '',
-    data.putere ? `${data.putere} kW` : '',
+    // La retrofit puterea e a sistemului lui, nu a cererii: pusă goală în subiect
+    // ar citi-o oricine drept „vrea 6 kW".
+    data.tipLucrareLabel || (data.putere ? `${data.putere} kW` : ''),
     data.termenLabel,
   ].filter(Boolean);
 

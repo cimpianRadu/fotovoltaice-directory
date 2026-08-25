@@ -117,6 +117,7 @@ export async function saveLeadToSheet(lead: {
   campanie?: string;
   paginaIntrare?: string;
   intervalApel?: string;
+  tipLucrare?: string;
 }): Promise<string> {
   const timestamp = new Date().toISOString();
   await appendRow('Leads', [
@@ -170,6 +171,10 @@ export async function saveLeadToSheet(lead: {
     // atribuire, ASTA merge în feedul public: e exact informația de care are
     // nevoie firma înainte să revendice, nu după.
     lead.intervalApel || '',   // AK — Interval preferat pentru apel
+    // AL — ce lucrare vrea: sistem nou, doar baterie sau extindere (25 aug 2026).
+    // Fără ea, un prosumator care voia doar o baterie n-avea unde să spună asta
+    // și scria o cifră inventată în „Putere", iar feedul o arăta ca sistem nou.
+    lead.tipLucrare || '',     // AL — Tip lucrare
   ]);
   return timestamp;
 }
@@ -364,6 +369,8 @@ export interface NewLead {
   paginaIntrare: string;
   // AK — intervalul preferat pentru apel (aug 2026).
   intervalApel: string;
+  // AL — sistem nou / doar baterie / extindere (25 aug 2026).
+  tipLucrare: string;
 }
 
 export interface NewListing {
@@ -428,6 +435,7 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     campanie: r[34] || '',
     paginaIntrare: r[35] || '',
     intervalApel: r[36] || '',
+    tipLucrare: r[37] || '',
     ...readCrmFields(r),
   }));
 }
@@ -485,6 +493,11 @@ export interface PublicLead {
   // Public intenționat, ca fazarea: nu identifică pe nimeni, dar decide dacă
   // proiectul e de azi sau de peste șase luni.
   bransament: string;
+  /**
+   * Sistem nou, doar baterie sau extindere. Public: schimbă complet ce ofertează
+   * firma, iar fără el o cerere de retrofit arăta identic cu una de sistem nou.
+   */
+  tipLucrare: string;
   // Doar semnal (există/nu există) — pozele în sine se trimit firmei, nu public.
   arePoze: boolean;
   /**
@@ -570,6 +583,7 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       wallbox: l.wallbox,
       termen: l.termen,
       bransament: l.bransament,
+      tipLucrare: l.tipLucrare,
       arePoze: Boolean(l.poze.trim()),
       // „ofertare" înseamnă tot că am vorbit cu el; stările închise nu ajung
       // până aici, sunt filtrate de `isOpenForClaims`.

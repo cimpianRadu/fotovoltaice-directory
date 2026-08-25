@@ -28,6 +28,8 @@ import {
   getRoofTypeLabel,
   getCallWindowLabel,
   getTimelineLabel,
+  getWorkTypeShort,
+  isRetrofit,
 } from '@/lib/utils-shared';
 
 /**
@@ -203,6 +205,7 @@ async function announceUnlockedLeads(
           judet: lead.judet,
           tipProiectLabel: getProjectTypeLabel(lead.tipProiect),
           segment: lead.segment,
+          tipLucrareLabel: isRetrofit(lead.tipLucrare) ? getWorkTypeShort(lead.tipLucrare) : '',
           putere: lead.putere,
           consumLunar: lead.consumLunar,
           acoperisLabel: lead.tipAcoperis ? getRoofTypeLabel(lead.tipAcoperis) : '',

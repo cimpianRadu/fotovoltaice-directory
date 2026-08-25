@@ -11,9 +11,12 @@ export interface LeadCardData {
   id: string;
   tipLabel: string;
   judet: string;
-  putere: string;
-  /** „≈2,3 kW estimat" — derivat din consum când clientul n-a dat puterea. */
-  putereEstimataLabel: string;
+  /** Gata de afișat: „15 kW", „are 6 kW" la retrofit, sau „≈2,3 kW estimat". */
+  putereLabel: string;
+  /** „≈5-7 kWh necesar" — capacitatea din tabelul de dimensionare, la „doar baterie". */
+  bateriaLabel: string;
+  tipLucrare: string;
+  tipLucrareLabel: string;
   suprafata: string;
   segment: string;
   postedLabel: string;
@@ -58,16 +61,107 @@ function FinancingLine({ label, tone }: { label: string; tone: FinancingTone }) 
   );
 }
 
+/**
+ * Iconurile badge-urilor, SVG inline pe `currentColor`. Proiectul n-are
+ * bibliotecă de iconuri și nu merită una pentru patru forme: un pachet întreg în
+ * bundle-ul clientului ar contrazice curățenia făcută pe /cereri în iulie 2026.
+ * 12px lângă text de 11px — mai mari trag ochiul de pe cuvânt.
+ */
+function BadgeIcon({ children }: { children: React.ReactNode }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="12"
+      height="12"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="shrink-0"
+    >
+      {children}
+    </svg>
+  );
+}
+
+const ICON_CASA = (
+  <BadgeIcon>
+    <path d="M3 11 12 4l9 7" />
+    <path d="M6 9.6V20h12V9.6" />
+  </BadgeIcon>
+);
+
+const ICON_HALA = (
+  <BadgeIcon>
+    <path d="M4 20V5h8v15" />
+    <path d="M12 20V10h8v10" />
+    <path d="M2.5 20h19" />
+    <path d="M7 8.5h1M7 13h1M16 14h1" />
+  </BadgeIcon>
+);
+
+const ICON_TELEFON = (
+  <BadgeIcon>
+    <rect x="7" y="2.5" width="10" height="19" rx="2.2" />
+    <path d="M10.6 18.4h2.8" />
+  </BadgeIcon>
+);
+
+const ICON_POZE = (
+  <BadgeIcon>
+    <path d="M3 8.8A1.8 1.8 0 0 1 4.8 7h1.9l1.4-2h7.8l1.4 2h1.9A1.8 1.8 0 0 1 21 8.8v8.4A1.8 1.8 0 0 1 19.2 19H4.8A1.8 1.8 0 0 1 3 17.2z" />
+    <circle cx="12" cy="13" r="3.2" />
+  </BadgeIcon>
+);
+
+const ICON_EXTINDERE = (
+  <BadgeIcon>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M12 8.4v7.2M8.4 12h7.2" />
+  </BadgeIcon>
+);
+
+const ICON_BATERIE = (
+  <BadgeIcon>
+    <rect x="2.5" y="7.5" width="16" height="9" rx="2" />
+    <path d="M21.5 10.8v2.4" />
+    <path d="M11.4 9.6 9 12.6h3.2l-1.4 2.4" />
+  </BadgeIcon>
+);
+
+function Badge({
+  icon,
+  tone,
+  title,
+  children,
+}: {
+  icon: React.ReactNode;
+  tone: string;
+  title?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <span
+      title={title}
+      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold ${tone}`}
+    >
+      {icon}
+      {children}
+    </span>
+  );
+}
+
 function SegmentBadge({ segment }: { segment: string }) {
   const rez = segment === 'rezidential';
   return (
-    <span
-      className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold ${
-        rez ? 'bg-emerald-50 text-emerald-700' : 'bg-primary/10 text-primary-dark'
-      }`}
+    <Badge
+      icon={rez ? ICON_CASA : ICON_HALA}
+      tone={rez ? 'bg-emerald-50 text-emerald-700' : 'bg-primary/10 text-primary-dark'}
     >
       {rez ? 'Rezidențial' : 'Comercial'}
-    </span>
+    </Badge>
   );
 }
 
@@ -134,7 +228,8 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
 
   const details = [
     lead.judet,
-    lead.putere ? `${lead.putere} kW` : lead.putereEstimataLabel || null,
+    lead.putereLabel || null,
+    lead.bateriaLabel || null,
     lead.suprafata ? `${lead.suprafata} mp` : null,
   ].filter(Boolean);
 
@@ -158,20 +253,33 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
           <SegmentBadge segment={lead.segment} />
           {/* Pozele în sine nu sunt publice — badge-ul semnalează doar că firma
               care revendică le primește, ceea ce face cererea mai valoroasă. */}
+          {/* Retrofitul schimbă complet ce ofertează firma, deci stă lângă
+              segment, nu jos printre specificații. Sistemul nou e implicitul și
+              n-are nevoie de etichetă. */}
+          {lead.tipLucrare && lead.tipLucrare !== 'sistem-nou' && (
+            <Badge
+              icon={lead.tipLucrare === 'doar-baterie' ? ICON_BATERIE : ICON_EXTINDERE}
+              tone="bg-violet-50 text-violet-700"
+              title="Are deja un sistem montat; puterea de mai jos e a lui, nu a cererii."
+            >
+              {lead.tipLucrareLabel}
+            </Badge>
+          )}
           {lead.arePoze && (
-            <span className="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold bg-sky-50 text-sky-700">
+            <Badge icon={ICON_POZE} tone="bg-sky-50 text-sky-700">
               Cu poze
-            </span>
+            </Badge>
           )}
           {/* Amber, nu verde: verdele e deja luat de segment, iar ăsta trebuie
               să fie primul lucru pe care ochiul îl prinde pe card. */}
           {lead.verificata && (
-            <span
+            <Badge
+              icon={ICON_TELEFON}
+              tone="bg-amber-100 text-amber-800"
               title="Am sunat clientul și ne-a confirmat că vrea ofertă."
-              className="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 text-amber-800"
             >
               Verificată telefonic
-            </span>
+            </Badge>
           )}
         </div>
         <span className="text-xs text-gray-400">{lead.postedLabel}</span>

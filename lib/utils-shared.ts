@@ -166,6 +166,11 @@ export const ROOF_TYPES_REZIDENTIAL = [
   { value: 'tabla', label: 'Tablă (fălțuită sau trapezoidală)' },
   { value: 'panouri-sandwich', label: 'Panouri sandwich' },
   { value: 'terasa', label: 'Terasă / acoperiș plat cu membrană' },
+  // Adăugată pe 25 aug 2026, după o cerere din Cluj: un om de la bloc care voia
+  // panouri pe terasa lui a bifat „Terasă / acoperiș plat", singurul lucru care
+  // semăna, iar firma citea „acoperișul blocului" — cu totul altă lucrare și
+  // alte avize.
+  { value: 'balcon-terasa-apartament', label: 'Balcon / terasa apartamentului' },
   { value: 'sindrila', label: 'Șindrilă bituminoasă' },
   { value: 'azbociment', label: 'Azbociment / eternit' },
   { value: 'la-sol', label: 'La sol (curte sau teren)' },
@@ -314,6 +319,42 @@ export const WALLBOX_OPTIONS = [
 // „Mă informez" e opțiune onestă intenționat: separă clientul care cumpără de
 // cel care compară prețuri, exact ca la finanțare. O cerere „mă informez" e tot
 // o cerere, dar firma știe să n-o sune de trei ori pe zi.
+/**
+ * Ce lucrare vrea, de fapt. Adăugat pe 25 aug 2026 fiindcă feedul nu avea cum să
+ * exprime „am deja panouri, vreau doar baterie": omul era obligat să scrie ceva
+ * în câmpul de putere și scria orice. Un prosumator din București cu 6 kW montați
+ * a trecut acolo „15", crezând că așa se încadrează la Casa Verde Baterii, iar
+ * cardul îl arăta firmelor ca pe o cerere de sistem de 15 kW.
+ *
+ * Sunt cel puțin șase cereri de retrofit în feed (Bihor, Ilfov, Constanța,
+ * Ialomița, Timiș, Brăila), iar Casa Verde Baterii abia se deschide.
+ */
+export const WORK_TYPES = [
+  { value: 'sistem-nou', label: 'Sistem fotovoltaic nou (panouri + invertor)' },
+  { value: 'doar-baterie', label: 'Doar baterie de stocare (am deja panouri)' },
+  { value: 'extindere', label: 'Extindere sau modernizare a unui sistem existent' },
+] as const;
+
+/** Eticheta scurtă, pentru cardul din /cereri unde spațiul e puțin. */
+const WORK_TYPE_SHORT: Record<string, string> = {
+  'sistem-nou': 'Sistem nou',
+  'doar-baterie': 'Doar baterie',
+  extindere: 'Extindere sistem',
+};
+
+export function getWorkTypeLabel(slug: string): string {
+  return WORK_TYPES.find((o) => o.value === slug)?.label ?? slug;
+}
+
+export function getWorkTypeShort(slug: string): string {
+  return WORK_TYPE_SHORT[slug] ?? slug;
+}
+
+/** Lucrările pe un sistem care există deja: puterea declarată e a lui, nu a cererii. */
+export function isRetrofit(tipLucrare: string): boolean {
+  return tipLucrare === 'doar-baterie' || tipLucrare === 'extindere';
+}
+
 export const TIMELINE_OPTIONS = [
   { value: 'cat-mai-repede', label: 'Cât mai repede' },
   { value: '1-3-luni', label: 'În 1-3 luni' },

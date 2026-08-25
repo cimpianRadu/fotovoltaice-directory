@@ -16,6 +16,8 @@ import {
   STORAGE_OPTIONS,
   WALLBOX_OPTIONS,
   TIMELINE_OPTIONS,
+  WORK_TYPES,
+  isRetrofit,
   CALL_WINDOW_OPTIONS,
 } from '@/lib/utils-shared';
 import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
@@ -131,6 +133,7 @@ function focusField(el: unknown) {
 // completează însă abia la pasul 5, după trimitere: la POST pleacă gol și
 // ajunge în Sheet prin /api/leads/enrich, ca restul detaliilor târzii.
 const STEP4_KEYS = [
+  'tipLucrare',
   'tipAcoperis',
   'putere',
   'consumLunar',
@@ -529,6 +532,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   const isRezidential = segment === 'rezidential';
   const projectTypes = isRezidential ? residentialProjectTypes : commercialProjectTypes;
   const roofTypes = isRezidential ? ROOF_TYPES_REZIDENTIAL : ROOF_TYPES_COMERCIAL;
+  const retrofit = isRetrofit(details.tipLucrare);
   const financingTypes = isRezidential ? FINANCING_REZIDENTIAL : FINANCING_COMERCIAL;
 
   function set<K extends keyof typeof values>(key: K, value: string) {
@@ -929,6 +933,14 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   }
 
   const step4Selects: FieldSpec[] = [
+    // Prima întrebare a pasului: schimbă înțelesul câmpului de putere de sub ea
+    // și, pe /cereri, tot ce ofertează firma. Vezi WORK_TYPES.
+    {
+      name: 'tipLucrare',
+      label: 'Ce lucrare vă trebuie',
+      options: opts(WORK_TYPES),
+      required: true,
+    },
     { name: 'tipAcoperis', label: 'Tip acoperiș', options: opts(roofTypes), required: true },
     // Obligatorii din 18 aug 2026. Sunt primele două întrebări pe care le pune
     // firma care ofertează, iar o cerere fără ele ajunge pe /cereri ca un card
@@ -1128,15 +1140,20 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
                 />
               ))}
 
+              {/* La retrofit, întrebarea își schimbă înțelesul: nu mai e „ce
+                  putere vrei", ci „ce ai deja". Un prosumator care voia doar o
+                  baterie n-avea ce răspunde la prima și scria o cifră inventată. */}
               <NumberWithUnknown
                 name="putere"
-                label="Putere dorită (kW)"
-                placeholder={isRezidential ? 'ex: 5' : 'ex: 200'}
+                label={retrofit ? 'Puterea sistemului pe care îl aveți (kW)' : 'Putere dorită (kW)'}
+                placeholder={retrofit ? 'ex: 6' : isRezidential ? 'ex: 5' : 'ex: 200'}
                 value={details.putere}
                 unknown={unknown.putere}
                 onChange={setDetail}
                 onToggle={toggleUnknown}
-                unknownLabel="Nu știu, aștept recomandarea instalatorului"
+                unknownLabel={
+                  retrofit ? 'Nu știu ce putere are' : 'Nu știu, aștept recomandarea instalatorului'
+                }
                 required
               />
             </div>

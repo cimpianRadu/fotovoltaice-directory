@@ -22,8 +22,11 @@ import {
   getYesNoLabel,
   getCallWindowLabel,
   getTimelineLabel,
+  getWorkTypeShort,
+  isRetrofit,
 } from '@/lib/utils-shared';
 import { mountingForRoof, parseConsumLunar, sizeKwp } from '@/lib/pv-estimate';
+import { bracketFor } from '@/lib/battery-sizing';
 import { type LeadCardData } from './LeadCard';
 import LeadFeed from './LeadFeed';
 import HowItWorks from './HowItWorks';
@@ -74,15 +77,28 @@ export default async function CereriPage() {
     // mai des, așa că de acolo scoatem puterea orientativă — aceeași formulă ca
     // în calculator (`sizeKwp`), marcată vizibil ca estimare.
     const consum = parseConsumLunar(l.consumLunar);
-    const kwpEstimat = !l.putere && consum
+    // La retrofit puterea declarată e a sistemului pe care omul îl ARE deja, nu
+    // a cererii, deci nu se estimează nimic din consum: ar fi dimensionarea unui
+    // sistem pe care nu îl cere. Pentru „doar baterie" reperul util e cu totul
+    // altul, capacitatea, și vine din tabelul de dimensionare din ghid.
+    const retrofit = isRetrofit(l.tipLucrare);
+    const kwpEstimat = !retrofit && !l.putere && consum
       ? sizeKwp(consum.kwhLunar, l.judet, mountingForRoof(l.tipAcoperis))
       : null;
+    const baterie = l.tipLucrare === 'doar-baterie' && consum ? bracketFor(consum.kwhLunar) : null;
+    const [bMin, bMax] = baterie ? baterie.capacity : [0, 0];
     return {
       id: l.id,
       tipLabel: getProjectTypeLabel(l.tipProiect),
       judet: l.judet,
-      putere: l.putere,
-      putereEstimataLabel: kwpEstimat ? `≈${formatKw(kwpEstimat)} kW estimat` : '',
+      putereLabel: l.putere
+        ? `${retrofit ? 'are ' : ''}${l.putere} kW`
+        : kwpEstimat
+          ? `≈${formatKw(kwpEstimat)} kW estimat`
+          : '',
+      bateriaLabel: baterie ? `≈${bMin === bMax ? bMin : `${bMin}-${bMax}`} kWh necesar` : '',
+      tipLucrare: l.tipLucrare,
+      tipLucrareLabel: l.tipLucrare ? getWorkTypeShort(l.tipLucrare) : '',
       suprafata: l.suprafata,
       segment: l.segment,
       postedLabel: cerereAgeLabel(ageDays),

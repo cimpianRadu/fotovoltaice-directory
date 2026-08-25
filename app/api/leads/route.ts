@@ -18,6 +18,8 @@ import {
   getRoofTypeLabel,
   getCallWindowLabel,
   getTimelineLabel,
+  getWorkTypeShort,
+  isRetrofit,
 } from '@/lib/utils-shared';
 
 // v3 lărgea destinatarii la partenerii de finanțare, dar bifa spunea „finanțare
@@ -98,6 +100,7 @@ export async function POST(request: Request) {
       (!body.termen && 'termen') ||
       (!body.tipAcoperis && 'tipAcoperis') ||
       (!body.bransament && 'bransament') ||
+      (!body.tipLucrare && 'tipLucrare') ||
       null;
     if (missingDetail) {
       return NextResponse.json(
@@ -107,6 +110,7 @@ export async function POST(request: Request) {
             termen: 'Alegeți cât de repede vreți instalarea (sau „Deocamdată mă informez").',
             tipAcoperis: 'Alegeți tipul de acoperiș (sau „Altul / nu știu").',
             bransament: 'Spuneți dacă există branșament electric (sau „Nu știu").',
+            tipLucrare: 'Alegeți ce lucrare vă trebuie.',
           }[missingDetail],
           field: missingDetail,
         },
@@ -182,6 +186,9 @@ async function notifyCountyAlerts(body: Record<string, string>, leadId: string) 
     judet,
     tipProiectLabel: getProjectTypeLabel((body.tipProiect || '').trim()),
     segment: (body.segment || '').trim(),
+    tipLucrareLabel: isRetrofit((body.tipLucrare || '').trim())
+      ? getWorkTypeShort((body.tipLucrare || '').trim())
+      : '',
     putere: (body.putere || '').trim(),
     consumLunar: (body.consumLunar || '').trim(),
     acoperisLabel: body.tipAcoperis ? getRoofTypeLabel(body.tipAcoperis.trim()) : '',
