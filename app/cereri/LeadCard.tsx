@@ -116,21 +116,6 @@ const ICON_POZE = (
   </BadgeIcon>
 );
 
-const ICON_EXTINDERE = (
-  <BadgeIcon>
-    <circle cx="12" cy="12" r="8.5" />
-    <path d="M12 8.4v7.2M8.4 12h7.2" />
-  </BadgeIcon>
-);
-
-const ICON_BATERIE = (
-  <BadgeIcon>
-    <rect x="2.5" y="7.5" width="16" height="9" rx="2" />
-    <path d="M21.5 10.8v2.4" />
-    <path d="M11.4 9.6 9 12.6h3.2l-1.4 2.4" />
-  </BadgeIcon>
-);
-
 function Badge({
   icon,
   tone,
@@ -236,6 +221,11 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
   // Detalii de ofertare, adăugate în formular în iulie 2026 — cererile mai vechi
   // nu le au, așa că rândul dispare complet când niciunul nu e completat.
   const specs = [
+    // Prima: schimbă înțelesul restului (puterea e a sistemului existent, nu a
+    // cererii). Badge-ul e rezervat lucrurilor care se citesc dintr-o privire.
+    lead.tipLucrare && lead.tipLucrare !== 'sistem-nou'
+      ? { label: 'Lucrare', value: lead.tipLucrareLabel }
+      : null,
     lead.acoperisLabel ? { label: 'Acoperiș', value: lead.acoperisLabel } : null,
     lead.fazareLabel ? { label: 'Alimentare', value: lead.fazareLabel } : null,
     lead.bransamentLabel ? { label: 'Branșament', value: lead.bransamentLabel } : null,
@@ -253,18 +243,6 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
           <SegmentBadge segment={lead.segment} />
           {/* Pozele în sine nu sunt publice — badge-ul semnalează doar că firma
               care revendică le primește, ceea ce face cererea mai valoroasă. */}
-          {/* Retrofitul schimbă complet ce ofertează firma, deci stă lângă
-              segment, nu jos printre specificații. Sistemul nou e implicitul și
-              n-are nevoie de etichetă. */}
-          {lead.tipLucrare && lead.tipLucrare !== 'sistem-nou' && (
-            <Badge
-              icon={lead.tipLucrare === 'doar-baterie' ? ICON_BATERIE : ICON_EXTINDERE}
-              tone="bg-violet-50 text-violet-700"
-              title="Are deja un sistem montat; puterea de mai jos e a lui, nu a cererii."
-            >
-              {lead.tipLucrareLabel}
-            </Badge>
-          )}
           {lead.arePoze && (
             <Badge icon={ICON_POZE} tone="bg-sky-50 text-sky-700">
               Cu poze
