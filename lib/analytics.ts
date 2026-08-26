@@ -19,6 +19,9 @@ type EventName =
   | 'lead_claim_submitted'
   | 'listing_form_submitted'
   | 'waitlist_signup'
+  // Înscriere la alerta „se deschide Casa Verde Baterii" din ghidurile CVB;
+  // props: sursa (ghidul), capacitate (dorită sau 'nespecificat')
+  | 'cvb_alert_signup'
   | 'company_contact_clicked'
   | 'external_link_clicked'
   | 'case_study_installer_clicked'

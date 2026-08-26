@@ -12,29 +12,33 @@ import { formatCurrency } from '@/lib/utils-shared';
 // Pagina acoperă clusterul „în rate", singurul gol comercial verificat cu volum:
 // „panouri fotovoltaice în rate" 480 căutări/lună și „panouri solare în rate"
 // 170, la un CPC de 2,3-2,7 euro, adică de trei ori mai mult decât pe „preț
-// panouri fotovoltaice". Nu aveam nimic pe el.
+// panouri fotovoltaice". Concurentul care ține poziția 2 pe tot clusterul
+// (greenlead.ro) scoate 41% din traficul lui organic dintr-o singură pagină de
+// rate — analiza din 26 aug 2026.
 //
-// Ce NU face pagina, deliberat: nu publică dobânzi, DAE sau exemple de rate.
-// Publicitatea la credit de consum are reguli proprii în România (OUG 50/2010),
-// iar în clipa în care punem o rată pe pagină intrăm sub ele. Costul sistemului
-// și amortizarea sunt terenul nostru și le putem susține cu date proprii;
-// condițiile de creditare le prezintă finanțatorul, pe pagina lui.
+// Decizia veche „nu publicăm dobânzi" (OUG 50/2010) a fost înlocuită la 26 aug
+// 2026 cu o linie mai precisă: publicăm DOAR dobânzile pe care băncile le
+// afișează public, ca informare editorială cu sursa și data la vedere, plus
+// calcule aritmetice marcate explicit ca ilustrare. Nu suntem finanțator și nu
+// promovăm un credit anume; prezentăm piața așa cum arată ea public. Regula
+// never-invent rămâne: fiecare cifră de mai jos are pagină-sursă verificată la
+// data din DOBANZI_VERIFICATE_LA; la refresh se re-verifică toate.
 //
 // Sursa de atribuire e `finantare`, ca să se vadă separat în coloana K din Sheet.
 
 const SURSA = 'finantare';
 
 export const metadata: Metadata = {
-  title: 'Panouri fotovoltaice în rate: ce opțiuni ai în 2026',
+  title: 'Panouri fotovoltaice în rate 2026: dobânzi reale și simulare',
   description:
-    'Cum îți poți instala panouri fotovoltaice în rate: credit bancar, plata în rate prin instalator, leasing pentru firme sau programe AFM. Cere oferte de la instalatori atestați ANRE.',
+    'Dobânzile afișate de bănci în august 2026 pentru panouri fotovoltaice în rate, simulare de rată lunară pe prețuri reale de piață și cum stau PPC, Enel și Hidroelectrica.',
   alternates: { canonical: '/finantare' },
   openGraph: {
     type: 'article',
     url: '/finantare',
-    title: 'Panouri fotovoltaice în rate: ce opțiuni ai în 2026',
+    title: 'Panouri fotovoltaice în rate 2026: dobânzi reale și simulare',
     description:
-      'Credit, rate prin instalator, leasing sau programe AFM. Ce presupune fiecare și cum ceri oferte de la instalatori atestați.',
+      'Dobânzile afișate public de bănci, simulare de rată pe prețuri reale și opțiunile de la furnizorii de energie. Verificat în august 2026.',
   },
 };
 
@@ -42,7 +46,7 @@ const faqs = [
   {
     question: 'Se pot instala panouri fotovoltaice în rate?',
     answer:
-      'Da. Există patru rute uzuale: un credit de nevoi personale luat de dumneavoastră de la o bancă sau un IFN, plata în rate oferită direct de instalator prin partenerul lui de finanțare, leasingul (disponibil pentru firme, nu pentru persoane fizice) și programele de sprijin, care nu sunt finanțare, ci reduc suma de plată. Multe firme din platformă lucrează deja cu una dintre aceste variante.',
+      'Da. Există patru variante uzuale: un credit de nevoi personale luat de dumneavoastră de la o bancă sau un IFN, plata în rate oferită direct de instalator prin partenerul lui de finanțare, leasingul (disponibil pentru firme, nu pentru persoane fizice) și programele de sprijin, care nu sunt finanțare, ci reduc suma de plată. Multe firme din platformă lucrează deja cu una dintre aceste variante.',
   },
   {
     question: 'Ce sumă trebuie finanțată, de fapt?',
@@ -67,11 +71,110 @@ const faqs = [
   {
     question: 'Cum funcționează dacă cer o ofertă aici?',
     answer:
-      'Completați formularul de cerere, iar la pasul de detalii alegeți ruta de finanțare care vi se potrivește. Cererea ajunge la firmele de instalare care acoperă zona dumneavoastră, iar dacă ați indicat că doriți finanțare, credit sau un program de sprijin, poate ajunge și la un partener de finanțare. Dacă ați indicat fonduri proprii, cererea nu se transmite niciunui finanțator.',
+      'Completați formularul de cerere, iar la pasul de detalii alegeți varianta de finanțare care vi se potrivește. Cererea ajunge la firmele de instalare care acoperă zona dumneavoastră, iar dacă ați indicat că doriți finanțare, credit sau un program de sprijin, poate ajunge și la un partener de finanțare. Dacă ați indicat fonduri proprii, cererea nu se transmite niciunui finanțator.',
+  },
+  {
+    question: 'Pot lua panouri fotovoltaice în rate, ca persoană fizică, fără avans?',
+    answer:
+      'Da, există cel puțin un produs bancar dedicat fotovoltaicelor care nu cere avans: la data verificării noastre, creditul ProGreen de la ProCredit Bank era afișat cu avans zero, până la 150.000 de lei pe 5 ani. Și creditele de nevoi personale obișnuite se acordă fără avans, pentru că banii vin în contul dumneavoastră. Condițiile exacte le confirmă banca, nu noi.',
+  },
+  {
+    question: 'PPC oferă panouri fotovoltaice în rate?',
+    answer:
+      'PPC Energie vinde sisteme fotovoltaice la pachet, cu prețuri afișate public între 19.090 lei (3 kWp monofazat) și 45.580 lei (10 kWp trifazat), cu dosarul de prosumator inclus. Plata în tranșe pe factura de energie e afișată la baterii (3 până la 36 de tranșe egale); la panouri, pagina publică nu afișează rate, deci condițiile se cer în ofertă. Cifrele sunt cele publicate de PPC la data verificării noastre din august 2026.',
+  },
+  {
+    question: 'Mai există oferta Enel de panouri în rate?',
+    answer:
+      'Nu. Enel nu mai operează în România: grupul grec PPC a preluat operațiunile Enel în octombrie 2023, iar clienții au fost transferați automat la PPC Energie. Dacă ați căutat oferta Enel pentru panouri, oferta echivalentă de astăzi este cea a PPC, descrisă mai sus.',
+  },
+  {
+    question: 'Hidroelectrica vinde panouri fotovoltaice în rate?',
+    answer:
+      'Nu. Hidroelectrica este furnizor de energie, nu instalator: nu vinde sisteme fotovoltaice și nu oferă rate pentru echipamente. Rolul ei pentru un prosumator e altul: vă cumpără surplusul injectat în rețea, la prețul din contractul de furnizare. Panourile le luați de la un instalator, iar Hidroelectrica rămâne o opțiune de furnizor.',
+  },
+  {
+    question: 'De ce dobânda din reclamă nu e dobânda pe care o primesc eu?',
+    answer:
+      'Pentru că dobânda minimă afișată e de obicei pentru sume mari sau vine la pachet cu condiții: venituri încasate la banca respectivă, asigurare de viață, pachete de beneficii. La suma tipică a unui sistem rezidențial, mai multe bănci aplică tranșa de sumă mică, unde dobânda e vizibil mai mare decât cea de afiș. De asta comparați întotdeauna DAE pe suma și perioada dumneavoastră, nu dobânda din titlu.',
   },
 ];
 
-const ROUTES = [
+// Dobânzile afișate public de bănci, citite direct din paginile lor de produs.
+// Fiecare rând are pagina-sursă verificată la DOBANZI_VERIFICATE_LA; dacă
+// actualizezi o cifră, actualizează și data. Nu adăuga rânduri fără sursă.
+const DOBANZI_VERIFICATE_LA = '26 august 2026';
+
+const CREDITE: { produs: string; dobanda: string; suma: string; nota: string }[] = [
+  {
+    produs: 'ProCredit Bank, creditul ProGreen',
+    dobanda: '7,40% - 10,40% fixă',
+    suma: 'până la 150.000 lei, 5 ani',
+    nota: 'Singurul credit dedicat exclusiv fotovoltaicelor găsit la o bancă; fără avans, există și variantă variabilă IRCC + 3,28%.',
+  },
+  {
+    produs: 'ING Personal, categoria Eco',
+    dobanda: '7,79% variabilă, indiferent de sumă',
+    suma: 'până la 200.000 lei, 5 ani',
+    nota: 'Fixă doar pe tranșe de sumă (11,49% sub 40.000 lei). Cere document de la instalator, emis în ultimele 30 de zile.',
+  },
+  {
+    produs: 'UniCredit, Creditul Verde fără ipotecă',
+    dobanda: '9,49% - 18,99% fixă, după sumă',
+    suma: 'până la 250.000 lei, 60 de rate',
+    nota: 'Panourile sunt pe lista tehnologiilor eligibile, dar la suma unui sistem rezidențial tipic se aplică tranșa mică, 16,99% - 18,99%.',
+  },
+  {
+    produs: 'CEC Bank, nevoi personale online',
+    dobanda: '6,99% cu venituri la CEC / 8,49% standard',
+    suma: 'până la 120.000 lei online, 5 ani',
+    nota: 'Credit generic, fără variantă verde pentru persoane fizice; 20 lei pe lună comision de administrare.',
+  },
+  {
+    produs: 'BCR, nevoi personale George',
+    dobanda: '7,99% - 14,99% fixă',
+    suma: 'până la 250.000 lei, 60 de luni',
+    nota: 'Credit generic; 6,29% doar cu pachet de beneficii și asigurare. Fosta campanie cu dobândă dedicată pentru solar are text expirat din 2023.',
+  },
+  {
+    produs: 'Raiffeisen, Flexicredit',
+    dobanda: '5,95% - 18,35% fixă',
+    suma: '60 de luni',
+    nota: 'Credit generic; varianta „Flexicredit Verde" nu mai apare în oferta publică. Intervalul e larg, dobânda finală depinde de profil.',
+  },
+  {
+    produs: 'TBI Bank, programul Green Energy',
+    dobanda: '9,9% între 10.000 și 60.000 lei',
+    suma: 'până la 60.000 lei, 60 de luni',
+    nota: 'Se acordă prin instalatori parteneri; cifra vine din grila publicată de un partener, TBI nu o afișează pe site-ul propriu.',
+  },
+];
+
+// Ilustrare de rată lunară cu formula anuității, pe dobânzi reale din tabelul
+// de mai sus. Doar dobânda nominală, fără comisioane și asigurări, deci DAE
+// real e mai mare; e o comparație între variante, nu o ofertă.
+const SIMULARE: { label: string; dobandaAnuala: number; nota: string }[] = [
+  { label: 'CEC 6,99%', dobandaAnuala: 6.99, nota: 'condiționat de încasarea veniturilor la CEC' },
+  { label: 'ProCredit ProGreen 7,40%', dobandaAnuala: 7.4, nota: 'credit dedicat fotovoltaicelor, fără avans' },
+  { label: 'ING Eco 7,79%', dobandaAnuala: 7.79, nota: 'dobândă variabilă, se mișcă odată cu IRCC' },
+  { label: 'TBI Green Energy 9,9%', dobandaAnuala: 9.9, nota: 'prin instalatori parteneri' },
+];
+
+const LUNI_SIMULARE = 60;
+
+/** Rata lunară cu formula anuității: S × i / (1 − (1+i)^−n), i = dobânda anuală / 12. */
+function rataLunara(suma: number, dobandaAnuala: number, luni: number): number {
+  const i = dobandaAnuala / 100 / 12;
+  return (suma * i) / (1 - Math.pow(1 + i, -luni));
+}
+
+const ROUTES: {
+  title: string;
+  who: string;
+  body: string;
+  href?: string;
+  hrefLabel?: string;
+}[] = [
   {
     title: 'Credit luat de dumneavoastră',
     who: 'Persoane fizice',
@@ -80,7 +183,7 @@ const ROUTES = [
   {
     title: 'Rate prin instalator',
     who: 'Persoane fizice',
-    body: 'Instalatorul are un partener de finanțare, iar dosarul se face odată cu comanda. E ruta cea mai rapidă și cea mai simplă administrativ. Cereți întotdeauna costul total, nu doar rata lunară, ca să îl puteți compara cu un credit obținut pe cont propriu.',
+    body: 'Instalatorul are un partener de finanțare, iar dosarul se face odată cu comanda. E varianta cea mai rapidă și cea mai simplă administrativ. Cereți întotdeauna costul total, nu doar rata lunară, ca să îl puteți compara cu un credit obținut pe cont propriu.',
   },
   {
     title: 'Leasing',
@@ -101,6 +204,11 @@ export default function FinantarePage() {
   // și spunem de ce, în loc să publicăm o cifră care pare solidă și nu e.
   const solidPoints = curve.points.filter((p) => p.offers >= 4);
 
+  // Baza simulării de rată: un sistem de 5 kWp la mediana intervalului 4-7 kWp
+  // din ofertele scrapate. Se recalculează singură la fiecare refresh de prețuri.
+  const bucket47 = curve.points.find((p) => p.minKwp === 4);
+  const cost5kwp = bucket47 && bucket47.offers >= 4 ? bucket47.median * 5 : null;
+
   return (
     <>
       <JsonLd
@@ -119,13 +227,13 @@ export default function FinantarePage() {
             Panouri fotovoltaice în rate: ce opțiuni aveți în 2026
           </h1>
           <p className="text-gray-500 mt-3 text-lg">
-            Patru rute prin care se plătește un sistem fotovoltaic fără să scoateți toată suma
+            Patru variante prin care se plătește un sistem fotovoltaic fără să scoateți toată suma
             deodată, ce presupune fiecare și la ce să vă uitați înainte să semnați.
           </p>
         </div>
 
         <section className="mb-10">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Cele patru rute</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Cele patru variante</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             {ROUTES.map((r) => (
               <div key={r.title} className="rounded-xl border border-border bg-white p-5">
@@ -136,6 +244,14 @@ export default function FinantarePage() {
                   </span>
                 </div>
                 <p className="text-sm text-gray-600 leading-relaxed">{r.body}</p>
+                {r.href && (
+                  <Link
+                    href={r.href}
+                    className="mt-3 inline-block text-sm font-medium text-primary-dark underline hover:text-primary"
+                  >
+                    {r.hrefLabel} &rarr;
+                  </Link>
+                )}
               </div>
             ))}
           </div>
@@ -206,21 +322,202 @@ export default function FinantarePage() {
 
         <section className="mb-10">
           <h2 className="text-xl font-bold text-gray-900 mb-3">
-            De ce nu găsiți dobânzi și rate pe pagina asta
+            Ce dobânzi afișează băncile pentru panouri fotovoltaice
           </h2>
-          <p className="text-gray-600 text-sm leading-relaxed">
-            Pentru că nu suntem finanțator și nu vrem să vă dăm cifre pe care nu le putem onora.
-            Dobânzile, DAE-ul și condițiile de aprobare diferă de la un finanțator la altul, se
-            schimbă în timp și depind de dosarul fiecăruia. Orice rată pe care am publica-o aici ar
-            fi o ilustrare, nu o ofertă, iar în domeniul creditului diferența asta contează. Ce
-            putem susține cu date proprii e costul sistemului, și pe acela îl publicăm mai sus, cu
-            eșantionul la vedere.
+          <p className="text-gray-600 text-sm leading-relaxed mb-4">
+            Am citit paginile publice de produs ale băncilor la {DOBANZI_VERIFICATE_LA} și am
+            notat exact ce afișează fiecare. Nu sunt oferte de la noi și nu sunt promisiuni:
+            sunt cifrele pe care le veți găsi chiar dumneavoastră pe site-urile lor, puse una
+            lângă alta ca să aveți de unde porni comparația.
           </p>
+
+          <div className="overflow-x-auto rounded-lg border border-border">
+            <table className="w-full text-sm">
+              <thead className="bg-surface text-left">
+                <tr>
+                  <th className="px-4 py-2.5 font-semibold text-gray-900 text-xs uppercase tracking-wide">
+                    Produs
+                  </th>
+                  <th className="px-4 py-2.5 font-semibold text-gray-900 text-xs uppercase tracking-wide">
+                    Dobânda afișată
+                  </th>
+                  <th className="px-4 py-2.5 font-semibold text-gray-900 text-xs uppercase tracking-wide">
+                    Sumă și perioadă
+                  </th>
+                  <th className="px-4 py-2.5 font-semibold text-gray-900 text-xs uppercase tracking-wide">
+                    De reținut
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {CREDITE.map((c) => (
+                  <tr key={c.produs} className="hover:bg-surface/50 transition-colors">
+                    <td className="px-4 py-2.5 text-gray-900 font-medium border-b border-border/50">
+                      {c.produs}
+                    </td>
+                    <td className="px-4 py-2.5 text-gray-900 border-b border-border/50 whitespace-nowrap">
+                      {c.dobanda}
+                    </td>
+                    <td className="px-4 py-2.5 text-gray-600 border-b border-border/50">{c.suma}</td>
+                    <td className="px-4 py-2.5 text-gray-600 border-b border-border/50">{c.nota}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="mt-3 text-xs text-gray-500 leading-relaxed">
+            Dobânzi nominale afișate public, verificate la {DOBANZI_VERIFICATE_LA}. DAE include
+            în plus comisioane și asigurări, deci e mai mare. Băncile își schimbă condițiile
+            fără preaviz; înainte de a semna, verificați cifra direct la bancă.
+          </p>
+
+          <div className="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-4">
+            <p className="text-sm text-amber-900 leading-relaxed">
+              <strong>Capcana tranșelor de sumă:</strong> dobânda minimă din reclame e de obicei
+              pentru credite mari. La suma unui sistem rezidențial, mai multe bănci aplică
+              tranșa mică, unde dobânda e alta: la UniCredit, un credit sub 50.000 lei intră pe
+              16,99% - 18,99%, nu pe minimul de afiș, iar la ING dobânda fixă sub 40.000 lei e
+              11,49%. Dintre produsele verificate, cele la care suma tipică a unui sistem
+              rezidențial chiar ia dobânda de afiș sunt ProCredit ProGreen (7,40%) și CEC
+              (6,99%, cu venituri încasate acolo).
+            </p>
+          </div>
         </section>
 
+        {cost5kwp && bucket47 && (
+          <section className="mb-10">
+            <h2 className="text-xl font-bold text-gray-900 mb-3">
+              Cât ar însemna pe lună: o ilustrare pe cifre reale
+            </h2>
+            <p className="text-gray-600 text-sm leading-relaxed mb-4">
+              Luăm un sistem de 5 kWp la mediana pieței din tabelul de mai sus:{' '}
+              {formatCurrency(bucket47.median)}/kWp × 5 = <strong>{formatCurrency(cost5kwp)}</strong>{' '}
+              cu montaj (din {bucket47.offers} oferte publice, scanate pe {curve.scrapedAt}).
+              Aplicăm formula anuității pe {LUNI_SIMULARE} de luni, cu dobânzile reale din tabel.
+            </p>
+
+            <div className="overflow-x-auto rounded-lg border border-border">
+              <table className="w-full text-sm">
+                <thead className="bg-surface text-left">
+                  <tr>
+                    <th className="px-4 py-2.5 font-semibold text-gray-900 text-xs uppercase tracking-wide">
+                      Varianta
+                    </th>
+                    <th className="px-4 py-2.5 font-semibold text-gray-900 text-xs uppercase tracking-wide">
+                      Rată lunară
+                    </th>
+                    <th className="px-4 py-2.5 font-semibold text-gray-900 text-xs uppercase tracking-wide">
+                      Total rambursat
+                    </th>
+                    <th className="px-4 py-2.5 font-semibold text-gray-900 text-xs uppercase tracking-wide">
+                      De reținut
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="hover:bg-surface/50 transition-colors">
+                    <td className="px-4 py-2.5 text-gray-900 font-medium border-b border-border/50">
+                      Plată integrală
+                    </td>
+                    <td className="px-4 py-2.5 text-gray-900 border-b border-border/50">0 lei/lună</td>
+                    <td className="px-4 py-2.5 text-gray-600 border-b border-border/50">
+                      {formatCurrency(cost5kwp)}
+                    </td>
+                    <td className="px-4 py-2.5 text-gray-600 border-b border-border/50">
+                      cel mai mic cost total, dar cere toată suma acum
+                    </td>
+                  </tr>
+                  {SIMULARE.map((s) => {
+                    const rata = rataLunara(cost5kwp, s.dobandaAnuala, LUNI_SIMULARE);
+                    return (
+                      <tr key={s.label} className="hover:bg-surface/50 transition-colors">
+                        <td className="px-4 py-2.5 text-gray-900 font-medium border-b border-border/50">
+                          {s.label}
+                        </td>
+                        <td className="px-4 py-2.5 text-gray-900 font-semibold border-b border-border/50 whitespace-nowrap">
+                          ~{formatCurrency(Math.round(rata))}/lună
+                        </td>
+                        <td className="px-4 py-2.5 text-gray-600 border-b border-border/50 whitespace-nowrap">
+                          ~{formatCurrency(Math.round(rata * LUNI_SIMULARE))}
+                        </td>
+                        <td className="px-4 py-2.5 text-gray-600 border-b border-border/50">{s.nota}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="mt-3 text-xs text-gray-500 leading-relaxed">
+              Calcul aritmetic cu formula anuității, doar pe dobânda nominală, fără comisioane de
+              analiză, administrare sau asigurări; costul real (DAE) e mai mare la fiecare. E o
+              comparație între variante pe aceeași sumă, nu o ofertă de credit și nu o promisiune
+              de aprobare.
+            </p>
+          </section>
+        )}
+
+        {/* Slotul de partener stă imediat după simularea de rate, nu la finalul
+            paginii: cine tocmai a comparat rate lunare e exact omul care vrea
+            pe cineva care să-l ajute cu finanțarea. Plasarea rămâne marcată
+            „Publicitate" prin componentă; conținutul editorial nu numește și
+            nu recomandă partenerul. */}
         <div className="mb-10">
-          <SponsorBanner position="finantare" />
+          <SponsorBanner position="finantare" title="Partener pentru finanțare și asigurări" />
         </div>
+
+        <section className="mb-10">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">
+            Rate de la furnizorul de energie: PPC, Enel, Hidroelectrica
+          </h2>
+          <p className="text-gray-600 text-sm leading-relaxed mb-4">
+            Mulți caută direct oferta furnizorului de curent, așa că am verificat ce există de
+            fapt, la {DOBANZI_VERIFICATE_LA}, pe paginile publice ale fiecăruia.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="rounded-xl border border-border bg-white p-5">
+              <h3 className="font-bold text-gray-900 mb-2">PPC Energie</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Vinde sisteme la pachet, cu prețuri afișate de la 19.090 lei (3 kWp monofazat) la
+                45.580 lei (10 kWp trifazat), cu panouri JA Solar, invertor Foxess și dosarul de
+                prosumator incluse. Plata în tranșe pe factură e afișată la baterii (3 - 36 de
+                tranșe egale); la panouri, pagina publică nu afișează rate. E un singur catalog,
+                la un singur preț, fără termen de comparație.
+              </p>
+            </div>
+            <div className="rounded-xl border border-border bg-white p-5">
+              <h3 className="font-bold text-gray-900 mb-2">Enel</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Nu mai există în România: grupul grec PPC a preluat operațiunile Enel în octombrie
+                2023, iar clienții au fost transferați automat la PPC Energie. Orice căutare după
+                „panouri în rate Enel" duce, în 2026, la oferta PPC de alături.
+              </p>
+            </div>
+            <div className="rounded-xl border border-border bg-white p-5">
+              <h3 className="font-bold text-gray-900 mb-2">Hidroelectrica</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Este furnizor, nu instalator: nu vinde sisteme fotovoltaice și nu oferă rate
+                pentru echipamente. Pentru un prosumator contează altfel: vă cumpără surplusul
+                injectat în rețea la prețul energiei active din contract. Panourile le luați de
+                la un instalator; Hidroelectrica rămâne o opțiune de furnizor.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">De unde vin cifrele de pe pagina asta</h2>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            Nu suntem finanțator și nu intermediem credite, deci nu avem nimic de vândut în
+            tabelele de mai sus. Dobânzile sunt cele afișate public de bănci pe paginile lor de
+            produs, citite la {DOBANZI_VERIFICATE_LA}; costul sistemelor vine din ofertele
+            publice ale magazinelor, cu eșantionul la vedere; ratele lunare sunt aritmetică pe
+            aceste două cifre, nimic mai mult. Condițiile finale, DAE-ul și aprobarea le
+            stabilește fiecare finanțator pe dosarul dumneavoastră. Când o cifră de aici nu mai
+            corespunde cu pagina băncii, are întâietate pagina băncii.
+          </p>
+        </section>
 
         <section id="faq" className="scroll-mt-20 mb-10">
           <FAQ items={faqs} title="Întrebări frecvente despre finanțare" />
@@ -229,7 +526,7 @@ export default function FinantarePage() {
         <InstallerCta
           sursa={SURSA}
           title="Gata să cereți oferte?"
-          description="Primiți oferte de la instalatori atestați ANRE din județul dumneavoastră. La pasul de detalii puteți spune ce rută de finanțare vă interesează, iar cererea ajunge la firmele potrivite situației."
+          description="Primiți oferte de la instalatori atestați ANRE din județul dumneavoastră. La pasul de detalii puteți spune ce variantă de finanțare vă interesează, iar cererea ajunge la firmele potrivite situației."
           ctaLabel="Cere oferte gratuit"
         />
 

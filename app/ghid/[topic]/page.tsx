@@ -11,6 +11,7 @@ import Markdown from '@/components/ui/Markdown';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
 import BatteryWidget from '@/components/BatteryWidget';
+import CvbAlertForm from '@/components/forms/CvbAlertForm';
 import { GUIDE_CTA } from '@/lib/guide-cta';
 
 /**
@@ -20,6 +21,17 @@ import { GUIDE_CTA } from '@/lib/guide-cta';
  */
 const GUIDE_WIDGET: Record<string, string> = {
   'casa-verde-baterii-2026-program-stocare-afm': 'punctaj',
+};
+
+/**
+ * Ghidurile care primesc formularul „anunță-mă când se deschide sesiunea CVB",
+ * cu secțiunea după care apare. Formularul stă lângă calendarul programului:
+ * exact locul în care cititorul află că data nu e anunțată și rămâne cu
+ * întrebarea „și atunci când?". Rândurile ajung în tabul AlerteCVB din Sheet.
+ */
+const GUIDE_ALERT_FORM: Record<string, string> = {
+  'casa-verde-baterii-2026-program-stocare-afm': 'calendar-update',
+  'casa-verde-baterii-2026-cine-nu-poate-aplica-intrebari': 'cand-se-deschide',
 };
 import { existsSync } from 'fs';
 import { join } from 'path';
@@ -207,6 +219,11 @@ export default async function GuidePage({ params }: Props) {
                   practică. Vezi GUIDE_WIDGET pentru maparea slug -> secțiune. */}
               {GUIDE_WIDGET[guide.slug] === section.id && (
                 <BatteryWidget sursa={`ghid/${guide.slug}#widget`} />
+              )}
+              {/* Alerta de sesiune CVB, montată după secțiunea de calendar.
+                  Vezi GUIDE_ALERT_FORM pentru maparea slug -> secțiune. */}
+              {GUIDE_ALERT_FORM[guide.slug] === section.id && (
+                <CvbAlertForm sursa={`ghid/${guide.slug}`} />
               )}
             </Fragment>
           ))}

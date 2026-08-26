@@ -1312,6 +1312,28 @@ export async function saveWaitlistToSheet(email: string) {
   ]);
 }
 
+/**
+ * Înscriere „anunță-mă când se deschide Casa Verde Baterii". Capacitatea și
+ * invertorul sunt opționale, dar pre-califică tehnic lead-ul: compatibilitatea
+ * invertor-baterie decide ce firme pot oferta când începe programul.
+ * Tabul se creează cu scripts/create-alerte-cvb-sheet.mjs.
+ */
+export async function saveCvbAlertToSheet(alert: {
+  email: string;
+  capacitate?: string;
+  invertor?: string;
+  sursa?: string;
+}) {
+  await appendRow('AlerteCVB', [
+    new Date().toISOString(),
+    alert.email,
+    alert.capacitate || '',
+    alert.invertor || '',
+    alert.sursa || '',
+    '', // status: gol = de notificat la deschiderea sesiunii
+  ]);
+}
+
 export async function saveAdInquiryToSheet(inquiry: {
   tier: string;
   numeFirma: string;
