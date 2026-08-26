@@ -92,12 +92,14 @@ export default function HomeSegmentHero({
   firms,
   counties,
   topCounties,
+  activity,
 }: {
   comercialStats: SegmentStats;
   rezidentialStats: SegmentStats;
   firms: FirmIndexItem[];
   counties: CountyIndexItem[];
   topCounties: CountyIndexItem[];
+  activity: { cereri: number; preluari: number } | null;
 }) {
   const { segment, setSegment } = useSegment();
   const stats = segment === 'rezidential' ? rezidentialStats : comercialStats;
@@ -145,15 +147,29 @@ export default function HomeSegmentHero({
             </Link>
           </div>
 
-          {/* Live-data proof — single discreet trust line (full proof lives in the „De ce" section) */}
+          {/* Dovada că platforma se mișcă, nu că are inventar. Vezi comentariul din
+              app/page.tsx pentru de ce nu apar aici „ofertele trimise". Fallback pe
+              numărul de instalatori dacă Sheets nu răspunde. */}
           <div className="flex justify-center mt-5 mb-7 sm:mb-9">
             <span className="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-200">
               <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0" />
-              <span>
-                <strong className="font-semibold text-white">{stats.count}</strong> instalatori verificați
-                {' · '}
-                <strong className="font-semibold text-white">{stats.anre}</strong> cu atestat ANRE confirmat live
-              </span>
+              {activity ? (
+                <span>
+                  <strong className="font-semibold text-white">{activity.cereri}</strong> de cereri
+                  primite
+                  {' · '}
+                  <strong className="font-semibold text-white">{activity.preluari}</strong> preluări
+                  de la firme
+                </span>
+              ) : (
+                <span>
+                  <strong className="font-semibold text-white">{stats.count}</strong> instalatori
+                  verificați
+                  {' · '}
+                  <strong className="font-semibold text-white">{stats.anre}</strong> cu atestat ANRE
+                  confirmat live
+                </span>
+              )}
             </span>
           </div>
 
@@ -180,20 +196,13 @@ export default function HomeSegmentHero({
         </div>
       </section>
 
-      {/* Benefits strip */}
-      <section className="bg-surface border-b border-border">
-        <div className="max-w-5xl mx-auto px-4 py-6 flex flex-wrap items-center justify-center gap-3 text-center">
-          {['Firme din zona ta', 'Calculator potrivit', 'Ghiduri pe înțelesul tău'].map((b) => (
-            <span
-              key={b}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 bg-white border border-border rounded-full px-4 py-2"
-            >
-              <span className="text-green-600 font-bold">&#10003;</span>
-              {b}
-            </span>
-          ))}
-        </div>
-      </section>
+      {/* Ultimele cereri. Înainte stăteau aici trei bife („Firme din zona ta",
+          „Calculator potrivit", „Ghiduri pe înțelesul tău") care nu spuneau nimic
+          verificabil. Cererile reale fac aceeași treabă și sunt adevărate: omul
+          vede că altcineva a cerut o ofertă acum două ore, din județul lui.
+
+          Banda mare de cereri de mai jos rămâne, dar are alt public și alt scop:
+          aceea e pentru instalatori, cu revendicare. Asta e dovadă pentru client. */}
     </>
   );
 }

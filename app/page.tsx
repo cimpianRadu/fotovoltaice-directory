@@ -32,7 +32,7 @@ import {
   getFinancingTone,
   type FinancingTone,
 } from '@/lib/utils-shared';
-import { getPublicLeads, type PublicLead } from '@/lib/sheets';
+import { getPublicLeads, getLeadsSince, getClaims, type PublicLead } from '@/lib/sheets';
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { PRICING } from '@/lib/pricing';
 import guidesData from '@/data/guides.json';
@@ -132,6 +132,34 @@ export default async function HomePage() {
     console.error('[home] failed to load cereri teaser:', err);
   }
 
+  // Dovada de activitate din capul paginii. Înainte stăteau acolo numărul de
+  // instalatori și cel de atestate, adică inventar: câți sunt în raft. Cifrele
+  // de mai jos spun altceva, că platforma chiar se mișcă în ambele sensuri, iar
+  // pentru omul care tocmai a aterizat aia e întrebarea, nu câte firme avem.
+  //
+  // Ce NU punem aici, deliberat: „oferte trimise". Depinde de firmă să bifeze
+  // „ofertat" în portal, iar la 25 aug 2026 erau 8 din 86 de revendicări. O
+  // cifră pe care n-o controlăm și care arată mai rău decât e realitatea.
+  //
+  // Și de ce scrie „preluări", nu „contactări": o revendicare înseamnă că firma a
+  // luat cererea, nu că a și sunat. Coloana „Contactat la" era completată la UNA
+  // din 86 pe 25 aug 2026, deci „contactări" ar fi o afirmație pe care n-o putem
+  // susține dacă ne-o cere cineva.
+  //
+  // Atestatul ANRE nu se pierde: rămâne în subtitlul de deasupra și în secțiunea
+  // „De ce", unde e argumentat, nu doar numărat.
+  let activity: { cereri: number; preluari: number } | null = null;
+  try {
+    const [toate, claims] = await Promise.all([getLeadsSince(new Date(0)), getClaims()]);
+    // Ascunsele și duplicatele nu sunt cereri, sunt zgomot de registru.
+    const reale = toate.filter((l) => l.status !== 'Ascuns' && !l.duplicatAl);
+    if (reale.length > 0) {
+      activity = { cereri: reale.length, preluari: claims.length };
+    }
+  } catch (err) {
+    console.error('[home] failed to load activity stats:', err);
+  }
+
   return (
     <>
       <JsonLd data={generateOrganizationJsonLd()} />
@@ -144,10 +172,174 @@ export default async function HomePage() {
         firms={FIRM_INDEX}
         counties={COUNTY_INDEX}
         topCounties={TOP_COUNTIES}
+        activity={activity}
       />
+
+      {/* Cereri active, mutate sub hero pe 25 aug 2026, în locul celor trei bife
+          generice („Firme din zona ta", „Calculator potrivit", „Ghiduri pe înțelesul
+          tău"), care nu spuneau nimic verificabil.
+
+          Textul e scris pentru CLIENT, nu pentru instalator, deși cardurile sunt
+          aceleași. Prima variantă zicea „Pentru firme de instalare, revendici cererea"
+          imediat sub un hero care promite oferte clientului, iar cele două audiențe
+          lipite una de alta devariantau. Pitch-ul de revendicare a rămas unde are sens,
+          pe /cereri și în secțiunea de listare din subsol. */}
+      {cereri.length > 0 && (
+        <section className="bg-secondary">
+          <div className="max-w-7xl mx-auto px-4 py-14">
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+              <div>
+                <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
+                  Cereri primite recent
+                </p>
+                <h2 className="text-2xl font-bold text-white">
+                  {cereriTotal} de cereri de ofertă în așteptare
+                </h2>
+                <p className="text-white/70 mt-1 text-sm">
+                  Oameni care caută instalator chiar acum. Cererea dumneavoastră ajunge în aceeași
+                  listă, la firmele cu atestat ANRE din județ.
+                </p>
+              </div>
+              <Link
+                href="/cere-oferta?sursa=home-cereri"
+                className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors"
+              >
+                Cere și dumneavoastră o ofertă
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              {cereri.map((c) => (
+                <Link
+                  key={c.id}
+                  href="/cere-oferta?sursa=home-cereri"
+                  className="rounded-xl bg-white/5 border border-white/10 hover:border-primary/50 hover:bg-white/10 transition-all p-4"
+                >
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span
+                      className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold ${
+                        c.segment === 'rezidential'
+                          ? 'bg-emerald-400/15 text-emerald-300'
+                          : 'bg-primary/20 text-primary'
+                      }`}
+                    >
+                      {c.segment === 'rezidential' ? 'Rezidențial' : 'Comercial'}
+                    </span>
+                    <span className="text-xs text-white/50">{cerereAgeLabel(calendarAgeDays(c.id))}</span>
+                  </div>
+                  <p className="font-semibold text-white text-sm">{getProjectTypeLabel(c.tipProiect)}</p>
+                  <p className="text-white/60 text-sm mt-0.5">
+                    {[c.judet, c.putere ? `${c.putere} kW` : null, c.suprafata ? `${c.suprafata} mp` : null]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </p>
+                  {/* Aceeași informație ca pe /cereri, dar pe fundal navy: tonurile
+                      din LeadCard sunt pentru fundal alb și n-ar avea contrast aici. */}
+                  {c.finantare && (
+                    <p
+                      className={`mt-1.5 flex items-center gap-1.5 text-xs font-medium ${
+                        HOME_FINANCING_TEXT[getFinancingTone(c.finantare)]
+                      }`}
+                    >
+                      <span
+                        aria-hidden
+                        className={`h-1.5 w-1.5 rounded-full ${
+                          HOME_FINANCING_DOT[getFinancingTone(c.finantare)]
+                        }`}
+                      />
+                      {getFinancingShort(c.finantare)}
+                    </p>
+                  )}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Cere Ofertă — buyer-facing CTA, segment-aware count */}
       <HomeOfertaBand comercialCount={COMERCIAL_STATS.count} rezidentialCount={REZIDENTIAL_STATS.count} />
+
+      {/* Finanțare pentru firme. Stătea la 53% din pagină, după secțiunea „De ce",
+          adică unde n-o găsea nimeni. Mutată aici pe 25 aug 2026, la ~20%, imediat
+          după banda de ofertă: alternează și cromatic, navy după surface.
+
+          Prima variantă punea două carduri egale, casă și
+          firmă, cu programele AFM în față — și dilua exact ce vrem promovat aici,
+          variantele private pe care stau partenerii de pe /finantare/firme. Programele
+          rămân în pagina de finanțare și în ghidurile lor, unde sunt argumentate.
+
+          Varianta rezidențială nu dispare, coboară la o linie de subsol: n-are ce căuta
+          la egalitate cu blocul B2B, dar nici nu vrem să rupem legătura spre ea. */}
+      <section className="bg-secondary">
+        <div className="max-w-7xl mx-auto px-4 py-14">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
+              Pentru firme
+            </p>
+            <h2 className="text-2xl font-bold text-white">
+              Soluții de finanțare pentru proiecte fotovoltaice
+            </h2>
+            <p className="text-white/70 mt-2 text-sm leading-relaxed">
+              Un sistem pe hală, depozit sau fabrică nu se plătește obligatoriu dintr-o dată.
+              Diferența dintre ele nu e dobânda, ci cine rămâne proprietar și ce scoateți din
+              buzunar la început.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3 mt-7">
+            {[
+              {
+                title: 'Leasing financiar',
+                upfront: 'Avans',
+                body: 'Finanțatorul cumpără sistemul, dumneavoastră plătiți rate. Bunul finanțat garantează contractul, deci de obicei fără garanții în plus.',
+              },
+              {
+                title: 'Credit de investiții',
+                upfront: 'Avans și garanții',
+                body: 'Sistemul e al firmei din prima zi. Analiza e mai grea, dar costul total al finanțării poate ieși mai mic.',
+              },
+              {
+                title: 'ESCO și leasing operațional',
+                upfront: 'Zero',
+                body: 'Un investitor terț finanțează, construiește și deține sistemul, iar firma plătește lunar pentru energia produsă sau pe baza economiilor garantate prin contract.',
+                highlight: true,
+              },
+            ].map((r) => (
+              <div
+                key={r.title}
+                className="rounded-xl border border-white/10 bg-white/5 p-5 transition-colors hover:border-primary/40 hover:bg-white/10"
+              >
+                <span
+                  className={`inline-block rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
+                    r.highlight ? 'bg-primary/25 text-primary' : 'bg-white/10 text-white/70'
+                  }`}
+                >
+                  {r.upfront}
+                </span>
+                <h3 className="mt-3 font-bold text-white">{r.title}</h3>
+                <p className="mt-1.5 text-sm text-white/60 leading-relaxed">{r.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <Link
+              href="/finantare/firme"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors"
+            >
+              Compară variantele
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
 
       {/* Featured Companies — Premium pool when available, else promote ad packages */}
       <section className="max-w-7xl mx-auto px-4 py-16">
@@ -223,82 +415,6 @@ export default async function HomePage() {
         )}
       </section>
 
-      {/* Cereri active — teaser live pentru instalatori, social proof pentru clienți */}
-      {cereri.length > 0 && (
-        <section className="bg-secondary">
-          <div className="max-w-7xl mx-auto px-4 py-14">
-            <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
-              <div>
-                <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
-                  Pentru firme de instalare
-                </p>
-                <h2 className="text-2xl font-bold text-white">
-                  {cereriTotal} cereri de ofertă în așteptare
-                </h2>
-                <p className="text-white/70 mt-1 text-sm">
-                  Clienți reali care caută instalator acum. Revendici cererea, te sunăm, primești
-                  datele complete. Maxim 3 firme per cerere.
-                </p>
-              </div>
-              <Link
-                href="/cereri"
-                className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors"
-              >
-                Vezi toate cererile
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </Link>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              {cereri.map((c) => (
-                <Link
-                  key={c.id}
-                  href="/cereri"
-                  className="rounded-xl bg-white/5 border border-white/10 hover:border-primary/50 hover:bg-white/10 transition-all p-4"
-                >
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <span
-                      className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold ${
-                        c.segment === 'rezidential'
-                          ? 'bg-emerald-400/15 text-emerald-300'
-                          : 'bg-primary/20 text-primary'
-                      }`}
-                    >
-                      {c.segment === 'rezidential' ? 'Rezidențial' : 'Comercial'}
-                    </span>
-                    <span className="text-xs text-white/50">{cerereAgeLabel(calendarAgeDays(c.id))}</span>
-                  </div>
-                  <p className="font-semibold text-white text-sm">{getProjectTypeLabel(c.tipProiect)}</p>
-                  <p className="text-white/60 text-sm mt-0.5">
-                    {[c.judet, c.putere ? `${c.putere} kW` : null, c.suprafata ? `${c.suprafata} mp` : null]
-                      .filter(Boolean)
-                      .join(' · ')}
-                  </p>
-                  {/* Aceeași informație ca pe /cereri, dar pe fundal navy: tonurile
-                      din LeadCard sunt pentru fundal alb și n-ar avea contrast aici. */}
-                  {c.finantare && (
-                    <p
-                      className={`mt-1.5 flex items-center gap-1.5 text-xs font-medium ${
-                        HOME_FINANCING_TEXT[getFinancingTone(c.finantare)]
-                      }`}
-                    >
-                      <span
-                        aria-hidden
-                        className={`h-1.5 w-1.5 rounded-full ${
-                          HOME_FINANCING_DOT[getFinancingTone(c.finantare)]
-                        }`}
-                      />
-                      {getFinancingShort(c.finantare)}
-                    </p>
-                  )}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Why trust us + ANRE Verification */}
       <section className="bg-surface border-y border-border">

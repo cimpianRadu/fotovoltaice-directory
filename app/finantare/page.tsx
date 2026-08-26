@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
+import type { ReactElement } from 'react';
 import Link from 'next/link';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import FAQ from '@/components/seo/FAQ';
 import InstallerCta from '@/components/InstallerCta';
-import SponsorBanner from '@/components/sponsor/SponsorBanner';
+import { SponsorFeature } from '@/components/sponsor/SponsorBanner';
 import { generateBreadcrumbJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { getKitPriceCurve } from '@/lib/kit-price-curve';
 import { formatCurrency } from '@/lib/utils-shared';
@@ -168,34 +169,87 @@ function rataLunara(suma: number, dobandaAnuala: number, luni: number): number {
   return (suma * i) / (1 - Math.pow(1 + i, -luni));
 }
 
+// Cardurile variantelor: o propoziție de esență + bife scanabile în loc de
+// paragraf. `ok: false` = lucrul la care trebuie să fii atent, nu un avantaj.
 const ROUTES: {
   title: string;
   who: string;
-  body: string;
+  tagline: string;
+  icon: 'bank' | 'bolt' | 'building' | 'percent';
+  points: { ok: boolean; text: string }[];
   href?: string;
   hrefLabel?: string;
 }[] = [
   {
     title: 'Credit luat de dumneavoastră',
     who: 'Persoane fizice',
-    body: 'Un credit de nevoi personale de la o bancă sau un IFN, cu care plătiți instalatorul ca și cum ați plăti cash. Avantajul e că negociați separat costul finanțării și rămâneți liber să alegeți orice instalator. Dezavantajul e că faceți două demersuri în loc de unul.',
+    tagline: 'Bani în cont, plătiți instalatorul ca și cash',
+    icon: 'bank',
+    points: [
+      { ok: true, text: 'Negociați dobânda separat, la banca aleasă de dumneavoastră' },
+      { ok: true, text: 'Rămâneți liber să alegeți orice instalator' },
+      { ok: false, text: 'Două demersuri în loc de unul: creditul și oferta, separat' },
+    ],
   },
   {
     title: 'Rate prin instalator',
     who: 'Persoane fizice',
-    body: 'Instalatorul are un partener de finanțare, iar dosarul se face odată cu comanda. E varianta cea mai rapidă și cea mai simplă administrativ. Cereți întotdeauna costul total, nu doar rata lunară, ca să îl puteți compara cu un credit obținut pe cont propriu.',
+    tagline: 'Totul într-un singur dosar, odată cu comanda',
+    icon: 'bolt',
+    points: [
+      { ok: true, text: 'Cel mai rapid drum: dosarul de finanțare se face la comandă' },
+      { ok: true, text: 'O singură discuție, un singur contract' },
+      { ok: false, text: 'Cereți costul total, nu doar rata lunară, ca să puteți compara' },
+    ],
   },
   {
     title: 'Leasing',
     who: 'Firme',
-    body: 'Disponibil pentru persoane juridice. Sistemul rămâne în proprietatea finanțatorului până la achitarea integrală, iar ratele au un tratament contabil propriu. Pentru o firmă cu consum mare, economia lunară la energie poate acoperi o parte semnificativă din rată.',
+    tagline: 'Rată lunară, sistemul devine al firmei la final',
+    icon: 'building',
+    points: [
+      { ok: true, text: 'Ratele au tratament contabil propriu' },
+      { ok: true, text: 'Economia lunară la energie poate acoperi o parte din rată' },
+      { ok: false, text: 'Sistemul e al finanțatorului până la achitarea integrală' },
+    ],
   },
   {
     title: 'Programe de sprijin',
     who: 'Depinde de program',
-    body: 'Casa Verde, Electric Up, fondurile pentru IMM-uri și cele agricole nu sunt finanțare, ci reduc suma pe care o aveți de plătit. Se pot combina cu un credit. Au sesiuni de înscriere, termene și liste de instalatori eligibili, deci calendarul contează la fel de mult ca banii.',
+    tagline: 'Bani nerambursabili care taie din suma de plată',
+    icon: 'percent',
+    points: [
+      { ok: true, text: 'Casa Verde, Electric Up, fondurile pentru IMM-uri și agricole' },
+      { ok: true, text: 'Se combină cu un credit: programul acoperă o parte, restul se finanțează' },
+      { ok: false, text: 'Sesiuni, termene, instalatori eligibili: calendarul contează cât banii' },
+    ],
   },
 ];
+
+// Iconurile cardurilor: SVG-uri inline pe currentColor, ca badge-urile să ia
+// culoarea brandului din clasa containerului, fără fișiere separate.
+const ROUTE_ICONS: Record<string, ReactElement> = {
+  bank: (
+    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 21h18M5 21V10m14 11V10M9 21v-6h6v6M3 9l9-6 9 6H3z" />
+    </svg>
+  ),
+  bolt: (
+    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M13 2L4.5 13.5H11L10 22l8.5-11.5H12L13 2z" />
+    </svg>
+  ),
+  building: (
+    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 21V5a1 1 0 011-1h9a1 1 0 011 1v16m0-12h4a1 1 0 011 1v11M3 21h18M8 8h1m-1 4h1m-1 4h1m3-8h1m-1 4h1m-1 4h1" />
+    </svg>
+  ),
+  percent: (
+    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 5L5 19M8.5 6.5a2 2 0 11-4 0 2 2 0 014 0zm11 11a2 2 0 11-4 0 2 2 0 014 0z" />
+    </svg>
+  ),
+};
 
 export default function FinantarePage() {
   const curve = getKitPriceCurve();
@@ -222,7 +276,7 @@ export default function FinantarePage() {
       <article className="max-w-4xl mx-auto px-4 py-6">
         <Breadcrumbs items={[{ label: 'Finanțare' }]} />
 
-        <div className="mt-6 mb-8">
+        <div className="mt-6 mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">
             Panouri fotovoltaice în rate: ce opțiuni aveți în 2026
           </h1>
@@ -230,24 +284,93 @@ export default function FinantarePage() {
             Patru variante prin care se plătește un sistem fotovoltaic fără să scoateți toată suma
             deodată, ce presupune fiecare și la ce să vă uitați înainte să semnați.
           </p>
+          {/* Trei promisiuni verificabile, nu slogane: fiecare chip corespunde
+              unei secțiuni de mai jos care chiar o susține. */}
+          <div className="mt-4 flex flex-wrap gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-surface border border-border px-3 py-1 text-xs text-gray-600">
+              <svg className="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              Dobânzi verificate la {DOBANZI_VERIFICATE_LA}
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-surface border border-border px-3 py-1 text-xs text-gray-600">
+              <svg className="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              Prețuri din {curve.totalOffers} de oferte publice
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-surface border border-border px-3 py-1 text-xs text-gray-600">
+              <svg className="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              Zero cifre estimate
+            </span>
+          </div>
+        </div>
+
+        {/* Plasarea principală de partener, sus, cum e vândută. */}
+        <div className="mb-10">
+          <SponsorFeature position="finantare" />
         </div>
 
         <section className="mb-10">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Cele patru variante</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             {ROUTES.map((r) => (
-              <div key={r.title} className="rounded-xl border border-border bg-white p-5">
-                <div className="flex items-center justify-between gap-3 mb-2">
-                  <h3 className="font-bold text-gray-900">{r.title}</h3>
-                  <span className="shrink-0 text-[11px] font-semibold uppercase tracking-wide text-primary-dark bg-primary/10 rounded-full px-2 py-0.5">
-                    {r.who}
+              <div
+                key={r.title}
+                className="flex flex-col rounded-xl border border-border bg-white p-5 hover:border-primary/30 hover:shadow-sm transition-all"
+              >
+                <div className="flex items-start gap-3">
+                  <span className="w-10 h-10 rounded-lg bg-primary/10 text-primary-dark flex items-center justify-center shrink-0">
+                    {ROUTE_ICONS[r.icon]}
                   </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <h3 className="font-bold text-gray-900">{r.title}</h3>
+                      <span className="shrink-0 text-[11px] font-semibold uppercase tracking-wide text-primary-dark bg-primary/10 rounded-full px-2 py-0.5">
+                        {r.who}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-0.5">{r.tagline}</p>
+                  </div>
                 </div>
-                <p className="text-sm text-gray-600 leading-relaxed">{r.body}</p>
+                <ul className="mt-4 space-y-2">
+                  {r.points.map((p) => (
+                    <li key={p.text} className="flex items-start gap-2 text-sm text-gray-600 leading-snug">
+                      {p.ok ? (
+                        <svg
+                          className="w-4 h-4 mt-0.5 text-emerald-600 shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2.5}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : (
+                        <svg
+                          className="w-4 h-4 mt-0.5 text-amber-500 shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                          />
+                        </svg>
+                      )}
+                      <span>{p.text}</span>
+                    </li>
+                  ))}
+                </ul>
                 {r.href && (
                   <Link
                     href={r.href}
-                    className="mt-3 inline-block text-sm font-medium text-primary-dark underline hover:text-primary"
+                    className="mt-auto pt-3 inline-block text-sm font-medium text-primary-dark underline hover:text-primary"
                   >
                     {r.hrefLabel} &rarr;
                   </Link>
@@ -457,15 +580,6 @@ export default function FinantarePage() {
             </p>
           </section>
         )}
-
-        {/* Slotul de partener stă imediat după simularea de rate, nu la finalul
-            paginii: cine tocmai a comparat rate lunare e exact omul care vrea
-            pe cineva care să-l ajute cu finanțarea. Plasarea rămâne marcată
-            „Publicitate" prin componentă; conținutul editorial nu numește și
-            nu recomandă partenerul. */}
-        <div className="mb-10">
-          <SponsorBanner position="finantare" title="Partener pentru finanțare și asigurări" />
-        </div>
 
         <section className="mb-10">
           <h2 className="text-xl font-bold text-gray-900 mb-3">

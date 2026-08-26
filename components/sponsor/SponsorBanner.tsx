@@ -414,6 +414,153 @@ function SponsorCard({
   );
 }
 
+/**
+ * Varianta „featured" a slotului de partener: UN singur partener (primul după
+ * sortarea Premium), gândit pentru capul paginii, cu acțiunile ca butoane
+ * reale, nu iconițe. Există pentru plasările vândute ca poziție principală;
+ * bannerul obișnuit rămâne pentru sloturile de listă. Aceleași evenimente,
+ * același `sp`, aceeași logică de preview, deci raportul lunar din
+ * /admin/analytics/sponsori nu se schimbă.
+ *
+ * Fără partener activ pe poziție nu se randează nimic: în capul paginii un
+ * „spațiu disponibil" ar împinge conținutul în jos fără să aducă nimic.
+ */
+export function SponsorFeature({ position }: { position: SponsorPosition }) {
+  const audience = POSITION_AUDIENCE[position];
+  const previewSlug = usePreviewSlug();
+  const now = useNow();
+
+  const sponsor = useMemo(() => {
+    if (previewSlug) {
+      const pending = ALL_SPONSORS.find((s) => s.slug === previewSlug && !s.active);
+      if (pending && (pending.positions === 'all' || pending.positions.includes(position))) {
+        return pending;
+      }
+    }
+    const live = LIVE_SPONSORS.filter(
+      (s) =>
+        (s.positions === 'all' || s.positions.includes(position)) &&
+        (now === null || isRunning(s.run, now)),
+    );
+    live.sort((a, b) => Number(b.positions === 'all') - Number(a.positions === 'all'));
+    return live[0] ?? null;
+  }, [position, previewSlug, now]);
+
+  const isPreview = Boolean(previewSlug) && sponsor?.slug === previewSlug;
+
+  const ref = useRef<HTMLDivElement>(null);
+  const tracked = useRef(false);
+
+  useEffect(() => {
+    if (isPreview || !sponsor) return;
+    const el = ref.current;
+    if (!el) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !tracked.current) {
+            tracked.current = true;
+            window.umami?.track('sponsor-impression', trackingProps(sponsor, position, audience));
+            obs.disconnect();
+          }
+        });
+      },
+      { threshold: 0.5 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [sponsor, position, audience, isPreview]);
+
+  if (!sponsor) return null;
+
+  const props = trackingProps(sponsor, position, audience);
+  const attrs = (event: 'sponsor-click' | 'sponsor-call' | 'sponsor-whatsapp') =>
+    isPreview
+      ? {}
+      : {
+          'data-umami-event': event,
+          'data-umami-event-sponsor': props.sponsor,
+          'data-umami-event-position': props.position,
+          'data-umami-event-audience': props.audience,
+          'data-umami-event-sp': props.sp,
+        };
+
+  return (
+    <>
+      {isPreview && <PreviewPill />}
+      <div
+        ref={ref}
+        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-secondary-dark via-secondary to-secondary-light p-5 sm:p-6"
+      >
+        {/* Un halo amber discret în colț, ca panoul să nu fie un dreptunghi mort. */}
+        <div
+          aria-hidden
+          className="absolute -right-12 -top-12 w-48 h-48 rounded-full bg-primary/25 blur-3xl"
+        />
+        <p className="relative text-[10px] uppercase tracking-wider text-white/40">Publicitate</p>
+
+        <div className="relative mt-3 flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+          <a
+            href={buildUrl(sponsor.baseUrl, position, audience)}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            {...attrs('sponsor-click')}
+            className="group flex items-center gap-4 flex-1 min-w-0"
+          >
+            <span className="w-14 h-14 rounded-xl bg-white p-1.5 shrink-0 flex items-center justify-center">
+              <Image
+                src={sponsor.logo}
+                alt={sponsor.name}
+                width={56}
+                height={56}
+                className="w-full h-full object-contain"
+              />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-lg font-bold text-white leading-tight group-hover:text-primary-light transition-colors">
+                {sponsor.name}
+              </span>
+              <span className="mt-1 block text-sm text-white/70 leading-snug">
+                {sponsor.messages[audience] ?? sponsor.messages.client}
+              </span>
+            </span>
+          </a>
+
+          <div className="flex flex-wrap gap-2 shrink-0">
+            {sponsor.phone && (
+              <a
+                href={`tel:${sponsor.phone.replace(/\s+/g, '')}`}
+                {...attrs('sponsor-call')}
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-4 py-2.5 transition-colors"
+              >
+                <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                </svg>
+                {sponsor.phone}
+              </a>
+            )}
+            {sponsor.whatsapp && (
+              <a
+                href={`https://wa.me/${sponsor.whatsapp}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                {...attrs('sponsor-whatsapp')}
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/25 hover:bg-white/10 text-white font-semibold text-sm px-4 py-2.5 transition-colors"
+              >
+                <svg className="w-4 h-4 shrink-0 text-[#25D366]" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+                WhatsApp
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
 function PreviewPill() {
   return (
     <div className="fixed bottom-4 left-4 z-50 rounded-full bg-amber-500 px-3 py-1.5 text-[11px] font-semibold text-white shadow-lg">

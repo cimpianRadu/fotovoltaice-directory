@@ -28,6 +28,9 @@ type EventName =
   | 'segment_selected'
   | 'hero_search_select'
   | 'hero_pill_click'
+  // Pastilele cu ultimele cereri din capul paginii, puse acolo pe 25 aug 2026
+  // în locul celor trei bife generice.
+  | 'hero_lead_pill_click'
   | 'cere_oferta_click'
   | 'portal_login_requested'
   | 'portal_login_completed'
