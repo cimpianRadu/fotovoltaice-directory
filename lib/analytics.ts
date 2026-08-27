@@ -29,6 +29,11 @@ type EventName =
   | 'hero_search_select'
   | 'hero_pill_click'
   | 'cere_oferta_click'
+  // Butonul din blocul „Pentru firme" de pe homepage. Secțiunea a fost urcată la
+  // ~20% din pagină pe 25 aug 2026 tocmai ca să fie văzută, dar până acum nu avea
+  // cum să se vadă dacă e și apăsată. `to` reține unde ducea la momentul apăsării,
+  // fiindcă ținta se mută pe /finantare/firme când pagina aia intră live.
+  | 'finantare_cta_click'
   | 'portal_login_requested'
   | 'portal_login_completed'
   | 'portal_note_added'

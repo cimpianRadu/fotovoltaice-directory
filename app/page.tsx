@@ -35,6 +35,7 @@ import {
 import { getPublicLeads, getLeadsSince, getClaims, type PublicLead } from '@/lib/sheets';
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { PRICING } from '@/lib/pricing';
+import HomeFinantareCta from '@/components/home/HomeFinantareCta';
 import guidesData from '@/data/guides.json';
 
 // Teaser-ul de cereri vine din Google Sheets — regenerare la 5 minute, ca /cereri.
@@ -273,7 +274,13 @@ export default async function HomePage() {
           rămân în pagina de finanțare și în ghidurile lor, unde sunt argumentate.
 
           Varianta rezidențială nu dispare, coboară la o linie de subsol: n-are ce căuta
-          la egalitate cu blocul B2B, dar nici nu vrem să rupem legătura spre ea. */}
+          la egalitate cu blocul B2B, dar nici nu vrem să rupem legătura spre ea.
+
+          Butonul duce în /finantare, nu în /finantare/firme. Pe 26 aug 2026 secțiunea
+          asta a plecat în producție cu linkul spre /finantare/firme, dar pagina aia a
+          rămas necommitată până confirmă partenerul cum arată, deci homepage-ul a
+          trimis într-un 404. Când pagina pentru firme intră live, aici se schimbă un
+          singur `href`. */}
       <section className="bg-secondary">
         <div className="max-w-7xl mx-auto px-4 py-14">
           <div className="max-w-2xl">
@@ -327,15 +334,7 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <Link
-              href="/finantare/firme"
-              className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors"
-            >
-              Compară variantele
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </Link>
+            <HomeFinantareCta href="/finantare">Compară variantele</HomeFinantareCta>
           </div>
         </div>
       </section>
