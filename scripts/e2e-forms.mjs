@@ -34,7 +34,10 @@ const FORMS = [
     text: { numeCompanie: `ROUTINE TEST ${TOKEN}`, numeContact: 'ROUTINE TEST', email: `${TEST_EMAIL_PREFIX}${TOKEN}-lead@example.com`, telefon: '0712345678', localitate: 'ROUTINE TEST' },
     // dropdown-urile pasului 4 sunt obligatorii (au „nu știu" în listă); le
     // completăm și ca să testăm componenta SearchableSelect
-    selects: [{ name: 'judet', step: 1 }, { name: 'tipAcoperis', step: 3 }, { name: 'termen', step: 3 }, { name: 'finantare', step: 3 }, { name: 'bransament', step: 3 }],
+    // `tipLucrare` (din 25 aug 2026) e prima întrebare a pasului 4 și e
+    // obligatorie; se alege prima opțiune, „sistem nou", deci nu apare câmpul de
+    // capacitate baterie al retrofitului.
+    selects: [{ name: 'judet', step: 1 }, { name: 'tipLucrare', step: 3 }, { name: 'tipAcoperis', step: 3 }, { name: 'termen', step: 3 }, { name: 'finantare', step: 3 }, { name: 'bransament', step: 3 }],
   },
   {
     id: 'listing', label: 'Listare firmă (/listeaza-firma)', path: '/listeaza-firma',
