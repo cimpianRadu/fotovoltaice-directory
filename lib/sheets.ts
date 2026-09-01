@@ -1253,6 +1253,14 @@ export async function addFirmEmailLink(input: {
     return;
   }
 
+  // Reactivare, nu rând nou: păstrăm ce era scris pe rând (data primei legături,
+  // firma, nota) când apelul nu aduce altceva — o relegare n-are voie să șteargă
+  // tăcut nota de ce s-au legat adresele.
+  const previous = rows[existing.index];
+  values[0] = previous[0] || values[0];
+  values[3] = values[3] || previous[3] || '';
+  values[5] = values[5] || previous[5] || '';
+
   const sheets = google.sheets({ version: 'v4', auth: getAuth() });
   await withRetry(
     () =>

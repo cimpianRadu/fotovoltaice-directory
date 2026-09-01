@@ -24,7 +24,7 @@ import { matchFirmsForLead } from '@/lib/lead-match';
 import { getCompanies } from '@/lib/utils';
 import { getProjectTypeLabel, type Company } from '@/lib/utils-shared';
 import ApproveClaims, { type PortalClaimRow } from './ApproveClaims';
-import LinkedEmails, { type EmailLinkRow } from './LinkedEmails';
+import FirmEmails from './FirmEmails';
 import GiveLead, { type GiveLeadFirm, type LeadOption } from './GiveLead';
 
 export const dynamic = 'force-dynamic';
@@ -88,6 +88,14 @@ interface PortalAccount {
    * numărate mai sus. Lista rămâne ca să se vadă pe cine s-a făcut ce.
    */
   linked: string[];
+  /** Firma așa cum apare pe revendicări — cheia după care se recunoaște altundeva. */
+  identity: { numeFirma: string; telefon: string } | undefined;
+  /**
+   * Conturi care par ale aceleiași firme, dar n-au fost legate încă. Nu se
+   * leagă singure: o legătură deschide datele de client ale unei firme către
+   * altă adresă, deci propunerea așteaptă o apăsare.
+   */
+  suggested: { email: string; reason: string }[];
   /** Cui se scrie revendicarea când îi dau o cerere de aici. */
   giveFirm: GiveLeadFirm | null;
   /** Cereri deschise pe care i le pot da, cele mai potrivite primele. */
@@ -339,15 +347,12 @@ function AccountCard({
         {accessLine(account)}
       </div>
 
-      {account.linked.length > 0 && (
-        <div className="border-b border-slate-100 px-4 py-2 text-xs text-slate-600">
-          <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
-            Aceeași firmă ·{' '}
-          </span>
-          <span className="text-slate-900">{account.linked.join(', ')}</span>
-          <span className="text-slate-400"> — vede și revendicările de acolo în portal</span>
-        </div>
-      )}
+      <FirmEmails
+        primary={account.email}
+        firma={firmName}
+        linked={account.linked}
+        suggested={account.suggested}
+      />
 
       <div className="border-b border-slate-100 px-4 py-2 text-xs text-slate-600">
         <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
@@ -590,6 +595,9 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       ).length,
       company,
       crmFirm: identity ? firms.find((f) => isSameFirm(f, identity)) : undefined,
+      identity,
+      // Completat după ce toate conturile există (are nevoie de ele, două câte două).
+      suggested: [],
       alertsByEmail: members.flatMap((m) => {
         const pref = alertsByEmail.get(m);
         return pref ? [{ email: m, pref }] : [];
@@ -599,6 +607,47 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       giveOptions,
     };
   });
+
+  // Adresele de la un provider public nu spun nimic despre firmă: două conturi
+  // pe gmail.com n-au nicio legătură între ele. Doar domeniul propriu al firmei
+  // e semnal — exact cazul Green Seiro (contact@ și adrian.b@ pe greenseiro.ro,
+  // cu nume de firmă scrise diferit în Sheet și telefoane diferite, deci
+  // nerecunoscute de isSameFirm).
+  const FREE_EMAIL_DOMAINS = new Set([
+    'gmail.com',
+    'yahoo.com',
+    'yahoo.ro',
+    'yahoo.co.uk',
+    'hotmail.com',
+    'hotmail.ro',
+    'outlook.com',
+    'live.com',
+    'msn.com',
+    'icloud.com',
+    'me.com',
+    'aol.com',
+    'protonmail.com',
+    'proton.me',
+    'mail.ru',
+  ]);
+  const domainOf = (email: string) => {
+    const domain = email.split('@')[1]?.trim().toLowerCase() ?? '';
+    return FREE_EMAIL_DOMAINS.has(domain) ? '' : domain;
+  };
+
+  for (const account of accounts) {
+    account.suggested = accounts.flatMap((other) => {
+      if (other.email === account.email) return [];
+      if (account.identity && other.identity && isSameFirm(account.identity, other.identity)) {
+        return [{ email: other.email, reason: 'revendică pe numele aceleiași firme' }];
+      }
+      const domain = domainOf(account.email);
+      if (domain && domain === domainOf(other.email)) {
+        return [{ email: other.email, reason: `același domeniu, ${domain}` }];
+      }
+      return [];
+    });
+  }
 
   // Ordinea = lista de lucru: întâi ce cere o apăsare de la mine (aprobări),
   // apoi conturile confirmate, apoi cine s-a împotmolit la intrare. În fiecare
@@ -626,10 +675,6 @@ export default async function PortalAccessPage({ searchParams }: Props) {
             activeFilter.key === 'fara-judete'
             ? accounts.filter((a) => stateOf(a) === 'cont' && !hasCountyAlerts(a))
             : accounts;
-
-  const linkRows: EmailLinkRow[] = emailLinks
-    .filter((l) => l.active)
-    .map((l) => ({ primary: l.primary, alias: l.alias, firma: l.firma }));
 
   const pendingTotal = accounts.reduce((s, a) => s + a.pending, 0);
   const untouchedTotal = accounts.reduce((s, a) => s + a.untouched, 0);
@@ -660,11 +705,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         <Stat label="Cu județe bifate" value={withCountyAlerts} />
       </div>
 
-      <div className="mt-6">
-        <LinkedEmails links={linkRows} />
-      </div>
-
-      <div className="flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3">
+      <div className="mt-6 flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3">
         {FILTERS.map((f) => (
           <Pill
             key={f.key}
