@@ -12,6 +12,45 @@ export interface FirmEmailRow {
   claims: number;
 }
 
+// Iconițe inline: patru forme de 12px, cât să se vadă ce face butonul fără să
+// aducem o librărie de icons pentru ele.
+function IconPencil() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5">
+      <path d="M12 20h9" strokeLinecap="round" />
+      <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function IconTrash() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5">
+      <path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function IconPlus() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5">
+      <path d="M12 5v14M5 12h14" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconLink() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5">
+      <path
+        d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1-1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 /**
  * Toate adresele de email ale unei firme, pe cardul ei din /admin/portal:
  * se văd împreună, se adaugă, se corectează și se scot de aici.
@@ -78,7 +117,7 @@ export default function FirmEmails({
       claims &&
       !window.confirm(
         `${oldEmail} are ${claims} ${claims === 1 ? 'revendicare' : 'revendicări'}. ` +
-          `Ele rămân pe adresa veche și ies din contul firmei. Corectezi oricum?`,
+          'Ele rămân pe adresa veche și ies din contul firmei. Corectezi oricum?',
       )
     ) {
       return;
@@ -88,29 +127,40 @@ export default function FirmEmails({
 
   function remove(email: string, claims: number) {
     const warning = claims
-      ? `Scoți ${email} de pe contul firmei? Cele ${claims} revendicări făcute de pe ea dispar din portalul firmei.`
+      ? `Scoți ${email} de pe contul firmei? Cele ${claims} ${
+          claims === 1 ? 'revendicare făcută' : 'revendicări făcute'
+        } de pe ea dispar din portalul firmei.`
       : `Scoți ${email} de pe contul firmei?`;
     if (window.confirm(warning)) send({ action: 'unlink', alias: email }, email);
   }
 
-  const input =
-    'min-w-0 flex-1 rounded border border-slate-200 px-2 py-1 text-xs';
-  const primaryBtn =
-    'rounded bg-slate-900 px-2 py-1 text-[11px] font-medium text-white disabled:opacity-50';
-  const ghostBtn = 'text-[11px] text-slate-400 hover:text-slate-900';
+  const inputClass =
+    'min-w-0 flex-1 rounded-lg border border-slate-300 px-2.5 py-1.5 text-xs text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100';
+  const saveClass =
+    'rounded-lg bg-sky-600 px-2.5 py-1.5 text-[11px] font-semibold text-white transition hover:bg-sky-700 disabled:opacity-50';
+  const cancelClass =
+    'rounded-lg px-2 py-1.5 text-[11px] font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-700';
 
   return (
-    <div className="border-b border-slate-100 px-4 py-2 text-xs text-slate-600">
-      <p className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
-        Emailurile firmei ({emails.length})
+    <div className="border-b border-slate-100 bg-slate-50/60 px-4 py-3">
+      <div className="flex items-baseline gap-2">
+        <p className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+          Emailurile firmei
+        </p>
+        <span className="rounded-full bg-slate-100 px-1.5 text-[10px] font-bold text-slate-500 tabular-nums">
+          {emails.length}
+        </span>
         {emails.length > 1 && (
-          <span className="normal-case tracking-normal"> · toate văd aceleași cereri în portal</span>
+          <span className="text-[10px] text-slate-400">văd aceleași cereri în portal</span>
         )}
-      </p>
+      </div>
 
-      <ul className="mt-1 space-y-1">
+      <ul className="mt-2 space-y-1.5">
         {emails.map((row) => (
-          <li key={row.email} className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <li
+            key={row.email}
+            className="group flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 transition hover:border-slate-300"
+          >
             {editing === row.email ? (
               <>
                 <input
@@ -121,85 +171,105 @@ export default function FirmEmails({
                     if (e.key === 'Enter') rename(row.email, row.claims);
                     if (e.key === 'Escape') setEditing(null);
                   }}
-                  className={input}
+                  className={inputClass}
                 />
                 <button
                   type="button"
                   disabled={busy === row.email || !draft.trim()}
                   onClick={() => rename(row.email, row.claims)}
-                  className={primaryBtn}
+                  className={saveClass}
                 >
                   {busy === row.email ? '…' : 'Salvează'}
                 </button>
-                <button type="button" onClick={() => setEditing(null)} className={ghostBtn}>
+                <button type="button" onClick={() => setEditing(null)} className={cancelClass}>
                   renunț
                 </button>
               </>
             ) : (
               <>
-                <span className="text-slate-900">{row.email}</span>
+                <span
+                  className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold uppercase ${
+                    row.isPrimary ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'
+                  }`}
+                >
+                  {row.email.slice(0, 1)}
+                </span>
+
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-xs font-medium text-slate-900">{row.email}</p>
+                  <p className="text-[10px] text-slate-400">
+                    {row.claims === 0
+                      ? 'nicio revendicare'
+                      : `${row.claims} ${row.claims === 1 ? 'revendicare' : 'revendicări'}`}
+                    {row.isPrimary && ' · intră în portal cu adresa asta'}
+                  </p>
+                </div>
+
                 {row.isPrimary ? (
                   <span
                     title="Adresa cu care firma intră în portal; pe ea se scriu cererile date din admin"
-                    className="rounded bg-slate-200 px-1.5 py-px text-[10px] font-semibold text-slate-600"
+                    className="shrink-0 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 ring-1 ring-emerald-200 ring-inset"
                   >
                     cont principal
                   </span>
                 ) : (
-                  <>
+                  <div className="flex shrink-0 items-center gap-1">
                     <button
                       type="button"
+                      title="Corectează adresa"
                       onClick={() => {
+                        setAdding(false);
                         setDraft(row.email);
                         setEditing(row.email);
                       }}
-                      className={ghostBtn}
+                      className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
                     >
+                      <IconPencil />
                       editează
                     </button>
                     <button
                       type="button"
+                      title="Scoate adresa de pe contul firmei"
                       disabled={busy === row.email}
                       onClick={() => remove(row.email, row.claims)}
-                      className="text-[11px] text-slate-400 hover:text-red-600 disabled:opacity-50"
+                      className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700 disabled:opacity-50"
                     >
+                      <IconTrash />
                       {busy === row.email ? '…' : 'scoate'}
                     </button>
-                  </>
+                  </div>
                 )}
-                <span className="ml-auto text-[10px] text-slate-400">
-                  {row.claims === 0
-                    ? 'nicio revendicare'
-                    : `${row.claims} ${row.claims === 1 ? 'revendicare' : 'revendicări'}`}
-                </span>
               </>
             )}
           </li>
         ))}
       </ul>
 
-      {suggested.length > 0 && (
-        <div className="mt-1.5 space-y-1">
-          {suggested.map((sug) => (
-            <div key={sug.email} className="flex flex-wrap items-center gap-1.5">
-              <span className="text-[11px] text-amber-700">
-                Poate aceeași firmă: <span className="font-medium">{sug.email}</span> ({sug.reason})
-              </span>
-              <button
-                type="button"
-                disabled={busy === sug.email}
-                onClick={() => send({ action: 'link', alias: sug.email }, sug.email)}
-                className="rounded border border-amber-300 bg-amber-50 px-1.5 py-0.5 text-[11px] font-medium text-amber-800 hover:bg-amber-100 disabled:opacity-50"
-              >
-                {busy === sug.email ? '…' : 'leagă'}
-              </button>
-            </div>
-          ))}
+      {suggested.map((sug) => (
+        <div
+          key={sug.email}
+          className="mt-1.5 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-2.5 py-1.5"
+        >
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700">
+            <IconLink />
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-xs font-medium text-amber-900">{sug.email}</p>
+            <p className="truncate text-[10px] text-amber-700">Poate aceeași firmă · {sug.reason}</p>
+          </div>
+          <button
+            type="button"
+            disabled={busy === sug.email}
+            onClick={() => send({ action: 'link', alias: sug.email }, sug.email)}
+            className="shrink-0 rounded-lg bg-amber-500 px-2.5 py-1.5 text-[11px] font-semibold text-white transition hover:bg-amber-600 disabled:opacity-50"
+          >
+            {busy === sug.email ? '…' : 'Leagă'}
+          </button>
         </div>
-      )}
+      ))}
 
       {adding ? (
-        <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+        <div className="mt-1.5 flex items-center gap-2 rounded-lg border border-sky-200 bg-sky-50/60 px-2.5 py-1.5">
           <input
             autoFocus
             value={draft}
@@ -208,18 +278,18 @@ export default function FirmEmails({
               if (e.key === 'Enter' && draft.trim()) send({ action: 'link', alias: draft }, 'add');
               if (e.key === 'Escape') setAdding(false);
             }}
-            placeholder="email colaborator"
-            className={input}
+            placeholder="email@firma.ro"
+            className={inputClass}
           />
           <button
             type="button"
             disabled={busy === 'add' || !draft.trim()}
             onClick={() => send({ action: 'link', alias: draft }, 'add')}
-            className={primaryBtn}
+            className={saveClass}
           >
             {busy === 'add' ? '…' : 'Adaugă'}
           </button>
-          <button type="button" onClick={() => setAdding(false)} className={ghostBtn}>
+          <button type="button" onClick={() => setAdding(false)} className={cancelClass}>
             renunț
           </button>
         </div>
@@ -227,17 +297,23 @@ export default function FirmEmails({
         <button
           type="button"
           onClick={() => {
+            // Un singur formular deschis: `draft` e comun, iar două câmpuri
+            // deschise ar arăta aceeași valoare în amândouă.
+            setEditing(null);
             setDraft('');
             setAdding(true);
           }}
           title={`Revendicările făcute de pe adresa adăugată se văd în contul ${primary}`}
-          className="mt-1 text-[11px] text-slate-400 hover:text-slate-900"
+          className="mt-1.5 flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-300 bg-white/70 px-2.5 py-2 text-[11px] font-semibold text-slate-500 transition hover:border-sky-400 hover:bg-sky-50 hover:text-sky-700"
         >
-          + adaugă email
+          <IconPlus />
+          adaugă email colaborator
         </button>
       )}
 
-      {error && <p className="mt-1 text-[11px] text-red-600">{error}</p>}
+      {error && (
+        <p className="mt-1.5 rounded-lg bg-red-50 px-2.5 py-1.5 text-[11px] text-red-700">{error}</p>
+      )}
     </div>
   );
 }
