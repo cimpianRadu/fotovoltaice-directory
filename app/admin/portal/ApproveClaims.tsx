@@ -27,6 +27,8 @@ export interface PortalClaimRow {
   firmStatus: ClaimStatus;
   /** Câte note a scris firma din portal — 0 + status nemutat = n-a atins-o. */
   noteCount: number;
+  /** Adresa de pe care s-a revendicat, scrisă doar pe conturile cu mai multe. */
+  claimedBy?: string;
 }
 
 const STATUS_CHIP: Record<ClaimStatus, string> = {
@@ -130,6 +132,11 @@ export default function ApproveClaims({ claims }: { claims: PortalClaimRow[] }) 
               >
                 {c.label}
               </span>
+              {c.claimedBy && (
+                <span className="shrink-0 text-[10px] text-slate-400" title="Adresa care a revendicat">
+                  {c.claimedBy}
+                </span>
+              )}
               <span
                 title={CLAIM_STATUS_HINTS[c.firmStatus]}
                 className={`shrink-0 rounded px-1.5 py-px text-[10px] font-semibold ${STATUS_CHIP[c.firmStatus]}`}

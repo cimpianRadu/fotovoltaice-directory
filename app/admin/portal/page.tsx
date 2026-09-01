@@ -76,12 +76,16 @@ interface PortalAccount {
   untouched: number;
   company: Company | undefined;
   crmFirm: CrmFirm | undefined;
-  /** Județele bifate pentru alerte pe email, dacă firma a intrat vreodată pe secțiunea aia. */
-  alerts: CountyAlertPref | null;
   /**
-   * Celelalte adrese ale aceleiași firme („Emailuri Firmă"). Cardul rămâne per
-   * email — aprobarea și jurnalul sunt pe adresă — dar în portal firma vede și
-   * revendicările de aici, deci „portal gol" se citește altfel.
+   * Județele bifate pentru alerte, pe adresă: bifa e per email (fiecare om își
+   * controlează inboxul), deci un cont cu două adrese poate avea două liste.
+   * Gol = nimeni din grup n-a ajuns pe secțiunea aia.
+   */
+  alertsByEmail: { email: string; pref: CountyAlertPref }[];
+  /**
+   * Celelalte adrese ale aceleiași firme („Emailuri Firmă"), strânse pe cardul
+   * contului principal: revendicările, jurnalul și alertele lor sunt deja
+   * numărate mai sus. Lista rămâne ca să se vadă pe cine s-a făcut ce.
    */
   linked: string[];
   /** Cui se scrie revendicarea când îi dau o cerere de aici. */
@@ -143,9 +147,9 @@ const FILTERS: { key: string; label: string; state?: AccountState }[] = [
   { key: 'fara-judete', label: 'Fără județe bifate' },
 ];
 
-/** Are alerte pornite pe cel puțin un județ. */
+/** Are alerte pornite pe cel puțin un județ, pe oricare din adresele contului. */
 function hasCountyAlerts(a: PortalAccount): boolean {
-  return Boolean(a.alerts?.active && a.alerts.counties.length > 0);
+  return a.alertsByEmail.some(({ pref }) => pref.active && pref.counties.length > 0);
 }
 
 function Stat({ label, value, tone }: { label: string; value: number; tone?: 'alert' | 'action' }) {
@@ -281,6 +285,9 @@ function AccountCard({
     .map((c) => ({
       timestamp: c.timestamp,
       leadId: c.leadId,
+      // Doar pe conturile cu mai multe adrese: altfel ar repeta emailul din
+      // capul cardului pe fiecare rând.
+      claimedBy: account.linked.length > 0 ? c.email : '',
       label: leadLabel(leadById.get(c.leadId), c.leadId),
       approvedAt: c.approvedAt,
       releasedAt: c.releasedAt,
@@ -346,7 +353,17 @@ function AccountCard({
         <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
           Alerte pe județ ·{' '}
         </span>
-        {alertsLine(account.alerts)}
+        {account.alertsByEmail.length === 0
+          ? alertsLine(null)
+          : account.alertsByEmail.map(({ email, pref }) => (
+              <span key={email} className="block sm:inline">
+                {/* Adresa se scrie doar când contul are mai multe: bifa e a
+                    omului, nu a firmei, iar „cine primește alertele" e prima
+                    întrebare la telefon. */}
+                {account.linked.length > 0 && <span className="text-slate-400">{email}: </span>}
+                {alertsLine(pref)}
+              </span>
+            ))}
       </div>
 
       <div className="px-4 py-3">
@@ -485,18 +502,30 @@ export default async function PortalAccessPage({ searchParams }: Props) {
     ]),
   );
 
-  const accounts: PortalAccount[] = [...emails].map((email) => {
-    const evs = (eventsByEmail.get(email) ?? []).sort((a, b) =>
-      b.timestamp.localeCompare(a.timestamp),
-    );
+  // Un card per FIRMĂ, nu per adresă: adresele legate în „Emailuri Firmă" se
+  // strâng pe cardul contului principal. Altfel revendicarea făcută de pe
+  // adresa colegului stă pe un card separat, al unei adrese care n-a intrat
+  // niciodată în portal, deci nici nu apare în vederea implicită („Au cont") —
+  // exact cardul pe care nu-l cauți când vrei să aprobi (1 sept 2026, cererea
+  // din Alba a Green Seiro).
+  const groups = new Map<string, string[]>();
+  for (const email of emails) {
+    const members = resolveEmailGroup(emailLinks, email);
+    groups.set(members[0], members);
+  }
+
+  const accounts: PortalAccount[] = [...groups].map(([email, members]) => {
+    const evs = members
+      .flatMap((m) => eventsByEmail.get(m) ?? [])
+      .sort((a, b) => b.timestamp.localeCompare(a.timestamp));
     const requests = evs.filter((e) => e.event === 'cerut');
     const logins = evs.filter((e) => e.event === 'intrat');
     const visits = evs.filter((e) => e.event === 'vazut');
     const inPortal = [...logins, ...visits].sort((a, b) => b.timestamp.localeCompare(a.timestamp));
-    const mine = claims.filter((c) => c.email === email);
+    const mine = claims.filter((c) => members.includes(c.email));
 
     const company =
-      companies.find((c) => c.contact.email?.trim().toLowerCase() === email) ??
+      companies.find((c) => members.includes(c.contact.email?.trim().toLowerCase() || '')) ??
       (mine[0]
         ? companies.find((c) =>
             isSameFirm({ numeFirma: c.name, telefon: c.contact.phone }, mine[0]),
@@ -526,7 +555,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
           .filter((l) => {
             const held = heldByLead.get(l.timestamp) ?? [];
             if (held.length >= MAX_CLAIMS_PER_LEAD) return false;
-            return !held.some((c) => isSameFirm(c, identity) || c.email === email);
+            return !held.some((c) => isSameFirm(c, identity) || members.includes(c.email));
           })
           .map((l) => {
             const m = company
@@ -561,8 +590,11 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       ).length,
       company,
       crmFirm: identity ? firms.find((f) => isSameFirm(f, identity)) : undefined,
-      alerts: alertsByEmail.get(email) ?? null,
-      linked: resolveEmailGroup(emailLinks, email).filter((e) => e !== email),
+      alertsByEmail: members.flatMap((m) => {
+        const pref = alertsByEmail.get(m);
+        return pref ? [{ email: m, pref }] : [];
+      }),
+      linked: members.filter((m) => m !== email),
       giveFirm,
       giveOptions,
     };
