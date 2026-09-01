@@ -15550,6 +15550,100 @@
         "judet": "Ilfov"
       },
       "segment": "ambele"
+    },
+    {
+      "id": "karmenergy",
+      "slug": "karmenergy",
+      "name": "KarmEnergy",
+      "cui": "RO17512803",
+      "logo": "/logos/karmenergy.png",
+      "description": "KarmEnergy este brandul comercial al Cromo Semper Automatic SRL, firmă înregistrată în 2005, cu sediul social în Pitești (Argeș) și punct operațional în Constanța. Proiectează și instalează sisteme fotovoltaice on-grid, hibride și off-grid pentru locuințe și firme, acoperind analiza consumului, dimensionarea, montajul, punerea în funcțiune, monitorizarea și mentenanța. Deține atestat ANRE tip B nr. 18022 din 07.03.2022, pentru instalații de 0,4 kV, și a fost instalator validat în programul Casa Verde Fotovoltaice, sesiunea 2022 (contract 214/RF). Montajul la cheie se face în principal în Constanța și Tulcea, iar în Călărași, Ialomița și Brăila în funcție de proiect. Operează și un magazin online cu panouri, invertoare Victron, Fronius, Sungrow și Solis, baterii, structuri de prindere și kituri complete, inclusiv echipamente pentru rulote și ambarcațiuni, livrate în toată țara.",
+      "founded": 2005,
+      "employees": 3,
+      "location": {
+        "city": "Constanța",
+        "county": "Constanța",
+        "address": "Str. Celulozei, Nr. 2 (punct operațional). Sediu social: Mun. Pitești, Bd. 1 Decembrie 1918, Bl. M5, Sc. A, Et. 4, Ap. 10, jud. Argeș"
+      },
+      "contact": {
+        "phone": "+40757986762",
+        "email": "office@karmenergy.ro",
+        "website": "https://karmenergy.ro"
+      },
+      "coverage": [
+        "Constanța",
+        "Tulcea",
+        "Călărași",
+        "Ialomița",
+        "Brăila"
+      ],
+      "specializations": [
+        "rezidential"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 1408113,
+        "profit": 449554,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 681233,
+            "profit": 50399,
+            "employees": 4
+          },
+          {
+            "year": 2022,
+            "revenue": 862527,
+            "profit": 86233,
+            "employees": 3
+          },
+          {
+            "year": 2023,
+            "revenue": 1722985,
+            "profit": 522575,
+            "employees": 4
+          },
+          {
+            "year": 2024,
+            "revenue": 825285,
+            "profit": 16269,
+            "employees": 4
+          },
+          {
+            "year": 2025,
+            "revenue": 1408113,
+            "profit": 449554,
+            "employees": 3
+          }
+        ]
+      },
+      "tags": [
+        "pv-rezidential",
+        "on-grid",
+        "hibrid",
+        "off-grid",
+        "stocare-baterii",
+        "prosumator",
+        "mentenanta-pv",
+        "magazin-online",
+        "victron-energy",
+        "experienta-20-ani"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-09-01",
+      "updatedAt": "2026-09-01",
+      "segment": "ambele",
+      "anreMatch": {
+        "societate": "CROMO SEMPER AUTOMATIC",
+        "judet": "Arges"
+      }
     }
   ]
 }

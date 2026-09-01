@@ -2926,5 +2926,17 @@
    "isActive": true,
    "tipTarifRaw": "Tarif B"
   }
+ ],
+ "CROMO SEMPER AUTOMATIC|Arges": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18022",
+   "dataEmitere": "07/03/2022",
+   "dataExpirare": "07/03/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
  ]
 }
