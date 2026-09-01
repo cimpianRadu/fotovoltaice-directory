@@ -5,6 +5,7 @@ import {
   findSubscriptionForCounty,
   getClaims,
   getCountyAlertPref,
+  getFirmEmailGroup,
   getLeadSubscriptions,
   getLeadsSince,
   isLeadClosed,
@@ -67,6 +68,14 @@ export default async function PortalPage() {
   const email = await getPortalEmail();
   if (!email) return <PortalLanding />;
 
+  // Adresele aceleiași firme: firmele revendică de pe adresa personală a
+  // omului de vânzări și intră apoi cu cea de contact, iar cererea revendicată
+  // trebuie să se vadă din oricare dintre ele. Fără legături, lista are un
+  // singur element și portalul se poartă exact ca înainte.
+  const emails = await getFirmEmailGroup(email);
+  const mineEmails = new Set(emails);
+  const linked = emails.filter((e) => e !== email);
+
   let mine: PortalClaim[] = [];
   let loadError = false;
   // Preferințele de alerte se citesc separat de revendicări: dacă tabul lor
@@ -89,7 +98,9 @@ export default async function PortalPage() {
     // deschise și nepreluate de ea. Feedul public nu le arată nimănui, deci
     // ăsta e singurul loc din care abonatul le poate lua.
     const subs = await getLeadSubscriptions();
-    const claimedByMe = new Set(claims.filter((c) => c.email === email).map((c) => c.leadId));
+    const claimedByMe = new Set(
+      claims.filter((c) => mineEmails.has(c.email)).map((c) => c.leadId),
+    );
     reserved = leads
       .filter(
         (l) =>
@@ -97,7 +108,7 @@ export default async function PortalPage() {
           !isLeadClosed(l.crmStatus) &&
           !isLeadHidden(l) &&
           !claimedByMe.has(l.timestamp) &&
-          findSubscriptionForCounty(subs, l.judet)?.email === email,
+          mineEmails.has(findSubscriptionForCounty(subs, l.judet)?.email || ''),
       )
       .map((l) => ({
         id: l.timestamp,
@@ -112,7 +123,7 @@ export default async function PortalPage() {
       .reverse();
 
     mine = claims
-      .filter((c) => c.email === email)
+      .filter((c) => mineEmails.has(c.email))
       .map((c) => {
         const lead = leadById.get(c.leadId);
         const approved = Boolean(c.approvedAt);
@@ -170,6 +181,13 @@ export default async function PortalPage() {
       <p className="text-sm text-gray-500 mb-8">
         Conectat ca <strong>{email}</strong>. Aici vezi cererile revendicate cu acest email,
         lași note și eliberezi locurile la care renunți.
+        {linked.length > 0 && (
+          <>
+            {' '}
+            Vezi și cererile revendicate de colegii tăi cu{' '}
+            <strong>{linked.join(', ')}</strong>.
+          </>
+        )}
       </p>
 
       {reserved.length > 0 && <PortalReservedLeads leads={reserved} />}

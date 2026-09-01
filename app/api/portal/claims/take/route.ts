@@ -7,6 +7,7 @@ import {
   countActiveClaimsForFirm,
   findSubscriptionForCounty,
   getClaims,
+  getFirmEmailGroup,
   getFullLeadById,
   getLeadSubscriptions,
   isLeadClosed,
@@ -45,8 +46,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Cererea nu mai este activă.' }, { status: 404 });
     }
 
-    const sub = findSubscriptionForCounty(await getLeadSubscriptions(), lead.judet);
-    if (!sub || sub.email !== email) {
+    const [subscriptions, emails] = await Promise.all([
+      getLeadSubscriptions(),
+      getFirmEmailGroup(email),
+    ]);
+    const sub = findSubscriptionForCounty(subscriptions, lead.judet);
+    if (!sub || !emails.includes(sub.email)) {
       return NextResponse.json(
         { error: 'Cererea nu e rezervată pentru contul tău.' },
         { status: 403 },

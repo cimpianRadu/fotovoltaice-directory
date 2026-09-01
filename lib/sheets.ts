@@ -1088,6 +1088,205 @@ export async function getPortalAccessEvents(): Promise<PortalAccessEvent[]> {
     });
 }
 
+// ── Emailuri legate (o firmă, mai multe adrese) ────────────────────────────
+// Identitatea în portal e emailul, iar firmele revendică de pe adrese diferite:
+// pe 1 sept 2026 Green Seiro avea trei revendicări pe contact@ și una pe
+// adrian.b@, iar contul logat n-o vedea pe a patra. Tabul leagă adresele
+// aceleiași firme, ca oricare dintre ele să vadă tot ce a revendicat firma.
+//
+// Legarea se face DOAR din /admin: adăugarea unei adrese îi dă acces la datele
+// de client ale celeilalte, deci n-are ce căuta în portalul firmei.
+
+const FIRM_EMAILS_SHEET = 'Emailuri Firmă';
+
+const FIRM_EMAILS_HEADER = [
+  'Adăugat la', // A — ISO
+  'Cont principal', // B — adresa cu care firma intră de obicei în portal
+  'Email suplimentar', // C — a doua adresă a aceleiași firme
+  'Firmă', // D — doar ca să se citească rândul fără să deschizi portalul
+  'Activ', // E — „nu" = legătură ruptă; rândul rămâne ca istoric
+  'Notă', // F
+];
+
+export interface FirmEmailLink {
+  /** ISO. */
+  addedAt: string;
+  primary: string;
+  alias: string;
+  firma: string;
+  /** Gol = activ: un rând scris de mână, fără coloana E, trebuie să meargă. */
+  active: boolean;
+  note: string;
+}
+
+export async function getFirmEmailLinks(): Promise<FirmEmailLink[]> {
+  let rows: string[][];
+  try {
+    rows = await readRows(FIRM_EMAILS_SHEET);
+  } catch {
+    // Tabul nu există încă (prima legătură din /admin îl creează).
+    return [];
+  }
+  return rows
+    // Header-ul cade singur: n-are „@" în niciuna din cele două coloane.
+    .filter((r) => (r[1] || '').includes('@') && (r[2] || '').includes('@'))
+    .map((r) => ({
+      addedAt: r[0] || '',
+      primary: (r[1] || '').trim().toLowerCase(),
+      alias: (r[2] || '').trim().toLowerCase(),
+      firma: r[3] || '',
+      active: (r[4] || '').trim().toLowerCase() !== 'nu',
+      note: r[5] || '',
+    }));
+}
+
+/**
+ * Toate adresele aceleiași firme, pornind de la una dintre ele. Legătura e
+ * bidirecțională (intri cu oricare și vezi tot) și tranzitivă (A-B plus B-C dă
+ * un singur grup de trei), ca să nu conteze pe ce rând a nimerit adresa.
+ *
+ * Primul element e „contul principal": prima adresă din coloana B a grupului.
+ * Un email fără nicio legătură se întoarce singur, deci apelantul poate folosi
+ * mereu lista, fără caz special.
+ */
+export function resolveEmailGroup(links: FirmEmailLink[], email: string): string[] {
+  const key = email.trim().toLowerCase();
+  if (!key) return [];
+
+  const active = links.filter((l) => l.active && l.primary && l.alias && l.primary !== l.alias);
+  const neighbours = new Map<string, string[]>();
+  const link = (a: string, b: string) => {
+    const list = neighbours.get(a);
+    if (list) list.push(b);
+    else neighbours.set(a, [b]);
+  };
+  for (const l of active) {
+    link(l.primary, l.alias);
+    link(l.alias, l.primary);
+  }
+
+  const group = new Set([key]);
+  const queue = [key];
+  while (queue.length) {
+    for (const next of neighbours.get(queue.shift() as string) ?? []) {
+      if (!group.has(next)) {
+        group.add(next);
+        queue.push(next);
+      }
+    }
+  }
+  if (group.size === 1) return [key];
+
+  const primary = active.find((l) => group.has(l.primary))?.primary;
+  const rest = [...group].filter((e) => e !== primary).sort();
+  return primary ? [primary, ...rest] : rest;
+}
+
+/**
+ * Adresele firmei logate: cea din sesiune plus cele legate de ea. Fail-open —
+ * un tab picat n-are voie să scoată firma din propriile revendicări, așa că în
+ * cel mai rău caz portalul se poartă ca înainte de legături.
+ */
+export async function getFirmEmailGroup(email: string): Promise<string[]> {
+  const key = email.trim().toLowerCase();
+  if (!key) return [];
+  try {
+    return resolveEmailGroup(await getFirmEmailLinks(), key);
+  } catch (err) {
+    console.error('[portal] emailuri legate:', err);
+    return [key];
+  }
+}
+
+/** Rândul care leagă cele două adrese, în orice ordine ar fi scris. */
+function findFirmEmailRow(
+  rows: string[][],
+  a: string,
+  b: string,
+): { index: number } | null {
+  const index = rows.findIndex((r) => {
+    const primary = (r[1] || '').trim().toLowerCase();
+    const alias = (r[2] || '').trim().toLowerCase();
+    return (primary === a && alias === b) || (primary === b && alias === a);
+  });
+  return index === -1 ? null : { index };
+}
+
+/** Leagă două adrese. Perechea existentă se reactivează, nu se dublează. */
+export async function addFirmEmailLink(input: {
+  primary: string;
+  alias: string;
+  firma?: string;
+  note?: string;
+}): Promise<void> {
+  const primary = input.primary.trim().toLowerCase();
+  const alias = input.alias.trim().toLowerCase();
+  if (!primary.includes('@') || !alias.includes('@')) {
+    throw new Error('Ambele adrese trebuie să fie emailuri valide.');
+  }
+  if (primary === alias) {
+    throw new Error('Cele două adrese sunt identice.');
+  }
+
+  const values = [
+    new Date().toISOString(),
+    primary,
+    alias,
+    (input.firma || '').trim(),
+    'da',
+    (input.note || '').trim(),
+  ];
+
+  let rows: string[][];
+  try {
+    rows = await readRows(FIRM_EMAILS_SHEET);
+  } catch {
+    await createSheetTab(FIRM_EMAILS_SHEET);
+    await appendRow(FIRM_EMAILS_SHEET, FIRM_EMAILS_HEADER);
+    await appendRow(FIRM_EMAILS_SHEET, values);
+    return;
+  }
+
+  const existing = findFirmEmailRow(rows, primary, alias);
+  if (!existing) {
+    await appendRow(FIRM_EMAILS_SHEET, values);
+    return;
+  }
+
+  const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+  await withRetry(
+    () =>
+      sheets.spreadsheets.values.update({
+        spreadsheetId: SPREADSHEET_ID,
+        range: `${FIRM_EMAILS_SHEET}!A${existing.index + 1}:F${existing.index + 1}`,
+        valueInputOption: 'RAW',
+        requestBody: { values: [values] },
+      }),
+    'update email legat',
+  );
+}
+
+/** Rupe legătura (coloana E), fără să șteargă rândul: rămâne istoricul. */
+export async function unlinkFirmEmail(a: string, b: string): Promise<void> {
+  const first = a.trim().toLowerCase();
+  const second = b.trim().toLowerCase();
+  const rows = await readRows(FIRM_EMAILS_SHEET);
+  const found = findFirmEmailRow(rows, first, second);
+  if (!found) throw new Error('Legătura nu există.');
+
+  const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+  await withRetry(
+    () =>
+      sheets.spreadsheets.values.update({
+        spreadsheetId: SPREADSHEET_ID,
+        range: `${FIRM_EMAILS_SHEET}!E${found.index + 1}`,
+        valueInputOption: 'RAW',
+        requestBody: { values: [['nu']] },
+      }),
+    'rupe email legat',
+  );
+}
+
 // ── Abonamente pe județ (distribuție prioritară) ───────────────────────────
 // Firma abonată primește cererile din județele ei înaintea tuturor, iar cererea
 // stă rezervată o fereastră de ore: nu se publică pe /cereri și nu poate fi

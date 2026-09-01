@@ -5,7 +5,10 @@ import {
   getCrmFirms,
   getLeadsSince,
   getCountyAlertPrefs,
+  getFirmEmailLinks,
+  resolveEmailGroup,
   type CountyAlertPref,
+  type FirmEmailLink,
   claimsHeldForLead,
   isLeadClosed,
   isLeadHidden,
@@ -21,6 +24,7 @@ import { matchFirmsForLead } from '@/lib/lead-match';
 import { getCompanies } from '@/lib/utils';
 import { getProjectTypeLabel, type Company } from '@/lib/utils-shared';
 import ApproveClaims, { type PortalClaimRow } from './ApproveClaims';
+import LinkedEmails, { type EmailLinkRow } from './LinkedEmails';
 import GiveLead, { type GiveLeadFirm, type LeadOption } from './GiveLead';
 
 export const dynamic = 'force-dynamic';
@@ -74,6 +78,12 @@ interface PortalAccount {
   crmFirm: CrmFirm | undefined;
   /** Județele bifate pentru alerte pe email, dacă firma a intrat vreodată pe secțiunea aia. */
   alerts: CountyAlertPref | null;
+  /**
+   * Celelalte adrese ale aceleiași firme („Emailuri Firmă"). Cardul rămâne per
+   * email — aprobarea și jurnalul sunt pe adresă — dar în portal firma vede și
+   * revendicările de aici, deci „portal gol" se citește altfel.
+   */
+  linked: string[];
   /** Cui se scrie revendicarea când îi dau o cerere de aici. */
   giveFirm: GiveLeadFirm | null;
   /** Cereri deschise pe care i le pot da, cele mai potrivite primele. */
@@ -322,6 +332,16 @@ function AccountCard({
         {accessLine(account)}
       </div>
 
+      {account.linked.length > 0 && (
+        <div className="border-b border-slate-100 px-4 py-2 text-xs text-slate-600">
+          <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+            Aceeași firmă ·{' '}
+          </span>
+          <span className="text-slate-900">{account.linked.join(', ')}</span>
+          <span className="text-slate-400"> — vede și revendicările de acolo în portal</span>
+        </div>
+      )}
+
       <div className="border-b border-slate-100 px-4 py-2 text-xs text-slate-600">
         <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
           Alerte pe județ ·{' '}
@@ -339,13 +359,19 @@ function AccountCard({
             <GiveLead firm={account.giveFirm} leads={account.giveOptions} />
           </div>
         )}
-        {account.claims.length === 0 && (
-          <p className="mt-1.5 text-xs text-amber-700">
-            Nicio revendicare pe emailul ăsta — în portal vede o pagină goală. Dacă e o
-            firmă cu cereri, scrie-i emailul în coloana Email (I) din „Revendicări" sau
-            dă-i o cerere de aici.
-          </p>
-        )}
+        {account.claims.length === 0 &&
+          (account.linked.length > 0 ? (
+            <p className="mt-1.5 text-xs text-slate-500">
+              Nicio revendicare pe adresa asta, dar e legată de {account.linked.join(', ')} —
+              în portal vede revendicările de acolo.
+            </p>
+          ) : (
+            <p className="mt-1.5 text-xs text-amber-700">
+              Nicio revendicare pe emailul ăsta — în portal vede o pagină goală. Dacă e o
+              firmă cu cereri, scrie-i emailul în coloana Email (I) din „Revendicări", leagă-i
+              adresa de contul firmei sau dă-i o cerere de aici.
+            </p>
+          ))}
       </div>
 
       <div className="mt-auto flex flex-wrap gap-3 border-t border-slate-100 px-4 py-2 text-xs">
@@ -404,13 +430,15 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   let firms: CrmFirm[];
   let leads: NewLead[];
   let alertPrefs: CountyAlertPref[];
+  let emailLinks: FirmEmailLink[];
   try {
-    [events, claims, firms, leads, alertPrefs] = await Promise.all([
+    [events, claims, firms, leads, alertPrefs, emailLinks] = await Promise.all([
       getPortalAccessEvents(),
       getClaims(),
       getCrmFirms(),
       getLeadsSince(new Date(0)),
       getCountyAlertPrefs(),
+      getFirmEmailLinks(),
     ]);
   } catch (err) {
     return (
@@ -534,6 +562,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       company,
       crmFirm: identity ? firms.find((f) => isSameFirm(f, identity)) : undefined,
       alerts: alertsByEmail.get(email) ?? null,
+      linked: resolveEmailGroup(emailLinks, email).filter((e) => e !== email),
       giveFirm,
       giveOptions,
     };
@@ -566,6 +595,10 @@ export default async function PortalAccessPage({ searchParams }: Props) {
             ? accounts.filter((a) => stateOf(a) === 'cont' && !hasCountyAlerts(a))
             : accounts;
 
+  const linkRows: EmailLinkRow[] = emailLinks
+    .filter((l) => l.active)
+    .map((l) => ({ primary: l.primary, alias: l.alias, firma: l.firma }));
+
   const pendingTotal = accounts.reduce((s, a) => s + a.pending, 0);
   const untouchedTotal = accounts.reduce((s, a) => s + a.untouched, 0);
   const withAccount = accounts.filter((a) => stateOf(a) === 'cont').length;
@@ -595,7 +628,11 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         <Stat label="Cu județe bifate" value={withCountyAlerts} />
       </div>
 
-      <div className="mt-6 flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3">
+      <div className="mt-6">
+        <LinkedEmails links={linkRows} />
+      </div>
+
+      <div className="flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3">
         {FILTERS.map((f) => (
           <Pill
             key={f.key}

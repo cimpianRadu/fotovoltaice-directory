@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getPortalEmail } from '@/lib/portal-session';
-import { getClaims, setClaimFirmStatus } from '@/lib/sheets';
+import { getClaims, getFirmEmailGroup, setClaimFirmStatus } from '@/lib/sheets';
 import { CLAIM_STATUSES, type ClaimStatus } from '@/lib/sheets-shared';
 
 /**
@@ -26,9 +26,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Status necunoscut.' }, { status: 400 });
     }
 
-    const claims = await getClaims();
+    const [claims, emails] = await Promise.all([getClaims(), getFirmEmailGroup(email)]);
     const claim = claims.find((c) => c.timestamp === claimTimestamp && c.leadId === leadId);
-    if (!claim || claim.email !== email) {
+    if (!claim || !emails.includes(claim.email)) {
       return NextResponse.json({ error: 'Revendicarea nu există.' }, { status: 404 });
     }
     if (claim.releasedAt) {
