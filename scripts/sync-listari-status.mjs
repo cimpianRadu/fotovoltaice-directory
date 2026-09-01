@@ -26,16 +26,8 @@ const SPREADSHEET_ID = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
 // verificat înainte de scriere.
 const UPDATES = [
   {
-    numeFirma: 'JTS Instal Construct SRL',
-    status: 'Adăugat în director (publicat 2026-07-29)',
-  },
-  {
-    numeFirma: 'Solrom Construct',
-    status: 'Adăugat în director (2026-08-07)',
-  },
-  {
-    numeFirma: 'Enera Switch',
-    status: 'Era deja în director (adăugat 2026-04-22, batch Cluj)',
+    numeFirma: 'Cromo Semper Automatic SRL',
+    status: 'Adăugat în director ca „KarmEnergy" (publicat 2026-09-01, județ Constanța)',
   },
 ];
 
