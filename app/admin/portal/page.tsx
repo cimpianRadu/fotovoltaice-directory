@@ -24,7 +24,7 @@ import { matchFirmsForLead } from '@/lib/lead-match';
 import { getCompanies } from '@/lib/utils';
 import { getProjectTypeLabel, type Company } from '@/lib/utils-shared';
 import ApproveClaims, { type PortalClaimRow } from './ApproveClaims';
-import FirmEmails from './FirmEmails';
+import FirmEmails, { type FirmEmailRow } from './FirmEmails';
 import GiveLead, { type GiveLeadFirm, type LeadOption } from './GiveLead';
 
 export const dynamic = 'force-dynamic';
@@ -83,11 +83,12 @@ interface PortalAccount {
    */
   alertsByEmail: { email: string; pref: CountyAlertPref }[];
   /**
-   * Celelalte adrese ale aceleiași firme („Emailuri Firmă"), strânse pe cardul
-   * contului principal: revendicările, jurnalul și alertele lor sunt deja
-   * numărate mai sus. Lista rămâne ca să se vadă pe cine s-a făcut ce.
+   * Toate adresele contului („Emailuri Firmă"), contul principal primul:
+   * revendicările, jurnalul și alertele lor sunt deja numărate împreună mai
+   * sus. Lista rămâne ca să se vadă pe cine s-a făcut ce și ca să se poată
+   * corecta de pe card.
    */
-  linked: string[];
+  addresses: FirmEmailRow[];
   /** Firma așa cum apare pe revendicări — cheia după care se recunoaște altundeva. */
   identity: { numeFirma: string; telefon: string } | undefined;
   /**
@@ -295,7 +296,7 @@ function AccountCard({
       leadId: c.leadId,
       // Doar pe conturile cu mai multe adrese: altfel ar repeta emailul din
       // capul cardului pe fiecare rând.
-      claimedBy: account.linked.length > 0 ? c.email : '',
+      claimedBy: account.addresses.length > 1 ? c.email : '',
       label: leadLabel(leadById.get(c.leadId), c.leadId),
       approvedAt: c.approvedAt,
       releasedAt: c.releasedAt,
@@ -347,12 +348,7 @@ function AccountCard({
         {accessLine(account)}
       </div>
 
-      <FirmEmails
-        primary={account.email}
-        firma={firmName}
-        linked={account.linked}
-        suggested={account.suggested}
-      />
+      <FirmEmails firma={firmName} emails={account.addresses} suggested={account.suggested} />
 
       <div className="border-b border-slate-100 px-4 py-2 text-xs text-slate-600">
         <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
@@ -365,7 +361,9 @@ function AccountCard({
                 {/* Adresa se scrie doar când contul are mai multe: bifa e a
                     omului, nu a firmei, iar „cine primește alertele" e prima
                     întrebare la telefon. */}
-                {account.linked.length > 0 && <span className="text-slate-400">{email}: </span>}
+                {account.addresses.length > 1 && (
+                  <span className="text-slate-400">{email}: </span>
+                )}
                 {alertsLine(pref)}
               </span>
             ))}
@@ -381,19 +379,13 @@ function AccountCard({
             <GiveLead firm={account.giveFirm} leads={account.giveOptions} />
           </div>
         )}
-        {account.claims.length === 0 &&
-          (account.linked.length > 0 ? (
-            <p className="mt-1.5 text-xs text-slate-500">
-              Nicio revendicare pe adresa asta, dar e legată de {account.linked.join(', ')} —
-              în portal vede revendicările de acolo.
-            </p>
-          ) : (
-            <p className="mt-1.5 text-xs text-amber-700">
-              Nicio revendicare pe emailul ăsta — în portal vede o pagină goală. Dacă e o
-              firmă cu cereri, scrie-i emailul în coloana Email (I) din „Revendicări", leagă-i
-              adresa de contul firmei sau dă-i o cerere de aici.
-            </p>
-          ))}
+        {account.claims.length === 0 && (
+          <p className="mt-1.5 text-xs text-amber-700">
+            Nicio revendicare pe niciuna din adresele contului — în portal vede o pagină
+            goală. Dacă e o firmă cu cereri, scrie-i emailul în coloana Email (I) din
+            „Revendicări", adaugă adresa de pe care a revendicat sau dă-i o cerere de aici.
+          </p>
+        )}
       </div>
 
       <div className="mt-auto flex flex-wrap gap-3 border-t border-slate-100 px-4 py-2 text-xs">
@@ -602,7 +594,11 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         const pref = alertsByEmail.get(m);
         return pref ? [{ email: m, pref }] : [];
       }),
-      linked: members.filter((m) => m !== email),
+      addresses: members.map((m) => ({
+        email: m,
+        isPrimary: m === email,
+        claims: mine.filter((c) => c.email === m).length,
+      })),
       giveFirm,
       giveOptions,
     };

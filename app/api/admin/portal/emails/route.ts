@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { addFirmEmailLink, unlinkFirmEmail } from '@/lib/sheets';
+import {
+  addFirmEmailLink,
+  FirmEmailInputError,
+  renameFirmEmailAlias,
+  unlinkFirmEmail,
+} from '@/lib/sheets';
 
 /**
  * Legarea a două adrese de email pe aceeași firmă din portal, din /admin/portal.
@@ -22,6 +27,8 @@ export async function POST(request: Request) {
 
     if (action === 'unlink') {
       await unlinkFirmEmail(primary, alias);
+    } else if (action === 'rename') {
+      await renameFirmEmailAlias(primary, alias, String(body?.newAlias || '').trim());
     } else {
       await addFirmEmailLink({
         primary,
@@ -35,6 +42,11 @@ export async function POST(request: Request) {
     revalidatePath('/portal');
     return NextResponse.json({ ok: true });
   } catch (err) {
+    // Adresa greșit tastată e răspunsul așteptat al formularului, nu o
+    // defecțiune — 400 cu mesajul ei, fără să umple logurile cu 500-uri.
+    if (err instanceof FirmEmailInputError) {
+      return NextResponse.json({ error: err.message }, { status: 400 });
+    }
     console.error('[admin] emailuri legate:', err);
     return NextResponse.json(
       { error: err instanceof Error ? err.message : 'Eroare internă' },

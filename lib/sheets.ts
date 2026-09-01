@@ -1108,6 +1108,12 @@ const FIRM_EMAILS_HEADER = [
   'Notă', // F
 ];
 
+/**
+ * Greșeală de completare (adresă invalidă, deja legată, legătură inexistentă),
+ * nu defecțiune: ruta o întoarce cu 400 și mesajul ei, nu cu 500.
+ */
+export class FirmEmailInputError extends Error {}
+
 export interface FirmEmailLink {
   /** ISO. */
   addedAt: string;
@@ -1222,10 +1228,10 @@ export async function addFirmEmailLink(input: {
   const primary = input.primary.trim().toLowerCase();
   const alias = input.alias.trim().toLowerCase();
   if (!primary.includes('@') || !alias.includes('@')) {
-    throw new Error('Ambele adrese trebuie să fie emailuri valide.');
+    throw new FirmEmailInputError('Ambele adrese trebuie să fie emailuri valide.');
   }
   if (primary === alias) {
-    throw new Error('Cele două adrese sunt identice.');
+    throw new FirmEmailInputError('Cele două adrese sunt identice.');
   }
 
   const values = [
@@ -1274,13 +1280,60 @@ export async function addFirmEmailLink(input: {
   );
 }
 
+/**
+ * Schimbă adresa legată pe același cont (o corectură de tastare, o adresă
+ * schimbată la firmă). Rândul rămâne același, cu data și nota lui — altfel
+ * o corectură ar arăta ca o legătură nouă.
+ */
+export async function renameFirmEmailAlias(
+  primary: string,
+  oldAlias: string,
+  newAlias: string,
+): Promise<void> {
+  const account = primary.trim().toLowerCase();
+  const previous = oldAlias.trim().toLowerCase();
+  const next = newAlias.trim().toLowerCase();
+  if (!next.includes('@')) throw new FirmEmailInputError('Adresa nouă nu e un email valid.');
+  if (next === account) throw new FirmEmailInputError('Adresa nouă e chiar contul principal.');
+  if (next === previous) return;
+
+  const rows = await readRows(FIRM_EMAILS_SHEET);
+  if (findFirmEmailRow(rows, account, next)) {
+    throw new FirmEmailInputError('Adresa asta e deja pe cont.');
+  }
+  const found = findFirmEmailRow(rows, account, previous);
+  if (!found) throw new FirmEmailInputError('Legătura nu există.');
+
+  const row = rows[found.index];
+  const values = [
+    row[0] || new Date().toISOString(),
+    account,
+    next,
+    row[3] || '',
+    'da',
+    row[5] || '',
+  ];
+
+  const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+  await withRetry(
+    () =>
+      sheets.spreadsheets.values.update({
+        spreadsheetId: SPREADSHEET_ID,
+        range: `${FIRM_EMAILS_SHEET}!A${found.index + 1}:F${found.index + 1}`,
+        valueInputOption: 'RAW',
+        requestBody: { values: [values] },
+      }),
+    'rename email legat',
+  );
+}
+
 /** Rupe legătura (coloana E), fără să șteargă rândul: rămâne istoricul. */
 export async function unlinkFirmEmail(a: string, b: string): Promise<void> {
   const first = a.trim().toLowerCase();
   const second = b.trim().toLowerCase();
   const rows = await readRows(FIRM_EMAILS_SHEET);
   const found = findFirmEmailRow(rows, first, second);
-  if (!found) throw new Error('Legătura nu există.');
+  if (!found) throw new FirmEmailInputError('Legătura nu există.');
 
   const sheets = google.sheets({ version: 'v4', auth: getAuth() });
   await withRetry(
