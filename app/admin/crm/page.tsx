@@ -19,6 +19,7 @@ import {
 import { getCompanies } from '@/lib/utils';
 import { isSameClient, parseRequestedFirms } from '@/lib/sheets-shared';
 import { matchFirmsForLead, type FirmMatch } from '@/lib/lead-match';
+import { matchNecesitFirms, type NecesitMatch } from '@/lib/necesit-match';
 import { getCallWindowLabel, getFinancingShort, getFinancingTone, type FinancingTone } from '@/lib/utils-shared';
 import ClaimList, { type ClaimRow } from './ClaimList';
 import LeadCrm from './LeadCrm';
@@ -158,11 +159,59 @@ function MatchList({ matches, lead }: { matches: FirmMatch[]; lead: NewLead }) {
   );
 }
 
+/**
+ * Firmele de pe necesit.ro din județul cererii, potrivite pe segment. Directorul
+ * e subțire pe rezidențial, iar necesit e plin de instalatori rezidențiali —
+ * unii plătesc deja pentru cereri acolo, alții sunt doar listați ca momeală SEO.
+ * Dacă sunt sau nu în directorul nostru e irelevant aici: întrebarea e pe cine
+ * mai pot suna pentru cererea asta.
+ */
+function NecesitList({ matches }: { matches: NecesitMatch[] }) {
+  if (matches.length === 0) return null;
+  return (
+    <div className="space-y-2 border-t border-slate-100 px-4 py-2">
+      <Caption>De pe necesit.ro, potriviri pe segment</Caption>
+      <ul className="space-y-1.5">
+        {matches.map((m) => (
+          <li key={m.slug} className="text-xs leading-snug">
+            <div className="flex flex-wrap items-baseline gap-x-2">
+              <a
+                href={m.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-slate-800 hover:underline"
+              >
+                {m.name}
+              </a>
+              <span className="text-slate-400">{m.locality}</span>
+              {m.phone ? (
+                <a
+                  href={`tel:${m.phone}`}
+                  className="text-slate-500 tabular-nums hover:text-slate-900"
+                >
+                  {m.phone}
+                </a>
+              ) : (
+                <span className="text-slate-300">fără telefon</span>
+              )}
+            </div>
+            <p className="text-[10px] text-slate-400">{m.reasons.join(' · ')}</p>
+            {m.warnings.length > 0 && (
+              <p className="text-[10px] text-amber-600">{m.warnings.join(' · ')}</p>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function LeadCard({
   lead,
   claims,
   firms,
   matches,
+  necesit,
   merged,
   sameClient,
 }: {
@@ -170,6 +219,7 @@ function LeadCard({
   claims: ClaimRow[];
   firms: FirmOption[];
   matches: FirmMatch[] | null;
+  necesit: NecesitMatch[];
   /** Câte retrimiteri ale aceleiași cereri s-au comasat în asta (coloana Q). */
   merged: number;
   /** Alte cereri deschise cu același telefon sau email: candidate la comasare. */
@@ -316,6 +366,7 @@ function LeadCard({
 
       {/* null = cerere închisă, nu mai sun pe nimeni pentru ea. */}
       {matches !== null && <MatchList matches={matches} lead={lead} />}
+      {matches !== null && <NecesitList matches={necesit} />}
 
       <div className="mt-auto border-t border-slate-100 bg-slate-50 px-4 py-3">
         <LeadCrm
@@ -677,6 +728,7 @@ export default async function CrmPage({ searchParams }: Props) {
                 ? null
                 : matchFirmsForLead(lead, lead.timestamp, companies, claims, crmFirms)
             }
+            necesit={isLeadClosed(lead.crmStatus) ? [] : matchNecesitFirms(lead)}
           />
         ))}
       </div>
