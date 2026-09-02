@@ -184,6 +184,11 @@ function NecesitList({ matches }: { matches: NecesitMatch[] }) {
                 {m.name}
               </a>
               <span className="text-slate-400">{m.locality}</span>
+              {m.askedListingAt && (
+                <span className="rounded bg-emerald-50 px-1 py-0.5 text-[10px] font-semibold text-emerald-700">
+                  a cerut listare · {m.askedListingAt}
+                </span>
+              )}
               {m.phone ? (
                 <a
                   href={`tel:${m.phone}`}
@@ -469,14 +474,16 @@ export default async function CrmPage({ searchParams }: Props) {
 
   let leads: NewLead[];
   let claims: LeadClaim[];
-  let listings: NewListing[];
+  // Citim tot istoricul de listări dintr-o singură dată: secțiunea de jos arată
+  // doar ultimele 30 de zile, dar o firmă care a cerut listare acum patru luni e
+  // la fel de bună de sunat, iar potrivirile de pe necesit o marchează ca atare.
+  let allListings: NewListing[];
   let crmFirms: CrmFirm[];
   try {
-    const listingsCutoff = new Date(Date.now() - LISTINGS_WINDOW_DAYS * 86_400_000);
-    [leads, claims, listings, crmFirms] = await Promise.all([
+    [leads, claims, allListings, crmFirms] = await Promise.all([
       getLeadsSince(new Date(0)),
       getClaims(),
-      getListingsSince(listingsCutoff),
+      getListingsSince(new Date(0)),
       getCrmFirms(),
     ]);
   } catch (err) {
@@ -486,6 +493,9 @@ export default async function CrmPage({ searchParams }: Props) {
       </div>
     );
   }
+
+  const listingsCutoff = Date.now() - LISTINGS_WINDOW_DAYS * 86_400_000;
+  const listings = allListings.filter((l) => Date.parse(l.timestamp) >= listingsCutoff);
 
   // Retrimiterile comasate (coloana Q, scrisă de scripts/merge-leads.mjs) nu
   // sunt cereri, sunt același om apăsând „Trimite" de mai multe ori: ies din
@@ -728,7 +738,7 @@ export default async function CrmPage({ searchParams }: Props) {
                 ? null
                 : matchFirmsForLead(lead, lead.timestamp, companies, claims, crmFirms)
             }
-            necesit={isLeadClosed(lead.crmStatus) ? [] : matchNecesitFirms(lead)}
+            necesit={isLeadClosed(lead.crmStatus) ? [] : matchNecesitFirms(lead, allListings)}
           />
         ))}
       </div>

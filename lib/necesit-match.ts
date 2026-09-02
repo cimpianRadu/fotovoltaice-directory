@@ -9,6 +9,7 @@
 // număr — pe alea le suni după ce le cauți, sau le deschizi profilul.
 
 import raw from '@/data/necesit-firms.json';
+import { normalizeFirmName } from './sheets-shared';
 
 export interface NecesitFirm {
   slug: string;
@@ -33,6 +34,13 @@ export interface NecesitFirm {
   url: string;
 }
 
+/** Rând din tabul „Listări": firma a completat singură formularul de listare. */
+export interface ListingSignal {
+  numeFirma: string;
+  telefon: string;
+  timestamp: string;
+}
+
 export interface NecesitMatch {
   slug: string;
   name: string;
@@ -40,6 +48,8 @@ export interface NecesitMatch {
   phone: string;
   url: string;
   score: number;
+  /** Data la care firma a cerut singură listare pe site. Gol dacă n-a cerut. */
+  askedListingAt: string;
   /** De ce e pe listă. Se afișează ca atare. */
   reasons: string[];
   /** De ce să stai pe gânduri înainte să suni. */
@@ -60,11 +70,23 @@ export const necesitGeneratedAt = DATA.generatedAt;
  */
 export function matchNecesitFirms(
   lead: { judet: string; segment: string },
+  listings: ListingSignal[] = [],
   limit = 4,
 ): NecesitMatch[] {
   const county = norm(lead.judet || '');
   if (!county) return [];
   const rezidential = (lead.segment || 'comercial') === 'rezidential';
+
+  // Cine a completat formularul de listare a ridicat singur mâna. E cel mai tare
+  // semnal pe care îl putem avea despre o firmă și bate orice deducem noi din
+  // date publice — deci îl căutăm după nume ȘI după telefon, ca la revendicări.
+  const askedByName = new Map<string, ListingSignal>();
+  const askedByPhone = new Map<string, ListingSignal>();
+  for (const l of listings) {
+    if (l.numeFirma) askedByName.set(normalizeFirmName(l.numeFirma), l);
+    const digits = (l.telefon || '').replace(/\D/g, '').slice(-9);
+    if (digits.length === 9) askedByPhone.set(digits, l);
+  }
 
   const out: NecesitMatch[] = [];
   for (const f of DATA.firms) {
@@ -73,6 +95,18 @@ export function matchNecesitFirms(
     const reasons: string[] = [];
     const warnings: string[] = [];
     let score = 0;
+
+    const phoneKey = f.phone.replace(/\D/g, '').slice(-9);
+    const asked =
+      askedByName.get(normalizeFirmName(f.name)) ??
+      (f.anreName ? askedByName.get(normalizeFirmName(f.anreName)) : undefined) ??
+      (phoneKey.length === 9 ? askedByPhone.get(phoneKey) : undefined);
+    if (asked) score += 6;
+
+    // Firma și-a lăsat numărul în formularul de listare. E mai proaspăt și mai
+    // sigur decât registrul ANRE, deci acoperă exact golul de 43%: tocmai
+    // firmele care au cerut listare erau cele pe care nu aveam pe ce le suna.
+    const phone = f.phone || (asked?.telefon ?? '');
 
     // Validarea AFM e singura dovadă tare de rezidențial pe care o avem:
     // înseamnă că firma e acceptată să lucreze dosare Casa Verde.
@@ -115,12 +149,14 @@ export function matchNecesitFirms(
       reasons.push('recenzii în ultimul an');
     }
 
-    if (f.phone) {
-      if (f.anreActive) {
+    if (phone) {
+      if (f.phone && f.anreActive) {
         score += 1;
         reasons.push('atestat ANRE activ');
-      } else {
+      } else if (f.phone) {
         warnings.push('atestat ANRE inactiv');
+      } else {
+        reasons.push('telefon din formularul de listare');
       }
     } else {
       // Fără număr nu se poate suna acum, deci coboară — dar rămâne pe listă,
@@ -133,11 +169,18 @@ export function matchNecesitFirms(
       warnings.push('necesit e platformă rezidențială');
     }
 
+    const d = asked ? Date.parse(asked.timestamp || '') : NaN;
     out.push({
+      askedListingAt:
+        !asked
+          ? ''
+          : Number.isFinite(d)
+            ? new Date(d).toLocaleDateString('ro-RO', { day: 'numeric', month: 'short', year: 'numeric' })
+            : 'dată necunoscută',
       slug: f.slug,
       name: f.name,
       locality: f.locality || f.county,
-      phone: f.phone,
+      phone,
       url: f.url,
       score,
       reasons,
