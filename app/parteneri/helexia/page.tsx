@@ -202,34 +202,46 @@ export default function HelexiaPage() {
           <div className="overflow-x-auto rounded-lg border border-border">
             <table className="w-full text-sm">
               <tbody>
+                {/* Site și email sunt link-uri chiar în tabel. Aveau, pe lângă rândul
+                    lor din tabel, și un buton separat „Vedeți site-ul Helexia" sub
+                    el: aceeași destinație scrisă de două ori, iar cea pe care omul
+                    o vede prima, adresa din tabel, era tocmai cea moartă.
+                    Evenimentul de click rămâne pe link, deci raportul către
+                    partener nu pierde nimic. */}
                 {[
-                  ['Helexia Servicii Energetice SRL', 'CUI 46740902'],
-                  ['Helexia Development Romania SRL', 'CUI 45670400'],
-                  ['Sediu', 'Betahaus, Str. Dr. Iacob Felix 63, etaj 12, București'],
-                  ['Email', 'romania.info@helexia.eu'],
-                  ['Site', 'helexia.ro'],
-                ].map(([k, v]) => (
+                  { k: 'Helexia Servicii Energetice SRL', v: 'CUI 46740902' },
+                  { k: 'Helexia Development Romania SRL', v: 'CUI 45670400' },
+                  { k: 'Sediu', v: 'Betahaus, Str. Dr. Iacob Felix 63, etaj 12, București' },
+                  { k: 'Email', v: 'romania.info@helexia.eu', href: 'mailto:romania.info@helexia.eu' },
+                  { k: 'Site', v: 'helexia.ro', href: 'https://helexia.ro' },
+                ].map(({ k, v, href }) => (
                   <tr key={k} className="hover:bg-surface/50 transition-colors">
                     <td className="px-4 py-2.5 text-gray-600 border-b border-border/50">{k}</td>
                     <td className="px-4 py-2.5 font-medium text-gray-900 border-b border-border/50">
-                      {v}
+                      {href ? (
+                        <a
+                          href={href}
+                          {...(href.startsWith('http')
+                            ? {
+                                target: '_blank',
+                                rel: 'noopener noreferrer nofollow sponsored',
+                              }
+                            : {})}
+                          data-umami-event="partener-site-click"
+                          data-umami-event-partener="helexia"
+                          className="text-secondary underline decoration-secondary/30 underline-offset-2 hover:text-primary-dark hover:decoration-primary-dark/40 transition-colors"
+                        >
+                          {v}
+                        </a>
+                      ) : (
+                        v
+                      )}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <a
-            href="https://helexia.ro"
-            target="_blank"
-            rel="noopener noreferrer nofollow sponsored"
-            data-umami-event="partener-site-click"
-            data-umami-event-partener="helexia"
-            className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-secondary hover:text-primary-dark transition-colors"
-          >
-            Vedeți site-ul Helexia
-            <span aria-hidden="true">&rarr;</span>
-          </a>
         </section>
 
         <InstallerCta
