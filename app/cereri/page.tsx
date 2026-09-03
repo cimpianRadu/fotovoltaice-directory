@@ -136,8 +136,6 @@ export default async function CereriPage() {
     };
   });
 
-  const active = cards.filter((c) => (claimCounts[c.id] || 0) < MAX_CLAIMS_PER_LEAD).length;
-
   return (
     <>
       <JsonLd
@@ -187,13 +185,10 @@ export default async function CereriPage() {
             </p>
           </div>
         ) : (
-          <>
-            <p className="mb-4 text-sm text-gray-500">
-              {cards.length} {cards.length === 1 ? 'cerere' : 'cereri'} primite
-              {active < cards.length ? `, ${active} încă disponibile` : ''}
-            </p>
-            <LeadFeed cards={cards} claimCounts={claimCounts} maxClaims={MAX_CLAIMS_PER_LEAD} />
-          </>
+          /* Numărătoarea stă în LeadFeed, nu aici: feedul pornește pe o
+             fereastră de vechime, iar un total server-side ar contrazice
+             numărul de carduri de sub el. */
+          <LeadFeed cards={cards} claimCounts={claimCounts} maxClaims={MAX_CLAIMS_PER_LEAD} />
         )}
 
       </div>

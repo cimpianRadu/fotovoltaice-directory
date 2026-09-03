@@ -176,15 +176,33 @@ export default async function HomePage() {
         activity={activity}
       />
 
+      {/* Sponsor. Prima oprire după hero, din 3 sept 2026. Înainte stătea deasupra
+          titlului „Instalatori Recomandați", la 35% din pagină: pe telefon asta
+          înseamnă 3,6 ecrane de derulat, adică un slot plătit pe care majoritatea
+          vizitatorilor de pe mobil nu îl vedea niciodată. Regula care l-a pus acolo
+          rămâne respectată — un partener care nu e instalator nu are voie să apară
+          sub titlul „Instalatori Recomandați", fiindcă s-ar citi ca firmă
+          recomandată din director — doar că acum e mult deasupra lui. */}
+      <section className="max-w-7xl mx-auto px-4 py-8">
+        <SponsorBanner position="homepage" />
+      </section>
+
       {/* Cereri active, mutate sub hero pe 25 aug 2026, în locul celor trei bife
           generice („Firme din zona ta", „Calculator potrivit", „Ghiduri pe înțelesul
           tău"), care nu spuneau nimic verificabil.
 
-          Textul e scris pentru CLIENT, nu pentru instalator, deși cardurile sunt
-          aceleași. Prima variantă zicea „Pentru firme de instalare, revendici cererea"
-          imediat sub un hero care promite oferte clientului, iar cele două audiențe
-          lipite una de alta devariantau. Pitch-ul de revendicare a rămas unde are sens,
-          pe /cereri și în secțiunea de listare din subsol. */}
+          Textul secțiunii e scris pentru CLIENT, nu pentru instalator: butonul mare
+          duce în formularul de ofertă, iar titlul vorbește despre cererea LUI. Prima
+          variantă zicea „Pentru firme de instalare, revendici cererea" imediat sub un
+          hero care promite oferte clientului, iar cele două audiențe lipite una de
+          alta se anulau.
+
+          Cardurile în schimb duc din 3 sept 2026 în cererea respectivă din feed
+          (`/cereri?cerere=<id>`), nu tot în formular: cine dă click pe o cerere
+          anume vrea cererea aia, iar un click care ateriza în formularul de ofertă
+          era o promisiune ruptă. Instalatorul ajunge direct la butonul de
+          revendicare; clientul ajunge într-o pagină care îi explică ce e feedul și
+          îi dă înapoi linkul spre Cere Ofertă. */}
       {cereri.length > 0 && (
         <section className="bg-secondary">
           <div className="max-w-7xl mx-auto px-4 py-14">
@@ -216,7 +234,7 @@ export default async function HomePage() {
               {cereri.map((c) => (
                 <Link
                   key={c.id}
-                  href="/cere-oferta?sursa=home-cereri"
+                  href={`/cereri?cerere=${encodeURIComponent(c.id)}`}
                   className="rounded-xl bg-white/5 border border-white/10 hover:border-primary/50 hover:bg-white/10 transition-all p-4"
                 >
                   <div className="flex items-center justify-between gap-2 mb-2">
@@ -342,17 +360,7 @@ export default async function HomePage() {
 
       {/* Featured Companies — Premium pool when available, else promote ad packages */}
       <section className="max-w-7xl mx-auto px-4 py-16">
-        {/* Sponsor. Stătea la 71% din pagină, adică 5,8 ecrane în jos pe mobil, unde
-            practic nu ajungea nimeni. Acum e la lățime plină, cu greutatea vizuală a
-            benzii de promo de mai jos, dar DEASUPRA titlului „Instalatori
-            Recomandați": un partener care nu e instalator nu are voie să stea sub
-            acel titlu, s-ar citi ca firmă recomandată din director. */}
-        <div className="mb-10">
-          <SponsorBanner position="homepage" />
-        </div>
-
-        {/* Calculatoarele stau sub bannerul plătit, nu deasupra lui: slotul de sus
-            e vândut. Două taburi în loc de două carduri stivuite. Curba de preț se
+        {/* Două taburi în loc de două carduri stivuite. Curba de preț se
             citește pe server, fișierul de scrape nu are ce căuta în bundle-ul
             clientului. Widgetul de baterii primește linkul spre ghid, fiindcă aici
             omul dă peste el fără să fi citit despre program. */}

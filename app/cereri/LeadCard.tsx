@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import { trackEvent } from '@/lib/analytics';
@@ -40,6 +40,8 @@ interface LeadCardProps {
   lead: LeadCardData;
   initialClaims: number;
   maxClaims: number;
+  /** Cererea spre care s-a dat click în `?cerere=<id>`: se aduce în ecran și se marchează. */
+  focused?: boolean;
 }
 
 // Punct colorat, nu pastilă: pastilele sunt deja luate de segment, iar asta
@@ -150,7 +152,7 @@ function SegmentBadge({ segment }: { segment: string }) {
   );
 }
 
-export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardProps) {
+export default function LeadCard({ lead, initialClaims, maxClaims, focused }: LeadCardProps) {
   const [claims, setClaims] = useState(initialClaims);
   const [modalOpen, setModalOpen] = useState(false);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
@@ -159,6 +161,17 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
   const full = claims >= maxClaims;
   const slotsLeft = maxClaims - claims;
   const claimedByMe = status === 'success';
+
+  // Cardul venit prin link direct se aduce singur în ecran. `block: 'center'`,
+  // nu 'start': pe telefon un card lipit de marginea de sus arată ca și cum ar
+  // fi tăiat, iar aici tocmai vrem să se vadă că e cardul cerut. Fără
+  // `behavior`, ca să respecte `scroll-behavior: smooth` din globals.css și
+  // setarea de mișcare redusă a vizitatorului.
+  const cardRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!focused) return;
+    cardRef.current?.scrollIntoView({ block: 'center' });
+  }, [focused]);
 
   // Modal: Escape închide, scroll-ul paginii e blocat cât e deschis.
   useEffect(() => {
@@ -237,7 +250,19 @@ export default function LeadCard({ lead, initialClaims, maxClaims }: LeadCardPro
   ].filter(Boolean) as { label: string; value: string }[];
 
   return (
-    <div className={`bg-white rounded-xl border border-border p-5 flex flex-col ${full && !claimedByMe ? 'opacity-75' : ''}`}>
+    <div
+      ref={cardRef}
+      className={`bg-white rounded-xl border p-5 flex flex-col scroll-mt-24 ${
+        focused ? 'border-primary ring-2 ring-primary/30' : 'border-border'
+      } ${full && !claimedByMe ? 'opacity-75' : ''}`}
+    >
+      {/* Confirmarea că ai ajuns unde ai apăsat. Fără ea, într-o grilă de carduri
+          identice, inelul singur s-ar citi ca o stare oarecare a cardului. */}
+      {focused && (
+        <p className="-mt-1 mb-2 text-[11px] font-semibold uppercase tracking-wider text-primary-dark">
+          Cererea selectată
+        </p>
+      )}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5">
           <SegmentBadge segment={lead.segment} />
