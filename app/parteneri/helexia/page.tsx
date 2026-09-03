@@ -39,29 +39,37 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
+// Cifrele vin din comunicatul lor de presă din 20 noiembrie 2024, nu din
+// pagina „despre noi": acolo secțiunea „Despre Helexia" e mai nouă decât
+// cifrele afișate pe prima pagină (1.250 de proiecte și 347 MW, la 31 dec
+// 2023) și, întâmplător, și mai favorabilă. Sursa e a lor, verificabilă.
 const FACTS = [
-  { label: 'Proiecte fotovoltaice, la nivel de grup', value: '1.250' },
-  { label: 'MW instalați, la nivel de grup', value: '347' },
-  { label: 'Acoperișuri puse în funcțiune în România', value: '28' },
-  { label: 'MW în România', value: '12,8' },
+  { label: 'Proiecte fotovoltaice finalizate, la nivel de grup', value: '1.785' },
+  { label: 'MW în operare, la nivel de grup', value: '386' },
+  { label: 'Magazine echipate în România', value: '28' },
+  { label: 'MW instalați în România', value: '12,8' },
 ];
 
+// Pașii sunt scriși cu verbele din propria lor descriere („se ocupă de proiect
+// de la început până la sfârșit", „dezvoltatorul proiectului și apoi
+// proprietarul", „vă rambursăm diferența"), la persoana a doua ca peste tot pe
+// site. Titlurile spun ce fac, nu ce sunt.
 const STEPS = [
   {
-    title: 'Analiza consumului',
-    body: 'Se uită la factura și la profilul de consum, ca să vadă dacă un sistem pe acoperiș, pe copertină sau la sol chiar iese mai ieftin decât energia din rețea.',
+    title: 'Analizează consumul și acoperișul',
+    body: 'Se uită la factura și la profilul de consum și calculează economiile pe care le puteți face cu un sistem pe acoperiș, pe copertină sau la sol.',
   },
   {
-    title: 'Ei investesc, ei construiesc',
-    body: 'Helexia răspunde de proiect cap-coadă: inginerie, achiziție, construcție (EPC) și finanțarea proiectului. Firma nu scoate bani la început.',
+    title: 'Finanțează și construiește',
+    body: 'Helexia răspunde de proiect de la început până la sfârșit: inginerie, achiziție, construcție și finanțarea proiectului. Firma dumneavoastră nu scoate bani la început și nu se ocupă de execuție.',
   },
   {
-    title: 'Ei rămân proprietari și operează',
-    body: 'Helexia e dezvoltatorul proiectului și apoi proprietarul lui, iar operarea și întreținerea rămân la ei pe toată durata contractului. Firma nu are pe cap nici defecțiunile, nici monitorizarea.',
+    title: 'Rămâne proprietar și se ocupă de operare',
+    body: 'Helexia e dezvoltatorul proiectului și apoi proprietarul lui, iar operarea și întreținerea rămân la ei pe toată durata contractului. Nu aveți pe cap nici defecțiunile, nici monitorizarea.',
   },
   {
-    title: 'Economiile sunt garantate prin contract',
-    body: 'Prin contract de performanță energetică. Helexia calculează economiile estimate, apoi monitorizează consumul și le compară cu cele prevăzute în contract. Dacă firma economisește mai puțin decât s-a prevăzut, diferența se rambursează; dacă economisește mai mult, Helexia primește un bonus.',
+    title: 'Garantează economiile prin contract',
+    body: 'Prin contract de performanță energetică: calculează economiile estimate, apoi monitorizează consumul real și îl compară cu ce scrie în contract. Dacă economisiți mai puțin decât s-a prevăzut, vă rambursează diferența; dacă economisiți mai mult, primesc un bonus.',
   },
 ];
 
@@ -95,10 +103,16 @@ export default function HelexiaPage() {
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">
             Helexia România: fotovoltaic pe firmă, fără investiție proprie
           </h1>
+          {/* Formularea e a lor, de pe helexia.ro/finantare: „se ocupă de proiect de
+              la început până la sfârșit", ca firma clientului „să se concentreze pe
+              activitatea de bază". Prima versiune spunea „Firma nu scoate bani la
+              început", care se citea și ca și cum Helexia nu ar investi. */}
           <p className="text-gray-500 mt-3 text-lg">
-            Helexia finanțează proiectul, îl construiește, rămâne proprietarul lui și îl
-            operează pe toată durata contractului. Firma nu scoate bani la început, iar
-            economiile de energie sunt garantate prin contract.
+            Pionier în tranziția energetică din 2010 și prezentă în România din 2022, Helexia se
+            ocupă de proiect de la început până la sfârșit: inginerie, achiziție și construcție,
+            finanțarea proiectului, apoi operarea și întreținerea pe toată durata contractului.
+            Firma dumneavoastră rămâne concentrată pe activitatea ei, fără să imobilizeze
+            capital, iar economiile de energie sunt garantate prin contract.
           </p>
         </header>
 
@@ -112,9 +126,26 @@ export default function HelexiaPage() {
             ))}
           </div>
           <p className="mt-3 text-xs text-gray-500 leading-relaxed">
-            Cifrele de grup sunt la 31 decembrie 2023, publicate de Helexia. Cele din România
-            sunt din comunicatul Voltalia privind acoperișurile puse în funcțiune aici. Helexia
-            face parte din grupul Helexia, subsidiară a Voltalia.
+            Cifrele sunt din comunicatul Helexia din 20 noiembrie 2024: la nivel de grup, peste
+            1.785 de proiecte fotovoltaice finalizate și 386 MW în operare, cu peste 470 de
+            angajați în 11 țări. Cele din România sunt din același comunicat. Helexia e filială
+            a Voltalia (Euronext Paris) și lucrează în România din 2022.
+          </p>
+        </section>
+
+        {/* Referințele cântăresc mai mult decât orice descriere: sunt nume pe care
+            decidentul le cunoaște, iar cifrele vin din comunicatul lor, deci le pot
+            verifica singuri. Lipseau cu totul din prima versiune a paginii. */}
+        <section className="mb-10 rounded-xl border border-secondary/15 bg-secondary/[0.03] p-6">
+          <h2 className="text-lg font-bold text-gray-900 mb-3">Ce au făcut în România</h2>
+          <p className="text-sm text-gray-600 leading-relaxed">
+            În septembrie 2024 au inaugurat 28 de magazine Auchan și Leroy Merlin echipate cu
+            peste 27.000 de panouri fotovoltaice, 12,8 MW pe mai bine de 63.000 mp de acoperiș.
+            Instalațiile acoperă între 20 și 30% din consumul fiecărui magazin, adică peste
+            14.000 MWh pe an și peste 8.000 de tone de CO<sub>2</sub> evitate anual.
+          </p>
+          <p className="mt-2 text-xs text-gray-500">
+            Sursa: comunicatul de presă Helexia, 20 noiembrie 2024.
           </p>
         </section>
 
@@ -135,23 +166,34 @@ export default function HelexiaPage() {
           </ol>
         </section>
 
+        {/* Aceleași fapte ca în prima versiune (nu e în director, nu are atestat
+            ANRE de instalator), dar spuse ca rol în proiect. Distincția rămâne
+            necesară: directorul promite instalator real cu atestat verificat, iar
+            un investitor afișat ca „firmă recomandată" ar strica exact asta. Ce se
+            schimbă e că partenerul e prezentat pentru ce face, nu pentru ce nu e. */}
         <section className="mb-10 rounded-xl border border-border bg-surface/60 p-6">
           <h2 className="text-lg font-bold text-gray-900 mb-3">
-            Ce nu e Helexia, ca să fie clar
+            Ce rol are Helexia și cui i se potrivește
           </h2>
           <p className="text-sm text-gray-600 leading-relaxed">
-            Nu e o firmă din directorul nostru și nu apare în{' '}
+            Helexia e investitor și antreprenor general: aduce banii, răspunde de proiect
+            cap-coadă și rămâne proprietarul sistemului. Partea de instalații electrice, cea
+            care cere atestat ANRE, se execută prin subcontractori. De aceea o găsiți aici, ca
+            partener de finanțare, și nu în{' '}
             <Link href="/firme" className="underline hover:text-gray-700">
-              lista celor 185 de instalatori verificați
+              directorul celor 185 de instalatori verificați
             </Link>
-            . Nu are atestat ANRE de instalator, pentru că nu execută în nume propriu lucrarea de
-            instalații electrice; e investitor și antreprenor general, iar partea atestată se
-            execută prin subcontractor. Dacă vă interesează un instalator atestat care să vă
-            monteze sistemul cumpărat de dumneavoastră, mergeți în{' '}
+            : sunt două roluri diferite în același proiect.
+          </p>
+          <p className="text-sm text-gray-600 leading-relaxed mt-3">
+            Vi se potrivește dacă vreți factura mai mică fără să scoateți bani din firmă și
+            fără să vă ocupați de operare. Dacă aveți deja bugetul pentru sistem, Helexia poate
+            dezvolta doar proiectul, fără partea de finanțare. Iar dacă vreți să cumpărați
+            dumneavoastră sistemul și să vi-l monteze o firmă din zonă, aveți{' '}
             <Link href="/firme?segment=comercial" className="underline hover:text-gray-700">
-              director
+              instalatorii atestați din director
             </Link>
-            , nu aici. Varianta asta e pentru cazul opus: nu vreți să cumpărați deloc sistemul.
+            .
           </p>
         </section>
 
@@ -163,7 +205,8 @@ export default function HelexiaPage() {
                 {[
                   ['Helexia Servicii Energetice SRL', 'CUI 46740902'],
                   ['Helexia Development Romania SRL', 'CUI 45670400'],
-                  ['Sediu', 'Str. Dr. Iacob Felix 63, București'],
+                  ['Sediu', 'Betahaus, Str. Dr. Iacob Felix 63, etaj 12, București'],
+                  ['Email', 'romania.info@helexia.eu'],
                   ['Site', 'helexia.ro'],
                 ].map(([k, v]) => (
                   <tr key={k} className="hover:bg-surface/50 transition-colors">
@@ -192,7 +235,7 @@ export default function HelexiaPage() {
         <InstallerCta
           sursa="partener/helexia"
           segment="comercial"
-          title="Nu sunteți sigur ce variantă vi se potrivește?"
+          title="Vreți să comparați cu varianta clasică?"
           description="Cereți întâi o ofertă de la instalatori atestați ANRE din județul dumneavoastră. Cu o valoare fermă în mână puteți compara corect cumpărarea, leasingul și varianta fără investiție proprie."
           ctaLabel="Cere oferte gratuit"
         />

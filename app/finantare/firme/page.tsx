@@ -70,7 +70,7 @@ const ROUTES = [
     name: 'Leasing operațional și ESCO',
     owner: 'Investitorul terț',
     upfront: 'Zero',
-    asks: 'Un contract lung, tipic peste zece ani, și un consum care merită investiția lui. Plătiți energia produsă sau pe baza economiilor garantate, după model.',
+    asks: 'Un contract lung, tipic peste zece ani, și un consum care merită investiția lui. Plătiți fie energia produsă, fie pe baza economiilor garantate prin contract, în funcție de partener.',
     best: 'Firma care nu vrea să atingă CAPEX-ul sau linia de credit',
   },
   {
@@ -145,8 +145,12 @@ const faqs = [
   },
   {
     question: 'Ce e un contract ESCO și de ce nu apare ca datorie?',
+    // Prima versiune băga ESCO și contractul de performanță energetică în
+    // aceeași frază, cu un singur mecanism: „firma plătește pentru energia
+    // produsă". Nu e mecanismul unui CPE, iar partenerul afișat chiar deasupra
+    // lucrează pe CPE, deci întrebarea îl descria greșit exact pe el.
     answer:
-      'Într-un contract de tip ESCO sau de performanță energetică, un terț investește în sistem, îl deține și îl operează, iar firma plătește pentru energia produsă sau pentru folosința instalației. Pentru că nu cumpărați activul, angajamentul are alt tratament decât un credit. Compensația e că economia se împarte cu investitorul, iar contractele sunt lungi. Tratamentul contabil exact se confirmă cu contabilul dumneavoastră, pe contractul concret.',
+      'E umbrela sub care un terț investește în sistem, îl deține și îl operează, iar firma nu scoate bani la început. De aici încolo sunt două mecanisme diferite, iar diferența decide ce semnați. În varianta cu plata energiei, plătiți energia produsă de sistem sau folosința instalației, de obicei sub prețul din rețea. În contractul de performanță energetică se pleacă de la economii: investitorul le calculează, le trece în contract, apoi monitorizează consumul real, iar dacă economisiți mai puțin decât s-a prevăzut vă rambursează diferența. Comun le e că nu cumpărați activul, deci angajamentul are alt tratament decât un credit, că economia se împarte cu investitorul și că vorbim de contracte lungi. Tratamentul contabil exact se confirmă cu contabilul dumneavoastră, pe contractul concret.',
   },
   {
     question: 'De ce nu publicați dobânzi și rate pe pagina asta?',
