@@ -25,6 +25,23 @@
       "facebook": "https://www.facebook.com/safetyleasing"
     },
     {
+      "slug": "helexia",
+      "name": "Helexia România",
+      "location": "Investitor și EPC",
+      "logo": "/logos/helexia.png",
+      "baseUrl": "https://helexia.ro",
+      "active": true,
+      "positions": [
+        "finantare-firme"
+      ],
+      "messages": {
+        "client": "Investitor terț care finanțează, construiește și deține sistemul, cu economii de energie garantate prin contract",
+        "instalator": "Investitor și antreprenor general pentru proiecte fotovoltaice pe acoperiș, copertină sau la sol"
+      },
+      "cta": "Vezi cum funcționează →",
+      "phone": "0748 076 864"
+    },
+    {
       "slug": "diodor",
       "name": "Diodor",
       "location": "Cluj-Napoca",

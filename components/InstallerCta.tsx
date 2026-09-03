@@ -13,10 +13,15 @@ import Button from '@/components/ui/Button';
 //
 // `sursa` ajunge în /cere-oferta?sursa=… și de acolo în coloana K din Sheet, ca
 // să se poată spune în sfârșit care pagină produce cereri.
+//
+// `segment` pune `?segment=` în link, iar SegmentProvider îl preferă cookie-ului
+// și îl salvează. Fără el, o pagină scrisă pentru firme ar trimite omul într-un
+// formular pornit pe rezidențial, care e implicit peste tot.
 
 interface InstallerCtaProps {
   specializare?: string;
   sursa?: string;
+  segment?: 'comercial' | 'rezidential';
   title?: string;
   description?: string;
   ctaLabel?: string;
@@ -25,11 +30,21 @@ interface InstallerCtaProps {
 export default function InstallerCta({
   specializare,
   sursa,
+  segment,
   title = 'Cauți un instalator pentru proiectul tău?',
   description = 'Spuneți-ne ce aveți nevoie și primiți oferte gratuite de la mai mulți instalatori atestați ANRE din zona dumneavoastră.',
   ctaLabel = 'Cere oferte gratuit',
 }: InstallerCtaProps) {
-  const href = sursa ? `/cere-oferta?sursa=${encodeURIComponent(sursa)}` : '/cere-oferta';
+  const params = new URLSearchParams();
+  if (segment) params.set('segment', segment);
+  if (sursa) params.set('sursa', sursa);
+  const query = params.toString();
+  const href = query ? `/cere-oferta?${query}` : '/cere-oferta';
+
+  const firmeParams = new URLSearchParams();
+  if (specializare) firmeParams.set('specializare', specializare);
+  if (segment) firmeParams.set('segment', segment);
+  const firmeQuery = firmeParams.toString();
 
   return (
     <div className="bg-primary/5 rounded-xl border border-primary/10 p-6 my-10 text-center">
@@ -43,7 +58,7 @@ export default function InstallerCta({
       <p className="mt-3 text-xs text-gray-500">
         Gratuit, fără obligații.{' '}
         <a
-          href={`/firme${specializare ? `?specializare=${specializare}` : ''}`}
+          href={`/firme${firmeQuery ? `?${firmeQuery}` : ''}`}
           className="underline hover:text-gray-700"
         >
           Sau vedeți direct firmele

@@ -352,7 +352,7 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <HomeFinantareCta href="/finantare">Compară variantele</HomeFinantareCta>
+            <HomeFinantareCta href="/finantare/firme">Compară variantele</HomeFinantareCta>
           </div>
         </div>
       </section>
