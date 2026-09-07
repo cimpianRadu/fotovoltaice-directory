@@ -701,3 +701,78 @@ export async function sendCountyLeadAlert(data: {
   }
   return result;
 }
+
+/**
+ * Cont nou în portal, către noi (nu către firmă).
+ *
+ * Prima autentificare reușită e singura dovadă că o firmă chiar a intrat, iar
+ * momentul cere reacție: firma e în portal, se uită la o cerere pe care încă
+ * n-are voie s-o vadă întreagă. Fără emailul ăsta, contul se descoperea abia la
+ * următoarea deschidere a /admin/portal.
+ */
+export async function sendNewPortalAccountNotification(data: {
+  email: string;
+  /** Pe unde a intrat: linkul din email sau codul de 6 cifre. */
+  method: 'link' | 'cod';
+  /** Numele firmei din director, dacă adresa se potrivește cu una listată. */
+  firmName?: string;
+  firmSlug?: string;
+  judet?: string;
+  /** Câte emailuri de login au plecat până acum către adresă. */
+  requests: number;
+  /** Revendicări active pe adresă în momentul intrării. */
+  activeClaims: number;
+  /** Dintre ele, câte așteaptă aprobarea noastră ca să vadă datele clientului. */
+  pendingClaims: number;
+}): Promise<void> {
+  const to = process.env.LISTING_NOTIFICATION_EMAIL || 'radu.cimpian94@gmail.com';
+
+  const row = (label: string, value: string) =>
+    `<tr><td style="padding:5px 12px 5px 0;color:#6b7280;font-size:13px;vertical-align:top;white-space:nowrap">${label}</td><td style="padding:5px 0;font-size:14px;color:#111827">${value}</td></tr>`;
+
+  // Ce e de făcut acum, în ordinea în care se întâmplă: o revendicare în
+  // așteptare cere un telefon de confirmare, un cont fără nicio revendicare e
+  // firma pe care am trimis-o noi în portal și căreia îi atribuim cererea.
+  const todo = data.pendingClaims
+    ? `Are ${data.pendingClaims} ${data.pendingClaims === 1 ? 'revendicare care așteaptă' : 'revendicări care așteaptă'} aprobarea: sună firma, apoi deblochează datele clientului din /admin/portal.`
+    : data.activeClaims
+      ? 'Are revendicări deja aprobate, deci vede datele clientului. Nimic de făcut acum.'
+      : 'Nu are nicio revendicare: dacă i-am promis o cerere, atribuie-i-o din /admin/portal.';
+
+  const html = `<!DOCTYPE html>
+<html>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
+  <div style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
+    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#ecfdf5">
+      <div style="font-size:12px;color:#047857;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">Cont nou în portal</div>
+      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${escapeHtml(data.firmName || data.email)}</h1>
+    </div>
+    <div style="padding:20px 24px">
+      <table style="border-collapse:collapse;width:100%">
+        ${row('Email', `<a href="mailto:${escapeHtml(data.email)}" style="color:#2563eb">${escapeHtml(data.email)}</a>`)}
+        ${data.firmName ? row('Firmă', `${escapeHtml(data.firmName)}${data.judet ? ` · ${escapeHtml(data.judet)}` : ''}${data.firmSlug ? ` · <a href="${PORTAL_BASE_URL}/firme/${escapeHtml(data.firmSlug)}" style="color:#2563eb">profil</a>` : ''}`) : row('Firmă', '<span style="color:#6b7280">adresa nu se potrivește cu nicio firmă din director</span>')}
+        ${row('A intrat cu', data.method === 'link' ? 'linkul din email' : 'codul de 6 cifre')}
+        ${row('Coduri cerute', String(data.requests))}
+        ${row('Revendicări active', `${data.activeClaims}${data.pendingClaims ? ` (${data.pendingClaims} de aprobat)` : ''}`)}
+      </table>
+      <div style="text-align:center;margin-top:20px">
+        <a href="${PORTAL_BASE_URL}/admin/portal" style="display:inline-block;padding:12px 24px;background:#1e3a5f;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">Deschide /admin/portal</a>
+      </div>
+    </div>
+    <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280;line-height:1.5">
+      ${todo}
+    </div>
+  </div>
+</body>
+</html>`;
+
+  const result = await sendEmail({
+    to,
+    subject: `Cont nou în portal: ${data.firmName || data.email}`,
+    html,
+  });
+
+  if (!result.ok) {
+    console.warn('[email] New portal account notification not sent:', result.reason);
+  }
+}

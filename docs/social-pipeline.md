@@ -9,6 +9,32 @@
 
 **Promovăm prioritar `/cere-oferta`, obiectivul e colectarea de lead-uri** (pe care userul vrea apoi să le vândă firmelor). Implicații: CTA primar al fiecărei postări noi = /cere-oferta (nu doar în comentariul fixat, ci ca destinație a unghiului); temele se triază după „aduce cereri de ofertă sau doar views?"; succes = submissions în digest, nu reach. Ideile cele mai aliniate din coadă: #4 (amortizare → calculator → cere-oferta) și #6 (câte firme în județul tău → cere-oferta).
 
+## 🎯 Focus strategic 2: instalatori (decizie user 2026-09-07)
+
+**Până când acoperirea cererilor revine peste 80%, postările se adresează firmelor, nu clienților.** Cererile nu mai sunt blocajul: 48 în 30 de zile la 7 sept (dublu față de luna dinainte), dar 27 dintre ele fără nicio revendicare activă, în 15 județe. Doar ~10 firme intră în portal și doar 3 au alerte pe județ. Detalii și cifre în memoria `project_funnel_diagnosis_2026_09_07`.
+
+**Ce spun datele despre canal (Umami, 90 de zile la 7 sept):** sesiunile din Google au făcut zero revendicări; sesiunile din Facebook au făcut 7 deschideri de modal și 4 revendicări. Aterizări direct pe /cereri: 33 din Facebook, 6 din Google. Deci Facebook e singurul canal public care aduce firme, iar reelurile pentru clienți (1 cerere din 29 atribuite) se opresc.
+
+**Ce a mers, în ordinea dovezilor:**
+1. **Poză cu screenshot de cerere + caption** („cerere 150 kW Prahova, nerevendicată", 28 iul). Cost: cinci minute. E formatul care a dus firme pe /cereri din Facebook. Devine formatul de bază.
+2. **Rezumatul de luni** (cereri noi / preluate / încă disponibile), deja pe firme ca audiență. Rămâne.
+3. **Reel narat** doar când există un unghi pe care poza nu-l poate spune (cum funcționează portalul, cum se aprobă revendicarea, ce înseamnă alertele). Sub 30 de secunde, adresare „tu", fără cifre în voce.
+
+**Cadență:** 3-4 postări pe săptămână, toate pentru firme, toate cu CTA pe `/cereri?judet=<județ>` sau `/portal`. Nu se mai produc reeluri pentru clienți în perioada asta; cele 9 randate și nepostate se pot posta doar dacă nu ocupă slotul unei postări pentru firme.
+
+**Unghiuri, în ordine:**
+- **„Cereri fără firmă în județul tău"**, per județ, screenshot filtrat pe județ. Se rotesc județele cu cereri nerevendicate (la 7 sept: Ilfov 5, apoi Argeș, Cluj, București, Arad, Bihor, Olt câte 2). Link: `/cereri?judet=<slug>&utm_source=facebook&utm_medium=poza&utm_campaign=cereri-<slug>`.
+- **Comment-gate „scrie județul"** (reel randat pe 27 aug, nepostat, răspunsurile pe 42 de județe există): firma comentează județul, primește linkul filtrat. Se postează prima.
+- **Portalul, pas cu pas** (reel randat pe 11 aug, nepostat): ce vede firma după revendicare, cum mută statusul, cum eliberează locul. De verificat capturile înainte de postare, portalul s-a schimbat din august.
+- **Alertele pe județ**: bifezi județele, primești email la fiecare cerere nouă acolo. Trei abonați la 7 sept. Poză sau reel scurt, CTA `/portal`.
+- **Distribuție în grupurile de instalatori de pe Facebook**, cu text per grup, nu doar pe pagină. Pagina are ~80 de vizite pe lună; grupurile sunt unde stau firmele.
+
+**Ce nu se face:** YouTube Shorts și TikTok se lasă deoparte până există un flux de firme (zero efect măsurat, cost de distribuție real). Fără reeluri despre Casa Verde, prețuri sau legislație în perioada asta.
+
+**Măsurare (din 7 sept, commit-ul cu atribuirea pe firme):** fiecare link poartă `utm_campaign=<slug-postare>`. Revendicările, cererile de listare și cererile de login în portal salvează canalul, campania și pagina de intrare (coloanele Q-T în „Revendicări", R-U în „Listări", E-G în „Portal Acces"), iar la revendicare și la listare firma poate bifa „cum ai aflat de noi". Raportul: `node scripts/firm-sources.mjs [--days 30]`, rulat lunea, odată cu rezumatul.
+
+**Criteriul de succes și de oprire:** firme NOI (prima revendicare sau primul login în portal) atribuite Facebook, pe săptămână. Ținta: cel puțin una pe săptămână. **Dacă după 4 săptămâni (5 oct 2026) media e sub una pe săptămână, socialul pentru firme se oprește** și timpul trece integral pe recrutare telefonică din listele din `docs/*-rezidential.md`. Regula se fixează acum, ca să nu se negocieze cu rezultatul în față.
+
 ## 📡 Distribuție multi-platformă (decizie user 2026-07-28)
 
 Același master 9:16 se postează pe **Facebook, Instagram, YouTube Shorts și TikTok**. Ordinea de prioritate stabilită: Instagram (cel mai ieftin de activat, cross-post din Meta Business Suite), YouTube Shorts (pariul real: link clicabil în descriere + coadă lungă pe căutare), TikTok (test cu criteriu de oprire: dacă la 8 săptămâni nu bate baseline-ul de pe Facebook și nu vezi click-uri pe linkul din bio în Umami, se închide).

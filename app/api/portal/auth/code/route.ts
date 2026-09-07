@@ -1,6 +1,7 @@
 import { NextResponse, after } from 'next/server';
 import { cookies } from 'next/headers';
 import { savePortalAccessEvent } from '@/lib/sheets';
+import { notifyIfNewPortalAccount } from '@/lib/portal-account';
 import {
   PORTAL_COOKIE,
   PORTAL_PENDING_COOKIE,
@@ -53,11 +54,12 @@ export async function POST(request: Request) {
       secret,
     );
 
-    after(() =>
-      savePortalAccessEvent({ email: pending.email, event: 'intrat', method: 'cod' }).catch((err) =>
-        console.error('[portal] jurnal acces (intrat/cod):', err),
-      ),
-    );
+    after(async () => {
+      await savePortalAccessEvent({ email: pending.email, event: 'intrat', method: 'cod' }).catch(
+        (err) => console.error('[portal] jurnal acces (intrat/cod):', err),
+      );
+      await notifyIfNewPortalAccount(pending.email, 'cod');
+    });
 
     const res = NextResponse.json({ ok: true });
     res.cookies.set(PORTAL_COOKIE, session, portalCookieOptions(PORTAL_SESSION_DAYS * 86_400));

@@ -1153,6 +1153,25 @@ export async function getPortalAccessEvents(): Promise<PortalAccessEvent[]> {
     });
 }
 
+/**
+ * Câte evenimente de fiecare fel are adresa în jurnal.
+ *
+ * Chemat DUPĂ scrierea rândului, `intrat === 1` înseamnă „prima autentificare
+ * reușită", adică firma tocmai și-a făcut cont. Numărătoarea se face pe jurnal,
+ * nu pe un flag separat, ca să rămână adevărată și după ștergerea rândurilor de
+ * test (sesiunile forjate lasă urme, iar ele se șterg din „Portal Acces").
+ */
+export async function getPortalEventCounts(
+  email: string,
+): Promise<Record<PortalEventKind, number>> {
+  const key = email.trim().toLowerCase();
+  const counts: Record<PortalEventKind, number> = { cerut: 0, intrat: 0, vazut: 0 };
+  for (const e of await getPortalAccessEvents()) {
+    if (e.email === key) counts[e.event] += 1;
+  }
+  return counts;
+}
+
 // ── Emailuri legate (o firmă, mai multe adrese) ────────────────────────────
 // Identitatea în portal e emailul, iar firmele revendică de pe adrese diferite:
 // pe 1 sept 2026 Green Seiro avea trei revendicări pe contact@ și una pe
