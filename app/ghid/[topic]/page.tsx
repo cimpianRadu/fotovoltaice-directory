@@ -7,6 +7,7 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import FAQ from '@/components/seo/FAQ';
 import InstallerCta from '@/components/InstallerCta';
+import FinantareB2B, { FINANTARE_B2B_GUIDES } from '@/components/FinantareB2B';
 import Markdown from '@/components/ui/Markdown';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
@@ -233,6 +234,10 @@ export default async function GuidePage({ params }: Props) {
           title="Instalatori Recomandați"
           subtitle="Firme partenere care fac proiecte ca cel din ghid"
         />
+
+        {/* Finanțarea vine ca obiecție imediat după preț, deci stă la finalul
+            conținutului, doar pe ghidurile citite de firme. */}
+        {FINANTARE_B2B_GUIDES.has(guide.slug) && <FinantareB2B slug={guide.slug} />}
 
         {/* CTA (repetat la final pentru cine ajunge aici) */}
         {ctaBlock}

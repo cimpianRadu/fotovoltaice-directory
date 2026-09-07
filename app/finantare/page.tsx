@@ -212,6 +212,8 @@ const ROUTES: {
       { ok: true, text: 'Economia lunară la energie poate acoperi o parte din rată' },
       { ok: false, text: 'Sistemul e al finanțatorului până la achitarea integrală' },
     ],
+    href: '/finantare/firme',
+    hrefLabel: 'Vedeți variantele pentru firme',
   },
   {
     title: 'Programe de sprijin',
@@ -670,6 +672,12 @@ export default function FinantarePage() {
               className="p-4 rounded-lg border border-border hover:border-primary/30 hover:shadow-sm transition-all text-sm font-medium text-gray-900"
             >
               Calculator: cât costă și în cât se amortizează
+            </Link>
+            <Link
+              href="/finantare/firme"
+              className="p-4 rounded-lg border border-border hover:border-primary/30 hover:shadow-sm transition-all text-sm font-medium text-gray-900"
+            >
+              Finanțare pentru firme: leasing, credit, ESCO
             </Link>
           </div>
         </div>
