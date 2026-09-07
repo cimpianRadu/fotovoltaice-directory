@@ -132,14 +132,19 @@ const heldAtClose = (leadId) =>
 
 const preluate = cereriSaptamana.filter((l) => heldAtClose(l.id).length > 0).length;
 const disponibile = cereriSaptamana.length - preluate;
-const revendicariSaptamana = claims.filter(
+// Aceeași condiție pentru revendicări și pentru firme: altfel cele două cifre se
+// contrazic pe ecran. Pe 31 august - 6 septembrie, patru firme au revendicat, dar
+// una a renunțat în aceeași săptămână, deci scena reelului ar fi arătat „trei
+// revendicări de la patru firme diferite".
+const revendicariActive = claims.filter(
   (c) => inWeek(c.zi) && (!c.releasedAt || roDay(c.releasedAt) > to),
-).length;
+);
+const revendicariSaptamana = revendicariActive.length;
 // Ofertele se numără după data marcării, nu după data cererii: firma poate
 // oferta în această săptămână o cerere primită săptămâna trecută.
 const oferteSaptamana = claims.filter((c) => c.offeredAt && inWeek(roDay(c.offeredAt))).length;
 const firmeActive = new Set(
-  claims.filter((c) => inWeek(c.zi) && c.firma).map((c) => c.firma.toLowerCase()),
+  revendicariActive.filter((c) => c.firma).map((c) => c.firma.toLowerCase()),
 ).size;
 
 const judete = {};
