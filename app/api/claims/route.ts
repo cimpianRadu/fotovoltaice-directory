@@ -15,6 +15,8 @@ import {
   saveClaimToSheet,
 } from '@/lib/sheets';
 import { isValidEmail, normalizeEmail } from '@/lib/portal-auth';
+import { sanitizeAttribution } from '@/lib/attribution';
+import { isFirmSource } from '@/lib/utils-shared';
 import { sendClaimNotification } from '@/lib/email';
 import {
   getConnectionLabel,
@@ -28,6 +30,11 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { leadId, numeFirma, numeContact, telefon, email } = body as Record<string, string>;
+    // De unde vine firma: canalul sesiunii (automat) + ce spune ea (opțional).
+    // Niciunul nu e condiție: revendicarea pleacă și cu ambele goale.
+    const attribution = sanitizeAttribution(body);
+    const cumAflatRaw = String(body?.cumAflat || '').trim().toLowerCase();
+    const cumAflat = isFirmSource(cumAflatRaw) ? cumAflatRaw : '';
 
     if (!leadId || !numeFirma?.trim() || !numeContact?.trim() || !telefon?.trim() || !email?.trim()) {
       return NextResponse.json(
@@ -126,6 +133,8 @@ export async function POST(request: Request) {
       telefon: telefon.trim(),
       source: 'self' as const,
       email: normalizeEmail(email),
+      attribution,
+      cumAflat,
     };
     await saveClaimToSheet(claim);
 

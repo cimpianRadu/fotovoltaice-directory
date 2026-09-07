@@ -16,6 +16,7 @@ import {
   type FirmStatus,
 } from './sheets-shared';
 import { google } from 'googleapis';
+import type { Attribution } from './attribution';
 
 function getAuth() {
   return new google.auth.GoogleAuth({
@@ -289,6 +290,10 @@ export async function saveListingToSheet(listing: {
   anreFirmName?: string;
   anreCerts?: string;
   anreStatus?: string;
+  /** Canalul sesiunii (first-touch), vezi lib/attribution.ts. */
+  attribution?: Attribution;
+  /** Răspunsul firmei la „cum ați aflat de noi?", vezi FIRM_SOURCE_OPTIONS. */
+  cumAflat?: string;
 }) {
   await appendRow('Listări', [
     new Date().toISOString(),
@@ -306,7 +311,15 @@ export async function saveListingToSheet(listing: {
     listing.anreStatus || '',
     listing.anreFirmName || '',
     listing.anreCerts || '',
-    listing.segment || 'comercial', // coloana Segment (trailing)
+    listing.segment || 'comercial', // P — Segment
+    '', // Q — marcaj „Email trimis", rezervat scripts/outreach.mjs; NU se scrie de aici
+    // R-U (din 7 sept 2026): de unde a venit firma. Pe 7 sept, 8 din 19 firme
+    // listate ajunseseră să revendice cereri, cel mai bun canal de firme pe
+    // care îl avem, și nu știam de unde vin. Vezi project_funnel_diagnosis_2026_09_07.
+    listing.attribution?.canal || '', // R — Canal (first-touch)
+    listing.attribution?.campanie || '', // S — Campanie (utm_campaign)
+    listing.attribution?.paginaIntrare || '', // T — Pagină intrare
+    listing.cumAflat || '', // U — Cum a aflat (răspunsul firmei)
   ]);
 }
 
@@ -401,6 +414,11 @@ export interface NewListing {
   anreFirmName: string;
   anreCerts: string;
   segment: string;
+  /** R-U, din 7 sept 2026. Goale pe rândurile mai vechi. */
+  canal: string;
+  campanie: string;
+  paginaIntrare: string;
+  cumAflat: string;
 }
 
 // A row's first cell holds an ISO timestamp. Header rows / blanks won't parse —
@@ -471,6 +489,11 @@ export async function getListingsSince(cutoff: Date): Promise<NewListing[]> {
     anreFirmName: r[13] || '',
     anreCerts: r[14] || '',
     segment: r[15] || 'comercial',
+    // r[16] = marcaj outreach (Q)
+    canal: r[17] || '',
+    campanie: r[18] || '',
+    paginaIntrare: r[19] || '',
+    cumAflat: r[20] || '',
   }));
 }
 
@@ -723,6 +746,18 @@ export interface LeadClaim {
   /** Coloana P: câte remindere au plecat. Plafonat la CLAIM_REMINDER_MAX. */
   reminderCount: number;
   /**
+   * Coloanele Q-S (din 7 sept 2026): canalul sesiunii în care s-a făcut
+   * revendicarea, first-touch, ca la cereri (AH-AJ din Leads). Goale pe
+   * rândurile vechi și pe cele `manual`. Motivul: pe 7 sept Umami arăta că
+   * sesiunile din Google nu fac nicio revendicare iar cele din Facebook fac,
+   * dar la nivel de firmă nu se putea spune nimic.
+   */
+  canal: string;
+  campanie: string;
+  paginaIntrare: string;
+  /** Coloana T: răspunsul firmei la „cum ai aflat de noi?" (FIRM_SOURCE_OPTIONS), opțional. */
+  cumAflat: string;
+  /**
    * Coloana F: unde e FIRMA cu cererea asta, după propria ei declarație din
    * /portal. Coloana exista de la început cu 'Nou' scris la creare, dar nimeni
    * nu o citea; din aug 2026 ține statusul real. Rândurile vechi îl primesc
@@ -761,6 +796,10 @@ function readClaimRow(r: string[]): LeadClaim {
     // reporni de la zero pentru ele.
     reminderCount: Number(r[15]) || (r[14] ? 1 : 0),
     firmStatus: deriveClaimStatus(r[5] || '', { offeredAt, releasedAt }),
+    canal: r[16] || '',
+    campanie: r[17] || '',
+    paginaIntrare: r[18] || '',
+    cumAflat: r[19] || '',
   };
 }
 
@@ -794,6 +833,10 @@ export async function saveClaimToSheet(claim: {
   telefon: string;
   source: ClaimSource;
   email?: string;
+  /** Doar la `self`: canalul sesiunii, first-touch. Vezi lib/attribution.ts. */
+  attribution?: Attribution;
+  /** Doar la `self`: răspunsul firmei la „cum ai aflat de noi?". */
+  cumAflat?: string;
 }): Promise<string> {
   const timestamp = new Date().toISOString();
   const values = [
@@ -813,6 +856,10 @@ export async function saveClaimToSheet(claim: {
     '', // N — Ofertat la: firma marchează din /portal că a trimis oferta
     '', // O — Ultimul reminder la: emailul „mai ești interesat?"
     '', // P — Remindere trimise: contorul de cadență (max CLAIM_REMINDER_MAX)
+    claim.attribution?.canal || '', // Q — Canal (first-touch al sesiunii)
+    claim.attribution?.campanie || '', // R — Campanie (utm_campaign)
+    claim.attribution?.paginaIntrare || '', // S — Pagină intrare
+    claim.cumAflat || '', // T — Cum a aflat (răspunsul firmei, opțional)
   ];
   try {
     await appendRow(CLAIMS_SHEET, values);
@@ -842,6 +889,10 @@ const CLAIMS_HEADER = [
   'Ofertat la', // N — firma marchează din /portal că a trimis oferta clientului
   'Ultimul reminder la', // O — emailul „mai ești interesat?", ultima trimitere
   'Remindere trimise', // P — contorul de cadență (2 zile lucrătoare, apoi la 4)
+  'Canal', // Q — first-touch al sesiunii (google/facebook/direct/...), din 7 sept 2026
+  'Campanie', // R — utm_campaign, ca să se lege revendicarea de o postare anume
+  'Pagină intrare', // S — prima pagină din sesiune
+  'Cum a aflat', // T — răspunsul firmei (FIRM_SOURCE_OPTIONS), opțional
 ];
 
 /**
@@ -1001,7 +1052,10 @@ export async function markClaimReminded(
 // măsura autentificările, nu folosirea.
 const PORTAL_SHEET = 'Portal Acces';
 
-const PORTAL_HEADER = ['Timestamp', 'Email', 'Eveniment', 'Metodă'];
+// E-G din 7 sept 2026: canalul sesiunii la `cerut` (prima intrare = cont nou).
+// Loginul e singurul moment în care o firmă nouă trece obligatoriu prin site,
+// deci e locul unde se vede de unde a venit, chiar dacă n-a revendicat nimic.
+const PORTAL_HEADER = ['Timestamp', 'Email', 'Eveniment', 'Metodă', 'Canal', 'Campanie', 'Pagină intrare'];
 
 export const PORTAL_EVENTS = ['cerut', 'intrat', 'vazut'] as const;
 export type PortalEventKind = (typeof PORTAL_EVENTS)[number];
@@ -1013,6 +1067,10 @@ export interface PortalAccessEvent {
   event: PortalEventKind;
   /** Doar pe `intrat`: pe unde a intrat. Gol pe restul. */
   method: 'link' | 'cod' | '';
+  /** Doar pe `cerut`, din 7 sept 2026: canalul sesiunii (first-touch). Gol pe restul. */
+  canal: string;
+  campanie: string;
+  paginaIntrare: string;
 }
 
 /**
@@ -1047,12 +1105,16 @@ export async function savePortalAccessEvent(e: {
   email: string;
   event: PortalEventKind;
   method?: 'link' | 'cod';
+  attribution?: Attribution;
 }) {
   const values = [
     new Date().toISOString(),
     e.email.trim().toLowerCase(),
     e.event,
     e.method ?? '',
+    e.attribution?.canal || '', // E
+    e.attribution?.campanie || '', // F
+    e.attribution?.paginaIntrare || '', // G
   ];
   try {
     await appendRow(PORTAL_SHEET, values);
@@ -1084,6 +1146,9 @@ export async function getPortalAccessEvents(): Promise<PortalAccessEvent[]> {
           ? (event as PortalEventKind)
           : 'cerut',
         method: method === 'link' || method === 'cod' ? method : '',
+        canal: r[4] || '',
+        campanie: r[5] || '',
+        paginaIntrare: r[6] || '',
       } satisfies PortalAccessEvent;
     });
 }

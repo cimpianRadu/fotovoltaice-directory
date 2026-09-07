@@ -373,6 +373,32 @@ export const CALL_WINDOW_OPTIONS = [
   { value: 'oricand', label: 'Oricând' },
 ] as const;
 
+/**
+ * „Cum ai aflat de noi?", întrebat firmelor la revendicare și la listare (din
+ * 7 sept 2026). Atribuirea automată (`lib/attribution.ts`) spune de unde a venit
+ * sesiunea, dar nu și de ce: o firmă care intră „direct" a putut afla de la un
+ * alt instalator, dintr-un telefon de-al nostru sau dintr-un reel văzut cu o
+ * săptămână în urmă. Opțional peste tot: e o întrebare, nu o condiție.
+ */
+export const FIRM_SOURCE_OPTIONS = [
+  { value: 'facebook', label: 'Facebook / Instagram' },
+  { value: 'google', label: 'Căutare Google' },
+  { value: 'email', label: 'Email de la noi' },
+  { value: 'telefon', label: 'Telefon / WhatsApp de la noi' },
+  { value: 'recomandare', label: 'Recomandare (instalator, client)' },
+  { value: 'altceva', label: 'Altceva' },
+] as const;
+
+export type FirmSource = (typeof FIRM_SOURCE_OPTIONS)[number]['value'];
+
+export function isFirmSource(value: string): value is FirmSource {
+  return FIRM_SOURCE_OPTIONS.some((o) => o.value === value);
+}
+
+export function getFirmSourceLabel(slug: string): string {
+  return FIRM_SOURCE_OPTIONS.find((o) => o.value === slug)?.label ?? slug;
+}
+
 export function getCallWindowLabel(slug: string): string {
   return CALL_WINDOW_OPTIONS.find((o) => o.value === slug)?.label ?? slug;
 }

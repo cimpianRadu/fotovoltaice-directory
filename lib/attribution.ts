@@ -116,6 +116,22 @@ export function deriveAttribution(url: string, referrer: string): Attribution {
 }
 
 /**
+ * Igienizează ce trimite clientul în body (revendicare, listare, login în
+ * portal). Aceeași curățare ca la citirea din `sessionStorage`: valorile ajung
+ * în celule de Sheet citite de om, iar body-ul unui POST poate conține orice.
+ * Nu are dependințe, deci merge și în rute API.
+ */
+export function sanitizeAttribution(raw: unknown): Attribution {
+  const r = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
+  const str = (v: unknown) => (typeof v === 'string' ? v : '');
+  return {
+    canal: clean(str(r.canal)),
+    campanie: clean(str(r.campanie)),
+    paginaIntrare: clean(str(r.paginaIntrare), 120),
+  };
+}
+
+/**
  * Se apelează la fiecare încărcare de pagină, dar scrie o singură dată pe
  * sesiune. A doua oară e no-op tocmai ca să nu se piardă canalul real când omul
  * dă refresh pe un ghid la a treia pagină.

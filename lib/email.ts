@@ -3,7 +3,7 @@
 // becomes a no-op so form submissions still succeed in environments where
 // email isn't configured (local dev, preview deploys without secrets).
 
-import { getFinancingShort, getFinancingTone, type FinancingTone } from './utils-shared';
+import { getFinancingShort, getFinancingTone, getFirmSourceLabel, type FinancingTone } from './utils-shared';
 import { CLAIM_REMINDER_MAX } from './sheets-shared';
 
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
@@ -81,6 +81,8 @@ interface ListingNotificationData {
   anreFirmName?: string;
   anreCerts?: string;
   anreStatus?: string;
+  attribution?: { canal: string; campanie: string; paginaIntrare: string };
+  cumAflat?: string;
 }
 
 function segmentBadge(segment: string): string {
@@ -218,7 +220,15 @@ export async function sendSubmissionsDigest(
 }
 
 interface ClaimNotificationData {
-  claim: { numeFirma: string; numeContact: string; telefon: string; email?: string };
+  claim: {
+    numeFirma: string;
+    numeContact: string;
+    telefon: string;
+    email?: string;
+    /** Canalul sesiunii + ce a răspuns firma la „cum ai aflat", ambele opționale. */
+    attribution?: { canal: string; campanie: string; paginaIntrare: string };
+    cumAflat?: string;
+  };
   lead: {
     numeCompanie: string;
     numeContact: string;
@@ -265,6 +275,8 @@ export async function sendClaimNotification(data: ClaimNotificationData): Promis
         ${row('Contact', escapeHtml(claim.numeContact))}
         ${row('Telefon', `<a href="tel:${escapeHtml(claim.telefon.replace(/\s/g, ''))}" style="color:#2563eb">${escapeHtml(claim.telefon)}</a>`)}
         ${claim.email ? row('Email (portal)', `<a href="mailto:${escapeHtml(claim.email)}" style="color:#2563eb">${escapeHtml(claim.email)}</a>`) : ''}
+        ${claim.attribution?.canal ? row('Canal', escapeHtml([claim.attribution.canal, claim.attribution.campanie].filter(Boolean).join(' · ')) + (claim.attribution.paginaIntrare ? ` <span style="color:#6b7280">(intrat pe ${escapeHtml(claim.attribution.paginaIntrare)})</span>` : '')) : ''}
+        ${claim.cumAflat ? row('Cum a aflat', escapeHtml(getFirmSourceLabel(claim.cumAflat))) : ''}
       </table>
       <div style="font-size:12px;color:#6b7280;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin:18px 0 6px">Lead-ul (datele clientului)</div>
       <table style="border-collapse:collapse;width:100%">
@@ -319,6 +331,10 @@ export async function sendListingNotification(data: ListingNotificationData): Pr
     ['Telefon', `<a href="tel:${escapeHtml(data.telefon.replace(/\s/g, ''))}">${escapeHtml(data.telefon)}</a>`],
     ...(data.website ? [['Website', `<a href="${escapeHtml(data.website)}" target="_blank" rel="noopener">${escapeHtml(data.website)}</a>`] as [string, string]] : []),
     ['Status ANRE', anreLine],
+    ...(data.attribution?.canal
+      ? [['Canal', escapeHtml([data.attribution.canal, data.attribution.campanie].filter(Boolean).join(' · ')) + (data.attribution.paginaIntrare ? ` <span style="color:#6b7280">(intrat pe ${escapeHtml(data.attribution.paginaIntrare)})</span>` : '')] as [string, string]]
+      : []),
+    ...(data.cumAflat ? [['Cum a aflat', escapeHtml(getFirmSourceLabel(data.cumAflat))] as [string, string]] : []),
   ];
 
   const tableRows = rows

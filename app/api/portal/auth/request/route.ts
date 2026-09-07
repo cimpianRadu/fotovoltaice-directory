@@ -11,6 +11,7 @@ import {
 } from '@/lib/portal-auth';
 import { sendPortalLoginEmail } from '@/lib/email';
 import { savePortalAccessEvent } from '@/lib/sheets';
+import { sanitizeAttribution } from '@/lib/attribution';
 
 /**
  * Pasul 1 al loginului: firma își lasă emailul, primește link + cod de 6 cifre.
@@ -29,6 +30,9 @@ export async function POST(request: Request) {
     if (!isValidEmail(email)) {
       return NextResponse.json({ error: 'Adresa de email nu este validă.' }, { status: 400 });
     }
+    // Canalul sesiunii (first-touch, trimis de LoginForm). Ajunge în jurnalul
+    // de acces pe `cerut`, ca la o firmă nouă să se vadă de unde a venit.
+    const attribution = sanitizeAttribution(body);
 
     const exp = Date.now() + PORTAL_LOGIN_TTL_MINUTES * 60_000;
     const code = generateLoginCode();
@@ -57,7 +61,7 @@ export async function POST(request: Request) {
     // Jurnalul de acces din /admin/portal. Scris DUPĂ răspuns (`after`) și cu
     // eroarea înghițită: un Sheets picat n-are voie să blocheze un login.
     after(() =>
-      savePortalAccessEvent({ email, event: 'cerut' }).catch((err) =>
+      savePortalAccessEvent({ email, event: 'cerut', attribution }).catch((err) =>
         console.error('[portal] jurnal acces (cerut):', err),
       ),
     );

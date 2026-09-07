@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { saveListingToSheet } from '@/lib/sheets';
 import { lookupAnreForListing, getAnreCodeLabel } from '@/lib/anre';
 import { sendListingNotification } from '@/lib/email';
+import { sanitizeAttribution } from '@/lib/attribution';
+import { isFirmSource } from '@/lib/utils-shared';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_RE = /^(?:\+?40|0040|0)\s*[0-9](?:[\s\-()]*[0-9]){8}$/;
@@ -81,6 +83,10 @@ export async function POST(request: Request) {
       anreFirmName: firm?.societate,
       anreCerts: anreCertsLabel,
       anreStatus: anreNote,
+      attribution: sanitizeAttribution(body),
+      cumAflat: isFirmSource(String(body.cumAflat || '').trim().toLowerCase())
+        ? String(body.cumAflat).trim().toLowerCase()
+        : '',
     };
 
     await saveListingToSheet(listingPayload);

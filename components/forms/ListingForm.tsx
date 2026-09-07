@@ -5,7 +5,8 @@ import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
 import Toast from '@/components/ui/Toast';
-import { getCounties } from '@/lib/utils-shared';
+import { getCounties, FIRM_SOURCE_OPTIONS } from '@/lib/utils-shared';
+import { getAttribution } from '@/lib/attribution';
 import { trackEvent } from '@/lib/analytics';
 import { getAnreCodeLabel, formatAnreDate, type ResolvedCert } from '@/lib/anre-shared';
 
@@ -36,6 +37,7 @@ type FormValues = {
   specializare: string;
   segment: string;
   descriere: string;
+  cumAflat: string;
   gdpr: boolean;
 };
 
@@ -51,6 +53,7 @@ const INITIAL: FormValues = {
   specializare: '',
   segment: 'comercial',
   descriere: '',
+  cumAflat: '',
   gdpr: false,
 };
 
@@ -226,6 +229,7 @@ export default function ListingForm() {
         body: JSON.stringify({
           ...values,
           gdpr: values.gdpr ? 'on' : '',
+          ...getAttribution(),
         }),
       });
 
@@ -238,6 +242,7 @@ export default function ListingForm() {
         company_name: values.numeFirma,
         county: values.judet,
         anre_matched: anreCheck.status === 'found-active' ? 'yes' : anreCheck.status === 'found-no-pv' ? 'no-pv' : 'no',
+        cum_aflat: values.cumAflat || 'nespecificat',
       });
 
       setStatus('success');
@@ -395,6 +400,14 @@ export default function ListingForm() {
         </div>
 
         <AnreStatus state={anreCheck} />
+
+        <Select
+          label="Cum ați aflat de noi? (opțional)"
+          name="cumAflat"
+          options={[...FIRM_SOURCE_OPTIONS]}
+          value={values.cumAflat}
+          onValueChange={(v) => setField('cumAflat', v)}
+        />
 
         <Input
           label="Scurtă descriere a firmei (opțional)"

@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import { trackEvent } from '@/lib/analytics';
+import { getAttribution } from '@/lib/attribution';
 
 type Step = 'email' | 'code';
 
@@ -29,7 +30,7 @@ export default function LoginForm() {
       const res = await fetch('/api/portal/auth/request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, ...getAttribution() }),
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) {

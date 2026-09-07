@@ -5,6 +5,8 @@ import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import { trackEvent } from '@/lib/analytics';
 import { MAX_ACTIVE_CLAIMS_PER_FIRM } from '@/lib/sheets-shared';
+import { getAttribution } from '@/lib/attribution';
+import { FIRM_SOURCE_OPTIONS } from '@/lib/utils-shared';
 import type { FinancingTone } from '@/lib/utils-shared';
 
 export interface LeadCardData {
@@ -157,6 +159,10 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
   const [modalOpen, setModalOpen] = useState(false);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const [error, setError] = useState<string | null>(null);
+  // „Cum ai aflat de noi?", opțional. Chips, nu dropdown: modalul pierde deja
+  // 59% dintre firme între deschidere și trimitere (Umami, 30 zile la 7 sept),
+  // un câmp în plus trebuie să coste un singur tap sau nimic.
+  const [cumAflat, setCumAflat] = useState('');
 
   const full = claims >= maxClaims;
   const slotsLeft = maxClaims - claims;
@@ -204,7 +210,7 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
       const res = await fetch('/api/claims', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, leadId: lead.id }),
+        body: JSON.stringify({ ...data, leadId: lead.id, cumAflat, ...getAttribution() }),
       });
       const json = await res.json().catch(() => ({}));
 
@@ -215,7 +221,11 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
         return;
       }
 
-      trackEvent('lead_claim_submitted', { county: lead.judet, project_type: lead.tipLabel });
+      trackEvent('lead_claim_submitted', {
+        county: lead.judet,
+        project_type: lead.tipLabel,
+        cum_aflat: cumAflat || 'nespecificat',
+      });
       if (typeof json.claims === 'number') setClaims(json.claims);
       setStatus('success');
     } catch {
@@ -411,6 +421,32 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
                   placeholder="contact@firma.ro"
                   autoComplete="email"
                 />
+                <fieldset>
+                  <legend className="block text-sm font-medium text-gray-700 mb-1.5">
+                    Cum ai aflat de cererile noastre?{' '}
+                    <span className="font-normal text-gray-400">(opțional)</span>
+                  </legend>
+                  <div className="flex flex-wrap gap-1.5">
+                    {FIRM_SOURCE_OPTIONS.map((o) => {
+                      const on = cumAflat === o.value;
+                      return (
+                        <button
+                          key={o.value}
+                          type="button"
+                          aria-pressed={on}
+                          onClick={() => setCumAflat(on ? '' : o.value)}
+                          className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+                            on
+                              ? 'border-amber-500 bg-amber-50 text-amber-900 font-medium'
+                              : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+                          }`}
+                        >
+                          {o.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </fieldset>
                 {error && <p className="text-xs text-red-600">{error}</p>}
                 <Button type="submit" variant="primary" disabled={status === 'submitting'} className="w-full">
                   {status === 'submitting' ? 'Se trimite...' : 'Trimite revendicarea'}

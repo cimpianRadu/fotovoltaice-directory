@@ -22,7 +22,7 @@ import {
 import { isClaimUntouched } from '@/lib/sheets-shared';
 import { matchFirmsForLead } from '@/lib/lead-match';
 import { getCompanies } from '@/lib/utils';
-import { getProjectTypeLabel, type Company } from '@/lib/utils-shared';
+import { getFirmSourceLabel, getProjectTypeLabel, type Company } from '@/lib/utils-shared';
 import ApproveClaims, { type PortalClaimRow } from './ApproveClaims';
 import FirmEmails, { type FirmEmailRow } from './FirmEmails';
 import GiveLead, { type GiveLeadFirm, type LeadOption } from './GiveLead';
@@ -308,6 +308,24 @@ function AccountCard({
     }))
     .sort((a, b) => b.timestamp.localeCompare(a.timestamp));
 
+  // De unde a venit firma (din 7 sept 2026): prima sursă cunoscută, în ordinea
+  // în care spune cel mai mult — răspunsul ei, apoi canalul primei revendicări,
+  // apoi canalul primei cereri de login. Gol pe conturile mai vechi.
+  const claimsAsc = [...account.claims].sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+  const said = claimsAsc.find((c) => c.cumAflat)?.cumAflat;
+  const viaClaim = claimsAsc.find((c) => c.canal);
+  const viaLogin = account.events.find((e) => e.event === 'cerut' && e.canal);
+  const origin = [
+    said ? `a zis: ${getFirmSourceLabel(said)}` : '',
+    viaClaim
+      ? `revendicare din ${viaClaim.canal}${viaClaim.campanie ? ` · ${viaClaim.campanie}` : ''}`
+      : viaLogin
+        ? `login din ${viaLogin.canal}${viaLogin.campanie ? ` · ${viaLogin.campanie}` : ''}`
+        : '',
+  ]
+    .filter(Boolean)
+    .join(' · ');
+
   return (
     <article className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
       <header
@@ -328,6 +346,7 @@ function AccountCard({
               </>
             )}
           </p>
+          {origin && <p className="mt-0.5 truncate text-[11px] text-slate-500">De unde: {origin}</p>}
         </div>
         <div className="flex shrink-0 flex-col items-end gap-1">
           <span
