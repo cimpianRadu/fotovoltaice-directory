@@ -24,7 +24,7 @@ export default function PortalLanding() {
         <h1 className="text-3xl font-bold text-gray-900">Portal Instalatori</h1>
         <p className="text-gray-600 mt-3 leading-relaxed">
           Locul din care firma ta află de cererile din județele ei și lucrează cererile pe care
-          le-a revendicat. Gratuit, fără parolă și fără cont de creat.
+          le-a revendicat. Contul e gratuit și nu are parolă: se face din emailul firmei.
         </p>
       </div>
 
@@ -73,7 +73,7 @@ export default function PortalLanding() {
       </div>
 
       <div className="bg-surface rounded-xl border border-border p-6 mb-8">
-        <h2 className="font-semibold text-gray-900 mb-4">Cum intri</h2>
+        <h2 className="font-semibold text-gray-900 mb-4">Cum îți faci cont</h2>
         <ol className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-gray-600">
           <li className="flex gap-3">
             <span className="shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary-dark font-bold text-sm inline-flex items-center justify-center">
@@ -91,7 +91,7 @@ export default function PortalLanding() {
             <span className="shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary-dark font-bold text-sm inline-flex items-center justify-center">
               3
             </span>
-            <span>Ești în portal, fără parolă de ținut minte</span>
+            <span>Contul e gata și ești în portal, fără parolă de ținut minte</span>
           </li>
         </ol>
       </div>
