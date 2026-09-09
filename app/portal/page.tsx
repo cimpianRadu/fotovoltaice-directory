@@ -6,6 +6,7 @@ import {
   getClaims,
   getCountyAlertPref,
   getFirmEmailGroup,
+  getLeadPhotos,
   getLeadSubscriptions,
   getLeadsSince,
   isLeadClosed,
@@ -91,8 +92,20 @@ export default async function PortalPage() {
   let reserved: ReservedLead[] = [];
 
   try {
-    const [claims, leads] = await Promise.all([getClaims(), getLeadsSince(new Date(0))]);
+    const [claims, leads, photos] = await Promise.all([
+      getClaims(),
+      getLeadsSince(new Date(0)),
+      // Tabul „Poze" ține doar căile din Blob; fișierele ies numai prin
+      // /api/portal/poza, care verifică din nou cine întreabă.
+      getLeadPhotos(),
+    ]);
     const leadById = new Map(leads.map((l) => [l.timestamp, l]));
+    const photosByLead = new Map<string, { pathname: string; fileName: string }[]>();
+    for (const p of photos) {
+      const list = photosByLead.get(p.leadId) || [];
+      list.push({ pathname: p.pathname, fileName: p.fileName });
+      photosByLead.set(p.leadId, list);
+    }
 
     // Cererile ținute pentru abonamentul firmei: încă în fereastră, încă
     // deschise și nepreluate de ea. Feedul public nu le arată nimănui, deci
@@ -159,7 +172,19 @@ export default async function PortalPage() {
                 telefon: lead.telefon,
                 email: lead.email,
                 localitate: [lead.localitate, lead.judet].filter(Boolean).join(', '),
+                // Trei surse, în ordinea încrederii: pozele urcate de client
+                // din formular, un link pus de noi în coloana AD, sau doar
+                // marcajul că există poze pe email. Ultimele două sunt
+                // moștenirea de dinainte de încărcarea din pagină.
+                pozeUrcate: photosByLead.get(c.leadId) || [],
                 poze: isPozeLink(lead.poze) ? lead.poze.trim() : '',
+                // Badge-ul „Cu poze" de pe /cereri se aprinde pe orice marcaj,
+                // nu doar pe link. Fără rândul ăsta, firma care a revendicat
+                // tocmai pentru poze n-ar găsi în portal nicio urmă de ele.
+                pozePeEmail:
+                  Boolean(lead.poze.trim()) &&
+                  !isPozeLink(lead.poze) &&
+                  !(photosByLead.get(c.leadId) || []).length,
               }
             : null,
         };

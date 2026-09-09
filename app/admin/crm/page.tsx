@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import {
+  getLeadPhotos,
   getLeadsSince,
   getClaims,
   getListingsSince,
@@ -14,6 +15,7 @@ import {
   type NewLead,
   type NewListing,
   type LeadClaim,
+  type LeadPhoto,
   type CrmFirm,
 } from '@/lib/sheets';
 import { getCompanies } from '@/lib/utils';
@@ -219,12 +221,15 @@ function LeadCard({
   necesit,
   merged,
   sameClient,
+  photos,
 }: {
   lead: NewLead;
   claims: ClaimRow[];
   firms: FirmOption[];
   matches: FirmMatch[] | null;
   necesit: NecesitMatch[];
+  /** Pozele urcate de client pe cererea asta. Servite de /api/admin/poza. */
+  photos: LeadPhoto[];
   /** Câte retrimiteri ale aceleiași cereri s-au comasat în asta (coloana Q). */
   merged: number;
   /** Alte cereri deschise cu același telefon sau email: candidate la comasare. */
@@ -344,6 +349,33 @@ function LeadCard({
             <div className="text-slate-400">{lead.status}</div>
           )}
           {lead.mesaj && <MessagePreview text={lead.mesaj} />}
+          {/* Pozele urcate de client. Fișierele sunt private, deci trec prin
+              /api/admin/poza, care verifică sesiunea de admin. */}
+          {photos.length > 0 && (
+            <div>
+              <Caption>Poze de la client</Caption>
+              <ul className="mt-1 flex flex-wrap gap-1.5">
+                {photos.map((poza) => {
+                  const src = `/api/admin/poza?cerere=${encodeURIComponent(
+                    lead.timestamp,
+                  )}&poza=${encodeURIComponent(poza.pathname)}`;
+                  return (
+                    <li key={poza.pathname}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <a href={src} target="_blank" rel="noopener noreferrer">
+                        <img
+                          src={src}
+                          alt={poza.fileName || 'Poză de la client'}
+                          loading="lazy"
+                          className="h-14 w-14 rounded border border-slate-200 object-cover transition-opacity hover:opacity-80"
+                        />
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
         </div>
 
         <div className="space-y-1 text-xs">
@@ -378,6 +410,7 @@ function LeadCard({
           id={lead.timestamp}
           status={lead.crmStatus}
           contacted={lead.contactedByFirm}
+          poze={lead.poze}
           notes={lead.notes}
         />
       </div>
@@ -479,12 +512,15 @@ export default async function CrmPage({ searchParams }: Props) {
   // la fel de bună de sunat, iar potrivirile de pe necesit o marchează ca atare.
   let allListings: NewListing[];
   let crmFirms: CrmFirm[];
+  // Pozele urcate de clienți: căile din Blob, grupate pe cerere mai jos.
+  let photos: LeadPhoto[];
   try {
-    [leads, claims, allListings, crmFirms] = await Promise.all([
+    [leads, claims, allListings, crmFirms, photos] = await Promise.all([
       getLeadsSince(new Date(0)),
       getClaims(),
       getListingsSince(new Date(0)),
       getCrmFirms(),
+      getLeadPhotos(),
     ]);
   } catch (err) {
     return (
@@ -492,6 +528,13 @@ export default async function CrmPage({ searchParams }: Props) {
         Nu am putut citi din Google Sheets: {err instanceof Error ? err.message : String(err)}
       </div>
     );
+  }
+
+  const photosByLead = new Map<string, LeadPhoto[]>();
+  for (const p of photos) {
+    const list = photosByLead.get(p.leadId) || [];
+    list.push(p);
+    photosByLead.set(p.leadId, list);
   }
 
   const listingsCutoff = Date.now() - LISTINGS_WINDOW_DAYS * 86_400_000;
@@ -731,6 +774,7 @@ export default async function CrmPage({ searchParams }: Props) {
             firms={firms}
             merged={mergedInto.get(lead.timestamp) ?? 0}
             sameClient={sameClientOf.get(lead.timestamp) ?? []}
+            photos={photosByLead.get(lead.timestamp) ?? []}
             // Potrivirile se calculează doar pe cererile deschise: pentru una
             // închisă nu mai sun pe nimeni, secțiunea ar fi zgomot.
             matches={

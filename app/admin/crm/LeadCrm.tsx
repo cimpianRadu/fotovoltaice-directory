@@ -6,6 +6,7 @@ import {
   LEAD_STATUS_HINTS,
   LEAD_STATUS_LABELS,
   isLeadClosed,
+  isPozeLink,
   type ContactState,
   type LeadNote,
   type LeadStatus,
@@ -38,15 +39,18 @@ export default function LeadCrm({
   id,
   status: initialStatus,
   contacted: initialContacted,
+  poze: initialPoze,
   notes: initialNotes,
 }: {
   id: string;
   status: LeadStatus;
   contacted: ContactState;
+  poze: string;
   notes: LeadNote[];
 }) {
   const [status, setStatus] = useState(initialStatus);
   const [contacted, setContacted] = useState(initialContacted);
+  const [poze, setPoze] = useState(initialPoze);
   const [notes, setNotes] = useState(initialNotes);
   const [state, setState] = useState<SaveState>('idle');
   const [message, setMessage] = useState<string | null>(null);
@@ -54,6 +58,7 @@ export default function LeadCrm({
   async function save(payload: {
     status?: LeadStatus;
     contacted?: ContactState;
+    poze?: string;
     note?: string;
     editNote?: { index: number; text: string; expected: string };
     deleteNote?: { index: number; expected: string };
@@ -74,6 +79,7 @@ export default function LeadCrm({
       if (!res.ok) throw new Error(body.error || `Eroare ${res.status}`);
       setStatus(body.crmStatus);
       setContacted(body.contactedByFirm);
+      setPoze(body.poze ?? '');
       setNotes(body.notes);
       setState('saved');
       setTimeout(() => setState('idle'), 1500);
@@ -124,6 +130,8 @@ export default function LeadCrm({
         </div>
       </div>
 
+      <PozeField value={poze} disabled={busy} onCommit={(v) => save({ poze: v })} />
+
       <NotesJournal
         notes={notes}
         state={state}
@@ -131,6 +139,61 @@ export default function LeadCrm({
         onAdd={(note) => save({ note })}
         onEdit={(editNote) => save({ editNote })}
         onDelete={(deleteNote) => save({ deleteNote })}
+      />
+    </div>
+  );
+}
+
+/**
+ * Coloana AD, singurul câmp din CRM care nu vine din formular: pozele ajung pe
+ * `contact@` cu referința cererii în subiect, iar cineva trebuie să le lege de
+ * cerere. Un link (folder Drive) ajunge în portal la firma care revendică; orice
+ * alt text aprinde doar badge-ul „Cu poze" de pe /cereri, ca semnalul să poată
+ * pleca înainte de urcarea pozelor. Golirea câmpului șterge legătura.
+ */
+function PozeField({
+  value,
+  disabled,
+  onCommit,
+}: {
+  value: string;
+  disabled: boolean;
+  onCommit: (v: string) => void;
+}) {
+  const [draft, setDraft] = useState(value);
+  // Valoarea confirmată de Sheets bate ce e în câmp: după salvare se vede ce
+  // s-a scris de fapt (fără spațiile de la capete), nu ce s-a tastat.
+  const [seen, setSeen] = useState(value);
+  if (seen !== value) {
+    setSeen(value);
+    setDraft(value);
+  }
+
+  return (
+    <div className="space-y-1">
+      <div className="flex items-baseline gap-1.5">
+        <Caption>Poze</Caption>
+        {value.trim() && !isPozeLink(value) && (
+          // Semnalul e aprins, dar firma nu primește nimic clicabil. Merită spus
+          // aici, nu descoperit de instalator în portal.
+          <span className="text-[10px] text-amber-600">marcaj fără link</span>
+        )}
+      </div>
+      <input
+        type="text"
+        value={draft}
+        disabled={disabled}
+        onChange={(e) => setDraft(e.target.value)}
+        onBlur={(e) => {
+          const next = e.currentTarget.value.trim();
+          if (next !== value.trim()) onCommit(next);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') e.currentTarget.blur();
+          if (e.key === 'Escape') setDraft(value);
+        }}
+        placeholder={'link folder Drive, sau „da” până le urci'}
+        className="w-full rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs text-slate-700 transition outline-none placeholder:text-slate-400 focus:border-slate-400 focus:bg-white focus:ring-2 focus:ring-slate-900/5"
       />
     </div>
   );

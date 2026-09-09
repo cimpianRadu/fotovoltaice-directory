@@ -25,10 +25,11 @@ function timeBucharest(): string {
 
 export async function POST(request: Request) {
   try {
-    const { id, status, contacted, note, editNote, deleteNote } = (await request.json()) as {
+    const { id, status, contacted, poze, note, editNote, deleteNote } = (await request.json()) as {
       id?: string;
       status?: string;
       contacted?: string;
+      poze?: string;
       note?: string;
       editNote?: { index?: number; text?: string; expected?: string };
       deleteNote?: { index?: number; expected?: string };
@@ -42,6 +43,27 @@ export async function POST(request: Request) {
     if (contacted !== undefined && contacted !== '' && !(CONTACT_STATES as readonly string[]).includes(contacted)) {
       return NextResponse.json({ error: 'valoare necunoscută pentru contactare' }, { status: 400 });
     }
+    // Coloana AD acceptă și marcaje scurte („da", „pe email"), nu doar linkul
+    // Drive — vezi isPozeLink. Ce nu acceptă e un link stricat: firma îl vede în
+    // portal ca pe singura cale către poze, deci un „drive.google.com/..." fără
+    // schemă ar duce-o în gol.
+    if (poze !== undefined) {
+      if (typeof poze !== 'string') {
+        return NextResponse.json({ error: 'valoare invalidă pentru poze' }, { status: 400 });
+      }
+      const value = poze.trim();
+      if (value.length > 500) {
+        return NextResponse.json({ error: 'legătura către poze e prea lungă' }, { status: 400 });
+      }
+      // Orice miroase a adresă web trebuie să fie una completă și clicabilă.
+      if (/^(https?:|www\.)|\.(com|ro|org|net)\//i.test(value) && !/^https?:\/\/\S+$/.test(value)) {
+        return NextResponse.json(
+          { error: 'linkul trebuie să înceapă cu https:// și să nu conțină spații' },
+          { status: 400 },
+        );
+      }
+    }
+
     // Toate trei scriu în aceeași celulă de note, deci nu pot veni împreună.
     const noteOps = [note?.trim() ? 1 : 0, editNote ? 1 : 0, deleteNote ? 1 : 0].reduce(
       (a, b) => a + b,
@@ -62,13 +84,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'text de notă invalid' }, { status: 400 });
     }
 
-    if (!status && contacted === undefined && !noteOps) {
+    if (!status && contacted === undefined && poze === undefined && !noteOps) {
       return NextResponse.json({ error: 'nimic de salvat' }, { status: 400 });
     }
 
     const fields = await updateLeadCrm(id, {
       status: status as LeadStatus | undefined,
       contacted: contacted as ContactState | undefined,
+      poze,
       note,
       editNote: editNote
         ? { index: editNote.index as number, expected: editNote.expected as string, text: editNote.text as string }
@@ -80,9 +103,10 @@ export async function POST(request: Request) {
       time: timeBucharest(),
     });
 
-    // Statusul decide dacă cererea mai apare în feedul public. Fără asta,
-    // una închisă ar mai sta acolo până la 5 minute (ISR-ul din /cereri).
-    if (status) revalidatePath('/cereri');
+    // Statusul decide dacă cererea mai apare în feedul public, pozele aprind
+    // badge-ul „Cu poze" pe cardul ei. Fără asta, schimbarea ar mai sta
+    // nevăzută până la 5 minute (ISR-ul din /cereri).
+    if (status || poze !== undefined) revalidatePath('/cereri');
 
     return NextResponse.json({ ok: true, ...fields });
   } catch (err) {

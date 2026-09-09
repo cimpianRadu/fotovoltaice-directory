@@ -9,6 +9,7 @@ import {
   saveLeadToSheet,
 } from '@/lib/sheets';
 import { sendCountyLeadAlert } from '@/lib/email';
+import { createLeadPhotoToken } from '@/lib/lead-photos';
 import { getCompanies } from '@/lib/utils';
 import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 import {
@@ -156,8 +157,18 @@ export async function POST(request: Request) {
     ));
 
     // `id` = timestamp-ul rândului, aceeași cheie folosită de /cereri și de
-    // revendicări. Se întoarce ca să putem lega de cerere pozele trimise ulterior.
-    return NextResponse.json({ success: true, id });
+    // revendicări. Se întoarce ca să putem lega de cerere pozele trimise
+    // ulterior; `photoToken` e dovada că cel care încarcă e chiar cel care
+    // tocmai a trimis cererea (vezi lib/lead-photos). Lipsa lui nu strică
+    // trimiterea: fără PORTAL_SECRET rămâne doar varianta pe email.
+    let photoToken = '';
+    try {
+      photoToken = createLeadPhotoToken(id);
+    } catch (err) {
+      console.error('[leads] token poze:', err);
+    }
+
+    return NextResponse.json({ success: true, id, photoToken });
   } catch (err) {
     console.error('Lead API error:', err);
     return NextResponse.json(

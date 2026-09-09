@@ -1,5 +1,9 @@
 'use client';
 
+// Pozele clientului sunt private: le servește /api/portal/poza după ce verifică
+// sesiunea, deci n-au URL public pe care next/image să-l poată optimiza.
+/* eslint-disable @next/next/no-img-element */
+
 import { useState } from 'react';
 import Button from '@/components/ui/Button';
 import { trackEvent } from '@/lib/analytics';
@@ -42,7 +46,12 @@ export interface PortalClaim {
     telefon: string;
     email: string;
     localitate: string;
+    /** Pozele urcate de client din formular. Se cer prin /api/portal/poza. */
+    pozeUrcate: { pathname: string; fileName: string }[];
+    /** Moștenire: link pus de noi în coloana AD, pentru pozele venite pe email. */
     poze: string;
+    /** Poze primite, dar încă neurcate: semnal, ca firma să știe că există. */
+    pozePeEmail: boolean;
   } | null;
 }
 
@@ -341,6 +350,33 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
                 {claim.client.email}
               </a>
             </p>
+            {claim.client.pozeUrcate.length > 0 && (
+              <div className="pt-1">
+                <p className="text-xs font-medium text-gray-700">
+                  Poze de la client ({claim.client.pozeUrcate.length})
+                </p>
+                <ul className="mt-1.5 flex flex-wrap gap-1.5">
+                  {claim.client.pozeUrcate.map((poza) => {
+                    const src = `/api/portal/poza?cerere=${encodeURIComponent(
+                      claim.leadId,
+                    )}&poza=${encodeURIComponent(poza.pathname)}`;
+                    return (
+                      <li key={poza.pathname}>
+                        {/* Servite de funcția noastră, după verificarea sesiunii:
+                            n-au URL public, deci nici next/image n-are ce optimiza. */}
+                        <a href={src} target="_blank" rel="noopener noreferrer">
+                          <img src={src}
+                            alt={poza.fileName || 'Poză de la client'}
+                            loading="lazy"
+                            className="h-16 w-16 rounded-md border border-border object-cover transition-opacity hover:opacity-80"
+                          />
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
             {claim.client.poze && (
               <p>
                 <a
@@ -352,6 +388,9 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
                   Pozele acoperișului / locației
                 </a>
               </p>
+            )}
+            {claim.client.pozePeEmail && (
+              <p className="text-gray-500">Clientul a trimis poze pe email, le adăugăm aici.</p>
             )}
           </div>
         </div>

@@ -23,6 +23,7 @@ import {
 import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
+import LeadPhotoUpload from './LeadPhotoUpload';
 import { trackEvent } from '@/lib/analytics';
 import { getAttribution } from '@/lib/attribution';
 
@@ -490,6 +491,8 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [leadRef, setLeadRef] = useState<string | null>(null);
+  // Tokenul de încărcare a pozelor, emis odată cu cererea. Vezi lib/lead-photos.
+  const [photoToken, setPhotoToken] = useState<string>('');
   const formRef = useRef<HTMLFormElement>(null);
   // Un pas care se demontează și-ar pierde valorile din FormData, deci câmpurile
   // sunt controlate și corpul cererii se construiește din state, nu din formular.
@@ -677,6 +680,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
       });
 
       setLeadRef(typeof json.id === 'string' ? json.id : null);
+      setPhotoToken(typeof json.photoToken === 'string' ? json.photoToken : '');
       // Pasul 5 începe de sus, ca orice pas; scrollăm cât formularul mai există.
       scrollToForm();
       setStatus('success');
@@ -905,21 +909,28 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
             ))}
           </div>
 
-          <div className="mt-6 pt-5 border-t border-border">
-            <p className="font-semibold text-gray-900 text-sm">
-              Poze cu acoperișul și tabloul electric
-            </p>
-            <p className="mt-1 text-sm text-gray-700 leading-relaxed">
-              Două-trei poze: una cu acoperișul văzut din exterior, una cu tabloul electric și
-              contorul. Cu ele, instalatorii pot calcula montajul fără să mai vină întâi în vizită.
-            </p>
-            <a
-              href={mailto}
-              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
-            >
-              Trimite pozele pe email
-            </a>
-          </div>
+          {/* Încărcarea are nevoie de cererea salvată și de tokenul ei; fără
+              ele (răspuns vechi din cache, PORTAL_SECRET lipsă) rămâne varianta
+              pe email, care a funcționat până acum. */}
+          {leadRef && photoToken ? (
+            <LeadPhotoUpload leadId={leadRef} token={photoToken} mailtoFallback={mailto} />
+          ) : (
+            <div className="mt-6 pt-5 border-t border-border">
+              <p className="font-semibold text-gray-900 text-sm">
+                Poze cu acoperișul și tabloul electric
+              </p>
+              <p className="mt-1 text-sm text-gray-700 leading-relaxed">
+                Două-trei poze: una cu acoperișul văzut din exterior, una cu tabloul electric și
+                contorul. Cu ele, instalatorii pot calcula montajul fără să mai vină întâi în vizită.
+              </p>
+              <a
+                href={mailto}
+                className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
+              >
+                Trimite pozele pe email
+              </a>
+            </div>
+          )}
         </div>
 
         {/* Nimic promoțional nu stă lângă formular: pagina are o singură treabă,

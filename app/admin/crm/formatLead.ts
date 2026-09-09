@@ -1,5 +1,5 @@
 import type { NewLead } from '@/lib/sheets';
-import { parseRequestedFirms } from '@/lib/sheets-shared';
+import { isPozeLink, parseRequestedFirms } from '@/lib/sheets-shared';
 import {
   getFinancingLabel, getYesNoLabel, getTimelineLabel, getRoofTypeLabel, getPhaseLabel,
   getConnectionLabel,
@@ -59,7 +59,9 @@ export function formatLeadForShare(lead: NewLead): string {
     line('Stație de încărcare', lead.wallbox ? getYesNoLabel(lead.wallbox) : ''),
     line('Termen dorit', lead.termen ? getTimelineLabel(lead.termen) : ''),
     line('Finanțare', lead.finantare ? getFinancingLabel(lead.finantare) : ''),
-    line('Poze', lead.poze),
+    // Mesajul ajunge la instalator prin WhatsApp, deci „Poze: da" l-ar trimite
+    // să întrebe unde sunt. Fără link spunem pe cine să întrebe.
+    line('Poze', lead.poze.trim() && !isPozeLink(lead.poze) ? 'da, le trimitem noi pe email' : lead.poze),
   ].filter(Boolean);
 
   const contactLines = [

@@ -250,7 +250,7 @@ export async function enrichLeadInSheet(
 }
 
 /** Coloanele scrise de fluxul de alerte, pe cerere deja salvată. */
-async function setLeadCell(timestamp: string, column: 'AE' | 'AF', value: string) {
+async function setLeadCell(timestamp: string, column: 'AD' | 'AE' | 'AF', value: string) {
   const { sheetRow } = await findLeadRow(timestamp);
   const sheets = google.sheets({ version: 'v4', auth: getAuth() });
   await withRetry(
@@ -1704,6 +1704,88 @@ export async function saveAdInquiryToSheet(inquiry: {
   ]);
 }
 
+// ── Poze pe cerere ─────────────────────────────────────────────────────────
+// Fișierele stau în Vercel Blob (store privat); aici ține evidența lor: ce
+// poză, a cui cerere, cât de mare. Un rând per fișier, niciodată binar în
+// Sheet. Coloana AD din Leads rămâne rezumatul citit de feed și de CRM, ca
+// /cereri să nu fie nevoit să deschidă tabul ăsta la fiecare randare.
+
+const PHOTOS_SHEET = 'Poze';
+
+const PHOTOS_HEADER = [
+  'Încărcat', // A — ISO
+  'Lead ID', // B — timestampul cererii, cheia din tabul Leads
+  'Cale', // C — pathname-ul din Blob, cu care se cere fișierul
+  'Nume fișier', // D — cum se numea la client, doar ca să se recunoască
+  'Tip', // E — content type
+  'Mărime', // F — bytes
+];
+
+export interface LeadPhoto {
+  uploadedAt: string;
+  leadId: string;
+  pathname: string;
+  fileName: string;
+  contentType: string;
+  size: number;
+}
+
+export async function getLeadPhotos(): Promise<LeadPhoto[]> {
+  let rows: string[][];
+  try {
+    rows = await readRows(PHOTOS_SHEET);
+  } catch {
+    // Tabul nu există încă — prima încărcare îl creează.
+    return [];
+  }
+  return rows
+    .filter((r) => Number.isFinite(Date.parse(r[0] || '')) && (r[2] || '').trim())
+    .map((r) => ({
+      uploadedAt: r[0] || '',
+      leadId: (r[1] || '').trim(),
+      pathname: (r[2] || '').trim(),
+      fileName: r[3] || '',
+      contentType: r[4] || '',
+      size: Number(r[5]) || 0,
+    }));
+}
+
+/** Pozele unei singure cereri, în ordinea încărcării. */
+export async function getPhotosForLead(leadId: string): Promise<LeadPhoto[]> {
+  return (await getLeadPhotos()).filter((p) => p.leadId === leadId);
+}
+
+/**
+ * Înregistrează o poză urcată și actualizează rezumatul din coloana AD.
+ * Întoarce câte poze are cererea după adăugare, ca ruta să poată răspunde cu
+ * numărul real, nu cu unul numărat în browser.
+ */
+export async function addLeadPhoto(photo: Omit<LeadPhoto, 'uploadedAt'>): Promise<number> {
+  const values = [
+    new Date().toISOString(),
+    photo.leadId,
+    photo.pathname,
+    photo.fileName,
+    photo.contentType,
+    String(photo.size),
+  ];
+
+  try {
+    await readRows(PHOTOS_SHEET);
+    await appendRow(PHOTOS_SHEET, values);
+  } catch {
+    await createSheetTab(PHOTOS_SHEET);
+    await appendRow(PHOTOS_SHEET, PHOTOS_HEADER);
+    await appendRow(PHOTOS_SHEET, values);
+  }
+
+  const count = (await getPhotosForLead(photo.leadId)).length;
+  // Rezumatul, nu un link: pozele private n-au URL public, iar `isPozeLink`
+  // trebuie să rămână fals ca portalul să arate galeria, nu o legătură moartă.
+  await setLeadCell(photo.leadId, 'AD', `${count} ${count === 1 ? 'poză' : 'poze'}`);
+  return count;
+}
+
 // ── Social: pipeline de postări ────────────────────────────────────────────
 // Sursa a fost `data/social-schedule.json`, mutată în Sheets pe 2026-07-28 ca
 // să poată fi editată fără deploy (fișierele din repo sunt read-only pe Vercel).
@@ -1823,6 +1905,9 @@ export async function toggleSocialPlatform(
 const LEAD_CRM_STATUS_COL = 21; // V
 const LEAD_NOTES_COL = 22; // W
 const LEAD_CONTACTED_COL = 23; // X
+// AD, singura coloană din afara blocului V-X scrisă tot din /admin/crm: pozele
+// vin pe email, deci cineva trebuie să le lege de cerere cu mâna.
+const LEAD_POZE_COL = 29; // AD
 
 export {
   LEAD_STATUSES,
@@ -1928,15 +2013,17 @@ export interface NoteRef {
 }
 
 /**
- * Setează statusul, marcajul de contactare și/sau operează pe jurnalul de note:
- * adaugă o notă datată (cele noi primele, ca să se citească fără scroll în
- * celulă), editează sau șterge una existentă.
+ * Setează statusul, marcajul de contactare, legătura către poze și/sau operează
+ * pe jurnalul de note: adaugă o notă datată (cele noi primele, ca să se
+ * citească fără scroll în celulă), editează sau șterge una existentă.
  */
 export async function updateLeadCrm(
   timestamp: string,
   changes: {
     status?: LeadStatus;
     contacted?: ContactState;
+    /** AD. Șirul gol e o valoare validă: șterge legătura pusă din greșeală. */
+    poze?: string;
     note?: string;
     editNote?: NoteRef & { text: string };
     deleteNote?: NoteRef;
@@ -1944,7 +2031,7 @@ export async function updateLeadCrm(
     /** HH:MM, ora României — se scrie doar pe notele nou adăugate. */
     time?: string;
   },
-): Promise<LeadCrmFields> {
+): Promise<LeadCrmFields & { poze: string }> {
   const { row, sheetRow } = await findLeadRow(timestamp);
   const data: { range: string; values: string[][] }[] = [];
 
@@ -1956,6 +2043,12 @@ export async function updateLeadCrm(
   if (changes.contacted !== undefined) {
     data.push({ range: `Leads!X${sheetRow}`, values: [[changes.contacted]] });
     row[LEAD_CONTACTED_COL] = changes.contacted;
+  }
+
+  if (changes.poze !== undefined) {
+    const poze = changes.poze.trim();
+    data.push({ range: `Leads!AD${sheetRow}`, values: [[poze]] });
+    row[LEAD_POZE_COL] = poze;
   }
 
   const note = changes.note?.trim();
@@ -2000,7 +2093,7 @@ export async function updateLeadCrm(
     );
   }
 
-  return readCrmFields(row);
+  return { ...readCrmFields(row), poze: row[LEAD_POZE_COL] || '' };
 }
 
 // ── CRM Firme: pipeline-ul telefonic pe instalatori ────────────────────────
