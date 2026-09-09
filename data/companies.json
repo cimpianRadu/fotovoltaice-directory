@@ -15644,6 +15644,177 @@
         "societate": "CROMO SEMPER AUTOMATIC",
         "judet": "Arges"
       }
+    },
+    {
+      "id": "solanum",
+      "slug": "solanum",
+      "name": "Solanum",
+      "cui": "RO11021688",
+      "logo": "/logos/solanum.png",
+      "description": "Solanum este o firmă din județul Timiș, înființată în 1998, cu sediul social în Moșnița Nouă și punct de lucru în Timișoara. Proiectează, instalează, pune în funcțiune și întreține sisteme fotovoltaice pentru locuințe, firme și hale de producție, cu montaj pe acoperiș, pe structuri tip carport și pe spații deschise. Deține atestat ANRE tip B nr. 18335, emis în iunie 2022 și valabil până în iunie 2027, și lucrează cu echipe proprii de montaj, plus ingineri electricieni care se ocupă de verificarea instalațiilor, configurarea echipamentelor și punerea în funcțiune. Este instalator validat AFM și a montat sisteme în programele Casa Verde Fotovoltaice 2023 și 2024, întocmind și dosarul de prosumator. Printre lucrările de referință publicate pe site sunt parcuri fotovoltaice în Germania (Magdeburg 16 MW, Bad Waldsee 8,7 MW, Dunningen 750 kW) și sisteme pe clădiri în Timișoara, la Printzone și Valeram, de câte 30 kW. Cifra de afaceri a crescut de la 3,1 milioane de lei în 2022 la 10,7 milioane de lei în 2025, cu 30 de angajați.",
+      "founded": 1998,
+      "employees": 30,
+      "location": {
+        "city": "Timișoara",
+        "county": "Timiș",
+        "address": "Str. Stan Vidrighin, Nr. 18, Timișoara 300571 (punct de lucru). Sediu social: Sat Moșnița Nouă, Com. Moșnița Nouă, Str. Rodnei, Nr. 5, jud. Timiș"
+      },
+      "contact": {
+        "phone": "+40773839066",
+        "email": "office@solanum.ro",
+        "website": "https://solanum.ro"
+      },
+      "coverage": [
+        "Timiș"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale"
+      ],
+      "certifications": [
+        "ISO-9001"
+      ],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 10664995,
+        "profit": 1130339,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 334297,
+            "profit": -1353,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 3131989,
+            "profit": 431699,
+            "employees": 6
+          },
+          {
+            "year": 2023,
+            "revenue": 4766550,
+            "profit": 295188,
+            "employees": 19
+          },
+          {
+            "year": 2024,
+            "revenue": 6334703,
+            "profit": 705981,
+            "employees": 18
+          },
+          {
+            "year": 2025,
+            "revenue": 10664995,
+            "profit": 1130339,
+            "employees": 30
+          }
+        ]
+      },
+      "tags": [
+        "pv-rezidential",
+        "pv-comercial",
+        "casa-verde",
+        "prosumator",
+        "proiectare",
+        "mentenanta-pv",
+        "parcuri-fotovoltaice"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-09-09",
+      "updatedAt": "2026-09-09",
+      "segment": "ambele",
+      "anreMatch": {
+        "societate": "SOLANUM",
+        "judet": "Timis"
+      }
+    },
+    {
+      "id": "moldovan-ecoserv",
+      "slug": "moldovan-ecoserv",
+      "name": "Moldovan Ecoserv",
+      "cui": "39615770",
+      "description": "Moldovan Ecoserv este o firmă din Mocod, comuna Nimigea, județul Bistrița-Năsăud, înființată în 2018. Se ocupă de proiectarea și execuția instalațiilor electrice de joasă tensiune, a instalațiilor termice și sanitare și a sistemelor fotovoltaice. Deține atestat ANRE tip B nr. 19267, emis în aprilie 2023 și valabil până în aprilie 2028, pentru instalații de 0,4 kV. Este o echipă mică, de trei oameni, care acoperă zona Bistrița-Năsăud și montează în principal sisteme pentru locuințe. Pe platforma daibau.ro, de unde își ia o parte din lucrări, are nota 9,8 din 10 și marcajul de răspuns în 24 de ore.",
+      "founded": 2018,
+      "employees": 1,
+      "location": {
+        "city": "Mocod",
+        "county": "Bistrița-Năsăud",
+        "address": "Sat Mocod, Com. Nimigea, Nr. 250, 427184"
+      },
+      "contact": {
+        "phone": "+40752975215",
+        "email": "electroinstalmoldovan@gmail.com",
+        "website": ""
+      },
+      "coverage": [
+        "Bistrița-Năsăud"
+      ],
+      "specializations": [
+        "rezidential"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 379769,
+        "profit": 54284,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 103560,
+            "profit": 26352,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 24470,
+            "profit": -5913
+          },
+          {
+            "year": 2023,
+            "revenue": 95712,
+            "profit": 21022,
+            "employees": 1
+          },
+          {
+            "year": 2024,
+            "revenue": 132245,
+            "profit": 57039,
+            "employees": 1
+          },
+          {
+            "year": 2025,
+            "revenue": 379769,
+            "profit": 54284,
+            "employees": 1
+          }
+        ]
+      },
+      "tags": [
+        "pv-rezidential",
+        "proiectare",
+        "certificare-anre"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-09-09",
+      "updatedAt": "2026-09-09",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "MOLDOVAN ECOSERV ",
+        "judet": "Bistrita-Nasaud"
+      }
     }
   ]
 }

@@ -2938,5 +2938,29 @@
    "isActive": true,
    "tipTarifRaw": "Tarif B"
   }
+ ],
+ "SOLANUM|Timis": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18335",
+   "dataEmitere": "21/06/2022",
+   "dataExpirare": "21/06/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "MOLDOVAN ECOSERV |Bistrita-Nasaud": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "19267",
+   "dataEmitere": "03/04/2023",
+   "dataExpirare": "03/04/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
  ]
 }

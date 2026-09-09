@@ -26,8 +26,12 @@ const SPREADSHEET_ID = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
 // verificat înainte de scriere.
 const UPDATES = [
   {
-    numeFirma: 'Cromo Semper Automatic SRL',
-    status: 'Adăugat în director ca „KarmEnergy" (publicat 2026-09-01, județ Constanța)',
+    numeFirma: 'SOLANUM SRL',
+    status: 'Adăugat în director (publicat 2026-09-09, județ Timiș)',
+  },
+  {
+    numeFirma: 'MOLDOVAN ECOSERV SRL',
+    status: 'Adăugat în director (publicat 2026-09-09, județ Bistrița-Năsăud)',
   },
 ];
 

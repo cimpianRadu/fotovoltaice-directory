@@ -80,8 +80,11 @@ function validate() {
     }
 
     // ── CUI format ──
-    if (c.cui && !/^RO\d+$/.test(c.cui.trim())) {
-      errors.push(`${prefix}: invalid CUI format "${c.cui}" (expected RO + digits)`);
+    // Prefixul RO înseamnă „înregistrat în scopuri de TVA". Firmele neplătitoare
+    // de TVA (Sunlux Energy, Moldovan Ecoserv) au CUI-ul fără prefix la ANAF, deci
+    // ambele forme sunt corecte.
+    if (c.cui && !/^(RO)?\d+$/.test(c.cui.trim())) {
+      errors.push(`${prefix}: invalid CUI format "${c.cui}" (expected digits, optionally RO-prefixed)`);
     }
 
     // ── Duplicate CUI ──
