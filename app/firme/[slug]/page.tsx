@@ -8,7 +8,6 @@ import FinancialStability from '@/components/company/FinancialStability';
 import CompanyTestimonials from '@/components/company/CompanyTestimonials';
 import Badge from '@/components/ui/Badge';
 import Link from 'next/link';
-import Button from '@/components/ui/Button';
 import {
   getCompanyBySlug,
   getCompanies,
@@ -232,14 +231,6 @@ export default async function CompanyDetailPage({ params }: Props) {
           <div className="lg:col-span-1">
             <div className="sticky top-20 space-y-4">
               <CompanyContact company={company} />
-
-              {/* CTA */}
-              <div className="bg-primary/5 border border-primary/10 rounded-xl p-5 text-center">
-                <p className="text-sm font-medium text-gray-900 mb-2">Vrei ofertă pentru proiectul tău?</p>
-                <Button href={`/cere-oferta?company=${encodeURIComponent(company.slug)}`} size="md" className="w-full">
-                  Cere Ofertă Gratuită
-                </Button>
-              </div>
 
               {/* Related guides */}
               {(() => {
