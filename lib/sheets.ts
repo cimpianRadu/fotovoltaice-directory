@@ -294,6 +294,8 @@ export async function saveListingToSheet(listing: {
   attribution?: Attribution;
   /** Răspunsul firmei la „cum ați aflat de noi?", vezi FIRM_SOURCE_OPTIONS. */
   cumAflat?: string;
+  /** V — a bifat „vreau și oferta Premium" în formularul de listare. */
+  interesPremium?: boolean;
 }) {
   await appendRow('Listări', [
     new Date().toISOString(),
@@ -320,6 +322,7 @@ export async function saveListingToSheet(listing: {
     listing.attribution?.campanie || '', // S — Campanie (utm_campaign)
     listing.attribution?.paginaIntrare || '', // T — Pagină intrare
     listing.cumAflat || '', // U — Cum a aflat (răspunsul firmei)
+    listing.interesPremium ? 'da' : '', // V — Interes Premium (bifa din formular)
   ]);
 }
 
@@ -419,6 +422,8 @@ export interface NewListing {
   campanie: string;
   paginaIntrare: string;
   cumAflat: string;
+  /** V, din 9 sept 2026. Gol pe rândurile mai vechi. */
+  interesPremium: string;
 }
 
 // A row's first cell holds an ISO timestamp. Header rows / blanks won't parse —
@@ -494,6 +499,7 @@ export async function getListingsSince(cutoff: Date): Promise<NewListing[]> {
     campanie: r[18] || '',
     paginaIntrare: r[19] || '',
     cumAflat: r[20] || '',
+    interesPremium: r[21] || '',
   }));
 }
 

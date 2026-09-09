@@ -87,6 +87,10 @@ export async function POST(request: Request) {
       cumAflat: isFirmSource(String(body.cumAflat || '').trim().toLowerCase())
         ? String(body.cumAflat).trim().toLowerCase()
         : '',
+      // Bifa „vreau și oferta Premium" din formularul de listare. Se scrie în
+      // coloana V din „Listări" și apare în emailul de notificare, ca să știu
+      // pe cine sun cu oferta plătită.
+      interesPremium: body.interesPremium === true || body.interesPremium === 'on',
     };
 
     await saveListingToSheet(listingPayload);

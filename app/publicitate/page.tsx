@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import Button from '@/components/ui/Button';
@@ -356,6 +357,12 @@ export default function AdvertisePage() {
               <Button href="#ad-inquiry?tier=premium" variant="secondary" size="md" className="w-full mt-5">
                 Activează Premium
               </Button>
+              <p className="text-xs text-gray-500 text-center mt-2">
+                <Link href="/publicitate/premium" className="text-secondary-dark underline hover:no-underline">
+                  Pagina completă Premium
+                </Link>
+                : unde apari, traficul paginilor și ce conține raportul lunar.
+              </p>
             </div>
             <div className="hidden sm:block">
               <PreviewPremium />

@@ -9,6 +9,7 @@ import { getCounties, FIRM_SOURCE_OPTIONS } from '@/lib/utils-shared';
 import { getAttribution } from '@/lib/attribution';
 import { trackEvent } from '@/lib/analytics';
 import { getAnreCodeLabel, formatAnreDate, type ResolvedCert } from '@/lib/anre-shared';
+import { PRICING } from '@/lib/pricing';
 
 const specializationOptions = [
   { value: 'hale-industriale', label: 'Hale industriale' },
@@ -38,6 +39,7 @@ type FormValues = {
   segment: string;
   descriere: string;
   cumAflat: string;
+  interesPremium: boolean;
   gdpr: boolean;
 };
 
@@ -54,6 +56,7 @@ const INITIAL: FormValues = {
   segment: 'comercial',
   descriere: '',
   cumAflat: '',
+  interesPremium: false,
   gdpr: false,
 };
 
@@ -243,6 +246,7 @@ export default function ListingForm() {
         county: values.judet,
         anre_matched: anreCheck.status === 'found-active' ? 'yes' : anreCheck.status === 'found-no-pv' ? 'no-pv' : 'no',
         cum_aflat: values.cumAflat || 'nespecificat',
+        interes_premium: values.interesPremium ? 'da' : 'nu',
       });
 
       setStatus('success');
@@ -417,6 +421,34 @@ export default function ListingForm() {
           value={values.descriere}
           onChange={(e) => setField('descriere', e.target.value)}
         />
+
+        {/* Bifa de Premium stă înainte de GDPR, nu după buton: e singurul loc din
+            flux unde firma poate cere oferta plătită fără să părăsească formularul. */}
+        <div className="rounded-xl border-2 border-secondary/40 bg-linear-to-r from-secondary/5 via-white to-primary/5 p-4">
+          <div className="flex items-start gap-2">
+            <input
+              type="checkbox"
+              id="interes-premium"
+              name="interesPremium"
+              checked={values.interesPremium}
+              onChange={(e) => setField('interesPremium', e.target.checked)}
+              className="mt-0.5 w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
+            />
+            <label htmlFor="interes-premium" className="text-sm text-gray-700 leading-relaxed">
+              <strong className="text-gray-900">Vreau și oferta de Partener Premium</strong> (
+              {PRICING.premium.monthly}€/lună): sus pe pagina județului meu, în rotația de pe homepage
+              și ghiduri, profil complet și raport lunar. Te sunăm cu detaliile, fără nicio obligație.{' '}
+              <a
+                href="/publicitate/premium"
+                target="_blank"
+                rel="noopener"
+                className="text-secondary-dark underline hover:no-underline"
+              >
+                Ce înseamnă Premium
+              </a>
+            </label>
+          </div>
+        </div>
 
         <div>
           <div className="flex items-start gap-2">

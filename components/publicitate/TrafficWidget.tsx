@@ -1,14 +1,16 @@
 import { getMetrics, getStats, resolveRange, type MetricRow } from '@/lib/umami';
 
-const FEATURED_PAGES: { path: string; label: string; tier: string }[] = [
-  { path: '/', label: 'Homepage', tier: 'Premium' },
-  { path: '/clasament', label: '/clasament', tier: 'Premium' },
-  { path: '/calculator-panouri-fotovoltaice', label: '/calculator', tier: 'Premium' },
-  { path: '/ghid', label: '/ghid (index)', tier: 'Premium' },
-  { path: '/verificare-anre', label: '/verificare-anre', tier: 'Plus' },
-  { path: '/firme/judet/cluj', label: '/firme/judet/cluj', tier: 'Plus' },
-  { path: '/firme/judet/bucuresti', label: '/firme/judet/bucuresti', tier: 'Plus' },
-  { path: '/firme/judet/timis', label: '/firme/judet/timis', tier: 'Plus' },
+// „Plasare" în loc de nume de pachet: după simplificarea din iunie 2026 toate
+// plasările de aici sunt Premium, singura diferență e unde anume apari.
+const FEATURED_PAGES: { path: string; label: string; placement: string }[] = [
+  { path: '/', label: 'Homepage', placement: 'Pool național' },
+  { path: '/clasament', label: '/clasament', placement: 'Pool național' },
+  { path: '/calculator-panouri-fotovoltaice', label: '/calculator', placement: 'Pool național' },
+  { path: '/ghid', label: '/ghid (index)', placement: 'Pool național' },
+  { path: '/verificare-anre', label: '/verificare-anre', placement: 'Featured ANRE' },
+  { path: '/firme/judet/cluj', label: '/firme/judet/cluj', placement: 'Pe județ' },
+  { path: '/firme/judet/bucuresti', label: '/firme/judet/bucuresti', placement: 'Pe județ' },
+  { path: '/firme/judet/timis', label: '/firme/judet/timis', placement: 'Pe județ' },
 ];
 
 function fmt(n: number): string {
@@ -74,7 +76,7 @@ export default async function TrafficWidget() {
           <thead>
             <tr className="border-b border-border bg-surface">
               <th className="text-left px-3 py-2 font-semibold text-gray-700">Pagină</th>
-              <th className="text-left px-3 py-2 font-semibold text-gray-700">Pachet care apare aici</th>
+              <th className="text-left px-3 py-2 font-semibold text-gray-700">Plasarea Premium de aici</th>
               <th className="text-right px-3 py-2 font-semibold text-gray-700">Vizualizări 30d</th>
             </tr>
           </thead>
@@ -85,12 +87,12 @@ export default async function TrafficWidget() {
                 <td className="px-3 py-2">
                   <span
                     className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${
-                      r.tier === 'Premium'
+                      r.placement === 'Pool național'
                         ? 'bg-secondary/10 text-secondary-dark'
                         : 'bg-primary/10 text-primary-dark'
                     }`}
                   >
-                    {r.tier}
+                    {r.placement}
                   </span>
                 </td>
                 <td className="px-3 py-2 text-right font-mono font-semibold text-gray-900">
@@ -103,7 +105,7 @@ export default async function TrafficWidget() {
       </div>
 
       <p className="text-[11px] text-gray-500 mt-3 leading-relaxed">
-        <strong>Cum citești:</strong> Premium apare pe paginile globale (homepage, /clasament, /calculator, /ghid). Plus apare pe pagina județului tău și pe /verificare-anre. Cifrele de mai sus sunt vizualizări reale ultimele 30 zile — folosește-le ca punct de plecare pentru o conversație cu noi, nu ca promisiune de impresii sau lead-uri.
+        <strong>Cum citești:</strong> Premium te pune în pool-ul rotativ de pe paginile naționale (homepage, /clasament, /calculator, /ghid), sus pe pagina județului tău și featured pe /verificare-anre. Cifrele de mai sus sunt vizualizări reale din ultimele 30 de zile, un punct de plecare pentru o conversație, nu o promisiune de impresii sau de lead-uri.
       </p>
     </div>
   );

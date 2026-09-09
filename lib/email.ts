@@ -83,6 +83,7 @@ interface ListingNotificationData {
   anreStatus?: string;
   attribution?: { canal: string; campanie: string; paginaIntrare: string };
   cumAflat?: string;
+  interesPremium?: boolean;
 }
 
 function segmentBadge(segment: string): string {
@@ -335,6 +336,9 @@ export async function sendListingNotification(data: ListingNotificationData): Pr
       ? [['Canal', escapeHtml([data.attribution.canal, data.attribution.campanie].filter(Boolean).join(' · ')) + (data.attribution.paginaIntrare ? ` <span style="color:#6b7280">(intrat pe ${escapeHtml(data.attribution.paginaIntrare)})</span>` : '')] as [string, string]]
       : []),
     ...(data.cumAflat ? [['Cum a aflat', escapeHtml(getFirmSourceLabel(data.cumAflat))] as [string, string]] : []),
+    ...(data.interesPremium
+      ? [['Premium', '<span style="color:#1e3a5f;font-weight:600">★ A cerut oferta de Partener Premium</span>'] as [string, string]]
+      : []),
   ];
 
   const tableRows = rows
@@ -371,7 +375,7 @@ export async function sendListingNotification(data: ListingNotificationData): Pr
 
   const result = await sendEmail({
     to,
-    subject: `Listare nouă: ${data.numeFirma} (${data.judet})`,
+    subject: `Listare nouă${data.interesPremium ? ' ★ PREMIUM' : ''}: ${data.numeFirma} (${data.judet})`,
     html,
     replyTo: data.email,
   });
