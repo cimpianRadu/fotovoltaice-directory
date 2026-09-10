@@ -27,6 +27,16 @@ const BASELINE = process.argv.includes('--baseline');
 // Process only one lead row (targeted one-off send); skips listings.
 const onlyLeadArg = process.argv.find((a) => a.startsWith('--only-lead='));
 const ONLY_LEAD = onlyLeadArg ? Number(onlyLeadArg.split('=')[1]) : null;
+// Confirm listings on explicitly named rows even if the ANRE gate says otherwise.
+// The gate requires anreStatus === 'verified-pv', which conflates "is published"
+// with "has a PV atestat". A firm can be published by hand without a C1A/C2A
+// (the call is Radu's, recorded as verified:true in companies.json), and those
+// rows then sit in the backlog forever. Naming a row here is that manual call,
+// made explicit. Publication + an email address are still required.
+const onlyListingArg = process.argv.find((a) => a.startsWith('--only-listing='));
+const ONLY_LISTINGS = onlyListingArg
+  ? new Set(onlyListingArg.split('=')[1].split(',').map((n) => Number(n.trim())).filter(Number.isFinite))
+  : null;
 // Clear the "Email trimis" marker on a lead row (correction after a bad run).
 const unmarkArg = process.argv.find((a) => a.startsWith('--unmark-lead='));
 const UNMARK_LEAD = unmarkArg ? Number(unmarkArg.split('=')[1]) : null;
@@ -58,7 +68,7 @@ const PHONE_TEL = '+40751547174';
 const SPREADSHEET_ID = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
 
 // Reach stats for the listing email (D). From Umami/GSC, confirm before campaigns.
-const STATS = { vizite: '~2.470', vizualizari: '~4.700', googlePct: '73%', aiVizite: '~65', firme: 181, judete: 34 };
+const STATS = { vizite: '~2.470', vizualizari: '~4.700', googlePct: '73%', aiVizite: '~65', firme: 185, judete: 34 };
 
 const LEAD_EMAILED_COL = 'O', LEAD_EMAILED_IDX = 14;
 const LISTING_EMAILED_COL = 'Q', LISTING_EMAILED_IDX = 16;
@@ -369,6 +379,7 @@ async function main() {
 
   for (const { row, lead } of leads) {
     if (sent >= MAX_EMAILS) { console.log('(cap atins, mă opresc)'); break; }
+    if (ONLY_LISTINGS) continue; // targeted listing send: skip leads
     if (ONLY_LEAD && row !== ONLY_LEAD) continue;
     if (!lead.email) { stats.skipped++; continue; }
     const firms = NOTIFY_FIRMS ? pickFirms(lead.judet, lead.segment, lastContacted) : [];
@@ -406,13 +417,15 @@ async function main() {
 
   for (const { row, listing } of listings) {
     if (ONLY_LEAD) break; // targeted lead send: skip listings
+    if (ONLY_LISTINGS && !ONLY_LISTINGS.has(row)) continue;
     if (sent >= MAX_EMAILS) { console.log('(cap atins, mă opresc)'); break; }
     const slug = publishedByCui.get(normCui(listing.cui));
     const rejected = /respins/i.test(listing.status || '');
 
-    // Published + PV-verified → confirmation D
-    if (slug && listing.anreStatus === 'verified-pv' && listing.email) {
-      console.log(`LISTARE rând ${row} (${listing.numeFirma}) → confirmare D`);
+    // Published + PV-verified (or named via --only-listing) → confirmation D
+    const forced = ONLY_LISTINGS?.has(row);
+    if (slug && (listing.anreStatus === 'verified-pv' || forced) && listing.email) {
+      console.log(`LISTARE rând ${row} (${listing.numeFirma}) → confirmare D${forced ? ` (deblocat manual; ANRE rămâne „${listing.anreStatus || 'gol'}")` : ''}`);
       const msg = listingConfirmEmail(listing, slug);
       const ok = await send(listing.email, msg.subject, msg.html);
       if (ok) { sent++; stats.listingsD++; if (SEND) await markCell('Listări', `${LISTING_EMAILED_COL}${row}`, SENT_MARK()); } else { stats.failed++; }
