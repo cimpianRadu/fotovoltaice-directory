@@ -274,13 +274,25 @@ export default async function PentruInstalatoriPage() {
               <tbody className="divide-y divide-border">
                 <tr>
                   <td className="px-4 py-3 font-medium text-gray-900">Costul</td>
-                  <td className="px-4 py-3 text-gray-600">Preț per cerere sau comision la contract</td>
-                  <td className="px-4 py-3 text-gray-900 font-medium">Zero, în ambele forme</td>
+                  {/* Costul care doare nu e prețul pe cerere, e comisionul din
+                      lucrarea care chiar s-a făcut: se ia din marja pe care ai
+                      muncit-o, nu din bugetul de marketing. */}
+                  <td className="px-4 py-3 text-gray-600">
+                    Comision din fiecare lucrare concretizată, deseori și preț per cerere
+                  </td>
+                  <td className="px-4 py-3 text-gray-900 font-medium">Gratuit</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium text-gray-900">Contactul clientului</td>
                   <td className="px-4 py-3 text-gray-600">Anonim până acceptă clientul oferta ta</td>
                   <td className="px-4 py-3 text-gray-900 font-medium">Complet, imediat după apelul de confirmare</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-gray-900">Unde îți administrezi cererile</td>
+                  <td className="px-4 py-3 text-gray-600">Dashboard-ul platformei</td>
+                  <td className="px-4 py-3 text-gray-900 font-medium">
+                    Portal propriu: status, notițe, alerte pe județ, pozele clientului
+                  </td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium text-gray-900">Câte firme pe aceeași cerere</td>
@@ -296,7 +308,7 @@ export default async function PentruInstalatoriPage() {
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium text-gray-900">Cine ține relația</td>
-                  <td className="px-4 py-3 text-gray-600">Platforma, prin dashboard și chat</td>
+                  <td className="px-4 py-3 text-gray-600">Platforma, prin chat și notificări</td>
                   <td className="px-4 py-3 text-gray-900 font-medium">Tu, direct la telefon cu omul</td>
                 </tr>
               </tbody>
