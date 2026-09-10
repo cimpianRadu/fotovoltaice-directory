@@ -29,7 +29,7 @@ import { mountingForRoof, parseConsumLunar, sizeKwp } from '@/lib/pv-estimate';
 import { PROGRAM, bracketFor } from '@/lib/battery-sizing';
 import { type LeadCardData } from './LeadCard';
 import LeadFeed from './LeadFeed';
-import HowItWorks from './HowItWorks';
+import InstallerBanner from './InstallerBanner';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 
 // Feedul se regenerează la cel mult 5 minute — destul de proaspăt pentru
@@ -165,7 +165,7 @@ export default async function CereriPage() {
           </p>
         </div>
 
-        <HowItWorks maxClaims={MAX_CLAIMS_PER_LEAD} />
+        <InstallerBanner />
 
         {/* Singura pagină cu audiență de instalatori, deci partenerii apar aici
             cu mesajul lor B2B. Sus, imediat după explicație: jos, sub feed, nu
