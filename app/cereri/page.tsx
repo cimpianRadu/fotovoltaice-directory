@@ -87,7 +87,8 @@ export default async function CereriPage() {
       : null;
     // Capacitatea de afișat la „doar baterie". Necesarul tehnic decide singur
     // doar pe fonduri proprii. Pe Casa Verde Baterii nu: programul finanțează de
-    // la 12 kWh în sus, deci aia e capacitatea pe care omul o va cumpăra, oricât
+    // la pragul lui în sus (10 kWh din 9 sept 2026, era 12), deci aia e
+    // capacitatea pe care omul o va cumpăra, oricât
     // de mic i-ar fi consumul. Prosumatorul din București scrisese „15" în
     // formular exact ca să prindă pragul, iar un card care i-ar fi arătat firmei
     // „5-7 kWh" ar fi ratat singurul număr care contează la el.

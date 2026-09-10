@@ -16,13 +16,16 @@ import Toast from '@/components/ui/Toast';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 import { trackEvent } from '@/lib/analytics';
 
-// Etichetele poartă și informația din ghid: pragul de 12 kWh și faptul că
-// subvenția maximă de 15.000 lei se atinge de la 16 kWh în sus.
+// Etichetele poartă și informația din ghid, în forma consolidată din 9 septembrie:
+// pragul a coborât la 10 kWh, subvenția maximă de 15.000 lei se atinge de la ~13,4
+// kWh (la standardul de cost de 1.500 lei/kWh), iar punctajul pe capacitate e maxim
+// de la 20 kWh. Valorile vechi ('12', '13-15', '16-20', 'peste-20') rămân în
+// rândurile deja scrise în Sheet și în lista din /api/alerta-cvb.
 const CAPACITATE_OPTIONS = [
-  { value: '12', label: '12 kWh (minimul programului)' },
-  { value: '13-15', label: '13 - 15 kWh' },
-  { value: '16-20', label: '16 - 20 kWh (subvenția maximă)' },
-  { value: 'peste-20', label: 'Peste 20 kWh' },
+  { value: '10', label: '10 kWh (minimul programului)' },
+  { value: '11-13', label: '11 - 13 kWh' },
+  { value: '14-19', label: '14 - 19 kWh (subvenția maximă)' },
+  { value: 'peste-20', label: '20 kWh sau mai mult (punctaj maxim)' },
   { value: 'nu-stiu', label: 'Nu știu încă' },
 ];
 

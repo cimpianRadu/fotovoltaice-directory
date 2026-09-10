@@ -66,9 +66,7 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
   const [unit, setUnit] = useState<'kwh' | 'lei'>('kwh');
   const [kwp, setKwp] = useState('5');
 
-  const [capacity, setCapacity] = useState('12');
-  const [pvTouched, setPvTouched] = useState(false);
-  const [pvDeclarat, setPvDeclarat] = useState('5');
+  const [capacity, setCapacity] = useState('10');
   const [cost, setCost] = useState('15000');
   const [costTouched, setCostTouched] = useState(false);
   const [ownSharePct, setOwnSharePct] = useState(25);
@@ -91,7 +89,6 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
 
   // ---------- Pașii 2-3: programul ----------
   const cap = Math.max(PROGRAM.minKwh, parseFloat(capacity) || PROGRAM.minKwh);
-  const pvKw = parseFloat(pvDeclarat) || 0;
   const costValue = costTouched ? parseFloat(cost) || 0 : cap * PROGRAM.costStandardPerKwh;
 
   const s2 = useMemo(() => {
@@ -105,11 +102,11 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
       pct,
       ownLei,
       granted: Math.max(0, Math.min(g.maxGrant, costValue - ownLei)),
-      score: scoreFor(cap, pvKw, pct),
+      score: scoreFor(cap, pct),
       atMax: Math.min(g.maxGrant, costValue * (1 - OWN_SHARE_FOR_MAX_POINTS)),
-      scoreAtMax: scoreFor(cap, pvKw, OWN_SHARE_FOR_MAX_POINTS),
+      scoreAtMax: scoreFor(cap, OWN_SHARE_FOR_MAX_POINTS),
     };
-  }, [cap, costValue, ownSharePct, pvKw]);
+  }, [cap, costValue, ownSharePct]);
 
   const { bracket } = s1;
   const gapToMin = PROGRAM.minKwh - bracket.capacity[1];
@@ -196,10 +193,7 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
                   min={0}
                   step={0.5}
                   value={kwp}
-                  onChange={(e) => {
-                    setKwp(e.target.value);
-                    if (!pvTouched) setPvDeclarat(e.target.value);
-                  }}
+                  onChange={(e) => setKwp(e.target.value)}
                   className={input}
                 />
                 <span className={suffix}>kWp</span>
@@ -263,8 +257,12 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
               </Note>
             )}
 
-            <div className="mt-3 grid gap-3 sm:grid-cols-3">
-              <Field label="Bateria pe care o iei" htmlFor="bw-cap" hint={`Minimul: ${PROGRAM.minKwh} kWh.`}>
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              <Field
+                label="Bateria pe care o iei"
+                htmlFor="bw-cap"
+                hint={`Minimul: ${PROGRAM.minKwh} kWh. Punctaj maxim de la ${PROGRAM.capacityForMaxPoints} kWh.`}
+              >
                 <input
                   id="bw-cap"
                   type="number"
@@ -279,23 +277,6 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
                   className={input}
                 />
                 <span className={suffix}>kWh</span>
-              </Field>
-
-              <Field label="Puterea PV declarată" htmlFor="bw-pv" hint={`1 punct/kW, max ${PROGRAM.maxPoints.pv}.`}>
-                <input
-                  id="bw-pv"
-                  type="number"
-                  inputMode="decimal"
-                  min={0}
-                  step={0.5}
-                  value={pvDeclarat}
-                  onChange={(e) => {
-                    setPvTouched(true);
-                    setPvDeclarat(e.target.value);
-                  }}
-                  className={input}
-                />
-                <span className={suffix}>kW</span>
               </Field>
 
               <Field
@@ -366,7 +347,6 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
                 {[
                   { l: 'Contribuție', v: s2.score.contribution, m: PROGRAM.maxPoints.contribution, c: 'bg-primary' },
                   { l: 'Capacitate', v: s2.score.capacity, m: PROGRAM.maxPoints.capacity, c: 'bg-secondary-light' },
-                  { l: 'Putere PV', v: s2.score.pv, m: PROGRAM.maxPoints.pv, c: 'bg-accent' },
                 ].map((b) => (
                   <div key={b.l} className="flex items-center gap-2">
                     <span className="w-20 shrink-0 text-[11px] text-gray-500">{b.l}</span>
@@ -449,8 +429,9 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
           <summary className="cursor-pointer font-semibold text-gray-600">Cum se calculează și ce e încă incert</summary>
 
           <p className="mt-2.5 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-amber-900">
-            <b>Estimare orientativă.</b> Cifrele vin din proiectul de ghid AFM intrat în consultare publică pe 18 august
-            2026, nu dintr-un act final. Punctajul, plafoanele și condițiile se pot schimba.
+            <b>Estimare orientativă.</b> Cifrele vin din forma consolidată a proiectului de ghid, publicată de MMAP pe
+            9 septembrie 2026. Tot proiect: ordinul nu e semnat și nu e în Monitorul Oficial, deci punctajul,
+            plafoanele și condițiile se mai pot schimba.
           </p>
 
           <div className="mt-2.5 overflow-x-auto">
@@ -459,7 +440,6 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
                 <tr className="border-b border-border text-left uppercase tracking-wide text-gray-400">
                   <th className="py-1.5 pr-2 font-bold">Profil</th>
                   <th className="py-1.5 px-1.5 text-right font-bold">Bat.</th>
-                  <th className="py-1.5 px-1.5 text-right font-bold">PV</th>
                   <th className="py-1.5 px-1.5 text-right font-bold">Contr.</th>
                   <th className="py-1.5 pl-1.5 text-right font-bold">Pct.</th>
                 </tr>
@@ -469,17 +449,15 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
                   <tr key={p.label} className="border-b border-border">
                     <td className="py-1.5 pr-2">{p.label}</td>
                     <td className="py-1.5 px-1.5 text-right tabular-nums">{p.capacity}</td>
-                    <td className="py-1.5 px-1.5 text-right tabular-nums">{p.pv}</td>
                     <td className="py-1.5 px-1.5 text-right tabular-nums">{num(p.ownShare * 100, 1)}%</td>
                     <td className="py-1.5 pl-1.5 text-right font-semibold tabular-nums">
-                      {pts(scoreFor(p.capacity, p.pv, p.ownShare).total)}
+                      {pts(scoreFor(p.capacity, p.ownShare).total)}
                     </td>
                   </tr>
                 ))}
                 <tr className="bg-primary/10 font-bold text-secondary">
                   <td className="py-1.5 pr-2">Dosarul tău</td>
                   <td className="py-1.5 px-1.5 text-right tabular-nums">{cap}</td>
-                  <td className="py-1.5 px-1.5 text-right tabular-nums">{num(pvKw, 1)}</td>
                   <td className="py-1.5 px-1.5 text-right tabular-nums">{num(s2.pct * 100, 1)}%</td>
                   <td className="py-1.5 pl-1.5 text-right tabular-nums">{pts(s2.score.total)}</td>
                 </tr>
@@ -489,10 +467,12 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
 
           <p className="mt-2.5 leading-relaxed">
             Pragul de admitere nu se știe, depinde de câți se înscriu. La punctaj egal contează, în ordine, valoarea
-            contribuției proprii, capacitatea, puterea PV, iar data înscrierii e ultimul criteriu. Punctajul se
-            calculează pe ce declari: dacă documentele nu susțin declarația, dosarul se respinge fără recalculare (art.
-            19 alin. 7). Cota de {num(PROGRAM.maxShare * 100)}% e aplicată pe baza plafonată la standardul de cost,
-            lectura prudentă, fiindcă proiectul nu precizează explicit dacă se aplică pe factura totală.
+            contribuției proprii, capacitatea, iar data înscrierii e ultimul criteriu. Puterea sistemului fotovoltaic nu
+            mai punctează deloc în forma consolidată. Punctajul acordat la înscriere nu se mai majorează și ordinea de
+            selecție nu se schimbă (art. 19 alin. 10); dacă documentele arată un punctaj mai mic decât cel declarat,
+            dosarul se respinge (art. 20 alin. 5). Cota de {num(PROGRAM.maxShare * 100)}% e aplicată pe baza plafonată la
+            standardul de cost, lectura prudentă, fiindcă proiectul nu precizează explicit dacă se aplică pe factura
+            totală.
           </p>
 
           {guideHref && (

@@ -3,7 +3,9 @@ import { saveCvbAlertToSheet } from '@/lib/sheets';
 
 // Valorile vin dintr-un select cu opțiuni fixe; validăm server-side ca în
 // Sheet să nu intre text liber (aceeași regulă ca la /api/ad-inquiry).
-const ALLOWED_CAPACITATE = ['12', '13-15', '16-20', 'peste-20', 'nu-stiu'];
+// Primele trei valori vechi ('12', '13-15', '16-20') rămân acceptate: sunt în
+// rândurile scrise înainte de forma consolidată din 9 septembrie 2026.
+const ALLOWED_CAPACITATE = ['10', '11-13', '14-19', '12', '13-15', '16-20', 'peste-20', 'nu-stiu'];
 const ALLOWED_INVERTOR = [
   'huawei',
   'deye',

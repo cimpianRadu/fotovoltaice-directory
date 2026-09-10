@@ -8,13 +8,13 @@
  *    Nu recalculăm cu o formulă proprie: o a doua metodă ar începe să contrazică
  *    tabelul din articol în ziua în care una dintre ele se schimbă.
  *
- * 2. **Programul** (`PROGRAM`, `scoreFor`, `grantFor`) vine din proiectul de ghid
- *    AFM intrat în consultare publică pe 18 august 2026, art. 5, 7 și 19.
- *    ⚠️ Proiect, nu act final. Orice afișare a acestor cifre trebuie însoțită de
- *    mențiunea că se pot schimba până la publicarea ghidului definitiv.
- *
- * Formulele de mai jos reproduc exact cele 8 repere numerice publicate în
- * articolul nostru (4 profiluri de punctaj + 4 praguri de finanțare).
+ * 2. **Programul** (`PROGRAM`, `scoreFor`, `grantFor`) vine din forma consolidată
+ *    a proiectului de ghid, publicată de MMAP pe 9 septembrie 2026, art. 5, 16
+ *    și 19. Ea a schimbat față de proiectul din 18 august: minimul 12 -> 10 kWh,
+ *    standardul de cost 1.250 -> 1.500 lei/kWh, iar punctajul a trecut de la trei
+ *    criterii la două (puterea PV nu mai punctează deloc).
+ *    ⚠️ Tot proiect, nu act final: ordinul nu e semnat și nu e în Monitorul
+ *    Oficial. Orice afișare a acestor cifre poartă mențiunea că se pot schimba.
  */
 
 export interface SizingBracket {
@@ -73,37 +73,47 @@ export function supportThresholdKwp(capacityKwh: number): number {
   return Math.round(kwpNeeded(capacityKwh)[0] * 2) / 2;
 }
 
-/** Parametrii programului, din proiectul de ghid AFM (consultare 18.08.2026). */
+/** Parametrii programului, din forma consolidată a proiectului de ghid (09.09.2026). */
 export const PROGRAM = {
-  /** Capacitate minimă finanțabilă, în kWh. */
-  minKwh: 12,
+  /** Capacitate minimă finanțabilă, în kWh (art. 16 alin. 2). */
+  minKwh: 10,
   /** Standard de cost, lei/kWh cu TVA (art. 5 alin. 4). */
-  costStandardPerKwh: 1250,
+  costStandardPerKwh: 1500,
   /** Cota maximă de finanțare din valoarea proiectului (art. 5 alin. 2). */
   maxShare: 0.75,
   /** Plafon absolut, lei cu TVA (art. 5 alin. 2). */
   maxGrant: 15000,
-  /** Contribuția proprie minimă obligatorie (art. 7, definiții). */
+  /** Contribuția proprie minimă obligatorie (art. 5 alin. 2). */
   minOwnShare: 0.25,
-  /** Punctaj maxim pe fiecare criteriu (art. 19). */
-  maxPoints: { contribution: 40, capacity: 40, pv: 20 },
-  /** Data la care proiectul a intrat în consultare publică. */
-  consultationSince: '2026-08-18',
+  /** Punctaj maxim pe fiecare criteriu (art. 19 alin. 4). */
+  maxPoints: { contribution: 50, capacity: 50 },
+  /** Capacitatea de la care criteriul dă punctaj maxim: 20 × 2,5 = 50. */
+  capacityForMaxPoints: 20,
+  /** Cicluri minime de încărcare-descărcare (art. 16 alin. 2). */
+  minCycles: 5000,
+  /** Data la care MMAP a publicat forma consolidată. */
+  consolidatedSince: '2026-09-09',
 } as const;
 
 export interface Score {
   contribution: number;
   capacity: number;
-  pv: number;
   total: number;
 }
 
-/** Punctajul din art. 19. `ownShare` e fracție (0,25 = 25%), nu procent. */
-export function scoreFor(capacityKwh: number, pvKw: number, ownShare: number): Score {
-  const contribution = Math.max(0, Math.min(PROGRAM.maxPoints.contribution, 80 * ownShare - 10));
-  const capacity = Math.min(PROGRAM.maxPoints.capacity, capacityKwh);
-  const pv = Math.min(PROGRAM.maxPoints.pv, pvKw);
-  return { contribution, capacity, pv, total: contribution + capacity + pv };
+/**
+ * Punctajul din art. 19 alin. (4). `ownShare` e fracție (0,25 = 25%), nu procent.
+ *
+ * Ghidul scrie criteriul în lei, `30 × contribuția proprie / finanțarea AFM`. Cum
+ * art. 5 alin. (2) definește contribuția proprie ca diferența dintre valoarea
+ * proiectului și finanțare, raportul e egal cu `ownShare / (1 − ownShare)`, deci
+ * formula de mai jos e aceeași, exprimată în cota din proiect.
+ */
+export function scoreFor(capacityKwh: number, ownShare: number): Score {
+  const ratio = ownShare >= 1 ? Infinity : ownShare / (1 - ownShare);
+  const contribution = Math.max(0, Math.min(PROGRAM.maxPoints.contribution, 30 * ratio));
+  const capacity = Math.min(PROGRAM.maxPoints.capacity, capacityKwh * 2.5);
+  return { contribution, capacity, total: contribution + capacity };
 }
 
 export interface Grant {
@@ -119,8 +129,10 @@ export interface Grant {
  * Plafoanele din art. 5, aplicate simultan.
  *
  * Cei 75% se aplică aici pe baza deja plafonată la standardul de cost, lectura
- * prudentă. Proiectul de ghid nu precizează explicit dacă procentul se calculează
- * pe factura totală sau pe baza plafonată; articolul semnalează ambiguitatea.
+ * prudentă. Forma consolidată a lămurit ce se întâmplă cu surplusul: ce depășește
+ * standardul de cost intră în contribuția proprie (art. 5 alin. 5), dar tot nu
+ * spune explicit dacă procentul se calculează pe factura totală sau pe baza
+ * plafonată.
  */
 export function grantFor(capacityKwh: number, projectCost: number): Grant {
   const eligibleBase = Math.min(projectCost, capacityKwh * PROGRAM.costStandardPerKwh);
@@ -132,11 +144,11 @@ export function grantFor(capacityKwh: number, projectCost: number): Grant {
 
 /** Profilurile de comparație publicate în articol, ca reper relativ. */
 export const REFERENCE_PROFILES = [
-  { label: 'Prosumator rezidențial tipic', capacity: 12, pv: 5, ownShare: 0.25 },
-  { label: 'Casă mare, sistem generos', capacity: 16, pv: 8, ownShare: 0.4 },
-  { label: 'Plătește majoritar din buzunar', capacity: 20, pv: 10, ownShare: 0.625 },
-  { label: 'Maxim teoretic', capacity: 40, pv: 20, ownShare: 0.625 },
+  { label: 'Minimul programului', capacity: 10, ownShare: 0.25 },
+  { label: 'Baterie medie, contribuție minimă', capacity: 14, ownShare: 0.25 },
+  { label: 'Baterie mare, plafonul de 15.000 lei', capacity: 20, ownShare: 0.5 },
+  { label: 'Maxim de punctaj', capacity: 20, ownShare: 0.625 },
 ] as const;
 
-/** Contribuția de la care criteriul dă punctaj maxim: 80 × 0,625 − 10 = 40. */
+/** Contribuția de la care criteriul dă punctaj maxim: 30 × 0,625/0,375 = 50. */
 export const OWN_SHARE_FOR_MAX_POINTS = 0.625;
