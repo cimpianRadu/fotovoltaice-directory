@@ -22,6 +22,10 @@ import { GUIDE_CTA } from '@/lib/guide-cta';
  */
 const GUIDE_WIDGET: Record<string, string> = {
   'casa-verde-baterii-2026-program-stocare-afm': 'punctaj',
+  // Hub-ul Casa Verde 2026: simulatorul stă sub secțiunea de punctaj, la fel ca
+  // pe ghidul de baterii, fiindcă SERP-ul pe „casa verde 2026" e câștigat de
+  // pagini de program cu simulator, nu de articole.
+  'casa-verde-fotovoltaice-2026': 'punctaj',
 };
 
 /**
@@ -33,6 +37,7 @@ const GUIDE_WIDGET: Record<string, string> = {
 const GUIDE_ALERT_FORM: Record<string, string> = {
   'casa-verde-baterii-2026-program-stocare-afm': 'calendar-update',
   'casa-verde-baterii-2026-cine-nu-poate-aplica-intrebari': 'cand-se-deschide',
+  'casa-verde-fotovoltaice-2026': 'calendar',
 };
 import { existsSync } from 'fs';
 import { join } from 'path';
