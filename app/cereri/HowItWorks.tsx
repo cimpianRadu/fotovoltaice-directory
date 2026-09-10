@@ -84,6 +84,10 @@ export default function HowItWorks({ maxClaims }: { maxClaims: number }) {
           >
             contact@instalatori-fotovoltaice.ro
           </a>
+          . Dacă e prima dată când ajungi aici, citește{' '}
+          <Link href="/pentru-instalatori" className="text-primary-dark underline hover:no-underline">
+            ce primești ca instalator
+          </Link>
           .
         </p>
       </div>

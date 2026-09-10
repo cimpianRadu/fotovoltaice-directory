@@ -71,22 +71,41 @@ export default function ListeazaFirmaPage() {
           <ListingForm />
         </div>
 
+        {/* Cele trei beneficii generice de aici nu convingeau pe nimeni. Argumentul
+            real (cererile libere, pe județe, chiar acum) e pe /pentru-instalatori
+            și se scrie singur din date, deci pagina asta doar trimite acolo. */}
         <div className="mt-6 bg-surface rounded-xl p-5 border border-border">
           <h2 className="font-semibold text-gray-900 mb-3">De ce să te listezi?</h2>
           <ul className="text-sm text-gray-600 space-y-2">
             <li className="flex items-start gap-2">
               <span className="text-primary font-bold mt-0.5">1.</span>
-              <span><strong>Vizibilitate</strong> — Profilul tău apare în căutările clienților din zona ta</span>
+              <span>
+                <strong>Cereri reale.</strong> Primești cereri de la clienți din județele în care lucrezi,
+                cu date complete de contact. Gratuit, fără comision.
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary font-bold mt-0.5">2.</span>
-              <span><strong>Credibilitate</strong> — Certificările și proiectele tale sunt prezentate profesional</span>
+              <span>
+                <strong>Profil public.</strong> Ai pagina ta, indexată în Google, cu datele din registre și
+                atestatul ANRE verificat live.
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary font-bold mt-0.5">3.</span>
-              <span><strong>Contact direct</strong> — Clienții te pot contacta direct prin telefon, email sau site</span>
+              <span>
+                <strong>Vizibilitate în căutări.</strong> Apari în lista de firme, în filtrele după județ și
+                specializare și în clasamentul după cifre reale.
+              </span>
             </li>
           </ul>
+          <p className="text-sm text-gray-600 mt-4 pt-4 border-t border-border">
+            Vezi{' '}
+            <Link href="/pentru-instalatori" className="text-primary-dark underline hover:no-underline">
+              cum funcționează pentru instalatori
+            </Link>
+            , cu numărul de cereri libere pe județe chiar acum.
+          </p>
         </div>
 
         {/* Repetat sub formular: cine a completat tot formularul e cel mai

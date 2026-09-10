@@ -25,6 +25,9 @@ const primaryLinks = [
 const moreLinks = [
   { href: '/verificare-anre', label: 'Verificare ANRE' },
   { href: '/clasament', label: 'Clasament' },
+  // Pagina-umbrelă pentru instalatori stă înaintea celor două pagini care sunt,
+  // de fapt, pașii ei: listarea și portalul.
+  { href: '/pentru-instalatori', label: 'Pentru instalatori' },
   { href: '/listeaza-firma', label: 'Listează-ți firma' },
   { href: '/portal', label: 'Portal Instalatori' },
   { href: '/publicitate', label: 'Publicitate' },
