@@ -224,19 +224,26 @@ export default function HomeLeadHero({
         {/* Ușa firmelor, la baza heroului. Sus ar concura cu cererea, care e
             treaba paginii; jos de tot ar fi la fel de invizibilă ca linkul din
             subsol. Aici o vede și cine intră pe brand sau după un telefon, adică
-            exact traficul direct pe care îl are homepage-ul. */}
+            exact traficul direct pe care îl are homepage-ul.
+
+            Pe amber, nu pe alb translucid: prima variantă (10 sept) se topea în
+            navy și se citea ca o notă de subsol. Cardurile de deasupra rămân albe
+            și pline, deci banda nu le fură atenția, doar încetează să dispară. */}
         <div className="mt-8 max-w-3xl mx-auto">
           <Link
             href="/pentru-instalatori"
             onClick={() => trackEvent('pentru_instalatori_click', { source: 'home_hero' })}
-            className="group flex items-center justify-between gap-3 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 hover:border-primary/50 px-4 py-3 transition-colors"
+            className="group flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-5 rounded-xl border border-primary/45 bg-primary/10 hover:bg-primary/15 px-4 sm:px-5 py-4 transition-colors"
           >
-            <span className="text-xs sm:text-sm text-gray-200 leading-snug">
-              <strong className="font-semibold text-white">Sunteți instalator?</strong>{' '}
-              Vedeți cum ajung cererile la firmele din județul dumneavoastră.
+            <span className="text-sm sm:text-base text-white leading-snug text-center sm:text-left">
+              <strong className="font-bold">Sunteți instalator?</strong> Preluați cereri gratuit de
+              pe platformă.
             </span>
-            <span className="shrink-0 text-xs sm:text-sm font-semibold text-primary-light group-hover:text-primary transition-colors whitespace-nowrap">
-              Detalii &rarr;
+            <span className="shrink-0 inline-flex items-center gap-2 rounded-lg bg-primary group-hover:bg-primary-dark text-white font-semibold text-sm px-4 py-2.5 transition-colors">
+              Vedeți cum funcționează
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
             </span>
           </Link>
         </div>
