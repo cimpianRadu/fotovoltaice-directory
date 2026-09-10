@@ -15,8 +15,6 @@ import {
   fuzzyMatchCompanyName,
   companyMatchesSegment,
 } from '@/lib/utils';
-import { useSegment } from '@/components/segment/SegmentProvider';
-import SegmentToggle from '@/components/segment/SegmentToggle';
 import { trackEvent } from '@/lib/analytics';
 
 const ITEMS_PER_PAGE = 9;
@@ -57,7 +55,15 @@ const capacityOptions = [
 
 export default function CompanyListClient() {
   const searchParams = useSearchParams();
-  const { segment } = useSegment();
+  // Segmentul a încetat pe 10 septembrie 2026 să mai fie o alegere globală ținută
+  // în cookie. Într-un director, ascunderea a 121 din 188 de firme pe baza unui
+  // comutator din bara de sus e stare invizibilă: omul vedea o listă scurtă și
+  // n-avea de unde ști de ce. Acum e un filtru ca oricare altul, pornit pe
+  // „toate"; `?segment=` din linkurile ghidurilor îl poate preselecta.
+  const segmentParam = searchParams.get('segment');
+  const [segmentFilter, setSegmentFilter] = useState<'toate' | 'rezidential' | 'comercial'>(
+    segmentParam === 'rezidential' || segmentParam === 'comercial' ? segmentParam : 'toate',
+  );
 
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') ?? '');
   const [county, setCounty] = useState(searchParams.get('judet') ?? '');
@@ -85,7 +91,9 @@ export default function CompanyListClient() {
       certification: certification || undefined,
       tag: selectedTags[0] || undefined,
     });
-    result = result.filter((c) => companyMatchesSegment(c, segment));
+    result = result.filter((c) =>
+      companyMatchesSegment(c, segmentFilter === 'toate' ? null : segmentFilter),
+    );
     if (searchQuery.trim()) {
       // Search covers name + oraș + județ — pe mobil oamenii tastează localitatea, nu numele firmei
       result = result.filter((c) =>
@@ -93,7 +101,7 @@ export default function CompanyListClient() {
       );
     }
     return sortCompanies(result, sortBy);
-  }, [allCompanies, segment, county, specialization, minCapacity, certification, selectedTags, sortBy, searchQuery]);
+  }, [allCompanies, segmentFilter, county, specialization, minCapacity, certification, selectedTags, sortBy, searchQuery]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const paginated = filtered.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
@@ -241,19 +249,33 @@ export default function CompanyListClient() {
 
   return (
     <>
-      {/* Segment context bar — lets visitors confirm/switch between Casă and Firmă */}
-      <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface border border-border rounded-xl px-4 py-3">
-        <p className="text-sm text-gray-600">
-          {segment === 'rezidential' ? (
-            <>Afișăm instalatori pentru <strong className="text-gray-900">casă</strong> (rezidențial)</>
-          ) : (
-            <>Afișăm instalatori pentru <strong className="text-gray-900">firmă</strong> (comercial / industrial)</>
-          )}
-        </p>
-        {/* Inline toggle on desktop; on mobile the floating toggle handles switching */}
-        <div className="hidden sm:block">
-          <SegmentToggle source="firme_bar" />
-        </div>
+      {/* Filtrul de segment. Înlocuiește bara „Afișăm instalatori pentru casă"
+          plus comutatorul, care schimbau o stare valabilă pe tot site-ul. */}
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+        <span className="text-sm text-gray-500 mr-1">Instalatori pentru:</span>
+        {([
+          { value: 'toate', label: 'Toate firmele' },
+          { value: 'rezidential', label: 'Casă' },
+          { value: 'comercial', label: 'Firmă' },
+        ] as const).map((opt) => (
+          <button
+            key={opt.value}
+            type="button"
+            onClick={() => {
+              setSegmentFilter(opt.value);
+              setPage(1);
+              trackEvent('filter_applied', { filter_type: 'segment', filter_value: opt.value });
+            }}
+            aria-pressed={segmentFilter === opt.value}
+            className={`text-sm font-medium rounded-full px-3.5 py-1.5 border transition-colors ${
+              segmentFilter === opt.value
+                ? 'bg-secondary text-white border-secondary'
+                : 'bg-white text-gray-600 border-border hover:border-secondary/40'
+            }`}
+          >
+            {opt.label}
+          </button>
+        ))}
       </div>
 
       {/* Search — always visible, never buried in filters */}

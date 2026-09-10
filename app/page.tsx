@@ -17,13 +17,12 @@ function getHeroImage(slug: string): string | null {
 }
 import FAQ from '@/components/seo/FAQ';
 import JsonLd from '@/components/seo/JsonLd';
-import HomeSegmentHero from '@/components/home/HomeSegmentHero';
-import HomeOfertaBand from '@/components/home/HomeOfertaBand';
+import HomeLeadHero from '@/components/home/HomeLeadHero';
 import CalculatorTabs from '@/components/home/CalculatorTabs';
 import { getKitPriceCurve } from '@/lib/kit-price-curve';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import PremiumPoolSection from '@/components/promo/PremiumPoolSection';
-import { getCompanies, getCoveredCounties, getPremiumCompanies, getCompaniesBySegment, getCompaniesByCounty, slugifyCounty } from '@/lib/utils';
+import { getCompanies, getCoveredCounties, getPremiumCompanies, getCompaniesByCounty, slugifyCounty } from '@/lib/utils';
 import {
   calendarAgeDays,
   cerereAgeLabel,
@@ -36,6 +35,7 @@ import { getPublicLeads, getLeadsSince, getClaims, type PublicLead } from '@/lib
 import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { PRICING } from '@/lib/pricing';
 import HomeFinantareCta from '@/components/home/HomeFinantareCta';
+import HomeInstalatoriCta from '@/components/home/HomeInstalatoriCta';
 import guidesData from '@/data/guides.json';
 
 // Teaser-ul de cereri vine din Google Sheets — regenerare la 5 minute, ca /cereri.
@@ -45,16 +45,6 @@ export const revalidate = 300;
 const COMPANY_COUNT = getCompanies().length;
 const COUNTY_COUNT = getCoveredCounties().length;
 const ANRE_COUNT = getCompanies().filter((c) => c.anreMatch !== null).length;
-function segmentStats(view: 'comercial' | 'rezidential') {
-  const list = getCompaniesBySegment(view);
-  return {
-    count: list.length,
-    anre: list.filter((c) => c.anreMatch !== null).length,
-    judete: new Set(list.map((c) => c.location.county)).size,
-  };
-}
-const COMERCIAL_STATS = segmentStats('comercial');
-const REZIDENTIAL_STATS = segmentStats('rezidential');
 
 // Lightweight client search index — firm name → page, county → judet page
 const FIRM_INDEX = getCompanies().map((c) => ({ name: c.name, slug: c.slug }));
@@ -166,14 +156,15 @@ export default async function HomePage() {
       <JsonLd data={generateOrganizationJsonLd()} />
       <JsonLd data={generateFAQJsonLd(homeFaqs)} />
 
-      {/* Hero — segment split (Casă vs Firmă) + fuzzy firm search */}
-      <HomeSegmentHero
-        comercialStats={COMERCIAL_STATS}
-        rezidentialStats={REZIDENTIAL_STATS}
+      {/* Hero — pasul 1 al formularului, direct în pagină. Vezi HomeLeadHero
+          pentru cifrele care au scos ușile „Casa mea / Firma mea" de aici. */}
+      <HomeLeadHero
         firms={FIRM_INDEX}
         counties={COUNTY_INDEX}
         topCounties={TOP_COUNTIES}
         activity={activity}
+        installerCount={COMPANY_COUNT}
+        anreCount={ANRE_COUNT}
       />
 
       {/* Sponsor. Prima oprire după hero, din 3 sept 2026. Înainte stătea deasupra
@@ -279,8 +270,105 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Cere Ofertă — buyer-facing CTA, segment-aware count */}
-      <HomeOfertaBand comercialCount={COMERCIAL_STATS.count} rezidentialCount={REZIDENTIAL_STATS.count} />
+      {/* Banda pentru instalatori, urcată aici pe 10 septembrie 2026. Înainte,
+          singurul lucru adresat firmelor stătea la finalul paginii („Listează-ți
+          firma gratuit"), iar /pentru-instalatori, pagina care chiar explică
+          înțelegerea, a primit 3 vizualizări în 30 de zile fiindcă nu ducea nimic
+          spre ea. Stă imediat sub cererile reale, fiindcă ăsta e argumentul: omul
+          tocmai a văzut cine cere oferte chiar acum.
+
+          Nu e o a doua pâlnie pusă peste cea de client: heroul și banda de cereri
+          vorbesc cu clientul, asta e o singură bandă, o singură dată. */}
+      <section className="max-w-7xl mx-auto px-4 py-10">
+        <div className="rounded-2xl border-2 border-primary/25 bg-primary/5 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+          <div>
+            <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider mb-1.5">
+              Pentru firme de instalare
+            </p>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+              Cererile ajung la firmele din județul lor
+            </h2>
+            <p className="text-gray-600 mt-1.5 text-sm leading-relaxed max-w-xl">
+              Vedeți cererile din județele dumneavoastră, le preluați pe cele care vă interesează și
+              vorbiți direct cu omul. Listarea, preluarea cererilor și portalul sunt gratuite.
+            </p>
+          </div>
+          <div className="shrink-0 flex flex-col items-start sm:items-end gap-2">
+            <HomeInstalatoriCta />
+            <Link
+              href="/listeaza-firma"
+              className="text-xs font-medium text-gray-500 hover:text-primary-dark transition-colors"
+            >
+              sau listați-vă firma direct &rarr;
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Companies — Premium pool when available, else promote ad packages */}
+      <section className="max-w-7xl mx-auto px-4 py-16">
+        {/* Două taburi în loc de două carduri stivuite. Curba de preț se
+            citește pe server, fișierul de scrape nu are ce căuta în bundle-ul
+            clientului. Widgetul de baterii primește linkul spre ghid, fiindcă aici
+            omul dă peste el fără să fi citit despre program. */}
+        <div className="mb-10">
+          <CalculatorTabs
+            priceCurve={getKitPriceCurve()}
+            batteryGuideHref="/ghid/casa-verde-baterii-2026-program-stocare-afm"
+          />
+        </div>
+
+        {hasPremium ? (
+          <>
+            <PremiumPoolSection
+              title="Instalatori de Panouri Fotovoltaice Recomandați"
+              subtitle="Firme partenere Premium — verificate cu atestat ANRE și experiență dovedită"
+            />
+            <div className="text-center">
+              <Link
+                href="/firme"
+                className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-primary transition-colors"
+              >
+                Vezi toate firmele &rarr;
+              </Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Instalatori de Panouri Fotovoltaice Recomandați</h2>
+              <p className="text-gray-500 mt-1">Firme verificate cu atestat ANRE și experiență dovedită</p>
+            </div>
+
+            <Link
+              href="/publicitate"
+              className="block rounded-xl border-2 border-primary/30 bg-primary/5 p-5 sm:p-6 hover:border-primary/50 hover:shadow-md transition-all group"
+            >
+              <div className="flex items-center justify-between gap-4 mb-2">
+                <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider">
+                  Promovează-ți firma pe platformă
+                </p>
+                <span className="text-xs text-primary-dark font-medium group-hover:underline hidden sm:inline">
+                  Vezi pachetele &rarr;
+                </span>
+              </div>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                Listare <strong>gratuită</strong> pentru instalatori. Pentru vizibilitate mai mare: Slot Popup <strong>{PRICING.popup.monthly}€</strong>, Premium <strong>{PRICING.premium.monthly}€</strong> (peste tot pe site) sau un studiu de caz colaborativ. Audiență 100% nișată B2B fotovoltaic.
+              </p>
+            </Link>
+
+            <div className="mt-6 text-center">
+              <Link
+                href="/firme"
+                className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-primary transition-colors"
+              >
+                Vezi toate firmele &rarr;
+              </Link>
+            </div>
+          </>
+        )}
+      </section>
+
 
       {/* Finanțare pentru firme. Stătea la 53% din pagină, după secțiunea „De ce",
           adică unde n-o găsea nimeni. Mutată aici pe 25 aug 2026, la ~20%, imediat
@@ -358,128 +446,55 @@ export default async function HomePage() {
       </section>
 
 
-      {/* Featured Companies — Premium pool when available, else promote ad packages */}
-      <section className="max-w-7xl mx-auto px-4 py-16">
-        {/* Două taburi în loc de două carduri stivuite. Curba de preț se
-            citește pe server, fișierul de scrape nu are ce căuta în bundle-ul
-            clientului. Widgetul de baterii primește linkul spre ghid, fiindcă aici
-            omul dă peste el fără să fi citit despre program. */}
-        <div className="mb-10">
-          <CalculatorTabs
-            priceCurve={getKitPriceCurve()}
-            batteryGuideHref="/ghid/casa-verde-baterii-2026-program-stocare-afm"
-          />
-        </div>
-
-        {hasPremium ? (
-          <>
-            <PremiumPoolSection
-              title="Instalatori de Panouri Fotovoltaice Recomandați"
-              subtitle="Firme partenere Premium — verificate cu atestat ANRE și experiență dovedită"
-            />
-            <div className="text-center">
-              <Link
-                href="/firme"
-                className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-primary transition-colors"
-              >
-                Vezi toate firmele &rarr;
-              </Link>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">Instalatori de Panouri Fotovoltaice Recomandați</h2>
-              <p className="text-gray-500 mt-1">Firme verificate cu atestat ANRE și experiență dovedită</p>
-            </div>
-
-            <Link
-              href="/publicitate"
-              className="block rounded-xl border-2 border-primary/30 bg-primary/5 p-5 sm:p-6 hover:border-primary/50 hover:shadow-md transition-all group"
-            >
-              <div className="flex items-center justify-between gap-4 mb-2">
-                <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider">
-                  Promovează-ți firma pe platformă
-                </p>
-                <span className="text-xs text-primary-dark font-medium group-hover:underline hidden sm:inline">
-                  Vezi pachetele &rarr;
-                </span>
-              </div>
-              <p className="text-sm text-gray-700 leading-relaxed">
-                Listare <strong>gratuită</strong> pentru instalatori. Pentru vizibilitate mai mare: Slot Popup <strong>{PRICING.popup.monthly}€</strong>, Premium <strong>{PRICING.premium.monthly}€</strong> (peste tot pe site) sau un studiu de caz colaborativ. Audiență 100% nișată B2B fotovoltaic.
-              </p>
-            </Link>
-
-            <div className="mt-6 text-center">
-              <Link
-                href="/firme"
-                className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-primary transition-colors"
-              >
-                Vezi toate firmele &rarr;
-              </Link>
-            </div>
-          </>
-        )}
-      </section>
-
-
-      {/* Why trust us + ANRE Verification */}
+      {/* Încredere + verificare ANRE, strâns pe 10 septembrie 2026 dintr-un bloc
+          pe două coloane (text lung, trei statistici, patru bife și un card mare)
+          într-o singură bandă. Bifele repetau ce scrie deja în hero și în fișele
+          de firmă; ce nu se găsea altundeva e verificatorul ANRE, care rămâne cu
+          buton propriu. */}
       <section className="bg-surface border-y border-border">
-        <div className="max-w-7xl mx-auto px-4 py-16">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left: text + stats */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                De ce instalatori-fotovoltaice.ro?
+        <div className="max-w-7xl mx-auto px-4 py-12">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12">
+            <div className="lg:flex-1">
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                Date verificate, nu liste copiate
               </h2>
-              <p className="text-gray-600 mb-6">
-                Cauți un <strong>instalator de panouri fotovoltaice</strong> pentru firma ta? Pe platforma noastră găsești <strong>{COMPANY_COUNT} de firme verificate</strong> cu date din registrele oficiale. Fiecare firmă are CUI verificat, certificări ANRE confirmate live din portal.anre.ro și date financiare publice.
+              <p className="text-gray-600 text-sm leading-relaxed max-w-xl">
+                Fiecare firmă are CUI verificat în registre publice, cifre financiare din
+                bilanțurile oficiale și atestatul ANRE confirmat live din portal.anre.ro, nu copiat
+                o dată și lăsat să se învechească.
               </p>
-
-              <div className="grid grid-cols-3 gap-4 mb-6">
+              <div className="grid grid-cols-3 gap-3 mt-6 max-w-md">
                 <div className="text-center p-3 rounded-lg bg-white border border-border">
                   <div className="text-2xl font-bold text-primary-dark">{COMPANY_COUNT}</div>
                   <div className="text-xs text-gray-500 mt-0.5">Firme verificate</div>
                 </div>
                 <div className="text-center p-3 rounded-lg bg-white border border-border">
                   <div className="text-2xl font-bold text-primary-dark">{ANRE_COUNT}</div>
-                  <div className="text-xs text-gray-500 mt-0.5">Cu ANRE C2A</div>
+                  <div className="text-xs text-gray-500 mt-0.5">Cu atestat ANRE</div>
                 </div>
                 <div className="text-center p-3 rounded-lg bg-white border border-border">
                   <div className="text-2xl font-bold text-primary-dark">{COUNTY_COUNT}</div>
                   <div className="text-xs text-gray-500 mt-0.5">Județe acoperite</div>
                 </div>
               </div>
-
-              <div className="space-y-2 text-sm text-gray-600">
-                <div className="flex items-center gap-2"><span className="text-green-600 font-bold">&#10003;</span> Atestat ANRE C2A verificat pe portal.anre.ro</div>
-                <div className="flex items-center gap-2"><span className="text-green-600 font-bold">&#10003;</span> Date financiare din registre publice oficiale</div>
-                <div className="flex items-center gap-2"><span className="text-green-600 font-bold">&#10003;</span> Acoperire în {COUNTY_COUNT} județe, filtrare după specializare</div>
-                <div className="flex items-center gap-2"><span className="text-green-600 font-bold">&#10003;</span> Ofertă gratuită direct pe platformă</div>
-              </div>
             </div>
 
-            {/* Right: ANRE Verification CTA card */}
-            <div className="bg-white rounded-2xl border border-border shadow-sm p-8 text-center">
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-primary-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Verificare Atestat ANRE</h3>
-              <p className="text-gray-500 mb-6 text-sm">
-                Verifică gratuit dacă un instalator are atestat ANRE valid. Caută după nume sau CUI și vezi certificările direct din registrul oficial.
+            <div className="lg:w-80 shrink-0 bg-white rounded-2xl border border-border shadow-sm p-6">
+              <h3 className="font-bold text-gray-900 mb-1.5">Verificare atestat ANRE</h3>
+              <p className="text-sm text-gray-500 mb-5 leading-relaxed">
+                Căutați o firmă după nume sau CUI și vedeți certificările direct din registrul
+                oficial. Gratuit, și pentru firme care nu sunt pe platformă.
               </p>
               <Link
                 href="/verificare-anre"
-                className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors"
               >
-                Verifică un instalator
+                Verificați un instalator
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
               </Link>
-              <p className="text-xs text-gray-400 mt-4">Date în timp real din portal.anre.ro</p>
+              <p className="text-xs text-gray-400 mt-3">Date în timp real din portal.anre.ro</p>
             </div>
           </div>
         </div>
@@ -548,31 +563,6 @@ export default async function HomePage() {
       {/* FAQ */}
       <section className="max-w-3xl mx-auto px-4 py-16">
         <FAQ items={homeFaqs} title="Întrebări Frecvente" />
-      </section>
-
-      {/* DOMINANT CTA — listează firma (single next-step for visitors who are companies) */}
-      <section className="bg-gradient-to-br from-primary/10 via-primary/5 to-white border-y border-primary/20">
-        <div className="max-w-7xl mx-auto px-4 py-16 sm:py-20 text-center">
-          <p className="text-sm font-semibold text-primary-dark uppercase tracking-wider mb-3">
-            Pentru firme de instalare
-          </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
-            Ești firmă de instalare fotovoltaică?
-          </h2>
-          <p className="text-base text-gray-600 mb-8 max-w-xl mx-auto">
-            Listează-ți firma gratuit și fii vizibil pentru managerii care caută instalatori autorizați ANRE în zona ta.
-          </p>
-          <Link
-            href="/listeaza-firma"
-            className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-base px-8 min-h-[52px] rounded-lg transition-colors shadow-sm"
-          >
-            Listează-ți Firma Gratuit
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </Link>
-          <p className="text-xs text-gray-500 mt-4">Fără carduri, fără contract — gata în 5 minute</p>
-        </div>
       </section>
 
     </>

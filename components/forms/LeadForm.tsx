@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
@@ -26,25 +26,11 @@ import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import LeadPhotoUpload from './LeadPhotoUpload';
 import { trackEvent } from '@/lib/analytics';
 import { getAttribution } from '@/lib/attribution';
-
-const commercialProjectTypes = [
-  { value: 'hala-industriala', label: 'Hală industrială' },
-  { value: 'cladire-birouri', label: 'Clădire de birouri' },
-  { value: 'parc-logistic', label: 'Parc logistic' },
-  { value: 'agricol', label: 'Agricol (fermă, seră, depozit)' },
-  { value: 'retail', label: 'Retail (magazin, centru comercial)' },
-  { value: 'hotel', label: 'Hotel / Pensiune' },
-  { value: 'institutie', label: 'Instituție publică' },
-  { value: 'altele', label: 'Altele' },
-];
-
-const residentialProjectTypes = [
-  { value: 'casa-individuala', label: 'Casă individuală' },
-  { value: 'vila', label: 'Vilă' },
-  { value: 'casa-vacanta', label: 'Casă de vacanță' },
-  { value: 'apartament', label: 'Apartament / bloc' },
-  { value: 'altele', label: 'Altele' },
-];
+import {
+  COMMERCIAL_PROJECT_TYPES,
+  RESIDENTIAL_PROJECT_TYPES,
+  segmentForProjectType,
+} from '@/lib/project-types';
 
 /** O firmă din director, strict cât îi trebuie formularului ca s-o dea la ales. */
 export interface FirmPick {
@@ -533,9 +519,8 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   const reportedFields = useRef(0);
 
   const counties = getCounties();
-  const { segment } = useSegment();
+  const { segment, setSegment } = useSegment();
   const isRezidential = segment === 'rezidential';
-  const projectTypes = isRezidential ? residentialProjectTypes : commercialProjectTypes;
   const roofTypes = isRezidential ? ROOF_TYPES_REZIDENTIAL : ROOF_TYPES_COMERCIAL;
   const retrofit = isRetrofit(details.tipLucrare);
   const financingTypes = isRezidential ? FINANCING_REZIDENTIAL : FINANCING_COMERCIAL;
@@ -611,11 +596,44 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
 
   function chooseProjectType(value: string) {
     markStarted();
+    // Segmentul vine din tipul ales, nu dintr-un comutator separat: de el atârnă
+    // tipurile de acoperiș, variantele de finanțare și potrivirea cu firmele.
+    const tipSegment = segmentForProjectType(value);
+    if (tipSegment && tipSegment !== segment) setSegment(tipSegment);
     setValues((v) => ({ ...v, tipProiect: value }));
     completeStep(0);
     setStep(1);
     scrollToForm();
   }
+
+  // Preselecția din heroul homepage-ului: `/cere-oferta?tip=casa-individuala`.
+  // Omul a răspuns deja la prima întrebare acolo, deci formularul se deschide la
+  // pasul de zonă. Nu folosim `chooseProjectType`: aia derulează pagina, ceea ce
+  // la montare ar smuci ecranul înainte ca omul să apuce să vadă unde a ajuns.
+  //
+  // `completeStep(0)` se trimite oricum: fără el, pașii din Umami s-ar citi ca și
+  // cum toți cei veniți din hero ar fi sărit primul pas, iar pâlnia n-ar mai fi
+  // comparabilă cu perioada dinaintea schimbării.
+  //
+  // Segmentul se aliniază la tip, nu invers. Un link cu `tip` rezidențial și un
+  // cookie rămas pe comercial ar da tipuri de acoperiș și finanțări de hală.
+  const prefilledRef = useRef(false);
+  useEffect(() => {
+    if (prefilledRef.current) return;
+    const tip = new URLSearchParams(window.location.search).get('tip');
+    if (!tip) return;
+    const tipSegment = segmentForProjectType(tip);
+    if (!tipSegment) return;
+    prefilledRef.current = true;
+    if (tipSegment !== segment) setSegment(tipSegment);
+    markStarted();
+    setValues((v) => ({ ...v, tipProiect: tip }));
+    completeStep(0);
+    setStep(1);
+    // Doar la montare: o schimbare ulterioară de segment vine de la om, iar
+    // rescrierea tipului i-ar șterge alegerea din formular.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -983,28 +1001,56 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
 
       <form ref={formRef} onSubmit={handleSubmit} noValidate className="space-y-4">
         {step === 0 && (
-          <div>
-            <p className="text-sm font-medium text-gray-700 mb-3">
-              {isRezidential ? 'Ce fel de locuință aveți?' : 'Ce fel de proiect aveți?'}
-            </p>
-            {/* Carduri, nu dropdown: un dropdown cere deschidere, scroll și
+          <div className="space-y-5">
+            {/* Ambele segmente pe același ecran, din 10 septembrie 2026. Înainte
+                lista depindea de un comutator Casă/Firmă din bara de sus, adică
+                un om cu hală vedea patru feluri de locuință și trebuia să ghicească
+                unde se schimbă. Alegerea de aici stabilește segmentul, iar
+                comutatorul a dispărut din tot site-ul.
+
+                Carduri, nu dropdown: un dropdown cere deschidere, scroll și
                 selecție, un card cere un tap și trece singur mai departe. */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {projectTypes.map((t) => (
-                <button
-                  key={t.value}
-                  type="button"
-                  onClick={() => chooseProjectType(t.value)}
-                  className={`text-left rounded-lg border px-4 py-3 text-sm font-medium transition-all min-h-[52px] ${
-                    values.tipProiect === t.value
-                      ? 'border-primary bg-primary/5 text-primary-dark'
-                      : 'border-gray-300 bg-white text-gray-900 hover:border-primary/50 hover:bg-primary/5'
-                  }`}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
+            {[
+              { titlu: 'Pentru casă', tipuri: RESIDENTIAL_PROJECT_TYPES.filter((t) => t.value !== 'altele') },
+              { titlu: 'Pentru firmă', tipuri: COMMERCIAL_PROJECT_TYPES.filter((t) => t.value !== 'altele') },
+            ].map((grup) => (
+              <div key={grup.titlu}>
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">
+                  {grup.titlu}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {grup.tipuri.map((t) => (
+                    <button
+                      key={t.value}
+                      type="button"
+                      onClick={() => chooseProjectType(t.value)}
+                      className={`text-left rounded-lg border px-4 py-3 text-sm font-medium transition-all min-h-[52px] ${
+                        values.tipProiect === t.value
+                          ? 'border-primary bg-primary/5 text-primary-dark'
+                          : 'border-gray-300 bg-white text-gray-900 hover:border-primary/50 hover:bg-primary/5'
+                      }`}
+                    >
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+
+            {/* `altele` are aceeași valoare în ambele liste, deci nu poate spune
+                singur ce segment e. Rămâne pe cel curent, iar restul întrebărilor
+                sunt oricum comune. */}
+            <button
+              type="button"
+              onClick={() => chooseProjectType('altele')}
+              className={`w-full text-left rounded-lg border px-4 py-3 text-sm font-medium transition-all min-h-[52px] ${
+                values.tipProiect === 'altele'
+                  ? 'border-primary bg-primary/5 text-primary-dark'
+                  : 'border-gray-300 bg-white text-gray-600 hover:border-primary/50 hover:bg-primary/5'
+              }`}
+            >
+              Altceva
+            </button>
           </div>
         )}
 
@@ -1220,8 +1266,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
         {/* Pe telefon butonul rămâne lipit de baza ecranului cât timp formularul
             e în viewport; gradientul maschează câmpurile care trec pe sub el.
             Marginile negative îl întind până la rama cardului părinte (p-5 pe
-            /despre, p-6 aici). Pilula Casă/Firmă e scoasă de pe aceste pagini,
-            vezi HIDE_ON în FloatingSegmentToggle.
+            /despre, p-6 aici).
             Pasul 0 n-are buton: cardurile avansează singure. */}
         {step > 0 && (
           <div className="max-md:sticky max-md:bottom-0 max-md:z-30 max-md:-mx-5 max-md:-mb-5 max-md:px-5 max-md:pt-3 max-md:pb-[max(1.25rem,env(safe-area-inset-bottom))] max-md:bg-linear-to-t from-white via-white/95 to-transparent">

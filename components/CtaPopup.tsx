@@ -25,7 +25,12 @@ export default function CtaPopup() {
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
 
-  const hiddenHere = HIDE_ON.some((p) => pathname.startsWith(p));
+  // Homepage-ul se compară exact, nu cu startsWith: „/" ar prefixa tot site-ul.
+  // Din 10 septembrie 2026 heroul de acolo conține primul pas al formularului,
+  // deci popupul ar repeta aceeași ofertă la 30 cm sub ea și, pe desktop, ar
+  // acoperi pastilele de județ. Pe restul paginilor rămâne: acolo chiar e
+  // singurul îndemn vizibil fără derulare.
+  const hiddenHere = pathname === '/' || HIDE_ON.some((p) => pathname.startsWith(p));
 
   useEffect(() => {
     if (hiddenHere) return;

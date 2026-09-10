@@ -4,7 +4,6 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Company } from '@/lib/utils';
-import { useSegment } from '@/components/segment/SegmentProvider';
 import { PV_RELEVANT_CODES, type PvRelevantCode } from '@/lib/anre-shared';
 
 interface Row {
@@ -54,7 +53,6 @@ function SortArrow({ active, dir }: { active: boolean; dir: SortDir }) {
 }
 
 export default function ClasamentTable({ rows, counties, showFilters = true, limit }: Props) {
-  const { segment } = useSegment();
   const [sortKey, setSortKey] = useState<SortKey>('revenue');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
   const [selectedCounty, setSelectedCounty] = useState<string>('');
@@ -81,11 +79,12 @@ export default function ClasamentTable({ rows, counties, showFilters = true, lim
   };
 
   const filtered = useMemo(() => {
-    // Respect the Casă/Firmă segment toggle. Legacy rows (no segment) count as commercial.
-    let out = rows.filter((r) => {
-      const s = r.segment || 'comercial';
-      return s === 'ambele' || s === segment;
-    });
+    // Clasamentul arată toate firmele din 10 septembrie 2026. Până atunci filtra
+    // după comutatorul global Casă/Firmă, care a fost scos: un clasament după
+    // cifra de afaceri care ascunde jumătate din firme pe baza unei stări
+    // nevăzute e mai degrabă derutant decât util. Filtrele vizibile (județ,
+    // certificări, cifră minimă) rămân.
+    let out = rows;
     if (selectedCounty) {
       out = out.filter((r) => r.county === selectedCounty);
     }
@@ -101,7 +100,7 @@ export default function ClasamentTable({ rows, counties, showFilters = true, lim
       });
     }
     return out;
-  }, [rows, segment, selectedCounty, minRevenue, activeCertFilters]);
+  }, [rows, selectedCounty, minRevenue, activeCertFilters]);
 
   const sorted = useMemo(() => {
     const copy = [...filtered];

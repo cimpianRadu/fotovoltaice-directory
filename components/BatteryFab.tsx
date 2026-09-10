@@ -5,8 +5,9 @@
 //
 //   desktop → pastilă verticală pe marginea din dreapta. Jos e ocupat: stânga
 //             CtaPopup (380px), dreapta PartnerCarousel (320px).
-//   mobil   → bandă lipită sub header. Jos-centru e FloatingSegmentToggle, iar
-//             un buton rotund fără text nu spunea ce e dincolo de el.
+//   mobil   → bandă lipită sub header. Un buton rotund fără text nu spunea ce
+//             e dincolo de el, iar jos-centru stătea pe atunci comutatorul
+//             Casă/Firmă (scos din site pe 10 septembrie 2026).
 //
 // Banda de pe mobil e `sticky`, montată în flux imediat sub header, nu `fixed`:
 // una `fixed` acoperea permanent vreo 60px de text. Așa ocupă spațiu real când e

@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import LeadForm, { type FirmPick } from '@/components/forms/LeadForm';
-import SegmentNotice from './SegmentNotice';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 import companiesData from '@/data/companies.json';
@@ -60,8 +59,6 @@ export default async function CereOfertaPage({
             Completează formularul o dată, iar cererea ta ajunge la instalatorii verificați din zona ta, pentru casă sau pentru firmă. Gratuit și fără obligații.
           </p>
         </div>
-
-        <SegmentNotice />
 
         {preselected && (
           <div className="mb-4 rounded-lg bg-primary/5 border border-primary/20 px-4 py-3 text-sm text-gray-700">

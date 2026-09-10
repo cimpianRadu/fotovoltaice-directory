@@ -28,6 +28,14 @@ type EventName =
   | 'segment_selected'
   | 'hero_search_select'
   | 'hero_pill_click'
+  // Cardurile de tip proiect din heroul homepage-ului (10 sept 2026). Ele au
+  // luat locul celor două „uși", care în 30 de zile au dat 27 de clickuri și
+  // zero cereri atribuite homepage-ului. `tip` spune ce a ales omul, deci se
+  // poate vedea și dacă rândul comercial merită să rămână în hero.
+  | 'home_hero_project_pick'
+  // Banda „Ești instalator?" care duce la /pentru-instalatori. Pagina aia a
+  // primit 3 vizualizări în 30 de zile fiindcă nu o găsea nimeni din homepage.
+  | 'pentru_instalatori_click'
   | 'cere_oferta_click'
   // Butonul din blocul „Pentru firme" de pe homepage. Secțiunea a fost urcată la
   // ~20% din pagină pe 25 aug 2026 tocmai ca să fie văzută, dar până acum nu avea

@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import SegmentToggle from '@/components/segment/SegmentToggle';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import { trackEvent } from '@/lib/analytics';
 
@@ -88,7 +87,6 @@ export default function Header() {
         {/* Desktop nav */}
         {/* Desktop nav de la lg în sus — linkuri + toggle + CTA nu încap sub 1024px */}
         <nav className="hidden lg:flex items-center gap-2.5 xl:gap-3 min-[1440px]:gap-5">
-          <SegmentToggle source="nav" />
           {primaryLinks.map((link) =>
             link.badge ? (
               // Bordură neutră, ca structură, iar singurul accent de culoare e
@@ -210,10 +208,6 @@ export default function Header() {
       {/* Mobile nav overlay — always in DOM for SEO, toggled with CSS */}
       <div className={`lg:hidden border-t border-border bg-white ${mobileOpen ? 'block' : 'hidden'}`}>
         <nav className="flex flex-col p-4 gap-1">
-          <div className="px-1 pb-3 mb-2 border-b border-border">
-            <p className="text-xs font-semibold text-gray-400 mb-2">Caut panouri pentru:</p>
-            <SegmentToggle source="nav_mobile" />
-          </div>
           {primaryLinks.map((link) => (
             <Link
               key={link.href}

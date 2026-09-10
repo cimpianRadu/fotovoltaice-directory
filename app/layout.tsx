@@ -5,7 +5,6 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import PartnerCarousel from '@/components/promo/PartnerCarousel';
 import { SegmentProvider } from '@/components/segment/SegmentProvider';
-import FloatingSegmentToggle from '@/components/segment/FloatingSegmentToggle';
 import CtaPopup from '@/components/CtaPopup';
 import BatteryFab from '@/components/BatteryFab';
 import AttributionCapture from '@/components/AttributionCapture';
@@ -90,7 +89,6 @@ export default function RootLayout({
           <PublicChrome>
             <Footer />
             <PartnerCarousel />
-            <FloatingSegmentToggle />
             <CtaPopup />
           </PublicChrome>
         </SegmentProvider>
