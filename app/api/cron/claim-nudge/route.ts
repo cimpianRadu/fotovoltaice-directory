@@ -205,7 +205,11 @@ async function announceUnlockedLeads(
           judet: lead.judet,
           tipProiectLabel: getProjectTypeLabel(lead.tipProiect),
           segment: lead.segment,
-          tipLucrareLabel: isRetrofit(lead.tipLucrare) ? getWorkTypeShort(lead.tipLucrare) : '',
+          tipLucrareLabel:
+            lead.tipLucrare && lead.tipLucrare !== 'sistem-nou'
+              ? getWorkTypeShort(lead.tipLucrare)
+              : '',
+          retrofit: isRetrofit(lead.tipLucrare),
           putere: lead.putere,
           consumLunar: lead.consumLunar,
           acoperisLabel: lead.tipAcoperis ? getRoofTypeLabel(lead.tipAcoperis) : '',

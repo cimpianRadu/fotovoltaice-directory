@@ -333,6 +333,11 @@ export const WORK_TYPES = [
   { value: 'sistem-nou', label: 'Sistem fotovoltaic nou (panouri + invertor)' },
   { value: 'doar-baterie', label: 'Doar baterie de stocare (am deja panouri)' },
   { value: 'extindere', label: 'Extindere sau modernizare a unui sistem existent' },
+  // Sept 2026: al doilea om în două zile care scrisese în mesajul liber că are
+  // deja invertorul și panourile cumpărate și caută doar pe cineva să i le
+  // monteze. Nu e retrofit (sistemul nu există încă, deci puterea declarată e a
+  // cererii), dar schimbă complet oferta: firma vinde manoperă, nu marfă.
+  { value: 'doar-montaj', label: 'Am deja echipamentele, vreau doar montajul' },
 ] as const;
 
 /** Eticheta scurtă, pentru cardul din /cereri unde spațiul e puțin. */
@@ -340,6 +345,7 @@ const WORK_TYPE_SHORT: Record<string, string> = {
   'sistem-nou': 'Sistem nou',
   'doar-baterie': 'Doar baterie',
   extindere: 'Extindere sistem',
+  'doar-montaj': 'Doar montaj',
 };
 
 export function getWorkTypeLabel(slug: string): string {
@@ -353,6 +359,16 @@ export function getWorkTypeShort(slug: string): string {
 /** Lucrările pe un sistem care există deja: puterea declarată e a lui, nu a cererii. */
 export function isRetrofit(tipLucrare: string): boolean {
   return tipLucrare === 'doar-baterie' || tipLucrare === 'extindere';
+}
+
+/**
+ * Clientul a cumpărat deja echipamentele și cere doar manoperă. Se citește ca
+ * badge pe /cereri, nu ca rând de detaliu: e primul lucru pe care o firmă
+ * trebuie să-l vadă înainte să revendice, fiindcă din cerere lipsește exact
+ * partea pe care mulți instalatori își fac marja.
+ */
+export function isDoarMontaj(tipLucrare: string): boolean {
+  return tipLucrare === 'doar-montaj';
 }
 
 export const TIMELINE_OPTIONS = [

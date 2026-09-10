@@ -6,7 +6,7 @@ import Button from '@/components/ui/Button';
 import { trackEvent } from '@/lib/analytics';
 import { MAX_ACTIVE_CLAIMS_PER_FIRM } from '@/lib/sheets-shared';
 import { getAttribution } from '@/lib/attribution';
-import { FIRM_SOURCE_OPTIONS } from '@/lib/utils-shared';
+import { FIRM_SOURCE_OPTIONS, isDoarMontaj } from '@/lib/utils-shared';
 import type { FinancingTone } from '@/lib/utils-shared';
 
 export interface LeadCardData {
@@ -120,6 +120,14 @@ const ICON_POZE = (
   </BadgeIcon>
 );
 
+// Cheia franceză: manoperă. Nu un panou și nu o casă, ca să nu se confunde cu
+// badge-ul de segment de lângă el.
+const ICON_MONTAJ = (
+  <BadgeIcon>
+    <path d="M15.5 3.5a5 5 0 0 0-6.4 6.4L3.6 15.4a2 2 0 0 0 2.8 2.8l5.5-5.5a5 5 0 0 0 6.4-6.4l-3 3-2.8-2.8z" />
+  </BadgeIcon>
+);
+
 function Badge({
   icon,
   tone,
@@ -134,7 +142,7 @@ function Badge({
   return (
     <span
       title={title}
-      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold ${tone}`}
+      className={`inline-flex items-center gap-1 whitespace-nowrap px-2 py-0.5 rounded-full text-[11px] font-semibold ${tone}`}
     >
       {icon}
       {children}
@@ -246,7 +254,7 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
   const specs = [
     // Prima: schimbă înțelesul restului (puterea e a sistemului existent, nu a
     // cererii). Badge-ul e rezervat lucrurilor care se citesc dintr-o privire.
-    lead.tipLucrare && lead.tipLucrare !== 'sistem-nou'
+    lead.tipLucrare && lead.tipLucrare !== 'sistem-nou' && !isDoarMontaj(lead.tipLucrare)
       ? { label: 'Lucrare', value: lead.tipLucrareLabel }
       : null,
     lead.acoperisLabel ? { label: 'Acoperiș', value: lead.acoperisLabel } : null,
@@ -273,14 +281,28 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
           Cererea selectată
         </p>
       )}
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-1.5">
+      <div className="flex items-start justify-between gap-2">
+        {/* Trei badge-uri (segment + poze + montaj) nu încap pe un rând într-o
+            coloană de grilă: se rup pe rânduri întregi, nu pe cuvinte. */}
+        <div className="flex flex-wrap items-center gap-1.5">
           <SegmentBadge segment={lead.segment} />
           {/* Pozele în sine nu sunt publice — badge-ul semnalează doar că firma
               care revendică le primește, ceea ce face cererea mai valoroasă. */}
           {lead.arePoze && (
             <Badge icon={ICON_POZE} tone="bg-sky-50 text-sky-700">
               Cu poze
+            </Badge>
+          )}
+          {/* Cererea din care lipsește marfa. O firmă care ofertează kit + montaj
+              trebuie să vadă asta înainte să consume o revendicare, nu după ce
+              sună clientul. */}
+          {isDoarMontaj(lead.tipLucrare) && (
+            <Badge
+              icon={ICON_MONTAJ}
+              tone="bg-violet-50 text-violet-700"
+              title="Clientul are deja panourile și invertorul. Cere doar manopera."
+            >
+              Doar montaj
             </Badge>
           )}
           {/* Amber, nu verde: verdele e deja luat de segment, iar ăsta trebuie
@@ -295,7 +317,7 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
             </Badge>
           )}
         </div>
-        <span className="text-xs text-gray-400">{lead.postedLabel}</span>
+        <span className="shrink-0 text-xs text-gray-400">{lead.postedLabel}</span>
       </div>
 
       <h3 className="mt-3 font-semibold text-gray-900">{lead.tipLabel}</h3>

@@ -193,13 +193,14 @@ async function notifyCountyAlerts(body: Record<string, string>, leadId: string) 
 
   const judet = (body.judet || '').trim();
   const finantare = (body.finantare || '').trim();
+  const tipLucrare = (body.tipLucrare || '').trim();
   const payload = {
     judet,
     tipProiectLabel: getProjectTypeLabel((body.tipProiect || '').trim()),
     segment: (body.segment || '').trim(),
-    tipLucrareLabel: isRetrofit((body.tipLucrare || '').trim())
-      ? getWorkTypeShort((body.tipLucrare || '').trim())
-      : '',
+    tipLucrareLabel:
+      tipLucrare && tipLucrare !== 'sistem-nou' ? getWorkTypeShort(tipLucrare) : '',
+    retrofit: isRetrofit(tipLucrare),
     putere: (body.putere || '').trim(),
     consumLunar: (body.consumLunar || '').trim(),
     acoperisLabel: body.tipAcoperis ? getRoofTypeLabel(body.tipAcoperis.trim()) : '',
