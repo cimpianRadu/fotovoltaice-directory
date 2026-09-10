@@ -1,0 +1,1182 @@
+[
+ {
+  "cui": "43071927",
+  "name": "DATCOM FIT SOLUTIONS S.R.L.",
+  "anreName": "DATCOM FIT SOLUTIONS",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 5",
+  "web": null,
+  "tel": "0723160123 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "21/09/2020",
+  "status": "functiune",
+  "address": "Municipiul Bucuresti, Sector 5, Str Iancu Jianu, Nr.70, Parter. Camera 2, Bl.m203, Sc.1, Ap.3",
+  "founded": 2020,
+  "caen": "8009 - Alte activitati de protectie n.c.a.",
+  "revenue": 1940861,
+  "profit": 260343,
+  "employees": 7,
+  "finYear": 2025,
+  "hist": [
+   {
+    "y": 2025,
+    "ca": 1940861,
+    "p": 260343,
+    "e": 7
+   },
+   {
+    "y": 2024,
+    "ca": 890063,
+    "p": -467578,
+    "e": 7
+   },
+   {
+    "y": 2023,
+    "ca": 2314610,
+    "p": 760499,
+    "e": 5
+   },
+   {
+    "y": 2022,
+    "ca": 1034719,
+    "p": -22426,
+    "e": 5
+   },
+   {
+    "y": 2021,
+    "ca": 216085,
+    "p": 59496,
+    "e": 0
+   }
+  ]
+ },
+ {
+  "cui": "25188784",
+  "name": "ROENER ENERGYPRO SRL",
+  "anreName": "ROENER ENERGYPRO",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 3",
+  "web": null,
+  "tel": "0213106602: 0727033755 0213106603",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "25/02/2009",
+  "status": "functiune",
+  "address": "Municipiul Bucuresti, Sector 3, Bld Decebal, Nr.7, Bl.s12, Sc.1, Et.4, Ap.10",
+  "founded": 2009,
+  "caen": "7112 - Activitati de inginerie si consultanta tehnica legate de acestea",
+  "revenue": 7811818,
+  "profit": 755727,
+  "employees": 9,
+  "finYear": 2025,
+  "hist": [
+   {
+    "y": 2025,
+    "ca": 7811818,
+    "p": 755727,
+    "e": 9
+   },
+   {
+    "y": 2024,
+    "ca": 7759511,
+    "p": 803497,
+    "e": 10
+   },
+   {
+    "y": 2023,
+    "ca": 51954989,
+    "p": 18016232,
+    "e": 9
+   },
+   {
+    "y": 2022,
+    "ca": 4710300,
+    "p": 31359,
+    "e": 8
+   },
+   {
+    "y": 2021,
+    "ca": 3468446,
+    "p": 1293082,
+    "e": 8
+   }
+  ]
+ },
+ {
+  "cui": "38091073",
+  "name": "MARIBAL EMEA S.R.L.",
+  "anreName": "MARIBAL EMEA",
+  "judet": "Ilfov",
+  "localitate": "Sat Petreşti, Comuna Corbeanca",
+  "web": null,
+  "tel": "0722222104 ",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "28/12/2018",
+  "status": "functiune",
+  "address": "Municipiul Bucuresti, Sector 2, Str Irimicului, Nr.3, Camera Nr. 2, Bl.3, Sc.2, Et.3, Ap.39",
+  "founded": 2017,
+  "caen": "6210 - Activitati de realizare a soft-ului la comanda (software orientat client)",
+  "revenue": 5347247,
+  "profit": 792193,
+  "employees": 4,
+  "finYear": 2025,
+  "hist": [
+   {
+    "y": 2025,
+    "ca": 5347247,
+    "p": 792193,
+    "e": 4
+   },
+   {
+    "y": 2024,
+    "ca": 3636850,
+    "p": 796213,
+    "e": 4
+   },
+   {
+    "y": 2023,
+    "ca": 2078853,
+    "p": 452681,
+    "e": 3
+   },
+   {
+    "y": 2022,
+    "ca": 2433215,
+    "p": 299315,
+    "e": 1
+   },
+   {
+    "y": 2021,
+    "ca": 302345,
+    "p": -142010,
+    "e": 1
+   }
+  ]
+ },
+ {
+  "cui": "34415622",
+  "name": "AURORA POWER S.R.L.",
+  "anreName": "AURORA POWER",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 2",
+  "web": null,
+  "tel": "0774041288, 0745302391 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "24/04/2015",
+  "status": "functiune",
+  "address": "Municipiul Bucuresti, Sector 2, Str. Tugomir Voievod, Nr.19, Mansarda",
+  "founded": 2015,
+  "caen": "4321 - Lucrari de instalatii electrice",
+  "revenue": 1951954,
+  "profit": -186031,
+  "employees": 4,
+  "finYear": 2025,
+  "hist": [
+   {
+    "y": 2025,
+    "ca": 1951954,
+    "p": -186031,
+    "e": 4
+   },
+   {
+    "y": 2024,
+    "ca": 2654053,
+    "p": 260507,
+    "e": 6
+   },
+   {
+    "y": 2023,
+    "ca": 843549,
+    "p": 1265,
+    "e": 6
+   },
+   {
+    "y": 2022,
+    "ca": 104035,
+    "p": -32707,
+    "e": 4
+   },
+   {
+    "y": 2021,
+    "ca": 150070,
+    "p": -15200,
+    "e": 0
+   }
+  ]
+ },
+ {
+  "cui": "43343452",
+  "name": "ECM (ELECTROCONS) SERVICES S.R.L.",
+  "anreName": "ECM (ELECTROCONS) SERVICES",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 2",
+  "web": null,
+  "tel": "0722835268 ",
+  "tarife": [
+   "Tarif C2A",
+   "Tarif Bp"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "17/11/2020",
+  "status": "functiune",
+  "address": "Municipiul Bucuresti, Sector 2, Str. Ciocarliei, Nr.22, Camera 1, Bl.d29, Sc.a, Et.6, Ap.27",
+  "founded": 2020,
+  "caen": "4321 - Lucrari de instalatii electrice",
+  "revenue": 1282994,
+  "profit": 209613,
+  "employees": 4,
+  "finYear": 2022,
+  "hist": [
+   {
+    "y": 2022,
+    "ca": 1282994,
+    "p": 209613,
+    "e": 4
+   },
+   {
+    "y": 2021,
+    "ca": 1010108,
+    "p": 181754,
+    "e": 4
+   }
+  ]
+ },
+ {
+  "cui": "30392933",
+  "name": "SMART DESIGN & SECURITY SRL",
+  "anreName": "SMART DESIGN & SECURITY",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 5",
+  "web": null,
+  "tel": "0728883884 ",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "04/07/2012",
+  "status": "functiune",
+  "address": "Municipiul Bucuresti, Sector 5, Str Sg. Maj. Ion Nedeleanu, Nr.10, Cam. 1, Bl.p60, Sc.2, Et.6, Ap.53",
+  "founded": 2012,
+  "caen": "4321 - Lucrari de instalatii electrice",
+  "revenue": 1215935,
+  "profit": 79565,
+  "employees": 3,
+  "finYear": 2023,
+  "hist": [
+   {
+    "y": 2023,
+    "ca": 1215935,
+    "p": 79565,
+    "e": 3
+   },
+   {
+    "y": 2022,
+    "ca": 473756,
+    "p": 67485,
+    "e": 2
+   },
+   {
+    "y": 2021,
+    "ca": 618842,
+    "p": 38270,
+    "e": 2
+   },
+   {
+    "y": 2020,
+    "ca": 521918,
+    "p": 44126,
+    "e": 3
+   },
+   {
+    "y": 2019,
+    "ca": 464148,
+    "p": 30096,
+    "e": 3
+   }
+  ]
+ },
+ {
+  "cui": "38475309",
+  "name": "VOLTRA S.R.L.",
+  "anreName": "VOLTRA",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 5",
+  "web": null,
+  "tel": "0785500700 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "13/11/2017",
+  "status": "functiune",
+  "address": "Municipiul Bucuresti, Sector 5, Str. Brebenei, Nr.20, Parter",
+  "founded": 2017,
+  "caen": "4321 - Lucrari de instalatii electrice",
+  "revenue": 2118440,
+  "profit": 1163174,
+  "employees": 1,
+  "finYear": 2025,
+  "hist": [
+   {
+    "y": 2025,
+    "ca": 2118440,
+    "p": 1163174,
+    "e": 1
+   },
+   {
+    "y": 2024,
+    "ca": 1335550,
+    "p": 104611,
+    "e": 1
+   },
+   {
+    "y": 2023,
+    "ca": 2476461,
+    "p": 679770,
+    "e": 2
+   },
+   {
+    "y": 2022,
+    "ca": 2268742,
+    "p": 66987,
+    "e": 2
+   },
+   {
+    "y": 2021,
+    "ca": 85927,
+    "p": 51209,
+    "e": 1
+   }
+  ]
+ },
+ {
+  "cui": "17412685",
+  "name": "ELBI ELECTRIC & LIGHTING SRL",
+  "anreName": "ELBI ELECTRIC & LIGHTING",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 6",
+  "web": null,
+  "tel": "0751789874 ",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "28/03/2005",
+  "status": "functiune",
+  "address": "Jud. Ilfov, Com. Chiajna, Str Italia, Nr.1-7, P3. Bucharest A1 Logistic Park. Depozitul 3",
+  "founded": 2005,
+  "caen": "4643 - Comert cu ridicata al aparatelor electrice de uz gospodaresc, al aparatelor de radio si televizoarelor",
+  "revenue": 468919358,
+  "profit": 3723804,
+  "employees": 286,
+  "finYear": 2025,
+  "hist": [
+   {
+    "y": 2025,
+    "ca": 468919358,
+    "p": 3723804,
+    "e": 286
+   },
+   {
+    "y": 2024,
+    "ca": 398015302,
+    "p": 4255161,
+    "e": 270
+   },
+   {
+    "y": 2023,
+    "ca": 384305564,
+    "p": 12525881,
+    "e": 237
+   },
+   {
+    "y": 2022,
+    "ca": 348851325,
+    "p": 14848060,
+    "e": 153
+   },
+   {
+    "y": 2021,
+    "ca": 301136561,
+    "p": -12903098,
+    "e": 142
+   }
+  ]
+ },
+ {
+  "cui": "46218918",
+  "name": "ALTERNATIVE HOME ENERGY S.R.L.",
+  "anreName": "ALTERNATIVE HOME ENERGY ",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 1",
+  "web": null,
+  "tel": "0722449229 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "30/05/2022",
+  "status": "functiune",
+  "address": "Municipiul Bucuresti, Sector 1, Sos Bucuresti-Targoviste, Nr.11a, In Spatiul Cu Suprafata De 67.96 Mp",
+  "founded": 2022,
+  "caen": "4321 - Lucrari de instalatii electrice",
+  "revenue": 11326469,
+  "profit": 1315753,
+  "employees": 10,
+  "finYear": 2025,
+  "hist": [
+   {
+    "y": 2025,
+    "ca": 11326469,
+    "p": 1315753,
+    "e": 10
+   },
+   {
+    "y": 2024,
+    "ca": 5341011,
+    "p": 741681,
+    "e": 14
+   },
+   {
+    "y": 2023,
+    "ca": 3912962,
+    "p": 464075,
+    "e": 7
+   },
+   {
+    "y": 2022,
+    "ca": 1000133,
+    "p": 84449,
+    "e": 4
+   }
+  ],
+  "websites": [
+   "https://alternative-energy.ro/"
+  ]
+ },
+ {
+  "cui": "34646350",
+  "name": "VOLTECH INSTAL SRL",
+  "anreName": "VOLTECH INSTAL",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 5",
+  "web": null,
+  "tel": "0757116212 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "12/06/2015",
+  "status": "functiune",
+  "address": "Municipiul Bucuresti, Sector 5, B-dul Mihail Kogalniceanu, Nr.35, Sc.a, Et.4, Ap.27",
+  "founded": 2015,
+  "caen": "4322 - Lucrari de instalatii sanitare, de incalzire si de aer conditionat",
+  "revenue": 576591,
+  "profit": 44506,
+  "employees": 1,
+  "finYear": 2025,
+  "hist": [
+   {
+    "y": 2025,
+    "ca": 576591,
+    "p": 44506,
+    "e": 1
+   },
+   {
+    "y": 2024,
+    "ca": 93053,
+    "p": 1865,
+    "e": 1
+   },
+   {
+    "y": 2023,
+    "ca": 4669198,
+    "p": 2008289,
+    "e": 1
+   },
+   {
+    "y": 2022,
+    "ca": 4112025,
+    "p": 527322,
+    "e": 1
+   },
+   {
+    "y": 2021,
+    "ca": 402523,
+    "p": 382717,
+    "e": 1
+   }
+  ]
+ },
+ {
+  "cui": "27242880",
+  "name": "PAVILION INTERMED S.R.L.",
+  "anreName": "PAVILION INTERMED",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 1",
+  "web": null,
+  "tel": "0730860670 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "09/04/2019",
+  "status": "functiune",
+  "address": "Municipiul Bucuresti, Sector 1, Str Radu Boiangiu, Nr.8, Camera 1, Bl.38, Sc.c, Et.parter, Ap.92",
+  "founded": 2010,
+  "caen": "4321 - Lucrari de instalatii electrice",
+  "revenue": 11682303,
+  "profit": 200110,
+  "employees": 3,
+  "finYear": 2025,
+  "hist": [
+   {
+    "y": 2025,
+    "ca": 11682303,
+    "p": 200110,
+    "e": 3
+   },
+   {
+    "y": 2024,
+    "ca": 2780928,
+    "p": 407772,
+    "e": 1
+   },
+   {
+    "y": 2023,
+    "ca": 65429,
+    "p": 39624,
+    "e": 1
+   },
+   {
+    "y": 2022,
+    "ca": 80757,
+    "p": 3798,
+    "e": 1
+   },
+   {
+    "y": 2021,
+    "ca": 429930,
+    "p": 2891,
+    "e": 1
+   }
+  ]
+ },
+ {
+  "cui": "18421606",
+  "name": "RADACINI ENERGY S.R.L.",
+  "anreName": "RADACINI ENERGY",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 6",
+  "web": null,
+  "tel": "0742103960 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "07/09/2011",
+  "status": "functiune",
+  "address": "Municipiul Bucuresti, Sector 6, Bld Iuliu Maniu, Nr.246, Camera 311, Bl.central, Et.3",
+  "founded": 2006,
+  "caen": "9531 - Repararea si intretinerea autovehiculelor",
+  "revenue": 7450906,
+  "profit": 1628919,
+  "employees": 3,
+  "finYear": 2025,
+  "hist": [
+   {
+    "y": 2025,
+    "ca": 7450906,
+    "p": 1628919,
+    "e": 3
+   },
+   {
+    "y": 2024,
+    "ca": 1765362,
+    "p": 78823,
+    "e": 4
+   },
+   {
+    "y": 2023,
+    "ca": 2125305,
+    "p": 252158,
+    "e": 2
+   },
+   {
+    "y": 2022,
+    "ca": 571036,
+    "p": 109063,
+    "e": 1
+   },
+   {
+    "y": 2021,
+    "ca": 940604,
+    "p": 101955,
+    "e": 4
+   }
+  ]
+ },
+ {
+  "cui": "48865325",
+  "name": "NICOM SMART BUSINESS S.R.L.",
+  "anreName": "NICOM SMART BUSINESS",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 3",
+  "web": null,
+  "tel": "0766550911 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "29/09/2023",
+  "status": "functiune",
+  "address": "Municipiul Bucuresti, Sector 3, Str. Drumeagului, Nr.19",
+  "founded": 2023,
+  "caen": "4321 - Lucrari de instalatii electrice",
+  "revenue": 870585,
+  "profit": 30519,
+  "employees": 1,
+  "finYear": 2025,
+  "hist": [
+   {
+    "y": 2025,
+    "ca": 870585,
+    "p": 30519,
+    "e": 1
+   },
+   {
+    "y": 2024,
+    "ca": 305239,
+    "p": 9574,
+    "e": 1
+   },
+   {
+    "y": 2023,
+    "ca": 125136,
+    "p": 83489,
+    "e": 1
+   }
+  ]
+ },
+ {
+  "cui": "18824862",
+  "name": "FUTURE ENERGY GROUP SRL",
+  "anreName": "FUTURE ENERGY GROUP ",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 1",
+  "web": null,
+  "tel": "0724299299 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "05/07/2006",
+  "status": "functiune",
+  "address": "Municipiul Bucuresti, Sector 1, Str. Constantin Aricescu, Nr.4, Camera 1, Et.2",
+  "founded": 2006,
+  "caen": "4322 - Lucrari de instalatii sanitare, de incalzire si de aer conditionat",
+  "revenue": 3458490,
+  "profit": 4295,
+  "employees": 5,
+  "finYear": 2025,
+  "hist": [
+   {
+    "y": 2025,
+    "ca": 3458490,
+    "p": 4295,
+    "e": 5
+   },
+   {
+    "y": 2024,
+    "ca": 4952174,
+    "p": 539339,
+    "e": 3
+   },
+   {
+    "y": 2023,
+    "ca": 2571863,
+    "p": -15303,
+    "e": 3
+   },
+   {
+    "y": 2022,
+    "ca": 1651011,
+    "p": 224978,
+    "e": 1
+   },
+   {
+    "y": 2021,
+    "ca": 0,
+    "p": 0,
+    "e": 0
+   }
+  ],
+  "error": "403 /companies/18824862/websites"
+ },
+ {
+  "cui": "42351112",
+  "name": "ELVAL ENGINEERING S.R.L.",
+  "anreName": "ELVAL ENGINEERING",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 6",
+  "web": null,
+  "tel": "0724501289 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "03/03/2020",
+  "error": "403 /companies/42351112"
+ },
+ {
+  "cui": "31722215",
+  "name": "REINVENIO POWER GROUP SRL",
+  "anreName": "REINVENIO POWER GROUP",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 1",
+  "web": null,
+  "tel": "0737569544 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "31/05/2013",
+  "error": "403 /companies/31722215"
+ },
+ {
+  "cui": "47645070",
+  "name": "B-CELL S.R.L.",
+  "anreName": "B-CELL",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 3",
+  "web": null,
+  "tel": "0757248152 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "15/02/2023",
+  "error": "403 /companies/47645070"
+ },
+ {
+  "cui": "6615609",
+  "name": "HONEST GENERAL TRADING SRL",
+  "anreName": "HONEST GENERAL TRADING",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 3",
+  "web": null,
+  "tel": "0730559293 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "20/12/1994",
+  "error": "403 /companies/6615609"
+ },
+ {
+  "cui": "27846339",
+  "name": "DEPANERO SRL",
+  "anreName": "DEPANERO",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 6",
+  "web": null,
+  "tel": "0752362464 ",
+  "tarife": [
+   "Tarif B",
+   "Tarif A3",
+   "Tarif E1",
+   "Tarif E2"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "11/07/2012",
+  "error": "403 /companies/27846339"
+ },
+ {
+  "cui": "44684911",
+  "name": "SUNWIRE LINK S.R.L.",
+  "anreName": "SUNWIRE LINK",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 1",
+  "web": null,
+  "tel": "0733928666 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "03/08/2021",
+  "error": "403 /companies/44684911"
+ },
+ {
+  "cui": "41254464",
+  "name": "MARCOF AUTOMATION S.R.L.",
+  "anreName": "MARCOF AUTOMATION",
+  "judet": "Prahova",
+  "localitate": "Sat Satu Nou, Comuna Lipăneşti",
+  "web": null,
+  "tel": "0746 226861 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "26/05/2023",
+  "error": "403 /companies/41254464"
+ },
+ {
+  "cui": "15017418",
+  "name": "R.C.A.-RETELE DE COMUNICATII AVANSATE SRL",
+  "anreName": "R.C.A.-RETELE DE COMUNICATII AVANSATE",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 6",
+  "web": null,
+  "tel": "0722575193, 0764552199 0310699624",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "15/11/2002",
+  "error": "403 /companies/15017418"
+ },
+ {
+  "cui": "38469463",
+  "name": "MOTOMA SECURITY SRL",
+  "anreName": "MOTOMA SECURITY",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 3",
+  "web": null,
+  "tel": "0747773031 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "10/11/2017",
+  "error": "403 /companies/38469463"
+ },
+ {
+  "cui": "47359737",
+  "name": "VILMAR ENERGY S.R.L.",
+  "anreName": "VILMAR ENERGY ",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 4",
+  "web": null,
+  "tel": "0742984802 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "22/12/2022",
+  "error": "403 /companies/47359737"
+ },
+ {
+  "cui": "22408516",
+  "name": "ELTECO SRL",
+  "anreName": "ELTECO",
+  "judet": "Giurgiu",
+  "localitate": "Municipiul Giurgiu",
+  "web": null,
+  "tel": "0722286911 ",
+  "tarife": [
+   "Tarif C2A",
+   "Tarif Bp"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "13/09/2007",
+  "error": "403 /companies/22408516"
+ },
+ {
+  "cui": "7609583",
+  "name": "RIG SERVICE SRL",
+  "anreName": "RIG SERVICE",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 5",
+  "web": null,
+  "tel": "0731121927, 0241 586406 0241 586448",
+  "tarife": [
+   "Tarif C2A",
+   "Tarif Bp"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "02/08/1995",
+  "error": "403 /companies/7609583"
+ },
+ {
+  "cui": "46022996",
+  "name": "VARTEC SERVICES S.R.L.",
+  "anreName": "VARTEC SERVICES",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 1",
+  "web": null,
+  "tel": "0751029232 ",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "01/07/2022",
+  "error": "403 /companies/46022996"
+ },
+ {
+  "cui": "45927741",
+  "name": "GENWAY ROMANIA S.R.L.",
+  "anreName": "GENWAY ROMANIA ",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 3",
+  "web": null,
+  "tel": "0726785385 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "07/04/2022",
+  "error": "403 /companies/45927741"
+ },
+ {
+  "cui": "34941813",
+  "name": "SIRO SWEETS IMPORT EXPORT S.R.L.",
+  "anreName": "SIRO SWEETS IMPORT EXPORT",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 5",
+  "web": null,
+  "tel": "0756019675 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "18/06/2021",
+  "error": "403 /companies/34941813"
+ },
+ {
+  "cui": "49028098",
+  "name": "GREEN TECH GENESIS S.R.L.",
+  "anreName": "GREEN TECH GENESIS",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 4",
+  "web": null,
+  "tel": "0728132183 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "30/10/2023",
+  "error": "403 /companies/49028098"
+ },
+ {
+  "cui": "47644881",
+  "name": "SUN WATT S.R.L.",
+  "anreName": "SUN WATT",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 4",
+  "web": null,
+  "tel": "0733097440 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "15/02/2023",
+  "error": "403 /companies/47644881"
+ },
+ {
+  "cui": "47181450",
+  "name": "FREE ENERGY TEAM S.R.L.",
+  "anreName": "FREE ENERGY TEAM ",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 2",
+  "web": null,
+  "tel": " ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "15/11/2022",
+  "error": "403 /companies/47181450"
+ },
+ {
+  "cui": "47189276",
+  "name": "TECHNOLOGY ARTIFICIAL WORLD S.R.L.",
+  "anreName": "TECHNOLOGY ARTIFICIAL WORLD",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 2",
+  "web": null,
+  "tel": "0724957991 ",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "16/11/2022",
+  "error": "403 /companies/47189276"
+ },
+ {
+  "cui": "13191271",
+  "name": "REFRIG CO INDUSTRIAL SRL",
+  "anreName": "REFRIG CO INDUSTRIAL",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 2",
+  "web": null,
+  "tel": "0742254466 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "13/07/2000",
+  "error": "403 /companies/13191271"
+ },
+ {
+  "cui": "46026831",
+  "name": "INSTAL GREEN ENERGY S.R.L.",
+  "anreName": "INSTAL GREEN ENERGY",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 1",
+  "web": null,
+  "tel": "0721.722.688 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "28/04/2022",
+  "error": "403 /companies/46026831"
+ },
+ {
+  "cui": "16262687",
+  "name": "MAXIMUS GENERAL SERVICES SRL",
+  "anreName": "MAXIMUS GENERAL SERVICES",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 5",
+  "web": null,
+  "tel": "0745047317 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "22/03/2004",
+  "error": "403 /companies/16262687"
+ },
+ {
+  "cui": "44270391",
+  "name": "SUN TREK S.R.L.",
+  "anreName": "SUN TREK",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 4",
+  "web": null,
+  "tel": "0774454279 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "13/05/2021",
+  "error": "403 /companies/44270391"
+ },
+ {
+  "cui": "47469012",
+  "name": "4SUN SOLAR S.R.L.",
+  "anreName": "4SUN SOLAR",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 2",
+  "web": null,
+  "tel": "0758010063 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "18/01/2023",
+  "error": "403 /companies/47469012"
+ },
+ {
+  "cui": "27690735",
+  "name": "UNIC BIZ CONCEPT SRL",
+  "anreName": "UNIC BIZ CONCEPT",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 1",
+  "web": null,
+  "tel": "0721959689 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "10/11/2010",
+  "error": "403 /companies/27690735"
+ },
+ {
+  "cui": "42964508",
+  "name": "STONE LINK S.R.L.",
+  "anreName": "STONE LINK",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 1",
+  "web": null,
+  "tel": "0722258577 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "26/08/2020",
+  "error": "403 /companies/42964508"
+ },
+ {
+  "cui": "46170674",
+  "name": "ROMTERRA ENERGY S.R.L.",
+  "anreName": "ROMTERRA ENERGY",
+  "judet": "Bucureşti",
+  "localitate": "Bucureşti Sectorul 6",
+  "web": null,
+  "tel": "0765308924 ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "isCV": true,
+  "forma": "SRL",
+  "inmat": "23/05/2022",
+  "error": "403 /companies/46170674"
+ }
+]

@@ -1,0 +1,1680 @@
+[
+ {
+  "cui": "2221393",
+  "name": "ELECTROBOBINAJ SRL",
+  "anreName": "ELECTROBOBINAJ",
+  "loc": "Loc. Vişeu de Sus, Oraş Viseu de Sus",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "09/03/2027",
+  "tel": "0744604817, 0746 090861 ",
+  "web": null,
+  "judetFisc": "Maramureş",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "36363708",
+  "name": "EASY UNIVERS INSTAL SRL",
+  "anreName": "EASY UNIVERS INSTAL",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "19/12/2029",
+  "tel": "0747193002 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "32398460",
+  "name": "AZUR SOLAR S.R.L.",
+  "anreName": "AZUR SOLAR",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "17/10/2027",
+  "tel": "0744300030 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "37283429",
+  "name": "SMART HOUSE COLOR SRL",
+  "anreName": "SMART HOUSE COLOR",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif A3",
+   "Tarif E1",
+   "Tarif E2"
+  ],
+  "exp": "27/01/2031",
+  "tel": "0741884321 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": true,
+  "rejected": false
+ },
+ {
+  "cui": "17218612",
+  "name": "TEHNODOMUS SRL",
+  "anreName": "TEHNODOMUS",
+  "loc": "Municipiul Constanţa",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "10/08/2028",
+  "tel": "0257 276 613, 0722 257381, 07446354 0257 276445",
+  "web": null,
+  "judetFisc": "Constanţa",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "23451905",
+  "name": "ZERO STRES SRL",
+  "anreName": "ZERO STRES",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "22/02/2027",
+  "tel": "0745773833 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "22551639",
+  "name": "RASPO ELECTRIC SRL",
+  "anreName": "RASPO ELECTRIC",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "11/09/2030",
+  "tel": "0745 369669, 0733 027950, 074558626 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "6648460",
+  "name": "EST GAZ SRL",
+  "anreName": "EST GAZ",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif Bp"
+  ],
+  "exp": "22/05/2028",
+  "tel": "0357 426450,0723154583 0356/469944",
+  "web": "WWW.ESTGAZ.RO",
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "49752863",
+  "name": "FUTURE SPARK ELECTRIC S.R.L.",
+  "anreName": "FUTURE SPARK ELECTRIC",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "18/07/2030",
+  "tel": "0741658310 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "45831972",
+  "name": "PRO MAINT INSTAL S.R.L.",
+  "anreName": "PRO MAINT INSTAL",
+  "loc": "Sat Turnu, Oraş Pecica",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "24/08/2028",
+  "tel": "0761697867 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "4936009",
+  "name": "ELECTRO F.A.L. SRL",
+  "anreName": "ELECTRO F.A.L",
+  "loc": "Sat Vladimirescu, Comuna Vladimirescu",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "29/11/2027",
+  "tel": "0257270011, 0722300549 0257270011",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "23568027",
+  "name": "ENERGO - PROIECT SRL",
+  "anreName": "ENERGO-PROIECT",
+  "loc": "Sat Sânleani, Comuna Livada",
+  "tarife": [
+   "Tarif C1A*-vizare periodica",
+   "Tarif C2A*-vizare periodica"
+  ],
+  "exp": "05/02/2031",
+  "tel": "0746066106, 0744517727, 0257276971 0257218744",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": true
+ },
+ {
+  "cui": "39358170",
+  "name": "ECO BRAZII S.R.L.",
+  "anreName": "ECO BRAZII",
+  "loc": "Sat Secaş, Comuna Brazii",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "23/10/2029",
+  "tel": "0741020406 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "23557788",
+  "name": "KOV SCHUTZ 2008 SRL",
+  "anreName": "KOV SCHUTZ 2008",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "08/02/2027",
+  "tel": "0724023322 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "49771067",
+  "name": "BPD ELECTRIC S.R.L.",
+  "anreName": "BPD ELECTRIC",
+  "loc": "Sat Frumuşeni, Comuna Frumuşeni",
+  "tarife": [
+   "Tarif Be"
+  ],
+  "exp": "18/07/2030",
+  "tel": "0749 933 606 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "50870030",
+  "name": "ELECTROGRAND SERV. S.R.L.",
+  "anreName": "ELECTROGRAND SERV",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif A2"
+  ],
+  "exp": "28/01/2030",
+  "tel": "0744290613 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "41889475",
+  "name": "RO-BI VEST MONTANA S.R.L.",
+  "anreName": "RO-BI VEST MONTANA",
+  "loc": "Sat Gurahonţ, Comuna Gurahonţ",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "24/11/2027",
+  "tel": "0751469061 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "5974094",
+  "name": "MAGURA IMPEX SRL",
+  "anreName": "MAGURA IMPEX",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "20/10/2030",
+  "tel": "0745637797, 0728728380 0257219663",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "17335469",
+  "name": "ENERGOSERV & CONSULTING SRL",
+  "anreName": "ENERGOSERV & CONSULTING",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif Be*-vizare periodica",
+   "Tarif C1A*-vizare periodica"
+  ],
+  "exp": "03/10/2028",
+  "tel": "0722 979725 0257 272128",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "20720758",
+  "name": "ELECTROCONSTRUCTII ARMAND & MATEI SRL",
+  "anreName": "ELECTROCONSTRUCTII ARMAND & MATEI",
+  "loc": "Loc. Ineu, Oraş Ineu",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "08/02/2027",
+  "tel": "0720533753 0257512045",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "43499576",
+  "name": "P V SYSTEM S.R.L.",
+  "anreName": "P V SYSTEM",
+  "loc": "Sat Zerind, Comuna Zerind",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "30/06/2030",
+  "tel": "0784630034 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "47652264",
+  "name": "GO GREEN ENERGY S.R.L.",
+  "anreName": "GO GREEN ENERGY",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "10/05/2028",
+  "tel": "0722281494 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "37760471",
+  "name": "M.A. TRANSILVANIA PRO CONSULT S.R.L.",
+  "anreName": "M.A. TRANSILVANIA PRO CONSULT",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif Bp"
+  ],
+  "exp": "16/05/2028",
+  "tel": "0745946900, 0745234449 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "44585829",
+  "name": "MAT ELECTRIC VISION S.R.L.",
+  "anreName": "MAT ELECTRIC VISION",
+  "loc": "Sat Variaşu Mare, Comuna Iratoşu",
+  "tarife": [
+   "Tarif Bp",
+   "Tarif C2A"
+  ],
+  "exp": "27/03/2029",
+  "tel": "0740270140 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "30220490",
+  "name": "CLEVER SOLUTIONS POINT SRL",
+  "anreName": "CLEVER SOLUTIONS POINT",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "08/09/2026",
+  "tel": "0741013800 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "35105263",
+  "name": "PROBIECTIV DESIGN SRL",
+  "anreName": "PROBIECTIV DESIGN",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "15/07/2029",
+  "tel": "0724284801 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "46516760",
+  "name": "INSTAL AREA CONCEPT S.R.L.",
+  "anreName": "INSTAL AREA CONCEPT ",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif Bp"
+  ],
+  "exp": "11/03/2029",
+  "tel": "0753472339 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "33352240",
+  "name": "ELECTRO IMED ENERGY SRL",
+  "anreName": "ELECTRO IMED ENERGY",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "09/08/2026",
+  "tel": "0741150089 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "47684690",
+  "name": "ELECTRICSMART.CO S.R.L.",
+  "anreName": "ELECTRICSMART.CO ",
+  "loc": "Sat Socodor, Comuna Socodor",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "06/03/2030",
+  "tel": "0751970357 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "44933303",
+  "name": "ADNINI INSTALL GRUP S.R.L.",
+  "anreName": "ADNINI INSTALL GRUP",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "25/01/2027",
+  "tel": "0745621166 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "49761896",
+  "name": "BBF ELECTRIC S.R.L.",
+  "anreName": "BBF ELECTRIC",
+  "loc": "Sat Sânpaul, Comuna Şofronea",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "18/07/2029",
+  "tel": "0726157717 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "16033829",
+  "name": "TERMOCONTROL SRL",
+  "anreName": "TERMOCONTROL",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "28/04/2027",
+  "tel": "0730711011/ 0768142168 0257 217154",
+  "web": "www.termocontrol.ro",
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "49120964",
+  "name": "BGA AUTOMATION HOLDING S.R.L.",
+  "anreName": "BGA AUTOMATION HOLDING",
+  "loc": "Loc. Ineu, Oraş Ineu",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "06/08/2030",
+  "tel": "0757207068 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "14452634",
+  "name": "AMBRA SERVICE SRL",
+  "anreName": "AMBRA SERVICE",
+  "loc": "Comuna Socodor",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "16/07/2029",
+  "tel": "0766062212 0356505706",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": true,
+  "rejected": false
+ },
+ {
+  "cui": "14300237",
+  "name": "CONSELECTRO SRL",
+  "anreName": "CONSELECTRO",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "11/12/2028",
+  "tel": "0722779248 0257270135",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "1683483",
+  "name": "COMPANIA DE APĂ ARAD SA",
+  "anreName": "COMPANIA DE APA ARAD",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif Bi*-vizare periodica"
+  ],
+  "exp": "12/04/2027",
+  "tel": "0257270843/ 849 0257270981",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "41653384",
+  "name": "ELECTRIC ELCISA S.R.L.",
+  "anreName": "ELECTRIC ELCISA",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "18/07/2030",
+  "tel": "0758258717 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "37375522",
+  "name": "ELECTROCM SERVICII S.R.L.",
+  "anreName": "ELECTROCM SERVICII",
+  "loc": "Loc. Ineu, Oraş Ineu",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "11/09/2028",
+  "tel": "0742134164 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "39257930",
+  "name": "INSTAL AREA S.R.L.",
+  "anreName": "INSTAL AREA",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "15/03/2027",
+  "tel": "0753472339 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "34578662",
+  "name": "TOTAL VIRSOR SRL",
+  "anreName": "TOTAL VIRSOR",
+  "loc": "Sat Căpruţa, Comuna Bârzava",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "07/02/2028",
+  "tel": "0745428540 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "40429347",
+  "name": "MARBA ELECTRIC SERV S.R.L.",
+  "anreName": "MARBA ELECTRIC SERV",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "04/04/2030",
+  "tel": "0749020569 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "26453340",
+  "name": "SISTEMA FLOOR HEATING SRL",
+  "anreName": "SISTEMA FLOOR HEATING",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "17/10/2027",
+  "tel": "0745682923 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "50636200",
+  "name": "BLITZ&ELECTRO S.R.L.",
+  "anreName": "BLITZ&ELECTRO ",
+  "loc": "Loc. Chişineu-Criş, Oraş Chişineu-Criş",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "23/05/2030",
+  "tel": "0747885514 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "40035881",
+  "name": "ASTRA ELECTRIC S.R.L.",
+  "anreName": "ASTRA ELECTRIC",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "18/08/2030",
+  "tel": "0724381090/0723764042 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": true,
+  "rejected": false
+ },
+ {
+  "cui": "36583169",
+  "name": "ESYS ANTREPRENOR SRL",
+  "anreName": "ESYS ANTREPRENOR",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "09/06/2027",
+  "tel": "0257709919, 0744604092, 0748030405, ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "42370343",
+  "name": "WEST PROJECT ENERGY S.R.L.",
+  "anreName": "WEST PROJECT ENERGY",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif C1A*-vizare periodica",
+   "Tarif C2A*-vizare periodica"
+  ],
+  "exp": "14/04/2030",
+  "tel": "0744566855 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "11028287",
+  "name": "GIRO-CONSTRUCT SRL",
+  "anreName": "GIRO CONSTRUCT",
+  "loc": "Municipiul Braşov",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A*-vizare periodica"
+  ],
+  "exp": "27/02/2029",
+  "tel": "0728 849055 ",
+  "web": null,
+  "judetFisc": "Braşov",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "36296927",
+  "name": "OGAUS TECHNOLOGY SRL",
+  "anreName": "OGAUS TECHNOLOGY",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif C1A"
+  ],
+  "exp": "13/07/2028",
+  "tel": "0257284262,0755339434 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "15020928",
+  "name": "HIGHLIGHTS ELECTRICAL SRL",
+  "anreName": "HIGHLIGHTS ELECTRICAL",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "14/04/2030",
+  "tel": "0724 796405 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "38095792",
+  "name": "ELECTRO SISTEM MONTAJ SRL",
+  "anreName": "ELECTRO SISTEM MONTAJ",
+  "loc": "Loc. Sebiş, Oraş Sebiş",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "29/01/2028",
+  "tel": "0741701561 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "37663533",
+  "name": "WIREN ROMANIA S.R.L.",
+  "anreName": "WIREN ROMANIA",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "17/06/2029",
+  "tel": "0749200544, 0720555728, 0754201216 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": true,
+  "rejected": false
+ },
+ {
+  "cui": "45899773",
+  "name": "SMART SUN S.R.L.",
+  "anreName": "SMART SUN",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "07/02/2028",
+  "tel": "0742695744 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "40305004",
+  "name": "NRG PROIECT 2018 S.R.L.",
+  "anreName": "NRG PROIECT 2018",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "28/11/2030",
+  "tel": "0722215816 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "18044573",
+  "name": "NORAS PROIECT SRL",
+  "anreName": "NORAS PROIECT",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif Bp*-vizare periodica"
+  ],
+  "exp": "12/07/2028",
+  "tel": "0257 257312, 0747 766704 0257 257312",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "40717757",
+  "name": "VAMAS POWER SERVICE S.R.L.",
+  "anreName": "VAMAS POWER SERVICE",
+  "loc": "Sat Fântânele, Comuna Fântânele",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "04/07/2029",
+  "tel": "0740555303 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "37830003",
+  "name": "STEMPLE POWER SRL",
+  "anreName": "STEMPLE POWER",
+  "loc": "Loc. Chişineu-Criş, Oraş Chişineu-Criş",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "31/10/2029",
+  "tel": "0727750954, 0756528768 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "16687866",
+  "name": "INFOWATT SRL",
+  "anreName": "INFOWATT",
+  "loc": "Municipiul Huşi",
+  "tarife": [
+   "Tarif Be",
+   "Tarif C1A"
+  ],
+  "exp": "21/11/2030",
+  "tel": "0742353914 ",
+  "web": null,
+  "judetFisc": "Vaslui",
+  "afm": true,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "47215804",
+  "name": "ELECTRO FOTOVOLTAIC SISTEM S.R.L.",
+  "anreName": "ELECTRO FOTOVOLTAIC SISTEM",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "10/01/2028",
+  "tel": "0741150089 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "42607190",
+  "name": "YRB ELECTRIC VEST S.R.L.",
+  "anreName": "YRB ELECTRIC VEST ",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "23/10/2029",
+  "tel": "0723339250 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "8799630",
+  "name": "APA PLUS '97 SRL",
+  "anreName": "APA PLUS '97",
+  "loc": "Municipiul Timişoara",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "16/05/2027",
+  "tel": "0748163936 ",
+  "web": null,
+  "judetFisc": "Timiş",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "46567020",
+  "name": "AMPEROSO ELECTRIC LINE S.R.L.",
+  "anreName": "AMPEROSO ELECTRIC LINE",
+  "loc": "Sat Neagra, Comuna Dezna",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "21/11/2027",
+  "tel": "0742506189 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "38880581",
+  "name": "BRICIU ELECTRIC S.R.L.",
+  "anreName": "BRICIU ELECTRIC",
+  "loc": "Sat Buteni, Comuna Buteni",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "22/11/2026",
+  "tel": "0771052398 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "34492331",
+  "name": "CONSTRUCT BUSINESS ELECTRIC TEAM SRL",
+  "anreName": "CONSTRUCT BUSINESS ELECTRIC TEAM",
+  "loc": "Sat Gurahonţ, Comuna Gurahonţ",
+  "tarife": [
+   "Tarif A3",
+   "Tarif C1A*-vizare periodica",
+   "Tarif C2A*-vizare periodica"
+  ],
+  "exp": "22/11/2026",
+  "tel": "0755071968, 0357819594 0357819594",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": false,
+  "rejected": true
+ },
+ {
+  "cui": "50659793",
+  "name": "ELTRI TECH S.R.L.",
+  "anreName": "ELTRI TECH",
+  "loc": "Sat Cicir, Comuna Vladimirescu",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "05/02/2031",
+  "tel": "0749200543 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": true
+ },
+ {
+  "cui": "38059552",
+  "name": "ELECTRO 222 CONSTRUCT SRL",
+  "anreName": "ELECTRO 222 CONSTRUCT",
+  "loc": "Loc. Sebiş, Oraş Sebiş",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "15/02/2029",
+  "tel": "0745359538 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "40334930",
+  "name": "CLEVERVOLT S.R.L.",
+  "anreName": "CLEVERVOLT",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "23/02/2031",
+  "tel": "0731039377 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "41112656",
+  "name": "AS ELECTRIC PROIECT S.R.L.",
+  "anreName": "AS ELECTRIC PROIECT",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "31/07/2029",
+  "tel": "0751431882 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "32166061",
+  "name": "TREDECO HOLDING SRL",
+  "anreName": "TREDECO HOLDING",
+  "loc": "Loc. Ineu, Oraş Ineu",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "22/06/2027",
+  "tel": "0730643892 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "43495060",
+  "name": "ENEF INSTAL ELECTRO SERVICE S.R.L.",
+  "anreName": "ENEF INSTAL ELECTRO SERVICE",
+  "loc": "Loc. Chişineu-Criş, Oraş Chişineu-Criş",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "03/10/2027",
+  "tel": "0723030006 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "46648133",
+  "name": "INTER UP S.R.L.",
+  "anreName": "INTER UP",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "25/11/2027",
+  "tel": "0737204091 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "9851191",
+  "name": "ELECON PLUS SRL",
+  "anreName": "ELECON PLUS",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "13/09/2028",
+  "tel": "0257 280047, 0744 568816 0257 280047",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": true
+ },
+ {
+  "cui": "30132640",
+  "name": "GLOBAL CUBIC PROJECTS S.R.L.",
+  "anreName": "GLOBAL CUBIC PROJECTS ",
+  "loc": "Bucureşti Sectorul 1",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "08/11/2028",
+  "tel": " ",
+  "web": null,
+  "judetFisc": "Bucureşti",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "15908586",
+  "name": "DRAST COMPANY SRL",
+  "anreName": "DRAST COMPANY",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif Be"
+  ],
+  "exp": "13/07/2027",
+  "tel": "0442491794 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "41505612",
+  "name": "RENEWEN - ECO  K & R S.R.L.",
+  "anreName": "RENEWEN - ECO K & R",
+  "loc": "Loc. Chişineu-Criş, Oraş Chişineu-Criş",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "31/03/2028",
+  "tel": "0784630034 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "37740270",
+  "name": "PREMIUM SERV INSTAL SRL",
+  "anreName": "PREMIUM SERV INSTAL",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "17/02/2030",
+  "tel": "0747193002 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "19235091",
+  "name": "SORELI GROUP SRL",
+  "anreName": "SORELI GROUP",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "27/03/2028",
+  "tel": "0728285342 ",
+  "web": "WWW.SORELI.RO",
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "25247678",
+  "name": "LOU ELECTRIC SRL",
+  "anreName": "LOU ELECTRIC",
+  "loc": "Sat Zimandcuz, Comuna Zimandu Nou",
+  "tarife": [
+   "Tarif C1A*-vizare periodica",
+   "Tarif C2A*-vizare periodica"
+  ],
+  "exp": "05/04/2028",
+  "tel": "0357 427602, 0742087375, 0721 27648 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "18514365",
+  "name": "ENERGOTEL SERV SRL",
+  "anreName": "ENERGOTEL SERV",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif Bp",
+   "Tarif C2A"
+  ],
+  "exp": "06/02/2029",
+  "tel": "0743 085484, 0729271005 0742 213250",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "41530144",
+  "name": "ITL SMART SOFT SOLUTIONS S.R.L.",
+  "anreName": "ITL SMART SOFT SOLUTIONS",
+  "loc": "Sat Zimandcuz, Comuna Zimandu Nou",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "18/12/2028",
+  "tel": "0742879363 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "50618912",
+  "name": "MATCOMPANY S.R.L.",
+  "anreName": "MATCOMPANY",
+  "loc": "Loc. Sântana, Oraş Sântana",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "12/12/2029",
+  "tel": "0740602246 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": true
+ },
+ {
+  "cui": "17697639",
+  "name": "PROFESIONAL ELECTRO-CONSTRUCT SRL",
+  "anreName": "PROFESIONAL ELECTRO-CONSTRUCT",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "15/02/2029",
+  "tel": "0745169086 0359809266",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "15160492",
+  "name": "COSERI ELECTRIC CO SRL",
+  "anreName": "COSERI ELECTRIC CO",
+  "loc": "Loc. Ineu, Oraş Ineu",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "24/05/2026",
+  "tel": "0257511810, 0742134164 0257511192",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "47561190",
+  "name": "E.L.S. GREEN ENERGY S.R.L.",
+  "anreName": "E.L.S. GREEN ENERGY",
+  "loc": "Sat Vladimirescu, Comuna Vladimirescu",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "24/08/2028",
+  "tel": "0748889187 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "4009886",
+  "name": "FAIR PLAY SERBAN SRL",
+  "anreName": "FAIR PLAY SERBAN",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif A3",
+   "Tarif E1",
+   "Tarif E2"
+  ],
+  "exp": "06/02/2028",
+  "tel": "0722 348102,0257218282 0257 218282",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": true,
+  "rejected": false
+ },
+ {
+  "cui": "46341510",
+  "name": "SWAPY ENERGY 2050 S.R.L.",
+  "anreName": "SWAPY ENERGY 2050 ",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif Be",
+   "Tarif C1A"
+  ],
+  "exp": "24/05/2028",
+  "tel": "0745013063 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "23524012",
+  "name": "DĂRĂBUŢ ELECTRO INSTAL SRL",
+  "anreName": "DARABUT ELECTRO INSTAL",
+  "loc": "Loc. Curtici, Oraş Curtici",
+  "tarife": [
+   "Tarif B*-vizare periodica"
+  ],
+  "exp": "13/07/2027",
+  "tel": "0257 464967, 0740 278827 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "47028326",
+  "name": "DAYONE ENERGY S.R.L.",
+  "anreName": "DAYONE ENERGY",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "09/03/2028",
+  "tel": "0758033944 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "15713576",
+  "name": "DATA PROMPT SRL",
+  "anreName": "DATA PROMPT",
+  "loc": "Sat Vladimirescu, Comuna Vladimirescu",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "21/12/2028",
+  "tel": "0722572544, 0741954540 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "20848421",
+  "name": "FUTURE TECH SOLUTIONS S.R.L.",
+  "anreName": "FUTURE TECH SOLUTIONS",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "22/03/2029",
+  "tel": "0730618401 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "30546560",
+  "name": "ELECTRO IMED 2012 SRL",
+  "anreName": "ELECTRO IMED 2012",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "20/03/2029",
+  "tel": "0741150089 0357819827",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": false,
+  "rejected": true
+ },
+ {
+  "cui": "31939797",
+  "name": "MIBU ELECTRIC SRL",
+  "anreName": "MIBU ELECTRIC",
+  "loc": "Sat Livada, Comuna Livada",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "28/03/2029",
+  "tel": "0726187676 0357429420",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": false,
+  "rejected": true
+ },
+ {
+  "cui": "10109588",
+  "name": "VIGADEN IMPEX SRL",
+  "anreName": "VIGADEN IMPEX",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "10/12/2029",
+  "tel": "0744300030 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "50636218",
+  "name": "VENTZ TECHNOLOGIES S.R.L.",
+  "anreName": "VENTZ TECHNOLOGIES",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "31/10/2030",
+  "tel": "075106251 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "24524487",
+  "name": "ELECTRO FARIO SRL",
+  "anreName": "ELECTRO FARIO",
+  "loc": "Sat Gurahonţ, Comuna Gurahonţ",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "23/06/2030",
+  "tel": "0748418220 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": true
+ },
+ {
+  "cui": "29597307",
+  "name": "DREAMWORK GEMINII SRL",
+  "anreName": "DREAMWORK GEMINII",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "26/02/2029",
+  "tel": "0744562224 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "40665330",
+  "name": "CURENT EXPERT S.R.L.",
+  "anreName": "CURENT EXPERT",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "15/11/2029",
+  "tel": "0745773833 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "30002496",
+  "name": "JAR BUILDING CRAFT SRL",
+  "anreName": "JAR BUILDING CRAFT",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif Bp"
+  ],
+  "exp": "24/05/2026",
+  "tel": "0741295029 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "31383917",
+  "name": "ASIPRAM PAKIRIS SRL",
+  "anreName": "ASIPRAM PAKIRIS",
+  "loc": "Loc. Chişineu-Criş, Oraş Chişineu-Criş",
+  "tarife": [
+   "Tarif Bi*-vizare periodica"
+  ],
+  "exp": "02/07/2029",
+  "tel": "0756612255 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "9260039",
+  "name": "ABIGAL SRL",
+  "anreName": "ABIGAL",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif A1"
+  ],
+  "exp": "28/06/2026",
+  "tel": "0740666267 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "46797593",
+  "name": "MAGO CONCEPT S.R.L.",
+  "anreName": "MAGO CONCEPT",
+  "loc": "Oraş Pecica",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "06/02/2028",
+  "tel": "0743040858 / 0744135374 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "6648339",
+  "name": "AMAHOUSE SRL",
+  "anreName": "AMAHOUSE",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "11/10/2026",
+  "tel": "0727223012 0257219550",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ },
+ {
+  "cui": "14870335",
+  "name": "PRECON ELECTRIC SRL",
+  "anreName": "PRECON ELECTRIC",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif C1A",
+   "Tarif C2A"
+  ],
+  "exp": "23/07/2029",
+  "tel": "0743142263 0257.219322",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": true,
+  "indir": true,
+  "rejected": false
+ },
+ {
+  "cui": "32933601",
+  "name": "BARDELLI GROUP SRL",
+  "anreName": "BARDELLI GROUP",
+  "loc": "Municipiul Arad",
+  "tarife": [
+   "Tarif B"
+  ],
+  "exp": "11/04/2028",
+  "tel": "0790474988 ",
+  "web": null,
+  "judetFisc": "Arad",
+  "afm": false,
+  "indir": false,
+  "rejected": false
+ }
+]
