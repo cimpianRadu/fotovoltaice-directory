@@ -14,10 +14,13 @@ import { trackEvent } from '@/lib/analytics';
 // mic, iar în el se intră oricum din widgeturile din ghiduri), dar pagina
 // rămâne. /cere-oferta nu e link aici: e CTA-ul amber al headerului, pe ambele
 // lățimi — conversia principală a site-ului nu concurează cu propriul link.
-const primaryLinks = [
+// `badge` marchează o intrare nouă. E temporar prin natura lui: un „NOU" lăsat
+// permanent nu mai înseamnă nimic și începe să arate neîngrijit. De scos pe la
+// mijlocul lui octombrie 2026.
+const primaryLinks: { href: string; label: string; badge?: string }[] = [
   { href: '/firme', label: 'Firme' },
   { href: '/cereri', label: 'Cereri Clienți' },
-  { href: '/pentru-instalatori', label: 'Pentru instalatori' },
+  { href: '/pentru-instalatori', label: 'Pentru instalatori', badge: 'NOU' },
   { href: '/studii-de-caz', label: 'Studii de Caz' },
   { href: '/ghid', label: 'Ghiduri' },
 ];
@@ -86,19 +89,37 @@ export default function Header() {
         {/* Desktop nav de la lg în sus — linkuri + toggle + CTA nu încap sub 1024px */}
         <nav className="hidden lg:flex items-center gap-2.5 xl:gap-3 min-[1440px]:gap-5">
           <SegmentToggle source="nav" />
-          {primaryLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`text-sm font-medium whitespace-nowrap transition-colors ${
-                isActive(link.href)
-                  ? 'text-primary-dark border-b-2 border-primary pb-0.5'
-                  : 'text-gray-600 hover:text-secondary-dark'
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {primaryLinks.map((link) =>
+            link.badge ? (
+              // Bordură neutră, ca structură, iar singurul accent de culoare e
+              // cuvântul călare pe linia de sus. Eticheta are fundal alb ca să
+              // taie bordura curat; headerul e alb inclusiv la scroll.
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`relative rounded-lg border border-border px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors ${
+                  isActive(link.href) ? 'text-primary-dark' : 'text-gray-600 hover:text-secondary-dark'
+                }`}
+              >
+                <span className="absolute -top-1.5 left-2.5 bg-white px-1 text-[9px] font-bold leading-none tracking-wider text-primary-dark">
+                  {link.badge}
+                </span>
+                {link.label}
+              </Link>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-sm font-medium whitespace-nowrap transition-colors ${
+                  isActive(link.href)
+                    ? 'text-primary-dark border-b-2 border-primary pb-0.5'
+                    : 'text-gray-600 hover:text-secondary-dark'
+                }`}
+              >
+                {link.label}
+              </Link>
+            )
+          )}
 
           {/* "Mai multe" dropdown */}
           <div ref={moreRef} className="relative">
@@ -205,6 +226,13 @@ export default function Header() {
               }`}
             >
               {link.label}
+              {/* Pe mobil rândul e lat cât ecranul, iar o legendă pe bordură ar
+                  arăta prost pe atâta lățime: aici „NOU" stă lângă text. */}
+              {link.badge && (
+                <span className="ml-2 align-middle text-[10px] font-bold tracking-wider text-primary-dark">
+                  {link.badge}
+                </span>
+              )}
             </Link>
           ))}
 
