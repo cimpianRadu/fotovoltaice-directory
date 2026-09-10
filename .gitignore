@@ -72,3 +72,8 @@ docs/*
 !docs/anre-api-reference.md
 STRATEGIE.md
 facebook-posts-batch-1.md
+
+# Capturi de lucru pentru review (UI, social). Locul lor e social/ sau
+# scratchpad-ul sesiunii, nu rădăcina repo-ului: pot conține date reale de cereri.
+scratch-*.png
+scratch-*.jpg
