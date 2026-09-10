@@ -24,9 +24,9 @@ import { MAX_CLAIMS_PER_LEAD, claimOccupiesLeadSlot, getClaims, getPublicLeads }
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: 'Pentru Instalatori: Cereri Reale, Gratuit, Fără Comision',
+  title: 'Pentru Instalatori: Cereri Reale, Plătești Doar Ce Închizi',
   description:
-    'Ești firmă de instalare fotovoltaice? Primești cereri reale de la clienți din județul tău, cu date complete de contact. Fără comision, fără abonament, maxim 3 firme per cerere.',
+    'Ești firmă de instalare fotovoltaice? Primești cereri reale de la clienți din județul tău, cu date complete de contact. Nu plătești per cerere: comision doar din lucrarea concretizată. Maxim 3 firme per cerere.',
   alternates: { canonical: '/pentru-instalatori' },
 };
 
@@ -34,7 +34,7 @@ const FAQ = [
   {
     question: 'Cât costă să primesc cereri?',
     answer:
-      'Nimic. Nu percepem comision la contract, nu vindem lead-uri la bucată și nu există abonament obligatoriu. Listarea firmei, revendicarea cererilor și accesul în portal sunt gratuite. Platforma se susține din publicitate, iar firmele care vor vizibilitate suplimentară pot alege un pachet de promovare, complet separat de cereri.',
+      'Ca să le primești, nimic. Listarea firmei, revendicarea cererilor, datele clientului și accesul în portal sunt gratuite, iar cererile nu se vând la bucată și nu există abonament obligatoriu. Plătești un comision doar din lucrările care se concretizează: dacă nu închizi, nu plătești. Firmele care vor vizibilitate suplimentară pot alege separat un pachet de promovare.',
   },
   {
     question: 'Ce primesc, concret, când revendic o cerere?',
@@ -157,12 +157,12 @@ export default async function PentruInstalatoriPage() {
             Pentru firmele de instalare
           </p>
           <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mt-2 leading-tight">
-            Cereri reale de la clienți, cu date complete de contact. Gratuit.
+            Cereri reale de la clienți, cu date complete de contact. Plătești doar ce închizi.
           </h1>
           <p className="text-gray-600 mt-4 text-base sm:text-lg">
             Oamenii ne caută pe Google când vor panouri sau baterii, completează un formular și cererea
-            ajunge aici. Tu o revendici, primești contactul întreg și vorbești direct cu clientul. Fără
-            comision la contract, fără plată per cerere, fără abonament obligatoriu.
+            ajunge aici. Tu o revendici, primești contactul întreg și vorbești direct cu clientul. Nu
+            plătești per cerere și nu ai abonament: comision doar din lucrarea care se concretizează.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
@@ -248,7 +248,7 @@ export default async function PentruInstalatoriPage() {
               <ul className="space-y-2.5 text-sm text-gray-700">
                 <li>Alegi cererile care ți se potrivesc, în județele în care lucrezi.</li>
                 <li>Suni clientul repede. Viteza e singurul lucru care decide cine ia lucrarea.</li>
-                <li>Ofertezi și închizi direct cu el, fără noi la mijloc și fără comision.</li>
+                <li>Ofertezi și închizi direct cu el, fără noi la mijloc.</li>
                 <li>Marchezi în portal ce s-a întâmplat și eliberezi locul dacă nu merge.</li>
               </ul>
             </div>
@@ -257,10 +257,10 @@ export default async function PentruInstalatoriPage() {
 
         {/* ── Diferența ───────────────────────────────────────── */}
         <section className="mt-10">
-          <h2 className="text-xl font-bold text-gray-900 mb-1">Cu ce e diferit de o platformă de lead-uri</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-1">Cu ce e diferit de alte platforme de lead-uri</h2>
           <p className="text-sm text-gray-500 mb-4">
-            Nu suntem un intermediar care ține clientul de partea lui. Suntem un director public de firme,
-            în care cererile ajung deschis.
+            Suntem și platformă de cereri, și director public de firme. Diferența nu e că nu luăm bani, e
+            când îi luăm: la finalul lucrării, nu la începutul ei.
           </p>
           <div className="overflow-x-auto rounded-xl border border-border bg-white">
             <table className="w-full text-sm">
@@ -274,13 +274,15 @@ export default async function PentruInstalatoriPage() {
               <tbody className="divide-y divide-border">
                 <tr>
                   <td className="px-4 py-3 font-medium text-gray-900">Costul</td>
-                  {/* Costul care doare nu e prețul pe cerere, e comisionul din
-                      lucrarea care chiar s-a făcut: se ia din marja pe care ai
-                      muncit-o, nu din bugetul de marketing. */}
+                  {/* Diferența care contează la telefon: acolo plătești cererea
+                      indiferent ce iese din ea, deci riscul e integral al firmei.
+                      Aici costul apare abia după ce firma a încasat lucrarea. */}
                   <td className="px-4 py-3 text-gray-600">
-                    Comision din fiecare lucrare concretizată, deseori și preț per cerere
+                    Plătești fiecare cerere, concretizată sau nu
                   </td>
-                  <td className="px-4 py-3 text-gray-900 font-medium">Gratuit</td>
+                  <td className="px-4 py-3 text-gray-900 font-medium">
+                    Comision doar din lucrarea concretizată
+                  </td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium text-gray-900">Contactul clientului</td>
@@ -436,7 +438,7 @@ export default async function PentruInstalatoriPage() {
               : 'Înscrie-ți firma și prinzi următoarea cerere din județul tău.'}
           </h2>
           <p className="text-sm text-gray-600 mt-2">
-            Gratuit, fără contract și fără obligația de a lua o cerere pe care nu o vrei.
+            Fără abonament, fără plată per cerere și fără obligația de a lua una pe care nu o vrei.
           </p>
           <div className="mt-5 flex flex-wrap gap-3 justify-center">
             <Button href="/cereri" size="lg">
