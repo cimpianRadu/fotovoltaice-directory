@@ -350,12 +350,27 @@ export function businessDaysBetween(fromMs: number, toMs: number = Date.now()): 
 /** Pragul, în ZILE LUCRĂTOARE, de la care o revendicare fără mișcare cere follow-up. */
 export const CLAIM_STALE_DAYS = 2;
 
+/**
+ * Excepția: pe „în discuții" firma chiar vorbește cu clientul, iar discuția are
+ * ritmul ei (un client plecat două zile, o poză de acoperiș care întârzie). Un
+ * apel de la mine după 2 zile acolo e zgomot, nu ajutor — și, mai rău, împinge
+ * firma să mute pastila doar ca să scape de marcaj. Statusurile în care nimeni
+ * n-a vorbit încă cu clientul rămân la 2: acolo întârzierea e chiar problema.
+ */
+export const CLAIM_STALE_DAYS_DISCUTII = 4;
+
+/** Câte zile lucrătoare de liniște tolerăm pentru statusul curent al revendicării. */
+export function claimStaleDays(status: ClaimStatus): number {
+  return status === 'discutii' ? CLAIM_STALE_DAYS_DISCUTII : CLAIM_STALE_DAYS;
+}
+
 interface ClaimActivity {
   timestamp: string;
   contactedAt: string;
   approvedAt: string;
   offeredAt: string;
   releasedAt: string;
+  firmStatus: ClaimStatus;
   firmNotes: LeadNote[];
 }
 
@@ -375,13 +390,13 @@ export function claimLastActivity(claim: ClaimActivity): number {
 
 /**
  * Firma a primit datele clientului, n-a marcat oferta și nimic nu s-a mișcat
- * de CLAIM_STALE_DAYS zile: de sunat, aflăm dacă mai e de interes sau
- * realocăm cererea. Revendicările de dinainte de portal (fără aprobare) nu
- * intră — ar aprinde tot istoricul.
+ * de pragul statusului ei (vezi claimStaleDays): de sunat, aflăm dacă mai e de
+ * interes sau realocăm cererea. Revendicările de dinainte de portal (fără
+ * aprobare) nu intră — ar aprinde tot istoricul.
  */
 export function isClaimStale(claim: ClaimActivity, now: number = Date.now()): boolean {
   if (claim.releasedAt || claim.offeredAt || !claim.approvedAt) return false;
-  return businessDaysBetween(claimLastActivity(claim), now) >= CLAIM_STALE_DAYS;
+  return businessDaysBetween(claimLastActivity(claim), now) >= claimStaleDays(claim.firmStatus);
 }
 
 /**
@@ -427,7 +442,7 @@ export function isClaimStatusUnproven(
 ): boolean {
   if (!claim.approvedAt || claim.releasedAt || claim.contactedAt || claim.offeredAt) return false;
   if (claim.firmStatus === 'de_sunat' || claim.noteCount > 0) return false;
-  return claimIdleBusinessDays(claim.approvedAt, now) >= CLAIM_STALE_DAYS;
+  return claimIdleBusinessDays(claim.approvedAt, now) >= claimStaleDays(claim.firmStatus);
 }
 
 /** Zile LUCRĂTOARE de când firma are datele clientului. -1 dacă data nu se parsează. */

@@ -1942,6 +1942,7 @@ export {
   claimOccupiesLeadSlot,
   claimReminderDue,
   claimRemindersExhausted,
+  claimStaleDays,
   claimsHeldForLead,
   countActiveClaimsForFirm,
   isClaimStale,

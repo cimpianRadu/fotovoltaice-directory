@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import {
   CLAIM_REMINDER_MAX,
-  CLAIM_STALE_DAYS,
   CLAIM_STATUS_HINTS,
   CLAIM_STATUS_LABELS,
   MAX_ACTIVE_CLAIMS_PER_FIRM,
@@ -12,6 +11,7 @@ import {
   claimIdleCalendarDays,
   claimLastActivity,
   claimRemindersExhausted,
+  claimStaleDays,
   isClaimStale,
   isClaimStatusUnproven,
   type ClaimSource,
@@ -188,16 +188,17 @@ function Claim({ claim }: { claim: ClaimRow }) {
           Firma zice că a semnat. Verifică cu clientul, apoi treci cererea pe „Câștigată".
         </div>
       )}
-      {/* Datele au plecat spre firmă, oferta nu, și nimic nu s-a mișcat de 2 zile
-          LUCRĂTOARE: apel de follow-up, aflăm dacă mai e de interes sau realocăm.
-          Weekendul nu se numără, dar clientul îl trăiește, deci lângă cifra de
-          zile lucrătoare stă și cât așteaptă omul de fapt. */}
+      {/* Datele au plecat spre firmă, oferta nu, și nimic nu s-a mișcat de
+          pragul statusului (2 zile LUCRĂTOARE, 4 pe „în discuții"): apel de
+          follow-up, aflăm dacă mai e de interes sau realocăm. Weekendul nu se
+          numără, dar clientul îl trăiește, deci lângă cifra de zile lucrătoare
+          stă și cât așteaptă omul de fapt. */}
       {isClaimStale({ ...claim, approvedAt, offeredAt: claim.offeredAt, contactedAt }) && (
         <div
           title={`Nimic nou din ${fmtDateTime(new Date(claimLastActivity({ ...claim, approvedAt, contactedAt })).toISOString())}`}
           className="mt-1 inline-block rounded bg-red-100 px-1.5 py-px text-[10px] font-semibold text-red-700"
         >
-          fără mișcare de {CLAIM_STALE_DAYS}+ zile lucrătoare, sună firma
+          fără mișcare de {claimStaleDays(claim.firmStatus)}+ zile lucrătoare, sună firma
           {approvedAt ? ` (clientul așteaptă de ${claimIdleCalendarDays(approvedAt)} zile)` : ''}
         </div>
       )}
