@@ -8,26 +8,27 @@ import SegmentToggle from '@/components/segment/SegmentToggle';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import { trackEvent } from '@/lib/analytics';
 
-// În bara principală rămân destinațiile pentru clientul care caută (Calculatorul
-// e momeala care se termină în cerere de ofertă). Uneltele căutate punctual trec
-// sub „Mai multe", inclusiv listarea de firmă: partea de listări nu e focusul
-// acum. /cere-oferta nu e link aici: e CTA-ul amber al headerului, pe ambele
+// În bara principală stau destinațiile pentru clientul care caută, plus pagina
+// de instalatori: firmele sunt jumătatea de piață care lipsește, iar cererile
+// nerevendicate se văd chiar lângă ea. Calculatorul a ieșit din bară (trafic
+// mic, iar în el se intră oricum din widgeturile din ghiduri), dar pagina
+// rămâne. /cere-oferta nu e link aici: e CTA-ul amber al headerului, pe ambele
 // lățimi — conversia principală a site-ului nu concurează cu propriul link.
 const primaryLinks = [
   { href: '/firme', label: 'Firme' },
   { href: '/cereri', label: 'Cereri Clienți' },
+  { href: '/pentru-instalatori', label: 'Pentru instalatori' },
   { href: '/studii-de-caz', label: 'Studii de Caz' },
   { href: '/ghid', label: 'Ghiduri' },
-  { href: '/calculator-panouri-fotovoltaice', label: 'Calculator' },
 ];
 
 // Uneltele primele, paginile despre site la urmă.
 const moreLinks = [
   { href: '/verificare-anre', label: 'Verificare ANRE' },
   { href: '/clasament', label: 'Clasament' },
-  // Pagina-umbrelă pentru instalatori stă înaintea celor două pagini care sunt,
-  // de fapt, pașii ei: listarea și portalul.
-  { href: '/pentru-instalatori', label: 'Pentru instalatori' },
+  // Calculatorul iese din bara principală, dar rămâne accesibil de aici: se
+  // intră în el mai ales din widgeturile din ghiduri, nu din navigație.
+  { href: '/calculator-panouri-fotovoltaice', label: 'Calculator' },
   { href: '/listeaza-firma', label: 'Listează-ți firma' },
   { href: '/portal', label: 'Portal Instalatori' },
   { href: '/publicitate', label: 'Publicitate' },
