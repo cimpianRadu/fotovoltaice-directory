@@ -27,6 +27,7 @@ import ClaimList, { type ClaimRow } from './ClaimList';
 import LeadCrm from './LeadCrm';
 import MessagePreview from './MessagePreview';
 import ShareLeadButton from './ShareLeadButton';
+import MergeLeadsButton from './MergeLeadsButton';
 import ManualClaimForm, { type FirmOption } from './ManualClaimForm';
 import { formatLeadForShare } from './formatLead';
 
@@ -329,7 +330,7 @@ function LeadCard({
           )}
           {/* Același om, altă cerere deschisă: ori a cerut altă firmă de pe altă
               pagină (cazul Sibiu, 21 aug), ori chiar are două proiecte. Decide
-              omul; scriptul face comasarea. */}
+              omul, de aici: butonul comasează în cererea de pe cardul ăsta. */}
           {sameClient.length > 0 && (
             <div className="text-amber-600">
               același telefon/email ca{' '}
@@ -341,6 +342,14 @@ function LeadCard({
                   </a>
                 </span>
               ))}
+              <MergeLeadsButton
+                leadId={lead.timestamp}
+                candidates={sameClient.map((o) => ({
+                  id: o.timestamp,
+                  when: fmtDateTime(o.timestamp),
+                  firms: parseRequestedFirms(o.preselectedCompany),
+                }))}
+              />
             </div>
           )}
           {/* Coloana M, veche: „Nou" e valoarea implicită și nu spune nimic.
@@ -540,9 +549,10 @@ export default async function CrmPage({ searchParams }: Props) {
   const listingsCutoff = Date.now() - LISTINGS_WINDOW_DAYS * 86_400_000;
   const listings = allListings.filter((l) => Date.parse(l.timestamp) >= listingsCutoff);
 
-  // Retrimiterile comasate (coloana Q, scrisă de scripts/merge-leads.mjs) nu
-  // sunt cereri, sunt același om apăsând „Trimite" de mai multe ori: ies din
-  // listă și din cifre, iar cardul canonic arată câte au fost.
+  // Retrimiterile comasate (coloana Q, scrisă de butonul de pe card sau de
+  // scripts/merge-leads.mjs) nu sunt cereri, sunt același om apăsând „Trimite"
+  // de mai multe ori: ies din listă și din cifre, iar cardul canonic arată
+  // câte au fost.
   const mergedInto = new Map<string, number>();
   for (const l of leads) {
     if (l.duplicatAl) mergedInto.set(l.duplicatAl, (mergedInto.get(l.duplicatAl) ?? 0) + 1);
@@ -756,11 +766,7 @@ export default async function CrmPage({ searchParams }: Props) {
             <span className="text-amber-600">
               {sameClientOf.size} cu același telefon/email ca alta
             </span>{' '}
-            — comasează local cu{' '}
-            <code className="rounded bg-slate-100 px-1 py-0.5 text-[10px] text-slate-600">
-              node scripts/merge-leads.mjs
-            </code>{' '}
-            (fără argumente listează grupurile)
+            — comasează de pe card, cu {'„Comasează în asta"'}
           </>
         )}
       </p>

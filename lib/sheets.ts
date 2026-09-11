@@ -6,8 +6,10 @@ import {
   clearsOfferMark,
   deriveClaimStatus,
   isLeadClosed,
+  isSameClient,
   isSameFirm,
   joinRequestedFirms,
+  parseRequestedFirms,
   type LeadStatus,
   type ContactState,
   type LeadNote,
@@ -1821,8 +1823,10 @@ export interface SocialPost {
   platforme: Partial<Record<SocialPlatform, string>>;
 }
 
+/** 0 → A, 25 → Z, 26 → AA: Leads trece de Z (comasarea scrie până în AM), Social nu. */
 function colLetter(index: number): string {
-  return String.fromCharCode(65 + index);
+  const high = Math.floor(index / 26);
+  return (high ? String.fromCharCode(64 + high) : '') + String.fromCharCode(65 + (index % 26));
 }
 
 export async function getSocialPosts(): Promise<SocialPost[]> {
@@ -2101,6 +2105,195 @@ export async function updateLeadCrm(
   }
 
   return { ...readCrmFields(row), poze: row[LEAD_POZE_COL] || '' };
+}
+
+// ── Comasarea retrimiterilor ───────────────────────────────────────────────
+// Același om apasă „Trimite" de mai multe ori (câte o pagină de firmă, cazul
+// Sibiu din 21 aug 2026) și ies trei cereri identice: trei carduri, trei
+// alerte, o singură cerere reală. Comasarea păstrează un rând canonic și
+// ascunde restul. Aceeași logică rula doar din scripts/merge-leads.mjs; butonul
+// din /admin/crm o cheamă de aici, ca decizia să se poată lua în fața cardului.
+// Nu se șterge niciun rând: reversibil de mână (golești Q, pui M înapoi).
+
+/**
+ * Celulele completate pe canonic din retrimiteri, când canonicul le are goale:
+ * exact ce strânge formularul + enrich, nimic din ce scriu CRM-ul sau cronurile.
+ * Nimic completat nu se suprascrie.
+ */
+const LEAD_MERGE_FILL_COLS: Record<number, string> = {
+  7: 'Suprafață',
+  8: 'Putere',
+  9: 'Mesaj',
+  18: 'Tip acoperiș',
+  19: 'Alimentare',
+  20: 'Consum lunar',
+  24: 'Finanțare',
+  25: 'Localitate',
+  26: 'Baterie',
+  27: 'Stație încărcare',
+  28: 'Termen',
+  32: 'Branșament',
+  36: 'Interval apel',
+  37: 'Tip lucrare',
+  38: 'Capacitate baterie',
+};
+
+const LEAD_FIRMS_COL = 11; // L
+const LEAD_STATUS_COL = 12; // M
+const LEAD_DUPLICAT_COL = 16; // Q
+
+function roDateTime(iso: string): string {
+  return new Date(iso).toLocaleString('ro-RO', {
+    day: 'numeric',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Europe/Bucharest',
+  });
+}
+
+/**
+ * Refuz pe care îl poate trece un om cu `force` (revendicare pe retrimitere,
+ * telefoane diferite) — spre deosebire de un refuz de structură (rând
+ * inexistent), care rămâne refuz.
+ */
+export class LeadMergeError extends Error {
+  readonly forceable: boolean;
+  constructor(message: string, forceable = false) {
+    super(message);
+    this.forceable = forceable;
+  }
+}
+
+export interface LeadMergeResult {
+  canonical: string;
+  merged: string[];
+  /** Firmele cerute, reunite din toate rândurile. */
+  firms: string;
+  /** Etichetele celulelor completate pe canonic din retrimiteri. */
+  filled: string[];
+}
+
+/**
+ * Comasează una sau mai multe retrimiteri în cererea canonică:
+ *   - L: reuniunea firmelor cerute din toate rândurile
+ *   - celulele goale ale canonicului se completează din retrimiteri
+ *   - W: o notă datată pe canonic + una pe fiecare retrimitere
+ *   - retrimiterile primesc M = „Ascuns" și Q = timestampul canonicului, deci
+ *     ies din /cereri, din alerte și din listele din /admin/crm (isLeadHidden)
+ */
+export async function mergeLeads(
+  canonicalId: string,
+  duplicateIds: string[],
+  opts: { force?: boolean; today?: string; time?: string } = {},
+): Promise<LeadMergeResult> {
+  if (!duplicateIds.length) throw new LeadMergeError('Nicio retrimitere de comasat.');
+  if (duplicateIds.includes(canonicalId)) {
+    throw new LeadMergeError('Cererea păstrată nu poate fi și retrimitere.');
+  }
+
+  const rows = await readRows('Leads');
+  const byId = new Map<string, { row: string[]; sheetRow: number }>();
+  rows.forEach((r, i) => {
+    if (i > 0 && Number.isFinite(Date.parse(r[0] || ''))) byId.set(r[0], { row: r, sheetRow: i + 1 });
+  });
+
+  const canon = byId.get(canonicalId);
+  if (!canon) throw new LeadMergeError('Cererea păstrată nu există în tabul Leads.');
+  if ((canon.row[LEAD_DUPLICAT_COL] || '').trim()) {
+    throw new LeadMergeError('Cererea păstrată e ea însăși o retrimitere deja comasată.');
+  }
+
+  const dups = duplicateIds.map((id) => {
+    const d = byId.get(id);
+    if (!d) throw new LeadMergeError(`Cererea ${id} nu există în tabul Leads.`);
+    if ((d.row[LEAD_DUPLICAT_COL] || '').trim()) {
+      throw new LeadMergeError(`Cererea din ${roDateTime(id)} e deja comasată în alta.`);
+    }
+    if (
+      !opts.force &&
+      !isSameClient(
+        { telefon: canon.row[4] || '', email: canon.row[3] || '' },
+        { telefon: d.row[4] || '', email: d.row[3] || '' },
+      )
+    ) {
+      throw new LeadMergeError(
+        `Cererea din ${roDateTime(id)} n-are același telefon/email cu cea păstrată.`,
+        true,
+      );
+    }
+    return d;
+  });
+
+  // Revendicările se leagă de cerere prin timestamp: una rămasă pe o retrimitere
+  // ar atârna de un rând ascuns, iar firma n-ar mai vedea cererea în portal.
+  if (!opts.force) {
+    const claims = await getClaims();
+    const stuck = claims.filter((c) => duplicateIds.includes(c.leadId));
+    if (stuck.length) {
+      const names = [...new Set(stuck.map((c) => c.numeFirma).filter(Boolean))].join(', ');
+      throw new LeadMergeError(
+        `Retrimiterile au revendicări (${names || stuck.length}). Mută-le pe cererea păstrată, apoi forțează.`,
+        true,
+      );
+    }
+  }
+
+  const firms = joinRequestedFirms([
+    ...parseRequestedFirms(canon.row[LEAD_FIRMS_COL]),
+    ...dups.flatMap((d) => parseRequestedFirms(d.row[LEAD_FIRMS_COL])),
+  ]);
+
+  const data: { range: string; values: string[][] }[] = [];
+  const cell = (sheetRow: number, index: number, value: string) =>
+    data.push({ range: `Leads!${colLetter(index)}${sheetRow}`, values: [[value]] });
+
+  if (firms !== (canon.row[LEAD_FIRMS_COL] || '')) cell(canon.sheetRow, LEAD_FIRMS_COL, firms);
+
+  const filled: string[] = [];
+  for (const [key, label] of Object.entries(LEAD_MERGE_FILL_COLS)) {
+    const index = Number(key);
+    if ((canon.row[index] || '').trim()) continue;
+    const src = dups.find((d) => (d.row[index] || '').trim());
+    if (!src) continue;
+    cell(canon.sheetRow, index, src.row[index].trim());
+    filled.push(label);
+  }
+
+  const date = opts.today || new Date().toISOString().slice(0, 10);
+  const stamp = (text: string, existing: string) =>
+    serializeNotes([{ date, ...(opts.time ? { time: opts.time } : {}), text }, ...parseNotes(existing || '')]);
+
+  const when = dups.map((d) => roDateTime(d.row[0])).join(', ');
+  const canonNote =
+    `Comasată: ${dups.length === 1 ? 'o retrimitere' : `${dups.length} retrimiteri`}` +
+    ` ale aceleiași cereri (${when})${firms ? `; firme cerute, adunate: ${firms}` : ''}`;
+  cell(canon.sheetRow, LEAD_NOTES_COL, stamp(canonNote, canon.row[LEAD_NOTES_COL]));
+
+  for (const d of dups) {
+    cell(d.sheetRow, LEAD_STATUS_COL, 'Ascuns');
+    cell(d.sheetRow, LEAD_DUPLICAT_COL, canonicalId);
+    cell(
+      d.sheetRow,
+      LEAD_NOTES_COL,
+      stamp(
+        `Retrimitere comasată în cererea din ${roDateTime(canonicalId)} (${canonicalId})`,
+        d.row[LEAD_NOTES_COL],
+      ),
+    );
+  }
+
+  const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+  await withRetry(
+    () =>
+      sheets.spreadsheets.values.batchUpdate({
+        spreadsheetId: SPREADSHEET_ID,
+        requestBody: { valueInputOption: 'RAW', data },
+      }),
+    'merge leads',
+  );
+
+  return { canonical: canonicalId, merged: duplicateIds, firms, filled };
 }
 
 // ── CRM Firme: pipeline-ul telefonic pe instalatori ────────────────────────

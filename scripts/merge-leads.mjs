@@ -18,6 +18,10 @@
  *     și Q = timestamp-ul canonicului (isLeadHidden + „+N retrimiteri" pe card)
  * Nu șterge niciun rând. Reversibil de mână: golește Q și pune M înapoi pe „Nou".
  *
+ * Calea normală e butonul „Comasează în asta" de pe cardul din /admin/crm
+ * (mergeLeads din lib/sheets.ts, aceleași reguli). Scriptul rămâne pentru
+ * comasări în masă și pentru cazurile care cer --force cu ochii pe dry run.
+ *
  * Usage:
  *   node scripts/merge-leads.mjs
  *       listează grupurile de cereri deschise cu același telefon sau email
@@ -69,7 +73,8 @@ const COL = {
 const FILL_COLS = {
   7: 'Suprafață', 8: 'Putere', 9: 'Mesaj', 18: 'Tip acoperiș', 19: 'Alimentare',
   20: 'Consum lunar', 24: 'Finanțare', 25: 'Localitate', 26: 'Baterie', 27: 'Stație încărcare',
-  28: 'Termen', 32: 'Branșament', 36: 'Interval apel',
+  28: 'Termen', 32: 'Branșament', 36: 'Interval apel', 37: 'Tip lucrare',
+  38: 'Capacitate baterie',
 };
 const CLOSED = ['castigata', 'altundeva', 'renuntat'];
 
