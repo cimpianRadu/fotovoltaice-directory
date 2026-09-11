@@ -1322,7 +1322,7 @@
       "name": "Eurotehnica IT&C S.R.L.",
       "cui": "RO26991098",
       "logo": "/logos/eurotehnica-itc.png",
-      "description": "Companie din Craiova cu peste 14 ani de experiență, specializată în sisteme fotovoltaice turnkey și infrastructură de încărcare vehicule electrice. Partener SKE Huawei, cu parteneriate Sungrow, Fronius și Canadian Solar. Peste 6.200 de instalații realizate la nivel național.",
+      "description": "Companie din Craiova, activă din 2010. Fotovoltaic: sisteme la cheie pentru locuințe, hale industriale și sedii comerciale, stocare cu baterii și stații de încărcare pentru vehicule electrice — peste 6.200 de sisteme instalate, cu echipamente Huawei, Deye, Atmoce și Pytes. Se ocupă și de dosarul de prosumator și de finanțare (Casa Verde, Electric Up, rate prin bancă).\n\nElectric și curenți slabi: instalații electrice interioare și exterioare de joasă tensiune (până la 1.000 V), supraveghere video, detecție efracție, control acces și pontaj, videointerfon, detecție și semnalizare incendiu, rețele voce-date și automatizări de porți, bariere și uși de garaj. Proiectare și execuție cu echipe proprii.",
       "founded": 2010,
       "employees": 33,
       "location": {
@@ -1333,24 +1333,42 @@
       "contact": {
         "phone": "0721322260",
         "email": "office@eurotehnicaitc.ro",
-        "website": "https://eurotehnicaitc.ro"
+        "website": "https://eurotehnica.ro"
+      },
+      "socials": {
+        "facebook": "https://www.facebook.com/eurotehnica/",
+        "instagram": "https://www.instagram.com/eurotehnica"
       },
       "coverage": [
         "Dolj",
-        "Olt",
         "Gorj",
-        "Mehedinți"
+        "Mehedinți",
+        "Olt",
+        "Vâlcea",
+        "Argeș",
+        "Dâmbovița",
+        "Prahova",
+        "Buzău",
+        "Brăila",
+        "Ialomița",
+        "Călărași",
+        "Giurgiu",
+        "Teleorman",
+        "Ilfov",
+        "București",
+        "Constanța",
+        "Tulcea"
       ],
       "specializations": [
+        "rezidential",
         "hale-industriale",
         "cladiri-birouri",
-        "retail",
-        "agricol"
+        "retail"
       ],
       "certifications": [],
       "capacity": {
         "minProjectKw": 5,
-        "maxProjectKw": 0,
+        "maxProjectKw": 400,
         "projectsCompleted": 6200
       },
       "financials": {
@@ -1392,18 +1410,31 @@
       },
       "tags": [
         "experienta-10-ani",
+        "pv-rezidential",
+        "pv-comercial",
+        "stocare-baterii",
+        "statii-incarcare-ev",
+        "casa-verde",
+        "electric-up",
+        "finantare-disponibila",
+        "mentenanta-inclusa",
         "partener-huawei",
-        "mentenanta-inclusa"
+        "instalatii-electrice",
+        "curenti-slabi",
+        "sisteme-securitate",
+        "detectie-incendiu",
+        "retele-voce-date",
+        "automatizari"
       ],
       "featured": false,
       "verified": true,
       "createdAt": "2026-02-25",
-      "updatedAt": "2026-07-28",
+      "updatedAt": "2026-09-11",
       "anreMatch": {
         "societate": "EUROTEHNICA IT&C",
         "judet": "Dolj"
       },
-      "segment": "comercial"
+      "segment": "ambele"
     },
     {
       "id": "fomco-solar",
