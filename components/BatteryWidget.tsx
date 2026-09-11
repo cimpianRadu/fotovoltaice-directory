@@ -16,7 +16,7 @@
 // 3. Nicio cifră fără sursă. Pragul de admitere NU e afișat, pentru că nu îl
 //    știe nimeni: în locul lui, profilurile de comparație din articol.
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { formatCurrency, formatNumber } from '@/lib/utils-shared';
 import {
   PROGRAM,
@@ -31,9 +31,25 @@ import {
   scoreFor,
   grantFor,
 } from '@/lib/battery-sizing';
+import {
+  DEFAULT_BUY_PRICE,
+  DEFAULT_INJECTION_PRICE,
+  DEFAULT_YIELD_KWH_PER_KWP,
+  INSTANT_SELF_CONSUMPTION,
+  ROUND_TRIP,
+  USABLE_FRACTION,
+  savingsFor,
+  paybackYears,
+} from '@/lib/battery-savings';
+import { DEFAULT_TARIFF_RON_PER_KWH } from '@/lib/pv-constants';
 
-/** Tariful implicit, același ca în `lib/pv-estimate.ts`, ca să nu iasă două cifre diferite. */
-const TARIFF_RON_PER_KWH = 1.3;
+/**
+ * Tariful implicit. Era rescris aici cu un comentariu „aceeași valoare ca în
+ * pv-estimate"; acum vine din `lib/pv-constants`, modulul fără dependențe de
+ * date, deci nu mai poate ajunge să difere. Importul nu aduce nimic în bundle
+ * în afară de numere.
+ */
+const TARIFF_RON_PER_KWH = DEFAULT_TARIFF_RON_PER_KWH;
 
 function trackUmami(event: string, data?: Record<string, string | number>) {
   if (typeof window === 'undefined') return;
@@ -47,7 +63,7 @@ const num = (n: number, d = 0) =>
 /** Taie zecimala inutilă: 27,0 devine 27, dar 27,5 rămâne 27,5. */
 const pts = (n: number) => (Number.isInteger(n) ? String(n) : num(n, 1));
 
-const STEPS = ['Consumul tău', 'Bateria', 'Punctajul'] as const;
+const STEPS = ['Consumul tău', 'Bateria', 'Punctajul', 'Economia'] as const;
 
 interface Props {
   /** Ajunge în /cere-oferta?sursa=… și de acolo în Sheet, ca să știm ce produce widgetul. */
@@ -71,6 +87,35 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
   const [costTouched, setCostTouched] = useState(false);
   const [ownSharePct, setOwnSharePct] = useState(25);
 
+  // Pasul 4. Prețurile sunt singurele mărimi noi: restul se reia din pașii 1-2,
+  // ca omul să nu reintroducă date pe care le-a dat deja.
+  const [buyPrice, setBuyPrice] = useState(DEFAULT_BUY_PRICE);
+  const [injectionPrice, setInjectionPrice] = useState(DEFAULT_INJECTION_PRICE);
+  /** Ce chip are panoul deschis. Unul singur odată. */
+  const [openChip, setOpenChip] = useState<string | null>(null);
+  /** Rândul de chip-uri plus panoul, ca să știm ce e „în afară". */
+  const chipsRef = useRef<HTMLDivElement>(null);
+
+  // Panoul se închidea doar reapăsând chip-ul sau alegând altul; un click
+  // oriunde în rest îl lăsa deschis, ceea ce pe telefon arată ca un widget
+  // blocat. `pointerdown`, nu `click`: se închide la atingere, nu după ridicarea
+  // degetului. Escape, pentru cine navighează de la tastatură.
+  useEffect(() => {
+    if (!openChip) return;
+    const outside = (e: PointerEvent) => {
+      if (!chipsRef.current?.contains(e.target as Node)) setOpenChip(null);
+    };
+    const esc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpenChip(null);
+    };
+    document.addEventListener('pointerdown', outside);
+    document.addEventListener('keydown', esc);
+    return () => {
+      document.removeEventListener('pointerdown', outside);
+      document.removeEventListener('keydown', esc);
+    };
+  }, [openChip]);
+
   // ---------- Pasul 1: dimensionarea ----------
   const s1 = useMemo(() => {
     const raw = parseFloat(consum) || 0;
@@ -81,6 +126,7 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
       raw,
       bracket,
       pv,
+      kwhPerMonth,
       daily: kwhPerMonth / DAYS_PER_MONTH,
       threshold: supportThresholdKwp(bracket.capacity[0]),
       topNeed: kwpNeeded(bracket.capacity[1]),
@@ -108,12 +154,117 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
     };
   }, [cap, costValue, ownSharePct]);
 
+  // ---------- Pasul 4: economia ----------
+  const s3 = useMemo(() => {
+    const sav = savingsFor({
+      consumLunarKwh: s1.kwhPerMonth,
+      kwp: s1.pv,
+      capacityKwh: cap,
+      buyPrice,
+      injectionPrice,
+    });
+    return {
+      sav,
+      /** Amortizarea pe banii tăi, adică pe contribuția proprie. */
+      paybackOwn: paybackYears(s2.ownLei, sav.perYear),
+      /** Amortizarea dacă plătești bateria integral, fără program. */
+      paybackFull: paybackYears(costValue, sav.perYear),
+    };
+  }, [s1.kwhPerMonth, s1.pv, cap, buyPrice, injectionPrice, s2.ownLei, costValue]);
+
   const { bracket } = s1;
   const gapToMin = PROGRAM.minKwh - bracket.capacity[1];
 
   const go = (n: number) => {
     setStep(n);
     trackUmami('baterie-widget-pas', { pas: n + 1, sursa });
+    // Pasul de economie e cel pe care vrem să-l măsurăm separat: cât de mulți
+    // ajung până aici și, mai ales, câți văd un rezultat saturat (adică bateria
+    // pe care o iau pentru punctaj e mai mare decât le folosește).
+    if (n === 3) {
+      trackUmami('baterie-economie-vazut', {
+        sursa,
+        capacitate: cap,
+        lei_an: Math.round(s3.sav.perYear),
+        saturat: s3.sav.saturated ? 'da' : 'nu',
+        limiteaza: s3.sav.limiter,
+      });
+    }
+  };
+
+  // Cei cinci parametri ai pasului 4. Patru vin din pașii anteriori și se
+  // ajustează de aici; doar prețurile sunt noi. Ținute într-un singur obiect ca
+  // rândul de chip-uri și panoul de sub el să citească aceeași definiție.
+  const CHIPS = ['buy', 'inject', 'kwp', 'cap', 'consum'] as const;
+  const chipConf: Record<
+    string,
+    {
+      label: string;
+      display: string;
+      value: number;
+      min: number;
+      max: number;
+      step: number;
+      set: (v: number) => void;
+      hint: string;
+    }
+  > = {
+    buy: {
+      label: 'cumperi',
+      display: `${num(buyPrice, 2)} lei`,
+      value: buyPrice,
+      min: 0.8,
+      max: 2,
+      step: 0.05,
+      set: setBuyPrice,
+      hint: 'Prețul de pe factură, cu tot cu distribuție și taxe. Implicit 1,30 lei, mijlocul intervalului rezidențial.',
+    },
+    inject: {
+      label: 'recuperezi',
+      display: `${num(injectionPrice, 2)} lei`,
+      value: injectionPrice,
+      min: 0,
+      max: 2,
+      step: 0.05,
+      set: setInjectionPrice,
+      hint: 'Cât primești înapoi pentru 1 kWh injectat. Sub compensare cantitativă e prețul energiei active din contract, nu un preț de nimic — de-aici vine cea mai mare parte din rezultat.',
+    },
+    kwp: {
+      label: 'sistem',
+      display: `${num(s1.pv, 1)} kWp`,
+      value: s1.pv,
+      min: 0,
+      max: 20,
+      step: 0.5,
+      set: (v) => setKwp(String(v)),
+      hint: 'Panourile pe care le ai deja. Ele dau surplusul din care se încarcă bateria.',
+    },
+    cap: {
+      label: 'stocare',
+      display: `${num(cap, 1)} kWh`,
+      value: cap,
+      min: PROGRAM.minKwh,
+      max: 30,
+      step: 1,
+      set: (v) => {
+        setCapacity(String(v));
+        setCostTouched(false);
+      },
+      hint: `Capacitatea nominală. Programul cere minimum ${PROGRAM.minKwh} kWh și dă punctaj maxim de la ${PROGRAM.capacityForMaxPoints} kWh.`,
+    },
+    consum: {
+      label: 'consum/lună',
+      display: `${num(s1.kwhPerMonth)} kWh`,
+      value: s1.kwhPerMonth,
+      min: 100,
+      max: 1500,
+      step: 25,
+      set: (v) => {
+        setUnit('kwh');
+        setConsum(String(v));
+      },
+      hint: 'Consumul casei. Din el iese cât apuci să scoți seara din baterie.',
+    },
   };
 
   const input =
@@ -123,11 +274,17 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
     'flex items-center rounded-r-lg border border-l-0 border-gray-300 bg-gray-50 px-2.5 text-sm font-semibold text-gray-500';
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-sm">
+    // `data-battery-calculator`: de el se agață `BatteryFab` ca să-și ascundă
+    // pastila cât timp calculatorul e pe ecran. Un atribut, nu un id, fiindcă
+    // widgetul apare și pe home, și pe fiecare pagină de ghid.
+    <div
+      data-battery-calculator
+      className="overflow-hidden rounded-2xl border border-border bg-white shadow-sm"
+    >
       {/* Antet compact, cu pașii ca navigație. */}
       <div className="bg-secondary px-4 py-3.5 text-white sm:px-5">
         <div className="flex items-baseline justify-between gap-3">
-          <h2 className="text-base font-bold sm:text-lg">Ce baterie îți trebuie și ce punctaj faci</h2>
+          <h2 className="text-base font-bold sm:text-lg">Ce baterie îți trebuie și cât economisești cu ea</h2>
           <span className="shrink-0 text-xs text-white/60">
             {step + 1}/{STEPS.length}
           </span>
@@ -332,8 +489,16 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
                 onMouseUp={() => trackUmami('baterie-slider-contributie', { pct: Math.round(s2.pct * 100) })}
                 className="mt-1.5 w-full accent-primary"
               />
+              {/* Cele două capete ale sliderului, scrise la capetele lui: unde
+                  e minimul și unde e maximul util. Într-un singur paragraf sub
+                  slider, omul trebuia să citească o frază ca să afle că are o
+                  limită jos; așa o vede în dreptul ei. */}
+              <div className="mt-1 flex justify-between gap-3 text-[11px] text-gray-500">
+                <span>minim {num(s2.minPct, 1)}%</span>
+                <span>punctaj maxim de la {num(OWN_SHARE_FOR_MAX_POINTS * 100, 1)}%</span>
+              </div>
               <p className="mt-1 text-[11px] text-gray-500">
-                Minimul la {cap} kWh: {num(s2.minPct, 1)}%. Plafonul de {formatNumber(PROGRAM.maxGrant)} lei îl urcă
+                Minimul la {cap} kWh e {num(s2.minPct, 1)}%: plafonul de {formatNumber(PROGRAM.maxGrant)} lei îl urcă
                 peste 25% la baterii mari.
               </p>
             </div>
@@ -388,6 +553,148 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
           </>
         )}
 
+        {/* ---------- Pasul 4 ---------- */}
+        {step === 3 && (
+          <>
+            {/* Rezultatul stă sus și se recalculează sub deget, ca omul să vadă
+                ce mișcă fiecare parametru fără să apese nimic. */}
+            <div className="rounded-xl border border-border bg-surface px-4 py-3">
+              <div className="text-[10px] font-bold uppercase tracking-wide text-gray-500">
+                {s3.sav.perYear > 0 ? 'Cu bateria câștigi' : 'Cu bateria pierzi'}
+              </div>
+              <div className="flex flex-wrap items-baseline gap-x-2">
+                <span
+                  className={`text-3xl font-extrabold leading-tight sm:text-4xl ${
+                    s3.sav.perYear > 0 ? 'text-secondary' : 'text-red-700'
+                  }`}
+                >
+                  {formatCurrency(Math.abs(Math.round(s3.sav.perYear)))}
+                </span>
+                <span className="text-sm text-gray-500">
+                  pe an · {formatCurrency(Math.abs(Math.round(s3.sav.perMonth)))}/lună
+                </span>
+              </div>
+            </div>
+
+            {/* Cei cinci parametri, pe un rând. Câmpurile pe rânduri separate
+                ocupau cinci ori mai mult, iar patru din cinci vin deja din pașii
+                anteriori: aici se ajustează, nu se completează de la zero. */}
+            <div ref={chipsRef}>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {CHIPS.map((c) => {
+                const conf = chipConf[c];
+                return (
+                  <button
+                    key={c}
+                    type="button"
+                    onClick={() => {
+                      const next = openChip === c ? null : c;
+                      setOpenChip(next);
+                      if (next) trackUmami('baterie-economie-chip', { parametru: c, sursa });
+                    }}
+                    aria-expanded={openChip === c}
+                    className={`rounded-lg border px-2.5 py-1.5 text-left transition-colors ${
+                      openChip === c
+                        ? 'border-primary bg-primary/10'
+                        : 'border-border bg-white hover:border-primary/50'
+                    }`}
+                  >
+                    <span className="block text-sm font-bold leading-tight text-secondary">
+                      {conf.display}
+                    </span>
+                    <span className="block text-[10px] uppercase tracking-wide text-gray-500">{conf.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Panoul de ajustare stă sub rând, pe toată lățimea. Un popover
+                ancorat de chip ar fi ieșit din card pe telefon, iar cardul are
+                `overflow-hidden`, deci l-ar fi și tăiat. */}
+            {/* Lățime limitată, nu toată lățimea cardului: pe desktop ieșea un
+                slider de aproape 2.000 px pentru un interval de doi lei, iar
+                valoarea din dreapta ajungea fix sub butonul flotant. */}
+            {openChip && (
+              <div className="mt-2 max-w-sm rounded-xl border border-primary/30 bg-primary/5 px-3.5 py-3">
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-xs font-semibold text-gray-700">{chipConf[openChip].label}</span>
+                  <span className="text-sm font-extrabold text-primary-dark">{chipConf[openChip].display}</span>
+                </div>
+                <input
+                  type="range"
+                  aria-label={chipConf[openChip].label}
+                  min={chipConf[openChip].min}
+                  max={chipConf[openChip].max}
+                  step={chipConf[openChip].step}
+                  value={chipConf[openChip].value}
+                  onChange={(e) => chipConf[openChip].set(parseFloat(e.target.value))}
+                  onMouseUp={() => trackUmami('baterie-economie-slider', { parametru: openChip })}
+                  className="mt-1.5 w-full accent-primary"
+                />
+                <p className="mt-1 text-[11px] leading-snug text-gray-600">{chipConf[openChip].hint}</p>
+              </div>
+            )}
+            </div>
+
+            {/* Amortizarea: singura cifră care spune dacă merită, și singura care
+                leagă pasul 3 de ăsta. Subvenția se vede aici, nu în punctaj. */}
+            <div className="mt-3 grid grid-cols-2 gap-2.5">
+              <div className="rounded-xl border border-border bg-surface px-3 py-2.5">
+                <div className="text-[10px] font-bold uppercase tracking-wide text-gray-500">Fără program</div>
+                <div className="text-xl font-extrabold text-secondary">
+                  {s3.paybackFull ? `${num(s3.paybackFull, 1)} ani` : 'nu se amortizează'}
+                </div>
+                <div className="text-[10px] text-gray-500">la {formatCurrency(costValue)}</div>
+              </div>
+              {/* Verde doar când chiar se amortizează. Un card verde peste
+                  „nu se amortizează" citește ca rezultat bun dintr-o privire. */}
+              <div
+                className={`rounded-xl border px-3 py-2.5 ${
+                  s3.paybackOwn ? 'border-emerald-200 bg-emerald-50' : 'border-border bg-surface'
+                }`}
+              >
+                <div className="text-[10px] font-bold uppercase tracking-wide text-gray-500">Cu subvenția AFM</div>
+                <div className={`text-xl font-extrabold ${s3.paybackOwn ? 'text-emerald-700' : 'text-gray-500'}`}>
+                  {s3.paybackOwn ? `${num(s3.paybackOwn, 1)} ani` : 'nu se amortizează'}
+                </div>
+                <div className="text-[10px] text-gray-500">la {formatCurrency(s2.ownLei)} din buzunar</div>
+              </div>
+            </div>
+
+            {/* Pragul de saturație. Motivul pentru care widgetul ăsta există:
+                peste el, kWh-ul în plus se plătește dar nu se folosește. */}
+            {s3.sav.perYear > 0 && s3.sav.saturationKwh > 0 && (
+              <Note tone={s3.sav.saturated ? 'warn' : 'ok'}>
+                {s3.sav.saturated ? (
+                  <>
+                    <b>Peste {num(s3.sav.saturationKwh, 1)} kWh economia nu mai crește.</b>{' '}
+                    {s3.sav.limiter === 'panouri'
+                      ? `Panourile de ${num(s1.pv, 1)} kWp lasă în medie ${num(s3.sav.surplusPerDay, 1)} kWh surplus pe zi, atât are bateria de stocat.`
+                      : `Seara consumi ${num(s3.sav.eveningPerDay, 1)} kWh, atât apuci să scoți din baterie.`}{' '}
+                    Cei {num(cap - s3.sav.saturationKwh, 1)} kWh peste prag îți aduc puncte la AFM, nu lei pe factură.
+                  </>
+                ) : (
+                  <>
+                    <b>Bateria e limita, nu sistemul.</b> Fiecare kWh în plus încă aduce economie, până pe la{' '}
+                    {num(s3.sav.saturationKwh, 1)} kWh.
+                  </>
+                )}
+              </Note>
+            )}
+
+            {s3.sav.perYear <= 0 && (
+              <Note tone="stop">
+                {/* `formatCurrency` rotunjește la leu întreg, deci 1,25 și 1,30
+                    ar apărea amândouă ca „1 RON". Prețurile unitare se scriu cu
+                    două zecimale, ca pe chip-uri. */}
+                <b>La prețurile astea bateria nu se justifică.</b> Recuperezi {num(injectionPrice, 2)} lei/kWh la
+                injecție și cumperi cu {num(buyPrice, 2)} lei/kWh, iar din fiecare kWh stocat se pierd{' '}
+                {num((1 - ROUND_TRIP) * 100)}% la conversie. Bateria are sens pentru backup, nu pentru factură.
+              </Note>
+            )}
+          </>
+        )}
+
         {/* Navigație + CTA */}
         <div className="mt-4 flex gap-2.5">
           {step > 0 && (
@@ -405,12 +712,20 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
               onClick={() => go(step + 1)}
               className="flex-1 rounded-xl bg-secondary px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-secondary-dark"
             >
-              {step === 0 ? 'Vezi ce punctaj faci' : 'Calculează punctajul'}
+              {step === 0 ? 'Vezi ce punctaj faci' : step === 1 ? 'Calculează punctajul' : 'Vezi cât economisești'}
             </button>
           ) : (
             <a
               href={`/cere-oferta?sursa=${encodeURIComponent(sursa)}`}
-              onClick={() => trackUmami('baterie-widget-cta', { capacitate: cap, punctaj: Math.round(s2.score.total) })}
+              onClick={() =>
+                trackUmami('baterie-widget-cta', {
+                  capacitate: cap,
+                  punctaj: Math.round(s2.score.total),
+                  lei_an: Math.round(s3.sav.perYear),
+                  amortizare: s3.paybackOwn ? Math.round(s3.paybackOwn * 10) / 10 : 0,
+                  saturat: s3.sav.saturated ? 'da' : 'nu',
+                })
+              }
               className="flex-1 rounded-xl bg-primary px-4 py-3 text-center text-sm font-bold text-white transition-colors hover:bg-primary-dark sm:text-base"
             >
               Cere o ofertă pentru baterii
@@ -421,6 +736,29 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
         {step === STEPS.length - 1 && (
           <p className="mt-2 text-center text-[11px] text-gray-500">
             Pentru bateria de {cap} kWh, de la instalatori cu atestat ANRE din județul tău.
+          </p>
+        )}
+
+        {/* Ieșire spre ofertă și de la punctaj, nu doar de la ultimul pas.
+            Până la pasul de economie, punctajul ERA ultimul pas și avea butonul
+            de ofertă; mutându-l mai departe, oricine se oprea aici mai are acum
+            un click de făcut. Link, nu buton, ca să nu concureze cu pasul
+            următor — dar `sursa` diferită, ca să știm câți ies pe scurtătură. */}
+        {step === 2 && (
+          <p className="mt-2 text-center text-xs text-gray-500">
+            <a
+              href={`/cere-oferta?sursa=${encodeURIComponent(`${sursa}-punctaj`)}`}
+              onClick={() =>
+                trackUmami('baterie-widget-cta', {
+                  capacitate: cap,
+                  punctaj: Math.round(s2.score.total),
+                  din_pas: 3,
+                })
+              }
+              className="font-semibold text-primary-dark hover:underline"
+            >
+              sau cere direct o ofertă pentru bateria de {cap} kWh
+            </a>
           </p>
         )}
 
@@ -464,6 +802,21 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
               </tbody>
             </table>
           </div>
+
+          <p className="mt-2.5 leading-relaxed">
+            <b className="text-gray-600">Economia</b> se calculează pe ce mută bateria zilnic: surplusul de peste zi
+            care altfel ar pleca în rețea, mutat în consumul de seară. Ipotezele, toate din ghidurile publicate aici:
+            autoconsum instant fără baterie {num(INSTANT_SELF_CONSUMPTION * 100)}% din producție (interval 20-30%),
+            randament dus-întors {num(ROUND_TRIP * 100)}% pe sistemul complet, invertor și BMS incluse (88-92%),
+            capacitate utilizabilă {num(USABLE_FRACTION * 100)}% din cea nominală (DoD al bateriilor LFP, 90-100%),
+            producție {formatNumber(DEFAULT_YIELD_KWH_PER_KWP)} kWh/kWp pe an, media țării, împărțită pe luni după
+            forma sezonieră PVGIS. Prețul de recuperare implicit, {num(DEFAULT_INJECTION_PRICE, 3)} lei/kWh, e prețul
+            energiei active — sub compensare cantitativă asta primești pentru surplus, conform art. 73¹ alin. (3) din
+            Legea nr. 160/2026, nu un preț de piață mult mai mic. Pune-ți cifrele de pe factura ta, sunt singurele care
+            contează. <b className="text-gray-600">Calculul se face lună cu lună</b>, fiindcă în decembrie panourile
+            produc a treia parte din cât produc în iulie, iar o baterie plină vara poate sta goală iarna. Consumul, în
+            schimb, e ținut constant: un profil lunar de consum nu avem de unde lua fără să-l inventăm.
+          </p>
 
           <p className="mt-2.5 leading-relaxed">
             Pragul de admitere nu se știe, depinde de câți se înscriu. La punctaj egal contează, în ordine, valoarea

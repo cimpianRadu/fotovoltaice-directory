@@ -10,6 +10,7 @@
 import pvgisData from '@/data/pvgis-yields.json';
 import pvgisMonthly from '@/data/pvgis-monthly.json';
 import type { KitPriceCurve, PricePoint } from './kit-price-curve';
+import { DEFAULT_YIELD, DEFAULT_TARIFF_RON_PER_KWH, MONTHLY_SHARES } from './pv-constants';
 
 export type Mounting = 'inclinat' | 'terasa' | 'sol';
 
@@ -32,14 +33,12 @@ export const MONTH_LABELS = ['ian', 'feb', 'mar', 'apr', 'mai', 'iun', 'iul', 'a
  */
 const MONTHLY = pvgisMonthly.judete as Record<string, { lunar: number[] }>;
 
-/** Media țării, pentru județele fără intrare proprie. Calculată o singură dată. */
-const DEFAULT_SHARES = (() => {
-  const all = Object.values(MONTHLY);
-  const sums = MONTH_LABELS.map((_, i) =>
-    all.reduce((acc, j) => acc + j.lunar[i] / j.lunar.reduce((a, b) => a + b, 0), 0) / all.length,
-  );
-  return sums;
-})();
+/**
+ * Media țării, pentru județele fără intrare proprie. Vine din `pv-constants`, ca
+ * să fie aceleași douăsprezece numere și în modulele care nu pot importa
+ * registrul PVGIS (`lib/battery-savings.ts`). Se calcula aici la fiecare load.
+ */
+const DEFAULT_SHARES: number[] = [...MONTHLY_SHARES];
 
 export function monthlyShares(judet: string): number[] {
   const entry = MONTHLY[judet];
@@ -48,20 +47,19 @@ export function monthlyShares(judet: string): number[] {
   return entry.lunar.map((v) => v / total);
 }
 
-/** Județ nerecunoscut: media aproximativă a țării, ca să nu pice calculul. */
-export const DEFAULT_YIELD = 1250;
+/**
+ * Județ nerecunoscut: media aproximativă a țării, ca să nu pice calculul.
+ * Re-exportat din `pv-constants`, unde stă ca să-l poată folosi și modulele care
+ * nu au voie să importe registrele PVGIS.
+ */
+export { DEFAULT_YIELD, DEFAULT_TARIFF_RON_PER_KWH };
 export const SYSTEM_LIFETIME_YEARS = 25;
 /** Degradarea anuală a panourilor, valoare uzuală de garanție. */
 export const ANNUAL_DEGRADATION = 0.005;
 export const M2_PER_KWP = 5;
 /** Factor de emisii pentru energia din rețea, folosit doar la CO₂ evitat. */
 export const KG_CO2_PER_KWH = 0.299;
-/**
- * Tariful mediu folosit când omul își dă consumul în lei, nu în kWh. Intervalul
- * rezidențial post-liberalizare e ~1,03-1,48 RON/kWh, deci 1,30 stă la mijloc.
- * Îl ținem separat ca să fie evident că e o ipoteză, nu o măsurătoare.
- */
-export const DEFAULT_TARIFF_RON_PER_KWH = 1.3;
+
 
 export function yieldFor(judet: string, mounting: Mounting = 'inclinat'): number {
   const base = YIELDS[judet] ?? DEFAULT_YIELD;

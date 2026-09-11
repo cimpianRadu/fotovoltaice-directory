@@ -61,6 +61,37 @@ export default function BatteryFab() {
     return () => window.removeEventListener('scroll', onScroll);
   }, [hiddenHere, pathname]);
 
+  // Pastila de pe desktop stă `fixed` pe marginea din dreapta și acoperea colțul
+  // calculatorului chiar când omul era cu ochii pe el — la pașii 3 și 4 tăia
+  // capătul din dreapta al hint-urilor de sub slidere. Cât timp calculatorul e pe
+  // ecran, un buton care duce la calculator nu are ce căuta acolo.
+  //
+  // Elementul e marcat cu `data-battery-calculator` în `BatteryWidget`, deci merge
+  // și pe home, și pe paginile de ghid. Dacă nu există pe pagina curentă,
+  // observatorul nu pornește și pastila se comportă ca înainte.
+  //
+  // Starea ține și pagina pe care s-a măsurat, nu doar da/nu. Altfel, la
+  // plecarea de pe home cu calculatorul pe ecran, ar fi rămas „da" pe pagina
+  // următoare și pastila ar fi dispărut acolo unde n-are ce ascunde — iar
+  // resetarea ei ar fi însemnat un `setState` sincron în effect, exact ce
+  // interzice `react-hooks/set-state-in-effect`. Comparând pagina, se resetează
+  // singură la navigare.
+  const [seen, setSeen] = useState({ path: pathname, on: false });
+  const onCalculator = seen.path === pathname && seen.on;
+
+  useEffect(() => {
+    if (hiddenHere) return;
+    const el = document.querySelector('[data-battery-calculator]');
+    if (!el) return;
+    const io = new IntersectionObserver((e) => setSeen({ path: pathname, on: e[0].isIntersecting }), {
+      // Puțin înainte să intre efectiv în ecran: altfel pastila dispare abia când
+      // cardul e deja pe jumătate vizibil, ceea ce se citește ca o sclipire.
+      rootMargin: '-80px 0px -80px 0px',
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [hiddenHere, pathname]);
+
   // Înălțimea headerului: măsurată, nu presupusă. `ResizeObserver` prinde și
   // deschiderea meniului de mobil, care schimbă înălțimea sub bandă.
   useEffect(() => {
@@ -92,7 +123,9 @@ export default function BatteryFab() {
         onClick={() => click('desktop')}
         aria-label={`${LABEL}: ce capacitate îți trebuie și ce punctaj iei la Casa Verde`}
         className={`hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-30 items-center gap-2 rounded-l-xl bg-secondary py-4 pl-4 pr-3 text-white shadow-lg transition-all duration-300 hover:bg-secondary-dark ${
-          visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'
+          visible && !onCalculator
+            ? 'opacity-100 translate-x-0'
+            : 'opacity-0 translate-x-4 pointer-events-none'
         }`}
       >
         <BatteryIcon className="w-5 h-5 shrink-0 text-primary-light" />
