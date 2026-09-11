@@ -7,6 +7,7 @@ const TABS = [
   { href: '/admin/azi', label: 'Azi' },
   { href: '/admin/crm', label: 'CRM' },
   { href: '/admin/firme', label: 'Instalatori' },
+  { href: '/admin/necesit', label: 'Necesit' },
   { href: '/admin/portal', label: 'Portal' },
   { href: '/admin/sponsori', label: 'Parteneri' },
   { href: '/admin/analytics', label: 'Overview' },

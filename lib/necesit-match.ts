@@ -190,3 +190,12 @@ export function matchNecesitFirms(
 
   return out.sort((a, b) => b.score - a.score).slice(0, limit);
 }
+
+/**
+ * Toată lista scanată, pentru pagina de apeluri din /admin/necesit. Acolo nu
+ * există o cerere care să dea județul și segmentul, deci nu se poate scora
+ * nimic dinainte: pagina primește firmele brute și filtrează singură.
+ */
+export function allNecesitFirms(): NecesitFirm[] {
+  return DATA.firms;
+}
