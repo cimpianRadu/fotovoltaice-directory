@@ -1363,7 +1363,8 @@
         "rezidential",
         "hale-industriale",
         "cladiri-birouri",
-        "retail"
+        "retail",
+        "agricol"
       ],
       "certifications": [],
       "capacity": {
