@@ -37,7 +37,7 @@ const FAQS = [
   {
     question: 'Ce înseamnă atestatele ANRE și cum le folosesc la filtrare?',
     answer:
-      'Atestatele ANRE sunt emise de Autoritatea Națională de Reglementare în Energie și autorizează firma să proiecteze și execute instalații electrice. Pentru proiecte fotovoltaice comerciale contează în principal C2A (medie și înaltă tensiune, obligatoriu peste 50 kWp conectat la rețea), C1A (joasă și medie tensiune), B (proiectare) și BP/BE (proiectare/execuție pentru anumite categorii). Bifează codurile dorite în filtru — vei vedea doar firmele care le au pe toate active simultan. Statusul se verifică direct în portal.anre.ro.',
+      'Atestatele ANRE sunt emise de Autoritatea Națională de Reglementare în Energie și autorizează firma să proiecteze și execute instalații electrice. Codurile se împart după tensiune, nu după puterea sistemului: B (proiectare și execuție la 0,4 kV), Bp și Be (doar proiectarea, respectiv doar execuția la 0,4 kV), C1A (proiectare 0,4–20 kV) și C2A (execuție 0,4–20 kV, inclusiv posturi de transformare). C2A contează când racordarea se face în medie tensiune — operatorul de distribuție decide asta prin avizul tehnic de racordare. Bifează codurile dorite în filtru — vei vedea doar firmele care le au pe toate active simultan. Statusul se verifică direct în portal.anre.ro.',
   },
   {
     question: 'De ce firma X nu apare în clasament?',
@@ -57,7 +57,7 @@ const FAQS = [
   {
     question: 'Cum aleg firma potrivită pentru proiectul meu?',
     answer:
-      'Pentru proiecte mari (hale industriale, parcuri logistice, centre comerciale peste 50 kWp) filtrează după C2A activ și sortează descrescător după cifra de afaceri — firme mari au de obicei echipe și capacitate operațională. Pentru proiecte mai mici (clădiri de birouri, magazine sub 100 kWp) o firmă cu C1A și 5+ angajați poate fi suficientă. Marja de profit (coloana Marjă) e un bun indicator de sănătate financiară pe termen lung — peste 5% e solid.',
+      'Pentru proiecte mari (hale industriale, parcuri logistice, centre comerciale), unde racordarea se face de regulă în medie tensiune, filtrează după C2A activ și sortează descrescător după cifra de afaceri — firmele mari au de obicei echipe și capacitate operațională. Pentru sisteme care se racordează în joasă tensiune, o firmă cu atestat B și 5+ angajați poate fi suficientă. Marja de profit (coloana Marjă) e un bun indicator de sănătate financiară pe termen lung — peste 5% e solid.',
   },
 ];
 
@@ -259,11 +259,11 @@ export default function ClasamentPage() {
             certificări ({PV_RELEVANT_CODES.join(', ')}), folosește pagina <Link href="/firme" className="text-primary hover:underline">/firme</Link>.
           </p>
           <p>
-            Pentru un proiect comercial mare (peste 50 kWp — hale industriale, parcuri logistice,
-            centre comerciale), caută firme cu <strong>atestat ANRE C2A activ</strong>, cifră de
-            afaceri de peste 15 milioane RON și echipă de minim 20 de angajați. Pentru un proiect
-            mai mic (clădiri de birouri, magazine sub 100 kWp), o firmă cu atestat{' '}
-            <strong>C1A sau B</strong> și 5–10 ani experiență poate fi suficientă. Marja de profit
+            Pentru un proiect comercial mare (hale industriale, parcuri logistice, centre
+            comerciale), unde racordarea se face de regulă în medie tensiune, caută firme cu{' '}
+            <strong>atestat ANRE C2A activ</strong>, cifră de afaceri de peste 15 milioane RON și
+            echipă de minim 20 de angajați. Pentru un sistem care se racordează în joasă tensiune, o
+            firmă cu atestat <strong>B</strong> și 5–10 ani experiență poate fi suficientă. Marja de profit
             peste 5% este un bun indicator de sănătate financiară pe termen lung.
           </p>
           <p>

@@ -71,11 +71,11 @@ const CODE_LABEL: Record<string, string> = {
 };
 
 const CODE_DESCRIPTION: Record<string, string> = {
-  C2A: 'Proiectare și executare instalații electrice exterioare (medie/înaltă tensiune). Necesar pentru proiecte comerciale și industriale peste 50 kWp.',
-  C1A: 'Proiectare instalații electrice exterioare (medie/înaltă tensiune). Relevant pentru faza de proiectare a proiectelor comerciale.',
-  B: 'Executare instalații electrice de joasă tensiune. Acoperă proiecte rezidențiale și comerciale mici (sub 50 kWp).',
-  BP: 'Executare parțială instalații electrice joasă tensiune. Variantă restrânsă a atestatului B.',
-  BE: 'Executare instalații electrice joasă tensiune (extinsă). Variantă a atestatului B.',
+  C2A: 'Executare linii electrice aeriene/subterane de 0,4–20 kV, posturi de transformare de până la 20 kV și partea de medie tensiune a stațiilor. Include competențele Be, Bi, A1 și A2. Necesar când racordarea se face în medie tensiune.',
+  C1A: 'Proiectare linii electrice aeriene/subterane de 0,4–20 kV și posturi de transformare de până la 20 kV. Doar proiectare, execuția cere C2A.',
+  B: 'Proiectare și executare instalații electrice și branșamente la 0,4 kV (joasă tensiune). Acoperă instalația clădirii și racordarea în joasă tensiune.',
+  BP: 'Proiectare instalații electrice și branșamente la 0,4 kV. Latura de proiectare a atestatului B.',
+  BE: 'Executare instalații electrice și branșamente la 0,4 kV. Latura de execuție a atestatului B.',
 };
 
 export function getAnreCodeLabel(code: string): string {

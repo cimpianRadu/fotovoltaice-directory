@@ -47,7 +47,7 @@ const faqJsonLd = {
       name: 'Ce înseamnă atestat ANRE tip C2A?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Atestatul C2A permite proiectarea și executarea instalațiilor electrice exterioare de medie și înaltă tensiune. Este esențial pentru proiecte fotovoltaice comerciale și industriale mai mari de 50 kWp — hale, clădiri de birouri, parcuri logistice.',
+        text: 'Atestatul C2A acoperă executarea liniilor electrice aeriene sau subterane de 0,4–20 kV, a posturilor de transformare de până la 20 kV și a părții de medie tensiune din stații, și include competențele Be, Bi, A1 și A2. Contează pentru proiectele fotovoltaice a căror racordare se face în medie tensiune — de regulă hale industriale, clădiri de birouri sau parcuri logistice. Tensiunea de racordare nu ține de o putere fixă în kWp: o stabilește operatorul de distribuție prin avizul tehnic de racordare (ATR).',
       },
     },
     {
@@ -63,7 +63,7 @@ const faqJsonLd = {
       name: 'Ce atestat trebuie să aibă un instalator fotovoltaic?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Pentru sisteme rezidențiale sau mici (sub 50 kWp) este suficient atestatul tip B. Pentru proiecte comerciale și industriale (peste 50 kWp) este necesar atestatul tip C2A. Ideal, firma ar trebui să aibă și atestate complementare (A3, E1, E2).',
+        text: 'Depinde de tensiunea la care se racordează sistemul, nu de o putere anume. Pentru instalația electrică a clădirii și pentru branșamentul în joasă tensiune (0,4 kV) e suficient atestatul tip B, care acoperă atât proiectarea, cât și execuția. Dacă operatorul de distribuție cere racordare în medie tensiune, lucrarea are nevoie de C1A pentru proiectare și C2A pentru execuție, ambele acoperind 0,4–20 kV. Tensiunea de racordare o stabilește operatorul prin avizul tehnic de racordare (ATR), în funcție de puterea cerută și de rețeaua din zonă. Multe firme au și atestate complementare (A3, E1, E2).',
       },
     },
     {
@@ -125,23 +125,25 @@ export default function VerificareAnrePage() {
           </h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="bg-surface rounded-xl border border-border p-4">
-              <h3 className="font-semibold text-secondary-dark mb-1">C2A — Executare Exterioară</h3>
+              <h3 className="font-semibold text-secondary-dark mb-1">C2A — Executare 0,4–20 kV</h3>
               <p className="text-sm text-gray-600">
-                Proiectare + executare instalații electrice exterioare (medie/înaltă tensiune).{' '}
-                <strong>Esențial</strong> pentru proiecte comerciale/industriale peste 50 kWp.
+                Executare linii electrice de 0,4–20 kV, posturi de transformare de până la 20 kV și
+                partea de medie tensiune a stațiilor.{' '}
+                <strong>Esențial</strong> când racordarea se face în medie tensiune.
               </p>
             </div>
             <div className="bg-surface rounded-xl border border-border p-4">
               <h3 className="font-semibold text-secondary-dark mb-1">B — Joasă Tensiune</h3>
               <p className="text-sm text-gray-600">
-                Executare instalații electrice de joasă tensiune. Suficient pentru proiecte
-                rezidențiale sau IMM-uri mici (sub 50 kWp).
+                Proiectare și executare instalații electrice și branșamente la 0,4 kV. Suficient
+                când sistemul se racordează în joasă tensiune.
               </p>
             </div>
             <div className="bg-surface rounded-xl border border-border p-4">
-              <h3 className="font-semibold text-secondary-dark mb-1">C1A — Proiectare Exterioară</h3>
+              <h3 className="font-semibold text-secondary-dark mb-1">C1A — Proiectare 0,4–20 kV</h3>
               <p className="text-sm text-gray-600">
-                Proiectare instalații electrice exterioare. Doar proiectare, nu execuție.
+                Proiectare linii electrice de 0,4–20 kV și posturi de transformare. Doar
+                proiectare, nu execuție.
               </p>
             </div>
             <div className="bg-surface rounded-xl border border-border p-4">
@@ -192,7 +194,7 @@ export default function VerificareAnrePage() {
             Ce atestat ANRE trebuie să aibă instalatorul de panouri fotovoltaice
           </h3>
           <p>
-            Depinde de dimensiunea proiectului. Pentru un <strong>sistem rezidențial sau comercial mic</strong> (sub 50 kWp), este suficient un atestat <strong>tip B</strong> (executare instalații electrice de joasă tensiune). Pentru <strong>proiecte comerciale și industriale</strong> mai mari de 50 kWp — hale industriale, clădiri de birouri, parcuri logistice — este necesar atestatul <strong>tip C2A</strong>, care acoperă proiectarea și executarea instalațiilor electrice exterioare de medie și înaltă tensiune.
+            Depinde de tensiunea la care se racordează sistemul, nu de puterea lui în kWp. Pentru instalația electrică a clădirii și pentru branșamentul în <strong>joasă tensiune</strong> (0,4 kV) e suficient un atestat <strong>tip B</strong>, care acoperă atât proiectarea, cât și execuția. Dacă operatorul de distribuție cere racordare în <strong>medie tensiune</strong> — situația obișnuită la hale industriale, clădiri de birouri sau parcuri logistice — lucrarea de racordare are nevoie de <strong>C1A</strong> pentru proiectare și <strong>C2A</strong> pentru execuție, ambele acoperind instalații de 0,4–20 kV. Tensiunea de racordare o stabilește operatorul prin <strong>avizul tehnic de racordare (ATR)</strong>, în funcție de puterea cerută și de rețeaua din zonă, deci nu există un prag fix în kWp de la care „e nevoie de C2A".
           </p>
           <p>
             Multe firme dețin și atestate complementare: <strong>A3</strong> (proiectare generală), <strong>E1</strong> și <strong>E2</strong> (verificare instalații), <strong>D1/D2</strong> (rețele electrice). Cu cât o firmă are mai multe tipuri de atestate active, cu atât poate acoperi mai multe etape ale proiectului fără a apela la subcontractori.
@@ -212,7 +214,7 @@ export default function VerificareAnrePage() {
             Sfaturi pentru alegerea unui instalator verificat
           </h3>
           <ul className="list-disc pl-5 space-y-2">
-            <li>Verifică <strong>atestatul C2A</strong> pentru orice proiect comercial sau industrial — este obligatoriu pentru sisteme peste 50 kWp</li>
+            <li>Verifică <strong>atestatul C2A</strong> dacă avizul tehnic de racordare cere medie tensiune — fără el, firma nu poate executa singură partea de racordare</li>
             <li>Asigură-te că atestatul este în stare <strong>„Atestat"</strong> (activ), nu „Expirat" sau „Retras"</li>
             <li>Verifică <strong>data de expirare</strong> — un atestat care expiră în curând ar putea cauza probleme dacă proiectul durează mai mult</li>
             <li>Cere referințe și vizitează proiecte finalizate — atestatul ANRE este o condiție necesară, dar nu suficientă</li>
@@ -234,7 +236,7 @@ export default function VerificareAnrePage() {
             </details>
             <details className="bg-surface rounded-xl border border-border p-4 group">
               <summary className="font-medium text-secondary-dark cursor-pointer">Ce înseamnă atestat ANRE tip C2A?</summary>
-              <p className="mt-2 text-sm text-gray-600">Atestatul C2A permite proiectarea și executarea instalațiilor electrice exterioare de medie și înaltă tensiune. Este esențial pentru proiecte fotovoltaice comerciale și industriale mai mari de 50 kWp — hale, clădiri de birouri, parcuri logistice.</p>
+              <p className="mt-2 text-sm text-gray-600">Atestatul C2A acoperă executarea liniilor electrice aeriene sau subterane de 0,4–20 kV, a posturilor de transformare de până la 20 kV și a părții de medie tensiune din stații, și include competențele Be, Bi, A1 și A2. Contează pentru proiectele fotovoltaice a căror racordare se face în medie tensiune — de regulă hale industriale, clădiri de birouri sau parcuri logistice. Tensiunea de racordare nu ține de o putere fixă în kWp: o stabilește operatorul de distribuție prin avizul tehnic de racordare (ATR).</p>
             </details>
             <details className="bg-surface rounded-xl border border-border p-4 group">
               <summary className="font-medium text-secondary-dark cursor-pointer">Cum verific dacă un instalator are atestat ANRE valid?</summary>
@@ -242,7 +244,7 @@ export default function VerificareAnrePage() {
             </details>
             <details className="bg-surface rounded-xl border border-border p-4 group">
               <summary className="font-medium text-secondary-dark cursor-pointer">Ce atestat trebuie să aibă un instalator fotovoltaic?</summary>
-              <p className="mt-2 text-sm text-gray-600">Pentru sisteme rezidențiale sau mici (sub 50 kWp) este suficient atestatul tip B. Pentru proiecte comerciale și industriale (peste 50 kWp) este necesar atestatul tip C2A. Ideal, firma ar trebui să aibă și atestate complementare (A3, E1, E2).</p>
+              <p className="mt-2 text-sm text-gray-600">Depinde de tensiunea la care se racordează sistemul, nu de o putere anume. Pentru instalația electrică a clădirii și pentru branșamentul în joasă tensiune (0,4 kV) e suficient atestatul tip B, care acoperă atât proiectarea, cât și execuția. Dacă operatorul de distribuție cere racordare în medie tensiune, lucrarea are nevoie de C1A pentru proiectare și C2A pentru execuție, ambele acoperind 0,4–20 kV. Tensiunea de racordare o stabilește operatorul prin avizul tehnic de racordare (ATR), în funcție de puterea cerută și de rețeaua din zonă. Multe firme au și atestate complementare (A3, E1, E2).</p>
             </details>
             <details className="bg-surface rounded-xl border border-border p-4 group">
               <summary className="font-medium text-secondary-dark cursor-pointer">Un instalator fără atestat ANRE poate monta panouri fotovoltaice?</summary>

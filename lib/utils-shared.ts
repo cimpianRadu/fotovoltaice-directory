@@ -515,8 +515,8 @@ export function getCertificationLabel(cert: string): string {
 
 export function getCertificationDescription(cert: string): string {
   const descriptions: Record<string, string> = {
-    'ANRE-C2A': 'Atestat pentru proiectare și executare instalații electrice exterioare (medie/înaltă tensiune). Necesar pentru proiecte comerciale și industriale peste 50 kWp.',
-    'ANRE-B': 'Atestat pentru executare instalații electrice de joasă tensiune. Acoperă proiecte rezidențiale și comerciale mici (sub 50 kWp).',
+    'ANRE-C2A': 'Atestat pentru executare linii electrice aeriene/subterane de 0,4–20 kV, posturi de transformare de până la 20 kV și partea de medie tensiune a stațiilor. Include competențele Be, Bi, A1 și A2. Necesar când racordarea se face în medie tensiune.',
+    'ANRE-B': 'Atestat pentru proiectare și executare instalații electrice și branșamente la 0,4 kV (joasă tensiune). Acoperă instalația clădirii și racordarea în joasă tensiune.',
     'ISO-9001': 'Sistem de management al calității conform standardului internațional ISO 9001.',
     'ISO-14001': 'Sistem de management de mediu conform standardului internațional ISO 14001.',
     'ISO-45001': 'Sistem de management al sănătății și securității ocupaționale conform ISO 45001.',
@@ -536,6 +536,22 @@ export function getTagLabel(tag: string): string {
     'finantare-disponibila': 'Finanțare disponibilă',
     'garantie-extinsa': 'Garanție extinsă',
     'monitorizare-inclusa': 'Monitorizare inclusă',
+    'pv-rezidential': 'Fotovoltaice rezidențiale',
+    'pv-comercial': 'Fotovoltaice comerciale',
+    'pv-industrial': 'Fotovoltaice industriale',
+    'stocare-baterii': 'Stocare cu baterii',
+    'statii-incarcare-ev': 'Stații de încărcare EV',
+    'casa-verde': 'Dosare Casa Verde',
+    proiectare: 'Proiectare',
+    'partener-huawei': 'Partener Huawei',
+    'electric-up': 'Dosare Electric Up',
+    'instalatii-electrice': 'Instalații electrice',
+    'curenti-slabi': 'Curenți slabi',
+    'sisteme-securitate': 'Sisteme de securitate',
+    'detectie-incendiu': 'Detecție incendiu',
+    'retele-voce-date': 'Rețele voce-date',
+    automatizari: 'Automatizări porți și bariere',
+    'bransamente-electrice': 'Branșamente electrice',
   };
   return labels[tag] ?? tag;
 }
