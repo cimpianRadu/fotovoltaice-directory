@@ -19,13 +19,19 @@ const PARTNERS = (sponsorsData.sponsors as Sponsor[]).filter(
   (s) => s.active && (s.positions === 'all' || s.positions.includes('popup')),
 );
 
+// Raportul se poate scoate și pentru un partener oprit — luna trecută a rulat.
+const ALL_PARTNERS = (sponsorsData.sponsors as Sponsor[])
+  .slice()
+  .sort((a, b) => Number(b.active) - Number(a.active) || a.name.localeCompare(b.name, 'ro'));
+
 const SPONSOR_BANNER_NAMES: string[] = (sponsorsData.sponsors as Sponsor[])
   .filter((s) => s.active)
   .map((s) => s.slug);
 
 import { SPONSOR_POSITION_LABELS } from '@/lib/sponsor-positions';
+import { lastCompletedMonth, monthParam } from '@/lib/sponsor-report';
 
-// Perechea poziție → audiență e ținută în SponsorBanner; aici e doar eticheta.
+// Perechea poziție → audiență stă în lib/sponsor-positions; aici e doar eticheta.
 const POSITION_LABELS: Record<string, string> = SPONSOR_POSITION_LABELS;
 
 const AUDIENCE_LABELS: Record<string, string> = {
@@ -44,6 +50,8 @@ async function safe<T>(fn: () => Promise<T>): Promise<{ data: T | null; error: s
 export default async function SponsoriPage({ searchParams }: { searchParams: SearchParams }) {
   const sp = await searchParams;
   const preset = resolvePreset(sp.range);
+  // Calculată per cerere: un server pornit luna trecută ar fi înghețat linkul.
+  const lastMonthParam = monthParam(lastCompletedMonth());
   const { startAt, endAt, label } = resolveRange(preset);
 
   // Sponsor banner: impressions and clicks broken down by sponsor + position
@@ -171,6 +179,29 @@ export default async function SponsoriPage({ searchParams }: { searchParams: Sea
       </div>
 
       {errors.length > 0 && <ErrorBanner errors={errors} />}
+
+      {/* Raportul contractual per partener (art. 4.3: până în ziua 10 a lunii
+          următoare). Pagina asta e panoul de lucru, cu toți partenerii la un
+          loc; linkurile duc la foaia care se trimite unui singur om. */}
+      <div className="bg-white border border-slate-200 rounded-lg p-4">
+        <div className="text-sm font-semibold text-slate-900 mb-1">Raport lunar de trimis</div>
+        <p className="text-xs text-slate-500 mb-3">
+          Cifrele unui singur partener, pe luna încheiată, gata de copiat în email sau de
+          tipărit în PDF.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {ALL_PARTNERS.map((partner) => (
+            <a
+              key={partner.slug}
+              href={`/admin/analytics/sponsori/raport/${partner.slug}?luna=${lastMonthParam}`}
+              className="px-3 py-1.5 text-xs rounded-md border border-slate-300 text-slate-700 hover:bg-slate-100 transition"
+            >
+              {partner.name}
+              {!partner.active && <span className="text-slate-400"> (inactiv)</span>} &rarr;
+            </a>
+          ))}
+        </div>
+      </div>
 
       {/* Sponsor Banner section */}
       <section className="space-y-4">

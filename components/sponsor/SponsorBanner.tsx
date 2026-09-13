@@ -3,7 +3,11 @@
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import sponsorsData from '@/data/sponsors.json';
-import { type SponsorPosition } from '@/lib/sponsor-positions';
+import {
+  POSITION_AUDIENCE,
+  type SponsorAudience,
+  type SponsorPosition,
+} from '@/lib/sponsor-positions';
 import { isRunning, type SponsorRun } from '@/lib/sponsor-run';
 
 declare global {
@@ -41,33 +45,12 @@ declare global {
  * propriu, deci partenerul primește apeluri și conversații inițiate, nu doar
  * un CTR.
  */
-export type SponsorAudience = 'client' | 'instalator';
+export type { SponsorPosition, SponsorAudience };
 
-export type { SponsorPosition };
-
-// Cine citește pagina, nu ce conține pagina. Paginile de instalatori sunt cele
-// unde ajunge o firmă care caută de lucru sau se ocupă de propria prezență:
-// feedul de cereri, portalul revendicărilor, formularul de listare.
-const POSITION_AUDIENCE: Record<SponsorPosition, SponsorAudience> = {
-  homepage: 'client',
-  'ghid-index': 'client',
-  'ghid-topic': 'client',
-  clasament: 'client',
-  'clasament-featured': 'client',
-  calculator: 'client',
-  firme: 'client',
-  'cere-oferta': 'client',
-  'cere-oferta-confirmare': 'client',
-  finantare: 'client',
-  'finantare-firme': 'client',
-  pret: 'client',
-  cereri: 'instalator',
-  portal: 'instalator',
-  'listeaza-firma': 'instalator',
-  // Popup-ul dreapta-jos nu se randează prin SponsorBanner (are componenta
-  // lui, PartnerCarousel) — intrarea există doar ca Record-ul să fie complet.
-  popup: 'client',
-};
+// Cine citește pagina, nu ce conține pagina: paginile de instalatori sunt cele
+// unde ajunge o firmă care caută de lucru sau se ocupă de propria prezență
+// (feedul de cereri, portalul, formularul de listare). Harta stă în
+// `lib/sponsor-positions` pentru că o citește și raportul lunar din admin.
 
 interface Sponsor {
   slug: string;
