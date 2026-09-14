@@ -21,6 +21,7 @@ import {
   getTimelineLabel,
   getWorkTypeShort,
   isRetrofit,
+  isSeInformeaza,
 } from '@/lib/utils-shared';
 
 // v3 lărgea destinatarii la partenerii de finanțare, dar bifa spunea „finanțare
@@ -209,6 +210,9 @@ async function notifyCountyAlerts(body: Record<string, string>, leadId: string) 
     finantareLabel: finantare ? getFinancingLabel(finantare) : '',
     termenLabel: body.termen ? getTimelineLabel(body.termen.trim()) : '',
     intervalApelLabel: body.intervalApel ? getCallWindowLabel(body.intervalApel.trim()) : '',
+    // „Mă informez": alerta pleacă tot, dar cu prefix și cu îndemnul de a urmări,
+    // nu de a revendica. Motivul lui vine abia la pasul 5, deci aici e gol.
+    ...(isSeInformeaza((body.termen || '').trim()) ? { informez: { motiv: '' } } : {}),
   };
 
   // Abonamentul pe județ ia cererea primul, singur, pentru fereastra lui.

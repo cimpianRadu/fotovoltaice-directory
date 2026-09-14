@@ -17,6 +17,9 @@ type EventName =
   | 'lead_enrich_submitted'
   | 'lead_claim_opened'
   | 'lead_claim_submitted'
+  // Urmărirea unei cereri pe care clientul se informează (14 sept 2026).
+  | 'lead_watch_opened'
+  | 'lead_watch_submitted'
   | 'listing_form_submitted'
   | 'waitlist_signup'
   // Înscriere la alerta „se deschide Casa Verde Baterii" din ghidurile CVB;

@@ -11,6 +11,9 @@ export const LEAD_STATUSES = [
   'castigata',
   'altundeva',
   'renuntat',
+  // Se informa și n-a răspuns la niciun check-in (14 sept 2026): închisă de
+  // cron, nu de noi. Diferită de „renunțat": omul n-a spus nimic, a tăcut.
+  'inactiva',
 ] as const;
 export type LeadStatus = (typeof LEAD_STATUSES)[number];
 
@@ -21,6 +24,7 @@ export const LEAD_STATUS_LABELS: Record<LeadStatus, string> = {
   castigata: 'Câștigată',
   altundeva: 'Altundeva',
   renuntat: 'Renunțat',
+  inactiva: 'Inactivă',
 };
 
 export const LEAD_STATUS_HINTS: Record<LeadStatus, string> = {
@@ -30,6 +34,7 @@ export const LEAD_STATUS_HINTS: Record<LeadStatus, string> = {
   castigata: 'a semnat, printr-o firmă de la noi',
   altundeva: 'și-a rezolvat în afara platformei',
   renuntat: 'nu mai face investiția',
+  inactiva: 'se informa, n-a răspuns la check-in-uri',
 };
 
 /**
@@ -40,7 +45,7 @@ export const LEAD_STATUS_HINTS: Record<LeadStatus, string> = {
  * feedului. „În ofertare" NU intră aici: acolo clientul încă vrea oferte, doar
  * că are deja una, iar plafonul de 3 revendicări face restul.
  */
-export const LEAD_CLOSED_STATUSES = ['castigata', 'altundeva', 'renuntat'] as const;
+export const LEAD_CLOSED_STATUSES = ['castigata', 'altundeva', 'renuntat', 'inactiva'] as const;
 
 export function isLeadClosed(status: LeadStatus): boolean {
   return (LEAD_CLOSED_STATUSES as readonly string[]).includes(status);

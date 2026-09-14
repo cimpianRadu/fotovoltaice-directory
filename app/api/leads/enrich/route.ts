@@ -1,5 +1,7 @@
-import { NextResponse } from 'next/server';
-import { enrichLeadInSheet, LEAD_ENRICH_FIELDS, type LeadEnrichField } from '@/lib/sheets';
+import { NextResponse, after } from 'next/server';
+import { enrichLeadInSheet, getFullLeadById, LEAD_ENRICH_FIELDS, type LeadEnrichField } from '@/lib/sheets';
+import { isBlocaj } from '@/lib/utils-shared';
+import { sendWelcomeIfDue } from '@/lib/informez';
 
 // Detaliile de după trimitere. Cererea există deja în Sheet (a scris-o
 // /api/leads și a întors timestamp-ul ca `id`), aici doar completăm coloanele
@@ -28,15 +30,28 @@ export async function POST(request: Request) {
     for (const field of LEAD_ENRICH_FIELDS) {
       const raw = body[field];
       if (typeof raw !== 'string') continue;
-      const value = raw.trim().slice(0, field === 'mesaj' ? MAX_MESSAGE_LENGTH : MAX_VALUE_LENGTH);
+      const long = field === 'mesaj' || field === 'blocajDetalii';
+      const value = raw.trim().slice(0, long ? MAX_MESSAGE_LENGTH : MAX_VALUE_LENGTH);
       if (value) fields[field] = value;
     }
+    // Blocajul e slug din listă, nu text liber: orice altceva nu intră în Sheet.
+    if (fields.blocaj && !isBlocaj(fields.blocaj)) delete fields.blocaj;
 
     if (!Object.keys(fields).length) {
       return NextResponse.json({ success: true, written: [] });
     }
 
     const written = await enrichLeadInSheet(id, fields);
+
+    // Răspunsul de la pasul 5 e momentul în care emailul de întâmpinare are ce
+    // spune (blocul depinde de el). Pleacă după răspuns, ca alertele pe județ;
+    // dacă omul sare pasul, îl trimite cronul a doua zi, cu blocul generic.
+    if (written.includes('blocaj')) {
+      after(async () => {
+        const lead = await getFullLeadById(id);
+        if (lead) await sendWelcomeIfDue(lead);
+      });
+    }
     return NextResponse.json({ success: true, written });
   } catch (err) {
     console.error('Lead enrich error:', err);

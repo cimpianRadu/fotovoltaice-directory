@@ -5,6 +5,8 @@ interface InputProps {
   required?: boolean;
   placeholder?: string;
   value?: string;
+  /** Necontrolat, precompletat (ex: emailul firmei logate). */
+  defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   error?: string;
@@ -22,6 +24,7 @@ export default function Input({
   required = false,
   placeholder,
   value,
+  defaultValue,
   onChange,
   onBlur,
   error,
@@ -48,6 +51,7 @@ export default function Input({
           disabled={disabled}
           placeholder={placeholder}
           value={value}
+          defaultValue={defaultValue}
           onChange={onChange}
           onBlur={onBlur}
           rows={4}
@@ -62,6 +66,7 @@ export default function Input({
           disabled={disabled}
           placeholder={placeholder}
           value={value}
+          defaultValue={defaultValue}
           onChange={onChange}
           onBlur={onBlur}
           inputMode={inputMode}

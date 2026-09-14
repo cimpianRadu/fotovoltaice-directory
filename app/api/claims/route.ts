@@ -8,13 +8,16 @@ import {
   findSubscriptionForCounty,
   getClaims,
   getFullLeadById,
+  getFirmEmailGroup,
   getLeadSubscriptions,
   isLeadClosed,
   isPriorityHeld,
   isSameFirm,
+  latestClaimIdentity,
   saveClaimToSheet,
 } from '@/lib/sheets';
 import { isValidEmail, normalizeEmail } from '@/lib/portal-auth';
+import { peekPortalEmail } from '@/lib/portal-session';
 import { sanitizeAttribution } from '@/lib/attribution';
 import { isFirmSource } from '@/lib/utils-shared';
 import { sendClaimNotification } from '@/lib/email';
@@ -29,12 +32,35 @@ import {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { leadId, numeFirma, numeContact, telefon, email } = body as Record<string, string>;
+    const leadId = String(body?.leadId || '').trim();
+    let { numeFirma, numeContact, telefon, email } = body as Record<string, string>;
     // De unde vine firma: canalul sesiunii (automat) + ce spune ea (opțional).
     // Niciunul nu e condiție: revendicarea pleacă și cu ambele goale.
     const attribution = sanitizeAttribution(body);
     const cumAflatRaw = String(body?.cumAflat || '').trim().toLowerCase();
     const cumAflat = isFirmSource(cumAflatRaw) ? cumAflatRaw : '';
+
+    // Firma cu cont în portal revendică dintr-un click: numele, contactul și
+    // telefonul vin din ultima ei revendicare, emailul din sesiune. Nimic din
+    // body nu e crezut pe drumul ăsta — altfel un cont ar putea trimite date
+    // false sub identitatea lui. Fără sesiune sau fără revendicare anterioară,
+    // clientul primește `needsForm` și deschide formularul complet.
+    if (body?.fromAccount === true) {
+      const sessionEmail = await peekPortalEmail();
+      const identity = sessionEmail
+        ? latestClaimIdentity(await getClaims(), await getFirmEmailGroup(sessionEmail))
+        : null;
+      if (!sessionEmail || !identity) {
+        return NextResponse.json(
+          { error: 'Sesiunea a expirat. Completează datele firmei.', needsForm: true },
+          { status: 401 },
+        );
+      }
+      email = sessionEmail;
+      numeFirma = identity.numeFirma;
+      numeContact = identity.numeContact;
+      telefon = identity.telefon;
+    }
 
     if (!leadId || !numeFirma?.trim() || !numeContact?.trim() || !telefon?.trim() || !email?.trim()) {
       return NextResponse.json(

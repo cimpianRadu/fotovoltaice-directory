@@ -8,8 +8,10 @@ import {
   claimOccupiesLeadSlot,
   getClaims,
   getPublicLeads,
+  getWatches,
   type PublicLead,
 } from '@/lib/sheets';
+import { informezMotiv } from '@/lib/lead-alerts';
 import {
   calendarAgeDays,
   cerereAgeLabel,
@@ -53,9 +55,12 @@ function formatKw(kwp: number): string {
 export default async function CereriPage() {
   let leads: PublicLead[] = [];
   const claimCounts: Record<string, number> = {};
+  // Câte firme urmăresc o cerere pe care clientul se informează. Nu e „loc
+  // ocupat": e semnalul că altcineva așteaptă și el reactivarea.
+  const watchCounts: Record<string, number> = {};
 
   try {
-    const [publicLeads, claims] = await Promise.all([getPublicLeads(), getClaims()]);
+    const [publicLeads, claims, watches] = await Promise.all([getPublicLeads(), getClaims(), getWatches()]);
     leads = publicLeads;
     for (const c of claims) {
       // Renunțările și cererile marcate „neconcretizat" nu ocupă locuri —
@@ -64,13 +69,19 @@ export default async function CereriPage() {
       if (!claimOccupiesLeadSlot(c)) continue;
       claimCounts[c.leadId] = (claimCounts[c.leadId] || 0) + 1;
     }
+    for (const w of watches) {
+      watchCounts[w.leadId] = (watchCounts[w.leadId] || 0) + 1;
+    }
   } catch (err) {
     // Fără credențiale Sheets (build local, preview) pagina rămâne funcțională, cu feed gol.
     console.error('[cereri] failed to load leads:', err);
   }
 
   const cards: LeadCardData[] = leads.map((l) => {
-    const ageDays = calendarAgeDays(l.id);
+    // O cerere reactivată („sunt gata", după ce omul se informa) se datează de
+    // la reactivare: pentru firmă e o cerere de azi, nu una de acum două luni.
+    const reactivata = Boolean(l.reactivataLa);
+    const ageDays = calendarAgeDays(l.reactivataLa || l.id);
     // 57% dintre cererile de după 18 aug 2026 vin fără putere: omul bifează „nu
     // știu, aștept recomandarea instalatorului", ceea ce e un răspuns corect,
     // dar lasă cardul fără niciun reper de dimensionare. Consumul îl completează
@@ -119,8 +130,11 @@ export default async function CereriPage() {
       tipLucrareLabel: l.tipLucrare ? getWorkTypeShort(l.tipLucrare) : '',
       suprafata: l.suprafata,
       segment: l.segment,
-      postedLabel: cerereAgeLabel(ageDays),
+      postedLabel: reactivata ? `reactivată ${cerereAgeLabel(ageDays)}` : cerereAgeLabel(ageDays),
       ageDays,
+      seInformeaza: l.seInformeaza,
+      informezMotiv: l.seInformeaza ? informezMotiv({ blocaj: l.blocaj, finantare: l.finantare }) : '',
+      reactivata,
       mesaj: l.mesaj,
       acoperisLabel: l.tipAcoperis ? getRoofTypeLabel(l.tipAcoperis) : '',
       fazareLabel: l.fazare ? getPhaseLabel(l.fazare) : '',
@@ -189,7 +203,12 @@ export default async function CereriPage() {
           /* Numărătoarea stă în LeadFeed, nu aici: feedul pornește pe o
              fereastră de vechime, iar un total server-side ar contrazice
              numărul de carduri de sub el. */
-          <LeadFeed cards={cards} claimCounts={claimCounts} maxClaims={MAX_CLAIMS_PER_LEAD} />
+          <LeadFeed
+            cards={cards}
+            claimCounts={claimCounts}
+            watchCounts={watchCounts}
+            maxClaims={MAX_CLAIMS_PER_LEAD}
+          />
         )}
 
       </div>

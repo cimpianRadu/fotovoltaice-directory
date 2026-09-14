@@ -22,7 +22,13 @@ import { getCompanies } from '@/lib/utils';
 import { isSameClient, parseRequestedFirms } from '@/lib/sheets-shared';
 import { matchFirmsForLead, type FirmMatch } from '@/lib/lead-match';
 import { matchNecesitFirms, type NecesitMatch } from '@/lib/necesit-match';
-import { getCallWindowLabel, getFinancingShort, getFinancingTone, type FinancingTone } from '@/lib/utils-shared';
+import {
+  getCallWindowLabel,
+  getFinancingShort,
+  getFinancingTone,
+  getTimelineLabel,
+  type FinancingTone,
+} from '@/lib/utils-shared';
 import ClaimList, { type ClaimRow } from './ClaimList';
 import LeadCrm from './LeadCrm';
 import MessagePreview from './MessagePreview';
@@ -58,6 +64,17 @@ const FINANCING_TONE_CLASS: Record<FinancingTone, string> = {
   credit: 'bg-sky-50 text-sky-700',
   program: 'bg-amber-50 text-amber-700',
   unknown: 'bg-slate-100 text-slate-500',
+};
+
+// Termenul dorit, al doilea filtru de apel după finanțare: „cât mai repede" cu
+// bani proprii e cererea care se închide, „mă informez" pe program e cea care
+// stă luni. Pilula lui e conturată, nu plină, ca să nu se confunde la o privire
+// cu badge-ul de finanțare de lângă ea.
+const TIMELINE_TONE_CLASS: Record<string, string> = {
+  'cat-mai-repede': 'border-rose-200 bg-rose-50 text-rose-700',
+  '1-3-luni': 'border-slate-200 bg-white text-slate-700',
+  'peste-3-luni': 'border-slate-200 bg-white text-slate-500',
+  'ma-informez': 'border-slate-200 bg-white text-slate-400',
 };
 
 const LISTINGS_WINDOW_DAYS = 30;
@@ -281,16 +298,31 @@ function LeadCard({
               {lead.sourcePage && ` → ${lead.sourcePage}`}
             </p>
           )}
-          {/* Goală pe cererile de dinainte de 29 iul 2026. */}
-          {lead.finantare && (
+          {/* Cu ce bani și în cât timp, pe același rând: sunt cele două
+              întrebări care decid dacă cererea se sună azi sau peste o lună.
+              Finanțarea e goală pe cererile de dinainte de 29 iul 2026,
+              termenul pe cele de dinainte de 4 aug — de-aia lipsa lui se scrie,
+              nu se ascunde: „nu știm" nu e totuna cu „nu se grăbește". */}
+          <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+            {lead.finantare && (
+              <span
+                className={`inline-block rounded px-1.5 py-0.5 text-[11px] font-medium ${
+                  FINANCING_TONE_CLASS[getFinancingTone(lead.finantare)]
+                }`}
+              >
+                {getFinancingShort(lead.finantare)}
+              </span>
+            )}
             <span
-              className={`mt-1.5 inline-block rounded px-1.5 py-0.5 text-[11px] font-medium ${
-                FINANCING_TONE_CLASS[getFinancingTone(lead.finantare)]
+              className={`inline-block rounded border px-1.5 py-0.5 text-[11px] font-medium ${
+                lead.termen
+                  ? TIMELINE_TONE_CLASS[lead.termen] || 'border-slate-200 bg-white text-slate-500'
+                  : 'border-dashed border-slate-200 bg-white text-slate-400'
               }`}
             >
-              {getFinancingShort(lead.finantare)}
+              {lead.termen ? getTimelineLabel(lead.termen) : 'termen nedeclarat'}
             </span>
-          )}
+          </div>
         </div>
         <span className="shrink-0 text-xs text-slate-400 tabular-nums">
           {fmtDateTime(lead.timestamp)}
@@ -321,7 +353,14 @@ function LeadCard({
               ceară până la 4 firme deodată. Aceleași nume urcă primele și în
               lista de potriviri de mai jos. */}
           {requested.length > 0 && (
-            <div className="text-slate-400">a cerut: {requested.join(' · ')}</div>
+            <div className="rounded-md border border-indigo-200 bg-indigo-50 px-2 py-1.5">
+              <div className="text-[10px] font-semibold tracking-wide text-indigo-500 uppercase">
+                {requested.length === 1 ? 'A cerut anume firma' : 'A cerut anume firmele'}
+              </div>
+              <div className="mt-0.5 leading-snug font-medium text-indigo-900">
+                {requested.join(' · ')}
+              </div>
+            </div>
           )}
           {merged > 0 && (
             <div className="text-slate-400">

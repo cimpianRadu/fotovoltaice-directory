@@ -21,6 +21,7 @@ import {
   type NewLead,
 } from '@/lib/sheets';
 import { sendClaimInactiveEmail, sendCountyLeadAlert } from '@/lib/email';
+import { runInformezDaily } from '@/lib/informez';
 import {
   getConnectionLabel,
   getFinancingLabel,
@@ -78,8 +79,17 @@ export async function GET(request: Request) {
     // o cerere deblocată sâmbătă e o veste bună, nu o bătaie pe umăr.
     const unlocked = await announceUnlockedLeads(leads, claims, now, dry);
 
-    if (!isBusinessDay(bucharestDay(now)) && !dry) {
-      return NextResponse.json({ ok: true, skipped: 'zi nelucrătoare', sent: 0, unlocked });
+    // Fluxul „mă informez" (lib/informez): alertele de reactivare merg și în
+    // weekend, întâmpinările și check-in-urile către clienți doar în zile
+    // lucrătoare, ca reminderele. Un eșec aici nu oprește reminderele.
+    const businessDay = isBusinessDay(bucharestDay(now));
+    const informez = await runInformezDaily(now, { dry, businessDay }).catch((err) => {
+      console.error('[cron/claim-nudge] informez:', err);
+      return null;
+    });
+
+    if (!businessDay && !dry) {
+      return NextResponse.json({ ok: true, skipped: 'zi nelucrătoare', sent: 0, unlocked, informez });
     }
 
     const due = claims.filter(
@@ -130,6 +140,7 @@ export async function GET(request: Request) {
       sent: sent.length,
       failed: failed.length,
       unlocked,
+      informez,
       details: { sent, failed },
     });
   } catch (err) {

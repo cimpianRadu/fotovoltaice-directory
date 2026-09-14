@@ -32,15 +32,25 @@ export function bucharestStamp(): { today: string; time: string } {
  * eroarea înghițită — jurnalul n-are voie să strice portalul.
  */
 export async function getPortalEmail(): Promise<string | null> {
+  const email = await peekPortalEmail();
+  if (!email) return null;
+  after(() =>
+    logPortalVisit(email).catch((err) => console.error('[portal] jurnal vizită:', err)),
+  );
+  return email;
+}
+
+/**
+ * Aceeași sesiune, fără rând în jurnal. Pentru paginile din afara portalului
+ * care doar recunosc firma (revendicarea de pe /cereri cu datele din cont):
+ * o vizită pe /cereri nu e o vizită în portal, iar jurnalul „Portal Acces"
+ * spune cine folosește portalul, nu cine e logat.
+ */
+export async function peekPortalEmail(): Promise<string | null> {
   const secret = process.env.PORTAL_SECRET;
   if (!secret) return null;
   const token = (await cookies()).get(PORTAL_COOKIE)?.value;
   const payload = await verifyToken(token, 'session', secret);
   if (!payload) return null;
-
-  const email = normalizeEmail(payload.email);
-  after(() =>
-    logPortalVisit(email).catch((err) => console.error('[portal] jurnal vizită:', err)),
-  );
-  return email;
+  return normalizeEmail(payload.email);
 }

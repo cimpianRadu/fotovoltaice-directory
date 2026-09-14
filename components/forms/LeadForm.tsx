@@ -19,6 +19,8 @@ import {
   WORK_TYPES,
   isRetrofit,
   CALL_WINDOW_OPTIONS,
+  BLOCAJ_OPTIONS,
+  isSeInformeaza,
 } from '@/lib/utils-shared';
 import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 import { useSegment } from '@/components/segment/SegmentProvider';
@@ -514,6 +516,10 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   // strânge consumul și mesajul. `extraDone` desparte pasul 5 de confirmare.
   const [extraDone, setExtraDone] = useState(false);
   const [extraStatus, setExtraStatus] = useState<'idle' | 'saving'>('idle');
+  // „Ce vă lipsește ca să mergeți mai departe?", doar la „mă informez" (14 sept
+  // 2026). Decide emailul de întâmpinare al platformei și ce vede firma pe card.
+  const [blocaj, setBlocaj] = useState('');
+  const [blocajDetalii, setBlocajDetalii] = useState('');
   const startedRef = useRef(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reportedFields = useRef(0);
@@ -768,7 +774,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     const consumValoare = unknown.consumLunar ? '' : details.consumLunar.trim();
     const consumLunar = consumValoare ? `${consumValoare} ${consumUnit}` : '';
     const mesaj = values.mesaj.trim();
-    if (!leadRef || (!consumLunar && !mesaj)) {
+    if (!leadRef || (!consumLunar && !mesaj && !blocaj)) {
       setExtraDone(true);
       return;
     }
@@ -777,7 +783,13 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
       const res = await fetch('/api/leads/enrich', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: leadRef, consumLunar, mesaj }),
+        body: JSON.stringify({
+          id: leadRef,
+          consumLunar,
+          mesaj,
+          blocaj,
+          blocajDetalii: blocaj === 'altceva' ? blocajDetalii.trim() : '',
+        }),
       });
       if (!res.ok) throw new Error('enrich failed');
       // Doar la salvare reușită, nu la „sar peste": raportul dintre `extra` și
@@ -806,6 +818,53 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
         </div>
 
         <div className="rounded-xl border border-border bg-white p-5 sm:p-6 space-y-4">
+          {/* Doar cine a bifat „mă informez". Chips, nu dropdown: un singur tap,
+              iar răspunsul e ce primește omul de la noi prin email, nu un câmp
+              de formular oarecare. */}
+          {isSeInformeaza(details.termen) && (
+            <fieldset>
+              <legend className="block text-sm font-medium text-gray-700 mb-1">
+                Ce vă lipsește ca să mergeți mai departe?
+              </legend>
+              <p className="mb-2 text-[11px] text-gray-400">
+                Ați bifat că deocamdată vă informați. Vă trimitem pe email exact ce vă lipsește, iar
+                firmele știu să nu vă sune insistent.
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {BLOCAJ_OPTIONS.map((o) => {
+                  const on = blocaj === o.value;
+                  return (
+                    <button
+                      key={o.value}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => setBlocaj(on ? '' : o.value)}
+                      className={`rounded-full border px-3 py-1.5 text-xs text-left transition-colors ${
+                        on
+                          ? 'border-amber-500 bg-amber-50 text-amber-900 font-medium'
+                          : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+                      }`}
+                    >
+                      {o.label}
+                    </button>
+                  );
+                })}
+              </div>
+              {blocaj === 'altceva' && (
+                <div className="mt-3">
+                  <Input
+                    label="Spuneți-ne pe scurt"
+                    name="blocajDetalii"
+                    type="textarea"
+                    placeholder="Ce v-ar ajuta să decideți?"
+                    value={blocajDetalii}
+                    onChange={(e) => setBlocajDetalii(e.target.value)}
+                  />
+                </div>
+              )}
+            </fieldset>
+          )}
+
           <ConsumField
             valoare={details.consumLunar}
             unit={consumUnit}
@@ -845,7 +904,22 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
           </Button>
           <button
             type="button"
-            onClick={() => setExtraDone(true)}
+            onClick={() => {
+              // Răspunsul la „ce vă lipsește" nu se pierde dacă omul sare peste
+              // consum și mesaj: pleacă singur, fără să-l țină pe pagină.
+              if (leadRef && blocaj) {
+                void fetch('/api/leads/enrich', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    id: leadRef,
+                    blocaj,
+                    blocajDetalii: blocaj === 'altceva' ? blocajDetalii.trim() : '',
+                  }),
+                }).catch(() => {});
+              }
+              setExtraDone(true);
+            }}
             className="block w-full text-center text-sm text-gray-500 hover:text-gray-900 transition-colors"
           >
             Sar peste acest pas

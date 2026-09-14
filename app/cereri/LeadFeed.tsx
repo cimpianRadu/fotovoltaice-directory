@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { slugifyCity } from '@/lib/utils-shared';
-import LeadCard, { type LeadCardData } from './LeadCard';
+import LeadCard, { type LeadCardData, type PortalMe } from './LeadCard';
 import CountyFilter from './CountyFilter';
 
 interface LeadFeedProps {
   cards: LeadCardData[];
   claimCounts: Record<string, number>;
+  watchCounts: Record<string, number>;
   maxClaims: number;
 }
 
@@ -72,7 +73,24 @@ const pillClass = (active: boolean) =>
       : 'bg-white text-gray-600 border-border hover:border-secondary/40 hover:text-secondary-dark'
   }`;
 
-export default function LeadFeed({ cards, claimCounts, maxClaims }: LeadFeedProps) {
+export default function LeadFeed({ cards, claimCounts, watchCounts, maxClaims }: LeadFeedProps) {
+  // Firma logată în portal (cookie httpOnly, deci se află doar de la server).
+  // Pagina e ISR, așa că nu se poate citi cookie-ul la randare; un singur
+  // apel la încărcare, iar până răspunde cardurile arată formularul complet.
+  const [me, setMe] = useState<PortalMe | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/portal/me', { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : { me: null }))
+      .then((j) => {
+        if (!cancelled && j?.me?.email) setMe(j.me as PortalMe);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const [age, setAge] = useState<AgeFilter>(DEFAULT_AGE);
   const [segment, setSegment] = useState<SegmentFilter>('toate');
   const [sort, setSort] = useState<SortDir>('recente');
@@ -253,8 +271,10 @@ export default function LeadFeed({ cards, claimCounts, maxClaims }: LeadFeedProp
               key={card.id}
               lead={card}
               initialClaims={claimCounts[card.id] || 0}
+              initialWatches={watchCounts[card.id] || 0}
               maxClaims={maxClaims}
               focused={card.id === focusId}
+              me={me}
             />
           ))}
         </div>

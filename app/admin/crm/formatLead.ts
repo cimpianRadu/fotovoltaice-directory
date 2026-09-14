@@ -3,6 +3,8 @@ import { isPozeLink, parseRequestedFirms } from '@/lib/sheets-shared';
 import {
   getFinancingLabel, getYesNoLabel, getTimelineLabel, getRoofTypeLabel, getPhaseLabel,
   getConnectionLabel,
+  getBlocajLabel,
+  formatShortDate,
 } from '@/lib/utils-shared';
 
 // Text plain, fără emoji și fără markdown — mesajul se lipește în WhatsApp
@@ -58,6 +60,8 @@ export function formatLeadForShare(lead: NewLead): string {
     line('Baterie de stocare', lead.stocare ? getYesNoLabel(lead.stocare) : ''),
     line('Stație de încărcare', lead.wallbox ? getYesNoLabel(lead.wallbox) : ''),
     line('Termen dorit', lead.termen ? getTimelineLabel(lead.termen) : ''),
+    line('Se informează', lead.blocaj ? `${getBlocajLabel(lead.blocaj)}${lead.blocajDetalii ? ` („${lead.blocajDetalii}”)` : ''}` : ''),
+    line('Reactivată la', lead.reactivataLa ? formatShortDate(lead.reactivataLa) : ''),
     line('Finanțare', lead.finantare ? getFinancingLabel(lead.finantare) : ''),
     // Mesajul ajunge la instalator prin WhatsApp, deci „Poze: da" l-ar trimite
     // să întrebe unde sunt. Fără link spunem pe cine să întrebe.

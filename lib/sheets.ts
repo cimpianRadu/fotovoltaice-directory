@@ -79,12 +79,12 @@ async function readRows(sheetName: string): Promise<string[][]> {
     () =>
       sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        // Range lat deliberat, cu rezervă peste ultima coloană folosită (AK).
+        // Range lat deliberat, cu rezervă peste ultima coloană folosită (AV).
         // Când s-au adăugat AH-AJ (atribuirea) range-ul a rămas la A:AG, așa că
         // acele coloane se scriau dar se citeau mereu goale. Celelalte taburi au
         // mai puține coloane, un range mai lat nu le afectează: rândurile vin
         // pur și simplu mai scurte.
-        range: `${sheetName}!A:AR`,
+        range: `${sheetName}!A:AZ`,
       }),
     `read ${sheetName}`,
   );
@@ -184,6 +184,10 @@ export async function saveLeadToSheet(lead: {
     // Până acum încăpea unul singur, iar clientul scria bateria în câmpul de
     // putere ca să aibă unde („15" al prosumatorului din București).
     lead.capacitateBaterie || '', // AM — Capacitate baterie (kWh)
+    // AN-AV — fluxul „mă informez" (14 sept 2026), toate scrise DUPĂ salvare:
+    // AN blocaj (răspunsul de la pasul 5), AO detalii, AP emailul de întâmpinare
+    // trimis, AQ reactivată la, AR/AS check-in-uri (contor, ultimul), AT răspunsul
+    // clientului, AU alertele de reactivare trimise, AV anunțul de program. Vezi NewLead.
   ]);
   return timestamp;
 }
@@ -207,6 +211,10 @@ const LEAD_ENRICH_COLUMNS = {
   stocare: 'AA',
   wallbox: 'AB',
   termen: 'AC',
+  // Pasul 5, doar la „mă informez": ce îl oprește (slug din BLOCAJ_OPTIONS) și,
+  // opțional, în cuvintele lui.
+  blocaj: 'AN',
+  blocajDetalii: 'AO',
 } as const;
 
 export type LeadEnrichField = keyof typeof LEAD_ENRICH_COLUMNS;
@@ -251,20 +259,89 @@ export async function enrichLeadInSheet(
   return written;
 }
 
-/** Coloanele scrise de fluxul de alerte, pe cerere deja salvată. */
-async function setLeadCell(timestamp: string, column: 'AD' | 'AE' | 'AF', value: string) {
+/** Coloanele scrise de fluxurile automate (alerte, „mă informez"), pe cerere deja salvată. */
+async function setLeadCell(timestamp: string, column: string, value: string) {
+  await setLeadCells(timestamp, { [column]: value });
+}
+
+/** Mai multe celule ale aceleiași cereri, într-un singur apel. */
+async function setLeadCells(timestamp: string, cells: Record<string, string>) {
   const { sheetRow } = await findLeadRow(timestamp);
   const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+  const data = Object.entries(cells).map(([column, value]) => ({
+    range: `Leads!${column}${sheetRow}`,
+    values: [[value]],
+  }));
   await withRetry(
     () =>
-      sheets.spreadsheets.values.update({
+      sheets.spreadsheets.values.batchUpdate({
         spreadsheetId: SPREADSHEET_ID,
-        range: `Leads!${column}${sheetRow}`,
-        valueInputOption: 'RAW',
-        requestBody: { values: [[value]] },
+        requestBody: { valueInputOption: 'RAW', data },
       }),
-    `update lead ${column}`,
+    `update lead ${Object.keys(cells).join(',')}`,
   );
+}
+
+// ── Fluxul „mă informez" (14 sept 2026) ────────────────────────────────────
+// Clientul care bifează „deocamdată mă informez" nu primește trei telefoane,
+// primește un email de la platformă cu ce a cerut de fapt (preț orientativ,
+// ghidul programului), apoi un check-in la 30 și la 60 de zile. Când e gata,
+// își actualizează cererea de pe pagina din email și cererea reintră în feed
+// ca proaspătă. Firmele nu revendică între timp, „urmăresc" (tabul Urmăriri)
+// și primesc primele vestea la reactivare.
+
+/** AP — emailul de întâmpinare a plecat. Idempotență: cronul reia rândurile fără marcaj. */
+export async function markInformezWelcomeSent(timestamp: string, at = new Date().toISOString()) {
+  await setLeadCell(timestamp, 'AP', at);
+}
+
+/** AR + AS — al câtelea check-in a plecat și când. */
+export async function markInformezCheckin(timestamp: string, count: number, at = new Date().toISOString()) {
+  await setLeadCells(timestamp, { AR: String(count), AS: at });
+}
+
+/**
+ * AT — ce a apăsat clientul în check-in. „astept" repornește ceasul (AR la 0,
+ * AS acum), ca următorul check-in să vină peste 30 de zile, nu mâine.
+ */
+export async function recordClientResponse(
+  timestamp: string,
+  response: string,
+  at = new Date().toISOString(),
+) {
+  const cells: Record<string, string> = { AT: `${response} ${at}` };
+  if (response === 'astept') {
+    cells.AR = '0';
+    cells.AS = at;
+  }
+  await setLeadCells(timestamp, cells);
+}
+
+/**
+ * Clientul și-a actualizat cererea și a spus că e gata: AQ ține data de la
+ * care cererea e „proaspătă" în feed, AU se golește ca alertele de reactivare
+ * să plece prin cron. Câmpurile goale nu se scriu, ca la enrich.
+ */
+export async function reactivateLeadFromClient(
+  timestamp: string,
+  fields: { termen: string; finantare?: string; putere?: string; mesaj?: string },
+  at = new Date().toISOString(),
+) {
+  const cells: Record<string, string> = { AC: fields.termen, AQ: at, AU: '', AT: `gata ${at}` };
+  if (fields.finantare) cells.Y = fields.finantare;
+  if (fields.putere) cells.I = fields.putere;
+  if (fields.mesaj) cells.J = fields.mesaj;
+  await setLeadCells(timestamp, cells);
+}
+
+/** AU — alertele către firmele cu județul bifat au plecat pentru reactivarea asta. */
+export async function markReactivationAlertsSent(timestamp: string, at = new Date().toISOString()) {
+  await setLeadCell(timestamp, 'AU', at);
+}
+
+/** AV — anunțul de deschidere a programului a plecat; nu se retrimite. */
+export async function markProgramAnnounced(timestamp: string, at = new Date().toISOString()) {
+  await setLeadCell(timestamp, 'AV', at);
 }
 
 /** Rezervă cererea pentru abonatul pe județ, până la ISO-ul dat. */
@@ -400,6 +477,26 @@ export interface NewLead {
   tipLucrare: string;
   // AM — capacitatea de baterie cerută, în kWh. Cifra clientului, nu una calculată.
   capacitateBaterie: string;
+  // AN-AU — fluxul „mă informez" (14 sept 2026). Goale pe orice cerere care
+  // n-a bifat termenul ăsta. Vezi markInformez* / reactivateLeadFromClient.
+  /** AN — ce îl oprește (slug din BLOCAJ_OPTIONS), răspuns la pasul 5. */
+  blocaj: string;
+  /** AO — același lucru, în cuvintele lui (opțional). */
+  blocajDetalii: string;
+  /** AP — ISO când a plecat emailul de întâmpinare al platformei. */
+  emailClientLa: string;
+  /** AQ — ISO când clientul a spus „sunt gata" și și-a actualizat cererea. Data „proaspătă" din feed. */
+  reactivataLa: string;
+  /** AR — câte check-in-uri au plecat (0, 1, 2). */
+  checkinTrimise: number;
+  /** AS — ISO al ultimului check-in (sau al ultimului „încă aștept"). */
+  checkinLa: string;
+  /** AT — ultimul răspuns al clientului: „gata|astept|renunt <ISO>". */
+  raspunsClient: string;
+  /** AU — ISO când au plecat alertele de reactivare către firmele cu județul bifat. */
+  alerteReactivareLa: string;
+  /** AV — ISO când i-a plecat anunțul de deschidere a programului (din /admin/informez). */
+  anuntProgramLa: string;
 }
 
 export interface NewListing {
@@ -473,8 +570,31 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     intervalApel: r[36] || '',
     tipLucrare: r[37] || '',
     capacitateBaterie: r[38] || '',
+    blocaj: r[39] || '',
+    blocajDetalii: r[40] || '',
+    emailClientLa: r[41] || '',
+    reactivataLa: r[42] || '',
+    checkinTrimise: Number(r[43]) || 0,
+    checkinLa: r[44] || '',
+    raspunsClient: r[45] || '',
+    alerteReactivareLa: r[46] || '',
+    anuntProgramLa: r[47] || '',
     ...readCrmFields(r),
   }));
+}
+
+/**
+ * Cererea e în modul „se informează": clientul a bifat termenul ăsta și încă
+ * nu a apăsat „sunt gata". Firmele o urmăresc în loc s-o revendice, alertele
+ * pe județ pleacă cu prefix, iar cronul îi trimite clientului check-in-uri.
+ */
+export function isLeadInformez(l: Pick<NewLead, 'termen' | 'reactivataLa'>): boolean {
+  return l.termen === 'ma-informez' && !l.reactivataLa;
+}
+
+/** Data de la care cererea e „proaspătă" în feed: reactivarea, dacă a avut loc. */
+export function leadFreshSince(l: Pick<NewLead, 'timestamp' | 'reactivataLa'>): string {
+  return l.reactivataLa || l.timestamp;
 }
 
 export async function getListingsSince(cutoff: Date): Promise<NewListing[]> {
@@ -555,6 +675,14 @@ export interface PublicLead {
   // Public intenționat: firma decide dacă revendică și în funcție de faptul că
   // omul poate vorbi abia seara. Nu identifică pe nimeni.
   intervalApel: string;
+  /**
+   * Clientul se informează, nu așteaptă oferte acum. Cardul arată „Urmărește"
+   * în loc de „Revendică", iar `blocaj` spune de ce (vezi BLOCAJ_OPTIONS).
+   */
+  seInformeaza: boolean;
+  blocaj: string;
+  /** ISO — clientul a revenit cu „sunt gata"; cardul se datează de aici și poartă badge. */
+  reactivataLa: string;
 }
 
 // Redactare pentru afișarea publică a mesajului: emailuri, URL-uri, șiruri de
@@ -696,6 +824,9 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       // până aici, sunt filtrate de `isOpenForClaims`.
       verificata: l.crmStatus === 'valida' || l.crmStatus === 'ofertare',
       intervalApel: l.intervalApel,
+      seInformeaza: isLeadInformez(l),
+      blocaj: l.blocaj,
+      reactivataLa: l.reactivataLa,
     }))
     .reverse(); // cele mai noi primele
 }
@@ -834,6 +965,29 @@ async function createSheetTab(title: string) {
 }
 
 /** Întoarce timestampul rândului scris — cheia lui, alături de leadId. */
+/**
+ * Datele firmei așa cum le-a declarat ultima dată la revendicare: nume,
+ * persoană de contact, telefon. Pe /cereri, firma cu cont nu le mai tastează —
+ * le luăm de aici, iar `email` rămâne adresa din sesiune. Cea mai recentă
+ * revendicare cu nume și telefon, pe oricare din adresele legate ale firmei.
+ * Null dacă firma n-a revendicat niciodată (a intrat doar pentru alerte).
+ */
+export function latestClaimIdentity(
+  claims: LeadClaim[],
+  emails: string[],
+): { numeFirma: string; numeContact: string; telefon: string } | null {
+  const mine = new Set(emails.map((e) => e.trim().toLowerCase()).filter(Boolean));
+  const latest = claims
+    .filter((c) => mine.has(c.email) && c.numeFirma.trim() && c.telefon.trim())
+    .sort((a, b) => b.timestamp.localeCompare(a.timestamp))[0];
+  if (!latest) return null;
+  return {
+    numeFirma: latest.numeFirma.trim(),
+    numeContact: latest.numeContact.trim(),
+    telefon: latest.telefon.trim(),
+  };
+}
+
 export async function saveClaimToSheet(claim: {
   leadId: string;
   numeFirma: string;
@@ -1058,6 +1212,83 @@ export async function markClaimReminded(
 // Sesiunea ține 30 de zile, deci loginurile sunt rare prin construcție: o firmă
 // care intră zilnic produce un singur `intrat` pe lună. Fără `vazut`, jurnalul
 // măsura autentificările, nu folosirea.
+// ── Urmăriri ────────────────────────────────────────────────────────────────
+// Firma „urmărește" o cerere pe care clientul se informează: nu consumă un loc
+// din cele 3, nu cere ofertă, dar primește prima emailul când cererea devine
+// activă. E răspunsul la nemulțumirea instalatorilor cu cererile „mă informez"
+// (sept 2026): în loc să le revendice și să oferteze degeaba, își pun un semn.
+
+const WATCHES_SHEET = 'Urmăriri';
+
+const WATCHES_HEADER = [
+  'Timestamp',
+  'Lead ID',
+  'Firmă',
+  'Email', // D — identitatea firmei în /portal, aici pleacă vestea reactivării
+  'Anunțat la', // E — ISO când i-a plecat emailul de reactivare
+];
+
+export interface LeadWatch {
+  timestamp: string;
+  leadId: string;
+  numeFirma: string;
+  email: string;
+  notifiedAt: string;
+}
+
+export async function getWatches(): Promise<LeadWatch[]> {
+  let rows: string[][];
+  try {
+    rows = await readRows(WATCHES_SHEET);
+  } catch {
+    return [];
+  }
+  return rows
+    .filter((r) => Number.isFinite(Date.parse(r[0] || '')))
+    .map((r) => ({
+      timestamp: r[0] || '',
+      leadId: r[1] || '',
+      numeFirma: r[2] || '',
+      email: (r[3] || '').trim().toLowerCase(),
+      notifiedAt: r[4] || '',
+    }));
+}
+
+export async function saveWatchToSheet(watch: { leadId: string; numeFirma: string; email: string }) {
+  const values = [
+    new Date().toISOString(),
+    watch.leadId,
+    watch.numeFirma,
+    watch.email.trim().toLowerCase(),
+    '',
+  ];
+  try {
+    await appendRow(WATCHES_SHEET, values);
+  } catch {
+    await createSheetTab(WATCHES_SHEET);
+    await appendRow(WATCHES_SHEET, WATCHES_HEADER);
+    await appendRow(WATCHES_SHEET, values);
+  }
+}
+
+/** Marchează (coloana E) toate urmăririle cererii ca anunțate. */
+export async function markWatchersNotified(leadId: string, at = new Date().toISOString()) {
+  const rows = await readRows(WATCHES_SHEET);
+  const data = rows
+    .map((r, i) => (i > 0 && r[1] === leadId && !r[4] ? { range: `${WATCHES_SHEET}!E${i + 1}`, values: [[at]] } : null))
+    .filter((d): d is { range: string; values: string[][] } => d !== null);
+  if (!data.length) return;
+  const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+  await withRetry(
+    () =>
+      sheets.spreadsheets.values.batchUpdate({
+        spreadsheetId: SPREADSHEET_ID,
+        requestBody: { valueInputOption: 'RAW', data },
+      }),
+    'mark watchers notified',
+  );
+}
+
 const PORTAL_SHEET = 'Portal Acces';
 
 // E-G din 7 sept 2026: canalul sesiunii la `cerut` (prima intrare = cont nou).

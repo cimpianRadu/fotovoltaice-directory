@@ -378,6 +378,74 @@ export const TIMELINE_OPTIONS = [
   { value: 'ma-informez', label: 'Deocamdată mă informez' },
 ] as const;
 
+/** Clientul a spus că deocamdată se informează, deci nu așteaptă oferte acum. */
+export function isSeInformeaza(termen: string): boolean {
+  return termen === 'ma-informez';
+}
+
+/**
+ * „Ce vă lipsește ca să mergeți mai departe?", întrebat DOAR celor care au
+ * bifat „mă informez", la pasul 5, după trimitere (14 sept 2026). Din 64 de
+ * cereri intrate după 18 aug, 18 aveau termenul ăsta și 12 dintre ele așteptau
+ * un program de finanțare: nu erau curioși, așteptau Casa Verde Baterii.
+ * Răspunsul decide ce primește omul de la platformă (emailul de întâmpinare) și
+ * ce vede firma pe card, ca să știe dacă merită un telefon scurt sau deloc.
+ */
+export const BLOCAJ_OPTIONS = [
+  { value: 'astept-program', label: 'Aștept să se deschidă programul de finanțare' },
+  { value: 'pret', label: 'Nu știu cât ar costa, vreau un preț orientativ' },
+  { value: 'merita', label: 'Nu știu dacă merită pentru consumul meu' },
+  { value: 'buget', label: 'Nu am bugetul acum, mă interesează finanțarea' },
+  { value: 'ce-sistem', label: 'Vreau să înțeleg ce sistem mi se potrivește' },
+  { value: 'altceva', label: 'Altceva' },
+] as const;
+
+export type Blocaj = (typeof BLOCAJ_OPTIONS)[number]['value'];
+
+export function isBlocaj(s: string): s is Blocaj {
+  return BLOCAJ_OPTIONS.some((o) => o.value === s);
+}
+
+export function getBlocajLabel(slug: string): string {
+  return BLOCAJ_OPTIONS.find((o) => o.value === slug)?.label ?? slug;
+}
+
+/** Ce vede firma pe card, sub badge-ul „Se informează": scurt, la persoana a treia. */
+const BLOCAJ_SHORT: Record<string, string> = {
+  'astept-program': 'așteaptă programul de finanțare',
+  pret: 'vrea un preț orientativ',
+  merita: 'nu știe dacă merită',
+  buget: 'nu are bugetul acum',
+  'ce-sistem': 'vrea să înțeleagă ce sistem i se potrivește',
+  altceva: 'alt motiv',
+};
+
+export function getBlocajShort(slug: string): string {
+  return BLOCAJ_SHORT[slug] ?? '';
+}
+
+/**
+ * Programul pe care îl așteaptă, după ruta de finanțare bifată. Numele apare în
+ * emailurile către client și în subtitlul de pe card; gol dacă finanțarea nu e
+ * un program.
+ */
+export function getProgramName(finantare: string): string {
+  switch (finantare) {
+    case 'afm-baterii':
+      return 'Casa Verde Baterii';
+    case 'casa-verde':
+      return 'Casa Verde Fotovoltaice';
+    case 'alt-program':
+      return 'programul de finanțare';
+    default:
+      return '';
+  }
+}
+
+/** Răspunsurile posibile ale clientului la check-in-ul de 30 de zile. */
+export const CLIENT_RESPONSES = ['gata', 'astept', 'renunt'] as const;
+export type ClientResponse = (typeof CLIENT_RESPONSES)[number];
+
 // Intervalul în care clientul vrea să fie sunat (aug 2026). Nu e un detaliu de
 // proiect, e singura variabilă din formular care atinge direct problema
 // măsurată: din cei 7 clienți întrebați dacă i-a sunat vreo firmă, 5 au spus nu.

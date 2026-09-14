@@ -21,6 +21,7 @@ const STATUS_TONE: Record<LeadStatus, string> = {
   castigata: 'bg-emerald-600',
   altundeva: 'bg-orange-600',
   renuntat: 'bg-slate-400',
+  inactiva: 'bg-slate-300',
 };
 
 const CONTACT_TONE: Record<string, string> = {

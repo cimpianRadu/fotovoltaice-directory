@@ -36,14 +36,40 @@ export interface LeadCardData {
   intervalApelLabel: string;
   arePoze: boolean;
   verificata: boolean;
+  /**
+   * Clientul se informează, nu așteaptă oferte acum (14 sept 2026). Cardul
+   * arată „Urmărește" în loc de „Vreau această cerere"; revendicarea rămâne
+   * posibilă, dar ca opțiune secundară. `informezMotiv` = de ce, în cuvintele
+   * noastre („așteaptă Casa Verde Baterii"), gol dacă n-a răspuns.
+   */
+  seInformeaza: boolean;
+  informezMotiv: string;
+  /** Se informa și a apăsat „sunt gata": cererea e datată de la reactivare. */
+  reactivata: boolean;
+}
+
+/**
+ * Firma logată în portal, de la /api/portal/me. Cu nume și telefon (a mai
+ * revendicat), revendicarea și urmărirea se trimit dintr-un click; doar cu
+ * email (a intrat pentru alerte), formularul rămâne, cu emailul precompletat.
+ */
+export interface PortalMe {
+  email: string;
+  numeFirma: string;
+  numeContact: string;
+  telefon: string;
 }
 
 interface LeadCardProps {
   lead: LeadCardData;
   initialClaims: number;
+  /** Câte firme urmăresc cererea (doar la „se informează"). */
+  initialWatches: number;
   maxClaims: number;
   /** Cererea spre care s-a dat click în `?cerere=<id>`: se aduce în ecran și se marchează. */
   focused?: boolean;
+  /** Firma logată în portal; null = anonim sau încă neaflat. */
+  me?: PortalMe | null;
 }
 
 // Punct colorat, nu pastilă: pastilele sunt deja luate de segment, iar asta
@@ -121,6 +147,14 @@ const ICON_POZE = (
 );
 
 // Cheia franceză: manoperă. Nu un panou și nu o casă, ca să nu se confunde cu
+// Ochi: „se informează", omul se uită, nu cumpără încă.
+const ICON_INFORMEAZA = (
+  <BadgeIcon>
+    <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" />
+    <circle cx="12" cy="12" r="3" />
+  </BadgeIcon>
+);
+
 // badge-ul de segment de lângă el.
 const ICON_MONTAJ = (
   <BadgeIcon>
@@ -150,6 +184,31 @@ function Badge({
   );
 }
 
+/**
+ * Ce trimite firma logată, în loc de formular: datele declarate ultima dată.
+ * Linkul „altă firmă?" deschide formularul complet, pentru omul de vânzări
+ * care revendică de pe contul colegului sau pentru o firmă cu două entități.
+ */
+function AccountBox({ me, verb, onManual }: { me: PortalMe; verb: string; onManual: () => void }) {
+  const line = [me.numeContact, me.telefon].filter(Boolean).join(' · ');
+  return (
+    <div className="rounded-lg bg-surface border border-border px-4 py-3 text-sm">
+      <p className="text-gray-600">
+        {verb} ca <strong className="text-gray-900">{me.numeFirma}</strong>
+      </p>
+      {line && <p className="text-gray-600 mt-0.5">{line}</p>}
+      <p className="text-gray-500 mt-0.5 break-all">{me.email}</p>
+      <button
+        type="button"
+        onClick={onManual}
+        className="mt-2 text-xs text-gray-500 underline hover:text-gray-900"
+      >
+        Altă firmă sau alte date? Completează manual
+      </button>
+    </div>
+  );
+}
+
 function SegmentBadge({ segment }: { segment: string }) {
   const rez = segment === 'rezidential';
   return (
@@ -162,11 +221,30 @@ function SegmentBadge({ segment }: { segment: string }) {
   );
 }
 
-export default function LeadCard({ lead, initialClaims, maxClaims, focused }: LeadCardProps) {
+export default function LeadCard({
+  lead,
+  initialClaims,
+  initialWatches,
+  maxClaims,
+  focused,
+  me = null,
+}: LeadCardProps) {
   const [claims, setClaims] = useState(initialClaims);
+  // Feedback instalatori, 14 sept 2026: cine are cont nu mai retastează firma,
+  // contactul și telefonul la fiecare revendicare. `manual` = „altă firmă?",
+  // deschide formularul complet; se resetează și la o sesiune expirată.
+  const accountReady = Boolean(me?.numeFirma && me?.telefon);
+  const [manual, setManual] = useState(false);
+  const fromAccount = accountReady && !manual;
   const [modalOpen, setModalOpen] = useState(false);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const [error, setError] = useState<string | null>(null);
+  // Urmărirea, la „se informează": modal separat, cu două câmpuri, fără
+  // telefonul nostru de confirmare. Vezi /api/urmariri.
+  const [watches, setWatches] = useState(initialWatches);
+  const [watchOpen, setWatchOpen] = useState(false);
+  const [watchStatus, setWatchStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [watchError, setWatchError] = useState<string | null>(null);
   // „Cum ai aflat de noi?", opțional. Chips, nu dropdown: modalul pierde deja
   // 59% dintre firme între deschidere și trimitere (Umami, 30 zile la 7 sept),
   // un câmp în plus trebuie să coste un singur tap sau nimic.
@@ -188,10 +266,14 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
   }, [focused]);
 
   // Modal: Escape închide, scroll-ul paginii e blocat cât e deschis.
+  const anyModal = modalOpen || watchOpen;
   useEffect(() => {
-    if (!modalOpen) return;
+    if (!anyModal) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setModalOpen(false);
+      if (e.key === 'Escape') {
+        setModalOpen(false);
+        setWatchOpen(false);
+      }
     };
     document.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
@@ -199,7 +281,40 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
       document.removeEventListener('keydown', onKey);
       document.body.style.overflow = '';
     };
-  }, [modalOpen]);
+  }, [anyModal]);
+
+  function handleWatchOpen() {
+    setWatchOpen(true);
+    setWatchError(null);
+    trackEvent('lead_watch_opened', { county: lead.judet, project_type: lead.tipLabel });
+  }
+
+  async function handleWatchSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setWatchStatus('submitting');
+    setWatchError(null);
+    const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+    try {
+      const res = await fetch('/api/urmariri', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...data, leadId: lead.id, fromAccount }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        if (json.needsForm) setManual(true);
+        setWatchStatus('idle');
+        setWatchError(json.error || 'A apărut o eroare. Încearcă din nou.');
+        return;
+      }
+      trackEvent('lead_watch_submitted', { county: lead.judet, project_type: lead.tipLabel });
+      if (!json.duplicate) setWatches((n) => n + 1);
+      setWatchStatus('success');
+    } catch {
+      setWatchStatus('idle');
+      setWatchError('A apărut o eroare. Încearcă din nou.');
+    }
+  }
 
   function handleOpen() {
     setModalOpen(true);
@@ -218,12 +333,13 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
       const res = await fetch('/api/claims', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, leadId: lead.id, cumAflat, ...getAttribution() }),
+        body: JSON.stringify({ ...data, leadId: lead.id, cumAflat, fromAccount, ...getAttribution() }),
       });
       const json = await res.json().catch(() => ({}));
 
       if (!res.ok) {
         if (json.full) setClaims(maxClaims);
+        if (json.needsForm) setManual(true);
         setStatus('idle');
         setError(json.error || 'A apărut o eroare. Încearcă din nou.');
         return;
@@ -232,7 +348,7 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
       trackEvent('lead_claim_submitted', {
         county: lead.judet,
         project_type: lead.tipLabel,
-        cum_aflat: cumAflat || 'nespecificat',
+        cum_aflat: fromAccount ? 'din_cont' : cumAflat || 'nespecificat',
       });
       if (typeof json.claims === 'number') setClaims(json.claims);
       setStatus('success');
@@ -316,6 +432,26 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
               Verificată telefonic
             </Badge>
           )}
+          {/* Gri, nu colorat: e semnalul „nu consuma ofertare aici", trebuie să
+              se citească înainte de orice altceva de pe card. */}
+          {lead.seInformeaza && (
+            <Badge
+              icon={ICON_INFORMEAZA}
+              tone="bg-slate-100 text-slate-700"
+              title="Clientul a spus că deocamdată se informează. Nu așteaptă ofertă acum."
+            >
+              Se informează
+            </Badge>
+          )}
+          {lead.reactivata && (
+            <Badge
+              icon={ICON_TELEFON}
+              tone="bg-orange-50 text-orange-700"
+              title="Clientul se informa, iar acum a spus că e gata pentru oferte și și-a actualizat cererea."
+            >
+              Reactivată
+            </Badge>
+          )}
         </div>
         <span className="shrink-0 text-xs text-gray-400">{lead.postedLabel}</span>
       </div>
@@ -325,6 +461,11 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
       {/* Cererile de dinainte de 29 iul 2026 n-au câmpul — rândul dispare de tot. */}
       {lead.finantareLabel && (
         <FinancingLine label={lead.finantareLabel} tone={lead.finantareTone} />
+      )}
+      {lead.seInformeaza && (
+        <p className="mt-2 text-xs text-slate-600">
+          Se informează{lead.informezMotiv ? `: ${lead.informezMotiv}` : ''}. Nu așteaptă ofertă acum.
+        </p>
       )}
       {specs.length > 0 && (
         <ul className="mt-2 flex flex-wrap gap-1.5">
@@ -342,7 +483,15 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
         <p className="mt-2 text-sm text-gray-500 italic leading-relaxed">„{lead.mesaj}”</p>
       )}
 
-      {/* Counter: sloturi vizuale + text. Afișat doar când există revendicări reale. */}
+      {/* La „se informează" nu există contor de locuri: nimeni nu ofertează,
+          deci nu e nimic de disputat. În loc, câte firme așteaptă reactivarea. */}
+      {lead.seInformeaza ? (
+        <p className="mt-4 text-xs text-gray-500">
+          {watches > 0
+            ? `${watches} ${watches === 1 ? 'firmă urmărește' : 'firme urmăresc'} cererea`
+            : 'Nimeni nu urmărește încă cererea'}
+        </p>
+      ) : (
       <div className="mt-4 flex items-center gap-2">
         <div className="flex gap-1">
           {Array.from({ length: maxClaims }, (_, i) => (
@@ -360,9 +509,28 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
               : 'Nicio revendicare încă'}
         </span>
       </div>
+      )}
 
       <div className="mt-4 flex-1 flex flex-col justify-end">
-        {claimedByMe ? (
+        {lead.seInformeaza && !claimedByMe ? (
+          watchStatus === 'success' ? (
+            <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-2.5 text-sm text-emerald-800 text-center font-medium">
+              Te anunțăm când devine activă ✓
+            </div>
+          ) : (
+            <>
+              <Button variant="secondary" onClick={handleWatchOpen} className="w-full">
+                Urmărește cererea
+              </Button>
+              <p className="mt-2 text-[11px] text-gray-500 text-center">
+                Primești email când clientul e gata, înaintea alertelor pe județ.{' '}
+                <button type="button" onClick={handleOpen} className="underline hover:text-gray-900">
+                  Vreau totuși să o revendic
+                </button>
+              </p>
+            </>
+          )
+        ) : claimedByMe ? (
           <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-2.5 text-sm text-emerald-800 text-center font-medium">
             Revendicare trimisă ✓
           </div>
@@ -383,6 +551,71 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
           </>
         )}
       </div>
+
+      {watchOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-gray-900/50"
+            onClick={() => watchStatus !== 'submitting' && setWatchOpen(false)}
+          />
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Urmărește cererea: ${lead.tipLabel}, ${lead.judet}`}
+            className="relative bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto p-6"
+          >
+            <div className="flex items-start justify-between gap-4 mb-1">
+              <h3 className="font-bold text-gray-900 text-lg">Urmărește această cerere</h3>
+              <button
+                onClick={() => setWatchOpen(false)}
+                aria-label="Închide"
+                className="shrink-0 -mt-1 -mr-1 w-9 h-9 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 hover:bg-surface transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <p className="text-sm text-gray-600 mb-4">
+              {lead.tipLabel} · {details.join(' · ')} · {lead.postedLabel}
+              {lead.informezMotiv && ` · ${lead.informezMotiv}`}
+            </p>
+            {watchStatus === 'success' ? (
+              <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-800">
+                Gata. Când clientul spune că e pregătit pentru oferte, primești email înaintea
+                firmelor cu alerte pe județ, iar cererea o revendici atunci de pe /cereri.
+              </div>
+            ) : (
+              <form onSubmit={handleWatchSubmit} className="space-y-3">
+                {fromAccount ? (
+                  <AccountBox me={me!} verb="Urmărești" onManual={() => setManual(true)} />
+                ) : (
+                  <>
+                    <Input label="Nume firmă" name="numeFirma" required placeholder="SC Firma SRL" />
+                    <Input
+                      label="Email firmă"
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="contact@firma.ro"
+                      autoComplete="email"
+                      defaultValue={me?.email}
+                    />
+                  </>
+                )}
+                {watchError && <p className="text-xs text-red-600">{watchError}</p>}
+                <Button type="submit" variant="primary" disabled={watchStatus === 'submitting'} className="w-full">
+                  {watchStatus === 'submitting' ? 'Se salvează...' : 'Urmărește cererea'}
+                </Button>
+                <p className="text-[11px] text-gray-500 leading-relaxed">
+                  Urmărirea nu e revendicare: nu ocupă un loc din cele {maxClaims}, nu te sunăm și nu
+                  primești datele clientului. Primești un singur email, când cererea devine activă.
+                </p>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
 
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -425,24 +658,34 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">
-                <Input label="Nume firmă" name="numeFirma" required placeholder="SC Firma SRL" />
-                <Input label="Persoană contact" name="numeContact" required placeholder="Ion Popescu" />
-                <Input
-                  label="Telefon"
-                  name="telefon"
-                  type="tel"
-                  required
-                  placeholder="0740 123 456"
-                  autoComplete="tel"
-                />
-                <Input
-                  label="Email firmă"
-                  name="email"
-                  type="email"
-                  required
-                  placeholder="contact@firma.ro"
-                  autoComplete="email"
-                />
+                {fromAccount ? (
+                  <AccountBox me={me!} verb="Revendici" onManual={() => setManual(true)} />
+                ) : (
+                  <>
+                    <Input label="Nume firmă" name="numeFirma" required placeholder="SC Firma SRL" />
+                    <Input label="Persoană contact" name="numeContact" required placeholder="Ion Popescu" />
+                    <Input
+                      label="Telefon"
+                      name="telefon"
+                      type="tel"
+                      required
+                      placeholder="0740 123 456"
+                      autoComplete="tel"
+                    />
+                    <Input
+                      label="Email firmă"
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="contact@firma.ro"
+                      autoComplete="email"
+                      defaultValue={me?.email}
+                    />
+                  </>
+                )}
+                {/* „Cum ai aflat" e întrebare de primă întâlnire: firma cu cont
+                    ne-a răspuns deja (sau n-a vrut) la prima revendicare. */}
+                {!fromAccount && (
                 <fieldset>
                   <legend className="block text-sm font-medium text-gray-700 mb-1.5">
                     Cum ai aflat de cererile noastre?{' '}
@@ -469,6 +712,7 @@ export default function LeadCard({ lead, initialClaims, maxClaims, focused }: Le
                     })}
                   </div>
                 </fieldset>
+                )}
                 {error && <p className="text-xs text-red-600">{error}</p>}
                 <Button type="submit" variant="primary" disabled={status === 'submitting'} className="w-full">
                   {status === 'submitting' ? 'Se trimite...' : 'Trimite revendicarea'}

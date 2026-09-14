@@ -58,7 +58,7 @@ export async function sendEmail(opts: SendEmailOptions): Promise<{ ok: boolean; 
   }
 }
 
-function escapeHtml(s: string): string {
+export function escapeHtml(s: string): string {
   return s
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -387,7 +387,7 @@ export async function sendListingNotification(data: ListingNotificationData): Pr
 
 // ── Portal instalatori ──────────────────────────────────────────────────────
 
-const PORTAL_BASE_URL = 'https://instalatori-fotovoltaice.ro';
+export const PORTAL_BASE_URL = 'https://instalatori-fotovoltaice.ro';
 
 /**
  * Emailul de login: link de acces direct + cod de 6 cifre. Codul există pentru
@@ -631,9 +631,18 @@ export async function sendCountyLeadAlert(data: {
   reservedUntil?: string;
   /** Către restul firmelor, după ce a expirat rezervarea unui abonat. */
   unlocked?: boolean;
+  /**
+   * Clientul se informează (14 sept 2026): alerta pleacă tot, dar cu prefix în
+   * subiect și cu motivul lui, ca firma să știe că nu așteaptă ofertă acum și
+   * să urmărească cererea în loc s-o revendice. Vezi getBlocajShort.
+   */
+  informez?: { motiv: string };
+  /** Clientul se informa și a apăsat „sunt gata": cererea a reintrat în feed. */
+  reactivated?: boolean;
 }): Promise<{ ok: boolean; reason?: string }> {
   const rezidential = data.segment === 'rezidential';
   const reserved = Boolean(data.reservedUntil);
+  const informez = Boolean(data.informez);
   const finantareColor = FINANCING_EMAIL_COLOR[getFinancingTone(data.finantareSlug)];
 
   const row = (label: string, value: string) =>
@@ -644,7 +653,7 @@ export async function sendCountyLeadAlert(data: {
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
   <div style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
     <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#fffbeb">
-      <div style="font-size:12px;color:#92400e;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">${reserved ? 'Rezervată pentru tine' : data.unlocked ? 'Cerere deblocată' : 'Cerere nouă'} · ${escapeHtml(data.judet)}</div>
+      <div style="font-size:12px;color:#92400e;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">${reserved ? 'Rezervată pentru tine' : data.unlocked ? 'Cerere deblocată' : data.reactivated ? 'Cerere reactivată' : informez ? 'Se informează' : 'Cerere nouă'} · ${escapeHtml(data.judet)}</div>
       <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${escapeHtml(data.tipProiectLabel)}</h1>
       <div style="margin-top:8px">${segmentBadge(rezidential ? 'rezidential' : 'comercial')}</div>
     </div>
@@ -652,6 +661,7 @@ export async function sendCountyLeadAlert(data: {
       <table style="border-collapse:collapse;width:100%">
         ${data.finantareLabel ? row('Finanțare', `<strong style="color:${finantareColor}">${escapeHtml(data.finantareLabel)}</strong>`) : ''}
         ${data.termenLabel ? row('Vrea instalarea', `<strong>${escapeHtml(data.termenLabel)}</strong>`) : ''}
+        ${data.informez ? row('Se informează', `<span style="color:#6b7280">${escapeHtml(data.informez.motiv || 'nu a spus de ce')}</span>`) : ''}
         ${data.tipLucrareLabel ? row('Lucrare', `<strong>${escapeHtml(data.tipLucrareLabel)}</strong>`) : ''}
         ${data.putere ? row(data.retrofit ? 'Are montat' : 'Putere', `${escapeHtml(data.putere)} kW`) : ''}
         ${data.consumLunar ? row('Consum lunar', escapeHtml(data.consumLunar)) : ''}
@@ -661,7 +671,7 @@ export async function sendCountyLeadAlert(data: {
         ${row('Județ', escapeHtml(data.judet))}
       </table>
       <div style="text-align:center;margin-top:20px">
-        <a href="${PORTAL_BASE_URL}${reserved ? '/portal' : '/cereri'}" style="display:inline-block;padding:12px 24px;background:#f59e0b;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">${reserved ? 'Preia cererea din portal' : 'Vezi cererea și revendic-o'}</a>
+        <a href="${PORTAL_BASE_URL}${reserved ? '/portal' : '/cereri'}" style="display:inline-block;padding:12px 24px;background:#f59e0b;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">${reserved ? 'Preia cererea din portal' : informez ? 'Vezi cererea și urmărește-o' : 'Vezi cererea și revendic-o'}</a>
       </div>
       <p style="font-size:13px;color:#6b7280;margin:16px 0 0;text-align:center;line-height:1.5">
         ${
@@ -669,7 +679,11 @@ export async function sendCountyLeadAlert(data: {
             ? `Cererea e numai a ta până pe <strong>${escapeHtml(fmtDate(data.reservedUntil || ''))}</strong>: nu apare pe /cereri și n-o primește nicio altă firmă. După, intră în feed ca oricare alta.`
             : data.unlocked
               ? 'Cererea a fost rezervată unei firme abonate, iar rezervarea a expirat fără ca ea s-o preia. Acum e liberă, primul venit.'
-              : 'Cererea se ia de pe /cereri, primul venit. Datele clientului se deblochează după apelul nostru de confirmare.'
+              : informez
+                ? 'Clientul a spus că deocamdată se informează. Nu așteaptă ofertă acum. Poți urmări cererea din feed și primești primul vestea când devine activă.'
+                : data.reactivated
+                  ? 'Clientul se informa, iar acum a spus că e gata pentru oferte și și-a actualizat cererea. Se ia de pe /cereri, primul venit.'
+                  : 'Cererea se ia de pe /cereri, primul venit. Datele clientului se deblochează după apelul nostru de confirmare.'
         }
       </p>
     </div>
@@ -697,7 +711,11 @@ export async function sendCountyLeadAlert(data: {
     ? `Rezervată pentru tine în ${data.judet}`
     : data.unlocked
       ? `Cerere deblocată în ${data.judet}`
-      : `Cerere nouă în ${data.judet}`;
+      : data.reactivated
+        ? `Cerere reactivată în ${data.judet}`
+        : informez
+          ? `[Se informează] Cerere nouă în ${data.judet}`
+          : `Cerere nouă în ${data.judet}`;
 
   const result = await sendEmail({
     to: data.to,
@@ -784,4 +802,49 @@ export async function sendNewPortalAccountNotification(data: {
   if (!result.ok) {
     console.warn('[email] New portal account notification not sent:', result.reason);
   }
+}
+
+/**
+ * Către firma care „urmărea" o cerere pe care clientul se informa: clientul a
+ * apăsat „sunt gata" și și-a actualizat cererea. Pleacă imediat la reactivare,
+ * înaintea alertelor pe județ (care vin prin cronul de a doua zi), ăsta e
+ * avantajul promis pe card celui care urmărește.
+ */
+export async function sendWatchActivatedEmail(data: {
+  to: string;
+  judet: string;
+  leadSummary: string;
+  leadId: string;
+}): Promise<{ ok: boolean; reason?: string }> {
+  const html = `<!DOCTYPE html>
+<html>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
+  <div style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
+    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#ecfdf5">
+      <div style="font-size:12px;color:#047857;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">Cerere activă · ${escapeHtml(data.judet)}</div>
+      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${escapeHtml(data.leadSummary)}</h1>
+    </div>
+    <div style="padding:24px">
+      <p style="font-size:14px;color:#374151;margin:0 0 14px">
+        Clientul cererii pe care o urmăreai a spus că e gata pentru oferte și și-a actualizat
+        cererea. Primești vestea înaintea firmelor cu alerte pe județ, care o află mâine dimineață.
+      </p>
+      <div style="text-align:center">
+        <a href="${PORTAL_BASE_URL}/cereri?cerere=${encodeURIComponent(data.leadId)}" style="display:inline-block;padding:12px 24px;background:#f59e0b;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">Vezi cererea și revendic-o</a>
+      </div>
+    </div>
+    <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280;line-height:1.5">
+      Primești emailul pentru că ai apăsat „Urmărește" pe cererea asta pe /cereri.
+    </div>
+  </div>
+</body>
+</html>`;
+
+  const result = await sendEmail({
+    to: data.to,
+    subject: `Cererea din ${data.judet} pe care o urmărești e acum activă`,
+    html,
+  });
+  if (!result.ok) console.warn('[email] Watch activated email not sent:', result.reason);
+  return result;
 }

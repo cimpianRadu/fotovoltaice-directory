@@ -14,7 +14,9 @@ import {
   isPriorityHeld,
   sanitizeMesajPublic,
   type NewLead,
+  isLeadInformez,
 } from '@/lib/sheets';
+import { informezMotiv } from '@/lib/lead-alerts';
 import { isPozeLink } from '@/lib/sheets-shared';
 import {
   getCounties,
@@ -26,6 +28,7 @@ import {
   getYesNoLabel,
   getCallWindowLabel,
   getTimelineLabel,
+  formatShortDate,
 } from '@/lib/utils-shared';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { type PortalClaim } from './PortalClaimCard';
@@ -60,6 +63,10 @@ function specsFor(lead: NewLead | undefined): { label: string; value: string }[]
     lead.stocare ? { label: 'Baterie', value: getYesNoLabel(lead.stocare) } : null,
     lead.wallbox ? { label: 'Stație auto', value: getYesNoLabel(lead.wallbox) } : null,
     lead.termen ? { label: 'Termen', value: getTimelineLabel(lead.termen) } : null,
+    // De ce se informează, în cuvintele noastre: firma vede că nu e cazul să
+    // oferteze acum, dar și că omul așteaptă un program, deci merită ținut minte.
+    isLeadInformez(lead) ? { label: 'Se informează', value: informezMotiv(lead) || 'nu a spus de ce' } : null,
+    lead.reactivataLa ? { label: 'Reactivată', value: formatShortDate(lead.reactivataLa) } : null,
   ].filter(Boolean) as { label: string; value: string }[];
 }
 

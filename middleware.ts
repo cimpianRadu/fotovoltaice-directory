@@ -16,6 +16,9 @@ const PORTAL_OPEN_PATHS = new Set([
   '/api/portal/auth/code',
   '/api/portal/auth/verify',
   '/api/portal/auth/logout',
+  // Cine sunt: răspunde { me: null } fără sesiune, nu 401 — e apelat de pe
+  // /cereri pentru orice vizitator, ca să știe dacă firma are cont.
+  '/api/portal/me',
 ]);
 
 async function portalMiddleware(req: NextRequest): Promise<NextResponse> {
