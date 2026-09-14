@@ -321,6 +321,101 @@ function PortalNextStep({
   );
 }
 
+/**
+ * Semnul întrebării de lângă cele două butoane ale unei cereri pe care clientul
+ * se informează (14 sept 2026). Cardul are acum două acțiuni care sună la fel
+ * pentru cine intră prima oară („o urmăresc" vs „vreau omul"), dar care costă
+ * diferit: una e un email, cealaltă consumă un loc din cele trei și ne pune să
+ * sunăm clientul. Diferența nu încape în eticheta butonului și nu merită încă un
+ * paragraf pe fiecare card, deci stă sub un (i).
+ *
+ * Se deschide la hover ȘI la click, fiindcă pe telefon hoverul nu există, iar
+ * pe /cereri majoritatea firmelor vin de pe telefon. `onFocus`/`onBlur` îl fac
+ * accesibil din tastatură; Escape îl închide.
+ */
+function ActionsInfo({ maxClaims }: { maxClaims: number }) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  // Ce a atins ultima oară butonul. Pe telefon Chrome trimite un `mouseenter`
+  // sintetic înaintea clickului, deci un simplu toggle pe click ar fi deschis
+  // tooltipul cu hoverul fals și l-ar fi închis imediat cu clickul: pe mobil nu
+  // se deschidea deloc. Hoverul rămâne doar pentru mouse, atingerea comută.
+  const pointer = useRef<string>('mouse');
+
+  // Pe atingere nu există „ies cu mouse-ul de pe buton": fără asta, tooltipurile
+  // deschise rămân deschise pe toate cardurile atinse.
+  useEffect(() => {
+    if (!open) return;
+    const onDocClick = (e: MouseEvent) => {
+      if (!wrapRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener('click', onDocClick);
+    return () => document.removeEventListener('click', onDocClick);
+  }, [open]);
+
+  return (
+    <div ref={wrapRef} className="relative flex justify-center">
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-label="Ce înseamnă fiecare buton"
+        onPointerDown={(e) => {
+          // `pointerdown` e sursa sigură pentru felul atingerii: `pointerenter`
+          // ajunge la React doar prin `pointerover`, deci nu e garantat.
+          pointer.current = e.pointerType;
+        }}
+        onPointerEnter={(e) => {
+          if (e.pointerType === 'mouse') setOpen(true);
+        }}
+        onPointerLeave={(e) => {
+          if (e.pointerType === 'mouse') setOpen(false);
+        }}
+        onClick={() => {
+          if (pointer.current !== 'mouse') setOpen((o) => !o);
+        }}
+        onFocus={() => setOpen(true)}
+        onBlur={() => setOpen(false)}
+        onKeyDown={(e) => e.key === 'Escape' && setOpen(false)}
+        className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] text-gray-500 transition-colors hover:text-gray-900"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="13"
+          height="13"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 16v-4M12 8h.01" />
+        </svg>
+        Ce înseamnă fiecare?
+      </button>
+      {open && (
+        <div
+          role="tooltip"
+          className="absolute top-full left-1/2 z-20 mt-2 w-72 max-w-[calc(100vw-3rem)] -translate-x-1/2 rounded-xl border border-border bg-white p-3 text-left text-xs leading-relaxed text-gray-600 shadow-lg"
+        >
+          <p>
+            <strong className="text-gray-900">Urmărește cererea</strong> — primești un singur
+            email, în momentul în care clientul spune că e gata de oferte, înaintea alertelor pe
+            județ. Nu ocupă loc, nu te sunăm și nu primești datele clientului.
+          </p>
+          <p className="mt-2">
+            <strong className="text-gray-900">Vreau să contactez persoana</strong> — revendici
+            cererea acum: te sunăm pentru confirmare, apoi primești în portal numele, telefonul
+            și adresa clientului. Ocupă unul din cele {maxClaims} locuri, deși clientul a spus
+            că deocamdată se informează.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function SegmentBadge({ segment }: { segment: string }) {
   const rez = segment === 'rezidential';
   return (
@@ -637,15 +732,20 @@ export default function LeadCard({
             </div>
           ) : (
             <>
+              {/* Revendicarea nu mai e un link în subsolul cardului: firma care
+                  vrea omul acum trebuie să găsească acțiunea acolo unde se uită,
+                  nu într-un rând de 11px. Rămâne a doua, ca greutate vizuală
+                  (contur, nu plin), fiindcă clientul chiar a spus că se
+                  informează — vezi tooltipul de dedesubt. */}
               <Button variant="secondary" onClick={handleWatchOpen} className="w-full">
                 Urmărește cererea
               </Button>
-              <p className="mt-2 text-[11px] text-gray-500 text-center">
-                Primești email când clientul e gata, înaintea alertelor pe județ.{' '}
-                <button type="button" onClick={handleOpen} className="underline hover:text-gray-900">
-                  Vreau totuși să o revendic
-                </button>
-              </p>
+              <Button variant="outline" onClick={handleOpen} className="mt-2 w-full">
+                Vreau să contactez persoana
+              </Button>
+              <div className="mt-1.5">
+                <ActionsInfo maxClaims={maxClaims} />
+              </div>
             </>
           )
         ) : claimedByMe ? (
