@@ -45,6 +45,10 @@ type EventName =
   // cum să se vadă dacă e și apăsată. `to` reține unde ducea la momentul apăsării,
   // fiindcă ținta se mută pe /finantare/firme când pagina aia intră live.
   | 'finantare_cta_click'
+  // Puntea de pe ecranul de confirmare al revendicării/urmăririi spre cont
+  // (14 sept 2026). `source` = revendicare | urmarire, `state` = anonim (n-are
+  // cont, linkul duce la login cu emailul precompletat) | logat / logat_alerte.
+  | 'portal_cta_click'
   | 'portal_login_requested'
   | 'portal_login_completed'
   | 'portal_note_added'

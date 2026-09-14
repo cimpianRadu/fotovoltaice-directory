@@ -59,7 +59,7 @@ export default function PortalCountyAlerts({
   }
 
   return (
-    <div className="mb-8 rounded-xl border border-border bg-surface p-5 sm:p-6">
+    <div id="alerte" className="mb-8 scroll-mt-24 rounded-xl border border-border bg-surface p-5 sm:p-6">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="font-semibold text-gray-900">Alerte pe județ</h2>

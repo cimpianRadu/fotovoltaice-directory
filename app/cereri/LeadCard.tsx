@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import { trackEvent } from '@/lib/analytics';
+import { PORTAL_EMAIL_KEY } from '@/lib/portal-email-handoff';
 import { MAX_ACTIVE_CLAIMS_PER_FIRM } from '@/lib/sheets-shared';
 import { getAttribution } from '@/lib/attribution';
 import { FIRM_SOURCE_OPTIONS, isDoarMontaj } from '@/lib/utils-shared';
@@ -209,6 +210,117 @@ function AccountBox({ me, verb, onManual }: { me: PortalMe; verb: string; onManu
   );
 }
 
+/**
+ * Puntea de la „am revendicat" la „am cont", pe ecranul de confirmare
+ * (14 sept 2026).
+ *
+ * De ce aici și nu în formular: modalul pierde deja 59% dintre firme între
+ * deschidere și trimitere (Umami, 30 zile la 7 sept), deci nu i se mai adaugă
+ * text înainte de buton. După trimitere însă firma tocmai ne-a dat emailul cu
+ * care se face contul, iar contul nu mai e o pagină despre care trebuie să
+ * afle de undeva: e pasul următor, cu emailul ei precompletat în link.
+ *
+ * Avantajele sunt scrise în ordinea utilității pentru cine tocmai a revendicat:
+ * datele clientului (le așteaptă acum), alertele pe județ (singurul lucru care
+ * aduce cererea următoare fără să stea pe feed), statusurile (eliberează locul).
+ */
+function PortalNextStep({
+  email,
+  hasAccount,
+  source,
+  arePoze,
+  judet,
+}: {
+  email: string;
+  hasAccount: boolean;
+  source: 'revendicare' | 'urmarire';
+  arePoze: boolean;
+  judet: string;
+}) {
+  if (hasAccount) {
+    return (
+      <p className="mt-3 text-xs text-gray-600 leading-relaxed">
+        Cererea apare în{' '}
+        <a
+          href="/portal"
+          onClick={() => trackEvent('portal_cta_click', { source, state: 'logat' })}
+          className="font-medium text-primary-dark underline hover:no-underline"
+        >
+          portalul tău
+        </a>
+        . Dacă n-ai bifat încă județele pentru{' '}
+        <a
+          href="/portal#alerte"
+          onClick={() => trackEvent('portal_cta_click', { source, state: 'logat_alerte' })}
+          className="font-medium text-primary-dark underline hover:no-underline"
+        >
+          alerte pe email
+        </a>
+        , o faci în 30 de secunde și afli de cererile din {judet} fără să mai intri pe feed.
+      </p>
+    );
+  }
+
+  return (
+    <div className="mt-4 rounded-xl border-2 border-primary bg-primary/5 p-4">
+      <p className="text-xs font-semibold uppercase tracking-wide text-primary-dark">
+        Pasul următor
+      </p>
+      <h4 className="mt-1 font-bold text-gray-900">Intră în portal cu același email</h4>
+      <p className="mt-1 text-sm text-gray-700 leading-relaxed">
+        Contul e gratuit și n-are parolă: primești un cod pe{' '}
+        {email ? <strong className="break-words">{email}</strong> : 'emailul firmei'} și ești
+        înăuntru. Acolo ai:
+      </p>
+      <ul className="mt-3 space-y-2 text-sm text-gray-700">
+        {[
+          source === 'revendicare'
+            ? `Datele complete ale clientului${arePoze ? ' și pozele trimise de el' : ''}, imediat după apelul nostru de confirmare.`
+            : 'Cererile pe care le urmărești și cele revendicate, într-un singur loc.',
+          `Alerte pe email la fiecare cerere nouă din ${judet} și din celelalte județe pe care le bifezi, în momentul în care intră.`,
+          'Statusul fiecărei cereri și notele tale, ca să nu te mai sunăm degeaba. Când renunți la o cerere, locul se eliberează pe loc.',
+        ].map((t) => (
+          <li key={t} className="flex gap-2">
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+              className="mt-0.5 shrink-0 text-primary-dark"
+            >
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+            <span className="leading-relaxed">{t}</span>
+          </li>
+        ))}
+      </ul>
+      <Button
+        href="/portal/login"
+        variant="primary"
+        className="mt-4 w-full"
+        onClick={() => {
+          // Precompletarea trece prin sessionStorage, nu prin query string:
+          // emailul firmei n-are ce căuta în URL-ul trimis la Umami sau în
+          // logurile serverului. Cheia e citită și ștearsă de LoginForm.
+          try {
+            if (email) sessionStorage.setItem(PORTAL_EMAIL_KEY, email);
+          } catch {
+            /* private mode: se tastează manual, nu e nimic de reparat */
+          }
+          trackEvent('portal_cta_click', { source, state: 'anonim' });
+        }}
+      >
+        Intră cu emailul firmei
+      </Button>
+    </div>
+  );
+}
+
 function SegmentBadge({ segment }: { segment: string }) {
   const rez = segment === 'rezidential';
   return (
@@ -249,6 +361,10 @@ export default function LeadCard({
   // 59% dintre firme între deschidere și trimitere (Umami, 30 zile la 7 sept),
   // un câmp în plus trebuie să coste un singur tap sau nimic.
   const [cumAflat, setCumAflat] = useState('');
+  // Emailul cu care a plecat revendicarea/urmărirea: cu el se precompletează
+  // linkul spre /portal/login pe ecranul de confirmare, ca firma să nu-l mai
+  // tasteze o dată (și să nu greșească alt email decât cel din revendicare).
+  const [emailFolosit, setEmailFolosit] = useState('');
 
   const full = claims >= maxClaims;
   const slotsLeft = maxClaims - claims;
@@ -308,6 +424,7 @@ export default function LeadCard({
         return;
       }
       trackEvent('lead_watch_submitted', { county: lead.judet, project_type: lead.tipLabel });
+      setEmailFolosit(typeof data.email === 'string' ? data.email : me?.email || '');
       if (!json.duplicate) setWatches((n) => n + 1);
       setWatchStatus('success');
     } catch {
@@ -351,6 +468,7 @@ export default function LeadCard({
         cum_aflat: fromAccount ? 'din_cont' : cumAflat || 'nespecificat',
       });
       if (typeof json.claims === 'number') setClaims(json.claims);
+      setEmailFolosit(typeof data.email === 'string' ? data.email : me?.email || '');
       setStatus('success');
     } catch {
       setStatus('idle');
@@ -581,9 +699,18 @@ export default function LeadCard({
               {lead.informezMotiv && ` · ${lead.informezMotiv}`}
             </p>
             {watchStatus === 'success' ? (
-              <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-800">
-                Gata. Când clientul spune că e pregătit pentru oferte, primești email înaintea
-                firmelor cu alerte pe județ, iar cererea o revendici atunci de pe /cereri.
+              <div>
+                <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-800">
+                  Gata. Când clientul spune că e pregătit pentru oferte, primești email înaintea
+                  firmelor cu alerte pe județ, iar cererea o revendici atunci de pe /cereri.
+                </div>
+                <PortalNextStep
+                  email={emailFolosit}
+                  hasAccount={Boolean(me)}
+                  source="urmarire"
+                  arePoze={lead.arePoze}
+                  judet={lead.judet}
+                />
               </div>
             ) : (
               <form onSubmit={handleWatchSubmit} className="space-y-3">
@@ -648,13 +775,18 @@ export default function LeadCard({
             </p>
 
             {claimedByMe ? (
-              <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-800">
-                Revendicare înregistrată. Te sunăm pentru confirmare, apoi găsești datele
-                clientului în{' '}
-                <a href="/portal" className="font-medium underline hover:no-underline">
-                  Portalul Instalatorilor
-                </a>
-                , intri cu emailul firmei, fără parolă.
+              <div>
+                <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-800">
+                  Revendicare înregistrată. Te sunăm pentru confirmare, apoi îți deblocăm datele
+                  clientului{lead.arePoze ? ' și pozele cererii' : ''}.
+                </div>
+                <PortalNextStep
+                  email={emailFolosit}
+                  hasAccount={Boolean(me)}
+                  source="revendicare"
+                  arePoze={lead.arePoze}
+                  judet={lead.judet}
+                />
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">
@@ -680,6 +812,7 @@ export default function LeadCard({
                       placeholder="contact@firma.ro"
                       autoComplete="email"
                       defaultValue={me?.email}
+                      hint="Cu el intri și în portal, unde primești datele clientului și alerte pe județele tale."
                     />
                   </>
                 )}
@@ -720,10 +853,10 @@ export default function LeadCard({
                 <p className="text-[11px] text-gray-500 leading-relaxed">
                   Revendicarea este rezervată firmelor de instalare fotovoltaice. Te contactăm
                   telefonic pentru confirmare, apoi primești datele complete ale clientului în{' '}
-                  <a href="/portal" className="underline hover:no-underline">Portalul Instalatorilor</a>{' '}
-                  (intri cu emailul firmei, fără parolă). Datele firmei tale sunt folosite doar
-                  pentru alocarea acestei cereri. Poți ține {MAX_ACTIVE_CLAIMS_PER_FIRM} cereri
-                  nemișcate odată: locul se eliberează imediat ce muți statusul cererii în portal.
+                  <a href="/portal" className="underline hover:no-underline">Portalul Instalatorilor</a>.
+                  Datele firmei tale sunt folosite doar pentru alocarea acestei cereri. Poți ține{' '}
+                  {MAX_ACTIVE_CLAIMS_PER_FIRM} cereri nemișcate odată: locul se eliberează imediat
+                  ce muți statusul cererii în portal.
                 </p>
               </form>
             )}

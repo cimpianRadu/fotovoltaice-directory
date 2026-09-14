@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import { trackEvent } from '@/lib/analytics';
 import { getAttribution } from '@/lib/attribution';
+import { PORTAL_EMAIL_KEY } from '@/lib/portal-email-handoff';
 
 type Step = 'email' | 'code';
 
@@ -21,6 +22,22 @@ export default function LoginForm() {
       ? 'Linkul de acces a expirat. Cere un cod nou mai jos.'
       : null,
   );
+
+  // Emailul lăsat de ecranul de confirmare al revendicării (vezi
+  // app/cereri/LeadCard.tsx): firma tocmai l-a tastat acolo, nu-l mai
+  // retastează aici și nu nimerește alt email decât cel de pe revendicare, caz
+  // în care portalul i-ar apărea gol. Se citește o dată și se șterge.
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem(PORTAL_EMAIL_KEY);
+      if (saved) {
+        setEmail(saved);
+        sessionStorage.removeItem(PORTAL_EMAIL_KEY);
+      }
+    } catch {
+      /* private mode: rămâne câmpul gol */
+    }
+  }, []);
 
   async function requestCode(e: React.FormEvent) {
     e.preventDefault();
