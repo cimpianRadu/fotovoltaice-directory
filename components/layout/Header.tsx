@@ -21,6 +21,10 @@ const primaryLinks: { href: string; label: string; badge?: string }[] = [
   { href: '/cereri', label: 'Cereri Clienți' },
   { href: '/pentru-instalatori', label: 'Pentru instalatori', badge: 'NOU' },
   { href: '/studii-de-caz', label: 'Studii de Caz' },
+  // Listarea a ieșit din „Mai multe": e intrarea firmei în director, deci
+  // capătul comercial al site-ului, nu o unealtă. Stă înaintea ghidurilor
+  // pentru că ghidurile se găsesc oricum din Google, listarea nu.
+  { href: '/listeaza-firma', label: 'Listează-ți firma' },
   { href: '/ghid', label: 'Ghiduri' },
 ];
 
@@ -31,7 +35,6 @@ const moreLinks = [
   // Calculatorul iese din bara principală, dar rămâne accesibil de aici: se
   // intră în el mai ales din widgeturile din ghiduri, nu din navigație.
   { href: '/calculator-panouri-fotovoltaice', label: 'Calculator' },
-  { href: '/listeaza-firma', label: 'Listează-ți firma' },
   { href: '/portal', label: 'Portal Instalatori' },
   { href: '/publicitate', label: 'Publicitate' },
   { href: '/intrebari-frecvente', label: 'Întrebări frecvente' },
