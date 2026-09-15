@@ -2900,5 +2900,27 @@
    "isActive": true,
    "tipTarifRaw": "Tarif B"
   }
+ ],
+ "IGF GRUP|Brasov": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "15204",
+   "dataEmitere": "07/10/2019",
+   "dataExpirare": "21/08/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "15203",
+   "dataEmitere": "07/10/2019",
+   "dataExpirare": "21/08/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
  ]
 }

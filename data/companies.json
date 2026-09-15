@@ -15847,6 +15847,108 @@
         "societate": "MOLDOVAN ECOSERV ",
         "judet": "Bistrita-Nasaud"
       }
+    },
+    {
+      "id": "igf-grup",
+      "slug": "igf-grup",
+      "name": "IGF Grup",
+      "cui": "RO40430724",
+      "logo": "/logos/igf-grup.png",
+      "description": "IGF Grup este o firmă din Brașov, înființată în 2019, care proiectează și execută instalații electrice de joasă și medie tensiune, sisteme fotovoltaice, stații de încărcare pentru vehicule electrice și instalații de curenți slabi. Deține atestatele ANRE de execuție C1A și C2A (nr. 15203 și 15204, valabile până în august 2029) și atestatele de proiectare E1 și E2 (nr. 22703 și 22704, valabile până în decembrie 2029), deci poate duce o lucrare de la proiect până la racordare. Cea mai mare lucrare fotovoltaică publicată este centrala de 1.503 kWp de la uzina Arctic din Ulmi, județul Dâmbovița, executată în 2023 în regim design and build, împreună cu postul de transformare de 2.500 kVA și rețeaua de medie tensiune aferentă. Tot în 2023 a montat un carport fotovoltaic hibrid, cu baterii și prize de încărcare pentru mașini și biciclete electrice, la Dexion în Râșnov, și un sistem de 10 kWp pentru o fermă de vaci din Palos. În zona de instalații electrice are lucrări la halele din parcul logistic Electroprecizia (Mapei, Ursus, Dräxlmaier, Dragon Star Curier), la magazine Lidl și Altex și la benzinării MOL și OMV. Sistemul de management este certificat ISO 9001, 14001, 45001, 27001, 37001 și 50001. Cifra de afaceri a crescut de la 2,9 milioane de lei în 2021 la 11,4 milioane de lei în 2025, cu 10 angajați. Face parte din grupul de companii MRJ.",
+      "founded": 2019,
+      "employees": 10,
+      "location": {
+        "city": "Brașov",
+        "county": "Brașov",
+        "address": "Str. Zizinului, Nr. 119, Obiectiv nr. 8, Sc. B, Et. 3, Birou 5, Brașov 500407"
+      },
+      "contact": {
+        "phone": "+40725995962",
+        "email": "contact@igfgrup.ro",
+        "website": "https://igfgrup.ro"
+      },
+      "coverage": [
+        "Brașov",
+        "Covasna",
+        "Dâmbovița"
+      ],
+      "specializations": [
+        "hale-industriale",
+        "agricol"
+      ],
+      "certifications": [
+        "ISO-9001",
+        "ISO-14001",
+        "ISO-45001",
+        "ISO-27001",
+        "ISO-37001",
+        "ISO-50001"
+      ],
+      "capacity": {
+        "minProjectKw": 10,
+        "maxProjectKw": 1503,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 11405586,
+        "profit": 1751605,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 2880304,
+            "profit": 1730390,
+            "employees": 6
+          },
+          {
+            "year": 2022,
+            "revenue": 3968915,
+            "profit": 1296183,
+            "employees": 6
+          },
+          {
+            "year": 2023,
+            "revenue": 10170754,
+            "profit": 135200,
+            "employees": 7
+          },
+          {
+            "year": 2024,
+            "revenue": 10697659,
+            "profit": 1752069,
+            "employees": 12
+          },
+          {
+            "year": 2025,
+            "revenue": 11405586,
+            "profit": 1751605,
+            "employees": 10
+          }
+        ]
+      },
+      "tags": [
+        "pv-comercial",
+        "pv-industrial",
+        "EPC",
+        "proiectare",
+        "medie-tensiune",
+        "bransamente-electrice",
+        "statii-incarcare-ev",
+        "stocare",
+        "agricol",
+        "atestari-anre-multiple",
+        "curenti-slabi",
+        "proiecte-mari"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-09-15",
+      "updatedAt": "2026-09-15",
+      "segment": "comercial",
+      "anreMatch": {
+        "societate": "IGF GRUP",
+        "judet": "Brasov"
+      }
     }
   ]
 }

@@ -578,6 +578,9 @@ export function getCertificationLabel(cert: string): string {
     'ISO-9001': 'ISO 9001',
     'ISO-14001': 'ISO 14001',
     'ISO-45001': 'ISO 45001',
+    'ISO-27001': 'ISO 27001',
+    'ISO-37001': 'ISO 37001',
+    'ISO-50001': 'ISO 50001',
   };
   return labels[cert] ?? cert;
 }
@@ -589,6 +592,9 @@ export function getCertificationDescription(cert: string): string {
     'ISO-9001': 'Sistem de management al calității conform standardului internațional ISO 9001.',
     'ISO-14001': 'Sistem de management de mediu conform standardului internațional ISO 14001.',
     'ISO-45001': 'Sistem de management al sănătății și securității ocupaționale conform ISO 45001.',
+    'ISO-27001': 'Sistem de management al securității informației conform standardului internațional ISO 27001.',
+    'ISO-37001': 'Sistem de management anti-mită conform standardului internațional ISO 37001.',
+    'ISO-50001': 'Sistem de management al energiei conform standardului internațional ISO 50001.',
   };
   return descriptions[cert] ?? '';
 }

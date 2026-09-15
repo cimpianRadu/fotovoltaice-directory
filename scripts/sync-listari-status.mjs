@@ -26,12 +26,8 @@ const SPREADSHEET_ID = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
 // verificat înainte de scriere.
 const UPDATES = [
   {
-    numeFirma: 'SOLANUM SRL',
-    status: 'Adăugat în director (publicat 2026-09-09, județ Timiș)',
-  },
-  {
-    numeFirma: 'MOLDOVAN ECOSERV SRL',
-    status: 'Adăugat în director (publicat 2026-09-09, județ Bistrița-Năsăud)',
+    numeFirma: 'IGF GRUP S.R.L.',
+    status: 'Adăugat în director (publicat 2026-09-15, județ Brașov)',
   },
 ];
 
