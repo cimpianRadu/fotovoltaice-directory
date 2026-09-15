@@ -11,6 +11,7 @@
 // își păstrează propriul chenar, iar un card în card ar arăta ca o greșeală.
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import QuickEstimateWidget from '@/components/home/QuickEstimateWidget';
 import BatteryWidget from '@/components/BatteryWidget';
 import type { KitPriceCurve } from '@/lib/kit-price-curve';
@@ -21,6 +22,9 @@ const TABS = [
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];
+
+/** Pagina proprie a calculatorului de baterii. */
+const CALCULATOR_HREF = '/calculator-casa-verde-baterii';
 
 function trackUmami(event: string, data?: Record<string, string | number>) {
   if (typeof window === 'undefined') return;
@@ -123,6 +127,19 @@ export default function CalculatorTabs({ priceCurve, batteryGuideHref }: Props) 
         className={active === 'baterie' ? '' : 'hidden'}
       >
         <BatteryWidget sursa="home-baterii" guideHref={batteryGuideHref} />
+        {/* Linkul spre pagina proprie a calculatorului stă în afara cardului și
+            la vedere. Widgetul are deja unul spre ghid, dar ascuns în <details>,
+            iar aici omul e pe home fără context: dacă vrea plafoanele, punctajul
+            și profilurile puse cap la cap, acolo le are. */}
+        <p className="mt-2.5 text-center text-sm">
+          <Link
+            href={CALCULATOR_HREF}
+            onClick={() => trackUmami('home-calculator-spre-pagina', { tab: 'baterie' })}
+            className="font-semibold text-primary-dark hover:underline"
+          >
+            Pagina calculatorului: punctaj, plafoane și profiluri &rarr;
+          </Link>
+        </p>
       </div>
     </div>
   );

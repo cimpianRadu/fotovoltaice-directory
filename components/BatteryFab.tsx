@@ -32,8 +32,16 @@ const LABEL = 'Calculator baterii';
 const STORAGE_KEY = 'battery-fab-dismissed';
 
 // Ecranele unde cititorul e în mijlocul unei acțiuni (formular, portal, admin)
-// sau unde e instalator, nu client.
-const HIDE_ON = ['/cere-oferta', '/listeaza-firma', '/portal', '/admin'];
+// sau unde e instalator, nu client. Plus pagina proprie a calculatorului: acolo
+// butonul ar trimite omul de la calculatorul pe care e la același calculator de
+// pe home.
+const HIDE_ON = [
+  '/cere-oferta',
+  '/listeaza-firma',
+  '/portal',
+  '/admin',
+  '/calculator-casa-verde-baterii',
+];
 
 export default function BatteryFab() {
   const pathname = usePathname();

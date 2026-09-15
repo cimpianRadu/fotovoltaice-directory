@@ -35,6 +35,7 @@ const moreLinks = [
   // Calculatorul iese din bara principală, dar rămâne accesibil de aici: se
   // intră în el mai ales din widgeturile din ghiduri, nu din navigație.
   { href: '/calculator-panouri-fotovoltaice', label: 'Calculator' },
+  { href: '/calculator-casa-verde-baterii', label: 'Calculator Casa Verde Baterii' },
   { href: '/portal', label: 'Portal Instalatori' },
   { href: '/publicitate', label: 'Publicitate' },
   { href: '/intrebari-frecvente', label: 'Întrebări frecvente' },
