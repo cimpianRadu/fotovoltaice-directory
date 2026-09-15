@@ -38,7 +38,7 @@ export interface LeadCardData {
   arePoze: boolean;
   verificata: boolean;
   /**
-   * Clientul se informează, nu așteaptă oferte acum (14 sept 2026). Cardul
+   * Clientul a bifat „Deocamdată mă informez” la termen (14 sept 2026). Cardul
    * arată „Urmărește" în loc de „Vreau această cerere"; revendicarea rămâne
    * posibilă, dar ca opțiune secundară. `informezMotiv` = de ce, în cuvintele
    * noastre („așteaptă Casa Verde Baterii"), gol dacă n-a răspuns.
@@ -148,11 +148,13 @@ const ICON_POZE = (
 );
 
 // Cheia franceză: manoperă. Nu un panou și nu o casă, ca să nu se confunde cu
-// Ochi: „se informează", omul se uită, nu cumpără încă.
+// „i" în cerc: iconița de informație pe care o știe toată lumea. Ochiul de
+// dinainte sugera supraveghere, nu „clientul se documentează".
 const ICON_INFORMEAZA = (
   <BadgeIcon>
-    <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" />
-    <circle cx="12" cy="12" r="3" />
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 11.2v4.6" />
+    <path d="M12 8.1h.01" />
   </BadgeIcon>
 );
 
@@ -275,7 +277,7 @@ function PortalNextStep({
       <ul className="mt-3 space-y-2 text-sm text-gray-700">
         {[
           source === 'revendicare'
-            ? `Datele complete ale clientului${arePoze ? ' și pozele trimise de el' : ''}, imediat după apelul nostru de confirmare.`
+            ? `Datele complete ale clientului${arePoze ? ' și pozele trimise de el' : ''}, fără apelul nostru de confirmare: firmele cu cont sunt doar aprobate.`
             : 'Cererile pe care le urmărești și cele revendicate, într-un singur loc.',
           `Alerte pe email la fiecare cerere nouă din ${judet} și din celelalte județe pe care le bifezi, în momentul în care intră.`,
           'Statusul fiecărei cereri și notele tale, ca să nu te mai sunăm degeaba. Când renunți la o cerere, locul se eliberează pe loc.',
@@ -406,9 +408,9 @@ function ActionsInfo({ maxClaims }: { maxClaims: number }) {
           </p>
           <p className="mt-2">
             <strong className="text-gray-900">Vreau să contactez persoana</strong> — revendici
-            cererea acum: te sunăm pentru confirmare, apoi primești în portal numele, telefonul
-            și adresa clientului. Ocupă unul din cele {maxClaims} locuri, deși clientul a spus
-            că deocamdată se informează.
+            cererea acum și primești în portal numele, telefonul și adresa clientului, după ce
+            aprobăm (dacă n-ai cont în portal, te sunăm întâi o dată). Ocupă unul din cele{' '}
+            {maxClaims} locuri, deși clientul a spus că deocamdată se informează.
           </p>
         </div>
       )}
@@ -460,6 +462,11 @@ export default function LeadCard({
   // linkul spre /portal/login pe ecranul de confirmare, ca firma să nu-l mai
   // tasteze o dată (și să nu greșească alt email decât cel din revendicare).
   const [emailFolosit, setEmailFolosit] = useState('');
+  // Firma cu cont în portal nu mai primește apelul de confirmare (15 sept
+  // 2026), deci ecranul de confirmare îi scrie altceva. Adevărul îl știe doar
+  // serverul (jurnalul de acces), nu sesiunea din pagină: o firmă cu cont poate
+  // revendica delogată, din feed.
+  const [hasAccount, setHasAccount] = useState(false);
 
   const full = claims >= maxClaims;
   const slotsLeft = maxClaims - claims;
@@ -564,6 +571,7 @@ export default function LeadCard({
       });
       if (typeof json.claims === 'number') setClaims(json.claims);
       setEmailFolosit(typeof data.email === 'string' ? data.email : me?.email || '');
+      setHasAccount(json.hasAccount === true);
       setStatus('success');
     } catch {
       setStatus('idle');
@@ -645,13 +653,14 @@ export default function LeadCard({
               Verificată telefonic
             </Badge>
           )}
-          {/* Gri, nu colorat: e semnalul „nu consuma ofertare aici", trebuie să
-              se citească înainte de orice altceva de pe card. */}
+          {/* Albastru de informație: griul se citea ca „card dezactivat", deși
+              cererea e la fel de reală ca celelalte. Albastrul e liber (verdele
+              e la segment, amberul la verificare, portocaliul la reactivare). */}
           {lead.seInformeaza && (
             <Badge
               icon={ICON_INFORMEAZA}
-              tone="bg-slate-100 text-slate-700"
-              title="Clientul a spus că deocamdată se informează. Nu așteaptă ofertă acum."
+              tone="bg-sky-100 text-sky-800"
+              title="La întrebarea despre termen, clientul a ales „Deocamdată mă informez”."
             >
               Se informează
             </Badge>
@@ -675,9 +684,13 @@ export default function LeadCard({
       {lead.finantareLabel && (
         <FinancingLine label={lead.finantareLabel} tone={lead.finantareTone} />
       )}
+      {/* Ce a spus clientul, nu ce deducem noi din asta: la termen a bifat
+          „Deocamdată mă informez". Dacă vrea sau nu ofertă acum n-a spus
+          nimeni, iar firma decide singură dacă sună. */}
       {lead.seInformeaza && (
-        <p className="mt-2 text-xs text-slate-600">
-          Se informează{lead.informezMotiv ? `: ${lead.informezMotiv}` : ''}. Nu așteaptă ofertă acum.
+        <p className="mt-2 text-xs text-sky-800">
+          La termen a ales „Deocamdată mă informez”
+          {lead.informezMotiv ? `: ${lead.informezMotiv}` : ''}.
         </p>
       )}
       {specs.length > 0 && (
@@ -877,12 +890,22 @@ export default function LeadCard({
             {claimedByMe ? (
               <div>
                 <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-800">
-                  Revendicare înregistrată. Te sunăm pentru confirmare, apoi îți deblocăm datele
-                  clientului{lead.arePoze ? ' și pozele cererii' : ''}.
+                  {hasAccount ? (
+                    <>
+                      Revendicare înregistrată. Nu te sunăm: ai cont în portal, deci aprobăm
+                      revendicarea și datele clientului{lead.arePoze ? ' și pozele cererii' : ''}{' '}
+                      apar direct acolo.
+                    </>
+                  ) : (
+                    <>
+                      Revendicare înregistrată. Te sunăm o dată pentru confirmare, apoi îți
+                      deblocăm datele clientului{lead.arePoze ? ' și pozele cererii' : ''}.
+                    </>
+                  )}
                 </div>
                 <PortalNextStep
                   email={emailFolosit}
-                  hasAccount={Boolean(me)}
+                  hasAccount={hasAccount}
                   source="revendicare"
                   arePoze={lead.arePoze}
                   judet={lead.judet}
@@ -951,9 +974,10 @@ export default function LeadCard({
                   {status === 'submitting' ? 'Se trimite...' : 'Trimite revendicarea'}
                 </Button>
                 <p className="text-[11px] text-gray-500 leading-relaxed">
-                  Revendicarea este rezervată firmelor de instalare fotovoltaice. Te contactăm
-                  telefonic pentru confirmare, apoi primești datele complete ale clientului în{' '}
-                  <a href="/portal" className="underline hover:no-underline">Portalul Instalatorilor</a>.
+                  Revendicarea este rezervată firmelor de instalare fotovoltaice. Cu cont în{' '}
+                  <a href="/portal" className="underline hover:no-underline">Portalul Instalatorilor</a>{' '}
+                  nu te sunăm: aprobăm revendicarea și datele complete ale clientului apar acolo.
+                  Fără cont, te sunăm o dată pentru confirmare.
                   Datele firmei tale sunt folosite doar pentru alocarea acestei cereri. Poți ține{' '}
                   {MAX_ACTIVE_CLAIMS_PER_FIRM} cereri nemișcate odată: locul se eliberează imediat
                   ce muți statusul cererii în portal.

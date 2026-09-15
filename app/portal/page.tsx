@@ -63,8 +63,8 @@ function specsFor(lead: NewLead | undefined): { label: string; value: string }[]
     lead.stocare ? { label: 'Baterie', value: getYesNoLabel(lead.stocare) } : null,
     lead.wallbox ? { label: 'Stație auto', value: getYesNoLabel(lead.wallbox) } : null,
     lead.termen ? { label: 'Termen', value: getTimelineLabel(lead.termen) } : null,
-    // De ce se informează, în cuvintele noastre: firma vede că nu e cazul să
-    // oferteze acum, dar și că omul așteaptă un program, deci merită ținut minte.
+    // De ce se informează, în cuvintele noastre: firma vede pe ce e blocat omul
+    // (preț, buget, un program de finanțare) și decide singură cum îl abordează.
     isLeadInformez(lead) ? { label: 'Se informează', value: informezMotiv(lead) || 'nu a spus de ce' } : null,
     lead.reactivataLa ? { label: 'Reactivată', value: formatShortDate(lead.reactivataLa) } : null,
   ].filter(Boolean) as { label: string; value: string }[];
@@ -257,8 +257,9 @@ export default async function PortalPage() {
 
       {mine.length > 0 && (
         <p className="mt-8 text-xs text-gray-400 leading-relaxed">
-          Datele clienților se deblochează după apelul nostru de confirmare. Statusul pe care îl
-          setezi tu ne spune unde ești cu clientul, ca să nu te mai sunăm degeaba. Locul unei firme
+          Datele clienților se deblochează imediat ce aprobăm revendicarea, fără apel de
+          confirmare. Statusul pe care îl setezi tu ne spune unde ești cu clientul, ca să nu te
+          mai sunăm degeaba. Locul unei firme
           se eliberează când clientul confirmă că a fost sunat, sau când renunți tu, cu un motiv,
           de aici.
         </p>

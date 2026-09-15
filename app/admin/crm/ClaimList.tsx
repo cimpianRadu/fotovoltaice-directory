@@ -43,6 +43,8 @@ export interface ClaimRow {
   remindedAt: string;
   /** Câte remindere au plecat. La CLAIM_REMINDER_MAX seria s-a terminat. */
   reminderCount: number;
+  /** Are cont în portal (jurnalul „Portal Acces"), deci nu se mai sună. */
+  hasPortalAccount: boolean;
 }
 
 const FIRM_STATUS_CHIP: Record<ClaimStatus, string> = {
@@ -171,6 +173,19 @@ function Claim({ claim }: { claim: ClaimRow }) {
           {claim.email}
         </div>
       )}
+      {/* Din 15 sept 2026 apelul de confirmare e doar pentru firmele fără cont:
+          cine e în portal se aprobă direct, iar datele îi apar acolo. Semnalul
+          stă lângă email, nu în butoane, ca să se citească înainte de a suna. */}
+      {!approvedAt &&
+        (claim.hasPortalAccount ? (
+          <div className="mt-0.5 inline-block rounded bg-emerald-100 px-1.5 py-px text-[10px] font-semibold text-emerald-700">
+            are cont · nu suna, doar aprobă
+          </div>
+        ) : (
+          <div className="mt-0.5 inline-block rounded bg-amber-100 px-1.5 py-px text-[10px] font-semibold text-amber-700">
+            fără cont · sun-o pentru confirmare
+          </div>
+        ))}
       <div className="text-slate-400">{fmtDateTime(claim.timestamp)}</div>
 
       {/* Statusul declarat de firmă în portal. E auto-raportat, deci semnal, nu
@@ -250,7 +265,9 @@ function Claim({ claim }: { claim: ClaimRow }) {
           title={
             approvedAt
               ? 'Retrage aprobarea — datele clientului dispar din portal'
-              : 'Aprobă revendicarea (după apelul cu firma) — datele clientului apar în portalul ei'
+              : claim.hasPortalAccount
+                ? 'Aprobă revendicarea — firma are cont, deci nu e nevoie de apel; datele clientului apar în portalul ei'
+                : 'Aprobă revendicarea (după apelul cu firma) — datele clientului apar în portalul ei'
           }
           className={`rounded px-2 py-1 text-[11px] font-medium transition disabled:cursor-wait ${
             approvedAt

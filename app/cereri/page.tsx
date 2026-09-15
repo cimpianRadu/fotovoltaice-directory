@@ -175,7 +175,7 @@ export default async function CereriPage() {
             <Link href="/cere-oferta" className="text-primary-dark underline hover:no-underline">
               Cere Ofertă
             </Link>
-            . Revendici una, te sunăm, primești contactul.
+            . Revendici una și primești contactul clientului în portal.
           </p>
         </div>
 

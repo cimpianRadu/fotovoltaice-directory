@@ -5,6 +5,7 @@ import {
   getClaims,
   getListingsSince,
   getCrmFirms,
+  getPortalAccountEmails,
   countActiveClaimsForFirm,
   claimRemindersExhausted,
   isClaimStale,
@@ -562,13 +563,17 @@ export default async function CrmPage({ searchParams }: Props) {
   let crmFirms: CrmFirm[];
   // Pozele urcate de clienți: căile din Blob, grupate pe cerere mai jos.
   let photos: LeadPhoto[];
+  // Adresele cu cont în portal: decid dacă revendicarea cere un telefon de
+  // confirmare sau doar aprobarea (regula din 15 sept 2026).
+  let portalAccounts: Set<string>;
   try {
-    [leads, claims, allListings, crmFirms, photos] = await Promise.all([
+    [leads, claims, allListings, crmFirms, photos, portalAccounts] = await Promise.all([
       getLeadsSince(new Date(0)),
       getClaims(),
       getListingsSince(new Date(0)),
       getCrmFirms(),
       getLeadPhotos(),
+      getPortalAccountEmails(),
     ]);
   } catch (err) {
     return (
@@ -614,7 +619,11 @@ export default async function CrmPage({ searchParams }: Props) {
   // cine a strâns cereri fără să le miște.
   const claimsByLead = new Map<string, ClaimRow[]>();
   for (const c of claims) {
-    const row: ClaimRow = { ...c, firmActive: countActiveClaimsForFirm(claims, c) };
+    const row: ClaimRow = {
+      ...c,
+      firmActive: countActiveClaimsForFirm(claims, c),
+      hasPortalAccount: portalAccounts.has((c.email || '').trim().toLowerCase()),
+    };
     const list = claimsByLead.get(c.leadId);
     if (list) list.push(row);
     else claimsByLead.set(c.leadId, [row]);

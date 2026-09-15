@@ -676,7 +676,7 @@ export interface PublicLead {
   // omul poate vorbi abia seara. Nu identifică pe nimeni.
   intervalApel: string;
   /**
-   * Clientul se informează, nu așteaptă oferte acum. Cardul arată „Urmărește"
+   * Clientul a bifat „Deocamdată mă informez" la termen. Cardul arată „Urmărește"
    * în loc de „Revendică", iar `blocaj` spune de ce (vezi BLOCAJ_OPTIONS).
    */
   seInformeaza: boolean;
@@ -1409,6 +1409,45 @@ export async function getPortalEventCounts(
     if (e.email === key) counts[e.event] += 1;
   }
   return counts;
+}
+
+/**
+ * Adresele care au cont în portal: au măcar un `intrat` în jurnalul „Portal
+ * Acces". Din 15 sept 2026 asta decide dacă firma primește apelul nostru de
+ * confirmare după revendicare — cine are cont nu mai e sunat, doar aprobat.
+ *
+ * Grupul de emailuri intră în calcul: dacă firma s-a logat cu contact@ și
+ * revendică de pe adrian.b@ (adrese legate din /admin/portal), tot are cont.
+ *
+ * Jurnalul, nu un flag: rândurile de test se șterg din „Portal Acces", deci
+ * răspunsul rămâne adevărat și după curățenie. Vezi `getPortalEventCounts`.
+ */
+export async function getPortalAccountEmails(): Promise<Set<string>> {
+  const [events, links] = await Promise.all([
+    getPortalAccessEvents(),
+    getFirmEmailLinks().catch(() => [] as FirmEmailLink[]),
+  ]);
+  const accounts = new Set<string>();
+  for (const e of events) {
+    if (e.event !== 'intrat' || !e.email) continue;
+    for (const address of resolveEmailGroup(links, e.email)) accounts.add(address);
+    accounts.add(e.email);
+  }
+  return accounts;
+}
+
+/** Firma care revendică de pe adresa asta are deja cont în portal? */
+export async function hasPortalAccount(email: string): Promise<boolean> {
+  const key = email.trim().toLowerCase();
+  if (!key) return false;
+  try {
+    return (await getPortalAccountEmails()).has(key);
+  } catch (err) {
+    // Fail-open pe „nu are cont": consecința e un apel în plus, nu date de
+    // client trimise cuiva pe care nu l-am verificat.
+    console.error('[portal] conturi:', err);
+    return false;
+  }
 }
 
 // ── Emailuri legate (o firmă, mai multe adrese) ────────────────────────────

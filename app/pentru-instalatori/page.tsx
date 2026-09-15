@@ -239,7 +239,7 @@ export default async function PentruInstalatoriPage() {
                 <li>Aducem oamenii din căutări Google, cu ghiduri și calculatoare, nu cu reclame plătite.</li>
                 <li>Îi punem să completeze un formular în cinci pași, ca să știi din start ce vrea fiecare.</li>
                 <li>Publicăm cererea și trimitem alertă pe email firmelor care au bifat județul.</li>
-                <li>Te sunăm pentru confirmare și îți deblocăm datele clientului în portal.</li>
+                <li>Îți deblocăm datele clientului în portal. Dacă n-ai încă un cont acolo, te sunăm o dată pentru confirmare.</li>
                 <li>Îți dăm o pagină publică de firmă, cu datele din registre și atestatul ANRE verificat live.</li>
               </ul>
             </div>
@@ -347,9 +347,11 @@ export default async function PentruInstalatoriPage() {
               </p>
             </div>
             <div className="rounded-xl border border-border bg-white p-4">
-              <p className="font-semibold text-gray-900 text-sm mb-1">Un telefon de confirmare</p>
+              <p className="font-semibold text-gray-900 text-sm mb-1">Un cont sau un telefon</p>
               <p className="text-sm text-gray-600">
-                La prima revendicare te sunăm scurt. Până atunci vezi proiectul, dar nu și datele clientului.
+                Cu cont în portal nu te sunăm deloc: revendicarea o aprobăm și datele clientului
+                apar acolo. Fără cont, la prima revendicare te sunăm scurt. Până la deblocare vezi
+                proiectul, dar nu și datele clientului.
               </p>
             </div>
           </div>

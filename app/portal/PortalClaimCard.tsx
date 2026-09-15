@@ -92,7 +92,7 @@ function StatusBadge({
   approved: boolean;
   status: ClaimStatus;
 }) {
-  // `whitespace-nowrap`: pe 375px „În confirmare, te sunăm" se rupea în două
+  // `whitespace-nowrap`: pe 375px eticheta de confirmare se rupea în două
   // rânduri lângă titlu și dezalinia tot capul cardului.
   const base =
     'inline-block whitespace-nowrap px-2 py-0.5 rounded-full text-[11px] font-semibold';
@@ -104,7 +104,9 @@ function StatusBadge({
     );
   }
   if (!approved) {
-    return <span className={`${base} bg-amber-50 text-amber-700`}>În confirmare, te sunăm</span>;
+    // Aici ești logat, deci ai cont: nu te mai sunăm, doar aprobăm (15 sept
+    // 2026). Eticheta veche promitea un telefon care nu mai vine.
+    return <span className={`${base} bg-amber-50 text-amber-700`}>Se aprobă</span>;
   }
   return (
     <span className={`${base} text-white ${STATUS_TONE[status]}`}>
@@ -397,8 +399,8 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
       ) : (
         !inactive && (
           <div className="mt-4 rounded-lg bg-surface border border-border px-4 py-3 text-sm text-gray-500">
-            Datele clientului se deblochează după apelul nostru de confirmare (durează de
-            obicei sub o zi lucrătoare).
+            Datele clientului se deblochează imediat ce aprobăm revendicarea (durează de obicei
+            sub o zi lucrătoare). Ai cont în portal, deci nu te sunăm pentru confirmare.
           </div>
         )
       )}

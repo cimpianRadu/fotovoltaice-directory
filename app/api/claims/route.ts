@@ -10,6 +10,7 @@ import {
   getFullLeadById,
   getFirmEmailGroup,
   getLeadSubscriptions,
+  hasPortalAccount,
   isLeadClosed,
   isPriorityHeld,
   isSameFirm,
@@ -130,7 +131,7 @@ export async function POST(request: Request) {
     const duplicate = allClaimsForLead.some((c) => isSameFirm(c, { numeFirma, telefon }));
     if (duplicate) {
       return NextResponse.json(
-        { error: 'Firma ta a revendicat deja această cerere. Te contactăm telefonic.' },
+        { error: 'Firma ta a revendicat deja această cerere. Urmărește-o în Portalul Instalatorilor.' },
         { status: 409 }
       );
     }
@@ -164,6 +165,13 @@ export async function POST(request: Request) {
     };
     await saveClaimToSheet(claim);
 
+    // Cine are cont în portal nu mai primește apelul de confirmare (regula
+    // userului, 15 sept 2026): aprobarea se dă direct din /admin/crm, iar
+    // datele clientului apar în portalul firmei. Revendicarea dintr-o sesiune
+    // validă e cont prin definiție; restul se verifică în jurnalul de acces.
+    const firmHasPortalAccount =
+      body?.fromAccount === true || (await hasPortalAccount(claim.email));
+
     const claimCount = claimsForLead.length + 1;
 
     // Fără asta, feedul rămâne pe ISR-ul de 5 minute și o altă firmă vede
@@ -192,9 +200,16 @@ export async function POST(request: Request) {
       },
       claimCount,
       maxClaims: MAX_CLAIMS_PER_LEAD,
+      firmHasPortalAccount,
     });
 
-    return NextResponse.json({ success: true, claims: claimCount });
+    // `hasAccount` schimbă ce scrie pe ecranul de confirmare: „te sunăm" doar
+    // pentru firmele fără cont.
+    return NextResponse.json({
+      success: true,
+      claims: claimCount,
+      hasAccount: firmHasPortalAccount,
+    });
   } catch (err) {
     console.error('Claims API error:', err);
     return NextResponse.json(

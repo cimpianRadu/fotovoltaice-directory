@@ -249,14 +249,22 @@ interface ClaimNotificationData {
   };
   claimCount: number; // inclusiv revendicarea curentă
   maxClaims: number;
+  /** Are cont în portal, deci nu o mai sunăm: doar aprobăm (15 sept 2026). */
+  firmHasPortalAccount?: boolean;
 }
 
 // Notificare imediată (nu în digest) — o revendicare e time-sensitive: firma
 // așteaptă telefonul de confirmare cât interesul e cald.
 export async function sendClaimNotification(data: ClaimNotificationData): Promise<void> {
   const to = process.env.LISTING_NOTIFICATION_EMAIL || 'radu.cimpian94@gmail.com';
-  const { claim, lead, claimCount, maxClaims } = data;
+  const { claim, lead, claimCount, maxClaims, firmHasPortalAccount } = data;
   const full = claimCount >= maxClaims;
+
+  // Prima linie din email e ce ai de făcut cu revendicarea asta: firma cu cont
+  // nu se mai sună, se aprobă din /admin/crm și datele îi apar în portal.
+  const actionLine = firmHasPortalAccount
+    ? '<div style="margin:0 0 14px;padding:9px 12px;border-radius:8px;background:#ecfdf5;border:1px solid #a7f3d0;font-size:13px;color:#065f46"><strong>Are cont în portal — nu o suna.</strong> Aprobă revendicarea din /admin/crm și datele clientului îi apar acolo.</div>'
+    : '<div style="margin:0 0 14px;padding:9px 12px;border-radius:8px;background:#fffbeb;border:1px solid #fde68a;font-size:13px;color:#92400e"><strong>Fără cont în portal — sun-o pentru confirmare.</strong> După apel, aprobă revendicarea ca să primească datele clientului.</div>';
 
   const row = (label: string, value: string) =>
     `<tr><td style="padding:5px 12px 5px 0;color:#6b7280;font-size:13px;vertical-align:top;white-space:nowrap">${label}</td><td style="padding:5px 0;font-size:14px;color:#111827">${value}</td></tr>`;
@@ -270,6 +278,7 @@ export async function sendClaimNotification(data: ClaimNotificationData): Promis
       <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${escapeHtml(lead.tipProiectLabel)} · ${escapeHtml(lead.judet)}</h1>
     </div>
     <div style="padding:20px 24px">
+      ${actionLine}
       <div style="font-size:12px;color:#6b7280;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px">Firma care revendică</div>
       <table style="border-collapse:collapse;width:100%">
         ${row('Firmă', escapeHtml(claim.numeFirma))}
@@ -295,7 +304,7 @@ export async function sendClaimNotification(data: ClaimNotificationData): Promis
       </table>
     </div>
     <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280">
-      Sună firma pentru confirmare, apoi decide livrarea. Salvat în tabul „Revendicări".${full ? ' Cererea e acum marcată Complet pe /cereri.' : ''}
+      ${firmHasPortalAccount ? 'Aprobă din /admin/crm, fără apel.' : 'Sună firma pentru confirmare, apoi aprobă.'} Salvat în tabul „Revendicări".${full ? ' Cererea e acum marcată Complet pe /cereri.' : ''}
     </div>
   </div>
 </body>
@@ -633,7 +642,7 @@ export async function sendCountyLeadAlert(data: {
   unlocked?: boolean;
   /**
    * Clientul se informează (14 sept 2026): alerta pleacă tot, dar cu prefix în
-   * subiect și cu motivul lui, ca firma să știe că nu așteaptă ofertă acum și
+   * subiect și cu motivul lui, ca firma să știe ce a bifat clientul la termen și
    * să urmărească cererea în loc s-o revendice. Vezi getBlocajShort.
    */
   informez?: { motiv: string };
@@ -680,7 +689,7 @@ export async function sendCountyLeadAlert(data: {
             : data.unlocked
               ? 'Cererea a fost rezervată unei firme abonate, iar rezervarea a expirat fără ca ea s-o preia. Acum e liberă, primul venit.'
               : informez
-                ? 'Clientul a spus că deocamdată se informează. Nu așteaptă ofertă acum. Poți urmări cererea din feed și primești primul vestea când devine activă.'
+                ? 'La întrebarea despre termen, clientul a ales „Deocamdată mă informez”. Poți urmări cererea din feed și primești primul vestea când spune că e gata de oferte.'
                 : data.reactivated
                   ? 'Clientul se informa, iar acum a spus că e gata pentru oferte și și-a actualizat cererea. Se ia de pe /cereri, primul venit.'
                   : 'Cererea se ia de pe /cereri, primul venit. Datele clientului se deblochează după apelul nostru de confirmare.'
@@ -758,10 +767,11 @@ export async function sendNewPortalAccountNotification(data: {
     `<tr><td style="padding:5px 12px 5px 0;color:#6b7280;font-size:13px;vertical-align:top;white-space:nowrap">${label}</td><td style="padding:5px 0;font-size:14px;color:#111827">${value}</td></tr>`;
 
   // Ce e de făcut acum, în ordinea în care se întâmplă: o revendicare în
-  // așteptare cere un telefon de confirmare, un cont fără nicio revendicare e
-  // firma pe care am trimis-o noi în portal și căreia îi atribuim cererea.
+  // așteptare cere doar aprobarea (firma are cont, deci n-o mai sunăm), un cont
+  // fără nicio revendicare e firma pe care am trimis-o noi în portal și căreia
+  // îi atribuim cererea.
   const todo = data.pendingClaims
-    ? `Are ${data.pendingClaims} ${data.pendingClaims === 1 ? 'revendicare care așteaptă' : 'revendicări care așteaptă'} aprobarea: sună firma, apoi deblochează datele clientului din /admin/portal.`
+    ? `Are ${data.pendingClaims} ${data.pendingClaims === 1 ? 'revendicare care așteaptă' : 'revendicări care așteaptă'} aprobarea: deblochează datele clientului din /admin/portal. Are cont, deci nu e nevoie de apel.`
     : data.activeClaims
       ? 'Are revendicări deja aprobate, deci vede datele clientului. Nimic de făcut acum.'
       : 'Nu are nicio revendicare: dacă i-am promis o cerere, atribuie-i-o din /admin/portal.';
