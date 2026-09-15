@@ -58,7 +58,7 @@ export default function PortalLanding() {
               feedul de cereri active
             </Link>
             , într-un singur loc. Datele de contact ale clientului se deblochează aici imediat ce
-            aprobăm revendicarea: firmele cu cont nu mai trec prin apelul nostru de confirmare.
+            aprobăm revendicarea.
           </p>
         </div>
 

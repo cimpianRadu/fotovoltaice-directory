@@ -277,7 +277,7 @@ function PortalNextStep({
       <ul className="mt-3 space-y-2 text-sm text-gray-700">
         {[
           source === 'revendicare'
-            ? `Datele complete ale clientului${arePoze ? ' și pozele trimise de el' : ''}, fără apelul nostru de confirmare: firmele cu cont sunt doar aprobate.`
+            ? `Datele complete ale clientului${arePoze ? ' și pozele trimise de el' : ''}, fără să te mai sunăm.`
             : 'Cererile pe care le urmărești și cele revendicate, într-un singur loc.',
           `Alerte pe email la fiecare cerere nouă din ${judet} și din celelalte județe pe care le bifezi, în momentul în care intră.`,
           'Statusul fiecărei cereri și notele tale, ca să nu te mai sunăm degeaba. Când renunți la o cerere, locul se eliberează pe loc.',
@@ -408,9 +408,8 @@ function ActionsInfo({ maxClaims }: { maxClaims: number }) {
           </p>
           <p className="mt-2">
             <strong className="text-gray-900">Vreau să contactez persoana</strong> — revendici
-            cererea acum și primești în portal numele, telefonul și adresa clientului, după ce
-            aprobăm (dacă n-ai cont în portal, te sunăm întâi o dată). Ocupă unul din cele{' '}
-            {maxClaims} locuri, deși clientul a spus că deocamdată se informează.
+            cererea acum și primești în portal numele, telefonul și adresa clientului. Ocupă unul
+            din cele {maxClaims} locuri, deși clientul a spus că deocamdată se informează.
           </p>
         </div>
       )}
@@ -684,14 +683,11 @@ export default function LeadCard({
       {lead.finantareLabel && (
         <FinancingLine label={lead.finantareLabel} tone={lead.finantareTone} />
       )}
-      {/* Ce a spus clientul, nu ce deducem noi din asta: la termen a bifat
-          „Deocamdată mă informez". Dacă vrea sau nu ofertă acum n-a spus
-          nimeni, iar firma decide singură dacă sună. */}
-      {lead.seInformeaza && (
-        <p className="mt-2 text-xs text-sky-800">
-          La termen a ales „Deocamdată mă informez”
-          {lead.informezMotiv ? `: ${lead.informezMotiv}` : ''}.
-        </p>
+      {/* Ce a răspuns clientul, nu ce deducem noi din asta: dacă vrea sau nu o
+          ofertă acum n-a spus nimeni, firma decide singură dacă sună. Fără
+          motiv nu scriem rândul: badge-ul și „Termen" spun deja tot. */}
+      {lead.seInformeaza && lead.informezMotiv && (
+        <p className="mt-2 text-xs text-sky-800">Ne-a spus că {lead.informezMotiv}.</p>
       )}
       {specs.length > 0 && (
         <ul className="mt-2 flex flex-wrap gap-1.5">
@@ -892,9 +888,9 @@ export default function LeadCard({
                 <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-800">
                   {hasAccount ? (
                     <>
-                      Revendicare înregistrată. Nu te sunăm: ai cont în portal, deci aprobăm
-                      revendicarea și datele clientului{lead.arePoze ? ' și pozele cererii' : ''}{' '}
-                      apar direct acolo.
+                      Revendicare înregistrată. Datele clientului
+                      {lead.arePoze ? ' și pozele cererii' : ''} apar în portalul tău în cel mult
+                      o zi lucrătoare.
                     </>
                   ) : (
                     <>
@@ -974,10 +970,10 @@ export default function LeadCard({
                   {status === 'submitting' ? 'Se trimite...' : 'Trimite revendicarea'}
                 </Button>
                 <p className="text-[11px] text-gray-500 leading-relaxed">
-                  Revendicarea este rezervată firmelor de instalare fotovoltaice. Cu cont în{' '}
-                  <a href="/portal" className="underline hover:no-underline">Portalul Instalatorilor</a>{' '}
-                  nu te sunăm: aprobăm revendicarea și datele complete ale clientului apar acolo.
-                  Fără cont, te sunăm o dată pentru confirmare.
+                  Revendicarea este rezervată firmelor de instalare fotovoltaice. Primești datele
+                  complete ale clientului în{' '}
+                  <a href="/portal" className="underline hover:no-underline">Portalul Instalatorilor</a>;
+                  la prima revendicare te sunăm o dată pentru confirmare.
                   Datele firmei tale sunt folosite doar pentru alocarea acestei cereri. Poți ține{' '}
                   {MAX_ACTIVE_CLAIMS_PER_FIRM} cereri nemișcate odată: locul se eliberează imediat
                   ce muți statusul cererii în portal.

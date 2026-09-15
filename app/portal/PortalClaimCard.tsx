@@ -400,7 +400,7 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
         !inactive && (
           <div className="mt-4 rounded-lg bg-surface border border-border px-4 py-3 text-sm text-gray-500">
             Datele clientului se deblochează imediat ce aprobăm revendicarea (durează de obicei
-            sub o zi lucrătoare). Ai cont în portal, deci nu te sunăm pentru confirmare.
+            sub o zi lucrătoare).
           </div>
         )
       )}

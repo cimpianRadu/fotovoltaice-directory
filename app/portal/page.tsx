@@ -257,9 +257,8 @@ export default async function PortalPage() {
 
       {mine.length > 0 && (
         <p className="mt-8 text-xs text-gray-400 leading-relaxed">
-          Datele clienților se deblochează imediat ce aprobăm revendicarea, fără apel de
-          confirmare. Statusul pe care îl setezi tu ne spune unde ești cu clientul, ca să nu te
-          mai sunăm degeaba. Locul unei firme
+          Datele clienților se deblochează imediat ce aprobăm revendicarea. Statusul pe care îl
+          setezi tu ne spune unde ești cu clientul, ca să nu te mai sunăm degeaba. Locul unei firme
           se eliberează când clientul confirmă că a fost sunat, sau când renunți tu, cu un motiv,
           de aici.
         </p>
