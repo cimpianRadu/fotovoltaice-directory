@@ -378,7 +378,8 @@ export const TIMELINE_OPTIONS = [
   { value: 'ma-informez', label: 'Deocamdată mă informez' },
 ] as const;
 
-/** Clientul a spus că deocamdată se informează, deci nu așteaptă oferte acum. */
+/** Clientul a ales „Deocamdată mă informez” la termen. Atât a spus: dacă vrea
+ *  sau nu o ofertă acum decide firma care sună, nu noi. */
 export function isSeInformeaza(termen: string): boolean {
   return termen === 'ma-informez';
 }
@@ -417,7 +418,7 @@ const BLOCAJ_SHORT: Record<string, string> = {
   merita: 'nu știe dacă merită',
   buget: 'nu are bugetul acum',
   'ce-sistem': 'vrea să înțeleagă ce sistem i se potrivește',
-  altceva: 'alt motiv',
+  altceva: 'are alt motiv',
 };
 
 export function getBlocajShort(slug: string): string {
