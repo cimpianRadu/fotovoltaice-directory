@@ -132,7 +132,6 @@ export function FeedbackThanks() {
 export function ClientFeedbackForm({ id, token }: { id: string; token: string }) {
   const [oferte, setOferte] = useState('');
   const [primulContact, setPrimulContact] = useState('');
-  const [firmaSemnata, setFirmaSemnata] = useState('');
   const [satisfactie, setSatisfactie] = useState('');
   const [experienta, setExperienta] = useState('');
   const [imbunatatiri, setImbunatatiri] = useState('');
@@ -143,7 +142,6 @@ export function ClientFeedbackForm({ id, token }: { id: string; token: string })
     token,
     oferte,
     primulContact: oferte === '0' ? '' : primulContact,
-    firmaSemnata,
     satisfactie,
     experienta,
     imbunatatiri,
@@ -157,7 +155,7 @@ export function ClientFeedbackForm({ id, token }: { id: string; token: string })
       <Choice label="Câte oferte ați primit?" options={OFERTE_OPTIONS} value={oferte} onChange={setOferte} required error={error?.field === 'oferte'} />
       {oferte !== '0' && (
         <Choice
-          label="În cât timp v-a contactat prima firmă?"
+          label="În cât timp v-a contactat prima firmă de la depunerea cererii?"
           options={PRIMUL_CONTACT_OPTIONS}
           value={primulContact}
           onChange={setPrimulContact}
@@ -165,13 +163,8 @@ export function ClientFeedbackForm({ id, token }: { id: string; token: string })
           error={error?.field === 'primulContact'}
         />
       )}
-      <Input
-        label="Cu ce firmă ați semnat?"
-        name="firmaSemnata"
-        value={firmaSemnata}
-        onChange={(e) => setFirmaSemnata(e.target.value)}
-        placeholder="Numele firmei"
-      />
+      {/* „Cu ce firmă ați semnat?" a fost scos pe 16 sept 2026: linkul se trimite
+          abia după ce știm firma, iar serverul o ia din revendicarea „câștigat". */}
       <Choice
         label="Cât de mulțumit sunteți de platformă?"
         options={SATISFACTIE_OPTIONS}

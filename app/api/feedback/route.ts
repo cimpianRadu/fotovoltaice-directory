@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getFullLeadById, hasFeedback, saveClientFeedback, saveFirmFeedback } from '@/lib/sheets';
+import { getClaims, getFullLeadById, hasFeedback, saveClientFeedback, saveFirmFeedback } from '@/lib/sheets';
 import { verifyFeedbackToken } from '@/lib/feedback-token';
 import {
   BATERIE_OPTIONS,
@@ -62,13 +62,20 @@ export async function POST(request: Request) {
       if (!isOption(TESTIMONIAL_OPTIONS, body.testimonial)) {
         return bad('Alegeți dacă putem folosi răspunsul.', 'testimonial');
       }
+      // Firma cu care a semnat nu se mai întreabă (16 sept 2026): linkul pleacă
+      // abia după ce revendicarea ei e pe „câștigat", deci o citim de acolo.
+      const firmaSemnata = (await getClaims())
+        .filter((c) => c.leadId === id && c.firmStatus === 'castigat')
+        .map((c) => c.numeFirma.trim())
+        .filter(Boolean)
+        .join(', ');
       await saveClientFeedback({
         leadId: id,
         client: (lead.numeContact || lead.numeCompanie).trim(),
         judet: lead.judet,
         oferte: body.oferte,
         primulContact,
-        firmaSemnata: text(body.firmaSemnata, 200),
+        firmaSemnata,
         satisfactie,
         experienta: text(body.experienta),
         imbunatatiri: text(body.imbunatatiri),
