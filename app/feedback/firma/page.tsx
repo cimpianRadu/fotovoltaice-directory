@@ -43,7 +43,6 @@ export default async function FirmFeedbackPage({
               token={t}
               firma={f}
               initialPutere={lead.putere}
-              initialBaterie={lead.stocare === 'da' || lead.stocare === 'nu' ? lead.stocare : ''}
             />
           </div>
         </>

@@ -28,17 +28,10 @@ export const TESTIMONIAL_OPTIONS: Option[] = [
   { value: 'nu', label: 'Nu' },
 ];
 
-export const STUDIU_CAZ_OPTIONS: Option[] = [
+export const FIRM_TESTIMONIAL_OPTIONS: Option[] = [
   { value: 'da', label: 'Da, cu numele firmei' },
   { value: 'da-fara-nume', label: 'Da, dar fără numele firmei' },
   { value: 'nu', label: 'Nu' },
-];
-
-export const PANA_LA_SEMNARE_OPTIONS: Option[] = [
-  { value: 'sub-o-saptamana', label: 'Sub o săptămână' },
-  { value: '1-2-saptamani', label: '1–2 săptămâni' },
-  { value: '2-4-saptamani', label: '2–4 săptămâni' },
-  { value: 'peste-o-luna', label: 'Peste o lună' },
 ];
 
 export const DATE_CORECTE_OPTIONS: Option[] = [
@@ -47,15 +40,23 @@ export const DATE_CORECTE_OPTIONS: Option[] = [
   { value: 'nu', label: 'Nu' },
 ];
 
-export const CLIENT_HOTARAT_OPTIONS: Option[] = [
-  { value: 'hotarat', label: 'Era deja hotărât' },
-  { value: 'compara', label: 'Compara oferte' },
-  { value: 'convins', label: 'A trebuit convins' },
+// Ce a putut face firma cu datele din cerere, fără alte întrebări (16 sept
+// 2026): măsura reală a utilității formularului, nu a clientului.
+export const DATE_UTILE_OPTIONS: Option[] = [
+  { value: 'oferta-direct', label: 'Am făcut oferta direct din cerere' },
+  { value: 'sunat-detalii', label: 'A trebuit să sun pentru detalii' },
+  { value: 'vizita', label: 'A fost nevoie de vizită la fața locului' },
 ];
 
-export const BATERIE_OPTIONS: Option[] = [
-  { value: 'da', label: 'Da' },
-  { value: 'nu', label: 'Nu' },
+// Ce a lipsit din cerere; se pot bifa mai multe, valorile se scriu în Sheets
+// separate prin virgulă.
+export const DATE_LIPSA_OPTIONS: Option[] = [
+  { value: 'buget', label: 'Bugetul clientului' },
+  { value: 'poze', label: 'Poze cu acoperișul' },
+  { value: 'consum', label: 'Consumul real / factura' },
+  { value: 'adresa', label: 'Adresa exactă' },
+  { value: 'disponibilitate', label: 'Când poate fi sunat' },
+  { value: 'nimic', label: 'Nimic, a fost suficient' },
 ];
 
 export const SATISFACTIE_VALUES = ['1', '2', '3', '4', '5'] as const;

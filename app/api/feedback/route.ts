@@ -2,15 +2,14 @@ import { NextResponse } from 'next/server';
 import { getClaims, getFullLeadById, hasFeedback, saveClientFeedback, saveFirmFeedback } from '@/lib/sheets';
 import { verifyFeedbackToken } from '@/lib/feedback-token';
 import {
-  BATERIE_OPTIONS,
-  CLIENT_HOTARAT_OPTIONS,
   DATE_CORECTE_OPTIONS,
+  DATE_LIPSA_OPTIONS,
+  DATE_UTILE_OPTIONS,
   FEEDBACK_TEXT_MAX,
+  FIRM_TESTIMONIAL_OPTIONS,
   OFERTE_OPTIONS,
-  PANA_LA_SEMNARE_OPTIONS,
   PRIMUL_CONTACT_OPTIONS,
   SATISFACTIE_VALUES,
-  STUDIU_CAZ_OPTIONS,
   TESTIMONIAL_OPTIONS,
   isOption,
 } from '@/lib/feedback-shared';
@@ -82,18 +81,18 @@ export async function POST(request: Request) {
         testimonial: body.testimonial,
       });
     } else {
-      if (!isOption(PANA_LA_SEMNARE_OPTIONS, body.panaLaSemnare)) {
-        return bad('Alegeți cât a durat până la semnare.', 'panaLaSemnare');
-      }
       if (!isOption(DATE_CORECTE_OPTIONS, body.dateCorecte)) {
         return bad('Spuneți-ne dacă datele din cerere erau corecte.', 'dateCorecte');
       }
-      if (!isOption(CLIENT_HOTARAT_OPTIONS, body.clientHotarat)) {
-        return bad('Spuneți-ne cât de hotărât era clientul.', 'clientHotarat');
+      if (!isOption(DATE_UTILE_OPTIONS, body.dateUtile)) {
+        return bad('Spuneți-ne ce ați putut face cu datele din cerere.', 'dateUtile');
       }
-      if (!isOption(STUDIU_CAZ_OPTIONS, body.studiuCaz)) {
-        return bad('Alegeți dacă putem publica lucrarea ca studiu de caz.', 'studiuCaz');
+      if (!isOption(FIRM_TESTIMONIAL_OPTIONS, body.testimonial)) {
+        return bad('Alegeți dacă putem publica părerea dumneavoastră.', 'testimonial');
       }
+      const dateLipsa = Array.isArray(body.dateLipsa)
+        ? body.dateLipsa.filter((v): v is string => isOption(DATE_LIPSA_OPTIONS, v))
+        : [];
       const putereRaw = text(body.putere, 20).replace(',', '.');
       const putere = putereRaw && Number.isFinite(Number(putereRaw)) && Number(putereRaw) > 0 ? putereRaw : '';
       await saveFirmFeedback({
@@ -101,14 +100,13 @@ export async function POST(request: Request) {
         firma,
         judet: lead.judet,
         putere,
-        baterie: isOption(BATERIE_OPTIONS, body.baterie) ? body.baterie : '',
-        panaLaSemnare: body.panaLaSemnare,
         dateCorecte: body.dateCorecte,
-        clientHotarat: body.clientHotarat,
+        dateUtile: body.dateUtile,
+        dateLipsa: dateLipsa.join(', '),
         satisfactie,
         experienta: text(body.experienta),
         imbunatatiri: text(body.imbunatatiri),
-        studiuCaz: body.studiuCaz,
+        testimonial: body.testimonial,
       });
     }
 

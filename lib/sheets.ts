@@ -1300,14 +1300,13 @@ const FEEDBACK_FIRM_HEADER = [
   'Firmă',
   'Județ',
   'Putere (kW)',
-  'Baterie',
-  'Până la semnare',
   'Date corecte',
-  'Client',
+  'Date utile',
+  'Ce a lipsit',
   'Satisfacție (1-5)',
   'Experiență',
   'Îmbunătățiri',
-  'Studiu de caz',
+  'Testimonial',
 ];
 
 export interface ClientFeedback {
@@ -1328,15 +1327,16 @@ export interface FirmFeedback {
   firma: string;
   judet: string;
   putere: string;
-  baterie: string;
-  panaLaSemnare: string;
   dateCorecte: string;
-  clientHotarat: string;
+  /** Ce a putut face cu datele: oferta-direct / sunat-detalii / vizita. */
+  dateUtile: string;
+  /** Ce a lipsit din cerere, sluguri separate prin virgulă. */
+  dateLipsa: string;
   satisfactie: string;
   experienta: string;
   imbunatatiri: string;
-  /** Acordul firmei de a publica lucrarea: da / da-fara-nume / nu. */
-  studiuCaz: string;
+  /** Acordul firmei de a publica părerea: da / da-fara-nume / nu. */
+  testimonial: string;
 }
 
 async function appendWithHeader(sheetName: string, header: string[], values: string[]) {
@@ -1372,14 +1372,13 @@ export async function saveFirmFeedback(f: FirmFeedback) {
     f.firma,
     f.judet,
     f.putere,
-    f.baterie,
-    f.panaLaSemnare,
     f.dateCorecte,
-    f.clientHotarat,
+    f.dateUtile,
+    f.dateLipsa,
     f.satisfactie,
     f.experienta,
     f.imbunatatiri,
-    f.studiuCaz,
+    f.testimonial,
   ]);
 }
 

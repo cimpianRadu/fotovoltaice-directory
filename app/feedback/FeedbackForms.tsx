@@ -4,14 +4,13 @@ import { useState } from 'react';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import {
-  BATERIE_OPTIONS,
-  CLIENT_HOTARAT_OPTIONS,
   DATE_CORECTE_OPTIONS,
+  DATE_LIPSA_OPTIONS,
+  DATE_UTILE_OPTIONS,
+  FIRM_TESTIMONIAL_OPTIONS,
   OFERTE_OPTIONS,
-  PANA_LA_SEMNARE_OPTIONS,
   PRIMUL_CONTACT_OPTIONS,
   SATISFACTIE_VALUES,
-  STUDIU_CAZ_OPTIONS,
   TESTIMONIAL_OPTIONS,
 } from '@/lib/feedback-shared';
 
@@ -57,6 +56,50 @@ function Choice({
                   ? 'border-primary bg-primary/10 font-semibold text-gray-900'
                   : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
               } ${error && !value ? 'border-red-400' : ''}`}
+            >
+              {o.label}
+            </button>
+          );
+        })}
+      </div>
+      {hint && <p className="mt-1 text-xs text-gray-500">{hint}</p>}
+    </fieldset>
+  );
+}
+
+// Aceleași butoane, dar se pot bifa mai multe („ce a lipsit din cerere").
+function MultiChoice({
+  label,
+  options,
+  value,
+  onChange,
+  hint,
+}: {
+  label: string;
+  options: Option[];
+  value: string[];
+  onChange: (v: string[]) => void;
+  hint?: string;
+}) {
+  return (
+    <fieldset>
+      <legend className="block text-sm font-medium text-gray-700 mb-1.5">{label}</legend>
+      <div className="flex flex-wrap gap-2">
+        {options.map((o) => {
+          const selected = value.includes(o.value);
+          return (
+            <button
+              key={o.value}
+              type="button"
+              aria-pressed={selected}
+              onClick={() =>
+                onChange(selected ? value.filter((v) => v !== o.value) : [...value, o.value])
+              }
+              className={`rounded-lg border px-3 py-2 text-sm transition-colors ${
+                selected
+                  ? 'border-primary bg-primary/10 font-semibold text-gray-900'
+                  : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+              }`}
             >
               {o.label}
             </button>
@@ -215,37 +258,33 @@ export function FirmFeedbackForm({
   token,
   firma,
   initialPutere,
-  initialBaterie,
 }: {
   id: string;
   token: string;
   firma: string;
   initialPutere: string;
-  initialBaterie: string;
 }) {
   const [putere, setPutere] = useState(initialPutere);
-  const [baterie, setBaterie] = useState(initialBaterie);
-  const [panaLaSemnare, setPanaLaSemnare] = useState('');
   const [dateCorecte, setDateCorecte] = useState('');
-  const [clientHotarat, setClientHotarat] = useState('');
+  const [dateUtile, setDateUtile] = useState('');
+  const [dateLipsa, setDateLipsa] = useState<string[]>([]);
   const [satisfactie, setSatisfactie] = useState('');
   const [experienta, setExperienta] = useState('');
   const [imbunatatiri, setImbunatatiri] = useState('');
-  const [studiuCaz, setStudiuCaz] = useState('');
+  const [testimonial, setTestimonial] = useState('');
   const { status, error, submit } = useSubmit(() => ({
     role: 'firma',
     id,
     token,
     firma,
     putere,
-    baterie,
-    panaLaSemnare,
     dateCorecte,
-    clientHotarat,
+    dateUtile,
+    dateLipsa,
     satisfactie,
     experienta,
     imbunatatiri,
-    studiuCaz,
+    testimonial,
   }));
 
   if (status === 'done') return <FeedbackThanks />;
@@ -261,15 +300,6 @@ export function FirmFeedbackForm({
         onChange={(e) => setPutere(e.target.value)}
         placeholder="ex: 20"
       />
-      <Choice label="Sistemul are baterie?" options={BATERIE_OPTIONS} value={baterie} onChange={setBaterie} />
-      <Choice
-        label="Cât a durat de la preluarea cererii până la semnare?"
-        options={PANA_LA_SEMNARE_OPTIONS}
-        value={panaLaSemnare}
-        onChange={setPanaLaSemnare}
-        required
-        error={error?.field === 'panaLaSemnare'}
-      />
       <Choice
         label="Datele din cerere erau corecte?"
         options={DATE_CORECTE_OPTIONS}
@@ -279,12 +309,19 @@ export function FirmFeedbackForm({
         error={error?.field === 'dateCorecte'}
       />
       <Choice
-        label="Cât de hotărât era clientul?"
-        options={CLIENT_HOTARAT_OPTIONS}
-        value={clientHotarat}
-        onChange={setClientHotarat}
+        label="Ce ați putut face cu datele din cerere?"
+        options={DATE_UTILE_OPTIONS}
+        value={dateUtile}
+        onChange={setDateUtile}
         required
-        error={error?.field === 'clientHotarat'}
+        error={error?.field === 'dateUtile'}
+      />
+      <MultiChoice
+        label="Ce v-ar fi ajutat să mai știți din cerere?"
+        options={DATE_LIPSA_OPTIONS}
+        value={dateLipsa}
+        onChange={setDateLipsa}
+        hint="Puteți bifa mai multe."
       />
       <Choice
         label="Cât de mulțumiți sunteți de platformă?"
@@ -312,19 +349,17 @@ export function FirmFeedbackForm({
         placeholder="Opțional"
       />
       <Choice
-        label="Putem publica lucrarea ca studiu de caz?"
-        options={STUDIU_CAZ_OPTIONS}
-        value={studiuCaz}
-        onChange={setStudiuCaz}
+        label="Putem publica părerea dumneavoastră pe site și pe rețelele noastre sociale?"
+        options={FIRM_TESTIMONIAL_OPTIONS}
+        value={testimonial}
+        onChange={setTestimonial}
         required
-        error={error?.field === 'studiuCaz'}
+        error={error?.field === 'testimonial'}
       />
       <PublishNote>
-        Dacă alegeți „da", putem publica un articol pe site și postări pe rețelele noastre sociale cu
-        județul, tipul lucrării, puterea, bateria, durata până la semnare și răspunsurile de mai sus,
-        plus numele firmei și linkul spre profilul ei la prima variantă. Pozele de la montaj le
-        publicăm doar dacă ni le trimiteți dumneavoastră. Datele clientului apar doar cu acordul lui
-        separat.
+        Dacă alegeți „da", putem publica textul scris mai sus, județul, tipul lucrării și puterea
+        instalată și, doar la prima variantă, numele firmei cu link spre profilul ei. Studiile de caz
+        cu fotografii se stabilesc separat, în scris.
       </PublishNote>
       {error && <p className="text-sm text-red-600">{error.message}</p>}
       <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full">
