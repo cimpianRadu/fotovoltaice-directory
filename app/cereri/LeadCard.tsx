@@ -33,7 +33,7 @@ export interface LeadCardData {
   finantareTone: FinancingTone;
   stocareLabel: string;
   wallboxLabel: string;
-  /** Slugul din TIMELINE_OPTIONS; decide culoarea rândului „Vrea instalarea". */
+  /** Slugul din TIMELINE_OPTIONS; decide grosimea rândului „Vrea instalarea". */
   termen: string;
   termenLabel: string;
   intervalApelLabel: string;
@@ -95,20 +95,61 @@ function FinancingLine({ label, tone }: { label: string; tone: FinancingTone }) 
 }
 
 // Termenul, scos din pastilele mici (16 sept 2026, cerere user): alături de
-// finanțare e ce decide dacă firma sună azi. Aceeași formă ca rândul de
-// finanțare, culoarea după slugul din TIMELINE_OPTIONS.
-const TIMELINE_STYLES: Record<string, { dot: string; text: string }> = {
-  'cat-mai-repede': { dot: 'bg-emerald-500', text: 'text-emerald-700' },
-  '1-3-luni': { dot: 'bg-amber-500', text: 'text-amber-700' },
-  'peste-3-luni': { dot: 'bg-gray-400', text: 'text-gray-600' },
-  'ma-informez': { dot: 'bg-sky-500', text: 'text-sky-700' },
+// finanțare e ce decide dacă firma sună azi. Fără a doua scală de culori:
+// pusă lângă punctul colorat al finanțării, o culoare pe termen se citea ca
+// aceeași dimensiune. Iconița spune urgența (fulgerul din logo la „cât mai
+// repede", calendar la lunile de așteptare, „i" la „mă informez", ca badge-ul),
+// grosimea textului o întărește.
+const TIMELINE_STYLE: Record<string, { text: string; icon: React.ReactNode }> = {
+  'cat-mai-repede': {
+    text: 'font-semibold text-gray-900',
+    icon: <path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12z" />,
+  },
+  '1-3-luni': {
+    text: 'font-medium text-gray-700',
+    icon: (
+      <>
+        <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
+        <path d="M3.5 10h17M8 3v4M16 3v4" />
+      </>
+    ),
+  },
+  'peste-3-luni': {
+    text: 'text-gray-500',
+    icon: (
+      <>
+        <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
+        <path d="M3.5 10h17M8 3v4M16 3v4" />
+      </>
+    ),
+  },
+  'ma-informez': {
+    text: 'text-gray-500',
+    icon: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 11.2v4.6M12 8.1h.01" />
+      </>
+    ),
+  },
 };
 
 function TimelineLine({ slug, label }: { slug: string; label: string }) {
-  const style = TIMELINE_STYLES[slug] ?? TIMELINE_STYLES['peste-3-luni'];
+  const style = TIMELINE_STYLE[slug] ?? TIMELINE_STYLE['peste-3-luni'];
   return (
-    <p className={`mt-1 flex items-center gap-1.5 text-xs font-semibold ${style.text}`}>
-      <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} aria-hidden />
+    <p className={`mt-1.5 flex items-center gap-1.5 text-xs ${style.text}`}>
+      <svg
+        className="h-3.5 w-3.5 shrink-0 text-gray-500"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        {style.icon}
+      </svg>
       Vrea instalarea: {label.toLowerCase()}
     </p>
   );
