@@ -24,6 +24,7 @@ import { isSameClient, parseRequestedFirms } from '@/lib/sheets-shared';
 import { matchFirmsForLead, type FirmMatch } from '@/lib/lead-match';
 import { matchNecesitFirms, type NecesitMatch } from '@/lib/necesit-match';
 import {
+  getBudgetLabel,
   getCallWindowLabel,
   getFinancingShort,
   getFinancingTone,
@@ -348,6 +349,9 @@ function LeadCard({
             )}
             {lead.intervalApel && (
               <div className="text-emerald-700">sună: {getCallWindowLabel(lead.intervalApel)}</div>
+            )}
+            {getBudgetLabel(lead.buget) && (
+              <div className="text-slate-600">buget: {getBudgetLabel(lead.buget)}</div>
             )}
           </div>
           {/* Una sau mai multe: din 21 aug 2026 formularul lasă clientul să

@@ -22,6 +22,7 @@ import {
   getFinancingShort,
   getFinancingTone,
   getYesNoLabel,
+  getBudgetLabel,
   getCallWindowLabel,
   getTimelineLabel,
   getWorkTypeShort,
@@ -147,6 +148,7 @@ export default async function CereriPage() {
       termen: l.termen || '',
       termenLabel: l.termen ? getTimelineLabel(l.termen) : '',
       intervalApelLabel: l.intervalApel ? getCallWindowLabel(l.intervalApel) : '',
+      bugetLabel: getBudgetLabel(l.buget),
       arePoze: l.arePoze,
       verificata: l.verificata,
     };

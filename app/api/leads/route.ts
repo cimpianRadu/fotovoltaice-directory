@@ -17,6 +17,7 @@ import {
   getFinancingLabel,
   getProjectTypeLabel,
   getRoofTypeLabel,
+  getBudgetLabel,
   getCallWindowLabel,
   getTimelineLabel,
   getWorkTypeShort,
@@ -99,6 +100,7 @@ export async function POST(request: Request) {
     // verificarea e și pe server, cu `field` pentru focus.
     const missingDetail =
       (!body.finantare && 'finantare') ||
+      (!body.buget && 'buget') ||
       (!body.termen && 'termen') ||
       (!body.tipAcoperis && 'tipAcoperis') ||
       (!body.bransament && 'bransament') ||
@@ -109,6 +111,7 @@ export async function POST(request: Request) {
         {
           error: {
             finantare: 'Alegeți cum finanțați investiția (sau „Nu știu încă").',
+            buget: 'Alegeți un buget orientativ (sau „Nu știu încă").',
             termen: 'Alegeți cât de repede vreți instalarea (sau „Deocamdată mă informez").',
             tipAcoperis: 'Alegeți tipul de acoperiș (sau „Altul / nu știu").',
             bransament: 'Spuneți dacă există branșament electric (sau „Nu știu").',
@@ -210,6 +213,7 @@ async function notifyCountyAlerts(body: Record<string, string>, leadId: string) 
     finantareLabel: finantare ? getFinancingLabel(finantare) : '',
     termenLabel: body.termen ? getTimelineLabel(body.termen.trim()) : '',
     intervalApelLabel: body.intervalApel ? getCallWindowLabel(body.intervalApel.trim()) : '',
+    bugetLabel: getBudgetLabel((body.buget || '').trim()),
     // „Mă informez": alerta pleacă tot, dar cu prefix și cu îndemnul de a urmări,
     // nu de a revendica. Motivul lui vine abia la pasul 5, deci aici e gol.
     ...(isSeInformeaza((body.termen || '').trim()) ? { informez: { motiv: '' } } : {}),

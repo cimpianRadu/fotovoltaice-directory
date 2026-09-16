@@ -37,6 +37,8 @@ export interface LeadCardData {
   termen: string;
   termenLabel: string;
   intervalApelLabel: string;
+  /** Banda de buget aleasă de client; gol la „nu știu" sau pe cererile vechi. */
+  bugetLabel: string;
   arePoze: boolean;
   verificata: boolean;
   /**
@@ -660,6 +662,7 @@ export default function LeadCard({
     lead.fazareLabel ? { label: 'Alimentare', value: lead.fazareLabel } : null,
     lead.bransamentLabel ? { label: 'Branșament', value: lead.bransamentLabel } : null,
     lead.consumLunar ? { label: 'Consum', value: lead.consumLunar } : null,
+    lead.bugetLabel ? { label: 'Buget', value: lead.bugetLabel } : null,
     lead.stocareLabel ? { label: 'Baterie', value: lead.stocareLabel } : null,
     lead.wallboxLabel ? { label: 'Stație auto', value: lead.wallboxLabel } : null,
     lead.intervalApelLabel ? { label: 'Sunați', value: lead.intervalApelLabel } : null,

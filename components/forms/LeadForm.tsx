@@ -12,6 +12,8 @@ import {
   CONNECTION_OPTIONS,
   PHASE_TYPES,
   FINANCING_REZIDENTIAL,
+  BUDGET_COMERCIAL,
+  BUDGET_REZIDENTIAL,
   FINANCING_COMERCIAL,
   STORAGE_OPTIONS,
   WALLBOX_OPTIONS,
@@ -129,6 +131,7 @@ const STEP4_KEYS = [
   'consumLunar',
   'termen',
   'finantare',
+  'buget',
   'bransament',
 ] as const;
 
@@ -530,6 +533,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   const roofTypes = isRezidential ? ROOF_TYPES_REZIDENTIAL : ROOF_TYPES_COMERCIAL;
   const retrofit = isRetrofit(details.tipLucrare);
   const financingTypes = isRezidential ? FINANCING_REZIDENTIAL : FINANCING_COMERCIAL;
+  const budgetBands = isRezidential ? BUDGET_REZIDENTIAL : BUDGET_COMERCIAL;
 
   function set<K extends keyof typeof values>(key: K, value: string) {
     markStarted();
@@ -1054,6 +1058,16 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     // pe nimeni să inventeze un răspuns.
     { name: 'termen', label: 'Cât de repede vreți instalarea', options: opts(TIMELINE_OPTIONS), required: true },
     { name: 'finantare', label: 'Cum finanțați investiția', options: opts(financingTypes), required: true },
+    // Bugetul orientativ (16 sept 2026): toți instalatorii îl cer la primul
+    // telefon. Nu ca să ofereze la maximum, ci ca să aleagă componentele care
+    // încap, de exemplu panouri și invertor acum, bateria într-o etapă viitoare.
+    {
+      name: 'buget',
+      label: 'Buget orientativ',
+      options: opts(budgetBands),
+      required: true,
+      hint: 'Ajută firma să aleagă componentele care se încadrează în buget, de exemplu panourile și invertorul acum, bateria mai târziu.',
+    },
     // Cerut de instalatori pe 18 aug 2026: fără branșament nu se racordează
     // nimic, iar ei aflau abia la fața locului.
     {

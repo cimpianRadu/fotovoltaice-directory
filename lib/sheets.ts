@@ -122,6 +122,7 @@ export async function saveLeadToSheet(lead: {
   intervalApel?: string;
   tipLucrare?: string;
   capacitateBaterie?: string;
+  buget?: string;
 }): Promise<string> {
   const timestamp = new Date().toISOString();
   await appendRow('Leads', [
@@ -188,6 +189,12 @@ export async function saveLeadToSheet(lead: {
     // AN blocaj (răspunsul de la pasul 5), AO detalii, AP emailul de întâmpinare
     // trimis, AQ reactivată la, AR/AS check-in-uri (contor, ultimul), AT răspunsul
     // clientului, AU alertele de reactivare trimise, AV anunțul de program. Vezi NewLead.
+    // Rămân goale aici ca rândul să ajungă până la AW.
+    '', '', '', '', '', '', '', '', '',
+    // AW — bugetul orientativ ales de client (16 sept 2026), slug din
+    // BUDGET_REZIDENTIAL / BUDGET_COMERCIAL. Grila trebuie să aibă 49 de
+    // coloane (scripts/setup-buget.mjs), altfel append-ul pierde tot rândul.
+    lead.buget || '',          // AW — Buget orientativ
   ]);
   return timestamp;
 }
@@ -477,6 +484,8 @@ export interface NewLead {
   tipLucrare: string;
   // AM — capacitatea de baterie cerută, în kWh. Cifra clientului, nu una calculată.
   capacitateBaterie: string;
+  // AW — bugetul orientativ, slug din BUDGET_* (16 sept 2026). Gol înainte.
+  buget: string;
   // AN-AU — fluxul „mă informez" (14 sept 2026). Goale pe orice cerere care
   // n-a bifat termenul ăsta. Vezi markInformez* / reactivateLeadFromClient.
   /** AN — ce îl oprește (slug din BLOCAJ_OPTIONS), răspuns la pasul 5. */
@@ -578,6 +587,7 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     checkinLa: r[44] || '',
     raspunsClient: r[45] || '',
     alerteReactivareLa: r[46] || '',
+    buget: r[48] || '',
     anuntProgramLa: r[47] || '',
     ...readCrmFields(r),
   }));
@@ -675,6 +685,9 @@ export interface PublicLead {
   // Public intenționat: firma decide dacă revendică și în funcție de faptul că
   // omul poate vorbi abia seara. Nu identifică pe nimeni.
   intervalApel: string;
+  // Public intenționat: banda de buget nu identifică pe nimeni, dar e primul
+  // lucru pe care îl întreabă firma. Vezi BUDGET_* în lib/utils-shared.
+  buget: string;
   /**
    * Clientul a bifat „Deocamdată mă informez" la termen. Cardul arată „Urmărește"
    * în loc de „Revendică", iar `blocaj` spune de ce (vezi BLOCAJ_OPTIONS).
@@ -824,6 +837,7 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       // până aici, sunt filtrate de `isOpenForClaims`.
       verificata: l.crmStatus === 'valida' || l.crmStatus === 'ofertare',
       intervalApel: l.intervalApel,
+      buget: l.buget,
       seInformeaza: isLeadInformez(l),
       blocaj: l.blocaj,
       reactivataLa: l.reactivataLa,

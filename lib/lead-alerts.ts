@@ -8,6 +8,7 @@ import type { NewLead } from './sheets';
 import { isLeadInformez } from './sheets';
 import {
   getBlocajShort,
+  getBudgetLabel,
   getCallWindowLabel,
   getConnectionLabel,
   getFinancingLabel,
@@ -44,6 +45,7 @@ export function countyAlertPayloadFromLead(lead: NewLead) {
     finantareLabel: lead.finantare ? getFinancingLabel(lead.finantare) : '',
     termenLabel: lead.termen ? getTimelineLabel(lead.termen) : '',
     intervalApelLabel: lead.intervalApel ? getCallWindowLabel(lead.intervalApel) : '',
+    bugetLabel: getBudgetLabel(lead.buget),
     ...(isLeadInformez(lead) ? { informez: { motiv: informezMotiv(lead) } } : {}),
   };
 }

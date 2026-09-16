@@ -27,6 +27,7 @@ import {
   getProjectTypeLabel,
   getRoofTypeLabel,
   getPhaseLabel,
+  getBudgetLabel,
   getFinancingLabel,
 } from '@/lib/utils-shared';
 
@@ -197,6 +198,7 @@ export async function POST(request: Request) {
         consumLunar: lead.consumLunar,
         finantareLabel: lead.finantare ? getFinancingLabel(lead.finantare) : '',
         bransamentLabel: lead.bransament ? getConnectionLabel(lead.bransament) : '',
+        bugetLabel: getBudgetLabel(lead.buget),
       },
       claimCount,
       maxClaims: MAX_CLAIMS_PER_LEAD,

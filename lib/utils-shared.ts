@@ -262,6 +262,41 @@ export const FINANCING_COMERCIAL = [
   { value: 'nu-stiu', label: 'Nu știu încă, vreau să aflu' },
 ] as const;
 
+// Bugetul orientativ (16 sept 2026). Cerut de instalatori de fiecare dată
+// (instalatorul din 19 aug, postarea Solarem din 16 sept, opțiunea „Bugetul
+// clientului" din feedbackul firmelor): nu ca să dea prețul maxim, ci ca să
+// aleagă componentele care încap (panouri + invertor acum, bateria mai târziu).
+// Intervale, nu cifră liberă: clientul rezidențial rar știe o sumă exactă, dar
+// știe în ce bandă e. Benzile rezidențiale urmăresc prețurile cu montaj din
+// data/kit-prices.json (6 kW ≈ 20 mii, 10 kW ≈ 30 mii, 10 kW hibrid ≈ 46 mii).
+export const BUDGET_REZIDENTIAL = [
+  { value: 'sub-20k', label: 'Sub 20.000 lei' },
+  { value: '20-35k', label: '20.000 – 35.000 lei' },
+  { value: '35-50k', label: '35.000 – 50.000 lei' },
+  { value: '50-80k', label: '50.000 – 80.000 lei' },
+  { value: 'peste-80k', label: 'Peste 80.000 lei' },
+  { value: 'nu-stiu', label: 'Nu știu încă' },
+] as const;
+
+export const BUDGET_COMERCIAL = [
+  { value: 'sub-100k', label: 'Sub 100.000 lei' },
+  { value: '100-250k', label: '100.000 – 250.000 lei' },
+  { value: '250-500k', label: '250.000 – 500.000 lei' },
+  { value: '500k-1m', label: '500.000 – 1.000.000 lei' },
+  { value: 'peste-1m', label: 'Peste 1.000.000 lei' },
+  { value: 'nu-stiu', label: 'Nu știu încă' },
+] as const;
+
+const BUDGET_LABELS: Record<string, string> = Object.fromEntries(
+  [...BUDGET_REZIDENTIAL, ...BUDGET_COMERCIAL].map((o) => [o.value, o.label]),
+);
+
+/** Eticheta bugetului; „Nu știu încă" devine gol la afișare, ca să nu ocupe un chip degeaba. */
+export function getBudgetLabel(slug: string): string {
+  if (!slug || slug === 'nu-stiu') return '';
+  return BUDGET_LABELS[slug] ?? slug;
+}
+
 // Ca la ROOF_*: valorile comune celor două liste au aceeași etichetă, altfel
 // afișajul ar depinde de ordinea de construire a mapei.
 const FINANCING_LABELS: Record<string, string> = Object.fromEntries(

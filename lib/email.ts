@@ -246,6 +246,8 @@ interface ClaimNotificationData {
     consumLunar: string;
     finantareLabel: string;
     bransamentLabel: string;
+    /** Banda de buget; gol pe cererile dinainte de 16 sept 2026 sau la „nu știu". */
+    bugetLabel?: string;
   };
   claimCount: number; // inclusiv revendicarea curentă
   maxClaims: number;
@@ -299,6 +301,7 @@ export async function sendClaimNotification(data: ClaimNotificationData): Promis
         ${lead.consumLunar ? row('Consum lunar', escapeHtml(lead.consumLunar)) : ''}
         ${lead.bransamentLabel ? row('Branșament', escapeHtml(lead.bransamentLabel)) : ''}
         ${lead.finantareLabel ? row('Finanțare', `<strong>${escapeHtml(lead.finantareLabel)}</strong>`) : ''}
+        ${lead.bugetLabel ? row('Buget orientativ', `<strong>${escapeHtml(lead.bugetLabel)}</strong>`) : ''}
         ${row('Segment', escapeHtml(lead.segment))}
         ${row('Depus', escapeHtml(fmtDate(lead.timestamp)))}
       </table>
@@ -636,6 +639,8 @@ export async function sendCountyLeadAlert(data: {
   termenLabel: string;
   /** Intervalul cerut de client pentru apel; gol dacă n-a ales. */
   intervalApelLabel: string;
+  /** Banda de buget aleasă de client; gol dacă n-a ales sau nu știe. */
+  bugetLabel?: string;
   /** ISO — doar către abonat: până când cererea e rezervată numai pentru el. */
   reservedUntil?: string;
   /** Către restul firmelor, după ce a expirat rezervarea unui abonat. */
@@ -670,6 +675,7 @@ export async function sendCountyLeadAlert(data: {
       <table style="border-collapse:collapse;width:100%">
         ${data.finantareLabel ? row('Finanțare', `<strong style="color:${finantareColor}">${escapeHtml(data.finantareLabel)}</strong>`) : ''}
         ${data.termenLabel ? row('Vrea instalarea', `<strong>${escapeHtml(data.termenLabel)}</strong>`) : ''}
+        ${data.bugetLabel ? row('Buget orientativ', `<strong>${escapeHtml(data.bugetLabel)}</strong>`) : ''}
         ${data.informez ? row('Se informează', `<span style="color:#6b7280">${escapeHtml(data.informez.motiv || 'nu a spus de ce')}</span>`) : ''}
         ${data.tipLucrareLabel ? row('Lucrare', `<strong>${escapeHtml(data.tipLucrareLabel)}</strong>`) : ''}
         ${data.putere ? row(data.retrofit ? 'Are montat' : 'Putere', `${escapeHtml(data.putere)} kW`) : ''}
