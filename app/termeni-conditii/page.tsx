@@ -15,7 +15,7 @@ export default function TermeniConditii() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Termeni și Condiții</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 20 februarie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 16 septembrie 2026</p>
 
         <p>
           Prin accesarea și utilizarea site-ului <strong>instalatori-fotovoltaice.ro</strong> acceptați
@@ -88,13 +88,48 @@ export default function TermeniConditii() {
           <a href="mailto:contact@instalatori-fotovoltaice.ro">contact@instalatori-fotovoltaice.ro</a>.
         </p>
 
-        <h2>8. Modificări</h2>
+        <h2 id="testimoniale">8. Testimoniale și studii de caz</h2>
+        <p>
+          După ce o cerere de ofertă se încheie cu un contract semnat, putem cere clientului și
+          firmei care a executat lucrarea un scurt feedback, printr-un formular deschis doar cu un
+          link trimis de noi. Răspunsurile ne ajută să îmbunătățim platforma și sunt folosite
+          intern.
+        </p>
+        <p>
+          Publicăm un răspuns pe site sau pe rețelele noastre sociale{' '}
+          <strong>numai dacă persoana care l-a dat a ales explicit acest lucru în formular</strong>,
+          și numai în forma aleasă (cu nume sau fără nume). Concret:
+        </p>
+        <ul>
+          <li>
+            <strong>De la client</strong> putem publica textul scris de el, județul, tipul și puterea
+            sistemului. Numele apare doar dacă a ales varianta „cu numele meu".
+          </li>
+          <li>
+            <strong>De la firma instalatoare</strong> putem publica un studiu de caz cu județul, tipul
+            lucrării, puterea instalată, prezența bateriei, durata până la semnare și răspunsurile
+            din formular. Numele firmei și linkul spre profilul ei apar doar dacă a ales varianta „cu
+            numele firmei". Fotografiile de la montaj se publică doar dacă firma ni le trimite.
+          </li>
+          <li>
+            Nu publicăm niciodată numărul de telefon, adresa de email sau adresa exactă a lucrării.
+            Datele clientului nu apar în studiul de caz al firmei fără acordul separat al clientului.
+          </li>
+          <li>
+            Acordul se poate retrage oricând, printr-un email la{' '}
+            <a href="mailto:contact@instalatori-fotovoltaice.ro">contact@instalatori-fotovoltaice.ro</a>.
+            Scoatem conținutul de pe site în cel mai scurt timp posibil; ce a fost deja distribuit pe
+            rețele sociale de terți nu mai poate fi retras de noi.
+          </li>
+        </ul>
+
+        <h2>9. Modificări</h2>
         <p>
           Ne rezervăm dreptul de a modifica acești termeni oricând. Modificările intră în vigoare
           la publicarea pe această pagină.
         </p>
 
-        <h2>9. Legislație aplicabilă</h2>
+        <h2>10. Legislație aplicabilă</h2>
         <p>
           Acești termeni sunt guvernați de legislația din România. Orice litigiu va fi soluționat
           de instanțele competente din România.

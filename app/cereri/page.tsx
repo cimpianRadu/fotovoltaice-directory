@@ -144,6 +144,7 @@ export default async function CereriPage() {
       finantareTone: getFinancingTone(l.finantare),
       stocareLabel: l.stocare ? getYesNoLabel(l.stocare) : '',
       wallboxLabel: l.wallbox ? getYesNoLabel(l.wallbox) : '',
+      termen: l.termen || '',
       termenLabel: l.termen ? getTimelineLabel(l.termen) : '',
       intervalApelLabel: l.intervalApel ? getCallWindowLabel(l.intervalApel) : '',
       arePoze: l.arePoze,

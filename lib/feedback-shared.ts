@@ -20,9 +20,17 @@ export const PRIMUL_CONTACT_OPTIONS: Option[] = [
   { value: 'peste-o-saptamana', label: 'După mai mult de o săptămână' },
 ];
 
+// Consimțământul de publicare: ce apare public e scris explicit sub întrebare
+// și în /termeni-conditii#testimoniale. Valoarea se scrie în Sheets ca atare.
 export const TESTIMONIAL_OPTIONS: Option[] = [
   { value: 'da', label: 'Da, cu numele meu' },
   { value: 'da-fara-nume', label: 'Da, dar fără nume' },
+  { value: 'nu', label: 'Nu' },
+];
+
+export const STUDIU_CAZ_OPTIONS: Option[] = [
+  { value: 'da', label: 'Da, cu numele firmei' },
+  { value: 'da-fara-nume', label: 'Da, dar fără numele firmei' },
   { value: 'nu', label: 'Nu' },
 ];
 

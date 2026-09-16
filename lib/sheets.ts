@@ -1307,6 +1307,7 @@ const FEEDBACK_FIRM_HEADER = [
   'Satisfacție (1-5)',
   'Experiență',
   'Îmbunătățiri',
+  'Studiu de caz',
 ];
 
 export interface ClientFeedback {
@@ -1334,6 +1335,8 @@ export interface FirmFeedback {
   satisfactie: string;
   experienta: string;
   imbunatatiri: string;
+  /** Acordul firmei de a publica lucrarea: da / da-fara-nume / nu. */
+  studiuCaz: string;
 }
 
 async function appendWithHeader(sheetName: string, header: string[], values: string[]) {
@@ -1376,6 +1379,7 @@ export async function saveFirmFeedback(f: FirmFeedback) {
     f.satisfactie,
     f.experienta,
     f.imbunatatiri,
+    f.studiuCaz,
   ]);
 }
 

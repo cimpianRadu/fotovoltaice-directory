@@ -11,6 +11,7 @@ import {
   PANA_LA_SEMNARE_OPTIONS,
   PRIMUL_CONTACT_OPTIONS,
   SATISFACTIE_VALUES,
+  STUDIU_CAZ_OPTIONS,
   TESTIMONIAL_OPTIONS,
 } from '@/lib/feedback-shared';
 
@@ -64,6 +65,21 @@ function Choice({
       </div>
       {hint && <p className="mt-1 text-xs text-gray-500">{hint}</p>}
     </fieldset>
+  );
+}
+
+// Ce anume se publică, spus lângă întrebare, nu doar în termeni: cine bifează
+// „da" trebuie să știe exact ce apare. Aceeași listă e în /termeni-conditii.
+function PublishNote({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="-mt-3 text-xs text-gray-500 leading-relaxed">
+      {children} Nu publicăm niciodată telefonul, emailul sau adresa exactă. Acordul se poate retrage
+      oricând, scriindu-ne la contact@instalatori-fotovoltaice.ro. Detalii în{' '}
+      <a href="/termeni-conditii#testimoniale" target="_blank" rel="noopener" className="underline">
+        Termeni și condiții
+      </a>
+      .
+    </p>
   );
 }
 
@@ -182,13 +198,17 @@ export function ClientFeedbackForm({ id, token }: { id: string; token: string })
         placeholder="Opțional"
       />
       <Choice
-        label="Putem folosi răspunsul dumneavoastră pe site sau pe rețelele sociale?"
+        label="Putem publica părerea dumneavoastră pe site și pe rețelele noastre sociale?"
         options={TESTIMONIAL_OPTIONS}
         value={testimonial}
         onChange={setTestimonial}
         required
         error={error?.field === 'testimonial'}
       />
+      <PublishNote>
+        Dacă alegeți „da", putem publica textul scris mai sus, județul, tipul și puterea sistemului
+        și, doar la prima variantă, numele dumneavoastră.
+      </PublishNote>
       {error && <p className="text-sm text-red-600">{error.message}</p>}
       <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full">
         {status === 'submitting' ? 'Se trimite...' : 'Trimite răspunsul'}
@@ -218,6 +238,7 @@ export function FirmFeedbackForm({
   const [satisfactie, setSatisfactie] = useState('');
   const [experienta, setExperienta] = useState('');
   const [imbunatatiri, setImbunatatiri] = useState('');
+  const [studiuCaz, setStudiuCaz] = useState('');
   const { status, error, submit } = useSubmit(() => ({
     role: 'firma',
     id,
@@ -231,6 +252,7 @@ export function FirmFeedbackForm({
     satisfactie,
     experienta,
     imbunatatiri,
+    studiuCaz,
   }));
 
   if (status === 'done') return <FeedbackThanks />;
@@ -296,6 +318,21 @@ export function FirmFeedbackForm({
         onChange={(e) => setImbunatatiri(e.target.value)}
         placeholder="Opțional"
       />
+      <Choice
+        label="Putem publica lucrarea ca studiu de caz?"
+        options={STUDIU_CAZ_OPTIONS}
+        value={studiuCaz}
+        onChange={setStudiuCaz}
+        required
+        error={error?.field === 'studiuCaz'}
+      />
+      <PublishNote>
+        Dacă alegeți „da", putem publica un articol pe site și postări pe rețelele noastre sociale cu
+        județul, tipul lucrării, puterea, bateria, durata până la semnare și răspunsurile de mai sus,
+        plus numele firmei și linkul spre profilul ei la prima variantă. Pozele de la montaj le
+        publicăm doar dacă ni le trimiteți dumneavoastră. Datele clientului apar doar cu acordul lui
+        separat.
+      </PublishNote>
       {error && <p className="text-sm text-red-600">{error.message}</p>}
       <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full">
         {status === 'submitting' ? 'Se trimite...' : 'Trimite răspunsul'}

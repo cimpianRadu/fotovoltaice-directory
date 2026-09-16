@@ -10,6 +10,7 @@ import {
   PANA_LA_SEMNARE_OPTIONS,
   PRIMUL_CONTACT_OPTIONS,
   SATISFACTIE_VALUES,
+  STUDIU_CAZ_OPTIONS,
   TESTIMONIAL_OPTIONS,
   isOption,
 } from '@/lib/feedback-shared';
@@ -83,6 +84,9 @@ export async function POST(request: Request) {
       if (!isOption(CLIENT_HOTARAT_OPTIONS, body.clientHotarat)) {
         return bad('Spuneți-ne cât de hotărât era clientul.', 'clientHotarat');
       }
+      if (!isOption(STUDIU_CAZ_OPTIONS, body.studiuCaz)) {
+        return bad('Alegeți dacă putem publica lucrarea ca studiu de caz.', 'studiuCaz');
+      }
       const putereRaw = text(body.putere, 20).replace(',', '.');
       const putere = putereRaw && Number.isFinite(Number(putereRaw)) && Number(putereRaw) > 0 ? putereRaw : '';
       await saveFirmFeedback({
@@ -97,6 +101,7 @@ export async function POST(request: Request) {
         satisfactie,
         experienta: text(body.experienta),
         imbunatatiri: text(body.imbunatatiri),
+        studiuCaz: body.studiuCaz,
       });
     }
 

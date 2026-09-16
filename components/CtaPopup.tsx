@@ -19,6 +19,7 @@ const HIDE_ON = [
   '/publicitate',
   '/portal',
   '/pentru-instalatori',
+  '/feedback',
 ];
 
 export default function CtaPopup() {

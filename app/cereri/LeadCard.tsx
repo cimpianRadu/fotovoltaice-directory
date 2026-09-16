@@ -33,6 +33,8 @@ export interface LeadCardData {
   finantareTone: FinancingTone;
   stocareLabel: string;
   wallboxLabel: string;
+  /** Slugul din TIMELINE_OPTIONS; decide culoarea rândului „Vrea instalarea". */
+  termen: string;
   termenLabel: string;
   intervalApelLabel: string;
   arePoze: boolean;
@@ -88,6 +90,26 @@ function FinancingLine({ label, tone }: { label: string; tone: FinancingTone }) 
     <p className={`mt-2 flex items-center gap-1.5 text-xs font-medium ${style.text}`}>
       <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} aria-hidden />
       {label}
+    </p>
+  );
+}
+
+// Termenul, scos din pastilele mici (16 sept 2026, cerere user): alături de
+// finanțare e ce decide dacă firma sună azi. Aceeași formă ca rândul de
+// finanțare, culoarea după slugul din TIMELINE_OPTIONS.
+const TIMELINE_STYLES: Record<string, { dot: string; text: string }> = {
+  'cat-mai-repede': { dot: 'bg-emerald-500', text: 'text-emerald-700' },
+  '1-3-luni': { dot: 'bg-amber-500', text: 'text-amber-700' },
+  'peste-3-luni': { dot: 'bg-gray-400', text: 'text-gray-600' },
+  'ma-informez': { dot: 'bg-sky-500', text: 'text-sky-700' },
+};
+
+function TimelineLine({ slug, label }: { slug: string; label: string }) {
+  const style = TIMELINE_STYLES[slug] ?? TIMELINE_STYLES['peste-3-luni'];
+  return (
+    <p className={`mt-1 flex items-center gap-1.5 text-xs font-semibold ${style.text}`}>
+      <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} aria-hidden />
+      Vrea instalarea: {label.toLowerCase()}
     </p>
   );
 }
@@ -599,7 +621,6 @@ export default function LeadCard({
     lead.consumLunar ? { label: 'Consum', value: lead.consumLunar } : null,
     lead.stocareLabel ? { label: 'Baterie', value: lead.stocareLabel } : null,
     lead.wallboxLabel ? { label: 'Stație auto', value: lead.wallboxLabel } : null,
-    lead.termenLabel ? { label: 'Termen', value: lead.termenLabel } : null,
     lead.intervalApelLabel ? { label: 'Sunați', value: lead.intervalApelLabel } : null,
   ].filter(Boolean) as { label: string; value: string }[];
 
@@ -683,9 +704,10 @@ export default function LeadCard({
       {lead.finantareLabel && (
         <FinancingLine label={lead.finantareLabel} tone={lead.finantareTone} />
       )}
+      {lead.termenLabel && <TimelineLine slug={lead.termen} label={lead.termenLabel} />}
       {/* Ce a răspuns clientul, nu ce deducem noi din asta: dacă vrea sau nu o
           ofertă acum n-a spus nimeni, firma decide singură dacă sună. Fără
-          motiv nu scriem rândul: badge-ul și „Termen" spun deja tot. */}
+          motiv nu scriem rândul: badge-ul și rândul de termen spun deja tot. */}
       {lead.seInformeaza && lead.informezMotiv && (
         <p className="mt-2 text-xs text-sky-800">Ne-a spus că {lead.informezMotiv}.</p>
       )}

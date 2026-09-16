@@ -182,13 +182,15 @@ export default async function HomePage() {
           generice („Firme din zona ta", „Calculator potrivit", „Ghiduri pe înțelesul
           tău"), care nu spuneau nimic verificabil.
 
-          Textul secțiunii e scris pentru CLIENT, nu pentru instalator: butonul mare
-          duce în formularul de ofertă, iar titlul vorbește despre cererea LUI. Prima
-          variantă zicea „Pentru firme de instalare, revendici cererea" imediat sub un
-          hero care promite oferte clientului, iar cele două audiențe lipite una de
-          alta se anulau.
+          Din 16 sept 2026 secțiunea se adresează INSTALATORULUI: butonul mare duce
+          în feedul de cereri („Vezi toate cererile"), nu în formularul de ofertă.
+          Clientul are deja hero-ul și butonul „Cere oferte" din header; aici e
+          singurul loc de pe homepage unde firma vede că există cereri de preluat.
+          (Între 25 aug și 16 sept butonul zicea „Cere și dumneavoastră o ofertă”,
+          pe ideea că două audiențe lipite se anulează; decizia userului a fost
+          să dea secțiunea firmelor.)
 
-          Cardurile în schimb duc din 3 sept 2026 în cererea respectivă din feed
+          Cardurile duc din 3 sept 2026 în cererea respectivă din feed
           (`/cereri?cerere=<id>`), nu tot în formular: cine dă click pe o cerere
           anume vrea cererea aia, iar un click care ateriza în formularul de ofertă
           era o promisiune ruptă. Instalatorul ajunge direct la butonul de
@@ -206,15 +208,15 @@ export default async function HomePage() {
                   {cereriTotal} de cereri de ofertă în așteptare
                 </h2>
                 <p className="text-white/70 mt-1 text-sm">
-                  Oameni care caută instalator chiar acum. Cererea dumneavoastră ajunge în aceeași
-                  listă, la firmele cu atestat ANRE din județ.
+                  Oameni care caută instalator chiar acum. Firmele cu atestat ANRE le pot prelua
+                  gratuit, cu datele complete ale clientului.
                 </p>
               </div>
               <Link
-                href="/cere-oferta?sursa=home-cereri"
+                href="/cereri"
                 className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors"
               >
-                Cere și dumneavoastră o ofertă
+                Vezi toate cererile
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>

@@ -38,6 +38,10 @@ export default function PoliticaConfidentialitate() {
           <li>
             <strong>Newsletter / Waitlist:</strong> adresa de email
           </li>
+          <li>
+            <strong>Formularul de feedback după o lucrare semnată</strong> (deschis doar cu un link
+            trimis de noi): răspunsurile la întrebări, părerea scrisă și opțiunea de publicare aleasă
+          </li>
         </ul>
 
         <h3>Date colectate automat</h3>
@@ -60,6 +64,11 @@ export default function PoliticaConfidentialitate() {
           <li>Procesarea cererilor de listare a firmelor pe platformă</li>
           <li>Trimiterea de comunicări solicitate (newsletter)</li>
           <li>Îmbunătățirea funcționalității site-ului</li>
+          <li>
+            Publicarea de testimoniale și studii de caz, numai cu acordul explicit dat în formularul
+            de feedback și în forma aleasă acolo (cu sau fără nume); detalii în{' '}
+            <a href="/termeni-conditii#testimoniale">Termeni și condiții</a>
+          </li>
         </ul>
 
         <h2>3. Temeiul legal al prelucrării</h2>
