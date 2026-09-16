@@ -1271,6 +1271,127 @@ export async function saveWatchToSheet(watch: { leadId: string; numeFirma: strin
   }
 }
 
+// ── Feedback după concretizare ──────────────────────────────────────────────
+// Două taburi, create lazy la primul răspuns: clientul care a semnat și firma
+// cu care a semnat. Linkurile le scoate scripts/feedback-links.mjs, nu apar pe
+// site. Un rând per trimitere; pagina nu mai arată formularul dacă există deja
+// un rând pentru aceeași cerere (și aceeași firmă, pe tabul firmelor).
+
+const FEEDBACK_CLIENT_SHEET = 'Feedback clienți';
+const FEEDBACK_FIRM_SHEET = 'Feedback firme';
+
+const FEEDBACK_CLIENT_HEADER = [
+  'Timestamp',
+  'Lead ID',
+  'Client',
+  'Județ',
+  'Oferte primite',
+  'Primul contact',
+  'Firma cu care a semnat',
+  'Satisfacție (1-5)',
+  'Experiență',
+  'Îmbunătățiri',
+  'Testimonial',
+];
+
+const FEEDBACK_FIRM_HEADER = [
+  'Timestamp',
+  'Lead ID',
+  'Firmă',
+  'Județ',
+  'Putere (kW)',
+  'Baterie',
+  'Până la semnare',
+  'Date corecte',
+  'Client',
+  'Satisfacție (1-5)',
+  'Experiență',
+  'Îmbunătățiri',
+];
+
+export interface ClientFeedback {
+  leadId: string;
+  client: string;
+  judet: string;
+  oferte: string;
+  primulContact: string;
+  firmaSemnata: string;
+  satisfactie: string;
+  experienta: string;
+  imbunatatiri: string;
+  testimonial: string;
+}
+
+export interface FirmFeedback {
+  leadId: string;
+  firma: string;
+  judet: string;
+  putere: string;
+  baterie: string;
+  panaLaSemnare: string;
+  dateCorecte: string;
+  clientHotarat: string;
+  satisfactie: string;
+  experienta: string;
+  imbunatatiri: string;
+}
+
+async function appendWithHeader(sheetName: string, header: string[], values: string[]) {
+  try {
+    await appendRow(sheetName, values);
+  } catch {
+    await createSheetTab(sheetName);
+    await appendRow(sheetName, header);
+    await appendRow(sheetName, values);
+  }
+}
+
+export async function saveClientFeedback(f: ClientFeedback) {
+  await appendWithHeader(FEEDBACK_CLIENT_SHEET, FEEDBACK_CLIENT_HEADER, [
+    new Date().toISOString(),
+    f.leadId,
+    f.client,
+    f.judet,
+    f.oferte,
+    f.primulContact,
+    f.firmaSemnata,
+    f.satisfactie,
+    f.experienta,
+    f.imbunatatiri,
+    f.testimonial,
+  ]);
+}
+
+export async function saveFirmFeedback(f: FirmFeedback) {
+  await appendWithHeader(FEEDBACK_FIRM_SHEET, FEEDBACK_FIRM_HEADER, [
+    new Date().toISOString(),
+    f.leadId,
+    f.firma,
+    f.judet,
+    f.putere,
+    f.baterie,
+    f.panaLaSemnare,
+    f.dateCorecte,
+    f.clientHotarat,
+    f.satisfactie,
+    f.experienta,
+    f.imbunatatiri,
+  ]);
+}
+
+/** Există deja un răspuns pentru cererea asta (și firma asta, pe tabul firmelor)? */
+export async function hasFeedback(role: 'client' | 'firma', leadId: string, firma = ''): Promise<boolean> {
+  let rows: string[][];
+  try {
+    rows = await readRows(role === 'client' ? FEEDBACK_CLIENT_SHEET : FEEDBACK_FIRM_SHEET);
+  } catch {
+    return false;
+  }
+  return rows.some(
+    (r, i) => i > 0 && r[1] === leadId && (role === 'client' || (r[2] || '').trim() === firma.trim()),
+  );
+}
+
 /** Marchează (coloana E) toate urmăririle cererii ca anunțate. */
 export async function markWatchersNotified(leadId: string, at = new Date().toISOString()) {
   const rows = await readRows(WATCHES_SHEET);
