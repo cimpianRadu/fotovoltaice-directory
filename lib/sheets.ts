@@ -1594,8 +1594,11 @@ export async function hasPortalAccount(email: string): Promise<boolean> {
 // adrian.b@, iar contul logat n-o vedea pe a patra. Tabul leagă adresele
 // aceleiași firme, ca oricare dintre ele să vadă tot ce a revendicat firma.
 //
-// Legarea se face DOAR din /admin: adăugarea unei adrese îi dă acces la datele
-// de client ale celeilalte, deci n-are ce căuta în portalul firmei.
+// Din 17 sept 2026 firma își adaugă și își scoate singură adresele din portal
+// (lib/portal-firm-emails.ts), fără confirmare prin cod, ca să fie ușor. Riscul
+// acceptat: o adresă greșit tastată vede datele clienților firmei. Plasele de
+// siguranță sunt acolo (fără adrese care au deja cont sau cereri, nota „din
+// portal" pe rând, email către noi); /admin/portal corectează orice.
 
 const FIRM_EMAILS_SHEET = 'Emailuri Firmă';
 
@@ -1827,25 +1830,84 @@ export async function renameFirmEmailAlias(
   );
 }
 
-/** Rupe legătura (coloana E), fără să șteargă rândul: rămâne istoricul. */
-export async function unlinkFirmEmail(a: string, b: string): Promise<void> {
+/**
+ * Rupe legătura (coloana E), fără să șteargă rândul: rămâne istoricul. `note`
+ * se adaugă după nota existentă (F), ca să se vadă cine a rupt-o din portal.
+ */
+export async function unlinkFirmEmail(a: string, b: string, note?: string): Promise<void> {
   const first = a.trim().toLowerCase();
   const second = b.trim().toLowerCase();
   const rows = await readRows(FIRM_EMAILS_SHEET);
   const found = findFirmEmailRow(rows, first, second);
   if (!found) throw new FirmEmailInputError('Legătura nu există.');
 
+  const previousNote = (rows[found.index][5] || '').trim();
+  const nextNote = note ? [previousNote, note.trim()].filter(Boolean).join(' · ') : previousNote;
+
   const sheets = google.sheets({ version: 'v4', auth: getAuth() });
   await withRetry(
     () =>
       sheets.spreadsheets.values.update({
         spreadsheetId: SPREADSHEET_ID,
-        range: `${FIRM_EMAILS_SHEET}!E${found.index + 1}`,
+        range: `${FIRM_EMAILS_SHEET}!E${found.index + 1}:F${found.index + 1}`,
         valueInputOption: 'RAW',
-        requestBody: { values: [['nu']] },
+        requestBody: { values: [['nu', nextNote]] },
       }),
     'rupe email legat',
   );
+}
+
+/**
+ * Mută pe altă adresă toate rândurile unei adrese dintr-o coloană de email
+ * (revendicări, urmăriri). Folosit când firma își scoate o adresă din portal:
+ * fără mutare, cererile revendicate de pe ea ar dispărea din contul firmei.
+ * Întoarce câte rânduri a mutat.
+ */
+async function reassignEmailColumn(
+  sheet: string,
+  column: string,
+  columnIndex: number,
+  from: string,
+  to: string,
+  label: string,
+): Promise<number> {
+  const source = from.trim().toLowerCase();
+  const target = to.trim().toLowerCase();
+  if (!source || !target || source === target) return 0;
+
+  let rows: string[][];
+  try {
+    rows = await readRows(sheet);
+  } catch {
+    return 0; // Tabul nu există, deci n-are ce muta.
+  }
+  const data = rows.flatMap((r, i) =>
+    (r[columnIndex] || '').trim().toLowerCase() === source
+      ? [{ range: `${sheet}!${column}${i + 1}`, values: [[target]] }]
+      : [],
+  );
+  if (!data.length) return 0;
+
+  const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+  await withRetry(
+    () =>
+      sheets.spreadsheets.values.batchUpdate({
+        spreadsheetId: SPREADSHEET_ID,
+        requestBody: { valueInputOption: 'RAW', data },
+      }),
+    label,
+  );
+  return data.length;
+}
+
+/** Revendicările adresei (coloana I) trec pe altă adresă a aceleiași firme. */
+export function reassignClaimsEmail(from: string, to: string): Promise<number> {
+  return reassignEmailColumn(CLAIMS_SHEET, 'I', 8, from, to, 'mută revendicări pe altă adresă');
+}
+
+/** Urmăririle adresei (coloana D) trec pe altă adresă a aceleiași firme. */
+export function reassignWatchesEmail(from: string, to: string): Promise<number> {
+  return reassignEmailColumn(WATCHES_SHEET, 'D', 3, from, to, 'mută urmăriri pe altă adresă');
 }
 
 // ── Abonamente pe județ (distribuție prioritară) ───────────────────────────
@@ -1952,6 +2014,11 @@ export function isPriorityHeld(lead: { prioritarPanaLa: string }, now = Date.now
 //
 // Un rând per email (upsert, nu jurnal): preferințele sunt starea curentă, iar
 // un istoric de bifări n-ar folosi nimănui.
+//
+// Alertele sunt ale FIRMEI, nu ale adresei (17 sept 2026): adresele legate în
+// „Emailuri Firmă" primesc toate aceleași alerte. O adresă nouă adăugată unei
+// firme le primește fără să intre în portal, iar o firmă care își schimbă
+// emailul nu le pierde.
 
 const ALERTS_SHEET = 'Alerte Județe';
 
@@ -2001,13 +2068,34 @@ export async function getCountyAlertPrefs(): Promise<CountyAlertPref[]> {
     }));
 }
 
-export async function getCountyAlertPref(email: string): Promise<CountyAlertPref | null> {
-  const key = email.trim().toLowerCase();
-  const prefs = await getCountyAlertPrefs();
-  return prefs.find((p) => p.email === key) ?? null;
+/**
+ * Lista valabilă a firmei: rândul salvat cel mai recent de pe oricare din
+ * adresele ei. Ultima salvare câștigă, deci oprirea alertelor de pe o adresă le
+ * oprește pentru toată firma, la fel ca bifarea unui județ.
+ */
+export function resolveGroupAlertPref(
+  prefs: CountyAlertPref[],
+  group: string[],
+): CountyAlertPref | null {
+  const members = new Set(group);
+  let latest: CountyAlertPref | null = null;
+  for (const p of prefs) {
+    if (!members.has(p.email)) continue;
+    if (!latest || p.updatedAt.localeCompare(latest.updatedAt) > 0) latest = p;
+  }
+  return latest;
 }
 
-/** Upsert pe email. Lista goală = alerte oprite, dar rândul rămâne. */
+/** Alertele firmei din care face parte adresa, inclusiv cele bifate de pe altă adresă a ei. */
+export async function getCountyAlertPref(email: string): Promise<CountyAlertPref | null> {
+  const [prefs, group] = await Promise.all([getCountyAlertPrefs(), getFirmEmailGroup(email)]);
+  return resolveGroupAlertPref(prefs, group);
+}
+
+/**
+ * Upsert pe email. Lista goală = alerte oprite, dar rândul rămâne. Rândul scris
+ * e cel mai nou din grup, deci devine lista valabilă pentru toată firma.
+ */
 export async function saveCountyAlertPrefs(email: string, counties: string[]): Promise<void> {
   const key = email.trim().toLowerCase();
   if (!key) return;
@@ -2047,22 +2135,58 @@ export async function saveCountyAlertPrefs(email: string, counties: string[]): P
   );
 }
 
-/** Emailurile care au bifat județul, dintr-o listă deja citită (pentru cron). */
+/**
+ * Adresele care primesc alerta pentru județ, dintr-o listă deja citită (pentru
+ * cron). Decizia se ia pe firmă: lista ei valabilă (`resolveGroupAlertPref`)
+ * trebuie să conțină județul, iar atunci primesc TOATE adresele legate.
+ *
+ * `exclude` scoate firma întreagă, nu doar adresa: abonatul sau cine urmărea
+ * cererea a primit deja emailul lui, iar colegul lui nu trebuie să mai
+ * primească încă unul despre aceeași cerere.
+ */
 export function filterCountyAlertRecipients(
   prefs: CountyAlertPref[],
   judet: string,
+  links: FirmEmailLink[] = [],
+  exclude: Iterable<string> = [],
 ): string[] {
   const key = countyKey(judet || '');
   if (!key) return [];
-  return prefs
-    .filter((p) => p.active && p.counties.some((c) => countyKey(c) === key))
-    .map((p) => p.email);
+  const excluded = new Set([...exclude].map((e) => (e || '').trim().toLowerCase()).filter(Boolean));
+
+  const recipients = new Set<string>();
+  const seenGroups = new Set<string>();
+  for (const p of prefs) {
+    const group = resolveEmailGroup(links, p.email);
+    if (!group.length || seenGroups.has(group[0])) continue;
+    seenGroups.add(group[0]);
+
+    const pref = resolveGroupAlertPref(prefs, group);
+    if (!pref?.active || !pref.counties.some((c) => countyKey(c) === key)) continue;
+    if (group.some((e) => excluded.has(e))) continue;
+    for (const e of group) recipients.add(e);
+  }
+  return [...recipients];
 }
 
-/** Emailurile care au bifat județul cererii. Lista e mică, se citește la fiecare cerere. */
+/**
+ * Legăturile dintre adrese pentru alerte. Fail-open ca `getFirmEmailGroup`: un
+ * tab picat nu oprește alertele, doar le trimite ca înainte, pe adresa care a bifat.
+ */
+export async function getFirmEmailLinksForAlerts(): Promise<FirmEmailLink[]> {
+  try {
+    return await getFirmEmailLinks();
+  } catch (err) {
+    console.error('[alerte] emailuri legate:', err);
+    return [];
+  }
+}
+
+/** Adresele care primesc alerta pentru județul cererii. Listele sunt mici, se citesc la fiecare cerere. */
 export async function getCountyAlertRecipients(judet: string): Promise<string[]> {
   if (!judet.trim()) return [];
-  return filterCountyAlertRecipients(await getCountyAlertPrefs(), judet);
+  const [prefs, links] = await Promise.all([getCountyAlertPrefs(), getFirmEmailLinksForAlerts()]);
+  return filterCountyAlertRecipients(prefs, judet, links);
 }
 
 export async function saveWaitlistToSheet(email: string) {

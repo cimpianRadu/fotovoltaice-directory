@@ -56,6 +56,8 @@ type EventName =
   | 'portal_filter_applied'
   | 'portal_claim_released'
   | 'portal_alerts_saved'
+  | 'portal_email_added'
+  | 'portal_email_removed'
   | 'portal_reserved_taken'
   // Butonul flotant care duce la calculatorul de baterii. `source` separă
   // varianta de desktop de cea de mobil, ca să se vadă care dintre ele produce.

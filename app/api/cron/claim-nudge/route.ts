@@ -6,6 +6,7 @@ import {
   findSubscriptionForCounty,
   getClaims,
   getCountyAlertPrefs,
+  getFirmEmailLinksForAlerts,
   getLeadSubscriptions,
   getLeadsSince,
   bucharestDay,
@@ -176,7 +177,11 @@ async function announceUnlockedLeads(
   );
   if (!pending.length) return { announced, skipped };
 
-  const [prefs, subs] = await Promise.all([getCountyAlertPrefs(), getLeadSubscriptions()]);
+  const [prefs, subs, links] = await Promise.all([
+    getCountyAlertPrefs(),
+    getLeadSubscriptions(),
+    getFirmEmailLinksForAlerts(),
+  ]);
   const claimedLeads = new Set(
     claims.filter(claimOccupiesLeadSlot).map((c) => c.leadId),
   );
@@ -195,9 +200,7 @@ async function announceUnlockedLeads(
     // Abonatul a avut fereastra lui și n-a luat cererea: nu-l mai anunțăm încă
     // o dată, ar suna a reproș.
     const sub = findSubscriptionForCounty(subs, lead.judet);
-    const recipients = filterCountyAlertRecipients(prefs, lead.judet).filter(
-      (to) => to !== sub?.email,
-    );
+    const recipients = filterCountyAlertRecipients(prefs, lead.judet, links, [sub?.email ?? '']);
 
     if (!recipients.length) {
       if (!dry) await markLeadAlertsSent(lead.timestamp);

@@ -16,6 +16,7 @@ import {
   filterCountyAlertRecipients,
   findSubscriptionForCounty,
   getCountyAlertPrefs,
+  getFirmEmailLinksForAlerts,
   getLeadSubscriptions,
   getLeadsSince,
   getWatches,
@@ -32,6 +33,7 @@ import {
   reactivateLeadFromClient,
   recordClientResponse,
   updateLeadCrm,
+  type FirmEmailLink,
   type LeadWatch,
   type NewLead,
 } from './sheets';
@@ -227,14 +229,15 @@ export async function runInformezDaily(
   opts: { dry: boolean; businessDay: boolean },
 ): Promise<InformezDailyResult> {
   const result: InformezDailyResult = { welcomes: [], checkins: [], closed: [], reactivated: [], failed: [] };
-  const [leads, watches, prefs, subs] = await Promise.all([
+  const [leads, watches, prefs, subs, links] = await Promise.all([
     getLeadsSince(new Date(0)),
     getWatches(),
     getCountyAlertPrefs(),
     getLeadSubscriptions(),
+    getFirmEmailLinksForAlerts(),
   ]);
 
-  await announceReactivatedLeads(leads, watches, prefs, subs, now, opts.dry, result);
+  await announceReactivatedLeads(leads, watches, prefs, links, subs, now, opts.dry, result);
   if (!opts.businessDay) return result;
 
   for (const lead of leads.filter((l) => welcomeDueByCron(l, now)).slice(0, MAX_WELCOMES_PER_RUN)) {
@@ -285,6 +288,7 @@ async function announceReactivatedLeads(
   leads: NewLead[],
   watches: LeadWatch[],
   prefs: Awaited<ReturnType<typeof getCountyAlertPrefs>>,
+  links: FirmEmailLink[],
   subs: Awaited<ReturnType<typeof getLeadSubscriptions>>,
   now: number,
   dry: boolean,
@@ -300,10 +304,11 @@ async function announceReactivatedLeads(
   );
   for (const lead of pending.slice(0, MAX_REACTIVATED_PER_RUN)) {
     const sub = findSubscriptionForCounty(subs, lead.judet);
-    const watching = new Set(watches.filter((w) => w.leadId === lead.timestamp).map((w) => w.email));
-    const recipients = filterCountyAlertRecipients(prefs, lead.judet).filter(
-      (to) => to !== sub?.email && !watching.has(to),
-    );
+    const watching = watches.filter((w) => w.leadId === lead.timestamp).map((w) => w.email);
+    const recipients = filterCountyAlertRecipients(prefs, lead.judet, links, [
+      sub?.email ?? '',
+      ...watching,
+    ]);
     const label = `${lead.judet} · ${lead.timestamp} → ${recipients.length} firme`;
     if (dry) {
       result.reactivated.push(label);

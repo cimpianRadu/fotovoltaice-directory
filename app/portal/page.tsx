@@ -35,6 +35,8 @@ import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { type PortalClaim } from './PortalClaimCard';
 import PortalClaimList from './PortalClaimList';
 import PortalCountyAlerts from './PortalCountyAlerts';
+import PortalFirmEmails from './PortalFirmEmails';
+import { MAX_FIRM_EMAILS } from '@/lib/portal-firm-emails';
 import PortalLanding from './PortalLanding';
 import PortalReservedLeads, { type ReservedLead } from './PortalReservedLeads';
 import LogoutButton from './LogoutButton';
@@ -227,6 +229,8 @@ export default async function PortalPage() {
       {reserved.length > 0 && <PortalReservedLeads leads={reserved} />}
 
       <PortalCountyAlerts counties={getCounties()} initial={alertCounties} />
+
+      <PortalFirmEmails current={email} addresses={emails} max={MAX_FIRM_EMAILS} />
 
       {loadError && (
         <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 mb-6">

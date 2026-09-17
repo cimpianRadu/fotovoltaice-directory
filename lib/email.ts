@@ -864,3 +864,127 @@ export async function sendWatchActivatedEmail(data: {
   if (!result.ok) console.warn('[email] Watch activated email not sent:', result.reason);
   return result;
 }
+
+/**
+ * Adresele firmei schimbate din portal (self-service, 17 sept 2026). Trei
+ * emailuri: adresei adăugate (ca omul să știe că are acces și de unde intră),
+ * adresei scoase (dacă n-a fost dorința ei, află imediat și ne poate scrie) și
+ * nouă, pentru că adăugarea e fără confirmare și o corectăm din /admin/portal.
+ */
+function portalFirmEmailShell(opts: { eyebrow: string; title: string; body: string; footer: string; tone: 'green' | 'amber' }) {
+  const bg = opts.tone === 'green' ? '#ecfdf5' : '#fffbeb';
+  const fg = opts.tone === 'green' ? '#047857' : '#b45309';
+  return `<!DOCTYPE html>
+<html>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
+  <div style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
+    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:${bg}">
+      <div style="font-size:12px;color:${fg};font-weight:600;letter-spacing:0.05em;text-transform:uppercase">${opts.eyebrow}</div>
+      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${opts.title}</h1>
+    </div>
+    <div style="padding:24px">${opts.body}</div>
+    <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280;line-height:1.5">${opts.footer}</div>
+  </div>
+</body>
+</html>`;
+}
+
+export async function sendPortalEmailAddedEmail(data: {
+  to: string;
+  by: string;
+  firma: string;
+}): Promise<{ ok: boolean; reason?: string }> {
+  const firm = data.firma ? escapeHtml(data.firma) : 'firmei';
+  const html = portalFirmEmailShell({
+    tone: 'green',
+    eyebrow: 'Portalul instalatorilor',
+    title: `Ai acces la cererile ${firm}`,
+    body: `
+      <p style="font-size:14px;color:#374151;margin:0 0 14px">
+        ${escapeHtml(data.by)} a adăugat adresa ta pe contul firmei. Vezi cererile revendicate de firmă,
+        cu datele clienților, și primești alertele pe județ ale firmei.
+      </p>
+      <p style="font-size:14px;color:#374151;margin:0 0 18px">
+        Intri cu adresa asta: ceri un cod pe email și ești în portal.
+      </p>
+      <div style="text-align:center">
+        <a href="${PORTAL_BASE_URL}/portal" style="display:inline-block;padding:12px 24px;background:#f59e0b;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">Intră în portal</a>
+      </div>`,
+    footer:
+      'Nu lucrezi la firma asta? Răspunde la emailul ăsta sau scrie-ne la contact@instalatori-fotovoltaice.ro și scoatem adresa.',
+  });
+  const result = await sendEmail({
+    to: data.to,
+    subject: `Ai acces la cererile ${data.firma || 'firmei'} în portal`,
+    html,
+    replyTo: 'contact@instalatori-fotovoltaice.ro',
+  });
+  if (!result.ok) console.warn('[email] Portal email added not sent:', result.reason);
+  return result;
+}
+
+export async function sendPortalEmailRemovedEmail(data: {
+  to: string;
+  by: string;
+  firma: string;
+}): Promise<{ ok: boolean; reason?: string }> {
+  const firm = data.firma ? escapeHtml(data.firma) : 'firmei';
+  const html = portalFirmEmailShell({
+    tone: 'amber',
+    eyebrow: 'Portalul instalatorilor',
+    title: `Adresa ta nu mai e pe contul ${firm}`,
+    body: `
+      <p style="font-size:14px;color:#374151;margin:0">
+        ${escapeHtml(data.by)} a scos adresa ta din contul firmei. Cererile și alertele au rămas la firmă,
+        pe adresa lui ${escapeHtml(data.by)}.
+      </p>`,
+    footer:
+      'Dacă n-ați vrut asta, răspunde la emailul ăsta sau scrie-ne la contact@instalatori-fotovoltaice.ro și refacem legătura.',
+  });
+  const result = await sendEmail({
+    to: data.to,
+    subject: `Adresa ta nu mai e pe contul ${data.firma || 'firmei'} în portal`,
+    html,
+    replyTo: 'contact@instalatori-fotovoltaice.ro',
+  });
+  if (!result.ok) console.warn('[email] Portal email removed not sent:', result.reason);
+  return result;
+}
+
+export async function sendPortalFirmEmailChangeNotification(data: {
+  action: 'add' | 'remove';
+  email: string;
+  by: string;
+  firma: string;
+  addresses: string[];
+  movedClaims?: number;
+}): Promise<void> {
+  const to = process.env.LISTING_NOTIFICATION_EMAIL || 'radu.cimpian94@gmail.com';
+  const added = data.action === 'add';
+  const row = (label: string, value: string) =>
+    `<tr><td style="padding:5px 12px 5px 0;color:#6b7280;font-size:13px;vertical-align:top;white-space:nowrap">${label}</td><td style="padding:5px 0;font-size:14px;color:#111827">${value}</td></tr>`;
+  const html = portalFirmEmailShell({
+    tone: added ? 'green' : 'amber',
+    eyebrow: added ? 'Adresă adăugată din portal' : 'Adresă scoasă din portal',
+    title: escapeHtml(data.firma || data.by),
+    body: `
+      <table style="border-collapse:collapse;width:100%">
+        ${row(added ? 'Adăugată' : 'Scoasă', escapeHtml(data.email))}
+        ${row('De către', escapeHtml(data.by))}
+        ${row('Adresele acum', data.addresses.map(escapeHtml).join('<br>'))}
+        ${data.movedClaims !== undefined ? row('Revendicări mutate', String(data.movedClaims)) : ''}
+      </table>
+      <div style="text-align:center;margin-top:20px">
+        <a href="${PORTAL_BASE_URL}/admin/portal" style="display:inline-block;padding:12px 24px;background:#1e3a5f;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">Deschide /admin/portal</a>
+      </div>`,
+    footer: added
+      ? 'Adăugarea e fără confirmare: dacă adresa nu pare a firmei, scoate-o din /admin/portal.'
+      : 'Revendicările, urmăririle și județele adresei scoase au trecut pe adresa care a scos-o.',
+  });
+  const result = await sendEmail({
+    to,
+    subject: `${added ? 'Adresă adăugată' : 'Adresă scoasă'} în portal: ${data.firma || data.by}`,
+    html,
+  });
+  if (!result.ok) console.warn('[email] Portal firm email change notification not sent:', result.reason);
+}

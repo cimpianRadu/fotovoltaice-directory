@@ -7,6 +7,7 @@ import {
   getCountyAlertPrefs,
   getFirmEmailLinks,
   resolveEmailGroup,
+  resolveGroupAlertPref,
   type CountyAlertPref,
   type FirmEmailLink,
   claimsHeldForLead,
@@ -77,11 +78,11 @@ interface PortalAccount {
   company: Company | undefined;
   crmFirm: CrmFirm | undefined;
   /**
-   * Județele bifate pentru alerte, pe adresă: bifa e per email (fiecare om își
-   * controlează inboxul), deci un cont cu două adrese poate avea două liste.
-   * Gol = nimeni din grup n-a ajuns pe secțiunea aia.
+   * Județele pentru alerte, ale FIRMEI: lista salvată cel mai recent de pe
+   * oricare adresă a contului, primită de toate adresele lui. Null = nimeni din
+   * grup n-a ajuns pe secțiunea aia.
    */
-  alertsByEmail: { email: string; pref: CountyAlertPref }[];
+  alerts: CountyAlertPref | null;
   /**
    * Toate adresele contului („Emailuri Firmă"), contul principal primul:
    * revendicările, jurnalul și alertele lor sunt deja numărate împreună mai
@@ -156,9 +157,9 @@ const FILTERS: { key: string; label: string; state?: AccountState }[] = [
   { key: 'fara-judete', label: 'Fără județe bifate' },
 ];
 
-/** Are alerte pornite pe cel puțin un județ, pe oricare din adresele contului. */
+/** Are alerte pornite pe cel puțin un județ. */
 function hasCountyAlerts(a: PortalAccount): boolean {
-  return a.alertsByEmail.some(({ pref }) => pref.active && pref.counties.length > 0);
+  return !!a.alerts?.active && a.alerts.counties.length > 0;
 }
 
 function Stat({ label, value, tone }: { label: string; value: number; tone?: 'alert' | 'action' }) {
@@ -373,19 +374,15 @@ function AccountCard({
         <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
           Alerte pe județ ·{' '}
         </span>
-        {account.alertsByEmail.length === 0
-          ? alertsLine(null)
-          : account.alertsByEmail.map(({ email, pref }) => (
-              <span key={email} className="block sm:inline">
-                {/* Adresa se scrie doar când contul are mai multe: bifa e a
-                    omului, nu a firmei, iar „cine primește alertele" e prima
-                    întrebare la telefon. */}
-                {account.addresses.length > 1 && (
-                  <span className="text-slate-400">{email}: </span>
-                )}
-                {alertsLine(pref)}
-              </span>
-            ))}
+        {alertsLine(account.alerts)}
+        {/* Cu mai multe adrese, toate primesc alertele; se scrie de pe care
+            s-a salvat lista, ca să se știe cine a bifat. */}
+        {account.alerts && account.addresses.length > 1 && (
+          <span className="text-slate-400">
+            {' '}
+            · salvate de {account.alerts.email}, primite de toate cele {account.addresses.length} adrese
+          </span>
+        )}
       </div>
 
       <div className="px-4 py-3">
@@ -483,7 +480,6 @@ export default async function PortalAccessPage({ searchParams }: Props) {
 
   const companies = getCompanies();
   const leadById = new Map(leads.map((l) => [l.timestamp, l]));
-  const alertsByEmail = new Map(alertPrefs.map((p) => [p.email, p]));
 
   const eventsByEmail = new Map<string, PortalAccessEvent[]>();
   for (const e of events) {
@@ -609,10 +605,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       identity,
       // Completat după ce toate conturile există (are nevoie de ele, două câte două).
       suggested: [],
-      alertsByEmail: members.flatMap((m) => {
-        const pref = alertsByEmail.get(m);
-        return pref ? [{ email: m, pref }] : [];
-      }),
+      alerts: resolveGroupAlertPref(alertPrefs, members),
       addresses: members.map((m) => ({
         email: m,
         isPrimary: m === email,
