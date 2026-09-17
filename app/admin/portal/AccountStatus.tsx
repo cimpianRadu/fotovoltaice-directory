@@ -80,9 +80,12 @@ export default function AccountStatus({
           type="button"
           disabled={busy}
           onClick={deactivate}
-          className="ml-auto text-slate-400 transition hover:text-red-700 disabled:opacity-50"
+          className="ml-auto flex items-center gap-1.5 rounded-lg bg-red-600 px-2.5 py-1 text-[11px] font-semibold text-white transition hover:bg-red-700 disabled:opacity-50"
         >
-          {busy ? '…' : 'dezactivează contul'}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5">
+            <path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          {busy ? '…' : 'Dezactivează contul'}
         </button>
       )}
       {error && <span className="w-full text-[11px] text-red-700">{error}</span>}
