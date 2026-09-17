@@ -1,6 +1,18 @@
 import { SITE_NAME, SITE_URL } from './utils';
 import type { Company } from './utils';
 
+// Google ia numele afișat deasupra titlului din schema WebSite de pe home. Fără ea
+// arată domeniul, iar titlurile n-au mai cărat brandul din 17 sept.
+export function generateWebSiteJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Instalatori Fotovoltaice',
+    alternateName: [SITE_NAME, 'instalatori-fotovoltaice.ro'],
+    url: SITE_URL,
+  };
+}
+
 export function generateOrganizationJsonLd() {
   return {
     '@context': 'https://schema.org',

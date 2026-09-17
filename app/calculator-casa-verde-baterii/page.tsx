@@ -81,7 +81,7 @@ const faqs = [
 export const metadata: Metadata = {
   title: 'Calculator Casa Verde Baterii 2026: Punctaj și Finanțare AFM',
   description:
-    'Calculează punctajul Casa Verde Baterii 2026 și cât primești de la AFM: 50 de puncte pe contribuție, 50 pe capacitate, plafon 1.500 lei/kWh. Cifrele din forma consolidată a ghidului.',
+    'Calculează punctajul Casa Verde Baterii 2026 și cât primești de la AFM: 50 de puncte pe contribuție, 50 pe capacitate, plafon 1.500 lei/kWh.',
   alternates: { canonical: '/calculator-casa-verde-baterii' },
   openGraph: {
     type: 'website',

@@ -9,7 +9,7 @@ import { getPlusCompaniesForAnre, PROMO_CAPS } from '@/lib/utils';
 export const metadata: Metadata = {
   title: 'Verificare Instalator Fotovoltaic — Atestat ANRE + Casa Verde',
   description:
-    'Verifică instant un instalator de panouri fotovoltaice: atestatele ANRE (C2A, C1A, B, A3 — active sau expirate, live din registrul oficial) și dacă apare pe lista AFM Casa Verde Fotovoltaice. Caută după nume sau CUI.',
+    'Verifică un instalator de panouri fotovoltaice: atestatele ANRE live din registrul oficial și dacă e pe lista AFM Casa Verde. Caută după nume sau CUI.',
   alternates: {
     canonical: '/verificare-anre',
   },

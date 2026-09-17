@@ -18,6 +18,7 @@ import {
   getSpecializationLabel,
   MAJOR_CITIES,
 } from '@/lib/utils';
+import { clampMeta } from '@/lib/utils-shared';
 import { hasActiveAnreCert } from '@/lib/anre';
 
 interface Props {
@@ -39,7 +40,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `Firme Montaj Panouri Fotovoltaice ${city} 2026 | ${companies.length} Instalatori Autorizați`,
-    description: `${companies.length} firme verificate de instalare și montaj panouri fotovoltaice în ${city}. Instalatori autorizați ANRE cu date financiare reale. Compară și cere ofertă gratuită.`,
+    description: clampMeta(
+      `${companies.length} firme verificate de instalare și montaj panouri fotovoltaice în ${city}. Instalatori autorizați ANRE cu date financiare reale. Compară și cere ofertă gratuită.`,
+    ),
     alternates: { canonical: `/firme/oras/${slug}` },
   };
 }

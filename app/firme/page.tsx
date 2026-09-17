@@ -15,8 +15,8 @@ const COMPANY_COUNT = getCompanies().length;
 const COUNTY_COUNT = getCoveredCounties().length;
 
 export const metadata: Metadata = {
-  title: `Firme Autorizate Panouri Fotovoltaice 2026 — ${COMPANY_COUNT} Instalatori ANRE pentru Montaj și Instalare`,
-  description: `Lista completă cu ${COMPANY_COUNT} firme autorizate ANRE pentru montaj și instalare panouri fotovoltaice din România. Instalatori verificați, date financiare reale, acoperire ${COUNTY_COUNT} județe. Cere ofertă gratuită.`,
+  title: `Firme Autorizate Panouri Fotovoltaice 2026: ${COMPANY_COUNT} Instalatori ANRE`,
+  description: `Lista cu ${COMPANY_COUNT} firme autorizate ANRE pentru montaj panouri fotovoltaice, din ${COUNTY_COUNT} județe. Instalatori verificați, date financiare reale. Cere ofertă gratuită.`,
   alternates: { canonical: '/firme' },
 };
 

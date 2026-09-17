@@ -37,7 +37,7 @@ const SURSA = 'finantare-firme';
 export const metadata: Metadata = {
   title: 'Finanțare pentru proiecte fotovoltaice: opțiuni pentru firme în 2026',
   description:
-    'Leasing, credit de investiții, ESCO și programe nerambursabile pentru un sistem fotovoltaic pe hală, depozit sau fabrică. Ce presupune fiecare variantă și ce cere finanțatorul.',
+    'Leasing, credit de investiții, ESCO și programe nerambursabile pentru fotovoltaice pe hală sau fabrică. Ce presupune fiecare și ce cere finanțatorul.',
   alternates: { canonical: '/finantare/firme' },
   openGraph: {
     type: 'article',

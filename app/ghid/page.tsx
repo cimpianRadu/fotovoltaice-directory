@@ -24,7 +24,7 @@ function getHeroImage(slug: string): string | null {
 export const metadata: Metadata = {
   title: 'Ghiduri Panouri Fotovoltaice Comerciale | Articole și Resurse 2026',
   description:
-    'Ghiduri complete despre panouri fotovoltaice comerciale și industriale: costuri, legislație, subvenții, alegerea instalatorului. Informații verificate și actualizate.',
+    'Ghiduri despre panouri fotovoltaice comerciale și industriale: costuri, legislație, subvenții, alegerea instalatorului. Informații verificate și actualizate.',
   alternates: { canonical: '/ghid' },
 };
 

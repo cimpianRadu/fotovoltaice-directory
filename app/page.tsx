@@ -32,7 +32,7 @@ import {
   type FinancingTone,
 } from '@/lib/utils-shared';
 import { getPublicLeads, getLeadsSince, getClaims, type PublicLead } from '@/lib/sheets';
-import { generateOrganizationJsonLd, generateFAQJsonLd } from '@/lib/seo';
+import { generateOrganizationJsonLd, generateWebSiteJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { PRICING } from '@/lib/pricing';
 import HomeFinantareCta from '@/components/home/HomeFinantareCta';
 import HomeInstalatoriCta from '@/components/home/HomeInstalatoriCta';
@@ -153,6 +153,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLd data={generateWebSiteJsonLd()} />
       <JsonLd data={generateOrganizationJsonLd()} />
       <JsonLd data={generateFAQJsonLd(homeFaqs)} />
 

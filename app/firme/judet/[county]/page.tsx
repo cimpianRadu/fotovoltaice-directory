@@ -19,6 +19,7 @@ import {
   getSpecializationLabel,
   MAJOR_CITIES,
 } from '@/lib/utils';
+import { clampMeta } from '@/lib/utils-shared';
 import { hasActiveAnreCert } from '@/lib/anre';
 import PromovateSection from '@/components/promo/PromovateSection';
 
@@ -38,10 +39,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!county) return {};
 
   const companies = getCompaniesByCounty(county);
+  const n = companies.length;
 
   return {
-    title: `Instalatori Panouri Fotovoltaice ${county} 2026: ${companies.length} Firme Autorizate ANRE`,
-    description: `${companies.length} firme verificate de instalare panouri fotovoltaice și panouri solare în ${county}. Instalatori autorizați ANRE, date financiare reale, listă completă. Compară și cere ofertă gratuită.`,
+    title: `Instalatori Panouri Fotovoltaice ${county} 2026: ${n} ${n === 1 ? 'Firmă Autorizată' : 'Firme Autorizate'} ANRE`,
+    description: clampMeta(
+      `${n === 1 ? '1 firmă verificată' : `${n} firme verificate`} de instalare panouri fotovoltaice în ${county}: atestat ANRE, date financiare reale. Compară și cere ofertă gratuită.`,
+    ),
     alternates: { canonical: `/firme/judet/${slug}` },
   };
 }

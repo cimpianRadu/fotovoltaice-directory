@@ -23,6 +23,7 @@ import {
   formatAnreDate,
 } from '@/lib/anre';
 import { generateLocalBusinessJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo';
+import { clampMeta } from '@/lib/utils-shared';
 import guidesData from '@/data/guides.json';
 
 interface Props {
@@ -38,9 +39,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const company = getCompanyBySlug(slug);
   if (!company) return {};
 
+  // Forma juridică iese din titlu (lumea caută „Enera", nu „Enera S.R.L."), orașul intră:
+  // e al doilea cuvânt după nume în căutările de firmă.
+  const shortName = company.name.replace(/\s+S\.?\s?(R\.?\s?L|A)\.?(?=\s|$)/i, '').trim();
+
   return {
-    title: `${company.name} - Instalator Panouri Fotovoltaice`,
-    description: `${company.name} din ${company.location.city} - ${company.description.slice(0, 150)}`,
+    title: `${shortName}: Panouri Fotovoltaice ${company.location.city}`,
+    description: clampMeta(`${company.name} din ${company.location.city}: ${company.description}`),
     alternates: { canonical: `/firme/${slug}` },
     openGraph: {
       type: 'profile',

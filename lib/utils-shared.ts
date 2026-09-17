@@ -780,6 +780,14 @@ export const MAJOR_CITIES = [
   'București', 'Cluj-Napoca', 'Timișoara', 'Iași', 'Brașov', 'Craiova', 'Sibiu', 'Oradea',
 ] as const;
 
+/** Taie un meta description la limita de afișare din SERP, pe graniță de cuvânt. */
+export function clampMeta(text: string, max = 155): string {
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if ([...clean].length <= max) return clean;
+  const cut = [...clean].slice(0, max - 1).join('');
+  return cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,;:.\-–—]+$/, '') + '…';
+}
+
 export const SITE_NAME = 'Instalatori Fotovoltaice România';
 export const SITE_URL = 'https://instalatori-fotovoltaice.ro';
 export const SITE_DESCRIPTION =

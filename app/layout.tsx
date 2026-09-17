@@ -23,7 +23,10 @@ const COUNTY_COUNT = getCoveredCounties().length;
 export const metadata: Metadata = {
   title: {
     default: `Oferte Panouri Fotovoltaice 2026 | ${COMPANY_COUNT} Instalatori ANRE`,
-    template: '%s | Instalatori Fotovoltaice România',
+    // Fără sufix de brand: Google afișează numele site-ului separat, deasupra titlului
+    // (vine din schema WebSite de pe home). Sufixul de 35 de caractere împingea
+    // cuvintele căutate dincolo de tăietura din SERP pe 311 din 315 pagini.
+    template: '%s',
   },
   description: `Descrie proiectul o dată și primești oferte de la instalatori verificați de panouri fotovoltaice, cu atestat ANRE și date financiare reale, din ${COUNTY_COUNT} județe. Gratuit.`,
   metadataBase: new URL('https://instalatori-fotovoltaice.ro'),

@@ -79,14 +79,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const heroImage = getHeroImage(guide.slug);
 
+  // `seoTitle` scurtează doar titlul din SERP (≤62 caractere) acolo unde H1-ul e lung;
+  // H1-ul, breadcrumb-ul și schema Article rămân pe `title`.
+  const serpTitle = (guide as { seoTitle?: string }).seoTitle ?? guide.title;
+
   return {
-    title: guide.title,
+    title: serpTitle,
     description: guide.metaDescription,
     alternates: { canonical: `/ghid/${topic}` },
     openGraph: {
       type: 'article',
       url: `/ghid/${topic}`,
-      title: guide.title,
+      title: serpTitle,
       description: guide.metaDescription,
       publishedTime: guide.publishedAt,
       authors: [guide.author],

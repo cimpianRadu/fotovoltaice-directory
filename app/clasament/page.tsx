@@ -12,9 +12,9 @@ import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import InstallerCta from '@/components/InstallerCta';
 
 export const metadata: Metadata = {
-  title: 'Clasament Firme Panouri Fotovoltaice România 2026 — Sortare după Cifră, Angajați, Atestate ANRE',
+  title: 'Clasament Firme Panouri Fotovoltaice 2026: Cifră de Afaceri, ANRE',
   description:
-    'Clasament transparent al firmelor de instalare panouri fotovoltaice din România. Sortare după cifră de afaceri, profit, număr de angajați și filtrare după atestate ANRE active (C2A, C1A, B). Date din bilanțurile publice și portal.anre.ro.',
+    'Firmele de instalare panouri fotovoltaice din România sortate după cifră de afaceri, profit și angajați, cu filtru pe atestate ANRE. Date din bilanțuri publice.',
   alternates: { canonical: '/clasament' },
 };
 
