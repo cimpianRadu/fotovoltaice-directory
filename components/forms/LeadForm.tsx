@@ -27,6 +27,7 @@ import {
   SCOP_INDEPENDENTA_HINT,
 } from '@/lib/utils-shared';
 import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
+import { DEFAULT_TARIFF_RON_PER_KWH } from '@/lib/pv-constants';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import LeadPhotoUpload from './LeadPhotoUpload';
@@ -293,6 +294,33 @@ function NumberWithUnknown({
 
 export type ConsumUnit = 'lei' | 'kWh';
 
+// Pragurile de „sigur asta e cifra?", în kWh pe lună. Din 53 de consumuri
+// trimise cu unitate aleasă (25 aug – 17 sept 2026), cel mai mic credibil a
+// fost 80 kWh, iar două au fost sub prag: „8 kWh" și „50 lei". Sus, cel mai
+// mare rezidențial a fost 1.180 kWh; peste 3.000 e mai degrabă totalul pe an.
+// Comercialul nu are plafon: acolo au venit și 12.000 kWh pe lună, reale.
+const CONSUM_MIN_KWH = 50;
+const CONSUM_MAX_KWH_REZIDENTIAL = 3000;
+
+/**
+ * Întrebarea de pus când cifra nu pare a unei luni întregi, sau null. Nu e o
+ * eroare: casa nouă, nelocuită încă, chiar consumă 8 kWh. De aceea a doua
+ * apăsare pe „Salvează" trimite cifra neschimbată.
+ */
+function consumDubios(valoare: string, unit: ConsumUnit, rezidential: boolean): string | null {
+  const n = Number(valoare.replace(',', '.'));
+  if (!Number.isFinite(n) || n <= 0) return null;
+  const kwh = unit === 'kWh' ? n : n / DEFAULT_TARIFF_RON_PER_KWH;
+  const scris = `${valoare} ${unit}`;
+  if (kwh < CONSUM_MIN_KWH) {
+    return `Ați scris ${scris} pe lună. Cifra nu pare corectă, vă rugăm să verificați pe factură. Dacă e corectă, apăsați din nou pe „Salvează și încheie”.`;
+  }
+  if (rezidential && kwh > CONSUM_MAX_KWH_REZIDENTIAL) {
+    return `Ați scris ${scris} pe lună. Cifra nu pare corectă, vă rugăm să verificați pe factură: poate e consumul pe tot anul. Dacă e corectă, apăsați din nou pe „Salvează și încheie”.`;
+  }
+  return null;
+}
+
 /**
  * Consumul lunar: cifră plus unitatea aleasă explicit, nu text liber. Până pe
  * 25 aug 2026 câmpul era liber, iar în Sheet ajungeau alături „300kw", „500 lei
@@ -310,7 +338,10 @@ function ConsumField({
   onValoare,
   onUnit,
   onToggle,
+  avertisment,
 }: {
+  /** Întrebarea de confirmare la o cifră neverosimilă; vezi `consumDubios`. */
+  avertisment?: string | null;
   valoare: string;
   unit: ConsumUnit;
   unknown: boolean;
@@ -364,6 +395,11 @@ function ConsumField({
         </div>
       </div>
       <p className="mt-1 text-[11px] text-gray-400">{active.hint}</p>
+      {avertisment && (
+        <p role="alert" className="mt-1.5 rounded-md bg-amber-50 px-2.5 py-2 text-xs text-amber-900">
+          {avertisment}
+        </p>
+      )}
       <label className="mt-1.5 flex items-center gap-2 text-xs text-gray-600 cursor-pointer">
         <input
           type="checkbox"
@@ -531,6 +567,10 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   const [scopDetalii, setScopDetalii] = useState('');
   const [scopError, setScopError] = useState(false);
   const scopRef = useRef<HTMLFieldSetElement>(null);
+  // Consumul pentru care omul a văzut deja întrebarea de confirmare. Ținem
+  // valoarea, nu un boolean: dacă schimbă cifra cu alta la fel de ciudată,
+  // întrebarea se pune din nou.
+  const [consumIntrebat, setConsumIntrebat] = useState('');
   const startedRef = useRef(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reportedFields = useRef(0);
@@ -791,6 +831,11 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
       focusField(scopRef.current);
       return;
     }
+    if (consumLunar && consumLunar !== consumIntrebat && consumDubios(consumValoare, consumUnit, isRezidential)) {
+      setConsumIntrebat(consumLunar);
+      focusField(document.getElementById('consumLunar'));
+      return;
+    }
     if (!leadRef) {
       setExtraDone(true);
       return;
@@ -941,6 +986,11 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
             onValoare={(v) => setDetail('consumLunar', v)}
             onUnit={setConsumUnit}
             onToggle={() => toggleUnknown('consumLunar')}
+            avertisment={
+              !unknown.consumLunar && consumIntrebat === `${details.consumLunar.trim()} ${consumUnit}`
+                ? consumDubios(details.consumLunar.trim(), consumUnit, isRezidential)
+                : null
+            }
           />
 
           <div>
