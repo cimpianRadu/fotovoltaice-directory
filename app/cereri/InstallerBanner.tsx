@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { trackEvent } from '@/lib/analytics';
+import { usePortalLoggedIn } from '@/lib/portal-hint';
 
 /**
  * Bannerul pentru instalatori de deasupra feedului, din 10 septembrie 2026.
@@ -16,6 +17,9 @@ import { trackEvent } from '@/lib/analytics';
  * pe homepage, banda de sub cereri sau bannerul ăsta.
  */
 export default function InstallerBanner() {
+  // Firma logată e deja instalator cu cont: în locul bannerului vede bara
+  // „Conectat ca" din feed, iar cererile urcă cu un ecran mai sus pe telefon.
+  if (usePortalLoggedIn()) return null;
   return (
     <Link
       href="/pentru-instalatori"

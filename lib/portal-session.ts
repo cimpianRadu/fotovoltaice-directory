@@ -34,6 +34,9 @@ export function bucharestStamp(): { today: string; time: string } {
 export async function getPortalEmail(): Promise<string | null> {
   const email = await peekPortalEmail();
   if (!email) return null;
+  // Localul scrie în același Sheet ca producția: o verificare din `next dev`
+  // pe contul unei firme ar apărea în jurnal ca vizită a firmei.
+  if (process.env.NODE_ENV === 'development') return email;
   after(() =>
     logPortalVisit(email).catch((err) => console.error('[portal] jurnal vizită:', err)),
   );

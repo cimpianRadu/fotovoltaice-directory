@@ -131,7 +131,10 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
   const [releaseBusy, setReleaseBusy] = useState(false);
   const [releaseError, setReleaseError] = useState<string | null>(null);
   const [released, setReleased] = useState(Boolean(claim.releasedAt));
-  const [detailsOpen, setDetailsOpen] = usePersistedToggle('portal-card-details-open', true);
+  // Notele se strâng pe telefon: jurnalul întreg plus câmpul de scris ocupau
+  // jumătate de card sub butonul de apel. Rămâne la vedere ultima notă.
+  const [notesOpen, setNotesOpen] = useState(false);
+  const [detailsOpen, setDetailsOpen] = usePersistedToggle('portal-card-details-open', false);
 
   async function addNote(e: React.FormEvent) {
     e.preventDefault();
@@ -231,21 +234,21 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
   const inactive = released;
 
   return (
-    <div className={`bg-white rounded-xl border border-border p-5 ${inactive ? 'opacity-70' : ''}`}>
-      <div className="flex items-center justify-between gap-2 flex-wrap">
-        <div className="flex flex-wrap items-center gap-2">
-          <h3 className="font-semibold text-gray-900">
+    <div className={`bg-white rounded-xl border border-border p-4 sm:p-5 ${inactive ? 'opacity-70' : ''}`}>
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <h3 className="font-semibold leading-snug text-gray-900">
             {claim.tipLabel}
             {claim.judet ? ` · ${claim.judet}` : ''}
           </h3>
-          <StatusBadge
-            released={released}
-            releasedAt={claim.releasedAt}
-            approved={claim.approved}
-            status={status}
-          />
+          <p className="mt-0.5 text-xs text-gray-400">revendicat {fmtDate(claim.claimedAt)}</p>
         </div>
-        <span className="text-xs text-gray-400">revendicat {fmtDate(claim.claimedAt)}</span>
+        <StatusBadge
+          released={released}
+          releasedAt={claim.releasedAt}
+          approved={claim.approved}
+          status={status}
+        />
       </div>
 
       {/* Detaliile proiectului se citesc o dată, la primul contact, apoi cardul
@@ -301,7 +304,7 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
       )}
 
       {claim.client ? (
-        <div className="mt-4 rounded-lg bg-emerald-50/60 border border-emerald-200 p-4">
+        <div className="mt-3 rounded-lg bg-emerald-50/60 border border-emerald-200 p-3 sm:p-4">
           <div className="text-[11px] font-semibold uppercase tracking-wide text-emerald-700 mb-2">
             Datele clientului
           </div>
@@ -439,7 +442,9 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
           <div className="text-[11px] font-semibold uppercase tracking-wide text-gray-400 mb-2">
             Unde ești cu clientul
           </div>
-          <div className="flex flex-wrap gap-1.5">
+          {/* Pe telefon un singur rând care se derulează: șase pastile pe trei
+              rânduri împingeau notele și renunțarea sub ecran. */}
+          <div className="-mx-4 flex gap-1.5 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0 [&::-webkit-scrollbar]:hidden">
             {CLAIM_STATUSES.map((s) => {
               const active = s === status;
               // 30px înălțime era sub pragul de atingere pe telefon, iar o
@@ -452,7 +457,7 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
                   title={CLAIM_STATUS_HINTS[s]}
                   disabled={statusBusy}
                   onClick={() => pickStatus(s)}
-                  className={`rounded-full border px-3 py-2.5 text-[13px] font-medium transition-colors disabled:cursor-wait disabled:opacity-60 sm:py-1.5 sm:text-xs ${
+                  className={`shrink-0 whitespace-nowrap rounded-full border px-3 py-2.5 text-[13px] font-medium transition-colors disabled:cursor-wait disabled:opacity-60 sm:py-1.5 sm:text-xs ${
                     active
                       ? `${STATUS_TONE[s]} text-white border-transparent`
                       : 'bg-white text-gray-600 border-border hover:border-secondary/40 hover:text-secondary-dark'
@@ -483,38 +488,68 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
       )}
 
       {/* Jurnalul de note — vizibil și pentru noi în CRM, deci ce scrii aici chiar ajută la realocare. */}
-      <div className="mt-4 border-t border-border pt-4">
-        <div className="text-[11px] font-semibold uppercase tracking-wide text-gray-400 mb-2">
-          Notele tale
-        </div>
-        {notes.length > 0 && (
-          <ul className="space-y-2 mb-3">
-            {notes.map((n, i) => (
-              <li key={`${n.date}-${i}`} className="text-sm text-gray-700">
-                <span className="text-xs text-gray-400 mr-2">
-                  {n.date}
-                  {n.time ? ` ${n.time}` : ''}
-                </span>
-                {n.text}
-              </li>
-            ))}
-          </ul>
+      <div className="mt-4 border-t border-border pt-3">
+        <button
+          type="button"
+          onClick={() => setNotesOpen(!notesOpen)}
+          aria-expanded={notesOpen}
+          className="flex w-full items-center justify-between gap-2 py-1 text-left"
+        >
+          <span className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+            Notele tale{notes.length > 0 ? ` (${notes.length})` : ''}
+          </span>
+          <span className="flex items-center gap-1 text-xs text-gray-500">
+            {notesOpen ? 'Ascunde' : inactive ? 'Arată' : notes.length ? 'Arată / adaugă' : 'Adaugă'}
+            <svg
+              className={`h-3.5 w-3.5 transition-transform ${notesOpen ? 'rotate-180' : ''}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              aria-hidden="true"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
+        </button>
+        {!notesOpen && notes[0] && (
+          <p className="mt-1 truncate text-sm text-gray-600">
+            <span className="mr-2 text-xs text-gray-400">{notes[0].date}</span>
+            {notes[0].text}
+          </p>
         )}
-        {/* Pe 375px input + buton pe același rând lăsau ~198px de scris, în
-            care nici placeholderul nu încăpea. Se stivuiesc pe telefon. */}
-        {!inactive && (
-          <form onSubmit={addNote} className="flex flex-col gap-2 sm:flex-row">
-            <input
-              type="text"
-              value={noteText}
-              onChange={(e) => setNoteText(e.target.value)}
-              placeholder="Ex: am sunat, nu răspunde, reîncerc mâine"
-              className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
-            />
-            <Button type="submit" variant="outline" disabled={noteBusy || !noteText.trim()}>
-              {noteBusy ? '...' : 'Adaugă'}
-            </Button>
-          </form>
+        {notesOpen && (
+          <div className="mt-2">
+            {notes.length > 0 && (
+              <ul className="space-y-2 mb-3">
+                {notes.map((n, i) => (
+                  <li key={`${n.date}-${i}`} className="text-sm text-gray-700">
+                    <span className="text-xs text-gray-400 mr-2">
+                      {n.date}
+                      {n.time ? ` ${n.time}` : ''}
+                    </span>
+                    {n.text}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {/* Pe 375px input + buton pe același rând lăsau ~198px de scris, în
+                care nici placeholderul nu încăpea. Se stivuiesc pe telefon. */}
+            {!inactive && (
+              <form onSubmit={addNote} className="flex flex-col gap-2 sm:flex-row">
+                <input
+                  type="text"
+                  value={noteText}
+                  onChange={(e) => setNoteText(e.target.value)}
+                  placeholder="Ex: am sunat, nu răspunde, reîncerc mâine"
+                  className="flex-1 rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none sm:py-2"
+                />
+                <Button type="submit" variant="outline" disabled={noteBusy || !noteText.trim()}>
+                  {noteBusy ? '...' : 'Adaugă nota'}
+                </Button>
+              </form>
+            )}
+          </div>
         )}
         {noteError && <p className="mt-1 text-xs text-red-600">{noteError}</p>}
       </div>
@@ -553,17 +588,15 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
             /* Link gri de 12px, firmele nu-l vedeau. Renunțarea nu e o acțiune
                de ascuns: fără ea cererea stă ocupată la o firmă care nu mai
                lucrează la ea, iar clientul așteaptă degeaba. */
-            <div>
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs text-gray-500">Nu mai lucrezi la ea? Eliberezi locul pentru altă firmă.</p>
               <button
                 type="button"
                 onClick={() => setReleaseOpen(true)}
-                className="inline-flex items-center rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-700 transition-colors hover:border-red-300 hover:bg-red-100 sm:py-2"
+                className="shrink-0 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700 transition-colors hover:border-red-300 hover:bg-red-100"
               >
-                Renunț la această cerere
+                Renunț
               </button>
-              <p className="mt-1.5 text-xs text-gray-500">
-                Eliberezi locul pentru altă firmă. Îți cerem doar motivul.
-              </p>
             </div>
           )}
         </div>

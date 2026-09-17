@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { slugifyCity } from '@/lib/utils-shared';
 import LeadCard, { type LeadCardData, type PortalMe } from './LeadCard';
 import CountyFilter from './CountyFilter';
@@ -201,6 +202,32 @@ export default function LeadFeed({ cards, claimCounts, watchCounts, maxClaims }:
 
   return (
     <>
+      {/* Firma logată vede că e recunoscută și că revendică dintr-un click,
+          înainte să dea de primul card. Fără nume și telefon (n-a revendicat
+          niciodată) prima revendicare trece încă prin formular. */}
+      {me && (
+        <div className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50/70 px-4 py-3">
+          <div className="min-w-0 text-sm">
+            <p className="truncate text-gray-800">
+              Conectat ca <strong>{me.numeFirma || me.email}</strong>
+            </p>
+            <p className="text-xs text-emerald-800">
+              {me.numeFirma && me.telefon
+                ? typeof me.activeClaims === 'number' && me.maxActiveClaims
+                  ? `Revendici dintr-un click · ${me.activeClaims} din ${me.maxActiveClaims} locuri ocupate`
+                  : 'Revendici dintr-un click'
+                : 'Prima revendicare îți cere datele firmei, apoi merge dintr-un click'}
+            </p>
+          </div>
+          <Link
+            href="/portal"
+            className="shrink-0 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
+          >
+            Contul meu
+          </Link>
+        </div>
+      )}
+
       <p className="mb-4 text-sm text-gray-500">
         {visible.length} {visible.length === 1 ? 'cerere' : 'cereri'}
         {age === DEFAULT_AGE ? ' din ultimele două săptămâni' : ''}

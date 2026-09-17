@@ -804,7 +804,7 @@ function isOpenForClaims(l: NewLead): boolean {
  * prioritate a unui abonat. Obligație contractuală, nu preferință de produs —
  * în fereastra aia cererea nu se publică și nu se dă nimănui altcuiva.
  */
-function isPubliclyClaimable(l: NewLead): boolean {
+export function isPubliclyClaimable(l: NewLead): boolean {
   return isOpenForClaims(l) && !isPriorityHeld(l);
 }
 
@@ -1908,6 +1908,130 @@ export function reassignClaimsEmail(from: string, to: string): Promise<number> {
 /** Urmăririle adresei (coloana D) trec pe altă adresă a aceleiași firme. */
 export function reassignWatchesEmail(from: string, to: string): Promise<number> {
   return reassignEmailColumn(WATCHES_SHEET, 'D', 3, from, to, 'mută urmăriri pe altă adresă');
+}
+
+// ── Profilul firmei (datele de revendicare) ───────────────────────────────
+// Numele firmei, persoana de contact și telefonul, completate o dată în portal
+// (17 sept 2026). Până atunci se luau din ultima revendicare a firmei, deci o
+// firmă fără revendicări completa formularul la fiecare cerere, iar colegul nou
+// revendica cu numele și telefonul celui care revendicase ultimul.
+//
+// Un rând per adresă (upsert). Profilul e al FIRMEI: se citește rândul cel mai
+// nou de pe oricare adresă legată, ca la alertele pe județ.
+
+const FIRM_PROFILE_SHEET = 'Profil Firmă';
+
+const FIRM_PROFILE_HEADER = [
+  'Actualizat', // A — ISO
+  'Email', // B — adresa de pe care s-a salvat
+  'Nume firmă', // C
+  'Persoană contact', // D
+  'Telefon', // E
+];
+
+export interface FirmProfile {
+  updatedAt: string;
+  email: string;
+  numeFirma: string;
+  numeContact: string;
+  telefon: string;
+}
+
+export async function getFirmProfiles(): Promise<FirmProfile[]> {
+  let rows: string[][];
+  try {
+    rows = await readRows(FIRM_PROFILE_SHEET);
+  } catch {
+    return []; // Tabul se creează la prima salvare.
+  }
+  return rows
+    .filter((r) => Number.isFinite(Date.parse(r[0] || '')) && (r[1] || '').includes('@'))
+    .map((r) => ({
+      updatedAt: r[0] || '',
+      email: (r[1] || '').trim().toLowerCase(),
+      numeFirma: (r[2] || '').trim(),
+      numeContact: (r[3] || '').trim(),
+      telefon: (r[4] || '').trim(),
+    }));
+}
+
+/** Profilul complet cel mai nou de pe adresele grupului. */
+export function resolveGroupProfile(profiles: FirmProfile[], group: string[]): FirmProfile | null {
+  const members = new Set(group);
+  let latest: FirmProfile | null = null;
+  for (const p of profiles) {
+    if (!members.has(p.email) || !p.numeFirma || !p.telefon) continue;
+    if (!latest || p.updatedAt.localeCompare(latest.updatedAt) > 0) latest = p;
+  }
+  return latest;
+}
+
+export async function saveFirmProfile(
+  email: string,
+  profile: { numeFirma: string; numeContact: string; telefon: string },
+): Promise<void> {
+  const key = email.trim().toLowerCase();
+  if (!key) return;
+  const values = [
+    new Date().toISOString(),
+    key,
+    profile.numeFirma.trim(),
+    profile.numeContact.trim(),
+    profile.telefon.trim(),
+  ];
+
+  let rows: string[][];
+  try {
+    rows = await readRows(FIRM_PROFILE_SHEET);
+  } catch {
+    await createSheetTab(FIRM_PROFILE_SHEET);
+    await appendRow(FIRM_PROFILE_SHEET, FIRM_PROFILE_HEADER);
+    await appendRow(FIRM_PROFILE_SHEET, values);
+    return;
+  }
+
+  const index = rows.findIndex((r) => (r[1] || '').trim().toLowerCase() === key);
+  if (index === -1) {
+    await appendRow(FIRM_PROFILE_SHEET, values);
+    return;
+  }
+  const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+  await withRetry(
+    () =>
+      sheets.spreadsheets.values.update({
+        spreadsheetId: SPREADSHEET_ID,
+        range: `${FIRM_PROFILE_SHEET}!A${index + 1}:E${index + 1}`,
+        valueInputOption: 'RAW',
+        requestBody: { values: [values] },
+      }),
+    'update profil firmă',
+  );
+}
+
+/**
+ * Cu ce date revendică firma logată: profilul salvat în portal, altfel ultima
+ * revendicare a firmei (cum era înainte de profil). Null = n-avem nume și
+ * telefon, deci revendicarea trece prin formular.
+ */
+export async function getFirmIdentity(
+  email: string,
+): Promise<{ numeFirma: string; numeContact: string; telefon: string; fromProfile: boolean } | null> {
+  const [claims, group, profiles] = await Promise.all([
+    getClaims(),
+    getFirmEmailGroup(email),
+    getFirmProfiles(),
+  ]);
+  const profile = resolveGroupProfile(profiles, group);
+  if (profile) {
+    return {
+      numeFirma: profile.numeFirma,
+      numeContact: profile.numeContact,
+      telefon: profile.telefon,
+      fromProfile: true,
+    };
+  }
+  const fromClaims = latestClaimIdentity(claims, group);
+  return fromClaims ? { ...fromClaims, fromProfile: false } : null;
 }
 
 // ── Abonamente pe județ (distribuție prioritară) ───────────────────────────

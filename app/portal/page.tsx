@@ -11,13 +11,23 @@ import {
   getLeadsSince,
   isLeadClosed,
   isLeadHidden,
+  isPubliclyClaimable,
+  getFirmProfiles,
+  latestClaimIdentity,
+  resolveGroupProfile,
+  MAX_CLAIMS_PER_LEAD,
   isPriorityHeld,
   sanitizeMesajPublic,
   type NewLead,
   isLeadInformez,
 } from '@/lib/sheets';
 import { informezMotiv } from '@/lib/lead-alerts';
-import { isPozeLink } from '@/lib/sheets-shared';
+import {
+  MAX_ACTIVE_CLAIMS_PER_FIRM,
+  claimOccupiesLeadSlot,
+  countActiveClaimsForFirm,
+  isPozeLink,
+} from '@/lib/sheets-shared';
 import {
   getCounties,
   getConnectionShort,
@@ -30,6 +40,8 @@ import {
   getCallWindowLabel,
   getTimelineLabel,
   formatShortDate,
+  calendarAgeDays,
+  slugifyCity,
 } from '@/lib/utils-shared';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { type PortalClaim } from './PortalClaimCard';
@@ -40,6 +52,11 @@ import { MAX_FIRM_EMAILS } from '@/lib/portal-firm-emails';
 import PortalLanding from './PortalLanding';
 import PortalReservedLeads, { type ReservedLead } from './PortalReservedLeads';
 import LogoutButton from './LogoutButton';
+import PortalTabs from './PortalTabs';
+import PortalFirmProfile from './PortalFirmProfile';
+
+/** Fereastra „cereri noi" din cardul contului: cât de proaspătă e o cerere care merită sunată azi. */
+const NEW_LEADS_DAYS = 7;
 
 // Datele firmei logate nu au voie în cache-ul static — mereu proaspete, per sesiune.
 export const dynamic = 'force-dynamic';
@@ -101,14 +118,22 @@ export default async function PortalPage() {
   }
 
   let reserved: ReservedLead[] = [];
+  let firmName = '';
+  let profile = { numeFirma: '', numeContact: '', telefon: '' };
+  let profileSaved = false;
+  let slotsUsed = 0;
+  // Cereri revendicabile acum, din județele bifate, din ultima săptămână, pe
+  // care firma nu le are deja: motivul de a deschide /cereri azi.
+  let newInCounties = 0;
 
   try {
-    const [claims, leads, photos] = await Promise.all([
+    const [claims, leads, photos, profiles] = await Promise.all([
       getClaims(),
       getLeadsSince(new Date(0)),
       // Tabul „Poze" ține doar căile din Blob; fișierele ies numai prin
       // /api/portal/poza, care verifică din nou cine întreabă.
       getLeadPhotos(),
+      getFirmProfiles(),
     ]);
     const leadById = new Map(leads.map((l) => [l.timestamp, l]));
     const photosByLead = new Map<string, { pathname: string; fileName: string }[]>();
@@ -201,74 +226,167 @@ export default async function PortalPage() {
         };
       })
       .reverse(); // cele mai noi primele
+
+    // Profilul salvat în portal are întâietate; altfel precompletăm formularul
+    // din ultima revendicare, ca firma veche doar să confirme datele.
+    const saved = resolveGroupProfile(profiles, emails);
+    const identity = saved ?? latestClaimIdentity(claims, emails);
+    profileSaved = Boolean(saved);
+    profile = {
+      numeFirma: identity?.numeFirma || '',
+      numeContact: identity?.numeContact || '',
+      telefon: identity?.telefon || '',
+    };
+    firmName = identity?.numeFirma || '';
+    slotsUsed = identity ? countActiveClaimsForFirm(claims, identity) : 0;
+
+    const wanted = new Set(alertCounties);
+    const heldByLead = new Map<string, number>();
+    for (const c of claims) {
+      if (claimOccupiesLeadSlot(c)) heldByLead.set(c.leadId, (heldByLead.get(c.leadId) || 0) + 1);
+    }
+    newInCounties = leads.filter(
+      (l) =>
+        wanted.has(l.judet) &&
+        isPubliclyClaimable(l) &&
+        calendarAgeDays(l.reactivataLa || l.timestamp) <= NEW_LEADS_DAYS &&
+        !claimedByMe.has(l.timestamp) &&
+        (heldByLead.get(l.timestamp) || 0) < MAX_CLAIMS_PER_LEAD,
+    ).length;
   } catch (err) {
     console.error('[portal] failed to load claims:', err);
     loadError = true;
   }
 
-  // `pb-24` pe telefon: butonul plutitor de filtre e poziționat fix, iar fără
-  // rezerva asta ar acoperi ultimul lucru de pe pagină când ajungi la capăt.
+  const cereriHref = alertCounties.length
+    ? `/cereri?judet=${alertCounties.map(slugifyCity).join(',')}`
+    : '/cereri';
+
   return (
-    <div className="max-w-3xl mx-auto px-4 pt-8 pb-24 sm:pb-8">
-      <div className="flex items-start justify-between gap-4 mb-2">
-        <h1 className="text-2xl font-bold text-gray-900">Cererile firmei tale</h1>
-        <LogoutButton />
-      </div>
-      <p className="text-sm text-gray-500 mb-8">
-        Conectat ca <strong>{email}</strong>. Aici vezi cererile revendicate cu acest email,
-        lași note și eliberezi locurile la care renunți.
-        {linked.length > 0 && (
-          <>
-            {' '}
-            Vezi și cererile revendicate de colegii tăi cu{' '}
-            <strong>{linked.join(', ')}</strong>.
-          </>
+    <div className="max-w-3xl mx-auto px-4 pt-6 pb-10 sm:pt-8">
+      {/* Contul: cine ești, ce ai în lucru, cât loc mai ai. Pe telefon e tot ce
+          încape în primul ecran, deci doar cifrele și acțiunea următoare. */}
+      <section className="rounded-2xl border border-border bg-white p-4 sm:p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+              Contul firmei
+            </p>
+            <h1 className="mt-0.5 line-clamp-2 text-xl font-bold leading-tight text-gray-900 sm:text-2xl">
+              {firmName || 'Cererile firmei tale'}
+            </h1>
+            <p className="mt-0.5 truncate text-xs text-gray-500">
+              {email}
+              {linked.length > 0 && ` + ${linked.length} ${linked.length === 1 ? 'coleg' : 'colegi'}`}
+            </p>
+          </div>
+          <LogoutButton />
+        </div>
+
+        {!loadError && <PortalFirmProfile initial={profile} saved={profileSaved} />}
+
+        {firmName && (
+          <div className="mt-3">
+            <div className="flex items-center justify-between text-xs text-gray-500">
+              <span>Locuri ocupate pentru revendicări noi</span>
+              <span className="font-semibold text-gray-700 tabular-nums">
+                {slotsUsed} din {MAX_ACTIVE_CLAIMS_PER_FIRM}
+              </span>
+            </div>
+            <div className="mt-1.5 flex gap-1" aria-hidden>
+              {Array.from({ length: MAX_ACTIVE_CLAIMS_PER_FIRM }, (_, i) => (
+                <span
+                  key={i}
+                  className={`h-1.5 flex-1 rounded-full ${i < slotsUsed ? 'bg-primary' : 'bg-gray-200'}`}
+                />
+              ))}
+            </div>
+            {slotsUsed >= MAX_ACTIVE_CLAIMS_PER_FIRM && (
+              <p className="mt-1.5 text-xs text-amber-700">
+                Mută statusul cererilor la care ai sunat și se eliberează locuri.
+              </p>
+            )}
+          </div>
         )}
-      </p>
 
-      {reserved.length > 0 && <PortalReservedLeads leads={reserved} />}
+        <Link
+          href={cereriHref}
+          className="mt-4 flex items-center justify-between gap-3 rounded-xl bg-primary px-4 py-3 text-white transition-colors hover:bg-primary-dark"
+        >
+          <span className="text-sm font-semibold leading-snug">
+            {alertCounties.length === 0
+              ? 'Vezi cererile noi de pe site'
+              : newInCounties > 0
+                ? `${newInCounties} ${newInCounties === 1 ? 'cerere nouă' : 'cereri noi'} în județele tale`
+                : 'Vezi cererile din județele tale'}
+            {alertCounties.length > 0 && (
+              <span className="block text-xs font-normal opacity-90">
+                {newInCounties > 0 ? `din ultimele ${NEW_LEADS_DAYS} zile, revendici dintr-un click` : 'nimic nou în ultimele 7 zile'}
+              </span>
+            )}
+          </span>
+          <span aria-hidden className="text-lg">→</span>
+        </Link>
+      </section>
 
-      <PortalCountyAlerts counties={getCounties()} initial={alertCounties} />
-
-      <PortalFirmEmails current={email} addresses={emails} max={MAX_FIRM_EMAILS} />
-
-      {loadError && (
-        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 mb-6">
-          Nu am putut încărca cererile. Reîmprospătează pagina.
+      {reserved.length > 0 && (
+        <div className="mt-5">
+          <PortalReservedLeads leads={reserved} />
         </div>
       )}
 
-      {!loadError && mine.length === 0 && (
-        <div className="bg-surface rounded-xl border border-border p-10 text-center">
-          <p className="text-gray-600 font-medium">Nicio cerere revendicată cu acest email.</p>
-          <p className="text-sm text-gray-500 mt-2 leading-relaxed">
-            Revendică cereri din{' '}
-            <Link href="/cereri" className="text-primary-dark underline hover:no-underline">
-              feedul de cereri active
-            </Link>{' '}
-            folosind emailul <strong>{email}</strong>. Dacă ai revendicat înainte de lansarea
-            portalului, scrie-ne la{' '}
-            <a
-              href="mailto:contact@instalatori-fotovoltaice.ro"
-              className="text-primary-dark underline hover:no-underline"
-            >
-              contact@instalatori-fotovoltaice.ro
-            </a>{' '}
-            și îți legăm revendicările vechi de cont.
-          </p>
-        </div>
-      )}
+      <div className="mt-5">
+        <PortalTabs
+          claimsCount={mine.length}
+          settingsBadge={alertCounties.length === 0}
+          claims={
+            <>
+              {loadError && (
+                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 mb-6">
+                  Nu am putut încărca cererile. Reîmprospătează pagina.
+                </div>
+              )}
 
-      {mine.length > 0 && <PortalClaimList claims={mine} />}
+              {!loadError && mine.length === 0 && (
+                <div className="bg-surface rounded-xl border border-border p-6 text-center sm:p-10">
+                  <p className="text-gray-600 font-medium">Nicio cerere revendicată încă.</p>
+                  <p className="text-sm text-gray-500 mt-2 leading-relaxed">
+                    Revendică din{' '}
+                    <Link href={cereriHref} className="text-primary-dark underline hover:no-underline">
+                      cererile active
+                    </Link>
+                    : cât ești conectat, revendicarea e dintr-un click. Dacă ai revendicat înainte cu
+                    alt email, scrie-ne la{' '}
+                    <a
+                      href="mailto:contact@instalatori-fotovoltaice.ro"
+                      className="text-primary-dark underline hover:no-underline"
+                    >
+                      contact@instalatori-fotovoltaice.ro
+                    </a>
+                    .
+                  </p>
+                </div>
+              )}
 
-      {mine.length > 0 && (
-        <p className="mt-8 text-xs text-gray-400 leading-relaxed">
-          Datele clienților se deblochează imediat ce aprobăm revendicarea. Statusul pe care îl
-          setezi tu ne spune unde ești cu clientul, ca să nu te mai sunăm degeaba. Locul unei firme
-          se eliberează când clientul confirmă că a fost sunat, sau când renunți tu, cu un motiv,
-          de aici.
-        </p>
-      )}
+              {mine.length > 0 && <PortalClaimList claims={mine} />}
+
+              {mine.length > 0 && (
+                <p className="mt-8 text-xs text-gray-400 leading-relaxed">
+                  Datele clienților se deblochează imediat ce aprobăm revendicarea. Statusul pe care
+                  îl setezi tu ne spune unde ești cu clientul. Locul se eliberează când renunți, cu un
+                  motiv, sau când marchezi că ai pierdut clientul.
+                </p>
+              )}
+            </>
+          }
+          settings={
+            <>
+              <PortalCountyAlerts counties={getCounties()} initial={alertCounties} />
+              <PortalFirmEmails current={email} addresses={emails} max={MAX_FIRM_EMAILS} />
+            </>
+          }
+        />
+      </div>
 
       {/* Cea mai bună plasare de instalatori de pe site, și singura unde firma
           e prinsă exact în momentul potrivit: tocmai a luat o lucrare nouă.

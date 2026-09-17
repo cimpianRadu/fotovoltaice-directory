@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server';
 import {
-  getClaims,
-  getFirmEmailGroup,
+  getFirmIdentity,
   getFullLeadById,
   getWatches,
   isLeadClosed,
   isLeadInformez,
-  latestClaimIdentity,
   saveWatchToSheet,
 } from '@/lib/sheets';
 import { isValidEmail, normalizeEmail } from '@/lib/portal-auth';
@@ -29,7 +27,7 @@ export async function POST(request: Request) {
     if (body.fromAccount === true) {
       const sessionEmail = await peekPortalEmail();
       const identity = sessionEmail
-        ? latestClaimIdentity(await getClaims(), await getFirmEmailGroup(sessionEmail))
+        ? await getFirmIdentity(sessionEmail)
         : null;
       if (!sessionEmail || !identity) {
         return NextResponse.json(

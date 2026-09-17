@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
 import {
   CLAIM_STATUSES,
@@ -10,28 +10,6 @@ import {
 } from '@/lib/sheets-shared';
 import PortalClaimCard, { STATUS_TONE, type PortalClaim } from './PortalClaimCard';
 import { usePersistedToggle } from './usePersistedToggle';
-
-/**
- * Sub pragul ăsta filtrele sunt decor: plafonul de revendicări active e 3, deci
- * o firmă vede filtre abia când istoricul de cereri închise le face utile.
- */
-const FILTERS_FROM = 6;
-
-type Choice = string; // '' = toate
-
-// Aceeași regulă de atingere ca la banda de statusuri: confortabil pe telefon,
-// compact pe desktop.
-const pillClass = (active: boolean) =>
-  `rounded-full border px-3 py-2.5 text-[13px] font-medium transition-colors sm:py-1.5 sm:text-xs ${
-    active
-      ? 'bg-secondary text-white border-secondary'
-      : 'bg-white text-gray-600 border-border hover:border-secondary/40 hover:text-secondary-dark'
-  }`;
-
-function normSegment(s: string): string {
-  // Ca în /cereri: tot ce nu e explicit rezidențial e comercial (defaultul formularului).
-  return s === 'rezidential' ? 'rezidential' : 'comercial';
-}
 
 function ChevronIcon({ open }: { open: boolean }) {
   return (
@@ -48,32 +26,6 @@ function ChevronIcon({ open }: { open: boolean }) {
   );
 }
 
-function FilterRow({
-  label,
-  options,
-  value,
-  count,
-  onPick,
-}: {
-  label: string;
-  options: { id: Choice; label: string }[];
-  value: Choice;
-  count: (id: Choice) => number;
-  onPick: (id: Choice) => void;
-}) {
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      <span className="w-16 shrink-0 text-xs font-medium text-gray-400">{label}</span>
-      {options.map((o) => (
-        <button key={o.id} type="button" onClick={() => onPick(o.id)} className={pillClass(value === o.id)}>
-          {o.label}{' '}
-          <span className={value === o.id ? 'opacity-80' : 'text-gray-400'}>({count(o.id)})</span>
-        </button>
-      ))}
-    </div>
-  );
-}
-
 /**
  * Ce înseamnă fiecare status, scris pe ecran. Explicațiile existau doar ca
  * `title` pe pastile, adică invizibile pe telefon și pentru cine nu ține
@@ -82,10 +34,10 @@ function FilterRow({
  * fiecare zi, iar starea rămâne memorată pe browserul firmei.
  */
 function StatusLegend() {
-  const [open, setOpen] = usePersistedToggle('portal-legend-open', true);
+  const [open, setOpen] = usePersistedToggle('portal-legend-open', false);
 
   return (
-    <div className="mb-5 rounded-xl border border-border bg-surface">
+    <div className="rounded-xl border border-border bg-surface">
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -127,204 +79,110 @@ function StatusLegend() {
   );
 }
 
-export default function PortalClaimList({ claims }: { claims: PortalClaim[] }) {
-  const [status, setStatus] = useState<Choice>('');
-  const [segment, setSegment] = useState<Choice>('');
-  const [judet, setJudet] = useState<Choice>('');
-  // Pe telefon filtrele stăteau ca un bloc de trei rânduri deasupra cererilor,
-  // adică împingeau munca sub ecran ca să afișeze niște controale folosite rar.
-  const [sheetOpen, setSheetOpen] = useState(false);
+/**
+ * Contorul și filtrul sunt același lucru (feedback 17 sept 2026): căsuțele cu
+ * cifre sunt butoane, cu exact etichetele statusurilor de pe carduri. Înainte
+ * erau cifre de „rezumat" cu alți termeni deasupra unui rând separat de
+ * filtre, deci două vocabulare pentru aceleași cereri.
+ */
+type View = 'toate' | 'aprobare' | ClaimStatus | 'renuntate';
 
-  useEffect(() => {
-    if (!sheetOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSheetOpen(false);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [sheetOpen]);
+/** Ieșite din lucru: renunțate din portal sau marcate „Neconcretizat". Coboară la finalul listei. */
+function isClosed(c: PortalClaim): boolean {
+  return Boolean(c.releasedAt) || c.firmStatus === 'pierdut';
+}
 
-  const counties = [...new Set(claims.map((c) => c.judet).filter(Boolean))].sort((a, b) =>
-    a.localeCompare(b, 'ro'),
-  );
-
-  const matches = (c: PortalClaim, f: { status: Choice; segment: Choice; judet: Choice }) =>
-    (!f.status || c.firmStatus === f.status) &&
-    (!f.segment || normSegment(c.segment) === f.segment) &&
-    (!f.judet || c.judet === f.judet);
-
-  const current = { status, segment, judet };
-  // Counterele țin cont de celelalte două dimensiuni (faceted), ca în /cereri.
-  const countBy = (key: 'status' | 'segment' | 'judet') => (id: Choice) =>
-    claims.filter((c) => matches(c, { ...current, [key]: id })).length;
-
-  const visible = claims.filter((c) => matches(c, current));
-  const active = visible.filter((c) => !c.releasedAt);
-  const released = visible.filter((c) => c.releasedAt);
-
-  const pick = (key: 'status' | 'segment' | 'judet', set: (v: Choice) => void) => (v: Choice) => {
-    set(v);
-    if (v) trackEvent('portal_filter_applied', { filtru: key, valoare: v });
-  };
-
-  const activeCount = [status, segment, judet].filter(Boolean).length;
-
-  function resetFilters() {
-    setStatus('');
-    setSegment('');
-    setJudet('');
+function inView(c: PortalClaim, view: View): boolean {
+  switch (view) {
+    case 'toate':
+      return true;
+    // Aceeași regulă ca badge-ul de pe card: renunțarea are întâietate față de status.
+    case 'renuntate':
+      return Boolean(c.releasedAt);
+    case 'aprobare':
+      return !c.releasedAt && !c.approved;
+    default:
+      return !c.releasedAt && c.approved && c.firmStatus === view;
   }
+}
 
-  // Statusurile fără nicio cerere n-au ce căuta pe ecran: o pastilă „(0)" pe
-  // care nu se poate apăsa util e zgomot, nu informație.
-  const statusOptions = [
-    { id: '', label: 'Toate' },
-    ...CLAIM_STATUSES.filter((s) => claims.some((c) => c.firmStatus === s)).map((s) => ({
-      id: s as Choice,
-      label: CLAIM_STATUS_LABELS[s as ClaimStatus],
-    })),
-  ];
+const VIEWS: { id: View; label: string; dot?: string }[] = [
+  { id: 'toate', label: 'Toate' },
+  { id: 'aprobare', label: 'Se aprobă', dot: 'bg-amber-300' },
+  ...CLAIM_STATUSES.map((s) => ({
+    id: s as View,
+    label: CLAIM_STATUS_LABELS[s],
+    dot: STATUS_TONE[s],
+  })),
+  { id: 'renuntate', label: 'Renunțate', dot: 'bg-gray-300' },
+];
 
-  const showFilters = claims.length >= FILTERS_FROM;
-  // Legenda explică banda de statusuri, deci apare doar când banda există
-  // undeva pe ecran: altfel ar descrie butoane pe care firma nu le vede încă.
+export default function PortalClaimList({ claims }: { claims: PortalClaim[] }) {
+  const [view, setView] = useState<View>('toate');
+
+  const count = (id: View) => claims.filter((c) => inView(c, id)).length;
+  // În „Toate", cele la care s-a renunțat coboară la final: lista e de lucru.
+  const visible = claims
+    .filter((c) => inView(c, view))
+    .sort((a, b) => Number(isClosed(a)) - Number(isClosed(b)));
   const showLegend = claims.some((c) => c.approved && !c.releasedAt);
 
-  const filterRows = (
-    <div className="space-y-2.5">
-      <FilterRow
-        label="Status"
-        options={statusOptions}
-        value={status}
-        count={countBy('status')}
-        onPick={pick('status', setStatus)}
-      />
-      <FilterRow
-        label="Segment"
-        options={[
-          { id: '', label: 'Toate' },
-          { id: 'rezidential', label: 'Rezidențial' },
-          { id: 'comercial', label: 'Comercial' },
-        ]}
-        value={segment}
-        count={countBy('segment')}
-        onPick={pick('segment', setSegment)}
-      />
-      {counties.length > 1 && (
-        <FilterRow
-          label="Județ"
-          options={[{ id: '', label: 'Toate' }, ...counties.map((j) => ({ id: j, label: j }))]}
-          value={judet}
-          count={countBy('judet')}
-          onPick={pick('judet', setJudet)}
-        />
-      )}
-    </div>
-  );
+  function pick(id: View) {
+    // Al doilea tap pe aceeași căsuță scoate filtrul.
+    const next = id === view ? 'toate' : id;
+    setView(next);
+    if (next !== 'toate') trackEvent('portal_filter_applied', { filtru: 'status', valoare: next });
+  }
 
   return (
     <>
-      {showLegend && <StatusLegend />}
+      <div className="mb-4 grid grid-cols-3 gap-1.5 sm:gap-2">
+        {VIEWS.map((v) => {
+          const n = count(v.id);
+          const active = view === v.id;
+          return (
+            <button
+              key={v.id}
+              type="button"
+              onClick={() => pick(v.id)}
+              aria-pressed={active}
+              disabled={n === 0 && !active}
+              className={`flex min-h-[58px] flex-col items-center justify-center rounded-xl border px-1 py-2 text-center transition-colors disabled:opacity-40 ${
+                active
+                  ? 'border-secondary bg-secondary text-white'
+                  : 'border-border bg-white text-gray-900 hover:border-secondary/40'
+              }`}
+            >
+              <span className="text-lg font-bold leading-none tabular-nums sm:text-xl">{n}</span>
+              <span
+                className={`mt-1 flex items-center gap-1 text-[11px] leading-tight ${
+                  active ? 'text-white/90' : 'text-gray-500'
+                }`}
+              >
+                {v.dot && <span className={`hidden h-1.5 w-1.5 shrink-0 rounded-full sm:inline-block ${v.dot}`} />}
+                {v.label}
+              </span>
+            </button>
+          );
+        })}
+      </div>
 
-      {/* Desktop: filtrele stau la vedere, spațiul există. */}
-      {showFilters && <div className="mb-5 hidden sm:block">{filterRows}</div>}
-
-      {visible.length === 0 && (
+      {visible.length === 0 ? (
         <div className="bg-surface rounded-xl border border-border p-8 text-center text-sm text-gray-500">
-          Nicio cerere pentru filtrele selectate.
+          Nicio cerere aici.
         </div>
-      )}
-
-      {active.length > 0 && (
-        <div className="space-y-4">
-          {active.map((c) => (
+      ) : (
+        <div className="space-y-3 sm:space-y-4">
+          {visible.map((c) => (
             <PortalClaimCard key={`${c.leadId}-${c.claimTimestamp}`} claim={c} />
           ))}
         </div>
       )}
 
-      {released.length > 0 && (
-        <>
-          <h2 className="mt-10 mb-3 text-sm font-semibold uppercase tracking-wide text-gray-400">
-            Cereri la care ai renunțat
-          </h2>
-          <div className="space-y-4">
-            {released.map((c) => (
-              <PortalClaimCard key={`${c.leadId}-${c.claimTimestamp}`} claim={c} />
-            ))}
-          </div>
-        </>
-      )}
-
-      {/* Mobil: buton plutitor + panou de jos. Locul de sub ecran e liber pe
-          portal, comutatorul Casă/Firmă nu se mai afișează aici. */}
-      {showFilters && (
-        <>
-          <button
-            type="button"
-            onClick={() => setSheetOpen(true)}
-            className="fixed bottom-4 right-4 z-40 flex items-center gap-2 rounded-full bg-secondary px-4 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-secondary-dark sm:hidden"
-          >
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-7.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-              />
-            </svg>
-            Filtre
-            {activeCount > 0 && (
-              <span className="rounded-full bg-white px-1.5 text-xs font-bold text-secondary">
-                {activeCount}
-              </span>
-            )}
-          </button>
-
-          {sheetOpen && (
-            <div className="fixed inset-0 z-50 sm:hidden">
-              <button
-                type="button"
-                aria-label="Închide filtrele"
-                onClick={() => setSheetOpen(false)}
-                className="absolute inset-0 bg-black/30"
-              />
-              <div className="absolute inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-2xl bg-white p-4 shadow-2xl">
-                <div className="mb-3 flex items-center justify-between">
-                  <span className="font-semibold text-gray-900">Filtre</span>
-                  <div className="flex items-center gap-3">
-                    {activeCount > 0 && (
-                      <button
-                        type="button"
-                        onClick={resetFilters}
-                        className="text-xs text-gray-500 underline hover:text-gray-800"
-                      >
-                        Șterge tot
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => setSheetOpen(false)}
-                      className="rounded-lg border border-border px-3 py-1.5 text-sm font-medium text-gray-600"
-                    >
-                      Gata
-                    </button>
-                  </div>
-                </div>
-                {filterRows}
-                <p className="mt-4 text-xs text-gray-400">
-                  {visible.length} din {claims.length} cereri
-                </p>
-              </div>
-            </div>
-          )}
-        </>
+      {showLegend && (
+        <div className="mt-6">
+          <StatusLegend />
+        </div>
       )}
     </>
   );

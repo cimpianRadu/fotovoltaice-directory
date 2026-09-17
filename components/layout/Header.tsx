@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import { trackEvent } from '@/lib/analytics';
+import { usePortalLoggedIn } from '@/lib/portal-hint';
 
 // În bara principală stau destinațiile pentru clientul care caută, plus pagina
 // de instalatori: firmele sunt jumătatea de piață care lipsește, iar cererile
@@ -36,11 +37,18 @@ const moreLinks = [
   // intră în el mai ales din widgeturile din ghiduri, nu din navigație.
   { href: '/calculator-panouri-fotovoltaice', label: 'Calculator' },
   { href: '/calculator-casa-verde-baterii', label: 'Calculator Casa Verde Baterii' },
-  { href: '/portal', label: 'Portal Instalatori' },
   { href: '/publicitate', label: 'Publicitate' },
   { href: '/intrebari-frecvente', label: 'Întrebări frecvente' },
   { href: '/despre', label: 'Despre noi' },
 ];
+
+function PersonIcon({ className }: { className: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+    </svg>
+  );
+}
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -56,6 +64,11 @@ export default function Header() {
   }
 
   const isMoreActive = moreLinks.some((l) => isActive(l.href));
+  // Se recitește la fiecare randare, deci și după navigarea din login spre /portal.
+  const portalLoggedIn = usePortalLoggedIn();
+  // Portalul e al firmelor: eticheta spune asta înainte de click, ca un client
+  // care caută instalator să nu intre acolo crezând că e contul lui.
+  const portalLabel = portalLoggedIn ? 'Contul meu' : 'Acces instalatori';
 
   // Close "Mai multe" dropdown on outside click
   useEffect(() => {
@@ -172,6 +185,20 @@ export default function Header() {
           </div>
 
           <Link
+            href="/portal"
+            title={portalLoggedIn ? 'Contul firmei în Portalul Instalatorilor' : 'Portalul e doar pentru firmele de instalare'}
+            className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-sm font-semibold whitespace-nowrap transition-colors ${
+              portalLoggedIn
+                ? 'border-primary bg-primary/10 text-primary-dark hover:bg-primary/20'
+                : 'border-primary/60 text-primary-dark hover:bg-primary/10'
+            }`}
+          >
+            <PersonIcon className="h-4 w-4" />
+            {/* Între lg și xl bara nu mai are loc de text: rămâne iconița. */}
+            <span className="sr-only xl:not-sr-only">{portalLabel}</span>
+          </Link>
+
+          <Link
             href="/cere-oferta?sursa=header"
             onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_desktop' })}
             className="bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-4 py-2 rounded-lg whitespace-nowrap transition-colors"
@@ -182,6 +209,17 @@ export default function Header() {
 
         {/* Mobile hamburger */}
         <div className="flex items-center gap-2 lg:hidden">
+          {/* Doar iconița pe telefon: textul „Acces instalatori" nu încape lângă
+              „Cere oferte" pe 375px. Eticheta completă e în meniu. */}
+          <Link
+            href="/portal"
+            aria-label={portalLabel}
+            className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border ${
+              portalLoggedIn ? 'border-primary bg-primary/10 text-primary-dark' : 'border-primary/60 text-primary-dark'
+            }`}
+          >
+            <PersonIcon className="h-5 w-5" />
+          </Link>
           <Link
             href="/cere-oferta?sursa=header"
             onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_mobile' })}
@@ -212,6 +250,19 @@ export default function Header() {
       {/* Mobile nav overlay — always in DOM for SEO, toggled with CSS */}
       <div className={`lg:hidden border-t border-border bg-white ${mobileOpen ? 'block' : 'hidden'}`}>
         <nav className="flex flex-col p-4 gap-1">
+          <Link
+            href="/portal"
+            onClick={() => setMobileOpen(false)}
+            className="mb-2 flex items-center gap-3 rounded-lg border border-border px-3 py-2.5 text-gray-700 hover:bg-surface"
+          >
+            <PersonIcon className="h-5 w-5 shrink-0 text-secondary-dark" />
+            <span>
+              <span className="block text-base font-medium">{portalLabel}</span>
+              <span className="block text-xs text-gray-500">
+                {portalLoggedIn ? 'Cererile și alertele firmei tale' : 'Doar pentru firmele de instalare'}
+              </span>
+            </span>
+          </Link>
           {primaryLinks.map((link) => (
             <Link
               key={link.href}

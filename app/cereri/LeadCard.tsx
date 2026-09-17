@@ -63,6 +63,8 @@ export interface PortalMe {
   numeFirma: string;
   numeContact: string;
   telefon: string;
+  activeClaims?: number;
+  maxActiveClaims?: number;
 }
 
 interface LeadCardProps {
@@ -605,6 +607,100 @@ export default function LeadCard({
     trackEvent('lead_claim_opened', { county: lead.judet, project_type: lead.tipLabel });
   }
 
+  // Firma logată cu datele deja știute revendică din card: o confirmare pe loc,
+  // fără modal (feedback 17 sept 2026). Confirmarea rămâne, pentru că o
+  // atingere greșită pe telefon ar ocupa unul din cele 3 locuri ale cererii.
+  const [quickOpen, setQuickOpen] = useState(false);
+
+  function startClaim() {
+    if (!fromAccount) {
+      handleOpen();
+      return;
+    }
+    setQuickOpen(true);
+    setError(null);
+    trackEvent('lead_claim_opened', { county: lead.judet, project_type: lead.tipLabel });
+  }
+
+  async function quickClaim() {
+    setStatus('submitting');
+    setError(null);
+    try {
+      const res = await fetch('/api/claims', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leadId: lead.id, fromAccount: true, ...getAttribution() }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        if (json.full) setClaims(maxClaims);
+        setStatus('idle');
+        // Sesiune expirată sau fără date de firmă: formularul complet preia de aici.
+        if (json.needsForm) {
+          setManual(true);
+          setQuickOpen(false);
+          setModalOpen(true);
+        }
+        setError(json.error || 'A apărut o eroare. Încearcă din nou.');
+        return;
+      }
+      trackEvent('lead_claim_submitted', {
+        county: lead.judet,
+        project_type: lead.tipLabel,
+        cum_aflat: 'din_cont',
+      });
+      if (typeof json.claims === 'number') setClaims(json.claims);
+      setEmailFolosit(me?.email || '');
+      setHasAccount(true);
+      setQuickOpen(false);
+      setStatus('success');
+    } catch {
+      setStatus('idle');
+      setError('A apărut o eroare. Încearcă din nou.');
+    }
+  }
+
+  const quickBox = quickOpen && me && (
+    <div className="rounded-lg border border-primary/40 bg-primary/5 p-3 text-sm">
+      <p className="text-gray-700">
+        Revendici ca <strong className="text-gray-900">{me.numeFirma}</strong>
+        {me.telefon ? ` · ${me.telefon}` : ''}
+      </p>
+      <p className="mt-0.5 text-xs text-gray-500">
+        Datele clientului apar în contul tău după aprobare.
+      </p>
+      {error && <p className="mt-2 text-xs text-red-600">{error}</p>}
+      <div className="mt-3 flex gap-2">
+        <Button
+          variant="primary"
+          onClick={quickClaim}
+          disabled={status === 'submitting'}
+          className="flex-1"
+        >
+          {status === 'submitting' ? 'Se trimite...' : 'Confirmă'}
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => setQuickOpen(false)}
+          disabled={status === 'submitting'}
+        >
+          Anulează
+        </Button>
+      </div>
+      <button
+        type="button"
+        onClick={() => {
+          setQuickOpen(false);
+          setManual(true);
+          handleOpen();
+        }}
+        className="mt-2 text-xs text-gray-500 underline hover:text-gray-900"
+      >
+        Altă firmă sau alte date?
+      </button>
+    </div>
+  );
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus('submitting');
@@ -800,7 +896,9 @@ export default function LeadCard({
       )}
 
       <div className="mt-4 flex-1 flex flex-col justify-end">
-        {lead.seInformeaza && !claimedByMe ? (
+        {quickBox ? (
+          quickBox
+        ) : lead.seInformeaza && !claimedByMe ? (
           watchStatus === 'success' ? (
             <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-2.5 text-sm text-emerald-800 text-center font-medium">
               Te anunțăm când devine activă ✓
@@ -815,7 +913,7 @@ export default function LeadCard({
               <Button variant="secondary" onClick={handleWatchOpen} className="w-full">
                 Urmărește cererea
               </Button>
-              <Button variant="outline" onClick={handleOpen} className="mt-2 w-full">
+              <Button variant="outline" onClick={startClaim} className="mt-2 w-full">
                 Vreau să contactez persoana
               </Button>
               <div className="mt-1.5">
@@ -826,6 +924,11 @@ export default function LeadCard({
         ) : claimedByMe ? (
           <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-2.5 text-sm text-emerald-800 text-center font-medium">
             Revendicare trimisă ✓
+            {me && !modalOpen && (
+              <a href="/portal" className="mt-0.5 block text-xs font-normal underline hover:no-underline">
+                Vezi în contul tău
+              </a>
+            )}
           </div>
         ) : full ? (
           <div className="rounded-lg bg-surface border border-border px-4 py-2.5 text-sm text-gray-500 text-center font-medium">
@@ -833,7 +936,7 @@ export default function LeadCard({
           </div>
         ) : (
           <>
-            <Button variant="primary" onClick={handleOpen} className="w-full">
+            <Button variant="primary" onClick={startClaim} className="w-full">
               Vreau această cerere
             </Button>
             {claims > 0 && (

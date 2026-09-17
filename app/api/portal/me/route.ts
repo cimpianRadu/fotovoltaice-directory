@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { peekPortalEmail } from '@/lib/portal-session';
-import { getClaims, getFirmEmailGroup, latestClaimIdentity } from '@/lib/sheets';
+import { getClaims, getFirmIdentity } from '@/lib/sheets';
+import { MAX_ACTIVE_CLAIMS_PER_FIRM, countActiveClaimsForFirm } from '@/lib/sheets-shared';
 
 // Cine e firma logată, pentru /cereri: cu cont, revendicarea și urmărirea se
 // trimit dintr-un click, cu datele declarate ultima dată. Pagina /cereri e
@@ -16,8 +17,7 @@ export async function GET() {
     const email = await peekPortalEmail();
     if (!email) return NextResponse.json({ me: null }, { headers });
 
-    const [claims, emails] = await Promise.all([getClaims(), getFirmEmailGroup(email)]);
-    const identity = latestClaimIdentity(claims, emails);
+    const [claims, identity] = await Promise.all([getClaims(), getFirmIdentity(email)]);
     return NextResponse.json(
       {
         me: {
@@ -25,6 +25,10 @@ export async function GET() {
           numeFirma: identity?.numeFirma ?? '',
           numeContact: identity?.numeContact ?? '',
           telefon: identity?.telefon ?? '',
+          // Pentru bara „Conectat ca" de pe /cereri: câte locuri mai are firma
+          // înainte ca revendicarea să fie refuzată de plafon.
+          activeClaims: identity ? countActiveClaimsForFirm(claims, identity) : 0,
+          maxActiveClaims: MAX_ACTIVE_CLAIMS_PER_FIRM,
         },
       },
       { headers },

@@ -7,6 +7,12 @@
 
 export const PORTAL_COOKIE = 'portal_session';
 export const PORTAL_PENDING_COOKIE = 'portal_pending';
+/**
+ * Doar un semn pentru header („Contul meu" în loc de „Acces instalatori"),
+ * citibil din JavaScript. Nu dă acces la nimic: sesiunea rămâne cookie-ul
+ * httpOnly de mai sus, verificat pe server. Îl pune și îl scoate middleware-ul.
+ */
+export const PORTAL_HINT_COOKIE = 'portal_hint';
 export const PORTAL_SESSION_DAYS = 30;
 /** Linkul și codul din email expiră împreună — destul cât să deschizi inboxul. */
 export const PORTAL_LOGIN_TTL_MINUTES = 15;

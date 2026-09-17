@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, after } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
@@ -8,14 +8,14 @@ import {
   findSubscriptionForCounty,
   getClaims,
   getFullLeadById,
-  getFirmEmailGroup,
+  getFirmIdentity,
   getLeadSubscriptions,
   hasPortalAccount,
   isLeadClosed,
   isPriorityHeld,
   isSameFirm,
-  latestClaimIdentity,
   saveClaimToSheet,
+  saveFirmProfile,
 } from '@/lib/sheets';
 import { isValidEmail, normalizeEmail } from '@/lib/portal-auth';
 import { peekPortalEmail } from '@/lib/portal-session';
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
     if (body?.fromAccount === true) {
       const sessionEmail = await peekPortalEmail();
       const identity = sessionEmail
-        ? latestClaimIdentity(await getClaims(), await getFirmEmailGroup(sessionEmail))
+        ? await getFirmIdentity(sessionEmail)
         : null;
       if (!sessionEmail || !identity) {
         return NextResponse.json(
@@ -165,6 +165,29 @@ export async function POST(request: Request) {
       cumAflat,
     };
     await saveClaimToSheet(claim);
+
+    // Firma logată care n-are încă profil completează formularul o singură
+    // dată: datele de acum devin profilul, iar următoarea revendicare e dintr-un
+    // click. Doar când nu există profil, ca „Altă firmă?" să nu-l suprascrie.
+    if (body?.fromAccount !== true) {
+      const sessionEmail = await peekPortalEmail();
+      if (sessionEmail) {
+        after(async () => {
+          try {
+            const existing = await getFirmIdentity(sessionEmail);
+            if (!existing?.fromProfile) {
+              await saveFirmProfile(sessionEmail, {
+                numeFirma: claim.numeFirma,
+                numeContact: claim.numeContact,
+                telefon: claim.telefon,
+              });
+            }
+          } catch (err) {
+            console.error('[claims] profil firmă:', err);
+          }
+        });
+      }
+    }
 
     // Cine are cont în portal nu mai primește apelul de confirmare (regula
     // userului, 15 sept 2026): aprobarea se dă direct din /admin/crm, iar
