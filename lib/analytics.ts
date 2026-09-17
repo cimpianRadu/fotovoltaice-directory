@@ -15,6 +15,8 @@ type EventName =
   // Îmbogățirea de după trimitere — cererea e deja salvată, evenimentul măsoară
   // doar cât din detaliile opționale acceptă omul să completeze (`fields`).
   | 'lead_enrich_submitted'
+  // Ce vrea să rezolve, de la pasul 5 (17 sept 2026), slugurile cu virgulă.
+  | 'lead_scop'
   | 'lead_claim_opened'
   | 'lead_claim_submitted'
   // Urmărirea unei cereri pe care clientul se informează (14 sept 2026).

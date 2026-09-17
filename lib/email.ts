@@ -248,6 +248,8 @@ interface ClaimNotificationData {
     bransamentLabel: string;
     /** Banda de buget; gol pe cererile dinainte de 16 sept 2026 sau la „nu știu". */
     bugetLabel?: string;
+    /** Ce vrea să rezolve (pasul 5); gol pe cererile vechi. */
+    scopLabel?: string;
   };
   claimCount: number; // inclusiv revendicarea curentă
   maxClaims: number;
@@ -302,6 +304,7 @@ export async function sendClaimNotification(data: ClaimNotificationData): Promis
         ${lead.bransamentLabel ? row('Branșament', escapeHtml(lead.bransamentLabel)) : ''}
         ${lead.finantareLabel ? row('Finanțare', `<strong>${escapeHtml(lead.finantareLabel)}</strong>`) : ''}
         ${lead.bugetLabel ? row('Buget orientativ', `<strong>${escapeHtml(lead.bugetLabel)}</strong>`) : ''}
+        ${lead.scopLabel ? row('Vrea să rezolve', `<strong>${escapeHtml(lead.scopLabel)}</strong>`) : ''}
         ${row('Segment', escapeHtml(lead.segment))}
         ${row('Depus', escapeHtml(fmtDate(lead.timestamp)))}
       </table>
@@ -641,6 +644,8 @@ export async function sendCountyLeadAlert(data: {
   intervalApelLabel: string;
   /** Banda de buget aleasă de client; gol dacă n-a ales sau nu știe. */
   bugetLabel?: string;
+  /** Ce vrea să rezolve; gol dacă alerta pleacă înainte de pasul 5. */
+  scopLabel?: string;
   /** ISO — doar către abonat: până când cererea e rezervată numai pentru el. */
   reservedUntil?: string;
   /** Către restul firmelor, după ce a expirat rezervarea unui abonat. */
@@ -676,6 +681,7 @@ export async function sendCountyLeadAlert(data: {
         ${data.finantareLabel ? row('Finanțare', `<strong style="color:${finantareColor}">${escapeHtml(data.finantareLabel)}</strong>`) : ''}
         ${data.termenLabel ? row('Vrea instalarea', `<strong>${escapeHtml(data.termenLabel)}</strong>`) : ''}
         ${data.bugetLabel ? row('Buget orientativ', `<strong>${escapeHtml(data.bugetLabel)}</strong>`) : ''}
+        ${data.scopLabel ? row('Vrea să rezolve', `<strong>${escapeHtml(data.scopLabel)}</strong>`) : ''}
         ${data.informez ? row('Se informează', `<span style="color:#6b7280">${escapeHtml(data.informez.motiv || 'nu a spus de ce')}</span>`) : ''}
         ${data.tipLucrareLabel ? row('Lucrare', `<strong>${escapeHtml(data.tipLucrareLabel)}</strong>`) : ''}
         ${data.putere ? row(data.retrofit ? 'Are montat' : 'Putere', `${escapeHtml(data.putere)} kW`) : ''}

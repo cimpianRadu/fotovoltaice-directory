@@ -23,6 +23,7 @@ import {
   getFinancingTone,
   getYesNoLabel,
   getBudgetLabel,
+  getScopLabel,
   getCallWindowLabel,
   getTimelineLabel,
   getWorkTypeShort,
@@ -149,6 +150,8 @@ export default async function CereriPage() {
       termenLabel: l.termen ? getTimelineLabel(l.termen) : '',
       intervalApelLabel: l.intervalApel ? getCallWindowLabel(l.intervalApel) : '',
       bugetLabel: getBudgetLabel(l.buget),
+      // Fără textul de la „Altceva”: pe feedul public rămâne doar eticheta.
+      scopLabel: getScopLabel(l.scop),
       arePoze: l.arePoze,
       verificata: l.verificata,
     };

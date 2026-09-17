@@ -222,6 +222,10 @@ const LEAD_ENRICH_COLUMNS = {
   // opțional, în cuvintele lui.
   blocaj: 'AN',
   blocajDetalii: 'AO',
+  // Pasul 5, obligatoriu pentru toți (17 sept 2026): ce vrea să rezolve, sluguri
+  // din SCOP_OPTIONS separate cu „; ", plus textul de la „Altceva".
+  scop: 'AX',
+  scopDetalii: 'AY',
 } as const;
 
 export type LeadEnrichField = keyof typeof LEAD_ENRICH_COLUMNS;
@@ -486,6 +490,10 @@ export interface NewLead {
   capacitateBaterie: string;
   // AW — bugetul orientativ, slug din BUDGET_* (16 sept 2026). Gol înainte.
   buget: string;
+  /** AX — ce vrea să rezolve, sluguri din SCOP_OPTIONS cu „; " (17 sept 2026). */
+  scop: string;
+  /** AY — textul de la „Altceva". Privat: nu intră în PublicLead. */
+  scopDetalii: string;
   // AN-AU — fluxul „mă informez" (14 sept 2026). Goale pe orice cerere care
   // n-a bifat termenul ăsta. Vezi markInformez* / reactivateLeadFromClient.
   /** AN — ce îl oprește (slug din BLOCAJ_OPTIONS), răspuns la pasul 5. */
@@ -588,6 +596,8 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     raspunsClient: r[45] || '',
     alerteReactivareLa: r[46] || '',
     buget: r[48] || '',
+    scop: r[49] || '',
+    scopDetalii: r[50] || '',
     anuntProgramLa: r[47] || '',
     ...readCrmFields(r),
   }));
@@ -688,6 +698,8 @@ export interface PublicLead {
   // Public intenționat: banda de buget nu identifică pe nimeni, dar e primul
   // lucru pe care îl întreabă firma. Vezi BUDGET_* în lib/utils-shared.
   buget: string;
+  /** Ce vrea să rezolve (sluguri). Public: fără textul liber de la „Altceva". */
+  scop: string;
   /**
    * Clientul a bifat „Deocamdată mă informez" la termen. Cardul arată „Urmărește"
    * în loc de „Revendică", iar `blocaj` spune de ce (vezi BLOCAJ_OPTIONS).
@@ -838,6 +850,7 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       verificata: l.crmStatus === 'valida' || l.crmStatus === 'ofertare',
       intervalApel: l.intervalApel,
       buget: l.buget,
+      scop: l.scop,
       seInformeaza: isLeadInformez(l),
       blocaj: l.blocaj,
       reactivataLa: l.reactivataLa,

@@ -37,6 +37,7 @@ import {
   getFinancingLabel,
   getYesNoLabel,
   getBudgetLabel,
+  getScopLabel,
   getCallWindowLabel,
   getTimelineLabel,
   formatShortDate,
@@ -73,6 +74,9 @@ export const metadata: Metadata = {
 function specsFor(lead: NewLead | undefined): { label: string; value: string }[] {
   if (!lead) return [];
   return [
+    getScopLabel(lead.scop, lead.scopDetalii)
+      ? { label: 'Vrea', value: getScopLabel(lead.scop, lead.scopDetalii) }
+      : null,
     lead.putere ? { label: 'Putere', value: `${lead.putere} kW` } : null,
     lead.suprafata ? { label: 'Suprafață', value: `${lead.suprafata} mp` } : null,
     lead.tipAcoperis ? { label: 'Acoperiș', value: getRoofTypeLabel(lead.tipAcoperis) } : null,

@@ -28,6 +28,7 @@ import {
   getRoofTypeLabel,
   getPhaseLabel,
   getBudgetLabel,
+  getScopLabel,
   getFinancingLabel,
 } from '@/lib/utils-shared';
 
@@ -222,6 +223,7 @@ export async function POST(request: Request) {
         finantareLabel: lead.finantare ? getFinancingLabel(lead.finantare) : '',
         bransamentLabel: lead.bransament ? getConnectionLabel(lead.bransament) : '',
         bugetLabel: getBudgetLabel(lead.buget),
+        scopLabel: getScopLabel(lead.scop, lead.scopDetalii),
       },
       claimCount,
       maxClaims: MAX_CLAIMS_PER_LEAD,

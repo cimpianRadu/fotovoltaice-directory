@@ -18,6 +18,7 @@ import { sendClaimNotification } from '@/lib/email';
 import {
   getConnectionLabel,
   getBudgetLabel,
+  getScopLabel,
   getFinancingLabel,
   getPhaseLabel,
   getProjectTypeLabel,
@@ -112,6 +113,7 @@ export async function POST(request: Request) {
         finantareLabel: lead.finantare ? getFinancingLabel(lead.finantare) : '',
         bransamentLabel: lead.bransament ? getConnectionLabel(lead.bransament) : '',
         bugetLabel: getBudgetLabel(lead.buget),
+        scopLabel: getScopLabel(lead.scop, lead.scopDetalii),
       },
       claimCount: allClaims.filter((c) => c.leadId === leadId).length + 1,
       maxClaims: MAX_CLAIMS_PER_LEAD,

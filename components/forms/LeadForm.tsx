@@ -23,6 +23,8 @@ import {
   CALL_WINDOW_OPTIONS,
   BLOCAJ_OPTIONS,
   isSeInformeaza,
+  SCOP_OPTIONS,
+  SCOP_INDEPENDENTA_HINT,
 } from '@/lib/utils-shared';
 import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 import { useSegment } from '@/components/segment/SegmentProvider';
@@ -90,7 +92,7 @@ const STEPS = [
   { id: 'zona', label: 'Zonă' },
   { id: 'contact', label: 'Contact' },
   { id: 'detalii', label: 'Detalii' },
-  { id: 'extra', label: 'Opțional' },
+  { id: 'extra', label: 'Obiectiv' },
 ] as const;
 
 // Cererea se trimite la „detalii"; „extra" e ecran post-trimitere, nu pas de
@@ -523,6 +525,12 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   // 2026). Decide emailul de întâmpinare al platformei și ce vede firma pe card.
   const [blocaj, setBlocaj] = useState('');
   const [blocajDetalii, setBlocajDetalii] = useState('');
+  // „Ce vreți să rezolvați?" (17 sept 2026), obligatoriu pe pasul 5: firma vede
+  // din start ce așteaptă omul. `scopError` apare doar după un „Salvează" gol.
+  const [scop, setScop] = useState<string[]>([]);
+  const [scopDetalii, setScopDetalii] = useState('');
+  const [scopError, setScopError] = useState(false);
+  const scopRef = useRef<HTMLFieldSetElement>(null);
   const startedRef = useRef(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reportedFields = useRef(0);
@@ -778,7 +786,12 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     const consumValoare = unknown.consumLunar ? '' : details.consumLunar.trim();
     const consumLunar = consumValoare ? `${consumValoare} ${consumUnit}` : '';
     const mesaj = values.mesaj.trim();
-    if (!leadRef || (!consumLunar && !mesaj && !blocaj)) {
+    if (!scop.length) {
+      setScopError(true);
+      focusField(scopRef.current);
+      return;
+    }
+    if (!leadRef) {
       setExtraDone(true);
       return;
     }
@@ -793,9 +806,12 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
           mesaj,
           blocaj,
           blocajDetalii: blocaj === 'altceva' ? blocajDetalii.trim() : '',
+          scop: scop.join('; '),
+          scopDetalii: scop.includes('altceva') ? scopDetalii.trim() : '',
         }),
       });
       if (!res.ok) throw new Error('enrich failed');
+      trackEvent('lead_scop', { scop: scop.join(','), segment });
       // Doar la salvare reușită, nu la „sar peste": raportul dintre `extra` și
       // `detalii` din Umami spune câți acceptă pasul opțional.
       completeStep(EXTRA_STEP);
@@ -807,9 +823,9 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     setExtraDone(true);
   }
 
-  // Pasul 5, după trimitere: opțional prin construcție — cererea a plecat la
-  // pasul 4, deci cine închide pagina aici nu mai pierde nimic. Două câmpuri și
-  // atât; restul detaliilor rămân pe ecranul de confirmare, cu salvare automată.
+  // Pasul 5, după trimitere: cererea a plecat la pasul 4, deci cine închide
+  // pagina aici nu mai pierde nimic. Din 17 sept 2026 „ce vreți să rezolvați"
+  // e obligatoriu (fără „sar peste"); consumul și mesajul rămân opționale.
   if (status === 'success' && !extraDone) {
     return (
       <div className="space-y-5">
@@ -817,11 +833,60 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
 
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 leading-relaxed">
           <span className="font-semibold text-emerald-900">Cererea a fost trimisă ✓</span> Mai
-          aveți un pas, opțional: consumul și un mesaj scurt cresc șansele să fiți contactat de
-          firme.
+          aveți un pas: spuneți-ne ce vreți să rezolvați, ca firmele să vă facă o ofertă potrivită.
         </div>
 
         <div className="rounded-xl border border-border bg-white p-5 sm:p-6 space-y-4">
+          <fieldset ref={scopRef} tabIndex={-1} className="outline-none">
+            <legend className="block text-sm font-medium text-gray-700 mb-1">
+              Ce vreți să rezolvați? <span className="text-red-500">*</span>
+            </legend>
+            <p className="mb-2 text-[11px] text-gray-400">Puteți bifa mai multe.</p>
+            <div className="flex flex-wrap gap-1.5">
+              {SCOP_OPTIONS.map((o) => {
+                const on = scop.includes(o.value);
+                return (
+                  <button
+                    key={o.value}
+                    type="button"
+                    aria-pressed={on}
+                    onClick={() => {
+                      setScopError(false);
+                      setScop((cur) => (on ? cur.filter((v) => v !== o.value) : [...cur, o.value]));
+                    }}
+                    className={`rounded-full border px-3 py-1.5 text-xs text-left transition-colors ${
+                      on
+                        ? 'border-amber-500 bg-amber-50 text-amber-900 font-medium'
+                        : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+                    }`}
+                  >
+                    {o.label}
+                  </button>
+                );
+              })}
+            </div>
+            {scop.includes('independenta') && (
+              <p className="mt-2 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-900 leading-relaxed">
+                {SCOP_INDEPENDENTA_HINT}
+              </p>
+            )}
+            {scop.includes('altceva') && (
+              <div className="mt-3">
+                <Input
+                  label="Spuneți-ne pe scurt"
+                  name="scopDetalii"
+                  type="textarea"
+                  placeholder="Ce ați vrea să obțineți de la sistem?"
+                  value={scopDetalii}
+                  onChange={(e) => setScopDetalii(e.target.value)}
+                />
+              </div>
+            )}
+            {scopError && (
+              <p className="mt-2 text-xs text-red-600">Alegeți cel puțin o variantă.</p>
+            )}
+          </fieldset>
+
           {/* Doar cine a bifat „mă informez". Chips, nu dropdown: un singur tap,
               iar răspunsul e ce primește omul de la noi prin email, nu un câmp
               de formular oarecare. */}
@@ -906,28 +971,6 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
           >
             {extraStatus === 'saving' ? 'Se salvează...' : 'Salvează și încheie'}
           </Button>
-          <button
-            type="button"
-            onClick={() => {
-              // Răspunsul la „ce vă lipsește" nu se pierde dacă omul sare peste
-              // consum și mesaj: pleacă singur, fără să-l țină pe pagină.
-              if (leadRef && blocaj) {
-                void fetch('/api/leads/enrich', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    id: leadRef,
-                    blocaj,
-                    blocajDetalii: blocaj === 'altceva' ? blocajDetalii.trim() : '',
-                  }),
-                }).catch(() => {});
-              }
-              setExtraDone(true);
-            }}
-            className="block w-full text-center text-sm text-gray-500 hover:text-gray-900 transition-colors"
-          >
-            Sar peste acest pas
-          </button>
         </div>
       </div>
     );

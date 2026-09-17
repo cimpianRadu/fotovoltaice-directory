@@ -1,6 +1,6 @@
 import { NextResponse, after } from 'next/server';
 import { enrichLeadInSheet, getFullLeadById, LEAD_ENRICH_FIELDS, type LeadEnrichField } from '@/lib/sheets';
-import { isBlocaj } from '@/lib/utils-shared';
+import { isBlocaj, parseScop } from '@/lib/utils-shared';
 import { sendWelcomeIfDue } from '@/lib/informez';
 
 // Detaliile de după trimitere. Cererea există deja în Sheet (a scris-o
@@ -30,12 +30,18 @@ export async function POST(request: Request) {
     for (const field of LEAD_ENRICH_FIELDS) {
       const raw = body[field];
       if (typeof raw !== 'string') continue;
-      const long = field === 'mesaj' || field === 'blocajDetalii';
+      const long = field === 'mesaj' || field === 'blocajDetalii' || field === 'scopDetalii';
       const value = raw.trim().slice(0, long ? MAX_MESSAGE_LENGTH : MAX_VALUE_LENGTH);
       if (value) fields[field] = value;
     }
     // Blocajul e slug din listă, nu text liber: orice altceva nu intră în Sheet.
     if (fields.blocaj && !isBlocaj(fields.blocaj)) delete fields.blocaj;
+    // La fel scopul: doar sluguri din SCOP_OPTIONS, rescrise în ordinea listei.
+    if (fields.scop) {
+      const scop = parseScop(fields.scop).join('; ');
+      if (scop) fields.scop = scop;
+      else delete fields.scop;
+    }
 
     if (!Object.keys(fields).length) {
       return NextResponse.json({ success: true, written: [] });

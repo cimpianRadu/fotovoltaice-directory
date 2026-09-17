@@ -25,6 +25,7 @@ import { matchFirmsForLead, type FirmMatch } from '@/lib/lead-match';
 import { matchNecesitFirms, type NecesitMatch } from '@/lib/necesit-match';
 import {
   getBudgetLabel,
+  getScopLabel,
   getCallWindowLabel,
   getFinancingShort,
   getFinancingTone,
@@ -352,6 +353,9 @@ function LeadCard({
             )}
             {getBudgetLabel(lead.buget) && (
               <div className="text-slate-600">buget: {getBudgetLabel(lead.buget)}</div>
+            )}
+            {getScopLabel(lead.scop, lead.scopDetalii) && (
+              <div className="text-slate-600">vrea: {getScopLabel(lead.scop, lead.scopDetalii)}</div>
             )}
           </div>
           {/* Una sau mai multe: din 21 aug 2026 formularul lasă clientul să

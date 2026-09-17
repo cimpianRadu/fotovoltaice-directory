@@ -39,6 +39,8 @@ export interface LeadCardData {
   intervalApelLabel: string;
   /** Banda de buget aleasă de client; gol la „nu știu" sau pe cererile vechi. */
   bugetLabel: string;
+  /** Ce vrea clientul să rezolve (pasul 5, din 17 sept 2026); gol pe cererile vechi. */
+  scopLabel: string;
   arePoze: boolean;
   verificata: boolean;
   /**
@@ -754,6 +756,9 @@ export default function LeadCard({
     lead.tipLucrare && lead.tipLucrare !== 'sistem-nou' && !isDoarMontaj(lead.tipLucrare)
       ? { label: 'Lucrare', value: lead.tipLucrareLabel }
       : null,
+    // Imediat după lucrare: firma vede din start dacă omul are așteptări
+    // realiste (ex. „independență totală de rețea” pe o casă de 5 kW).
+    lead.scopLabel ? { label: 'Vrea', value: lead.scopLabel } : null,
     lead.acoperisLabel ? { label: 'Acoperiș', value: lead.acoperisLabel } : null,
     lead.fazareLabel ? { label: 'Alimentare', value: lead.fazareLabel } : null,
     lead.bransamentLabel ? { label: 'Branșament', value: lead.bransamentLabel } : null,

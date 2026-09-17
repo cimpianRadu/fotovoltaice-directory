@@ -461,6 +461,48 @@ export function getBlocajShort(slug: string): string {
 }
 
 /**
+ * „Ce vreți să rezolvați?", obligatoriu la pasul 5, după trimitere (17 sept
+ * 2026). Din feedbackul Stromline: firmele pierd timp pe cereri cu așteptări
+ * nerealiste (curent iarna, fără rețea, din 3-4 panouri). Nu blocăm pe nimeni:
+ * firma vede pe card ce vrea omul, iar cine bifează „deloc de rețea" află din
+ * hint ce implică. Mai multe bife posibile; în Sheet, slugurile cu „; ".
+ */
+export const SCOP_OPTIONS = [
+  { value: 'factura', label: 'O factură mai mică la curent', short: 'factură mai mică' },
+  { value: 'backup', label: 'Să am curent când se ia de la rețea', short: 'curent când pică rețeaua' },
+  { value: 'independenta', label: 'Să nu mai depind deloc de rețea', short: 'independență totală de rețea' },
+  {
+    value: 'consumatori',
+    label: 'Să încarc mașina electrică sau să alimentez o pompă de căldură',
+    short: 'mașină electrică sau pompă de căldură',
+  },
+  { value: 'altceva', label: 'Altceva', short: 'altceva' },
+] as const;
+
+export const SCOP_INDEPENDENTA_HINT =
+  'Înseamnă baterii mari și un sistem mai scump decât unul legat la rețea. Instalatorul vă spune ce e realist pentru consumul dumneavoastră.';
+
+/** Slugurile valide, în ordinea din listă, fără dubluri. Acceptă „a; b" sau un array. */
+export function parseScop(raw: string | readonly string[]): string[] {
+  const parts = typeof raw === 'string' ? raw.split(';') : raw;
+  const set = new Set(parts.map((s) => s.trim()));
+  return SCOP_OPTIONS.map((o) => o.value).filter((v) => set.has(v));
+}
+
+/**
+ * Eticheta scurtă pentru card, portal, CRM și emailuri. `detalii` (textul de la
+ * „Altceva") se pune doar unde e privat: pe feedul public rămâne „altceva".
+ */
+export function getScopLabel(raw: string, detalii = ''): string {
+  return parseScop(raw)
+    .map((v) => {
+      if (v === 'altceva' && detalii.trim()) return detalii.trim();
+      return SCOP_OPTIONS.find((o) => o.value === v)?.short ?? v;
+    })
+    .join(', ');
+}
+
+/**
  * Programul pe care îl așteaptă, după ruta de finanțare bifată. Numele apare în
  * emailurile către client și în subtitlul de pe card; gol dacă finanțarea nu e
  * un program.

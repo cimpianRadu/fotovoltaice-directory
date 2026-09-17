@@ -9,6 +9,7 @@ import { isLeadInformez } from './sheets';
 import {
   getBlocajShort,
   getBudgetLabel,
+  getScopLabel,
   getCallWindowLabel,
   getConnectionLabel,
   getFinancingLabel,
@@ -46,6 +47,7 @@ export function countyAlertPayloadFromLead(lead: NewLead) {
     termenLabel: lead.termen ? getTimelineLabel(lead.termen) : '',
     intervalApelLabel: lead.intervalApel ? getCallWindowLabel(lead.intervalApel) : '',
     bugetLabel: getBudgetLabel(lead.buget),
+    scopLabel: getScopLabel(lead.scop, lead.scopDetalii),
     ...(isLeadInformez(lead) ? { informez: { motiv: informezMotiv(lead) } } : {}),
   };
 }
