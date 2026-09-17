@@ -10,7 +10,7 @@ import {
   portalCookieOptions,
 } from '@/lib/portal-auth';
 import { sendPortalLoginEmail } from '@/lib/email';
-import { savePortalAccessEvent } from '@/lib/sheets';
+import { isPortalEmailDeactivated, savePortalAccessEvent } from '@/lib/sheets';
 import { sanitizeAttribution } from '@/lib/attribution';
 
 /**
@@ -33,6 +33,18 @@ export async function POST(request: Request) {
     // Canalul sesiunii (first-touch, trimis de LoginForm). Ajunge în jurnalul
     // de acces pe `cerut`, ca la o firmă nouă să se vadă de unde a venit.
     const attribution = sanitizeAttribution(body);
+
+    // Cont dezactivat din /admin/portal: nu trimitem cod. Aici endpointul spune
+    // că adresa există, dar numai cui o are deja și a fost oprit de noi.
+    if (await isPortalEmailDeactivated(email)) {
+      return NextResponse.json(
+        {
+          error:
+            'Contul acestei adrese este dezactivat. Scrieți-ne la contact@instalatori-fotovoltaice.ro dacă vreți să-l reactivăm.',
+        },
+        { status: 403 },
+      );
+    }
 
     const exp = Date.now() + PORTAL_LOGIN_TTL_MINUTES * 60_000;
     const code = generateLoginCode();

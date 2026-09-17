@@ -1588,6 +1588,138 @@ export async function hasPortalAccount(email: string): Promise<boolean> {
   }
 }
 
+// ── Conturi dezactivate ─────────────────────────────────────────────────────
+// Un cont de portal nu se șterge: revendicările lui stau pe cereri reale, iar
+// jurnalul spune cine a văzut datele clienților. Din 17 sept 2026 se poate
+// DEZACTIVA din /admin/portal: firma nu mai intră (sesiunea deschisă nu mai e
+// recunoscută, codul nu se mai trimite), nu mai primește alerte pe județ, iar
+// cardul iese din listele de lucru. Reactivarea readuce totul, datele n-au
+// plecat nicăieri.
+//
+// Un rând per ADRESĂ, nu per firmă: la dezactivare se scriu toate adresele
+// legate ale contului, ca verificarea de la login să nu aibă nevoie de
+// „Emailuri Firmă" (o citire de Sheets în plus la fiecare pagină de portal).
+
+const DEACTIVATED_SHEET = 'Conturi Dezactivate';
+
+const DEACTIVATED_HEADER = [
+  'Actualizat', // A — ISO
+  'Email', // B — o adresă a contului
+  'Dezactivat', // C — „da" / „nu"; rândul rămâne ca istoric la reactivare
+  'Notă', // D — de ce, scris din admin
+];
+
+export interface DeactivatedAccount {
+  email: string;
+  /** ISO — când a fost dezactivat. */
+  at: string;
+  note: string;
+}
+
+export async function getDeactivatedAccounts(): Promise<DeactivatedAccount[]> {
+  let rows: string[][];
+  try {
+    rows = await readRows(DEACTIVATED_SHEET);
+  } catch {
+    // Tabul nu există încă — prima dezactivare îl creează.
+    return [];
+  }
+  return rows
+    .filter((r) => (r[1] || '').includes('@') && (r[2] || '').trim().toLowerCase() === 'da')
+    .map((r) => ({
+      at: r[0] || '',
+      email: (r[1] || '').trim().toLowerCase(),
+      note: r[3] || '',
+    }));
+}
+
+/** Dezactivează sau reactivează adresele date. Upsert pe email, rândurile nu se șterg. */
+export async function setAccountsDeactivated(
+  emails: string[],
+  deactivated: boolean,
+  note = '',
+): Promise<void> {
+  const keys = [...new Set(emails.map((e) => e.trim().toLowerCase()).filter((e) => e.includes('@')))];
+  if (!keys.length) return;
+  const now = new Date().toISOString();
+  const valuesFor = (email: string) => [now, email, deactivated ? 'da' : 'nu', note];
+
+  let rows: string[][];
+  try {
+    rows = await readRows(DEACTIVATED_SHEET);
+  } catch {
+    if (!deactivated) return;
+    await createSheetTab(DEACTIVATED_SHEET);
+    await appendRow(DEACTIVATED_SHEET, DEACTIVATED_HEADER);
+    rows = [DEACTIVATED_HEADER];
+  }
+
+  const data: { range: string; values: string[][] }[] = [];
+  for (const email of keys) {
+    const index = rows.findIndex((r) => (r[1] || '').trim().toLowerCase() === email);
+    if (index !== -1) {
+      data.push({ range: `${DEACTIVATED_SHEET}!A${index + 1}:D${index + 1}`, values: [valuesFor(email)] });
+    } else if (deactivated) {
+      await appendRow(DEACTIVATED_SHEET, valuesFor(email));
+    }
+  }
+  if (data.length) {
+    const sheets = google.sheets({ version: 'v4', auth: getAuth() });
+    await withRetry(
+      () =>
+        sheets.spreadsheets.values.batchUpdate({
+          spreadsheetId: SPREADSHEET_ID,
+          requestBody: { valueInputOption: 'RAW', data },
+        }),
+      'update conturi dezactivate',
+    );
+  }
+  deactivatedCache = null;
+}
+
+/**
+ * Lista ține un minut per instanță: verificarea stă pe fiecare pagină și rută
+ * de portal, iar Sheets are 60 de citiri pe minut. O dezactivare ajunge deci
+ * pe celelalte instanțe în cel mult un minut.
+ */
+const DEACTIVATED_CACHE_MS = 60_000;
+let deactivatedCache: { at: number; emails: Set<string> } | null = null;
+
+export async function getDeactivatedEmails(): Promise<Set<string>> {
+  if (deactivatedCache && Date.now() - deactivatedCache.at < DEACTIVATED_CACHE_MS) {
+    return deactivatedCache.emails;
+  }
+  const emails = new Set((await getDeactivatedAccounts()).map((a) => a.email));
+  deactivatedCache = { at: Date.now(), emails };
+  return emails;
+}
+
+/**
+ * Adresa e a unui cont dezactivat? Fail-open: un tab picat n-are voie să
+ * scoată din portal toate firmele, în cel mai rău caz un cont dezactivat mai
+ * intră până revine Sheets.
+ */
+export async function isPortalEmailDeactivated(email: string): Promise<boolean> {
+  const key = email.trim().toLowerCase();
+  if (!key) return false;
+  try {
+    return (await getDeactivatedEmails()).has(key);
+  } catch (err) {
+    console.error('[portal] conturi dezactivate:', err);
+    return false;
+  }
+}
+
+/** Pentru alerte: aceeași listă, fail-open pe „nimeni dezactivat". */
+export async function getDeactivatedEmailsForAlerts(): Promise<string[]> {
+  try {
+    return [...(await getDeactivatedEmails())];
+  } catch (err) {
+    console.error('[alerte] conturi dezactivate:', err);
+    return [];
+  }
+}
+
 // ── Emailuri legate (o firmă, mai multe adrese) ────────────────────────────
 // Identitatea în portal e emailul, iar firmele revendică de pe adrese diferite:
 // pe 1 sept 2026 Green Seiro avea trei revendicări pe contact@ și una pe
@@ -2309,8 +2441,12 @@ export async function getFirmEmailLinksForAlerts(): Promise<FirmEmailLink[]> {
 /** Adresele care primesc alerta pentru județul cererii. Listele sunt mici, se citesc la fiecare cerere. */
 export async function getCountyAlertRecipients(judet: string): Promise<string[]> {
   if (!judet.trim()) return [];
-  const [prefs, links] = await Promise.all([getCountyAlertPrefs(), getFirmEmailLinksForAlerts()]);
-  return filterCountyAlertRecipients(prefs, judet, links);
+  const [prefs, links, deactivated] = await Promise.all([
+    getCountyAlertPrefs(),
+    getFirmEmailLinksForAlerts(),
+    getDeactivatedEmailsForAlerts(),
+  ]);
+  return filterCountyAlertRecipients(prefs, judet, links, deactivated);
 }
 
 export async function saveWaitlistToSheet(email: string) {

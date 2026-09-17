@@ -7,6 +7,7 @@ import {
   getClaims,
   getCountyAlertPrefs,
   getFirmEmailLinksForAlerts,
+  getDeactivatedEmailsForAlerts,
   getLeadSubscriptions,
   getLeadsSince,
   bucharestDay,
@@ -177,11 +178,15 @@ async function announceUnlockedLeads(
   );
   if (!pending.length) return { announced, skipped };
 
-  const [prefs, subs, links] = await Promise.all([
+  const [allPrefs, subs, links, deactivated] = await Promise.all([
     getCountyAlertPrefs(),
     getLeadSubscriptions(),
     getFirmEmailLinksForAlerts(),
+    getDeactivatedEmailsForAlerts(),
   ]);
+  // Conturile dezactivate din /admin/portal nu mai primesc alerte. Toate
+  // adresele unui cont dezactivat sunt pe listă, deci grupul rămâne fără listă.
+  const prefs = allPrefs.filter((p) => !deactivated.includes(p.email));
   const claimedLeads = new Set(
     claims.filter(claimOccupiesLeadSlot).map((c) => c.leadId),
   );

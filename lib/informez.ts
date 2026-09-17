@@ -17,6 +17,7 @@ import {
   findSubscriptionForCounty,
   getCountyAlertPrefs,
   getFirmEmailLinksForAlerts,
+  getDeactivatedEmailsForAlerts,
   getLeadSubscriptions,
   getLeadsSince,
   getWatches,
@@ -229,13 +230,16 @@ export async function runInformezDaily(
   opts: { dry: boolean; businessDay: boolean },
 ): Promise<InformezDailyResult> {
   const result: InformezDailyResult = { welcomes: [], checkins: [], closed: [], reactivated: [], failed: [] };
-  const [leads, watches, prefs, subs, links] = await Promise.all([
+  const [leads, watches, allPrefs, subs, links, deactivated] = await Promise.all([
     getLeadsSince(new Date(0)),
     getWatches(),
     getCountyAlertPrefs(),
     getLeadSubscriptions(),
     getFirmEmailLinksForAlerts(),
+    getDeactivatedEmailsForAlerts(),
   ]);
+  // Conturile dezactivate din /admin/portal nu mai primesc alerte.
+  const prefs = allPrefs.filter((p) => !deactivated.includes(p.email));
 
   await announceReactivatedLeads(leads, watches, prefs, links, subs, now, opts.dry, result);
   if (!opts.businessDay) return result;

@@ -6,6 +6,8 @@ import {
   getLeadsSince,
   getCountyAlertPrefs,
   getFirmEmailLinks,
+  getDeactivatedAccounts,
+  type DeactivatedAccount,
   resolveEmailGroup,
   resolveGroupAlertPref,
   type CountyAlertPref,
@@ -27,6 +29,7 @@ import { getFirmSourceLabel, getProjectTypeLabel, type Company } from '@/lib/uti
 import ApproveClaims, { type PortalClaimRow } from './ApproveClaims';
 import FirmEmails, { type FirmEmailRow } from './FirmEmails';
 import GiveLead, { type GiveLeadFirm, type LeadOption } from './GiveLead';
+import AccountStatus from './AccountStatus';
 
 export const dynamic = 'force-dynamic';
 
@@ -102,6 +105,11 @@ interface PortalAccount {
   giveFirm: GiveLeadFirm | null;
   /** Cereri deschise pe care i le pot da, cele mai potrivite primele. */
   giveOptions: LeadOption[];
+  /**
+   * Dezactivat din admin (oricare adresă a contului e pe „Conturi
+   * Dezactivate"). Cardul stă doar pe filtrul lui, nu intră în cifre.
+   */
+  deactivated: DeactivatedAccount | null;
 }
 
 /**
@@ -155,6 +163,7 @@ const FILTERS: { key: string; label: string; state?: AccountState }[] = [
   { key: 'necunoscut', label: 'Jurnalul nu știe', state: 'necunoscut' },
   { key: 'goi', label: 'Portal gol' },
   { key: 'fara-judete', label: 'Fără județe bifate' },
+  { key: 'dezactivate', label: 'Dezactivate' },
 ];
 
 /** Are alerte pornite pe cel puțin un județ. */
@@ -330,7 +339,9 @@ function AccountCard({
   return (
     <article className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
       <header
-        className={`flex items-start justify-between gap-3 border-b px-4 py-3 ${STATE_STYLES[state].header}`}
+        className={`flex items-start justify-between gap-3 border-b px-4 py-3 ${
+          account.deactivated ? 'border-slate-300 bg-slate-200' : STATE_STYLES[state].header
+        }`}
       >
         <div className="min-w-0">
           <h3 className="truncate font-semibold text-slate-900">{firmName || account.email}</h3>
@@ -350,6 +361,11 @@ function AccountCard({
           {origin && <p className="mt-0.5 truncate text-[11px] text-slate-500">De unde: {origin}</p>}
         </div>
         <div className="flex shrink-0 flex-col items-end gap-1">
+          {account.deactivated && (
+            <span className="rounded-full bg-slate-700 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white uppercase">
+              dezactivat
+            </span>
+          )}
           <span
             className={`rounded-full px-2.5 py-1 text-[11px] font-bold tracking-wide uppercase ${STATE_STYLES[state].badge}`}
           >
@@ -363,6 +379,14 @@ function AccountCard({
           )}
         </div>
       </header>
+
+      {account.deactivated && (
+        <div className="border-b border-slate-200 bg-slate-100 px-4 py-2 text-xs text-slate-700">
+          Dezactivat pe {fmtDateTime(account.deactivated.at)}: nu intră în portal, nu primește
+          alerte.
+          {account.deactivated.note && <> Motiv: {account.deactivated.note}</>}
+        </div>
+      )}
 
       <div className="border-b border-slate-100 px-4 py-2 text-xs text-slate-600">
         {accessLine(account)}
@@ -420,6 +444,11 @@ function AccountCard({
             cererile în CRM →
           </Link>
         )}
+        <AccountStatus
+          label={firmName || account.email}
+          emails={account.addresses.map((a) => a.email)}
+          deactivatedAt={account.deactivated?.at ?? ''}
+        />
       </div>
 
       {account.events.length > 0 && (
@@ -461,14 +490,16 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   let leads: NewLead[];
   let alertPrefs: CountyAlertPref[];
   let emailLinks: FirmEmailLink[];
+  let deactivatedList: DeactivatedAccount[];
   try {
-    [events, claims, firms, leads, alertPrefs, emailLinks] = await Promise.all([
+    [events, claims, firms, leads, alertPrefs, emailLinks, deactivatedList] = await Promise.all([
       getPortalAccessEvents(),
       getClaims(),
       getCrmFirms(),
       getLeadsSince(new Date(0)),
       getCountyAlertPrefs(),
       getFirmEmailLinks(),
+      getDeactivatedAccounts(),
     ]);
   } catch (err) {
     return (
@@ -526,7 +557,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
     groups.set(members[0], members);
   }
 
-  const accounts: PortalAccount[] = [...groups].map(([email, members]) => {
+  let accounts: PortalAccount[] = [...groups].map(([email, members]) => {
     const evs = members
       .flatMap((m) => eventsByEmail.get(m) ?? [])
       .sort((a, b) => b.timestamp.localeCompare(a.timestamp));
@@ -613,6 +644,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       })),
       giveFirm,
       giveOptions,
+      deactivated: deactivatedList.find((d) => members.includes(d.email)) ?? null,
     };
   });
 
@@ -645,7 +677,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
 
   for (const account of accounts) {
     account.suggested = accounts.flatMap((other) => {
-      if (other.email === account.email) return [];
+      if (other.email === account.email || other.deactivated) return [];
       if (account.identity && other.identity && isSameFirm(account.identity, other.identity)) {
         return [{ email: other.email, reason: 'revendică pe numele aceleiași firme' }];
       }
@@ -669,8 +701,16 @@ export default async function PortalAccessPage({ searchParams }: Props) {
     return d !== 0 ? d : b.lastSeen.localeCompare(a.lastSeen);
   });
 
+  // Dezactivatele stau doar pe filtrul lor: nu mai sunt de lucru, deci nici în
+  // liste, nici în cifrele de sus.
+  const deactivatedAccounts = accounts.filter((a) => a.deactivated);
+  const allAccounts = accounts;
+  accounts = accounts.filter((a) => !a.deactivated);
+
   const activeFilter = FILTERS.find((f) => f.key === filtru) ?? FILTERS[0];
-  const visible = activeFilter.state
+  const visible = activeFilter.key === 'dezactivate'
+    ? deactivatedAccounts
+    : activeFilter.state
     ? accounts.filter((a) => stateOf(a) === activeFilter.state)
     : activeFilter.key === 'de-aprobat'
       ? accounts.filter((a) => a.pending > 0)
@@ -721,6 +761,9 @@ export default async function PortalAccessPage({ searchParams }: Props) {
             active={activeFilter.key === f.key}
           >
             {f.label}
+            {f.key === 'dezactivate' && deactivatedAccounts.length > 0 && (
+              <> ({deactivatedAccounts.length})</>
+            )}
           </Pill>
         ))}
       </div>
@@ -737,7 +780,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
 
       {visible.length === 0 && (
         <p className="mt-2 rounded-xl border border-slate-200 bg-white px-4 py-8 text-center text-sm text-slate-500">
-          {accounts.length === 0
+          {allAccounts.length === 0
             ? 'Nicio firmă cu portal încă. Apar aici la prima revendicare cu email sau la prima cerere de acces.'
             : 'Nicio firmă pentru filtrul ales.'}
         </p>

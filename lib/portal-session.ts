@@ -5,7 +5,7 @@
 import { cookies } from 'next/headers';
 import { after } from 'next/server';
 import { PORTAL_COOKIE, normalizeEmail, verifyToken } from './portal-auth';
-import { logPortalVisit } from './sheets';
+import { isPortalEmailDeactivated, logPortalVisit } from './sheets';
 
 /** Data și ora României pentru jurnalul de note — același format ca în /admin/crm. */
 export function bucharestStamp(): { today: string; time: string } {
@@ -55,5 +55,9 @@ export async function peekPortalEmail(): Promise<string | null> {
   const token = (await cookies()).get(PORTAL_COOKIE)?.value;
   const payload = await verifyToken(token, 'session', secret);
   if (!payload) return null;
-  return normalizeEmail(payload.email);
+  const email = normalizeEmail(payload.email);
+  // Contul dezactivat din /admin/portal: sesiunea de 30 de zile e încă semnată
+  // valid, dar nu mai e recunoscută. Firma vede fața publică a portalului.
+  if (await isPortalEmailDeactivated(email)) return null;
+  return email;
 }
