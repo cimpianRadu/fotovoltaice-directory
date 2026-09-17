@@ -87,6 +87,12 @@ export interface ConsumLunar {
   kwhLunar: number;
   /** Cum se scrie pe ecran: „250 lei/lună" sau „300 kWh/lună". */
   label: string;
+  /**
+   * Aceeași cifră în cealaltă unitate, la tariful-ipoteză: „≈390 lei" pentru
+   * 300 kWh, „≈190 kWh" pentru 250 lei. Rotunjit la zeci, ca să nu pară o
+   * măsurătoare. Tariful e cel rezidențial, deci se afișează doar acolo.
+   */
+  echivalent: string;
 }
 
 // Convenția românească: punctul și spațiul separă miile („15.000", „15 000"),
@@ -138,11 +144,16 @@ export function parseConsumLunar(raw: string): ConsumLunar | null {
 
   const kwhLunar = basis === 'kwh' ? lunar : lunar / DEFAULT_TARIFF_RON_PER_KWH;
   const rotunjit = Math.round(lunar);
+  const laZeci = (n: number) => Math.max(10, Math.round(n / 10) * 10);
+  const echivalent = basis === 'kwh'
+    ? `≈${laZeci(lunar * DEFAULT_TARIFF_RON_PER_KWH)} lei`
+    : `≈${laZeci(kwhLunar)} kWh`;
   return {
     valoare: lunar,
     basis,
     kwhLunar,
     label: basis === 'kwh' ? `${rotunjit} kWh/lună` : `${rotunjit} lei/lună`,
+    echivalent,
   };
 }
 

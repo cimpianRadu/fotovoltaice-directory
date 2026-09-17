@@ -291,9 +291,14 @@ const BUDGET_LABELS: Record<string, string> = Object.fromEntries(
   [...BUDGET_REZIDENTIAL, ...BUDGET_COMERCIAL].map((o) => [o.value, o.label]),
 );
 
-/** Eticheta bugetului; „Nu știu încă" devine gol la afișare, ca să nu ocupe un chip degeaba. */
+/**
+ * Eticheta bugetului. „Nu știu încă" se afișează „Nehotărât", nu gol: altfel
+ * firma nu deosebește clientul care n-are un buget în minte de cererea veche,
+ * de dinainte de 16 sept 2026, care n-a fost întrebată deloc.
+ */
 export function getBudgetLabel(slug: string): string {
-  if (!slug || slug === 'nu-stiu') return '';
+  if (!slug) return '';
+  if (slug === 'nu-stiu') return 'Nehotărât';
   return BUDGET_LABELS[slug] ?? slug;
 }
 

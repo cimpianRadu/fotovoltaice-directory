@@ -37,7 +37,7 @@ export interface LeadCardData {
   termen: string;
   termenLabel: string;
   intervalApelLabel: string;
-  /** Banda de buget aleasă de client; gol la „nu știu" sau pe cererile vechi. */
+  /** Banda de buget aleasă de client („Nehotărât" la „nu știu"); gol pe cererile vechi. */
   bugetLabel: string;
   /** Ce vrea clientul să rezolve (pasul 5, din 17 sept 2026); gol pe cererile vechi. */
   scopLabel: string;

@@ -141,7 +141,13 @@ export default async function CereriPage() {
       acoperisLabel: l.tipAcoperis ? getRoofTypeLabel(l.tipAcoperis) : '',
       fazareLabel: l.fazare ? getPhaseLabel(l.fazare) : '',
       bransamentLabel: l.bransament ? getConnectionShort(l.bransament) : '',
-      consumLunar: consum ? consum.label : l.consumLunar,
+      // Firma gândește în kWh, clientul în factură: pe rezidențial arătăm și
+      // cealaltă unitate. Pe comercial nu, tariful-ipoteză e cel casnic.
+      consumLunar: !consum
+        ? l.consumLunar
+        : l.segment === 'rezidential'
+          ? `${consum.label} (${consum.echivalent})`
+          : consum.label,
       finantareLabel: l.finantare ? getFinancingShort(l.finantare) : '',
       finantareTone: getFinancingTone(l.finantare),
       stocareLabel: l.stocare ? getYesNoLabel(l.stocare) : '',
