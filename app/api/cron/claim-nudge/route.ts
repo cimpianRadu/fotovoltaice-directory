@@ -12,6 +12,7 @@ import {
   getLeadsSince,
   bucharestDay,
   claimIdleBusinessDays,
+  claimIdleCalendarDays,
   claimReminderDue,
   isBusinessDay,
   isLeadClosed,
@@ -22,7 +23,11 @@ import {
   type LeadClaim,
   type NewLead,
 } from '@/lib/sheets';
-import { sendClaimInactiveEmail, sendCountyLeadAlert } from '@/lib/email';
+import {
+  sendClaimInactiveEmail,
+  sendCountyLeadAlert,
+  sendPendingCallsDigest,
+} from '@/lib/email';
 import { runInformezDaily } from '@/lib/informez';
 import {
   getConnectionLabel,
@@ -93,8 +98,19 @@ export async function GET(request: Request) {
     });
 
     if (!businessDay && !dry) {
-      return NextResponse.json({ ok: true, skipped: 'zi nelucrătoare', sent: 0, unlocked, informez });
+      return NextResponse.json({
+        ok: true,
+        skipped: 'zi nelucrătoare',
+        sent: 0,
+        pendingCalls: [],
+        unlocked,
+        informez,
+      });
     }
+
+    // Înaintea reminderelor: primele revendicări care încă așteaptă apelul meu
+    // de confirmare. Emailul pleacă spre MINE, nu spre firmă.
+    const pendingCalls = await remindMeToCall(claims, leadById, now, dry);
 
     const due = claims.filter(
       (c) => c.email && claimReminderDue({ ...c, noteCount: c.firmNotes.length }, now),
@@ -143,6 +159,7 @@ export async function GET(request: Request) {
       candidates: due.length,
       sent: sent.length,
       failed: failed.length,
+      pendingCalls,
       unlocked,
       informez,
       details: { sent, failed },
@@ -250,4 +267,65 @@ async function announceUnlockedLeads(
   }
 
   return { announced, skipped };
+}
+
+/**
+ * Primele revendicări care încă așteaptă apelul meu de confirmare, strânse
+ * într-un email către MINE, în fiecare dimineață în care există vreuna.
+ *
+ * De ce așa și nu altfel: prima versiune (18 sept 2026) elibera revendicarea
+ * după o zi și anunța firma. Greșit, și userul a spus-o direct: dacă o firmă
+ * revendică o cerere, treaba noastră e să o sunăm, nu să i-o luăm. Firma a
+ * făcut exact ce trebuia; cel care întârzie sunt eu, deci alarma vine la mine.
+ *
+ * Nu are marcaj de „trimis deja" și nici plafon de repetare: atâta timp cât o
+ * firmă așteaptă un telefon, emailul revine mâine. Asta e tot rostul lui.
+ */
+async function remindMeToCall(
+  claims: LeadClaim[],
+  leadById: Map<string, NewLead>,
+  now: number,
+  dry: boolean,
+): Promise<string[]> {
+  const waiting = claims
+    .filter((c) => {
+      // `manual` are datele din discuția la telefon, deci nu așteaptă nimic.
+      if (c.approvedAt || c.releasedAt || c.source === 'manual') return false;
+      // Fără email n-avem cont de deblocat: rândurile vechi, dinainte de portal.
+      if (!c.email) return false;
+      const lead = leadById.get(c.leadId);
+      return Boolean(lead) && !isLeadClosed(lead!.crmStatus) && !isLeadHidden(lead!);
+    })
+    .map((c) => {
+      const lead = leadById.get(c.leadId)!;
+      return {
+        numeFirma: c.numeFirma,
+        numeContact: c.numeContact,
+        telefon: c.telefon,
+        email: c.email,
+        leadSummary: [
+          getProjectTypeLabel(lead.tipProiect),
+          lead.judet,
+          lead.putere ? `${lead.putere} kW` : '',
+        ]
+          .filter(Boolean)
+          .join(' · '),
+        // Două ceasuri, ca în /admin/crm: al firmei (zile lucrătoare) și al
+        // clientului, care nu are weekend și așteaptă un telefon.
+        businessDays: claimIdleBusinessDays(c.timestamp, now),
+        calendarDays: claimIdleCalendarDays(c.timestamp, now),
+      };
+    })
+    // Cel care așteaptă de cel mai mult timp, primul.
+    .sort((a, b) => b.calendarDays - a.calendarDays);
+
+  if (!waiting.length) return [];
+
+  const labels = waiting.map(
+    (w) => `${w.numeFirma} (${w.telefon}) → ${w.leadSummary}, ${w.calendarDays} zile`,
+  );
+  if (dry) return labels;
+
+  await sendPendingCallsDigest({ claims: waiting });
+  return labels;
 }

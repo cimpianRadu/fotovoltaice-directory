@@ -116,8 +116,7 @@ export default function PortalReservedLeads({ leads }: { leads: ReservedLead[] }
 
       {error && <p className="mt-3 text-sm text-red-700">{error}</p>}
       <p className="mt-3 text-xs text-gray-500 leading-relaxed">
-        După preluare, datele clientului se deblochează ca la orice revendicare, imediat ce o
-        aprobăm.
+        După preluare, datele clientului apar pe loc, ca la orice revendicare.
       </p>
     </div>
   );

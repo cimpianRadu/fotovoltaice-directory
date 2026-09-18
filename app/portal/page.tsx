@@ -376,9 +376,9 @@ export default async function PortalPage() {
 
               {mine.length > 0 && (
                 <p className="mt-8 text-xs text-gray-400 leading-relaxed">
-                  Datele clienților se deblochează imediat ce aprobăm revendicarea. Statusul pe care
-                  îl setezi tu ne spune unde ești cu clientul. Locul se eliberează când renunți, cu un
-                  motiv, sau când marchezi că ai pierdut clientul.
+                  Datele clienților apar pe loc când revendici, fără să mai aștepți nimic de la noi.
+                  Statusul pe care îl setezi tu ne spune unde ești cu clientul. Locul se eliberează
+                  când renunți, cu un motiv, sau când marchezi că ai pierdut clientul.
                 </p>
               )}
             </>

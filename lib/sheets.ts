@@ -1026,6 +1026,13 @@ export async function saveClaimToSheet(claim: {
   attribution?: Attribution;
   /** Doar la `self`: răspunsul firmei la „cum ai aflat de noi?". */
   cumAflat?: string;
+  /**
+   * ISO, scris direct în coloana M: firma a mai trecut o dată prin apelul de
+   * confirmare, deci datele clientului i se deblochează în aceeași secundă în
+   * care revendică. Vezi `firmIsConfirmed`. Gol la prima revendicare a unei
+   * firme noi, care așteaptă apelul.
+   */
+  approvedAt?: string;
 }): Promise<string> {
   const timestamp = new Date().toISOString();
   const values = [
@@ -1041,7 +1048,7 @@ export async function saveClaimToSheet(claim: {
     '', // J — Renunțat la: ISO, scris din /portal la renunț
     '', // K — Motiv renunțare: obligatoriu la renunț, scris din /portal
     '', // L — Note firmă: jurnalul firmei din /portal (format parseNotes)
-    '', // M — Aprobat la: scris din /admin/crm; deblochează datele clientului în portal
+    claim.approvedAt || '', // M — Aprobat la: automat la firmele confirmate, altfel din /admin/crm după apel
     '', // N — Ofertat la: firma marchează din /portal că a trimis oferta
     '', // O — Ultimul reminder la: emailul „mai ești interesat?"
     '', // P — Remindere trimise: contorul de cadență (max CLAIM_REMINDER_MAX)
@@ -2757,6 +2764,7 @@ export {
   isClaimStale,
   isClaimStatusUnproven,
   isClaimUntouched,
+  firmIsConfirmed,
   firmMentionedIn,
   isLeadClosed,
   isSameFirm,

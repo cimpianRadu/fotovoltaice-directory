@@ -6,7 +6,9 @@ import {
   claimsHeldForLead,
   countActiveClaimsForFirm,
   findSubscriptionForCounty,
+  firmIsConfirmed,
   getClaims,
+  getFirmEmailGroup,
   getFullLeadById,
   getFirmIdentity,
   getLeadSubscriptions,
@@ -21,7 +23,7 @@ import { isValidEmail, normalizeEmail } from '@/lib/portal-auth';
 import { peekPortalEmail } from '@/lib/portal-session';
 import { sanitizeAttribution } from '@/lib/attribution';
 import { isFirmSource } from '@/lib/utils-shared';
-import { sendClaimNotification } from '@/lib/email';
+import { sendClaimApprovedEmail, sendClaimNotification } from '@/lib/email';
 import {
   getConnectionLabel,
   getProjectTypeLabel,
@@ -155,6 +157,20 @@ export async function POST(request: Request) {
       );
     }
 
+    // Apelul de confirmare e pe FIRMĂ, nu pe revendicare (18 sept 2026, vezi
+    // `firmIsConfirmed`): firma care a mai avut o revendicare aprobată primește
+    // datele clientului în secunda în care revendică, fără să aștepte un buton
+    // apăsat de mine. Prima revendicare a unei firme noi rămâne în spatele
+    // apelului, exact cum scrie pe /cereri. Dacă apelul întârzie, cererea NU se
+    // ia de la firmă: cronul de dimineață mă sună pe mine, cu lista de apeluri
+    // (`remindMeToCall`). Firma a făcut ce trebuia, deci nu ea plătește.
+    const firmEmails = await getFirmEmailGroup(normalizeEmail(email));
+    const firmConfirmed = firmIsConfirmed(allClaims, {
+      emails: firmEmails,
+      numeFirma,
+      telefon,
+    });
+
     const claim = {
       leadId,
       numeFirma: numeFirma.trim(),
@@ -164,6 +180,7 @@ export async function POST(request: Request) {
       email: normalizeEmail(email),
       attribution,
       cumAflat,
+      approvedAt: firmConfirmed ? new Date().toISOString() : '',
     };
     await saveClaimToSheet(claim);
 
@@ -199,6 +216,17 @@ export async function POST(request: Request) {
 
     const claimCount = claimsForLead.length + 1;
 
+    const leadSummary = `${getProjectTypeLabel(lead.tipProiect)} · ${lead.judet}${
+      lead.putere ? ` · ${lead.putere} kW` : ''
+    }`;
+
+    // Deblocarea automată îi spune firmei același lucru pe care i-l spunea
+    // emailul de după aprobarea manuală. Firma închide pagina și pleacă pe
+    // teren; fără email ar afla din portal abia la următoarea intrare.
+    if (firmConfirmed) {
+      await sendClaimApprovedEmail({ to: claim.email, leadSummary });
+    }
+
     // Fără asta, feedul rămâne pe ISR-ul de 5 minute și o altă firmă vede
     // cererea ca nerevendicată imediat după ce a fost luată.
     revalidatePath('/cereri');
@@ -228,14 +256,16 @@ export async function POST(request: Request) {
       claimCount,
       maxClaims: MAX_CLAIMS_PER_LEAD,
       firmHasPortalAccount,
+      firmConfirmed,
     });
 
-    // `hasAccount` schimbă ce scrie pe ecranul de confirmare: „te sunăm" doar
-    // pentru firmele fără cont.
+    // Ecranul de confirmare spune trei lucruri diferite: datele sunt deja în
+    // portal (`unlocked`), sau te sunăm o dată pentru prima revendicare.
     return NextResponse.json({
       success: true,
       claims: claimCount,
       hasAccount: firmHasPortalAccount,
+      unlocked: firmConfirmed,
     });
   } catch (err) {
     console.error('Claims API error:', err);

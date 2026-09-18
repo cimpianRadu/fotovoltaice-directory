@@ -57,8 +57,8 @@ export default function PortalLanding() {
             <Link href="/cereri" className="text-primary-dark underline hover:no-underline">
               feedul de cereri active
             </Link>
-            , într-un singur loc. Datele de contact ale clientului se deblochează aici imediat ce
-            aprobăm revendicarea.
+            , într-un singur loc. Datele de contact ale clientului apar aici pe loc; doar la prima
+            cerere a unei firme noi dăm întâi un telefon de confirmare.
           </p>
         </div>
 

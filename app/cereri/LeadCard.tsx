@@ -530,11 +530,15 @@ export default function LeadCard({
   // linkul spre /portal/login pe ecranul de confirmare, ca firma să nu-l mai
   // tasteze o dată (și să nu greșească alt email decât cel din revendicare).
   const [emailFolosit, setEmailFolosit] = useState('');
-  // Firma cu cont în portal nu mai primește apelul de confirmare (15 sept
-  // 2026), deci ecranul de confirmare îi scrie altceva. Adevărul îl știe doar
-  // serverul (jurnalul de acces), nu sesiunea din pagină: o firmă cu cont poate
-  // revendica delogată, din feed.
+  // Are cont în portal (jurnalul de acces), deci ecranul de confirmare îi arată
+  // drumul spre portal, nu spre login. Adevărul îl știe doar serverul, nu
+  // sesiunea din pagină: o firmă cu cont poate revendica delogată, din feed.
   const [hasAccount, setHasAccount] = useState(false);
+  // Apelul de confirmare e o singură dată, la prima revendicare a firmei (18
+  // sept 2026). Firma care a mai trecut o dată prin el primește datele pe loc,
+  // deci ecranul de confirmare nu mai promite nici apel, nici așteptare. Vine
+  // de la server (`unlocked`), singurul care știe istoricul firmei.
+  const [unlocked, setUnlocked] = useState(false);
 
   const full = claims >= maxClaims;
   const slotsLeft = maxClaims - claims;
@@ -739,6 +743,7 @@ export default function LeadCard({
       if (typeof json.claims === 'number') setClaims(json.claims);
       setEmailFolosit(typeof data.email === 'string' ? data.email : me?.email || '');
       setHasAccount(json.hasAccount === true);
+      setUnlocked(json.unlocked === true);
       setStatus('success');
     } catch {
       setStatus('idle');
@@ -1089,16 +1094,18 @@ export default function LeadCard({
             {claimedByMe ? (
               <div>
                 <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-800">
-                  {hasAccount ? (
+                  {unlocked ? (
                     <>
                       Revendicare înregistrată. Datele clientului
-                      {lead.arePoze ? ' și pozele cererii' : ''} apar în portalul tău în cel mult
-                      o zi lucrătoare.
+                      {lead.arePoze ? ' și pozele cererii' : ''} sunt deja în portalul tău, poți
+                      suna acum.
                     </>
                   ) : (
                     <>
-                      Revendicare înregistrată. Te sunăm o dată pentru confirmare, apoi îți
-                      deblocăm datele clientului{lead.arePoze ? ' și pozele cererii' : ''}.
+                      Revendicare înregistrată. E prima ta cerere de la noi, așa că te sunăm o
+                      dată pentru confirmare, apoi îți deblocăm datele clientului
+                      {lead.arePoze ? ' și pozele cererii' : ''}. De la a doua cerere le primești
+                      pe loc.
                     </>
                   )}
                 </div>
@@ -1176,7 +1183,7 @@ export default function LeadCard({
                   Revendicarea este rezervată firmelor de instalare fotovoltaice. Primești datele
                   complete ale clientului în{' '}
                   <a href="/portal" className="underline hover:no-underline">Portalul Instalatorilor</a>;
-                  la prima revendicare te sunăm o dată pentru confirmare.
+                  la prima revendicare te sunăm o dată pentru confirmare, apoi le primești pe loc.
                   Datele firmei tale sunt folosite doar pentru alocarea acestei cereri. Poți ține{' '}
                   {MAX_ACTIVE_CLAIMS_PER_FIRM} cereri nemișcate odată: locul se eliberează imediat
                   ce muți statusul cererii în portal.

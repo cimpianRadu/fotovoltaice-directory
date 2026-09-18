@@ -104,9 +104,10 @@ function StatusBadge({
     );
   }
   if (!approved) {
-    // Aici ești logat, deci ai cont: nu te mai sunăm, doar aprobăm (15 sept
-    // 2026). Eticheta veche promitea un telefon care nu mai vine.
-    return <span className={`${base} bg-amber-50 text-amber-700`}>Se aprobă</span>;
+    // Din 18 sept 2026 o revendicare neaprobată e prima cerere a firmei, care
+    // chiar așteaptă apelul de confirmare. Restul se deblochează la revendicare,
+    // deci nu mai trec niciodată prin starea asta.
+    return <span className={`${base} bg-amber-50 text-amber-700`}>Așteaptă apelul</span>;
   }
   return (
     <span className={`${base} text-white ${STATUS_TONE[status]}`}>
@@ -402,8 +403,8 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
       ) : (
         !inactive && (
           <div className="mt-4 rounded-lg bg-surface border border-border px-4 py-3 text-sm text-gray-500">
-            Datele clientului se deblochează imediat ce aprobăm revendicarea (durează de obicei
-            sub o zi lucrătoare).
+            E prima ta cerere de la noi: te sunăm o dată pentru confirmare și datele clientului
+            apar aici. De la a doua cerere se deblochează pe loc, fără telefon.
           </div>
         )
       )}

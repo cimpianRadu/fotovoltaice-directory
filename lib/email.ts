@@ -255,20 +255,28 @@ interface ClaimNotificationData {
   maxClaims: number;
   /** Are cont în portal, deci nu o mai sunăm: doar aprobăm (15 sept 2026). */
   firmHasPortalAccount?: boolean;
+  /**
+   * A mai trecut o dată prin apelul de confirmare, deci datele clientului i s-au
+   * deblocat automat la revendicare (18 sept 2026). Nu mai e nimic de apăsat.
+   */
+  firmConfirmed?: boolean;
 }
 
 // Notificare imediată (nu în digest) — o revendicare e time-sensitive: firma
 // așteaptă telefonul de confirmare cât interesul e cald.
 export async function sendClaimNotification(data: ClaimNotificationData): Promise<void> {
   const to = process.env.LISTING_NOTIFICATION_EMAIL || 'radu.cimpian94@gmail.com';
-  const { claim, lead, claimCount, maxClaims, firmHasPortalAccount } = data;
+  const { claim, lead, claimCount, maxClaims, firmHasPortalAccount, firmConfirmed } = data;
   const full = claimCount >= maxClaims;
 
-  // Prima linie din email e ce ai de făcut cu revendicarea asta: firma cu cont
-  // nu se mai sună, se aprobă din /admin/crm și datele îi apar în portal.
-  const actionLine = firmHasPortalAccount
-    ? '<div style="margin:0 0 14px;padding:9px 12px;border-radius:8px;background:#ecfdf5;border:1px solid #a7f3d0;font-size:13px;color:#065f46"><strong>Are cont în portal — nu o suna.</strong> Aprobă revendicarea din /admin/crm și datele clientului îi apar acolo.</div>'
-    : '<div style="margin:0 0 14px;padding:9px 12px;border-radius:8px;background:#fffbeb;border:1px solid #fde68a;font-size:13px;color:#92400e"><strong>Fără cont în portal — sun-o pentru confirmare.</strong> După apel, aprobă revendicarea ca să primească datele clientului.</div>';
+  // Prima linie din email e ce ai de făcut cu revendicarea asta. Trei cazuri:
+  // firmă deja confirmată (nimic de făcut, datele au plecat), firmă nouă cu
+  // cont, firmă nouă fără cont. Apelul rămâne doar la prima revendicare.
+  const actionLine = firmConfirmed
+    ? '<div style="margin:0 0 14px;padding:9px 12px;border-radius:8px;background:#ecfdf5;border:1px solid #a7f3d0;font-size:13px;color:#065f46"><strong>Firmă deja confirmată — nimic de făcut.</strong> Datele clientului i s-au deblocat automat în portal.</div>'
+    : firmHasPortalAccount
+    ? '<div style="margin:0 0 14px;padding:9px 12px;border-radius:8px;background:#fffbeb;border:1px solid #fde68a;font-size:13px;color:#92400e"><strong>Prima revendicare a firmei (are cont) — sun-o o dată.</strong> După apel, aprobă din /admin/crm; de la a doua cerere se deblochează singură. Până suni, îți apare în emailul „de sunat azi".</div>'
+    : '<div style="margin:0 0 14px;padding:9px 12px;border-radius:8px;background:#fffbeb;border:1px solid #fde68a;font-size:13px;color:#92400e"><strong>Prima revendicare a firmei — sun-o pentru confirmare.</strong> După apel, aprobă din /admin/crm; de la a doua cerere se deblochează singură. Până suni, îți apare în emailul „de sunat azi".</div>';
 
   const row = (label: string, value: string) =>
     `<tr><td style="padding:5px 12px 5px 0;color:#6b7280;font-size:13px;vertical-align:top;white-space:nowrap">${label}</td><td style="padding:5px 0;font-size:14px;color:#111827">${value}</td></tr>`;
@@ -310,7 +318,7 @@ export async function sendClaimNotification(data: ClaimNotificationData): Promis
       </table>
     </div>
     <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280">
-      ${firmHasPortalAccount ? 'Aprobă din /admin/crm, fără apel.' : 'Sună firma pentru confirmare, apoi aprobă.'} Salvat în tabul „Revendicări".${full ? ' Cererea e acum marcată Complet pe /cereri.' : ''}
+      ${firmConfirmed ? 'Deblocată automat, fără apel.' : 'Sună firma pentru confirmare, apoi aprobă.'} Salvat în tabul „Revendicări".${full ? ' Cererea e acum marcată Complet pe /cereri.' : ''}
     </div>
   </div>
 </body>
@@ -496,6 +504,84 @@ export async function sendClaimReleaseNotification(data: {
  * Către firmă, după ce aprobăm revendicarea din /admin/crm: datele clientului
  * s-au deblocat în portal. Fail-open ca restul notificărilor.
  */
+/**
+ * Către MINE, în fiecare dimineață în care o firmă nouă așteaptă apelul de
+ * confirmare pentru prima ei revendicare.
+ *
+ * Emailul are un singur scop: să pot suna de pe telefon fără să deschid
+ * /admin/crm, deci numărul e link `tel:` și primul din listă e cel care
+ * așteaptă de cel mai mult timp. Zilele calendaristice sunt scrise tare pentru
+ * că ăsta e ceasul clientului, care nu are weekend.
+ *
+ * Nu pleacă niciodată către firmă: dacă o firmă a revendicat o cerere, treaba
+ * noastră e să o sunăm, nu să-i luăm cererea (decizia userului, 18 sept 2026).
+ */
+export async function sendPendingCallsDigest(data: {
+  claims: {
+    numeFirma: string;
+    numeContact: string;
+    telefon: string;
+    email: string;
+    leadSummary: string;
+    businessDays: number;
+    calendarDays: number;
+  }[];
+}): Promise<{ ok: boolean; reason?: string }> {
+  const to = process.env.LISTING_NOTIFICATION_EMAIL || 'radu.cimpian94@gmail.com';
+  const n = data.claims.length;
+
+  const cards = data.claims
+    .map(
+      (c) => `<div style="padding:12px 0;border-bottom:1px solid #f1f5f9">
+        <div style="font-size:15px;color:#111827;font-weight:600">${escapeHtml(c.numeFirma)}</div>
+        <div style="font-size:14px;margin-top:3px">
+          <a href="tel:${escapeHtml(c.telefon.replace(/\s/g, ''))}" style="color:#2563eb;font-weight:600">${escapeHtml(c.telefon)}</a>
+          <span style="color:#6b7280"> · ${escapeHtml(c.numeContact)}</span>
+        </div>
+        <div style="font-size:13px;color:#374151;margin-top:3px">${escapeHtml(c.leadSummary)}</div>
+        <div style="font-size:12px;margin-top:3px;color:${c.calendarDays >= 2 ? '#b91c1c' : '#6b7280'}">
+          clientul așteaptă de ${c.calendarDays === 1 ? 'o zi' : `${c.calendarDays} zile`}
+          (${c.businessDays === 1 ? 'o zi lucrătoare' : `${c.businessDays} zile lucrătoare`})
+        </div>
+      </div>`,
+    )
+    .join('');
+
+  const html = `<!DOCTYPE html>
+<html>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
+  <div style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
+    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#fffbeb">
+      <div style="font-size:12px;color:#92400e;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">De sunat azi · ${n}</div>
+      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${n === 1 ? 'O firmă nouă așteaptă apelul' : `${n} firme noi așteaptă apelul`}</h1>
+    </div>
+    <div style="padding:20px 24px">
+      <p style="font-size:14px;color:#374151;margin:0 0 6px">
+        Prima lor revendicare. Până le suni, nu au datele clientului, iar clientul nu are cine
+        să-l sune.
+      </p>
+      ${cards}
+    </div>
+    <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280">
+      După apel, aprobă din /admin/crm. De la a doua cerere firma se deblochează singură.
+      Emailul revine mâine cât timp mai e cineva pe listă.
+    </div>
+  </div>
+</body>
+</html>`;
+
+  const result = await sendEmail({
+    to,
+    subject: `De sunat azi: ${n} ${n === 1 ? 'firmă așteaptă' : 'firme așteaptă'} apelul de confirmare`,
+    html,
+  });
+
+  if (!result.ok) {
+    console.warn('[email] Pending calls digest not sent:', result.reason);
+  }
+  return result;
+}
+
 /**
  * „Mai ești interesat?" — cererea are datele deblocate de câteva zile lucrătoare
  * și firma n-a atins-o deloc. Tonul e cerut de user și e deliberat fără reproș:

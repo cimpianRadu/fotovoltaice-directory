@@ -259,6 +259,57 @@ export function claimsHeldForLead<
   return claims.filter((c) => c.leadId === leadId && claimOccupiesLeadSlot(c));
 }
 
+// ── Gate-ul de confirmare: pe firmă, nu pe revendicare ─────────────────────
+// Până pe 18 septembrie 2026 fiecare revendicare aștepta o aprobare manuală din
+// /admin/crm. Registrul a arătat ce devenise pasul: din 125 de revendicări
+// niciuna respinsă, iar în septembrie mediana de la revendicare la aprobare era
+// de 2 minute. Nu o decizie, deci, ci un buton apăsat ca să se întâmple ceea ce
+// urma oricum. Costul îl plăteau cererile pe care uitam să-l apăs: 4 clienți
+// reali (Alba, Arad, două în Dolj) au stat între 7 și 22 de zile cu locul ocupat
+// de o firmă care nu primise niciodată datele lor.
+//
+// De aici încolo gate-ul e pe FIRMĂ, exact cum scrie de mult pe /cereri: „la
+// prima revendicare te sunăm o dată pentru confirmare". Prima trece prin apel,
+// restul se deblochează pe loc.
+//
+// Ce NU facem când apelul întârzie: nu luăm cererea de la firmă. Prima variantă
+// a schimbării o elibera după o zi și anunța firma, iar userul a respins-o pe
+// loc, cu argumentul corect: dacă o firmă revendică o cerere, treaba noastră e
+// să o sunăm. Întârzierea e a noastră, deci alarma e a noastră, în emailul „de
+// sunat azi" din cronul claim-nudge (`remindMeToCall`).
+
+/**
+ * Am vorbit deja cel puțin o dată cu firma asta, deci datele clientului i se
+ * deblochează pe loc la revendicare.
+ *
+ * Două dovezi că apelul s-a făcut: o revendicare aprobată (aprobarea VENEA după
+ * apel) sau una `manual`, adică una pe care i-am dat-o noi chiar la telefon.
+ * Aceeași regulă o folosește `lib/daily-agenda.ts` ca să decidă dacă firma are
+ * datele clientului; dacă aici am cere doar aprobarea, firmele cărora le-am dat
+ * cereri la telefon ar fi sunate a doua oară pentru o confirmare deja făcută.
+ *
+ * Identificarea e cea de la plafoane (`isSameFirm`, nume SAU telefon) plus
+ * grupul de adrese al contului: cine revendică de pe a doua adresă a contului
+ * lui nu e o firmă nouă. Revendicările aprobate și apoi abandonate se numără și
+ * ele — a renunțat la o cerere, nu la faptul că am vorbit cu ea.
+ */
+export function firmIsConfirmed<
+  T extends {
+    email: string;
+    numeFirma: string;
+    telefon: string;
+    approvedAt: string;
+    source: string;
+  },
+>(claims: T[], firm: { emails: string[]; numeFirma: string; telefon: string }): boolean {
+  const emails = new Set(firm.emails.map((e) => e.trim().toLowerCase()).filter(Boolean));
+  return claims.some(
+    (c) =>
+      (c.approvedAt !== '' || c.source === 'manual') &&
+      (emails.has(c.email) || isSameFirm(c, firm)),
+  );
+}
+
 // ── Ceasul revendicărilor: zile lucrătoare ─────────────────────────────────
 // Firmele nu lucrează sâmbăta, duminica și de sărbătorile legale. Un email de
 // luni dimineața care spune „au trecut 2 zile" peste un weekend e o nedreptate

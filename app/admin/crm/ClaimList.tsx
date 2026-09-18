@@ -173,19 +173,17 @@ function Claim({ claim }: { claim: ClaimRow }) {
           {claim.email}
         </div>
       )}
-      {/* Din 15 sept 2026 apelul de confirmare e doar pentru firmele fără cont:
-          cine e în portal se aprobă direct, iar datele îi apar acolo. Semnalul
-          stă lângă email, nu în butoane, ca să se citească înainte de a suna. */}
-      {!approvedAt &&
-        (claim.hasPortalAccount ? (
-          <div className="mt-0.5 inline-block rounded bg-emerald-100 px-1.5 py-px text-[10px] font-semibold text-emerald-700">
-            are cont · nu suna, doar aprobă
-          </div>
-        ) : (
-          <div className="mt-0.5 inline-block rounded bg-amber-100 px-1.5 py-px text-[10px] font-semibold text-amber-700">
-            fără cont · sun-o pentru confirmare
-          </div>
-        ))}
+      {/* Din 18 sept 2026 apelul de confirmare e o singură dată, la prima
+          revendicare a firmei: restul se deblochează automat, deci o revendicare
+          `self` neaprobată ESTE prima ei. Semnalul stă lângă email, nu în
+          butoane, ca să se citească înainte de a suna. Cât timp rămâne
+          neaprobată, cronul de dimineață mi-o pune pe lista de apeluri. */}
+      {!approvedAt && claim.source !== 'manual' && (
+        <div className="mt-0.5 inline-block rounded bg-amber-100 px-1.5 py-px text-[10px] font-semibold text-amber-700">
+          prima revendicare · sun-o pentru confirmare
+          {claim.hasPortalAccount ? ' · are cont' : ''}
+        </div>
+      )}
       <div className="text-slate-400">{fmtDateTime(claim.timestamp)}</div>
 
       {/* Statusul declarat de firmă în portal. E auto-raportat, deci semnal, nu
