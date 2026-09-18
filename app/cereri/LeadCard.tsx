@@ -539,6 +539,11 @@ export default function LeadCard({
   const full = claims >= maxClaims;
   const slotsLeft = maxClaims - claims;
   const claimedByMe = status === 'success';
+  const watchedByMe = watchStatus === 'success';
+  // Pe cererile „se informează" bara de locuri era ascunsă cu totul, așa că o
+  // revendicare reală devenea invizibilă în feed (Galați, 17 sept 2026: firma
+  // a luat cererea, cardul arăta în continuare „nimeni nu urmărește").
+  const showSlots = !lead.seInformeaza || claims > 0;
 
   // Cardul venit prin link direct se aduce singur în ecran. `block: 'center'`,
   // nu 'start': pe telefon un card lipit de marginea de sus arată ca și cum ar
@@ -872,60 +877,43 @@ export default function LeadCard({
         <p className="mt-2 text-sm text-gray-500 italic leading-relaxed">„{lead.mesaj}”</p>
       )}
 
-      {/* La „se informează" nu există contor de locuri: nimeni nu ofertează,
-          deci nu e nimic de disputat. În loc, câte firme așteaptă reactivarea. */}
-      {lead.seInformeaza ? (
-        <p className="mt-4 text-xs text-gray-500">
+      {/* Bara de locuri. La „se informează" apare doar după prima revendicare:
+          cât timp nimeni n-a cerut contactul, „0/3" ar împinge spre acțiunea
+          pe care tocmai o descurajăm. Dar din clipa în care o firmă a dat
+          „Vreau să contactez persoana", locul e ocupat la fel ca pe orice
+          cerere (plafonul din /api/claims nu face excepție), deci se vede. */}
+      {showSlots && (
+        <div className="mt-4 flex items-center gap-2">
+          <div className="flex gap-1">
+            {Array.from({ length: maxClaims }, (_, i) => (
+              <span
+                key={i}
+                className={`w-6 h-1.5 rounded-full ${i < claims ? 'bg-primary' : 'bg-gray-200'}`}
+              />
+            ))}
+          </div>
+          <span className="text-xs text-gray-500">
+            {full
+              ? 'Complet'
+              : claims > 0
+                ? `${claims}/${maxClaims} revendicate`
+                : 'Nicio revendicare încă'}
+          </span>
+        </div>
+      )}
+      {/* Urmăritorii: câte firme așteaptă reactivarea cererii. Doar la
+          „se informează" — pe restul nu există urmărire. */}
+      {lead.seInformeaza && (
+        <p className={`${showSlots ? 'mt-2' : 'mt-4'} text-xs text-gray-500`}>
           {watches > 0
             ? `${watches} ${watches === 1 ? 'firmă urmărește' : 'firme urmăresc'} cererea`
             : 'Nimeni nu urmărește încă cererea'}
         </p>
-      ) : (
-      <div className="mt-4 flex items-center gap-2">
-        <div className="flex gap-1">
-          {Array.from({ length: maxClaims }, (_, i) => (
-            <span
-              key={i}
-              className={`w-6 h-1.5 rounded-full ${i < claims ? 'bg-primary' : 'bg-gray-200'}`}
-            />
-          ))}
-        </div>
-        <span className="text-xs text-gray-500">
-          {full
-            ? 'Complet'
-            : claims > 0
-              ? `${claims}/${maxClaims} revendicate`
-              : 'Nicio revendicare încă'}
-        </span>
-      </div>
       )}
 
       <div className="mt-4 flex-1 flex flex-col justify-end">
         {quickBox ? (
           quickBox
-        ) : lead.seInformeaza && !claimedByMe ? (
-          watchStatus === 'success' ? (
-            <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-2.5 text-sm text-emerald-800 text-center font-medium">
-              Te anunțăm când devine activă ✓
-            </div>
-          ) : (
-            <>
-              {/* Revendicarea nu mai e un link în subsolul cardului: firma care
-                  vrea omul acum trebuie să găsească acțiunea acolo unde se uită,
-                  nu într-un rând de 11px. Rămâne a doua, ca greutate vizuală
-                  (contur, nu plin), fiindcă clientul chiar a spus că se
-                  informează — vezi tooltipul de dedesubt. */}
-              <Button variant="secondary" onClick={handleWatchOpen} className="w-full">
-                Urmărește cererea
-              </Button>
-              <Button variant="outline" onClick={startClaim} className="mt-2 w-full">
-                Vreau să contactez persoana
-              </Button>
-              <div className="mt-1.5">
-                <ActionsInfo maxClaims={maxClaims} />
-              </div>
-            </>
-          )
         ) : claimedByMe ? (
           <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-2.5 text-sm text-emerald-800 text-center font-medium">
             Revendicare trimisă ✓
@@ -935,10 +923,51 @@ export default function LeadCard({
               </a>
             )}
           </div>
-        ) : full ? (
-          <div className="rounded-lg bg-surface border border-border px-4 py-2.5 text-sm text-gray-500 text-center font-medium">
-            Complet — {maxClaims}/{maxClaims} firme
+        ) : watchedByMe ? (
+          <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-2.5 text-sm text-emerald-800 text-center font-medium">
+            Te anunțăm când devine activă ✓
           </div>
+        ) : full ? (
+          /* Plafonul se verifică înaintea fluxului „se informează": altfel
+             firma vedea butonul de revendicare pe o cerere deja plină și afla
+             abia după ce completa formularul (409 din /api/claims). Urmărirea
+             rămâne deschisă — nu ocupă niciun loc. */
+          lead.seInformeaza ? (
+            <>
+              <Button variant="secondary" onClick={handleWatchOpen} className="w-full">
+                Urmărește cererea
+              </Button>
+              <p className="mt-2 text-[11px] text-gray-500 text-center font-medium">
+                Complet — {maxClaims}/{maxClaims} firme au cerut deja contactul
+              </p>
+            </>
+          ) : (
+            <div className="rounded-lg bg-surface border border-border px-4 py-2.5 text-sm text-gray-500 text-center font-medium">
+              Complet — {maxClaims}/{maxClaims} firme
+            </div>
+          )
+        ) : lead.seInformeaza ? (
+          <>
+            {/* Revendicarea nu mai e un link în subsolul cardului: firma care
+                vrea omul acum trebuie să găsească acțiunea acolo unde se uită,
+                nu într-un rând de 11px. Rămâne a doua, ca greutate vizuală
+                (contur, nu plin), fiindcă clientul chiar a spus că se
+                informează — vezi tooltipul de dedesubt. */}
+            <Button variant="secondary" onClick={handleWatchOpen} className="w-full">
+              Urmărește cererea
+            </Button>
+            <Button variant="outline" onClick={startClaim} className="mt-2 w-full">
+              Vreau să contactez persoana
+            </Button>
+            {claims > 0 && (
+              <p className="mt-2 text-[11px] text-amber-700 text-center font-medium">
+                {slotsLeft === 1 ? 'Ultimul loc disponibil' : `Mai sunt ${slotsLeft} locuri`}
+              </p>
+            )}
+            <div className="mt-1.5">
+              <ActionsInfo maxClaims={maxClaims} />
+            </div>
+          </>
         ) : (
           <>
             <Button variant="primary" onClick={startClaim} className="w-full">
