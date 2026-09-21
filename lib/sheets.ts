@@ -79,12 +79,12 @@ async function readRows(sheetName: string): Promise<string[][]> {
     () =>
       sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        // Range lat deliberat, cu rezervă peste ultima coloană folosită (AV).
+        // Range lat deliberat, cu rezervă peste ultima coloană folosită (BA).
         // Când s-au adăugat AH-AJ (atribuirea) range-ul a rămas la A:AG, așa că
         // acele coloane se scriau dar se citeau mereu goale. Celelalte taburi au
         // mai puține coloane, un range mai lat nu le afectează: rândurile vin
         // pur și simplu mai scurte.
-        range: `${sheetName}!A:AZ`,
+        range: `${sheetName}!A:BD`,
       }),
     `read ${sheetName}`,
   );
@@ -350,6 +350,16 @@ export async function markReactivationAlertsSent(timestamp: string, at = new Dat
   await setLeadCell(timestamp, 'AU', at);
 }
 
+/** AZ — emailul „mai e activă cererea?" a plecat; nu se retrimite. */
+export async function markActiveCheckSent(timestamp: string, at = new Date().toISOString()) {
+  await setLeadCell(timestamp, 'AZ', at);
+}
+
+/** BA + AT — clientul a confirmat că încă vrea oferte: cererea urcă în feed de la `at`. */
+export async function markLeadConfirmedActive(timestamp: string, at = new Date().toISOString()) {
+  await setLeadCells(timestamp, { BA: at, AT: `activa ${at}` });
+}
+
 /** AV — anunțul de deschidere a programului a plecat; nu se retrimite. */
 export async function markProgramAnnounced(timestamp: string, at = new Date().toISOString()) {
   await setLeadCell(timestamp, 'AV', at);
@@ -514,6 +524,12 @@ export interface NewLead {
   alerteReactivareLa: string;
   /** AV — ISO când i-a plecat anunțul de deschidere a programului (din /admin/informez). */
   anuntProgramLa: string;
+  // AZ-BA — verificarea „mai e activă cererea?" (21 sept 2026), pe cererile
+  // care NU se informează. Vezi lib/confirmare-activa.
+  /** AZ — ISO când a plecat emailul de verificare. Nu se retrimite. */
+  verificareTrimisaLa: string;
+  /** BA — ISO când clientul a confirmat că încă vrea oferte. Data „proaspătă" din feed. */
+  confirmataLa: string;
 }
 
 export interface NewListing {
@@ -599,6 +615,8 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     scop: r[49] || '',
     scopDetalii: r[50] || '',
     anuntProgramLa: r[47] || '',
+    verificareTrimisaLa: r[51] || '',
+    confirmataLa: r[52] || '',
     ...readCrmFields(r),
   }));
 }
@@ -612,9 +630,14 @@ export function isLeadInformez(l: Pick<NewLead, 'termen' | 'reactivataLa'>): boo
   return l.termen === 'ma-informez' && !l.reactivataLa;
 }
 
-/** Data de la care cererea e „proaspătă" în feed: reactivarea, dacă a avut loc. */
-export function leadFreshSince(l: Pick<NewLead, 'timestamp' | 'reactivataLa'>): string {
-  return l.reactivataLa || l.timestamp;
+/**
+ * Data de la care cererea e „proaspătă" în feed: cea mai recentă dintre
+ * trimitere, reactivare („sunt gata") și confirmarea „încă vreau oferte".
+ */
+export function leadFreshSince(
+  l: Pick<NewLead, 'timestamp' | 'reactivataLa' | 'confirmataLa'>,
+): string {
+  return [l.timestamp, l.reactivataLa, l.confirmataLa].filter(Boolean).sort().at(-1) || l.timestamp;
 }
 
 export async function getListingsSince(cutoff: Date): Promise<NewListing[]> {
@@ -708,6 +731,8 @@ export interface PublicLead {
   blocaj: string;
   /** ISO — clientul a revenit cu „sunt gata"; cardul se datează de aici și poartă badge. */
   reactivataLa: string;
+  /** ISO — clientul a confirmat pe email că încă vrea oferte; cardul urcă și poartă badge. */
+  confirmataLa: string;
 }
 
 // Redactare pentru afișarea publică a mesajului: emailuri, URL-uri, șiruri de
@@ -854,6 +879,7 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       seInformeaza: isLeadInformez(l),
       blocaj: l.blocaj,
       reactivataLa: l.reactivataLa,
+      confirmataLa: l.confirmataLa,
     }))
     .reverse(); // cele mai noi primele
 }

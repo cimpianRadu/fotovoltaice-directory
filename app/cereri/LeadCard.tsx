@@ -53,6 +53,13 @@ export interface LeadCardData {
   informezMotiv: string;
   /** Se informa și a apăsat „sunt gata": cererea e datată de la reactivare. */
   reactivata: boolean;
+  /**
+   * Clientul a confirmat pe email că încă vrea oferte (21 sept 2026) și asta e
+   * ultimul lui semn de viață: cardul e datat de la confirmare și poartă badge.
+   */
+  confirmata?: boolean;
+  /** „23 sept 2026", data confirmării, pentru titlul badge-ului. */
+  confirmataLabel?: string;
 }
 
 /**
@@ -228,6 +235,13 @@ const ICON_INFORMEAZA = (
 );
 
 // badge-ul de segment de lângă el.
+const ICON_CONFIRMATA = (
+  <BadgeIcon>
+    <circle cx="12" cy="12" r="9" />
+    <path d="m8.2 12.3 2.6 2.6 5-5.2" />
+  </BadgeIcon>
+);
+
 const ICON_MONTAJ = (
   <BadgeIcon>
     <path d="M15.5 3.5a5 5 0 0 0-6.4 6.4L3.6 15.4a2 2 0 0 0 2.8 2.8l5.5-5.5a5 5 0 0 0 6.4-6.4l-3 3-2.8-2.8z" />
@@ -840,7 +854,18 @@ export default function LeadCard({
               Se informează
             </Badge>
           )}
-          {lead.reactivata && (
+          {/* Violet: singura culoare liberă. Nu e „verificată" (am vorbit noi cu
+              omul), e clientul care a spus singur, pe email, că încă vrea oferte. */}
+          {lead.confirmata && (
+            <Badge
+              icon={ICON_CONFIRMATA}
+              tone="bg-violet-50 text-violet-700"
+              title={`Clientul a confirmat pe email${lead.confirmataLabel ? ` pe ${lead.confirmataLabel}` : ''} că încă dorește oferte.`}
+            >
+              Confirmată activă
+            </Badge>
+          )}
+          {lead.reactivata && !lead.confirmata && (
             <Badge
               icon={ICON_TELEFON}
               tone="bg-orange-50 text-orange-700"

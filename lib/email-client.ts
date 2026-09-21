@@ -11,6 +11,9 @@
 //
 // Fiecare poartă butonul „Sunt gata pentru oferte", care deschide pagina de
 // actualizare a cererii, și linkul „nu mă mai contactați", care o închide.
+//
+// Plus, din 21 sept 2026, verificarea „mai căutați oferte?" pentru cererile
+// obișnuite (nu „mă informez"), trimisă din /api/admin/confirmare-activa.
 
 import { sendEmail, escapeHtml, PORTAL_BASE_URL } from './email';
 import { clientLinkUrl } from './lead-client-token';
@@ -239,5 +242,37 @@ export async function sendProgramOpenedEmail(
     replyTo: REPLY_TO,
   });
   if (!result.ok) console.warn('[email-client] anunț program netrimis:', result.reason);
+  return result;
+}
+
+/**
+ * 4. Verificarea „mai căutați oferte?", pe cererile obișnuite (21 sept 2026).
+ * „Da" urcă cererea în feed cu data de azi, „am ales o firmă" și „nu mai vreau"
+ * o închid. Tăcerea nu închide nimic.
+ */
+export async function sendActiveCheckEmail(lead: NewLead): Promise<{ ok: boolean; reason?: string }> {
+  const putere = lead.putere ? ` de ${escapeHtml(lead.putere)} kW` : '';
+  const body =
+    p('Bună ziua,') +
+    p(
+      `Pe ${escapeHtml(fmtDay(lead.timestamp))} ați trimis o cerere pe instalatori-fotovoltaice.ro pentru un sistem fotovoltaic${putere} în județul ${escapeHtml(lead.judet)}. Vrem ca firmele din zonă să vadă doar cereri actuale, așa că vă întrebăm scurt: mai căutați oferte?`,
+    ) +
+    button(clientLinkUrl(lead.timestamp, 'activa'), 'Da, încă vreau oferte') +
+    `<div style="text-align:center;margin:0 0 20px">
+      ${secondaryButton(clientLinkUrl(lead.timestamp, 'aleasa'), 'Am ales deja o firmă')}
+      ${secondaryButton(clientLinkUrl(lead.timestamp, 'renunt'), 'Nu mai vreau')}
+    </div>` +
+    p(
+      'Dacă apăsați „Da”, cererea urcă din nou în lista firmelor din județ, marcată ca actualizată azi. Un singur click, fără formular. Dacă nu răspundeți, nu se schimbă nimic.',
+    ) +
+    p('Dacă aveți întrebări, răspundeți la acest email. Îl citește un om.');
+
+  const result = await sendEmail({
+    to: lead.email,
+    subject: 'Mai căutați oferte pentru sistemul fotovoltaic?',
+    html: layout(lead, body),
+    replyTo: REPLY_TO,
+  });
+  if (!result.ok) console.warn('[email-client] verificare activă netrimisă:', result.reason);
   return result;
 }

@@ -28,6 +28,7 @@ import {
   getTimelineLabel,
   getWorkTypeShort,
   isRetrofit,
+  formatShortDate,
 } from '@/lib/utils-shared';
 import { mountingForRoof, parseConsumLunar, sizeKwp } from '@/lib/pv-estimate';
 import { PROGRAM, bracketFor } from '@/lib/battery-sizing';
@@ -82,8 +83,12 @@ export default async function CereriPage() {
   const cards: LeadCardData[] = leads.map((l) => {
     // O cerere reactivată („sunt gata", după ce omul se informa) se datează de
     // la reactivare: pentru firmă e o cerere de azi, nu una de acum două luni.
+    // La fel cererea confirmată de client pe email („încă vreau oferte", 21 sept
+    // 2026): urcă în feed de la confirmare. Contează ultimul semn de viață.
     const reactivata = Boolean(l.reactivataLa);
-    const ageDays = calendarAgeDays(l.reactivataLa || l.id);
+    const freshSince = [l.id, l.reactivataLa, l.confirmataLa].filter(Boolean).sort().at(-1) || l.id;
+    const confirmata = Boolean(l.confirmataLa) && freshSince === l.confirmataLa;
+    const ageDays = calendarAgeDays(freshSince);
     // 57% dintre cererile de după 18 aug 2026 vin fără putere: omul bifează „nu
     // știu, aștept recomandarea instalatorului", ceea ce e un răspuns corect,
     // dar lasă cardul fără niciun reper de dimensionare. Consumul îl completează
@@ -132,11 +137,17 @@ export default async function CereriPage() {
       tipLucrareLabel: l.tipLucrare ? getWorkTypeShort(l.tipLucrare) : '',
       suprafata: l.suprafata,
       segment: l.segment,
-      postedLabel: reactivata ? `reactivată ${cerereAgeLabel(ageDays)}` : cerereAgeLabel(ageDays),
+      postedLabel: confirmata
+        ? `confirmată ${cerereAgeLabel(ageDays)}`
+        : reactivata
+          ? `reactivată ${cerereAgeLabel(ageDays)}`
+          : cerereAgeLabel(ageDays),
       ageDays,
       seInformeaza: l.seInformeaza,
       informezMotiv: l.seInformeaza ? informezMotiv({ blocaj: l.blocaj, finantare: l.finantare }) : '',
       reactivata,
+      confirmata,
+      confirmataLabel: confirmata ? formatShortDate(l.confirmataLa) : '',
       mesaj: l.mesaj,
       acoperisLabel: l.tipAcoperis ? getRoofTypeLabel(l.tipAcoperis) : '',
       fazareLabel: l.fazare ? getPhaseLabel(l.fazare) : '',

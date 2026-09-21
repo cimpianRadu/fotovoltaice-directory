@@ -1,8 +1,9 @@
 // Linkurile din emailurile către client (fluxul „mă informez", 14 sept 2026):
-// „sunt gata pentru oferte", „încă mă informez", „nu mai vreau". Fiecare link
-// poartă un token semnat cu PORTAL_SECRET, ca la pozele cererii, peste
-// (cerere, acțiune, expirare). Fără el, oricine ar ghici un timestamp de
-// cerere ar putea închide sau reactiva cererea altcuiva.
+// „sunt gata pentru oferte", „încă mă informez", „nu mai vreau", plus, din
+// 21 sept 2026, verificarea „mai e activă?": „încă vreau oferte" și „am ales
+// deja o firmă". Fiecare link poartă un token semnat cu PORTAL_SECRET, ca la
+// pozele cererii, peste (cerere, acțiune, expirare). Fără el, oricine ar
+// ghici un timestamp de cerere ar putea închide sau reactiva cererea altcuiva.
 //
 // Expirarea e lungă intenționat: omul care așteaptă Casa Verde Baterii apasă
 // linkul peste două luni, nu peste o zi. Tokenul nu deschide date de contact,
@@ -10,7 +11,7 @@
 
 import { createHmac, timingSafeEqual } from 'node:crypto';
 
-export const CLIENT_LINK_ACTIONS = ['actualizare', 'astept', 'renunt'] as const;
+export const CLIENT_LINK_ACTIONS = ['actualizare', 'astept', 'renunt', 'activa', 'aleasa'] as const;
 export type ClientLinkAction = (typeof CLIENT_LINK_ACTIONS)[number];
 
 const TOKEN_TTL_MS = 180 * 24 * 60 * 60 * 1000;

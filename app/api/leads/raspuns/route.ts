@@ -2,12 +2,15 @@ import { NextResponse } from 'next/server';
 import { getFullLeadById, isLeadClosed } from '@/lib/sheets';
 import { isClientLinkAction, verifyClientToken } from '@/lib/lead-client-token';
 import { closeLeadByClient, recordStillWaiting } from '@/lib/informez';
+import { closeLeadChosenFirm, confirmLeadActive } from '@/lib/confirmare-activa';
 
 // Răspunsurile cu un click din emailurile către client: „încă mă informez"
 // (repornește ceasul check-in-urilor) și „nu mai vreau" (închide cererea).
 // Pagina /cerere/raspuns/[action] confirmă și apelează aici; efectul nu se
 // produce la simpla deschidere a linkului, ca un client de email care
 // preîncarcă linkurile să nu închidă cereri.
+// Din 21 sept 2026, și verificarea „mai căutați oferte?": „activa" (cererea
+// urcă în feed) și „aleasa" (închisă, cu firma aleasă, opțional, în `firma`).
 
 export async function POST(request: Request) {
   try {
@@ -15,6 +18,7 @@ export async function POST(request: Request) {
     const id = typeof body.id === 'string' ? body.id.trim() : '';
     const token = typeof body.token === 'string' ? body.token : '';
     const action = typeof body.action === 'string' ? body.action : '';
+    const firma = typeof body.firma === 'string' ? body.firma : '';
 
     if (!isClientLinkAction(action) || action === 'actualizare') {
       return NextResponse.json({ error: 'Acțiune necunoscută.' }, { status: 400 });
@@ -31,6 +35,8 @@ export async function POST(request: Request) {
     if (isLeadClosed(lead.crmStatus)) return NextResponse.json({ success: true, alreadyClosed: true });
 
     if (action === 'renunt') await closeLeadByClient(lead);
+    else if (action === 'activa') await confirmLeadActive(lead);
+    else if (action === 'aleasa') await closeLeadChosenFirm(lead, firma);
     else await recordStillWaiting(lead);
 
     return NextResponse.json({ success: true });
