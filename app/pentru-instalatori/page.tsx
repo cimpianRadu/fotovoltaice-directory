@@ -35,7 +35,7 @@ const FAQ = [
   {
     question: 'Cât costă să primesc cereri?',
     answer:
-      'Ca să le primești, nimic. Listarea firmei, revendicarea cererilor, datele clientului și accesul în portal sunt gratuite, iar cererile nu se vând la bucată și nu există abonament obligatoriu. Plătești un comision doar din lucrările care se concretizează: dacă nu închizi, nu plătești. Firmele care vor vizibilitate suplimentară pot alege separat un pachet de promovare.',
+      'Ca să le primești, nimic. Listarea firmei, revendicarea cererilor, datele clientului și accesul în portal sunt gratuite, iar cererile nu se vând la bucată și nu există abonament obligatoriu. Plătești un comision doar dacă semnezi contractul cu un client venit de aici: o sumă fixă pe trepte de putere la proiectele obișnuite, un procent din valoarea contractului fără TVA la cele mari. Cifrele le stabilim în scris cu tine înainte de prima cerere revendicată, iar mecanismul întreg (când apare plata, cum confirmăm lucrarea, cum se facturează, ce se întâmplă dacă se anulează contractul) e scris în secțiunea 8 din termenii și condițiile site-ului. Dacă nu semnezi nimic, nu plătești nimic. Firmele care vor vizibilitate suplimentară pot alege separat un pachet de promovare.',
   },
   {
     question: 'Ce primesc, concret, când revendic o cerere?',
@@ -331,6 +331,24 @@ export default async function PentruInstalatoriPage() {
           <p className="text-xs text-gray-500 mt-3">
             Coloana din stânga descrie tiparul obișnuit al platformelor de intermediere din România, nu o
             firmă anume.
+          </p>
+          {/* „Comision doar din lucrarea concretizată" e o promisiune, deci
+              trebuie să aibă unde duce: ce declanșează plata, cum se verifică
+              lucrarea, cum se facturează. Cifrele rămân la telefon (decizie
+              10 sept 2026), mecanismul e public. */}
+          <p className="text-sm text-gray-700 mt-4 rounded-xl border border-border bg-surface p-4">
+            <strong className="text-gray-900">Cum funcționează comisionul, exact.</strong> Apare o
+            singură dată, la semnarea contractului cu un client venit de aici: sumă fixă pe trepte
+            de putere la proiectele obișnuite, procent din valoarea contractului fără TVA la cele
+            mari. Nivelul îl stabilim în scris cu tine înainte de prima cerere revendicată, deci nu
+            te poate lua prin surprindere. Condițiile complete sunt în{' '}
+            <Link
+              href="/termeni-conditii#comision"
+              className="text-primary-dark underline hover:no-underline"
+            >
+              secțiunea 8 din termeni
+            </Link>
+            .
           </p>
         </section>
 

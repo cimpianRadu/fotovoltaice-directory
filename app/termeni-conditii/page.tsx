@@ -15,7 +15,7 @@ export default function TermeniConditii() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Termeni și Condiții</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 16 septembrie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 18 septembrie 2026</p>
 
         <p>
           Prin accesarea și utilizarea site-ului <strong>instalatori-fotovoltaice.ro</strong> acceptați
@@ -31,6 +31,10 @@ export default function TermeniConditii() {
           <li>Informații despre firmele de instalare (profil, certificări, acoperire geografică)</li>
           <li>Ghiduri informative despre panouri fotovoltaice</li>
           <li>Posibilitatea de a solicita oferte de la firmele listate</li>
+          <li>
+            Un feed public de cereri de ofertă, pe care firmele de instalare le pot revendica, și un
+            portal în care firma își gestionează cererile revendicate
+          </li>
         </ul>
 
         <h2>2. Rolul nostru</h2>
@@ -44,6 +48,12 @@ export default function TermeniConditii() {
           <li>Respectarea termenelor de execuție</li>
           <li>Orice prejudiciu rezultat din relația directă cu firmele listate</li>
         </ul>
+        <p>
+          Comisionul pe care îl poate datora o firmă instalatoare, în condițiile de la{' '}
+          <a href="#comision">secțiunea 8</a>, privește exclusiv relația dintre noi și acea firmă. El
+          nu ne face parte în contractul dintre firmă și client. Clientului nu îi cerem niciun cost
+          și nu adăugăm nimic la oferta pe care i-o face firma.
+        </p>
 
         <h2>3. Acuratețea informațiilor</h2>
         <p>
@@ -88,7 +98,59 @@ export default function TermeniConditii() {
           <a href="mailto:contact@instalatori-fotovoltaice.ro">contact@instalatori-fotovoltaice.ro</a>.
         </p>
 
-        <h2 id="testimoniale">8. Testimoniale și studii de caz</h2>
+        <h2 id="comision">8. Firme instalatoare: cereri revendicate și comision</h2>
+        <p>
+          Această secțiune privește firmele de instalare care primesc cereri prin platformă. Pentru
+          clienții care cer oferte, platforma este și rămâne gratuită: nu le cerem niciun cost și nu
+          le facturăm nimic.
+        </p>
+        <p>Sunt gratuite, fără condiții și fără abonament:</p>
+        <ul>
+          <li>listarea firmei în director și pagina ei publică</li>
+          <li>accesul în portal și alertele pe județ</li>
+          <li>vizualizarea cererilor publicate în feedul de cereri</li>
+          <li>revendicarea unei cereri și primirea datelor complete ale clientului</li>
+        </ul>
+        <p>
+          Nu vindem cereri la bucată. O cerere revendicată nu se plătește, indiferent ce iese din ea.
+        </p>
+        <p>
+          <strong>Când apare un cost.</strong> Firma datorează un comision doar dacă semnează un
+          contract cu un client a cărui cerere a primit-o prin platformă. Momentul care declanșează
+          obligația este semnarea contractului între firmă și client. Dacă nu se semnează niciun
+          contract, firma nu plătește nimic, oricâte cereri ar fi revendicat.
+        </p>
+        <p>
+          <strong>Cum se calculează.</strong> Pentru proiectele obișnuite, comisionul este o sumă
+          fixă, stabilită pe trepte, după puterea declarată în cererea transmisă de client, nu după
+          ce se montează în final. Pentru proiectele mari, peste pragul convenit, comisionul este un
+          procent din valoarea contractului, calculat la valoarea fără TVA. Nivelurile concrete
+          (sumele fixe pe trepte, procentul și pragul de la care se aplică) se convin în scris cu
+          fiecare firmă, înainte de prima cerere revendicată. Ele nu sunt publicate pe site fiindcă
+          se stabilesc individual, iar fără un astfel de acord scris firma nu datorează nimic.
+        </p>
+        <p>
+          <strong>Cum se confirmă lucrarea.</strong> Firma ne anunță contractul semnat, din portal
+          sau pe email. Putem verifica faptul semnării direct la clientul care a trimis cererea.
+          Verificăm dacă lucrarea s-a contractat, nu documentele comerciale ale firmei.
+        </p>
+        <p>
+          <strong>Facturare.</strong> Comisionul se facturează de Cîmpian Radu Gheorghe PFA, CUI
+          45316713, plătitor de TVA, după confirmarea contractului. Termenul de plată este cel din
+          acordul scris cu firma.
+        </p>
+        <p>
+          <strong>Dacă se anulează contractul.</strong> Dacă un contract semnat se anulează înainte
+          de începerea lucrării, comisionul nu se mai datorează, iar factura deja emisă se
+          stornează. Anularea se comunică în scris, de oricare dintre părți.
+        </p>
+        <p>
+          Pachetele de promovare (poziții sponsorizate, promovare pe județ) sunt un serviciu
+          separat, opțional, care nu influențează cererile primite și nu se compensează cu
+          comisionul.
+        </p>
+
+        <h2 id="testimoniale">9. Testimoniale și studii de caz</h2>
         <p>
           După ce o cerere de ofertă se încheie cu un contract semnat, putem cere clientului și
           firmei care a executat lucrarea un scurt feedback, printr-un formular deschis doar cu un
@@ -123,13 +185,13 @@ export default function TermeniConditii() {
           </li>
         </ul>
 
-        <h2>9. Modificări</h2>
+        <h2>10. Modificări</h2>
         <p>
           Ne rezervăm dreptul de a modifica acești termeni oricând. Modificările intră în vigoare
           la publicarea pe această pagină.
         </p>
 
-        <h2>10. Legislație aplicabilă</h2>
+        <h2>11. Legislație aplicabilă</h2>
         <p>
           Acești termeni sunt guvernați de legislația din România. Orice litigiu va fi soluționat
           de instanțele competente din România.

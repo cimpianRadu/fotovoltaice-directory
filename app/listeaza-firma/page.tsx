@@ -81,8 +81,15 @@ export default function ListeazaFirmaPage() {
               <span className="text-primary font-bold mt-0.5">1.</span>
               <span>
                 <strong>Cereri reale.</strong> Primești cereri de la clienți din județele în care lucrezi,
-                cu date complete de contact. Nu plătești per cerere, ci comision doar din lucrarea
-                concretizată.
+                cu date complete de contact. Nu plătești per cerere, ci comision doar la contractul
+                semnat, în condițiile din{' '}
+                <a
+                  href="/termeni-conditii#comision"
+                  className="text-primary-dark underline hover:no-underline"
+                >
+                  secțiunea 8 din termeni
+                </a>
+                .
               </span>
             </li>
             <li className="flex items-start gap-2">
