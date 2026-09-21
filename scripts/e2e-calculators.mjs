@@ -22,13 +22,14 @@ const TARGET = (process.env.TARGET_URL || 'https://instalatori-fotovoltaice.ro')
 // ---------- Oglinda formulelor din lib/battery-sizing.ts ----------
 // Ținute sincron manual, intenționat: dacă programul AFM se schimbă în cod dar nu
 // aici (sau invers), testul pică și forțează alinierea.
+// Forma consolidată a proiectului de ghid (MMAP, 09.09.2026).
 const PROGRAM = {
-  minKwh: 12,
-  costStandardPerKwh: 1250,
+  minKwh: 10,
+  costStandardPerKwh: 1500,
   maxShare: 0.75,
   maxGrant: 15000,
   minOwnShare: 0.25,
-  maxPoints: { contribution: 40, capacity: 40, pv: 20 },
+  maxPoints: { contribution: 50, capacity: 50 },
 };
 const SIZING_TABLE = [
   { maxKwhPerMonth: 200, capacity: [5, 5] },
@@ -44,14 +45,13 @@ function grantFor(cap, cost) {
   const minOwnShare = cost > 0 ? Math.max(PROGRAM.minOwnShare, (cost - maxGrant) / cost) : PROGRAM.minOwnShare;
   return { eligibleBase, maxGrant, minOwnShare };
 }
-function scoreFor(cap, pv, ownShare) {
-  const contribution = Math.max(0, Math.min(PROGRAM.maxPoints.contribution, 80 * ownShare - 10));
-  return {
-    total: contribution + Math.min(PROGRAM.maxPoints.capacity, cap) + Math.min(PROGRAM.maxPoints.pv, pv),
-  };
+function scoreFor(cap, ownShare) {
+  const ratio = ownShare >= 1 ? Infinity : ownShare / (1 - ownShare);
+  const contribution = Math.max(0, Math.min(PROGRAM.maxPoints.contribution, 30 * ratio));
+  return { total: contribution + Math.min(PROGRAM.maxPoints.capacity, cap * 2.5) };
 }
 /** Ce afișează widgetul la pasul 3, pentru capacitate+cost auto (nemodificat de om). */
-function batteryExpectation(cap, pvKw) {
+function batteryExpectation(cap) {
   const cost = cap * PROGRAM.costStandardPerKwh;
   const g = grantFor(cap, cost);
   const minPct = Math.ceil(g.minOwnShare * 1000) / 10;
@@ -62,7 +62,7 @@ function batteryExpectation(cap, pvKw) {
     pct: pct * 100,
     ownLei,
     granted: Math.max(0, Math.min(g.maxGrant, cost - ownLei)),
-    score: scoreFor(cap, pvKw, pct).total,
+    score: scoreFor(cap, pct).total,
   };
 }
 
@@ -119,7 +119,7 @@ async function checkBattery(ctx) {
     await page.waitForTimeout(1200); // hidratare React
 
     const expectedSizing = bracketFor(700).capacity;
-    const scenarios = [batteryExpectation(12, 5), batteryExpectation(20, 5)];
+    const scenarios = [batteryExpectation(PROGRAM.minKwh), batteryExpectation(20)];
 
     const got = await page.evaluate(
       async ({ helpers }) => {
@@ -131,14 +131,14 @@ async function checkBattery(ctx) {
         await sleep(200);
         out.sizingText = byExactText('div', 'De cât ai nevoie, tehnic')?.nextElementSibling?.textContent.trim() ?? null;
 
-        // Pasul 2: capacitatea implicită (12) și costul auto-completat.
+        // Pasul 2: capacitatea implicită (minimul programului) și costul auto-completat.
         if (!clickButton('Vezi ce punctaj faci')) return { error: 'butonul spre pasul 2 lipsește' };
         await sleep(300);
         out.defaultCap = parseNum(document.querySelector('#bw-cap')?.value);
         out.defaultCost = parseNum(document.querySelector('#bw-cost')?.value);
 
-        // Pasul 3, de două ori: cu 12 kWh (finanțare sub plafon) și cu 20 kWh
-        // (plafonul de 15.000 lei + contribuția minimă urcată la 40%).
+        // Pasul 3, de două ori: cu 10 kWh (finanțare sub plafon) și cu 20 kWh
+        // (plafonul de 15.000 lei + contribuția minimă urcată la 50%).
         const readStep3 = () => ({
           granted: parseNum(byExactText('div', 'Primești de la AFM')?.nextElementSibling?.textContent),
           own: parseNum(byExactText('div', 'Plătești tu')?.nextElementSibling?.textContent),
@@ -146,7 +146,7 @@ async function checkBattery(ctx) {
         });
         if (!clickButton('Calculează punctajul')) return { ...out, error: 'butonul spre pasul 3 lipsește' };
         await sleep(300);
-        out.s12 = readStep3();
+        out.s10 = readStep3();
 
         if (!clickButton('Înapoi')) return { ...out, error: 'butonul Înapoi lipsește' };
         await sleep(300);
@@ -156,8 +156,10 @@ async function checkBattery(ctx) {
         await sleep(300);
         out.s20 = readStep3();
 
+        // La pasul 3 ieșirea spre ofertă e linkul „sau cere direct o ofertă…";
+        // „Cere o ofertă pentru baterii" apare abia la pasul 4 (Economia).
         out.ctaHref = [...document.querySelectorAll('a')]
-          .find((a) => a.textContent.includes('Cere o ofertă pentru baterii'))?.getAttribute('href') ?? null;
+          .find((a) => /cere direct o ofertă|Cere o ofertă pentru baterii/.test(a.textContent))?.getAttribute('href') ?? null;
         return out;
       },
       { helpers: PAGE_HELPERS },
@@ -170,8 +172,8 @@ async function checkBattery(ctx) {
       got: got.sizingText,
       ok: !!got.sizingText && got.sizingText.includes(a === b ? `${a} kWh` : `${a} - ${b} kWh`),
     };
-    r.checks.defaultCost = { expected: scenarios[0].cost, got: got.defaultCost, ok: got.defaultCost === scenarios[0].cost && got.defaultCap === 12 };
-    for (const [key, exp, gotS] of [['cap12', scenarios[0], got.s12], ['cap20', scenarios[1], got.s20]]) {
+    r.checks.defaultCost = { expected: scenarios[0].cost, got: got.defaultCost, ok: got.defaultCost === scenarios[0].cost && got.defaultCap === PROGRAM.minKwh };
+    for (const [key, exp, gotS] of [['cap10', scenarios[0], got.s10], ['cap20', scenarios[1], got.s20]]) {
       r.checks[key] = {
         expected: { granted: exp.granted, own: exp.ownLei, score: exp.score },
         got: gotS,
