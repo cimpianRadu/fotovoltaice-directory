@@ -8,8 +8,9 @@
 //     în notă, și un email intern, fiindcă e singura confirmare de concretizare
 //     care nu vine de la firmă;
 //   - „Nu mai vreau" → același `renunt` ca la „mă informez".
-// Tăcerea nu închide nimic. Trimiterea e manuală, pe loturi mici, din
-// /api/admin/confirmare-activa; AZ oprește retrimiterea.
+// Tăcerea nu închide nimic. Trimiterea e pe loturi mici (spam): automat prin
+// /api/cron/confirmare-activa în zilele din ACTIVE_CHECK_BATCHES, sau manual
+// din /api/admin/confirmare-activa. AZ oprește retrimiterea.
 
 import { revalidatePath } from 'next/cache';
 import {
@@ -32,6 +33,20 @@ const TEST_PREFIX = 'routine-test-';
 /** Sub atât, omul abia a trimis cererea; întrebarea ar suna a grabă. */
 export const ACTIVE_CHECK_MIN_AGE_DAYS = 14;
 const INTERNAL_TO = 'contact@instalatori-fotovoltaice.ro';
+
+/**
+ * Loturile programate: zi (ora României) → câte emailuri. Cronul rulează zilnic
+ * la 09:00 și nu face nimic în zilele care nu sunt aici. Primul test, aprobat
+ * de Radu pe 21 sept 2026: 10 cereri, cele mai vechi, ca să nu intrăm în spam.
+ */
+export const ACTIVE_CHECK_BATCHES: Record<string, number> = {
+  '2026-09-22': 10,
+};
+
+/** Cereri rezolvate la telefon, încă nemarcate închise în CRM: nu le scriem. */
+export const ACTIVE_CHECK_EXCLUDE = [
+  '2026-06-24T13:34:08.537Z', // hotelul din Prahova, concretizat prin Electro Prahova
+];
 
 export function isActiveCheckCandidate(lead: NewLead, now: number): boolean {
   return (
@@ -65,11 +80,13 @@ export async function sendActiveChecks(opts: {
   exclude?: string[];
   dry: boolean;
 }): Promise<{ sent: string[]; failed: string[]; eligible: number }> {
+  if (opts.limit <= 0) return { sent: [], failed: [], eligible: 0 };
   const now = Date.now();
   const minDays = Math.max(opts.minDays ?? ACTIVE_CHECK_MIN_AGE_DAYS, ACTIVE_CHECK_MIN_AGE_DAYS);
   const maxDays = opts.maxDays ?? 365;
   const leads = (await getLeadsSince(new Date(0))).filter((l) => {
-    if (!isActiveCheckCandidate(l, now) || opts.exclude?.includes(l.timestamp)) return false;
+    if (!isActiveCheckCandidate(l, now)) return false;
+    if (ACTIVE_CHECK_EXCLUDE.includes(l.timestamp) || opts.exclude?.includes(l.timestamp)) return false;
     const age = (now - Date.parse(l.timestamp)) / DAY_MS;
     return age >= minDays && age <= maxDays;
   });
@@ -119,4 +136,14 @@ export async function closeLeadChosenFirm(lead: NewLead, firma: string, now = ne
     subject: `[Cerere închisă] ${lead.judet}: clientul a ales ${clean ? `„${clean}”` : 'o firmă (nespecificată)'}`,
     html: `<p>Cererea <strong>${escapeHtml(lead.timestamp)}</strong> (${escapeHtml(lead.judet)}, ${escapeHtml(lead.numeContact)}, ${escapeHtml(lead.telefon)}) a fost închisă ca <code>altundeva</code> din emailul „mai căutați oferte?".</p><p>Firma aleasă: <strong>${clean ? escapeHtml(clean) : 'nespecificată'}</strong>.</p><p>Dacă e o firmă care a revendicat cererea la noi, schimbă statusul în <code>castigata</code> din /admin/crm.</p>`,
   });
+}
+
+/** Câte verificări au plecat deja în ziua dată (ora României): lotul nu se trimite de două ori. */
+export async function activeChecksSentOn(day: string): Promise<number> {
+  const leads = await getLeadsSince(new Date(0));
+  return leads.filter(
+    (l) =>
+      l.verificareTrimisaLa &&
+      new Date(l.verificareTrimisaLa).toLocaleDateString('en-CA', { timeZone: 'Europe/Bucharest' }) === day,
+  ).length;
 }

@@ -7,6 +7,10 @@
     {
       "path": "/api/cron/claim-nudge",
       "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/confirmare-activa",
+      "schedule": "0 6 * * *"
     }
   ]
 }

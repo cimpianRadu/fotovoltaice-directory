@@ -6,6 +6,8 @@
  *
  *   node scripts/confirmare-activa-send.mjs [--limit 10] [--send]
  *
+ * Cere ADMIN_PASSWORD-ul de pe prod în .env.local. Loturile programate pleacă
+ * singure prin /api/cron/confirmare-activa (vezi ACTIVE_CHECK_BATCHES).
  * Loturi mici (10), ca să nu ajungem în spam. Fiecare cerere primește emailul
  * o singură dată (coloana AZ), deci rulările repetate iau următoarele la rând.
  */
@@ -18,11 +20,6 @@ const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const args = process.argv.slice(2);
 const send = args.includes('--send');
 const limit = Number(args[args.indexOf('--limit') + 1]) || 10;
-
-// Cereri rezolvate la telefon, încă nemarcate închise în CRM.
-const EXCLUDE = [
-  '2026-06-24T13:34:08.537Z', // hotelul din Prahova, concretizat prin Electro Prahova
-];
 
 const env = Object.fromEntries(
   readFileSync(path.join(ROOT, '.env.local'), 'utf8')
@@ -39,7 +36,7 @@ const cookie = createHash('sha256').update(`admin:${env.ADMIN_PASSWORD}`).digest
 const res = await fetch('https://instalatori-fotovoltaice.ro/api/admin/confirmare-activa', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json', Cookie: `admin_session=${cookie}` },
-  body: JSON.stringify({ limit, exclude: EXCLUDE, dry: !send }),
+  body: JSON.stringify({ limit, dry: !send }),
   signal: AbortSignal.timeout(90_000),
 });
 const json = await res.json().catch(() => ({}));
