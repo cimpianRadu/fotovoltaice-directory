@@ -36,6 +36,7 @@ import { generateOrganizationJsonLd, generateWebSiteJsonLd, generateFAQJsonLd } 
 import { PRICING } from '@/lib/pricing';
 import HomeFinantareCta from '@/components/home/HomeFinantareCta';
 import HomeInstalatoriCta from '@/components/home/HomeInstalatoriCta';
+import HomeFindInstaller from '@/components/home/HomeFindInstaller';
 import guidesData from '@/data/guides.json';
 
 // Teaser-ul de cereri vine din Google Sheets — regenerare la 5 minute, ca /cereri.
@@ -160,9 +161,6 @@ export default async function HomePage() {
       {/* Hero — pasul 1 al formularului, direct în pagină. Vezi HomeLeadHero
           pentru cifrele care au scos ușile „Casa mea / Firma mea" de aici. */}
       <HomeLeadHero
-        firms={FIRM_INDEX}
-        counties={COUNTY_INDEX}
-        topCounties={TOP_COUNTIES}
         activity={activity}
         installerCount={COMPANY_COUNT}
         anreCount={ANRE_COUNT}
@@ -177,6 +175,12 @@ export default async function HomePage() {
           recomandată din director — doar că acum e mult deasupra lui. */}
       <section className="max-w-7xl mx-auto px-4 py-8">
         <SponsorBanner position="homepage" />
+      </section>
+
+      {/* Căutarea după firmă sau județ, coborâtă aici din hero pe 21 sept 2026,
+          când locul ei din hero l-au luat testimonialele. */}
+      <section className="max-w-7xl mx-auto px-4 pb-14">
+        <HomeFindInstaller firms={FIRM_INDEX} counties={COUNTY_INDEX} topCounties={TOP_COUNTIES} />
       </section>
 
       {/* Cereri active, mutate sub hero pe 25 aug 2026, în locul celor trei bife

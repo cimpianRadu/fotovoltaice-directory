@@ -6,7 +6,7 @@ import {
   COMMERCIAL_PROJECT_TYPES,
   RESIDENTIAL_PROJECT_TYPES,
 } from '@/lib/project-types';
-import HomeHeroSearch, { type FirmIndexItem, type CountyIndexItem } from './HomeHeroSearch';
+import HeroTestimonials from './HeroTestimonials';
 
 /**
  * Heroul homepage-ului, refăcut pe 10 septembrie 2026.
@@ -85,9 +85,6 @@ function hrefFor(tip: string, segment: 'rezidential' | 'comercial') {
 }
 
 interface Props {
-  firms: FirmIndexItem[];
-  counties: CountyIndexItem[];
-  topCounties: CountyIndexItem[];
   /** Cereri și preluări din ultimele 30 de zile. `null` dacă Sheets n-a răspuns. */
   activity: { cereri: number; preluari: number } | null;
   /** Fallback pentru linia de dovadă când activitatea lipsește. */
@@ -96,9 +93,6 @@ interface Props {
 }
 
 export default function HomeLeadHero({
-  firms,
-  counties,
-  topCounties,
   activity,
   installerCount,
   anreCount,
@@ -193,33 +187,10 @@ export default function HomeLeadHero({
           </div>
         </div>
 
-        {/* Drumul celălalt: cine caută o firmă anume sau județul lui. Paginile de
-            județ au adus 18 din cele 44 de cereri cu atribuire, deci rămân sus. */}
-        <div className="mt-8 pt-6 border-t border-white/10 max-w-3xl mx-auto">
-          <p className="text-xs text-gray-400 mb-3 text-center sm:text-left">
-            Sau căutați direct un instalator
-          </p>
-          <HomeHeroSearch firms={firms} counties={counties} />
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mt-3">
-            {topCounties.map((c) => (
-              <Link
-                key={c.slug}
-                href={`/firme/judet/${c.slug}`}
-                onClick={() => trackEvent('hero_pill_click', { county: c.name })}
-                className="text-xs sm:text-sm text-secondary-dark bg-white hover:bg-gray-100 rounded-full px-3 py-1 transition-colors"
-              >
-                {c.name}
-              </Link>
-            ))}
-            <Link
-              href="/firme"
-              onClick={() => trackEvent('hero_pill_click', { county: 'toate' })}
-              className="text-xs sm:text-sm text-primary-light hover:text-primary self-center font-medium transition-colors"
-            >
-              toate firmele &rarr;
-            </Link>
-          </div>
-        </div>
+        {/* Testimonialele, în locul căutării din 21 sept 2026: dovada că cererea
+            ajunge la un contract semnat stă lângă formular. Căutarea după firmă
+            sau județ e acum sub parteneri, în HomeFindInstaller. */}
+        <HeroTestimonials />
 
         {/* Ușa firmelor, la baza heroului. Sus ar concura cu cererea, care e
             treaba paginii; jos de tot ar fi la fel de invizibilă ca linkul din

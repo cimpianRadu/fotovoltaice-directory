@@ -4,6 +4,7 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import Button from '@/components/ui/Button';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
+import ClientTestimonial from '@/components/ClientTestimonial';
 import { generateBreadcrumbJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { getTotalStats } from '@/lib/utils';
 import { MAX_CLAIMS_PER_LEAD, claimOccupiesLeadSlot, getClaims, getPublicLeads } from '@/lib/sheets';
@@ -197,6 +198,17 @@ export default async function PentruInstalatoriPage() {
             )}
           </section>
         )}
+
+        {/* ── Dovada că se închide ─────────────────────────────── */}
+        {/* Primul testimonial real (21 sept 2026). Pentru firmă argumentul e că
+            o cerere de aici a ajuns contract semnat, nu doar un telefon. */}
+        <section className="mt-10">
+          <ClientTestimonial
+            eyebrow="O cerere de aici, contract semnat"
+            title="Ce spune clientul"
+            subtitle="Hotel din Prahova, venit prin formularul de cerere. A primit oferte de la mai multe firme și a semnat cu una dintre ele."
+          />
+        </section>
 
         {/* ── Cereri libere pe județ ───────────────────────────── */}
         {hasFree && (
