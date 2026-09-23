@@ -4,8 +4,8 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import Button from '@/components/ui/Button';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
-import ClientTestimonial from '@/components/ClientTestimonial';
-import FirmTestimonial from '@/components/FirmTestimonial';
+import TestimonialCarousel from '@/components/home/TestimonialCarousel';
+import { getTestimonialCards } from '@/lib/testimoniale';
 import { generateBreadcrumbJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { getTotalStats } from '@/lib/utils';
 import { MAX_CLAIMS_PER_LEAD, claimOccupiesLeadSlot, getClaims, getPublicLeads } from '@/lib/sheets';
@@ -101,6 +101,7 @@ function Stat({ value, label, tone = 'default' }: { value: string; label: string
 }
 
 export default async function PentruInstalatoriPage() {
+  const testimoniale = getTestimonialCards();
   const stats = getTotalStats();
 
   // Cifrele live. Dacă Sheets pică, pagina rămâne funcțională și pur și simplu
@@ -201,21 +202,26 @@ export default async function PentruInstalatoriPage() {
         )}
 
         {/* ── Dovada că se închide ─────────────────────────────── */}
-        {/* Aceeași lucrare, văzută de ambele părți: clientul (21 sept 2026) și
-            firma care a montat (23 sept 2026). Pentru firmă argumentul e că o
-            cerere de aici a ajuns contract semnat, nu doar un telefon. */}
-        <section className="mt-10 grid gap-8 lg:grid-cols-2 lg:gap-6 items-start">
-          <ClientTestimonial
-            eyebrow="O cerere de aici, contract semnat"
-            title="Ce spune clientul"
-            subtitle="Hotel din Prahova, venit prin formularul de cerere. A primit oferte de la mai multe firme și a semnat cu una dintre ele."
-          />
-          <FirmTestimonial
-            eyebrow="Aceeași lucrare, de partea cealaltă"
-            title="Ce spune firma"
-            subtitle="Firma care a revendicat cererea, a ofertat și a executat montajul de 20 kW."
-          />
-        </section>
+        {/* Aceleași carduri ca în heroul de pe homepage (lib/testimoniale.ts):
+            clientul (21 sept 2026) și firma care a montat (23 sept 2026).
+            Pentru firmă argumentul e că o cerere de aici a ajuns contract
+            semnat, nu doar un telefon. */}
+        {testimoniale.length > 0 && (
+          <section className="mt-10">
+            <p className="text-xs font-semibold text-primary-dark uppercase tracking-wider mb-1.5">
+              O cerere de aici, contract semnat
+            </p>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Ce spun clientul și firma</h2>
+            <p className="text-gray-600 mt-1.5 text-sm leading-relaxed max-w-2xl">
+              Hotel din Prahova, venit prin formularul de cerere. Clientul a primit oferte de la mai
+              multe firme și a semnat cu una dintre ele; firma a revendicat cererea, a ofertat și a
+              executat montajul de 20 kW.
+            </p>
+            <div className="mt-5">
+              <TestimonialCarousel cards={testimoniale} tone="light" />
+            </div>
+          </section>
+        )}
 
         {/* ── Cereri libere pe județ ───────────────────────────── */}
         {hasFree && (

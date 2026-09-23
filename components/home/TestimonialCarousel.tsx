@@ -7,7 +7,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 // la sm în sus), puncte dedesubt, swipe pe mobil prin scroll-snap. Derulare
 // automată la 7 s, oprită la hover, focus, după orice atingere a userului, în
 // tab ascuns și la prefers-reduced-motion. Cardurile vin gata calculate din
-// HeroTestimonials (server), ca bundle-ul client să nu tragă JSON-urile.
+// lib/testimoniale.ts prin componente server, ca bundle-ul client să nu tragă
+// JSON-urile. `tone` alege culorile punctelor și contorului: „dark” pe navy
+// (hero), „light” pe fundal alb (/pentru-instalatori).
 
 export type TestimonialCard = {
   key: string;
@@ -58,7 +60,7 @@ function Arrow({ dir, onClick, disabled }: { dir: 'prev' | 'next'; onClick: () =
   );
 }
 
-export default function TestimonialCarousel({ cards }: { cards: TestimonialCard[] }) {
+export default function TestimonialCarousel({ cards, tone = 'dark' }: { cards: TestimonialCard[]; tone?: 'dark' | 'light' }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -119,7 +121,9 @@ export default function TestimonialCarousel({ cards }: { cards: TestimonialCard[
         {cards.map((t, i) => (
           <figure
             key={t.key}
-            className="snap-start shrink-0 w-full rounded-xl bg-white shadow-lg p-4 sm:p-5 text-left flex flex-col"
+            className={`snap-start shrink-0 w-full rounded-xl bg-white p-4 sm:p-5 text-left flex flex-col ${
+              tone === 'dark' ? 'shadow-lg' : 'border border-border shadow-sm'
+            }`}
             aria-hidden={many && i !== index ? true : undefined}
           >
             <div className="flex items-center justify-between gap-3 mb-2.5">
@@ -167,12 +171,19 @@ export default function TestimonialCarousel({ cards }: { cards: TestimonialCard[
                   aria-label={`Testimonialul ${i + 1} din ${cards.length}`}
                   onClick={() => { stopAutoplay(); goTo(i); }}
                   className={`h-2 rounded-full transition-all ${
-                    i === index ? 'w-6 bg-primary' : 'w-2 bg-white/40 hover:bg-white/70'
+                    i === index
+                      ? 'w-6 bg-primary'
+                      : tone === 'dark'
+                        ? 'w-2 bg-white/40 hover:bg-white/70'
+                        : 'w-2 bg-gray-300 hover:bg-gray-400'
                   }`}
                 />
               ))}
             </div>
-            <span className="text-xs font-medium tabular-nums text-white/60" aria-live="polite">
+            <span
+              className={`text-xs font-medium tabular-nums ${tone === 'dark' ? 'text-white/60' : 'text-gray-500'}`}
+              aria-live="polite"
+            >
               {index + 1} din {cards.length}
             </span>
           </div>
