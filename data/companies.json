@@ -15949,6 +15949,103 @@
         "societate": "IGF GRUP",
         "judet": "Brasov"
       }
+    },
+    {
+      "id": "energyfix",
+      "slug": "energyfix",
+      "name": "EnergyFix",
+      "cui": "RO38389879",
+      "logo": "/logos/energyfix.png",
+      "description": "EnergyFix este o firmă din București, Sector 4, înființată în 2017, care proiectează, montează și pune în funcțiune sisteme fotovoltaice pentru locuințe și firme din București, Ilfov și județele limitrofe. Deține atestat ANRE tip B nr. 18981, emis în ianuarie 2023 și valabil până în ianuarie 2028. Vinde kituri la cheie cu montaj inclus, de la 6 la 12 kW, monofazate și trifazate, cu panouri Canadian Solar și invertoare hibride Deye, la care se pot adăuga baterii V-TAC sau Felicity. Întocmește și depune dosarul de prosumator, face măsurarea prizei de pământ și eliberează buletinul PRAM, iar sistemele pot fi plătite în rate prin TBI Bank. Pentru firme oferă sisteme pe hale, fabrici, depozite și ferme, cu stocare modulară pe baterii LiFePO4, și servicii de mentenanță pentru sistemele existente. Are și un magazin online, shop.energyfix.ro, cu panouri Jinko, Canadian Solar și Hyundai, invertoare Deye și Solis, echipamente Victron, baterii, structuri și accesorii, cu livrare în toată țara. Cifra de afaceri a crescut de la 0,9 milioane de lei în 2024 la 5,75 milioane de lei în 2025.",
+      "founded": 2017,
+      "employees": 1,
+      "location": {
+        "city": "București",
+        "county": "București",
+        "address": "Str. Șoimuș, Nr. 49, Sector 4, București 040705"
+      },
+      "contact": {
+        "phone": "+40743454164",
+        "email": "contact@energyfix.ro",
+        "website": "https://energyfix.ro"
+      },
+      "coverage": [
+        "București",
+        "Ilfov",
+        "Giurgiu",
+        "Călărași",
+        "Dâmbovița",
+        "Prahova",
+        "Ialomița"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 5753948,
+        "profit": 213245,
+        "history": [
+          {
+            "year": 2021,
+            "revenue": 112125,
+            "profit": 55633,
+            "employees": 1
+          },
+          {
+            "year": 2022,
+            "revenue": 1052,
+            "profit": -95468,
+            "employees": 1
+          },
+          {
+            "year": 2023,
+            "revenue": 102962,
+            "profit": -826,
+            "employees": 1
+          },
+          {
+            "year": 2024,
+            "revenue": 898026,
+            "profit": 23735,
+            "employees": 1
+          },
+          {
+            "year": 2025,
+            "revenue": 5753948,
+            "profit": 213245,
+            "employees": 1
+          }
+        ]
+      },
+      "tags": [
+        "pv-rezidential",
+        "pv-comercial",
+        "prosumator",
+        "on-grid",
+        "hibrid",
+        "stocare-baterii",
+        "finantare-disponibila",
+        "mentenanta-pv",
+        "proiectare",
+        "magazin-online"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-09-23",
+      "updatedAt": "2026-09-23",
+      "segment": "ambele",
+      "anreMatch": {
+        "societate": "ENERGYFIX",
+        "judet": "Bucuresti"
+      }
     }
   ]
 }
