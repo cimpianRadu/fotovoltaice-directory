@@ -26,8 +26,8 @@ const SPREADSHEET_ID = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
 // verificat înainte de scriere.
 const UPDATES = [
   {
-    numeFirma: 'IGF GRUP S.R.L.',
-    status: 'Adăugat în director (publicat 2026-09-15, județ Brașov)',
+    numeFirma: 'Energyfix srl',
+    status: 'Adăugat în director (publicat 2026-09-23, județ București)',
   },
 ];
 

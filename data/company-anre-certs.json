@@ -2922,5 +2922,17 @@
    "isActive": true,
    "tipTarifRaw": "Tarif C1A*-vizare periodica"
   }
+ ],
+ "ENERGYFIX|Bucuresti": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18981",
+   "dataEmitere": "19/01/2023",
+   "dataExpirare": "19/01/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
  ]
 }
