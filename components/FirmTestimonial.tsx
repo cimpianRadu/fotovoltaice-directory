@@ -4,8 +4,9 @@ import testimoniale from '@/data/testimoniale-firme.json';
 // Testimoniale de la firmele care au executat o lucrare venită de aici. Vin din
 // tabul „Feedback firme” (formularul /feedback/firma) și intră în
 // data/testimoniale-firme.json DOAR cu „da” în coloana L; la „da-fara-nume”
-// numele firmei se scoate. Textul se copiază exact cum l-a scris omul, fără
-// corecturi, inclusiv fără diacritice dacă așa a venit.
+// numele firmei se scoate. Textul se păstrează cu formulările omului; se
+// corectează doar diacriticele și greșelile de tastare (decizia userului,
+// 23 sept 2026, pe textul Electro Prahova), niciodată cuvintele sau sensul.
 //
 // `slug` e profilul firmei din director (acordul „cu numele firmei” acoperă și
 // linkul); null când firma nu e listată, cum e Electro Prahova.
