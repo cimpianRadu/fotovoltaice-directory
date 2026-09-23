@@ -8,13 +8,15 @@
  *    Nu recalculăm cu o formulă proprie: o a doua metodă ar începe să contrazică
  *    tabelul din articol în ziua în care una dintre ele se schimbă.
  *
- * 2. **Programul** (`PROGRAM`, `scoreFor`, `grantFor`) vine din forma consolidată
- *    a proiectului de ghid, publicată de MMAP pe 9 septembrie 2026, art. 5, 16
- *    și 19. Ea a schimbat față de proiectul din 18 august: minimul 12 -> 10 kWh,
- *    standardul de cost 1.250 -> 1.500 lei/kWh, iar punctajul a trecut de la trei
- *    criterii la două (puterea PV nu mai punctează deloc).
- *    ⚠️ Tot proiect, nu act final: ordinul nu e semnat și nu e în Monitorul
- *    Oficial. Orice afișare a acestor cifre poartă mențiunea că se pot schimba.
+ * 2. **Programul** (`PROGRAM`, `scoreFor`, `grantFor`) vine din Ordinul ministrului
+ *    mediului nr. 1.904 din 11 septembrie 2026 pentru aprobarea Ghidului de
+ *    finanțare a Programului privind sisteme de stocare energie electrică
+ *    (Casa Verde Baterii), publicat în Monitorul Oficial nr. 775 din 14 septembrie
+ *    2026 (în vigoare 14.09.2026), art. 5, 6, 16 și 19. Față de proiectul din 18
+ *    august: minimul 12 -> 10 kWh, standardul de cost 1.250 -> 1.500 lei/kWh, iar
+ *    punctajul a trecut de la trei criterii la două (puterea PV nu mai punctează).
+ *    Data sesiunii de înscriere nu e anunțată; AFM validează întâi instalatorii,
+ *    apoi solicitanții (art. 8). Sursa: https://www.afm.ro/baterii_ghid.php
  */
 
 export interface SizingBracket {

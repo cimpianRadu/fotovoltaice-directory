@@ -34,10 +34,12 @@ import {
 
 const GUIDE_HREF = '/ghid/casa-verde-baterii-2026-program-stocare-afm';
 
-/** Ziua în care MMAP a publicat forma consolidată a proiectului de ghid. */
-const CONSOLIDATED_LABEL = '9 septembrie 2026';
-/** Ziua în care ministrul Mediului a anunțat semnarea ordinului. */
+/** Ziua în care ministrul Mediului a semnat ordinul de aprobare. */
 const SIGNED_LABEL = '11 septembrie 2026';
+/** Numărul ordinului și publicarea în Monitorul Oficial. */
+const ORDER_LABEL = 'Ordinul nr. 1.904/2026';
+const MO_LABEL = 'Monitorul Oficial nr. 775 din 14 septembrie 2026';
+const AFM_HREF = 'https://www.afm.ro/baterii_ghid.php';
 
 /**
  * Capacitatea de la care baza eligibilă atinge plafonul absolut de finanțare.
@@ -74,7 +76,7 @@ const faqs = [
   {
     question: 'Când se deschide sesiunea de înscrieri la Casa Verde Baterii?',
     answer:
-      'Nu are dată. Ministrul Mediului a anunțat pe 11 septembrie 2026 că a semnat ordinul de aprobare a ghidului, dar ordinul nu are număr public și nu este publicat în Monitorul Oficial, iar afm.ro nu listează încă programul. Lansarea a fost declarată pentru luna octombrie 2026, fără zi anunțată. Calculatorul folosește cifrele din forma consolidată a proiectului, pe care ordinul semnat o confirmă prin cele două criterii de punctaj.',
+      'Nu are dată. Ordinul ministrului mediului nr. 1.904 din 11 septembrie 2026 a fost publicat în Monitorul Oficial nr. 775 din 14 septembrie 2026 (în vigoare 14.09.2026), dar AFM nu a comunicat perioada de înscriere. Procesul din ghid, art. 8: întâi sesiunea de validare a instalatorilor (informații → înscriere → validare → contestații → contracte → lista instalatorilor validați), apoi sesiunea solicitanților (care poate rula în paralel cu pașii a-e). La conferința „Energia în priză" din 21 septembrie 2026, ministra Mediului a spus că „ce lansăm anul acesta va putea să fie instalat anul viitor", deci instalarea efectivă e realist în 2027, nu în toamnă. Calculatorul folosește cifrele finale din ordin.',
   },
 ];
 
@@ -151,13 +153,21 @@ export default function CalculatorCasaVerdeBateriiPage() {
 
         {/* Statusul programului stă deasupra uneltei, nu sub ea: cine intră aici
             caută și răspunsul la „când se deschide", iar răspunsul onest e că
-            nu are dată. */}
+            ordinul e publicat, dar sesiunea nu are dată. */}
         <div className="mb-8 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-gray-800">
-          <strong>Unde e programul acum:</strong> ministrul Mediului a anunțat pe {SIGNED_LABEL} că a
-          semnat ordinul de aprobare a ghidului. Ordinul nu are număr public, nu e în Monitorul
-          Oficial, iar afm.ro nu listează încă programul. Lansarea e declarată pentru octombrie, fără
-          zi anunțată. Calculatorul folosește forma consolidată a proiectului, publicată pe{' '}
-          {CONSOLIDATED_LABEL}, pe care ordinul semnat o confirmă prin cele două criterii de punctaj.
+          <strong>Unde e programul acum:</strong> {ORDER_LABEL} (semnat pe {SIGNED_LABEL}) a fost
+          publicat în {MO_LABEL}, în vigoare din 14 septembrie 2026. AFM nu a comunicat perioada
+          de înscriere: art. 8 prevede întâi sesiunea de validare a instalatorilor, apoi cea a
+          solicitanților. Calculatorul folosește cifrele din ordin (art. 5, 6, 16, 19). Sursa:{' '}
+          <a
+            href={AFM_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary-dark underline hover:no-underline"
+          >
+            afm.ro/baterii_ghid.php
+          </a>
+          .
         </div>
 
         <BatteryWidget sursa="calculator-casa-verde-baterii" guideHref={GUIDE_HREF} />
@@ -301,9 +311,11 @@ export default function CalculatorCasaVerdeBateriiPage() {
             de cost, dar te lasă să introduci costul tău real.
           </p>
           <p>
-            <strong>Regulile finale.</strong> Ordinul e semnat, dar nepublicat. Până apare în
-            Monitorul Oficial, orice cifră din calculator rămâne cea din forma consolidată a
-            proiectului. Explicația articol cu articol, cu eligibilitate, dosar și termene, e în{' '}
+            <strong>Regulile finale.</strong> Ordinul e publicat: {ORDER_LABEL} (semnat pe{' '}
+            {SIGNED_LABEL}) a apărut în {MO_LABEL}, în vigoare din 14 septembrie 2026. Cifrele
+            din calculator sunt cele din ordin. Ce lipsește e data sesiunii de înscriere: AFM
+            validează întâi instalatorii (art. 8), apoi deschide sesiunea solicitanților.
+            Explicația articol cu articol, cu eligibilitate, dosar și termene, e în{' '}
             <Link href={GUIDE_HREF} className="text-primary-dark underline hover:no-underline">
               ghidul Casa Verde Baterii 2026
             </Link>
