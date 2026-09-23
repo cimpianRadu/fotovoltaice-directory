@@ -1,15 +1,56 @@
-import testimoniale from '@/data/testimoniale.json';
+import Link from 'next/link';
+import clienti from '@/data/testimoniale.json';
+import firme from '@/data/testimoniale-firme.json';
 
 // Banda de testimoniale din hero, pe navy. Stă în locul căutării (mutată sub
 // parteneri pe 21 sept 2026): dovada socială prinde clientul lângă formular.
-// Rând orizontal cu scroll-snap: cu un singur testimonial ocupă toată lățimea,
-// de la al doilea încolo se derulează cu degetul. Fără autoplay.
-// Regulile de conținut (ce se publică, fără numele firmei) sunt în
-// components/ClientTestimonial.tsx.
+// Din 23 sept 2026 arată TOATE testimonialele, ale clienților și ale firmelor
+// care au montat, în ordinea în care au venit. Rând orizontal cu scroll-snap:
+// cu un singur card ocupă toată lățimea, de la al doilea încolo se derulează
+// cu degetul. Fără autoplay.
+// Regulile de conținut sunt în components/ClientTestimonial.tsx (clienți) și
+// components/FirmTestimonial.tsx (firme).
+
+type Card = {
+  key: string;
+  data: string;
+  nota: number;
+  badge: string;
+  text: string;
+  nume: string;
+  href: string | null;
+  meta: string;
+  extra: string | null;
+};
+
+const cards: Card[] = [
+  ...clienti.map((t) => ({
+    key: `client-${t.id}`,
+    data: t.data,
+    nota: t.nota,
+    badge: 'Contract semnat',
+    text: t.text,
+    nume: t.nume,
+    href: null,
+    meta: [t.tip, `${t.putere} kW`, t.judet].join(' · '),
+    extra: `${t.oferte} oferte primite`,
+  })),
+  ...firme.map((t) => ({
+    key: `firma-${t.id}-${t.firma}`,
+    data: t.data,
+    nota: t.nota,
+    badge: 'Lucrare executată',
+    text: t.text,
+    nume: t.firma,
+    href: t.slug ? `/firme/${t.slug}` : null,
+    meta: [t.tip, `${t.putere} kW`, t.judet].join(' · '),
+    extra: 'firma care a montat',
+  })),
+].sort((a, b) => a.data.localeCompare(b.data));
 
 export default function HeroTestimonials() {
-  if (testimoniale.length === 0) return null;
-  const single = testimoniale.length === 1;
+  if (cards.length === 0) return null;
+  const single = cards.length === 1;
 
   return (
     <div className="mt-8 pt-6 border-t border-white/10 max-w-3xl mx-auto">
@@ -21,9 +62,9 @@ export default function HeroTestimonials() {
           single ? '' : '-mx-4 px-4'
         }`}
       >
-        {testimoniale.map((t) => (
+        {cards.map((t) => (
           <figure
-            key={t.id}
+            key={t.key}
             className={`snap-start shrink-0 rounded-xl bg-white shadow-lg p-4 sm:p-5 text-left ${
               single ? 'w-full' : 'w-[85%] sm:w-[70%]'
             }`}
@@ -46,15 +87,25 @@ export default function HeroTestimonials() {
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                 </svg>
-                Contract semnat
+                {t.badge}
               </span>
             </div>
             <blockquote className="text-sm sm:text-base leading-relaxed text-gray-900">„{t.text}”</blockquote>
             <figcaption className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs sm:text-sm">
-              <span className="font-semibold text-gray-900">{t.nume}</span>
-              <span className="text-gray-500">{[t.tip, `${t.putere} kW`, t.judet].join(' · ')}</span>
-              <span className="text-gray-300">·</span>
-              <span className="text-gray-500">{t.oferte} oferte primite</span>
+              {t.href ? (
+                <Link href={t.href} className="font-semibold text-gray-900 hover:text-primary-dark">
+                  {t.nume}
+                </Link>
+              ) : (
+                <span className="font-semibold text-gray-900">{t.nume}</span>
+              )}
+              <span className="text-gray-500">{t.meta}</span>
+              {t.extra && (
+                <>
+                  <span className="text-gray-300">·</span>
+                  <span className="text-gray-500">{t.extra}</span>
+                </>
+              )}
             </figcaption>
           </figure>
         ))}
