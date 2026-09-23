@@ -5,6 +5,7 @@ import JsonLd from '@/components/seo/JsonLd';
 import Button from '@/components/ui/Button';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import ClientTestimonial from '@/components/ClientTestimonial';
+import FirmTestimonial from '@/components/FirmTestimonial';
 import { generateBreadcrumbJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { getTotalStats } from '@/lib/utils';
 import { MAX_CLAIMS_PER_LEAD, claimOccupiesLeadSlot, getClaims, getPublicLeads } from '@/lib/sheets';
@@ -200,13 +201,19 @@ export default async function PentruInstalatoriPage() {
         )}
 
         {/* ── Dovada că se închide ─────────────────────────────── */}
-        {/* Primul testimonial real (21 sept 2026). Pentru firmă argumentul e că
-            o cerere de aici a ajuns contract semnat, nu doar un telefon. */}
-        <section className="mt-10">
+        {/* Aceeași lucrare, văzută de ambele părți: clientul (21 sept 2026) și
+            firma care a montat (23 sept 2026). Pentru firmă argumentul e că o
+            cerere de aici a ajuns contract semnat, nu doar un telefon. */}
+        <section className="mt-10 grid gap-8 lg:grid-cols-2 lg:gap-6 items-start">
           <ClientTestimonial
             eyebrow="O cerere de aici, contract semnat"
             title="Ce spune clientul"
             subtitle="Hotel din Prahova, venit prin formularul de cerere. A primit oferte de la mai multe firme și a semnat cu una dintre ele."
+          />
+          <FirmTestimonial
+            eyebrow="Aceeași lucrare, de partea cealaltă"
+            title="Ce spune firma"
+            subtitle="Firma care a revendicat cererea, a ofertat și a executat montajul de 20 kW."
           />
         </section>
 
