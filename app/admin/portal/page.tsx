@@ -22,11 +22,26 @@ import {
   type CrmFirm,
   type NewLead,
 } from '@/lib/sheets';
-import { isClaimUntouched } from '@/lib/sheets-shared';
+import { isClaimUntouched, normalizeFirmName } from '@/lib/sheets-shared';
 import { matchFirmsForLead } from '@/lib/lead-match';
 import { getCompanies } from '@/lib/utils';
-import { getFirmSourceLabel, getProjectTypeLabel, type Company } from '@/lib/utils-shared';
-import ApproveClaims, { type PortalClaimRow } from './ApproveClaims';
+import {
+  getBudgetLabel,
+  getCallWindowLabel,
+  getConnectionLabel,
+  getFinancingLabel,
+  getFirmSourceLabel,
+  getPhaseLabel,
+  getProjectTypeLabel,
+  getRoofTypeLabel,
+  getScopLabel,
+  getTimelineLabel,
+  getWorkTypeLabel,
+  getYesNoLabel,
+  type Company,
+} from '@/lib/utils-shared';
+import { parseRequestedFirms } from '@/lib/sheets-shared';
+import ApproveClaims, { type ClaimLeadDetail, type PortalClaimRow } from './ApproveClaims';
 import FirmEmails, { type FirmEmailRow } from './FirmEmails';
 import GiveLead, { type GiveLeadFirm, type LeadOption } from './GiveLead';
 import AccountStatus from './AccountStatus';
@@ -210,6 +225,48 @@ function EmptyPortalBadge() {
   );
 }
 
+/**
+ * Cererea pentru modalul din card, cu etichetele rezolvate aici, pe server.
+ * Aceleași câmpuri ca mesajul de partajare din /admin/crm (formatLead.ts),
+ * fără notele interne: aici te uiți cine e clientul, nu ce am scris noi.
+ */
+function leadDetail(lead: NewLead | undefined): ClaimLeadDetail | undefined {
+  if (!lead) return undefined;
+  const spec = (label: string, value: string) =>
+    value.trim() ? [{ label, value: value.trim() }] : [];
+  const requested = parseRequestedFirms(lead.preselectedCompany);
+  return {
+    when: fmtDateTime(lead.timestamp),
+    numeContact: lead.numeContact,
+    numeCompanie: lead.numeCompanie,
+    telefon: lead.telefon,
+    email: lead.email,
+    localitate: lead.localitate,
+    intervalApel: lead.intervalApel ? getCallWindowLabel(lead.intervalApel) : '',
+    specs: [
+      ...spec('Segment', lead.segment === 'rezidential' ? 'Rezidențial' : lead.segment ? 'Comercial' : ''),
+      ...spec('Tip lucrare', lead.tipLucrare ? getWorkTypeLabel(lead.tipLucrare) : ''),
+      ...spec('Putere', lead.putere ? `${lead.putere} kW` : ''),
+      ...spec('Suprafață', lead.suprafata ? `${lead.suprafata} mp` : ''),
+      ...spec('Consum lunar', lead.consumLunar ? `${lead.consumLunar} kWh` : ''),
+      ...spec('Acoperiș', lead.tipAcoperis ? getRoofTypeLabel(lead.tipAcoperis) : ''),
+      ...spec('Fazare', lead.fazare ? getPhaseLabel(lead.fazare) : ''),
+      ...spec('Branșament', lead.bransament ? getConnectionLabel(lead.bransament) : ''),
+      ...spec('Baterie', lead.stocare ? getYesNoLabel(lead.stocare) : ''),
+      ...spec('Capacitate baterie', lead.capacitateBaterie ? `${lead.capacitateBaterie} kWh` : ''),
+      ...spec('Wallbox', lead.wallbox ? getYesNoLabel(lead.wallbox) : ''),
+      ...spec('Termen', lead.termen ? getTimelineLabel(lead.termen) : ''),
+      ...spec('Finanțare', lead.finantare ? getFinancingLabel(lead.finantare) : ''),
+      ...spec('Buget', getBudgetLabel(lead.buget)),
+      ...spec('Vrea', getScopLabel(lead.scop, lead.scopDetalii)),
+      ...spec('Firme cerute', requested.join(', ')),
+      ...spec('Poze', lead.poze ? 'da' : ''),
+    ],
+    mesaj: lead.mesaj.trim(),
+    crmHref: `/admin/crm#${encodeURIComponent(lead.timestamp)}`,
+  };
+}
+
 function leadLabel(lead: NewLead | undefined, leadId: string): string {
   if (!lead) return `cerere ${leadId.slice(0, 10)}`;
   return [getProjectTypeLabel(lead.tipProiect), lead.judet, lead.putere ? `${lead.putere} kW` : '']
@@ -295,10 +352,17 @@ function AccountCard({
   const state = stateOf(account);
   // Numele firmei: din revendicări (identitatea ei reală în portal), altfel din
   // director dacă emailul e cel public al unei firme listate.
-  const firmName =
-    account.claims.find((c) => c.numeFirma)?.numeFirma || account.company?.name || '';
+  const identityClaim = account.claims.find((c) => c.numeFirma);
+  const firmName = identityClaim?.numeFirma || account.company?.name || '';
   const phone =
     account.claims.find((c) => c.telefon)?.telefon || account.company?.contact.phone || '';
+  // Omul din spatele contului: la telefon pe el îl cauți, nu firma. Îl iau de pe
+  // revendicarea care a dat numele firmei, ca să fie aceeași persoană cu ea;
+  // dacă acolo lipsește („-" = necompletat), de pe oricare alta.
+  const contactName =
+    (identityClaim?.numeContact !== '-' ? identityClaim?.numeContact : '') ||
+    account.claims.find((c) => c.numeContact && c.numeContact !== '-')?.numeContact ||
+    '';
 
   const rows: PortalClaimRow[] = account.claims
     .map((c) => ({
@@ -307,7 +371,18 @@ function AccountCard({
       // Doar pe conturile cu mai multe adrese: altfel ar repeta emailul din
       // capul cardului pe fiecare rând.
       claimedBy: account.addresses.length > 1 ? c.email : '',
+      // Numele firmei, scris doar când NU e cel din antet: antetul arată o
+      // singură identitate (prima revendicare cu nume), deci fără marcajul ăsta
+      // o cerere revendicată pe altă firmă de pe același email arată ca și cum
+      // ar fi a firmei din cap. Se întâmplă: 19 sept 2026, același om a
+      // revendicat o dată ca „Sc Fotovolt srl" și o dată ca „Cable Connect".
+      claimedAs:
+        c.numeFirma && normalizeFirmName(c.numeFirma) !== normalizeFirmName(firmName)
+          ? c.numeFirma
+          : '',
+      claimedAsPhone: c.telefon,
       label: leadLabel(leadById.get(c.leadId), c.leadId),
+      detail: leadDetail(leadById.get(c.leadId)),
       approvedAt: c.approvedAt,
       releasedAt: c.releasedAt,
       releaseReason: c.releaseReason,
@@ -346,6 +421,7 @@ function AccountCard({
         <div className="min-w-0">
           <h3 className="truncate font-semibold text-slate-900">{firmName || account.email}</h3>
           <p className="mt-0.5 truncate text-xs text-slate-600">
+            {contactName && <span className="font-medium text-slate-700">{contactName} · </span>}
             <a href={`mailto:${account.email}`} className="hover:text-slate-900">
               {account.email}
             </a>
