@@ -26,10 +26,12 @@ export default async function ClientFeedbackPage({
   const [lead, answered] = await Promise.all([getFullLeadById(id), hasFeedback('client', id)]);
   if (!lead) return <InvalidFeedbackLink />;
 
-  const prenume = (lead.numeContact || '').trim().split(/\s+/)[0];
+  // Numele întreg: în formular oamenii scriu des numele de familie primul, iar
+  // „primul cuvânt” ieșea „tomuta, cum a fost?”.
+  const nume = (lead.numeContact || '').trim().replace(/\s+/g, ' ');
 
   return (
-    <FeedbackShell title={prenume ? `${prenume}, cum a fost?` : 'Cum a fost?'}>
+    <FeedbackShell title={nume ? `${nume}, cum a fost?` : 'Cum a fost?'}>
       {answered ? (
         <FeedbackThanks />
       ) : (
