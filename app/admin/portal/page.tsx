@@ -700,7 +700,15 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       firstRequest: requests.at(-1)?.timestamp ?? '',
       firstLogin: logins.at(-1)?.timestamp ?? '',
       lastInPortal: inPortal[0]?.timestamp ?? '',
-      lastSeen: evs[0]?.timestamp || mine[0]?.timestamp || '',
+      // Ce a făcut FIRMA, nu noi: aprobarea și reminderele nu intră.
+      lastSeen:
+        [
+          evs[0]?.timestamp,
+          ...mine.flatMap((c) => [c.timestamp, c.offeredAt, c.releasedAt]),
+        ]
+          .filter((t): t is string => !!t)
+          .sort()
+          .at(-1) ?? '',
       events: evs,
       claims: mine,
       pending: mine.filter((c) => !c.releasedAt && !c.approvedAt).length,
@@ -765,17 +773,9 @@ export default async function PortalAccessPage({ searchParams }: Props) {
     });
   }
 
-  // Ordinea = lista de lucru: întâi ce cere o apăsare de la mine (aprobări),
-  // apoi conturile confirmate, apoi cine s-a împotmolit la intrare. În fiecare
-  // grup, cel mai recent sus.
-  const rank: Record<AccountState, number> = { cont: 0, blocat: 1, necunoscut: 2 };
-  accounts.sort((a, b) => {
-    if ((a.pending > 0) !== (b.pending > 0)) return a.pending > 0 ? -1 : 1;
-    // Apoi cine cere un telefon: are datele și n-a făcut nimic cu ele.
-    if ((a.untouched > 0) !== (b.untouched > 0)) return a.untouched > 0 ? -1 : 1;
-    const d = rank[stateOf(a)] - rank[stateOf(b)];
-    return d !== 0 ? d : b.lastSeen.localeCompare(a.lastSeen);
-  });
+  // Cronologic după ultima activitate a firmei: cine a fost azi în portal stă
+  // sus (25 sept 2026). Lista de lucru (de aprobat, neatinse 2z+) are filtrele ei.
+  accounts.sort((a, b) => b.lastSeen.localeCompare(a.lastSeen));
 
   // Dezactivatele stau doar pe filtrul lor: nu mai sunt de lucru, deci nici în
   // liste, nici în cifrele de sus.
