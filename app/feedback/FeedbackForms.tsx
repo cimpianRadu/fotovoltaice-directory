@@ -224,6 +224,8 @@ export function ClientFeedbackForm({ id, token }: { id: string; token: string })
         value={experienta}
         onChange={(e) => setExperienta(e.target.value)}
         placeholder="Ce a mers bine, ce nu, cum v-au tratat firmele..."
+        required
+        error={error?.field === 'experienta' ? error.message : undefined}
       />
       <Input
         label="Ce ar trebui să îmbunătățim?"
@@ -245,7 +247,7 @@ export function ClientFeedbackForm({ id, token }: { id: string; token: string })
         Dacă alegeți „da", putem publica textul scris mai sus, județul, tipul și puterea sistemului
         și, doar la prima variantă, numele dumneavoastră.
       </PublishNote>
-      {error && <p className="text-sm text-red-600">{error.message}</p>}
+      {error && error.field !== 'experienta' && <p className="text-sm text-red-600">{error.message}</p>}
       <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full">
         {status === 'submitting' ? 'Se trimite...' : 'Trimite răspunsul'}
       </Button>
@@ -339,6 +341,8 @@ export function FirmFeedbackForm({
         value={experienta}
         onChange={(e) => setExperienta(e.target.value)}
         placeholder="Ce a mers bine, ce nu..."
+        required
+        error={error?.field === 'experienta' ? error.message : undefined}
       />
       <Input
         label="Ce ar trebui să îmbunătățim?"
@@ -361,7 +365,7 @@ export function FirmFeedbackForm({
         instalată și, doar la prima variantă, numele firmei cu link spre profilul ei. Studiile de caz
         cu fotografii se stabilesc separat, în scris.
       </PublishNote>
-      {error && <p className="text-sm text-red-600">{error.message}</p>}
+      {error && error.field !== 'experienta' && <p className="text-sm text-red-600">{error.message}</p>}
       <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full">
         {status === 'submitting' ? 'Se trimite...' : 'Trimite răspunsul'}
       </Button>

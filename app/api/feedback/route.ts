@@ -45,6 +45,12 @@ export async function POST(request: Request) {
       : '';
     if (!satisfactie) return bad('Alegeți o notă de la 1 la 5.', 'satisfactie');
 
+    // Obligatoriu din 28 sept 2026: fără text n-avem ce publica, chiar dacă
+    // omul zice „da” la publicare (Tomuța Ciprian: 5/5, câmp gol).
+    if (!text(body.experienta)) {
+      return bad('Scrieți-ne în câteva cuvinte cum vi s-a părut.', 'experienta');
+    }
+
     const lead = await getFullLeadById(id);
     if (!lead) return NextResponse.json({ error: 'Cererea nu mai există.' }, { status: 404 });
 
