@@ -606,7 +606,9 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 >
 > Ordinul Casa Verde Baterii are număr și e în Monitorul Oficial (**nr. 1.904/2026, MO nr. 775 din 14.09.2026**), deci triggerul pentru „update Casa Verde v2” de mai jos s-a produs deja — cu o săptămână în urmă. Ghidurile noastre spun încă „nepublicat în MO”: asta e eroare de fapt, deci corecția trece înaintea oricărui articol. #31 (PV + pompă de căldură, ~40/lună, vârf în noiembrie-ianuarie) se mută după #63; #63 are head-term-ul cu cel mai mare volum de pe site (`casa verde baterii 2026` **9.900 în august**).
 >
-> ### ⏭️ URMĂTORUL DE SCRIS: **coadă golită după publicarea #56 pe 21 sept.** Următoarele candidate depind de recheck GSC pe cluster-ul comparativ (~5 oct) și de update-ul Casa Verde Baterii v2 când apare ordinul în MO. Slot joi 24 sept: **#31 PV + pompă de căldură** intră în fereastră (sezonier decembrie-februarie, cererea urcă din octombrie).
+> ### ⏭️ URMĂTORUL DE SCRIS (post-29 sept, coadă REPOPULATĂ pentru 5-6 sloturi): **#64 Curățare/Spălare Panouri** (~750/lună, vârf 1.210 în ianuarie, backlink rank 1.2) → **#65 Certificat de Racordare Prosumator** (430/lună, LOW competition 0.04-0.06, CPC 1,80 EUR) → **#66 Panouri Fotovoltaice de Balcon** (260/lună, +136% yearly, unghi ANRE Q&A) → **#67 Producția PV Iarna PVGIS** (70/lună, seasonal, complementar cu #31 publicat azi) → **UPDATE CVB v2** când AFM anunță sesiunea + **UPDATE Metodologie ANRE v3** când apare ordinul final în MO (triggers dependente, PASUL 0.5).
+>
+> **Slotul de luni 28 sept a fost SĂRIT** (rutina a găsit coada goală după #63). Recuperat marți 29 sept cu **#31 PV + Pompă de Căldură** din backlog (cluster: `pompa de caldura pret` 880/lună + `pompa de caldura cu panouri fotovoltaice` 40 cu vârf 90 în noiembrie/ianuarie — fereastra sezonieră se deschide acum). Ordine nouă: joi 1 oct = #64, luni 5 oct = #65, joi 8 oct = #66. Fereastra sezonieră pentru #64 (iarna) și #67 (iarna) impune ordinea.
 >
 > **Slotul de luni 21 sept a fost consumat de #56 (Ghid comparativ modele baterii), plasa de siguranță a seriei** — verdict aplicat pe poarta SERP: a doua verificare consecutivă (Huawei 21 aug + Dyness 21 sept) a întors același rezultat, SERP integral de magazine + zero editorial. Regula din capul batch-ului aplică: brandurile Dyness / Pylontech / Deye se absorb în ghidul comparativ, nu se scriu individual. #53, #54, #55 marcate `⛔ absorbit în #56`. Seria de brand închisă oficial după 2 sloturi consumate cu succes (Huawei + Livoltek, ambele cu editorial validat pe SERP-urile lor specifice).
 >
@@ -633,6 +635,117 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 > **Nou 21 aug — batch „serie pe MODELE de baterii" (#52-#56), adăugat mai jos.** NU deplasează #39 din capul cozii; e o pistă paralelă, cu fereastră (termenii de brand scad trimestrial). Primul din serie, **#52 Livoltek**, e singurul cu dovadă că un articol editorial rankează în SERP-ul lui. **Fiecare intrare din serie are o poartă obligatorie de verificat înainte de scris** (tipul de SERP) — citește capul batch-ului, nu sări direct la intrare.
 >
 > **Fereastră următoare:** publicarea **ordinului FINAL** ANRE în Monitorul Oficial (~24 septembrie 2026) — proiectul e deja în consultare din 20 aug, deci pasul rămas e aprobarea. Va declanșa v2 pe #57 și v3 obligatoriu pe #44 + #37. Recheck ambele la 14/30 zile pentru poziție GSC pe cluster preț + cluster furnizori.
+
+### Batch 2026-09-29 — coadă completată pentru 5-6 sloturi (news scan + DataForSEO Labs)
+
+> **Context:** slotul de luni 28 sept a fost sărit fiindcă rutina a găsit coada goală după #63 (24 sept). Recuperat marți 29 sept cu #31 (PV + Pompă de Căldură, cluster `pompa de caldura pret` 880 + `pompa de caldura cu panouri fotovoltaice` 40 cu vârf 90 în noiembrie/ianuarie). Batch-ul de mai jos umple coada pentru **~2 săptămâni de rutină**, cu 4 articole editoriale + 2 update-uri legislative dependente de trigger. **Toate cifrele de volum sunt măsurate live 2026-09-29 pe DataForSEO Labs, RO/`ro`.**
+
+#### #64 — Curățare și Spălare Panouri Fotovoltaice 2026: Cost Real, Interval, Cine Face 🔝 TOP — SCRIE ÎNTÂI
+- **Status:** `💡 idee` · **cel mai mare cluster din coadă, cu competiție de linkuri aproape zero** · sursă: DataForSEO Labs, RO/`ro`, măsurat 2026-09-29
+- **Cluster cu volume măsurate (Google Ads via DataForSEO Labs):**
+  - `curatare panouri fotovoltaice` **390/lună medie**, cu vârf **1.000 în ianuarie 2026** (yearly trend +51%, quarterly +181%, monthly +84%)
+  - `spalare panouri fotovoltaice` **320/lună medie**, vârf **480 în martie/august**, minim 140 în decembrie (yearly +50%)
+  - `intretinere panouri fotovoltaice` **40/lună** (+150% yearly)
+  - `verificare panouri fotovoltaice` **20/lună**
+  - **Total cluster ≈ 770/lună medie, vârf 1.210+ în ianuarie**
+- **Competiție de linkuri EXTREM de scăzută:** ambele head-terms au **avg backlink rank 1.2** pe rezultatele din top (spalare: 3.2 backlinks, 2.5 referring_domains; curatare: 2.9 backlinks, 2.2 referring_domains). Paginile care rankează n-au aproape niciun link — clusterul se decide pe conținut.
+- **Fereastră sezonieră confirmată:** vârfurile sunt în **februarie-martie** (după iarnă, curățenia de primăvară) și **august-septembrie** (mijloc de vară, praful uscat + polenul stins). Ianuarie 2026 a avut spike de 1.000 pe „curatare" (probabil legat de val de reeluri sau evenimente meteo — verifică GSC dacă apare).
+- **Unghiul propriu, unic pe SERP:** presa și magazinele scriu „curățenia crește producția cu 20%" fără să spună când merită efortul și când NU. Diferențiatorul nostru:
+  1. **Când NU merită să plătești o firmă:** ploaia acoperă 80% din nevoia de curățare pentru panouri montate la înclinație ≥15°; producția cade sub 5% după depuneri normale de praf. Firmele care propun contracte anuale la 500-800 lei/an pe majoritatea sistemelor rezidențiale vând un serviciu neechivalent.
+  2. **Când merită REAL:** panouri sub 10° înclinație (montaj pe terasă plată), zone cu depuneri industriale/agricole (sere, ferme, drumuri de țară), după căderi de zăpadă bogată, după evenimente meteo (praf saharian, polen intens primăvara).
+  3. **Ce STRICĂ panourile:** apă tare (calcar > 200 ppm), jet mare presiune (> 40 bar), detergent alcalin/acid care atacă EVA-ul de la marginea celulelor, călcare pe modul (crapă microcristalele fără să se vadă). Nimeni nu scrie asta.
+  4. **Cost real, colectat de la firmele din director:** interval 300-1.500 lei per curățare rezidențial (10 kWp), 2-5 lei/panou pentru sisteme comerciale. **NU se estimează — se ia de la firme.** Depinde de Pas 5 apeluri.
+- **Cross-link + monetizare:** conectare directă cu directorul firmelor prin `/firme?segment=rezidential` — cluster comercial-tranzacțional, oamenii care caută „curatare panouri fotovoltaice" sunt lead-uri pentru firme.
+- **⚠️ Never-invent, strict:** prețurile de curățare doar de la firmele reale din director (Pas 5, apeluri) sau din surse publice cu link. Cifra „20% creștere producție prin curățare" e mit — cere sursă academică sau NU folosi. Impactul praful se măsoară în laborator (studii NREL: 2-15% pentru un an în deșert, 0.5-3% în climă temperată).
+- **Linkuri interne:** /firme?segment=rezidential (leads primari), /ghid/panouri-fotovoltaice-aer-conditionat-vara-canicula-2026, /ghid/sistem-fotovoltaic-3-5-10-kw-casa-pret-productie-amortizare-2026, /ghid/amortizare-panouri-fotovoltaice-2026, /cere-oferta.
+- **KPI:** impresii pe head-terms `curatare` + `spalare panouri fotovoltaice` la 14/30 zile; conversion rate spre /firme din articol.
+
+#### #65 — Certificat de Racordare Prosumator 2026: Ce E, Cum Îl Obții, Cât Durează
+- **Status:** `💡 idee` · **cluster procedural cu LOW competition și CPC mare (intent comercial)** · sursă: DataForSEO Labs, măsurat 2026-09-29
+- **Cluster cu volume măsurate:**
+  - `certificat de racordare` **320/lună medie**, vârf **590 în noiembrie 2025** (yearly trend -33%, quarterly +24%)
+  - `certificat de racordare prosumator` **110/lună medie**, vârf **170 în martie/noiembrie**
+  - **Total cluster ≈ 430/lună medie**
+- **Competiție EXTREM de slabă:** `certificat de racordare` — LOW competition 0.06, avg backlink rank 32.1 · `certificat de racordare prosumator` — LOW competition 0.04. CPC 1.51-1.80 EUR = intent commercial. Nimeni nu rankează cu articol serios.
+- **Unghi propriu — canibalizare de rezolvat înainte:** noi avem deja [/ghid/aviz-tehnic-racordare-atr-prosumator-2026](/ghid/aviz-tehnic-racordare-atr-prosumator-2026) (ATR e etapa PRE-racordare). **Certificatul de racordare e etapa POST-racordare — actul care confirmă că sistemul funcționează**, emis de operatorul de distribuție. Alt intent, altă întrebare. Delimitare explicită: ATR = am voie să racordez; certificat de racordare = mi-am pornit sistemul, iată dovada.
+- **Ce trebuie să conțină ghidul:**
+  1. **Ce e certificatul de racordare** (vs ATR, vs contract prosumator) — schema procedurală de la aviz la certificat.
+  2. **Cine îl emite:** operatorul de distribuție (Distribuție Energie Electrică România/DEER, PPC Energie/E-Distribuție, Delgaz Grid etc.) — pe județe.
+  3. **Ce documente cere:** proiect tehnic recepționat, PIF (proces verbal punere în funcțiune), declarația de conformitate a echipamentelor, certificate ISO 17065 (pentru echipamente).
+  4. **Cât durează:** termene legale (Ordinul ANRE 59/2013 + modificări) — 20 zile lucrătoare de la depunerea dosarului complet.
+  5. **Ce faci dacă întârzie:** procedură de sesizare ANRE.
+  6. **Cum apare pe factură:** momentul din care ești oficial prosumator cu drept la compensare.
+  7. **Costuri:** taxe distribuție + eventuale reprelucrări dosar.
+- **Never-invent:** procedura din Ordinul ANRE 59/2013 (și modificările ulterioare — 12/2022, 63/2019 etc.) direct din anre.ro; termenele legale citate cu numărul de zile din text, nu extrapolate. Numele operatorilor de distribuție corectat pe județe.
+- **Linkuri interne:** /ghid/aviz-tehnic-racordare-atr-prosumator-2026 (delimitare explicită), /ghid/legea-160-2026-prosumatori-compensare-lunara-gaz-surplus, /ghid/norme-anre-prosumator-2026-metodologie-consultare-publica, /verificare-anre, /firme, /cere-oferta.
+- **KPI:** impresii pe query-uri „cum obtin certificat de racordare", „durata certificat racordare", „cum apar prosumator pe factura".
+
+#### #66 — Panouri Fotovoltaice de Balcon și Apartament 2026: Ce Spune ANRE, Cine Le Poate Monta
+- **Status:** `💡 idee` · **cluster mic dar cu trending +136% yearly și unghi ANRE unic** · sursă: DataForSEO Labs, măsurat 2026-09-29 · promovat din backlog (#34)
+- **Cluster cu volume măsurate:**
+  - `kit fotovoltaic balcon` **170/lună medie, 260 în august** (yearly trend **+136%**, quarterly +86%)
+  - `panouri fotovoltaice apartament` **50/lună**, vârf 90 în septembrie 2025 (monthly +350%)
+  - `panou solar plug and play` **40/lună** (+150% yearly)
+  - Adiacent: `panouri solare balcon` — nemeasurat direct, dar frecvent în related searches
+  - **Total cluster ≈ 260/lună medie, tot în creștere agresivă**
+- **Competiție slabă:** `kit fotovoltaic balcon` avg backlink rank 9.2, 0.9 referring_domains — pagini care rankează fără link.
+- **Unghi propriu — documentul ANRE pe care nu-l citează nimeni:** [Q&A ANRE „Panouri fotovoltaice de mici dimensiuni conectate la priză"](https://anre.ro/wp-content/uploads/2026/03/QA-instalare-panouri-solare-sub-800W.pdf), linkat din pagina „Cum devin prosumator". Sursă primară, cu răspunsuri clare la exact întrebările pe care le pun oamenii. Articolele concurente scriu vag sau greșit; noi traducem cele 9 întrebări din Q&A în pași practici.
+- **De verificat înainte de scriere:**
+  1. **Poarta SERP** — pe `kit fotovoltaic balcon` pagina 1 e probabil mixtă (magazine + articole editoriale). Verifică cu `serp_organic_live_advanced` înainte de scriere.
+  2. **Documentul ANRE Q&A** — verifică dacă e actualizat (era publicat martie 2026 — poate fi înlocuit între timp).
+- **Cerințe cheie pe care Q&A-ul le clarifică (verificat din memorie):**
+  1. Sistemele plug-and-play cer **electrician autorizat ANRE** sau **firmă atestată ANRE** pentru montaj — NU e DIY legal.
+  2. Obligația de a **informa operatorul de distribuție** despre existența sistemului.
+  3. Legea 50/1991 (autorizația de construire) se aplică chiar pentru montaj pe balcon/fațadă — cere acordul asociației.
+  4. Limita de 800W la ieșirea invertorului = limita până la care nu e nevoie de aviz de racordare completă.
+- **Cross-link cu directorul — transformă achiziția DIY în lead:** legarea directă la firmele autorizate ANRE trimite traficul de „vreau doar un kit" spre serviciul de instalare validat.
+- **Never-invent:** toate regulile din PDF-ul ANRE cu link direct + dată. Prețurile de kit doar cu link magazin. NU estima producție anuală bazată pe articole marketing — folosește PVGIS cu orientarea reală (probabil verticală pentru balcon = producție cu 25-35% mai mică decât pe acoperiș).
+- **Linkuri interne:** /ghid/instalatori-autorizati-anre-panouri-fotovoltaice-2026, /ghid/verificare-instalator-panouri-fotovoltaice-2026, /ghid/aviz-tehnic-racordare-atr-prosumator-2026, /ghid/certificat-urbanism-autorizatie-construire-fotovoltaice-2026, /ghid/sistem-fotovoltaic-3-5-10-kw-casa-pret-productie-amortizare-2026, /verificare-anre, /firme.
+- **KPI:** impresii pe query-uri „e legal panouri balcon", „acord asociatie panouri", „kit 800W plug and play romania".
+
+#### #67 — Producția Panourilor Fotovoltaice Iarna: PVGIS Pe Lună, Zăpadă, Orientare
+- **Status:** `💡 idee` · **cluster mic dar seasonal + complementar cu #31 publicat 29 sept** · sursă: DataForSEO Labs
+- **Cluster cu volume măsurate:**
+  - `panouri fotovoltaice iarna` **10-40/lună**, vârf 40 în ianuarie
+  - `cat produc panourile fotovoltaice iarna` **30/lună**, vârf 50 în septembrie (yearly -25%)
+  - **Total cluster ≈ 70/lună medie, vârf iarna**
+- **De ce merită în ciuda volumului mic:**
+  1. **Fereastra e ACTIVĂ acum** — noiembrie-februarie e sezonul căutărilor.
+  2. **Complementar cu #31 (PV + pompă)** publicat azi — legare directă, cross-link natural: cine caută „cat produc panourile iarna" e potențial cumpărător de pompă.
+  3. **Compensare cantitativă (Legea 160/2026)** e chiar mecanismul care rezolvă decalajul de iarnă — cluster care validează unghiul strategic al platformei.
+- **Unghi propriu — cifrele PVGIS traduse în „ce înseamnă asta pentru factura mea":**
+  1. Tabel producție lunară din PVGIS pentru cele 3 sisteme (5/8/10 kWp) pe cele 3 zone climatice (sud/centru/nord).
+  2. **Impactul zăpezii:** cât timp stă zăpada pe panouri (unghi înclinare vs latitudine), când se topește singură vs când trebuie curățată.
+  3. **Impactul orientării:** panouri sud vs est/vest — pierdere iarna 15-25% pe orientări suboptime (când soarele e jos, unghiul e critic).
+  4. **Compensare cantitativă vs baterie iarna:** cum se leagă decalajul zi-noapte cu decalajul vară-iarnă (grafic conceptual).
+- **Never-invent:** PVGIS ca sursă primară cu link ([re.jrc.ec.europa.eu/pvg_tools](https://re.jrc.ec.europa.eu/pvg_tools/en/)); nu extrapola pentru județe extreme fără să rulezi PVGIS pe coordonate reale. Cifrele de zăpadă din studii academice publicate (NREL, Fraunhofer), NU din marketing de instalator.
+- **Linkuri interne:** /ghid/panouri-fotovoltaice-pompa-caldura-2026-dimensionare-cost (complementar direct), /ghid/legea-160-2026-prosumatori-compensare-lunara-gaz-surplus (compensare cantitativă), /ghid/sistem-fotovoltaic-3-5-10-kw-casa-pret-productie-amortizare-2026, /ghid/baterie-3-5-10-kw-dimensionare-dupa-puterea-sistemului-2026, /calculator-panouri-fotovoltaice?segment=rezidential.
+- **KPI:** impresii pe query-uri „panouri fotovoltaice ianuarie", „productie fotovoltaic decembrie", „zapada panouri fotovoltaice".
+
+#### #68 — Update Casa Verde Baterii v2: Sesiunea Se Deschide (când AFM anunță data)
+- **Status:** ⏳ trigger-dependent · **PASUL 0.5 cu prioritate absolută când trigger-ul se produce**
+- **Trigger:** publicarea de către AFM a dispoziției președintelui pentru:
+  (a) sesiunea de validare a instalatorilor (art. 8 alin. 1 din Ordinul 1.904/2026)
+  (b) sesiunea de înscriere a solicitanților (art. 8 alin. 2 după validare instalatori)
+- **Verifică săptămânal:** [afm.ro/baterii_ghid.php](https://www.afm.ro/baterii_ghid.php) + [afm.ro/sisteme_fotovoltaice.php](https://www.afm.ro/sisteme_fotovoltaice.php) + presa (Economedia, Startupcafe, Profit.ro).
+- **Ce se face când se declanșează:**
+  (a) Update instant pe toate cele 8 ghiduri Casa Verde cu data sesiunii + suma aprobată pentru sesiune.
+  (b) Alertă email către lista `alerta-cvb` (deja pusă la punct în infrastructură).
+  (c) **Un articol nou dedicat** pe „Casa Verde Baterii 2026: Sesiunea Se Deschide {data} — Ce Faci Acum" — intent tranzacțional, fereastra 24-48h maximum înainte să devină procedural.
+- **Linkuri interne:** hub + toate cele 7 ghiduri Casa Verde + calculator + /portal.
+- **KPI:** trafic exploziv pe ziua deschiderii (baseline: #10 a avut 229 clicks organic — sesiunea reală poate face 10x).
+
+#### #69 — Update Metodologie ANRE v3: Ordinul Final Publicat în MO
+- **Status:** ⏳ trigger-dependent · **PASUL 0.5 cu prioritate mare când trigger-ul se produce**
+- **Trigger:** publicarea în Monitorul Oficial a ordinului final pentru:
+  (a) Metodologia comercializare/facturare/decontare prosumatori (proiect din 20 aug 2026)
+  (b) Măsuri tranzitorii pentru contractele existente (proiect din 20 aug 2026)
+- **Termen legal (art. II Legea 160/2026):** 24 septembrie 2026 — **ADEJA DEPĂȘIT LA 29 SEPT**. Verifică [MO](https://legislatie.just.ro) + [anre.ro/category/documente-de-discutie/energie-electrica/prosumatori/](https://anre.ro/category/documente-de-discutie/energie-electrica/prosumatori/) săptămânal.
+- **Ce se face când se declanșează:**
+  (a) Update pe #57 (metodologie proiect → forma finală), #44 (legea prosumatorilor), #37 (compensare per furnizor), plus checklist-ul de 6 puncte din articol pe recalculare retroactivă.
+  (b) **Un articol nou opțional** pe „Ordinul ANRE X/2026 A Intrat în Vigoare: Ce Se Schimbă Pe Factura Ta din {data}" — dacă schimbarea e mare vs proiect.
+- **Linkuri interne:** #57 + #44 + #37 + /ghid/legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre + /portal.
+- **KPI:** protejarea pozițiilor existente pe cluster prosumator (ancoră stabilă înainte de 1 ianuarie 2027 când aplicare integrală).
 
 ### Batch 2026-09-21 — trigger legislativ confirmat (news scan)
 
@@ -1063,8 +1176,9 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 #### #27 — Panouri Fotovoltaice și Aerul Condiționat Vara — Randament la Caniculă
 - **Status:** ✅ publicat 2026-07-13 — vezi „Publicate recent".
 
-#### #31 — Panouri Fotovoltaice + Pompă de Căldură: Câți kW Îți Trebuie, Cost Total, Cât Acoperi din Încălzire
-- **Status:** 🟡 backlog · **candidat de promovat** (cel mai puternic semnal al scanării) · sursă: trend scan 2026-07-19
+#### ~~#31~~ — Panouri Fotovoltaice + Pompă de Căldură ✅ SCRIS 2026-09-29 → [/ghid/panouri-fotovoltaice-pompa-caldura-2026-dimensionare-cost](/ghid/panouri-fotovoltaice-pompa-caldura-2026-dimensionare-cost)
+- **Status:** ✅ publicat **2026-09-29** (recuperare slot sărit luni 28 sept). Detalii + KPI în „✅ Publicate recent".
+- **Status inițial:** 🟡 backlog · **candidat de promovat** (cel mai puternic semnal al scanării) · sursă: trend scan 2026-07-19
 - **Cluster intuit:** „panouri fotovoltaice pompa de caldura", „cati kw panouri pentru pompa de caldura", „pompa de caldura cu panouri solare cost", „cat consuma o pompa de caldura pe luna", „incalzire cu panouri fotovoltaice", „COP pompa de caldura iarna", „panouri fotovoltaice iarna productie"
 - **De ce:** exact replica formulei validate #27 (match consum/producție cu un consumator mare), dar pe sezonul opus — era deja notată ca „contrapartida sezonieră" în nota de replicare a lui #27. Semnal de cerere observat în scan: perechea PV + pompă de căldură apare recurent în marketingul instalatorilor cu preț combinat, iar articolele concurente de dimensionare rezidențială („câte panouri pentru o casă" — einvest, moneyline, micportal) citează explicit pompa de căldură ca factor care urcă necesarul. Ancorat pe performer dovedit: #14 Sistem 3/5/10 kW Casă (cluster rezidențial preț/dimensionare) + #22 Amortizare. Neacoperit pe site.
 - **Atenție never-invent:** COP/SCOP din datasheet-uri producători (Daikin/NIBE/Mitsubishi/Bosch) cu link, necesar termic din metodologie transparentă, producție lunară din PVGIS. Punctul cheie onest = decalajul sezonier (consumul de încălzire e iarna, vârful PV e vara) — nu vinde „independență totală".
@@ -1135,6 +1249,18 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Panouri Fotovoltaice + Pompă de Căldură 2026: Câți kW, Cost
+- **Publicat:** 2026-09-29 → [/ghid/panouri-fotovoltaice-pompa-caldura-2026-dimensionare-cost](/ghid/panouri-fotovoltaice-pompa-caldura-2026-dimensionare-cost). Ghidul **#31** din backlog (candidat marcat de trend scan 2026-07-19), publicat marți 29 sept ca RECUPERARE a slotului sărit luni 28 sept (rutina a găsit coada goală după #63). 10 secțiuni + 10 FAQ FAQPage, ~4.600 cuvinte.
+- **Cluster GSC țintă (Google Ads via DataForSEO Labs, RO/`ro`, măsurat 2026-09-29):**
+  - Head-term: `pompa de caldura pret` **880/lună medie**, **1.600 în noiembrie 2025**, 1.300 în ianuarie 2026 (sezonier, vârf noiembrie-februarie)
+  - Combinație: `pompa de caldura cu panouri fotovoltaice` **40/lună medie**, cu vârf **90 în noiembrie și ianuarie** (LOW competition, backlink rank 21.7, 0.7 referring_domains — pagini fără link)
+  - Adiacent: `cop pompa de caldura` 30/lună, `incalzire cu panouri fotovoltaice` 10-30, `panouri fotovoltaice iarna` 10-40 (toate cu sezonalitate iarnă)
+- **Angle central, unic pe SERP:** decalajul sezonier tratat onest — combinația **nu dă independență iarna**, dar taie ~70% din costul încălzirii dacă e dimensionată corect. Trei cifre care contează (SCOP, necesar termic, producție lunară PVGIS) puse în tabel. Presa scrie „panouri + pompă de căldură = independență energetică" fără să spună câți kWh acoperi în ianuarie. Noi punem tabelul cu decalajul direct în articol.
+- **Structură:** 10 secțiuni + 10 FAQ, prima frază răspunde direct la titlu (AEO). Tabele: SCOP tipic pentru pardoseală vs radiatoare, producție PVGIS lunară 3 mărimi × 12 luni × județ sud/nord, consum pompă lună cu lună + acoperire PV, cost total combinat 84.000 lei, comparativ pompă vs gaz. Never-invent respectat strict: PVGIS ca sursă primară pentru producție cu link, fișele producătorilor (Daikin/NIBE/Mitsubishi/Bosch/Panasonic) pentru SCOP, preț gaz/electricitate liberalizat post-1 iul 2025. **ZERO cifre inventate pe programe de finanțare** — verificat direct la sursele AFM/MMAP/PNRR la 29 sept: Casa Verde Plus (pompe) INEXISTENT la momentul publicării, marcat explicit.
+- **Cross-link:** /ghid/casa-verde-baterii-2026-program-stocare-afm, /ghid/casa-verde-baterii-2026-inscriere-acte-punctaj-strategie, /ghid/legea-160-2026-prosumatori-compensare-lunara-gaz-surplus, /ghid/compensare-prosumator-2026-ppc-eon-electrica-hidroelectrica-premier, /ghid/baterie-stocare-casa-backup-dimensionare-independenta-energetica-2026, /ghid/baterie-3-5-10-kw-dimensionare-dupa-puterea-sistemului-2026, /ghid/kit-panouri-fotovoltaice-3-5-10-kw-pret-montaj-2026, /ghid/amortizare-panouri-fotovoltaice-2026, /ghid/electric-up-2026-ghid-aplicare, /ghid/ce-intrebi-instalatorul-fotovoltaic-checklist-red-flags, /firme?segment=rezidential, /cere-oferta?segment=rezidential.
+- **KPI de urmărit (recheck ~13 oct și ~29 oct):** clicks/impresii pe head-term `pompa de caldura pret` (880) — foarte greu, SERP magazine; realistic — impresii pe `pompa de caldura cu panouri fotovoltaice` (40) + coada de dimensionare („cati kw panouri pentru pompa"). **Semnalul care validează unghiul strategic:** impresii pe query-uri cu „iarna" + „productie" + „decalaj" + „compensare cantitativa" — dacă apar, articolul a prins ce n-a scris nimeni. Verifică canibalizarea cu ghidurile de sistem 3/5/10 kW (dimensionare) și baterie backup — cele trei URL-uri trebuie să urce împreună. Recheck la 14 zile pe volumul de sezon (noiembrie).
+- **Next step:** `npm run indexnow -- --ghid panouri-fotovoltaice-pompa-caldura-2026-dimensionare-cost` + **GSC Request Indexing manual imediat** (fereastra sezonieră activă până în februarie 2027, dar valoarea e în primele 4-6 săptămâni). **Update obligatoriu v2** când: (a) apare o schemă activă de finanțare pentru pompe rezidențiale (secțiunea „Programe de finanțare"); (b) se schimbă prețul gazului liberalizat semnificativ (secțiunea „Comparativ cu centrala pe gaz"); (c) se publică schimbări la Casa Verde Fotovoltaice (secțiunea PV).
 
 ### Casa Verde Baterii 2026: Înscriere, Acte, Punctaj Optim
 - **URL:** [/ghid/casa-verde-baterii-2026-inscriere-acte-punctaj-strategie](/ghid/casa-verde-baterii-2026-inscriere-acte-punctaj-strategie)
