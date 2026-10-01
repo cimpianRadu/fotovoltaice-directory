@@ -100,6 +100,140 @@
         "ce-intrebi-instalatorul-fotovoltaic-oferta-checklist-red-flags-2026",
         "casa-verde-baterii-2026-program-stocare-afm"
       ]
+    },
+    {
+      "slug": "sistem-fotovoltaic-21-kwp-baterie-cabana-valea-doftanei-prahova-2026",
+      "published": false,
+      "previewToken": "356eecdbce9581e2f9af89fc",
+      "publishedAt": "2026-10-01",
+      "author": "Radu",
+      "title": "Sistem Fotovoltaic 21 kWp cu Baterie de 14 kWh la o Cabană din Valea Doftanei: De la Cerere la Recepție în 29 de Zile",
+      "metaDescription": "Septembrie 2026, Valea Doftanei, Prahova: 44 panouri LONGi de 480 W (21,12 kWp), invertor hibrid Deye de 20 kW trifazat și baterie SVA de 14 kWh, montate de Electro Prahova la o cabană. Cronologia de la cerere la recepție, dimensionarea, regimul fără injecție în rețea și cât ar trebui să producă.",
+      "disclosure": "colaborare",
+      "heroDescription": "Un sistem de 21,12 kWp cu 14 kWh de stocare, montat în septembrie 2026 la o cabană din Valea Doftanei, județul Prahova, de Electro Prahova. Cererea a intrat prin formularul nostru pe 12 august, contractul s-a semnat pe 1 septembrie, iar recepția finală s-a făcut pe 10 septembrie. Ce s-a montat, cum e dimensionat sistemul, de ce funcționează fără injecție în rețea și cât ar trebui să producă, cu cifrele exact așa cum apar în documentele lucrării.",
+      "installer": {
+        "name": "Electro Prahova (Arabic Solar Tech SRL)",
+        "cui": "46514581",
+        "location": "Ploiești, județul Prahova",
+        "phone": "0766 644 678",
+        "website": "https://electroprahova.ro",
+        "coverage": [
+          "Prahova",
+          "București",
+          "Ilfov",
+          "Dâmbovița",
+          "Buzău",
+          "Brașov",
+          "Giurgiu",
+          "Ialomița",
+          "Teleorman",
+          "Constanța",
+          "Mehedinți"
+        ],
+        "inDirectory": false
+      },
+      "project": {
+        "county": "Prahova",
+        "buildingType": "Cabană (pensiune), zona Valea Doftanei",
+        "date": "Septembrie 2026",
+        "kwp": 21.12,
+        "panels": "44 × LONGi Solar 480 W",
+        "inverter": "Deye 20 kW trifazat, hibrid, Low Voltage",
+        "battery": "SVA 14 kWh Low Voltage (51,2 V / 280 Ah)",
+        "strings": "Fără injecție în rețea (Zero Export)",
+        "duration": "Montaj 9-10 septembrie, recepție finală 10 septembrie"
+      },
+      "gallery": [
+        {
+          "file": "01-cabana-montaj.jpg",
+          "caption": "Cabana din Valea Doftanei pe 10 septembrie 2026, în timpul montajului: primele rânduri de panouri puse pe țiglă, liftul de panouri pe scară. În dreapta, pe acoperiș, panoul solar termic pe care clădirea îl avea deja."
+        },
+        {
+          "file": "02-invertor-baterie.jpg",
+          "caption": "Invertorul hibrid Deye de 20 kW trifazat și bateria SVA de 14 kWh, montate în interior, cu tablourile de protecție de o parte și de alta."
+        },
+        {
+          "file": "03-tablou-ac.jpg",
+          "caption": "Tabloul de curent alternativ: protecțiile pe fiecare fază, cablajul ordonat și etichetat, fotografiat înainte de închiderea ușii."
+        },
+        {
+          "file": "04-tablou-dc.jpg",
+          "caption": "Tabloul de curent continuu, cu protecțiile de pe partea stringurilor de panouri, închis și etichetat."
+        },
+        {
+          "file": "05-ecran-productie.jpg",
+          "caption": "Ecranul invertorului pe 18 septembrie 2026, ora 09:44: 3,42 kW din panouri, din care 3,15 kW intră în baterie (ajunsă la 43%), consumul cabanei 0,16 kW, din rețea 0,02 kW."
+        }
+      ],
+      "sections": [
+        {
+          "id": "ce-s-a-montat",
+          "title": "Ce s-a montat, pe scurt",
+          "content": "Un sistem fotovoltaic cu baterie, montat în septembrie 2026 la o cabană cu regim de pensiune din zona Valea Doftanei, județul Prahova: 44 de panouri pe acoperișul de țiglă și 14 kWh de stocare în interior, pe un invertor hibrid trifazat. Clădirea avea deja un panou solar termic pe acoperiș, care se vede în poza de mai sus, în dreapta.\n\nParticularitatea proiectului nu e tehnică, ci de traseu: cererea a venit prin [formularul nostru de cerere de ofertă](/cere-oferta) pe 12 august 2026, cu datele pe care le dă orice client (clădire tip hotel, circa 100 mp de acoperiș disponibil, alimentare trifazată, dorință de stocare), iar sistemul era recepționat pe 10 septembrie. Cronologia completă e în secțiunea următoare.\n\n| Componentă | Ce s-a montat |\n|---|---|\n| Panouri | 44 bucăți × LONGi Solar 480 W |\n| Putere instalată | 21,12 kWp |\n| Invertor | Deye 20 kW trifazat, hibrid, Low Voltage |\n| Stocare | SVA 14 kWh Low Voltage (51,2 V / 280 Ah) |\n| Regim de funcționare | fără injecție în rețea (Zero Export), bateria încărcată cu prioritate |\n| Amplasare | acoperiș înclinat, țiglă, clădire cu etaj |\n| Contract de execuție | nr. 215 din 1 septembrie 2026 |\n| Recepție finală | 10 septembrie 2026, rezultat „admis\" |\n\nCifrele de mai sus vin din procesul verbal de recepție finală și de pe etichetele echipamentelor, fotografiate la montaj. Nu am adăugat estimări proprii peste ele, iar acolo unde calculăm ceva mai jos, spunem că e un calcul și din ce rezultă. O singură cifră cere o notă: procesul verbal trece bateria la 16 kWh, dar eticheta de pe unitate spune 14 kWh (51,2 V × 280 Ah = 14,3 kWh). Am păstrat cifra de pe etichetă, pentru că e capacitatea reală a unității."
+        },
+        {
+          "id": "cronologie",
+          "title": "De la cerere la recepție: 29 de zile",
+          "content": "Cel mai util lucru pe care îl putem documenta la acest proiect nu e echipamentul, ci timpul. Datele de mai jos sunt din formularul de cerere, din contract, din datele pozelor și din procesul verbal de recepție.\n\n| Data | Ce s-a întâmplat |\n|---|---|\n| 12 august 2026 | Cererea de ofertă intră prin formularul nostru: hotel, Prahova, circa 100 mp acoperiș, trifazat, cu stocare |\n| 1 septembrie 2026 | Se semnează contractul de execuție (nr. 215) |\n| 3 septembrie 2026 | Primele poze de la clădire, înainte de montaj |\n| 9-10 septembrie 2026 | Montajul pe acoperiș: structura, panourile, invertorul și bateria |\n| 10 septembrie 2026 | Procesul verbal de recepție finală, rezultat „admis\" |\n| 18 septembrie 2026 | Sistemul produce: 3,42 kW din panouri la ora 09:44, bateria în încărcare |\n\nDouăzeci de zile de la cerere la contract și nouă zile de la contract la recepție. Intervalul de 20 de zile acoperă ofertarea, discuțiile și decizia clientului, care a primit mai multe oferte și a ales-o pe aceasta. Beneficiarul a scris, în formularul nostru de feedback, că experiența a fost „excelentă, comunicarea facilă\", iar firma a descris proiectul drept „un proces integrat de la ofertare, consultanță, furnizare, execuție și punere în funcțiune\".\n\nCe nu acoperă cele 29 de zile: procedura de racordare ca prosumator la operatorul de distribuție, care nu a fost necesară pentru punerea în funcțiune, pentru că sistemul e configurat să nu injecteze în rețea. Explicăm mai jos ce înseamnă asta și când se schimbă socoteala."
+        },
+        {
+          "id": "dimensionare",
+          "title": "Ce spun cifrele despre dimensionare",
+          "content": "**Panouri pe invertor.** 21,12 kWp de panouri pe un invertor de 20 kW înseamnă un raport de 1,06. E un raport conservator: panourile ating rar puterea de pe etichetă (vara, temperatura celulei taie din randament exact la amiază), iar la 1,06 invertorul nu va limita practic niciodată producția. Multe proiecte merg spre 1,2 sau 1,3 ca să umple invertorul mai multe ore pe zi; aici s-a ales varianta în care invertorul are rezervă. Subiectul pierderilor din caniculă e tratat în [ghidul despre randament vara](/ghid/panouri-fotovoltaice-aer-conditionat-vara-canicula-2026).\n\n**Trifazat, nu monofazat.** La 20 kW nu există discuție: puterea asta se montează pe alimentare trifazată, iar invertorul hibrid trifazat împarte producția și consumul pe cele trei faze. Dacă vrei un sistem de această mărime la o clădire cu branșament monofazat, prima lucrare e branșamentul, nu panourile.\n\n**Stocare pe kWp instalat.** 14 kWh de baterie la 21,12 kWp înseamnă 0,66 kWh de stocare pentru fiecare kWp. Spre comparație, [sistemul din Constanța](/studii-de-caz/sistem-fotovoltaic-cu-baterii-14-kw-32-kwh-montaj-constanta-2026) pe care l-am documentat în iulie avea 2,3 kWh pe kWp. Sunt două filozofii diferite: acolo bateria era dimensionată pentru autonomie, aici e dimensionată să mute o parte din producția de peste zi în seară și să absoarbă surplusul, nu să țină cabana peste noapte în zile înnorate. Cum alegi între ele, pe praguri de putere, e în [ghidul despre câți kWh de baterie la 3, 5 sau 10 kW](/ghid/baterie-3-5-10-kw-dimensionare-dupa-puterea-sistemului-2026)."
+        },
+        {
+          "id": "baterie-zero-export",
+          "title": "Bateria de 14 kWh și regimul fără injecție în rețea",
+          "content": "Pe ecranul invertorului, în setările de lucru, sistemul e pe „Zero Export to CT\" cu „Batt First\" bifat. În limbaj simplu: un transformator de curent montat pe branșament măsoară ce intră și ce iese, iar invertorul reglează producția astfel încât în rețea să nu plece nimic. Surplusul merge întâi în baterie, iar când bateria e plină și consumul e mic, invertorul reduce producția panourilor.\n\nPoza de pe 18 septembrie arată exact asta: 3,42 kW din panouri la ora 09:44, consumul cabanei 0,16 kW, bateria primește 3,15 kW, iar schimbul cu rețeaua e 0,02 kW. Practic zero.\n\n**De ce ai alege regimul ăsta.** Sistemul poate fi pus în funcțiune fără să aștepți certificarea ca prosumator și contorul bidirecțional, iar la o clădire pe persoană juridică discuția despre compensare și vânzare de surplus e oricum alta decât la o casă. Pentru cine vrea să înțeleagă ce înseamnă să fii prosumator din 2026, cu compensare lunară și vânzarea surplusului la preț de piață, am scris pe larg în [ghidul despre Legea prosumatorilor](/ghid/legea-160-2026-prosumatori-compensare-lunara-gaz-surplus).\n\n**Ce pierzi.** Energia pe care panourile ar fi putut-o produce când bateria e plină și cabana consumă puțin. La o pensiune, asta înseamnă în primul rând zilele din mijlocul săptămânii fără cazare, în lunile cu soare mult. Dacă proprietarul va dori să valorifice și surplusul acela, pasul următor e [avizul tehnic de racordare ca prosumator](/ghid/aviz-tehnic-racordare-atr-prosumator-2026), după care setarea de pe invertor se schimbă.\n\n**Protecțiile.** Pozele de la tablouri arată ce ar trebui să ceri la orice montaj: tablou separat de curent continuu, cu protecții pe stringurile de panouri, și tablou de curent alternativ cu protecții pe fiecare fază, cablaj etichetat. Nu e un detaliu cosmetic: e locul unde se vede dacă o firmă lucrează cu proiect sau improvizează."
+        },
+        {
+          "id": "productie",
+          "title": "Cât ar trebui să producă un asemenea sistem în Prahova",
+          "content": "Producția pe un an întreg nu are cum să existe încă, sistemul funcționând din 10 septembrie. Putem însă calcula un reper, cu o rezervă importantă pe care o spunem de la început.\n\nPentru un sistem fixat, orientat sud, cu înclinare de circa 30 de grade, referința PVGIS-SARAH3 pe care o folosim pentru județul Prahova e de **1.260 kWh pe fiecare kWp instalat, pe an**, calculată la coordonatele Ploieștiului. Aplicat la 21,12 kWp:\n\n| Calcul | Rezultat |\n|---|---|\n| 21,12 kWp × 1.260 kWh/kWp | circa 26.600 kWh pe an |\n| Iulie (151 kWh/kWp) | circa 3.200 kWh |\n| Decembrie (51 kWh/kWp) | circa 1.080 kWh |\n\n**Rezerva:** Valea Doftanei e zonă de munte, nu câmpie ca Ploieștiul. Iradierea, nebulozitatea și zăpada de pe panouri iarna diferă, iar orientarea și înclinarea reală a acoperișului nu ne-au fost comunicate. Cifra de mai sus e un **reper de referință, nu o estimare pentru acest acoperiș**, și e mai degrabă optimistă pentru o locație montană. Raportul de 3 la 1 între iulie și decembrie, însă, e tipic pentru toată țara și contează pentru o pensiune cu vârf de cazare iarna: producția e cea mai mică exact în sezonul cu consum mare.\n\nMetoda de calcul, cu referințele pe fiecare județ, e în [ghidul despre producție și amortizare pe sisteme de 3, 5 și 10 kW](/ghid/sistem-fotovoltaic-3-5-10-kw-casa-pret-productie-amortizare-2026), iar pentru o estimare pe datele tale ai [calculatorul de panouri fotovoltaice](/calculator-panouri-fotovoltaice)."
+        },
+        {
+          "id": "de-verificat",
+          "title": "Ce ai de verificat dacă vrei același lucru la o pensiune",
+          "content": "**Profilul de consum, nu doar factura.** La o cabană cu cazare, consumul e concentrat în weekend și în sezon, iar producția e concentrată la amiază, în zilele lucrătoare la fel ca în weekend. Regimul fără injecție face ca diferența asta să fie energie pierdută. Înainte de dimensionare, cere-i instalatorului să se uite pe consumul lunar și, dacă există, pe cel orar, nu doar pe suprafața acoperișului.\n\n**Branșamentul.** Puterea aprobată pe branșamentul trifazat existent decide cât poți monta fără lucrări la racord. Avizul tehnic de racordare se cere înainte să cumperi echipamentele, nu după.\n\n**Cine semnează lucrarea.** Lucrările la instalațiile electrice de racordare se execută de operatori economici atestați ANRE. Verifică orice firmă direct în registrul oficial, iar noi explicăm procedura în [ghidul de verificare a atestatelor ANRE](/verificare-anre). În cazul de față, contractul de execuție a fost semnat cu Onshore Arabic Holdings SRL, firma prin care Electro Prahova execută lucrările și care deține atestatul ANRE nr. 23938 (Tarif B, valabil până în decembrie 2030).\n\n**Ce să ceri în ofertă, în scris.** Schema de stringuri, modelul exact de invertor și de baterie, regimul de funcționare (cu sau fără injecție) și cine se ocupă de racordare dacă vei vrea să injectezi mai târziu. Întrebările complete sunt în [checklistul cu 20 de întrebări pentru instalator](/ghid/ce-intrebi-instalatorul-fotovoltaic-oferta-checklist-red-flags-2026).\n\n**Finanțarea.** Programul Casa Verde, inclusiv componenta de baterii, e pentru persoane fizice. O cabană pe societate comercială se finanțează din fonduri proprii, credit sau programele pentru firme, pe care le ținem la zi în [ghidul despre fonduri nerambursabile pentru IMM](/ghid/fonduri-nerambursabile-panouri-fotovoltaice-imm-2026)."
+        },
+        {
+          "id": "firma",
+          "title": "Cine a executat lucrarea",
+          "content": "Montajul a fost realizat de **Electro Prahova**, brandul sub care lucrează Arabic Solar Tech SRL (CUI 46514581) din Ploiești, județul Prahova, cu execuția contractată prin Onshore Arabic Holdings SRL, firma care deține atestatul ANRE. Lucrează pe instalații electrice și sisteme fotovoltaice rezidențiale și industriale și se deplasează, pe lângă Prahova, în București, Ilfov, Dâmbovița, Buzău, Brașov, Giurgiu, Ialomița, Teleorman, Constanța și Mehedinți.\n\nArticolul a fost realizat în colaborare cu ei: pozele de pe teren, procesul verbal de recepție și datele tehnice ale sistemului ne-au fost puse la dispoziție de echipa care a executat lucrarea. Firma nu a plătit pentru apariția aici.\n\nDacă vrei oferte pentru un proiect asemănător, de la firme din județul tău, [completează formularul de cerere](/cere-oferta?sursa=studiu-caz/sistem-fotovoltaic-21-kwp-baterie-cabana-valea-doftanei-prahova-2026) și primești propuneri fără să cauți tu fiecare instalator în parte. Poți vedea și [lista instalatorilor](/firme), cu atestatele ANRE preluate din registrul oficial și datele financiare la zi."
+        }
+      ],
+      "faq": [
+        {
+          "question": "Cât a costat sistemul?",
+          "answer": "Prețul lucrării nu a fost făcut public de părți, iar noi nu publicăm cifre pe care nu le putem susține cu un document. Pentru repere de preț pe capacități, vezi ghidurile noastre de costuri, iar pentru cifra exactă în cazul tău, cere oferte de la instalatorii din județ prin formularul de cerere."
+        },
+        {
+          "question": "De ce e nevoie de trifazat la 20 kW?",
+          "answer": "Pentru că o putere de 20 kW nu se poate monta pe o alimentare monofazată: limitele operatorilor de distribuție pe monofazat sunt mult sub această valoare, iar invertoarele hibride de 20 kW sunt trifazate prin construcție. La o clădire cu branșament monofazat, lucrarea începe cu trecerea la trifazat, iar costul ei intră în buget de la început."
+        },
+        {
+          "question": "Ce înseamnă „Zero Export\" și de ce a fost ales?",
+          "answer": "Invertorul măsoară, printr-un transformator de curent pe branșament, ce schimbă clădirea cu rețeaua și își reglează producția astfel încât să nu plece energie în rețea. Surplusul merge în baterie, iar când bateria e plină, producția e redusă. Avantajul e că sistemul poate funcționa fără certificarea ca prosumator și fără contor bidirecțional. Dezavantajul e energia pierdută în zilele cu soare și consum mic."
+        },
+        {
+          "question": "O baterie de 14 kWh ajunge pentru o pensiune?",
+          "answer": "Depinde de ce vrei să facă. Pentru a muta o parte din producția de peste zi în seară, 14 kWh la 21 kWp e o dimensionare rezonabilă. Pentru autonomie, adică să treci peste nopți întregi sau peste zile înnorate consecutive fără rețea, ar fi nevoie de mult mai mult, iar un reper e sistemul din Constanța pe care l-am documentat, cu 32 kWh la 14 kWp. Nu dimensiona bateria după puterea panourilor, ci după consumul de noapte și după scopul ei."
+        },
+        {
+          "question": "Se poate obține Casa Verde pentru o cabană pe firmă?",
+          "answer": "Nu. Programele Casa Verde, inclusiv Casa Verde Baterii, sunt pentru persoane fizice, pe locuința lor. O cabană pe societate comercială se finanțează din fonduri proprii, credit sau prin programele dedicate firmelor, pe care le urmărim în ghidul despre fonduri nerambursabile pentru IMM."
+        },
+        {
+          "question": "Cât a durat montajul propriu-zis?",
+          "answer": "Pozele de pe teren sunt din 9 și 10 septembrie 2026, iar procesul verbal de recepție finală e datat 10 septembrie. Intervalul acoperă montajul structurii și al panourilor pe acoperiș, invertorul, bateria și tablourile. Nu include procedura de racordare ca prosumator, care nu a fost necesară pentru punerea în funcțiune, sistemul fiind configurat fără injecție în rețea."
+        }
+      ],
+      "relatedGuides": [
+        "baterie-3-5-10-kw-dimensionare-dupa-puterea-sistemului-2026",
+        "legea-160-2026-prosumatori-compensare-lunara-gaz-surplus",
+        "aviz-tehnic-racordare-atr-prosumator-2026",
+        "ce-intrebi-instalatorul-fotovoltaic-oferta-checklist-red-flags-2026"
+      ]
     }
   ]
 }

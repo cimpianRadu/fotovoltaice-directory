@@ -122,8 +122,10 @@ export function generateArticleJsonLd(guide: {
   publishedAt: string;
   updatedAt?: string;
   heroImage?: string | null;
+  /** Secțiunea din URL; implicit `ghid`, studiile de caz trimit `studii-de-caz`. */
+  basePath?: string;
 }) {
-  const url = `${SITE_URL}/ghid/${guide.slug}`;
+  const url = `${SITE_URL}/${guide.basePath ?? 'ghid'}/${guide.slug}`;
   const image = guide.heroImage ? `${SITE_URL}${guide.heroImage}` : `${SITE_URL}/og-image.png`;
   return {
     '@context': 'https://schema.org',

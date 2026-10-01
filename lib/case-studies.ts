@@ -36,6 +36,13 @@ export type CaseStudyDisclosure = 'colaborare' | 'platit';
 export interface CaseStudy {
   slug: string;
   published: boolean;
+  /**
+   * Link de previzualizare pentru articolele nepublicate: firma le vede la
+   * `/studii-de-caz/previzualizare/<token>` înainte să apară pe site (dealul cu
+   * instalatorul e „review la noi înainte de publicare"). Pagina e noindex și
+   * blocată în robots; tokenul se schimbă sau se șterge după publicare.
+   */
+  previewToken?: string;
   publishedAt: string;
   author: string;
   title: string;
@@ -59,6 +66,12 @@ export function getCaseStudies(): CaseStudy[] {
 export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
   const study = CASE_STUDIES.find((c) => c.slug === slug);
   return study && study.published !== false ? study : undefined;
+}
+
+/** Pentru review-ul firmei: găsește articolul după token, publicat sau nu. */
+export function getCaseStudyByPreviewToken(token: string): CaseStudy | undefined {
+  if (!token || token.length < 16) return undefined;
+  return CASE_STUDIES.find((c) => c.previewToken === token);
 }
 
 /**
