@@ -1,16 +1,20 @@
 import Link from 'next/link';
+import { GRILA } from './grila';
 
 // Fișa de ținut deschisă la telefon cu instalatorii: cifra, mecanismul și
 // răspunsurile la obiecții, fără să caut prin memorii. Cifrele NU sunt publice
 // (decizie 10 sept 2026): pe site apare doar mecanismul, în T&C §8 și pe
 // /pentru-instalatori. Grila e cea din 4 sept 2026, confirmată 25 sept: sumele
 // sunt fără TVA (PFA plătitor, factura adaugă 21%), iar peste 100 kW e procent.
+// Din 2 oct 2026 treapta se ia după puterea din contract, nu din cerere: clientul
+// poate cere mai mult decât duce locația.
 
-const TREPTE = [
-  { putere: 'sub 10 kW', suma: '500 lei', nota: '605 lei cu TVA · 63% din cereri, mediana 6 kW' },
-  { putere: '10 – 100 kW', suma: '1.000 lei', nota: '1.210 lei cu TVA · în practică 10–30 kW' },
-  { putere: 'peste 100 kW', suma: '1–2%', nota: 'din valoarea contractului fără TVA, + TVA' },
+const NOTE = [
+  '605 lei cu TVA · 63% din cereri, mediana 6 kW',
+  '1.210 lei cu TVA · în practică 10–30 kW',
+  'din valoarea contractului fără TVA, + TVA',
 ];
+const TREPTE = GRILA.map((t, i) => ({ putere: t.putere, suma: t.suma, nota: NOTE[i] }));
 
 // Aceleași trepte ca procent din ofertă, pe prețuri reale cu montaj, fără TVA
 // (`data/kit-prices.json`, 17 aug 2026). Pentru „e mult”.
@@ -41,8 +45,8 @@ const OBIECTII = [
     a: 'Dacă se anulează contractul înainte să înceapă lucrarea, nu datorezi nimic, iar factura se stornează.',
   },
   {
-    q: '„Clientul a zis 10 kW, am montat 8.”',
-    a: 'Contează puterea din cerere, nu ce se montează. Știi de la început cât e, nu te surprinde nimic.',
+    q: '„Clientul a zis 12 kW, dar pe acoperiș încap 8.”',
+    a: 'Contează puterea din contract, nu din cerere. Semnezi 8 kW, plătești treapta de sub 10 kW. Merge și invers: dacă din 8 kW ceruți se semnează 40, e treapta de 10–100 kW.',
   },
   {
     q: '„Am deja destule cereri.”',
@@ -76,6 +80,12 @@ export default function ComisionPage() {
           </Link>
           .
         </p>
+        <Link
+          href="/admin/comision/document"
+          className="mt-3 inline-block rounded-md bg-slate-900 px-3 py-1.5 text-xs text-white hover:bg-slate-700"
+        >
+          Documentul pentru firme (PDF) →
+        </Link>
       </div>
 
       <div className="rounded-xl border-2 border-amber-400 bg-amber-50 p-5">
@@ -86,7 +96,7 @@ export default function ComisionPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card title="Grila, după puterea din cerere">
+        <Card title="Grila, după puterea din contract">
           <table className="w-full text-sm">
             <tbody className="divide-y divide-slate-100">
               {TREPTE.map((t) => (
@@ -145,8 +155,8 @@ export default function ComisionPage() {
             revendicarea.
           </li>
           <li>
-            <strong>Confirmarea:</strong> firma anunță din portal sau pe email; eu sun clientul la
-            30 de zile.
+            <strong>Confirmarea:</strong> firma anunță din portal sau pe email, cu puterea
+            contractată; eu sun clientul la 30 de zile și întreb și ce putere i s-a montat.
           </li>
           <li>
             <strong>Factura:</strong> după confirmare, prin PFA. Termenul de plată e cel din acordul

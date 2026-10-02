@@ -15,7 +15,7 @@ export default function TermeniConditii() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Termeni și Condiții</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 18 septembrie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 2 octombrie 2026</p>
 
         <p>
           Prin accesarea și utilizarea site-ului <strong>instalatori-fotovoltaice.ro</strong> acceptați
@@ -122,8 +122,8 @@ export default function TermeniConditii() {
         </p>
         <p>
           <strong>Cum se calculează.</strong> Pentru proiectele obișnuite, comisionul este o sumă
-          fixă, stabilită pe trepte, după puterea declarată în cererea transmisă de client, nu după
-          ce se montează în final. Pentru proiectele mari, peste pragul convenit, comisionul este un
+          fixă, stabilită pe trepte, după puterea din contractul semnat cu clientul, nu după puterea
+          din cererea transmisă de acesta. Pentru proiectele mari, peste pragul convenit, comisionul este un
           procent din valoarea contractului, calculat la valoarea fără TVA. Nivelurile concrete
           (sumele fixe pe trepte, procentul și pragul de la care se aplică) se convin în scris cu
           fiecare firmă, înainte de prima cerere revendicată. Ele nu sunt publicate pe site fiindcă
@@ -131,8 +131,9 @@ export default function TermeniConditii() {
         </p>
         <p>
           <strong>Cum se confirmă lucrarea.</strong> Firma ne anunță contractul semnat, din portal
-          sau pe email. Putem verifica faptul semnării direct la clientul care a trimis cererea.
-          Verificăm dacă lucrarea s-a contractat, nu documentele comerciale ale firmei.
+          sau pe email, împreună cu puterea contractată. Putem verifica semnarea și puterea direct
+          la clientul care a trimis cererea. Verificăm dacă lucrarea s-a contractat și la ce putere,
+          nu documentele comerciale ale firmei.
         </p>
         <p>
           <strong>Facturare.</strong> Comisionul se facturează de Cîmpian Radu Gheorghe PFA, CUI

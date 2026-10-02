@@ -24,12 +24,20 @@ export default async function SponsoriControlPage() {
                 : ''}
           </p>
         </div>
-        <Link
-          href="/admin/analytics/sponsori"
-          className="shrink-0 text-sm text-slate-500 hover:text-slate-900 transition"
-        >
-          Cifrele →
-        </Link>
+        <div className="flex shrink-0 items-center gap-4">
+          <Link
+            href="/admin/sponsori/oferta"
+            className="text-sm text-slate-500 hover:text-slate-900 transition"
+          >
+            Oferta (PDF) →
+          </Link>
+          <Link
+            href="/admin/analytics/sponsori"
+            className="text-sm text-slate-500 hover:text-slate-900 transition"
+          >
+            Cifrele →
+          </Link>
+        </div>
       </div>
 
       {meta.mode === 'bundled' && (
