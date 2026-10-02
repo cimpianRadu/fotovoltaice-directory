@@ -367,19 +367,6 @@ ${audienceRow('Instalatori (caută de lucru)', byAudience.instalator)}
 |---|---|---|
 ${positionRows}
 
-## 4. Postările de pe Facebook
-
-| Data | Subiect | Link |
-|---|---|---|
-| [ ] | [ ] | [ ] |
-| [ ] | [ ] | [ ] |
-
-*Cifrele de reach și reacții se văd direct în pagina de Facebook; nu fac parte din raport și nu sunt garantate contractual.*
-
-## 5. Observații și propuneri
-
-[ ]
-
 ---
 
 *Total interacțiuni = clicuri către site + apeluri + WhatsApp + Facebook. Afișările din popup se numără la deschiderea popup-ului, doar când partenerul era primul în rotație. Previzualizările (\`?preview=\`) nu trimit evenimente.*

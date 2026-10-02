@@ -318,23 +318,13 @@ export default async function RaportSponsorPage({
             nu trimit evenimente.
           </p>
         </section>
-
-        <section className="space-y-2 print:break-inside-avoid">
-          <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wider">
-            4. Postările de pe Facebook · 5. Observații
-          </h3>
-          <p className="text-xs text-slate-500">
-            Se completează manual în markdown, înainte de trimitere — datele postărilor și
-            propunerile pentru luna viitoare nu se pot scoate din Umami.
-          </p>
-        </section>
       </div>
 
       {/* Markdown-ul, gata de lipit în email. Vizibil ca fallback dacă clipboard-ul
           e blocat în browserul curent. */}
       <details className="print:hidden">
         <summary className="text-xs text-slate-500 cursor-pointer hover:text-slate-900">
-          Vezi markdown-ul trimis (secțiunile 4 și 5 se completează manual)
+          Vezi markdown-ul trimis
         </summary>
         <textarea
           id="raport-markdown"
