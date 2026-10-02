@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import sponsorsData from '@/data/sponsors.json';
@@ -44,6 +45,18 @@ function PrevCell({ value, before }: { value: number | null; before: boolean }) 
 function Num({ value }: { value: number | null }) {
   if (value === null) return <span className="text-slate-400 italic">nedisponibil</span>;
   return <>{value.toLocaleString('ro-RO')}</>;
+}
+
+/** Titlu de secțiune cu numărul în bulina amber a brandului. */
+function SectionTitle({ n, children }: { n: number; children: React.ReactNode }) {
+  return (
+    <h3 className="flex items-center gap-2.5 text-sm font-semibold text-secondary-dark uppercase tracking-wider">
+      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-xs font-bold">
+        {n}
+      </span>
+      {children}
+    </h3>
+  );
 }
 
 function Delta({ current, prev }: { current: number | null; prev: number | null }) {
@@ -155,169 +168,198 @@ export default async function RaportSponsorPage({
       )}
 
       {/* Foaia care ajunge la partener. De la aici în jos, totul e vizibil și la print. */}
-      <div className="bg-white border border-slate-200 rounded-lg p-6 space-y-8 print:border-0 print:p-0">
-        <div>
-          <h2 className="text-xl font-semibold text-slate-900">
-            Raport lunar — {sponsor.name}
-          </h2>
-          <p className="text-sm text-slate-500 mt-1">
-            <span className="capitalize">{report.monthLabel}</span> ·{' '}
-            {new Date(report.startAt).toLocaleDateString('ro-RO')} –{' '}
-            {new Date(report.endAt).toLocaleDateString('ro-RO')} · instalatori-fotovoltaice.ro
-          </p>
-        </div>
-
-        {/* 1. Pe scurt */}
-        <section className="space-y-3">
-          <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wider">
-            1. Pe scurt
-          </h3>
-          <table className="w-full text-sm">
-            <thead className="text-xs uppercase text-slate-500 border-b border-slate-200">
-              <tr>
-                <th className="text-left py-2 font-medium">Indicator</th>
-                <th className="text-right py-2 font-medium capitalize">{report.monthLabel}</th>
-                <th className="text-right py-2 font-medium capitalize">
-                  {report.prevMonthLabel}
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {SUMMARY.map((row) => (
-                <tr key={row.key}>
-                  <td className="py-2 text-slate-700">{row.label}</td>
-                  <td className="py-2 text-right tabular-nums">
-                    <Num value={t ? t[row.key] : null} />
-                    <Delta current={t ? t[row.key] : null} prev={p ? p[row.key] : null} />
-                  </td>
-                  <td className="py-2 text-right tabular-nums text-slate-500">
-                    <PrevCell value={p ? p[row.key] : null} before={report.prevBeforeStart} />
-                  </td>
-                </tr>
-              ))}
-              <tr className="font-semibold">
-                <td className="py-2 text-slate-900">Total interacțiuni</td>
-                <td className="py-2 text-right tabular-nums">
-                  <Num value={t ? t.engaged : null} />
-                  <Delta current={t ? t.engaged : null} prev={p ? p.engaged : null} />
-                </td>
-                <td className="py-2 text-right tabular-nums text-slate-500">
-                  <PrevCell value={p ? p.engaged : null} before={report.prevBeforeStart} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <p className="text-xs text-slate-500">
-            {report.prevBeforeStart && (
-              <>
-                Luna de comparație e dinaintea primei zile de rulare, deci nu are cifre de
-                pus alături.{' '}
-              </>
-            )}
-            Total interacțiuni = clicuri către site + apeluri + WhatsApp + Facebook
-            {rate !== null && (
-              <>
-                {' '}
-                · rată de interacțiune{' '}
-                {rate.toLocaleString('ro-RO', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-                % din afișări
-              </>
-            )}
-            .
-          </p>
-        </section>
-
-        {/* 2. Audiență */}
-        <section className="space-y-3">
-          <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wider">
-            2. Defalcare pe audiență
-          </h3>
-          <table className="w-full text-sm">
-            <thead className="text-xs uppercase text-slate-500 border-b border-slate-200">
-              <tr>
-                <th className="text-left py-2 font-medium">Audiență</th>
-                <th className="text-right py-2 font-medium">Afișări</th>
-                <th className="text-right py-2 font-medium">Interacțiuni</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {(['client', 'instalator'] as const).map((aud) => (
-                <tr key={aud}>
-                  <td className="py-2 text-slate-700">{AUDIENCE_LABELS[aud]}</td>
-                  <td className="py-2 text-right tabular-nums">
-                    <Num value={t ? report.byAudience[aud].imp : null} />
-                  </td>
-                  <td className="py-2 text-right tabular-nums">
-                    <Num value={t ? report.byAudience[aud].engaged : null} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="text-xs text-slate-500">
-            Audiența se deduce din pagina pe care a apărut slotul: paginile de instalatori
-            sunt feedul de cereri, portalul și formularul de listare.
-          </p>
-        </section>
-
-        {/* 3. Pagini */}
-        <section className="space-y-3">
-          <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wider">
-            3. Defalcare pe pagină
-          </h3>
-          {report.rows.length === 0 ? (
-            <p className="text-sm text-slate-500">
-              {t === null
-                ? 'Cifrele nu au putut fi citite din Umami pentru această lună.'
-                : 'Niciun eveniment înregistrat pentru acest partener în luna selectată.'}
-            </p>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm min-w-[560px]">
-                <thead className="text-xs uppercase text-slate-500 border-b border-slate-200">
-                  <tr>
-                    <th className="text-left py-2 font-medium">Pagina</th>
-                    <th className="text-right py-2 font-medium">Afișări</th>
-                    <th className="text-right py-2 font-medium">Clicuri site</th>
-                    <th className="text-right py-2 font-medium">Apeluri</th>
-                    <th className="text-right py-2 font-medium">WhatsApp</th>
-                    <th className="text-right py-2 font-medium">Facebook</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {report.rows.map((r) => (
-                    <tr key={r.position}>
-                      <td className="py-2 text-slate-700">{r.label}</td>
-                      <td className="py-2 text-right tabular-nums">
-                        {r.imp.toLocaleString('ro-RO')}
-                      </td>
-                      <td className="py-2 text-right tabular-nums">
-                        {r.clicks.toLocaleString('ro-RO')}
-                      </td>
-                      <td className="py-2 text-right tabular-nums font-medium text-emerald-700">
-                        {r.calls.toLocaleString('ro-RO')}
-                      </td>
-                      <td className="py-2 text-right tabular-nums font-medium text-emerald-700">
-                        {r.wa.toLocaleString('ro-RO')}
-                      </td>
-                      <td className="py-2 text-right tabular-nums text-slate-500">
-                        {r.social.toLocaleString('ro-RO')}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+      {/* printColorAdjust: fără el, Chrome scoate fundalurile (banda amber, bulinele)
+          din PDF. */}
+      <div
+        className="bg-white border border-slate-200 rounded-lg overflow-hidden print:border-0 print:rounded-none"
+        style={{ printColorAdjust: 'exact', WebkitPrintColorAdjust: 'exact' }}
+      >
+        <div className="h-1.5 bg-primary" />
+        <div className="p-6 space-y-8 print:px-0">
+          <div className="flex items-center justify-between gap-4 pb-5 border-b-2 border-secondary">
+            <div className="flex items-center gap-3">
+              <Image src="/logo.svg" alt="" width={44} height={44} className="w-11 h-11" />
+              <div>
+                <div className="text-lg font-bold text-secondary-dark leading-tight">
+                  Instalatori Fotovoltaice
+                </div>
+                <div className="text-xs text-slate-500">instalatori-fotovoltaice.ro</div>
+              </div>
             </div>
-          )}
-          <p className="text-xs text-slate-500">
-            Afișările din popup se numără la deschiderea popup-ului, doar când partenerul era
-            primul în rotație. Previzualizările (<code className="font-mono">?preview=</code>)
-            nu trimit evenimente.
-          </p>
-        </section>
+            <div className="text-right">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.15em] text-primary-dark">
+                Raport partener
+              </div>
+              <div className="text-sm font-medium text-secondary-dark capitalize">
+                {report.monthLabel}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-semibold text-secondary-dark">
+              Raport lunar — {sponsor.name}
+            </h2>
+            <p className="text-sm text-slate-500 mt-1">
+              Perioada {new Date(report.startAt).toLocaleDateString('ro-RO')} –{' '}
+              {new Date(report.endAt).toLocaleDateString('ro-RO')}
+            </p>
+          </div>
+
+          {/* 1. Pe scurt */}
+          <section className="space-y-3">
+            <SectionTitle n={1}>Pe scurt</SectionTitle>
+            <table className="w-full text-sm">
+              <thead className="text-xs uppercase text-secondary-light border-b-2 border-secondary/20">
+                <tr>
+                  <th className="text-left py-2 font-medium">Indicator</th>
+                  <th className="text-right py-2 font-medium capitalize">{report.monthLabel}</th>
+                  <th className="text-right py-2 font-medium capitalize">
+                    {report.prevMonthLabel}
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {SUMMARY.map((row) => (
+                  <tr key={row.key}>
+                    <td className="py-2 text-slate-700">{row.label}</td>
+                    <td className="py-2 text-right tabular-nums">
+                      <Num value={t ? t[row.key] : null} />
+                      <Delta current={t ? t[row.key] : null} prev={p ? p[row.key] : null} />
+                    </td>
+                    <td className="py-2 text-right tabular-nums text-slate-500">
+                      <PrevCell value={p ? p[row.key] : null} before={report.prevBeforeStart} />
+                    </td>
+                  </tr>
+                ))}
+                <tr className="font-semibold bg-primary/10">
+                  <td className="py-2 pl-2 text-secondary-dark">Total interacțiuni</td>
+                  <td className="py-2 text-right tabular-nums">
+                    <Num value={t ? t.engaged : null} />
+                    <Delta current={t ? t.engaged : null} prev={p ? p.engaged : null} />
+                  </td>
+                  <td className="py-2 pr-2 text-right tabular-nums text-slate-500">
+                    <PrevCell value={p ? p.engaged : null} before={report.prevBeforeStart} />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p className="text-xs text-slate-500">
+              {report.prevBeforeStart && (
+                <>
+                  Luna de comparație e dinaintea primei zile de rulare, deci nu are cifre de
+                  pus alături.{' '}
+                </>
+              )}
+              Total interacțiuni = clicuri către site + apeluri + WhatsApp + Facebook
+              {rate !== null && (
+                <>
+                  {' '}
+                  · rată de interacțiune{' '}
+                  {rate.toLocaleString('ro-RO', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                  % din afișări
+                </>
+              )}
+              .
+            </p>
+          </section>
+
+          {/* 2. Audiență */}
+          <section className="space-y-3">
+            <SectionTitle n={2}>Defalcare pe audiență</SectionTitle>
+            <table className="w-full text-sm">
+              <thead className="text-xs uppercase text-secondary-light border-b-2 border-secondary/20">
+                <tr>
+                  <th className="text-left py-2 font-medium">Audiență</th>
+                  <th className="text-right py-2 font-medium">Afișări</th>
+                  <th className="text-right py-2 font-medium">Interacțiuni</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {(['client', 'instalator'] as const).map((aud) => (
+                  <tr key={aud}>
+                    <td className="py-2 text-slate-700">{AUDIENCE_LABELS[aud]}</td>
+                    <td className="py-2 text-right tabular-nums">
+                      <Num value={t ? report.byAudience[aud].imp : null} />
+                    </td>
+                    <td className="py-2 text-right tabular-nums">
+                      <Num value={t ? report.byAudience[aud].engaged : null} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="text-xs text-slate-500">
+              Audiența se deduce din pagina pe care a apărut slotul: paginile de instalatori
+              sunt feedul de cereri, portalul și formularul de listare.
+            </p>
+          </section>
+
+          {/* 3. Pagini */}
+          <section className="space-y-3">
+            <SectionTitle n={3}>Defalcare pe pagină</SectionTitle>
+            {report.rows.length === 0 ? (
+              <p className="text-sm text-slate-500">
+                {t === null
+                  ? 'Cifrele nu au putut fi citite din Umami pentru această lună.'
+                  : 'Niciun eveniment înregistrat pentru acest partener în luna selectată.'}
+              </p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm min-w-[560px]">
+                  <thead className="text-xs uppercase text-secondary-light border-b-2 border-secondary/20">
+                    <tr>
+                      <th className="text-left py-2 font-medium">Pagina</th>
+                      <th className="text-right py-2 font-medium">Afișări</th>
+                      <th className="text-right py-2 font-medium">Clicuri site</th>
+                      <th className="text-right py-2 font-medium">Apeluri</th>
+                      <th className="text-right py-2 font-medium">WhatsApp</th>
+                      <th className="text-right py-2 font-medium">Facebook</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {report.rows.map((r) => (
+                      <tr key={r.position}>
+                        <td className="py-2 text-slate-700">{r.label}</td>
+                        <td className="py-2 text-right tabular-nums">
+                          {r.imp.toLocaleString('ro-RO')}
+                        </td>
+                        <td className="py-2 text-right tabular-nums">
+                          {r.clicks.toLocaleString('ro-RO')}
+                        </td>
+                        <td className="py-2 text-right tabular-nums font-medium text-emerald-700">
+                          {r.calls.toLocaleString('ro-RO')}
+                        </td>
+                        <td className="py-2 text-right tabular-nums font-medium text-emerald-700">
+                          {r.wa.toLocaleString('ro-RO')}
+                        </td>
+                        <td className="py-2 text-right tabular-nums text-slate-500">
+                          {r.social.toLocaleString('ro-RO')}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            <p className="text-xs text-slate-500">
+              Afișările din popup se numără la deschiderea popup-ului, doar când partenerul era
+              primul în rotație. Previzualizările (<code className="font-mono">?preview=</code>)
+              nu trimit evenimente.
+            </p>
+          </section>
+
+          <div className="flex items-center justify-between gap-4 pt-4 border-t border-slate-200 text-xs text-slate-500">
+            <span>
+              <span className="font-semibold text-secondary-dark">Instalatori Fotovoltaice</span>{' '}
+              · instalatori-fotovoltaice.ro
+            </span>
+            <span>contact@instalatori-fotovoltaice.ro</span>
+          </div>
+        </div>
       </div>
 
       {/* Markdown-ul, gata de lipit în email. Vizibil ca fallback dacă clipboard-ul
