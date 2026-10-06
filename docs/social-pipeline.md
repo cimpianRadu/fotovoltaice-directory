@@ -9,13 +9,13 @@
 
 **Promovăm prioritar `/cere-oferta`, obiectivul e colectarea de lead-uri** (pe care userul vrea apoi să le vândă firmelor). Implicații: CTA primar al fiecărei postări noi = /cere-oferta (nu doar în comentariul fixat, ci ca destinație a unghiului); temele se triază după „aduce cereri de ofertă sau doar views?"; succes = submissions în digest, nu reach. Ideile cele mai aliniate din coadă: #4 (amortizare → calculator → cere-oferta) și #6 (câte firme în județul tău → cere-oferta).
 
-## 🎯 Focus strategic 3: înapoi pe cereri (decizie user 2026-10-06)
+## 🎯 Focus strategic 3: echilibru firme + clienți, accent pe cereri (decizie user 2026-10-06)
 
-**Avem acum mai mulți instalatori activi, deci obiectivul revine la mai multe cereri de la clienți.** Focusul 2 de mai jos (doar postări pentru firme) nu mai e în vigoare; rămâne ca istoric și pentru măsurarea pe firme.
+**Avem acum mai mulți instalatori activi, deci postăm echilibrat, și pentru firme și pentru clienți, cu accent acum pe atras mai multe cereri.** Regula „doar pentru firme” din Focusul 2 de mai jos nu mai e în vigoare; restul (formatele care merg pe firme, măsurarea) rămâne valabil.
 
 - Postările pentru proprietari se produc din nou: CTA primar `/cere-oferta` (ca în Focusul 1), adresare „dumneavoastră” sau „tu” după format.
 - Reelurile pentru clienți deja randate și nepostate (vezi inventarul din memoria `project_reel_backlog`) se pot posta, după ce li se reverifică cifrele.
-- Pentru firme rămân două obiceiuri: rezumatul de luni și reelul de final de lună despre pachetul de partener (cu cifrele lunii).
+- Pentru firme continuă postările care au mers (poze cu cereri pe județ, rezumatul de luni) plus un obicei nou: reelul de final de lună despre pachetul de partener, cu cifrele lunii.
 - Idee nouă, pentru clienți: la început de săptămână, reel cu câte oferte au primit cererile săptămâna trecută, doar când numărul e decent.
 - Ideile stau în `social/IDEI.md`.
 
