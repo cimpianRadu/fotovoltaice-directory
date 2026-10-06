@@ -27,12 +27,12 @@ respectivă, ex. `2026-08-w3-17-23`). Folderul fiecărei postări rămâne datat
    Un changelog merge ca poză cu caption, nu ca reel narat.
 3. Reelul trebuie să aibă o singură idee. Dacă ai două, sunt două reels la două
    zile distanță (userul a respins explicit un reel de 53s).
-4. **Din 7 sept 2026: pentru cine e?** Dacă e pentru proprietari (Casa Verde,
-   prețuri, legislație), nu se produce acum. Focusul e pe firme până când
-   cererile nerevendicate scad sub 20% (vezi „Focus strategic 2" din
-   `docs/social-pipeline.md`). Pentru firme, întreabă întâi dacă subiectul nu
-   încape într-o poză cu screenshot și caption: acela e formatul care a adus
-   firme pe /cereri, iar un reel costă de zece ori mai mult.
+4. **Pentru cine e?** Din 6 oct 2026 obiectivul e din nou mai multe cereri
+   de la clienți (vezi „Focus strategic 3" din `docs/social-pipeline.md`), deci
+   reelurile pentru proprietari se produc, cu CTA `/cere-oferta`. Pentru firme,
+   întreabă întâi dacă subiectul nu încape într-o poză cu screenshot și caption:
+   acela e formatul care a adus firme pe /cereri, iar un reel costă de zece ori
+   mai mult.
 
 Semnul că pasul 0 a fost sărit: scriptul se umple cu al doilea exemplu numeric,
 cu o frază despre metodologie și cu un disclaimer chiar înainte de CTA. Alea nu

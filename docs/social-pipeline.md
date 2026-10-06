@@ -9,7 +9,17 @@
 
 **Promovăm prioritar `/cere-oferta`, obiectivul e colectarea de lead-uri** (pe care userul vrea apoi să le vândă firmelor). Implicații: CTA primar al fiecărei postări noi = /cere-oferta (nu doar în comentariul fixat, ci ca destinație a unghiului); temele se triază după „aduce cereri de ofertă sau doar views?"; succes = submissions în digest, nu reach. Ideile cele mai aliniate din coadă: #4 (amortizare → calculator → cere-oferta) și #6 (câte firme în județul tău → cere-oferta).
 
-## 🎯 Focus strategic 2: instalatori (decizie user 2026-09-07)
+## 🎯 Focus strategic 3: înapoi pe cereri (decizie user 2026-10-06)
+
+**Avem acum mai mulți instalatori activi, deci obiectivul revine la mai multe cereri de la clienți.** Focusul 2 de mai jos (doar postări pentru firme) nu mai e în vigoare; rămâne ca istoric și pentru măsurarea pe firme.
+
+- Postările pentru proprietari se produc din nou: CTA primar `/cere-oferta` (ca în Focusul 1), adresare „dumneavoastră” sau „tu” după format.
+- Reelurile pentru clienți deja randate și nepostate (vezi inventarul din memoria `project_reel_backlog`) se pot posta, după ce li se reverifică cifrele.
+- Pentru firme rămân două obiceiuri: rezumatul de luni și reelul de final de lună despre pachetul de partener (cu cifrele lunii).
+- Idee nouă, pentru clienți: la început de săptămână, reel cu câte oferte au primit cererile săptămâna trecută, doar când numărul e decent.
+- Ideile stau în `social/IDEI.md`.
+
+## 🎯 Focus strategic 2: instalatori (decizie user 2026-09-07, înlocuit pe 2026-10-06)
 
 **Până când acoperirea cererilor revine peste 80%, postările se adresează firmelor, nu clienților.** Cererile nu mai sunt blocajul: 48 în 30 de zile la 7 sept (dublu față de luna dinainte), dar 27 dintre ele fără nicio revendicare activă, în 15 județe. Doar ~10 firme intră în portal și doar 3 au alerte pe județ. Detalii și cifre în memoria `project_funnel_diagnosis_2026_09_07`.
 
@@ -96,6 +106,8 @@ Linkul din bio (IG, TikTok) se schimbă la fiecare reel, cu `utm_campaign`-ul po
 > **Postare nouă = rând nou în Sheet.** Folderul din `social/` nu e văzut de /admin/social. Adaugă rândul cu `node scripts/social-add.mjs --tema "..." --folder "social/<data>-<tema>/" --format "..." --programat <ISO> --cta <pagina>` (dry-run implicit, `--write` scrie; ID-ul se calculează automat).
 
 ## 📋 Coadă activă
+
+> **Din 2026-10-06, ideile noi de postări se scriu în `social/IDEI.md`** (format checklist, citit de Social Hub). Intrările de mai jos rămân ca istoric și detaliu pentru ideile listate acolo.
 
 > **📅 Calendar săptămâna 3-9 aug (revizuit 2026-08-05, goal = cereri):** **#9 AFIR narat ✅ POSTAT 3 aug pe Facebook + Instagram** (marcat în Sheet, folder redenumit cu ✅; rămâne nedistribuit pe YouTube Shorts și TikTok, unde încă se poate posta) → **#23 „Trei cereri azi" ✅ POSTAT 4 aug** → **#22 reel „cereri cu poze" ✅ POSTAT 5 aug pe Facebook + Instagram** (anunț produs, refăcut din poză + caption în reel narat 37s la cererea userului; marcat în Sheet abia pe 6 aug) → joi 6 aug **#20 reel alertă, re-cut pe hook B** (aceeași zi cu articolul #43, se susțin reciproc) → sâmbătă 8 aug **#21 kit preț cu montaj** (derivat din ghidul #46, intenție de cumpărare maximă). Posterul de alertă (fost #22 în doc) a fost **renunțat**, absorbit în #20; ID-ul 22 din Sheet e acum reelul „cereri cu poze". Decizie de format: **doar reels narate**, sunt cele care au mers cel mai bine; obiectivul pe #20 e keywords + trafic spre site, nu followers. Candidat pentru luni 10 aug: reel derivat din #36 (Legea prosumatorilor rezidențial, articolul vine joi prin rutină) sau #6 „câte firme are județul tău". ⚠️ De verificat în Meta Planner: posterul #19 (programat 30 iul) tot nu e marcat postat în Sheet.
 >
