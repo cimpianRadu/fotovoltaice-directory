@@ -3,13 +3,35 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
+import { ClientFeedbackForm } from '@/app/feedback/FeedbackForms';
+
+type StatusCheckAction = 'semnat' | 'decid' | 'altafirma' | 'necontactat';
 
 interface ResponseConfirmProps {
-  action: 'astept' | 'renunt' | 'activa' | 'aleasa';
+  action: 'astept' | 'renunt' | 'activa' | 'aleasa' | StatusCheckAction;
   id: string;
   token: string;
+  /** La „semnat": revendicarea aleasă, semnată în token. */
+  f?: string;
   valid: boolean;
+  /** La „semnat": numele firmei. */
+  firmName?: string;
+  /** Doar la „Ați găsit o ofertă bună?": chestionarul de după confirmare. */
+  feedback?: { token: string; done: boolean };
 }
+
+const ALTA_FIRMA_OPTIONS = [
+  { value: 'altundeva', label: 'Am ales o firmă care nu a venit prin platformă' },
+  { value: 'renuntat', label: 'Nu mai fac lucrarea, cel puțin deocamdată' },
+] as const;
+
+/** Introducerea chestionarului, după butonul apăsat (aprobate de Radu pe 6 oct 2026). */
+const FEEDBACK_INTRO: Record<StatusCheckAction, string> = {
+  semnat: 'Felicitări pentru decizie! Ne-ar ajuta mult să aflăm cum a decurs.',
+  decid: 'Am notat. Până atunci, ne-ar ajuta să aflăm cum vi s-au părut ofertele de până acum.',
+  altafirma: 'Am notat. Ne-ar ajuta să aflăm ce n-a mers, ca să facem platforma mai bună.',
+  necontactat: 'Ne pare rău, nu așa ar trebui să meargă. Ne-ar ajuta să aflăm mai multe.',
+};
 
 const COPY = {
   astept: {
@@ -36,13 +58,40 @@ const COPY = {
     button: 'Confirm, închideți cererea',
     done: 'Cererea a fost închisă. Vă mulțumim și spor la montaj!',
   },
+  semnat: {
+    title: 'Ați semnat cu {firma}',
+    body: 'Confirmați și închidem cererea, ca să nu vă mai sune alte firme.',
+    button: 'Confirm, am semnat',
+    done: 'Am notat. Vă mulțumim și spor la montaj!',
+  },
+  decid: {
+    title: 'Încă vă decideți',
+    body: 'Nicio problemă, cererea rămâne așa cum e. Confirmați și vă mai punem câteva întrebări scurte.',
+    button: 'Confirm, încă mă decid',
+    done: 'Am notat. Vă mulțumim!',
+  },
+  altafirma: {
+    title: 'Ce s-a întâmplat?',
+    body: 'Alegeți varianta potrivită și închidem cererea, ca să nu vă mai sune alte firme.',
+    button: 'Confirm',
+    done: 'Cererea a fost închisă. Vă mulțumim că ne-ați spus!',
+  },
+  necontactat: {
+    title: 'Nu v-a contactat nicio firmă',
+    body: 'Confirmați și ne uităm noi ce s-a întâmplat.',
+    button: 'Confirm',
+    done: 'Am notat. Vă mulțumim că ne-ați spus!',
+  },
 } as const;
 
-export default function ResponseConfirm({ action, id, token, valid }: ResponseConfirmProps) {
+export default function ResponseConfirm({ action, id, token, f = '', valid, firmName = '', feedback }: ResponseConfirmProps) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'done'>('idle');
   const [error, setError] = useState<string | null>(null);
   const [firma, setFirma] = useState('');
+  const [motiv, setMotiv] = useState('');
   const copy = COPY[action];
+  const title = copy.title.replace('{firma}', firmName);
+  const statusCheck = action === 'semnat' || action === 'decid' || action === 'altafirma' || action === 'necontactat';
 
   if (!valid) {
     return (
@@ -60,13 +109,24 @@ export default function ResponseConfirm({ action, id, token, valid }: ResponseCo
   }
 
   async function confirm() {
+    if (action === 'altafirma' && !motiv) {
+      setError('Alegeți una dintre variante.');
+      return;
+    }
     setStatus('submitting');
     setError(null);
     try {
       const res = await fetch('/api/leads/raspuns', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, token, action, ...(action === 'aleasa' ? { firma } : {}) }),
+        body: JSON.stringify({
+          id,
+          token,
+          action,
+          ...(action === 'aleasa' ? { firma } : {}),
+          ...(action === 'semnat' ? { f } : {}),
+          ...(action === 'altafirma' ? { motiv } : {}),
+        }),
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) {
@@ -81,13 +141,27 @@ export default function ResponseConfirm({ action, id, token, valid }: ResponseCo
     }
   }
 
+  if (status === 'done' && statusCheck && feedback && !feedback.done) {
+    return (
+      <>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Mulțumim!</h1>
+        <p className="mt-4 text-gray-700 leading-relaxed">
+          {FEEDBACK_INTRO[action as StatusCheckAction]} Durează cam două minute.
+        </p>
+        <div className="mt-6">
+          <ClientFeedbackForm id={id} token={feedback.token} />
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{copy.title}</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{title}</h1>
       {status === 'done' ? (
         <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-5 text-sm text-emerald-800 leading-relaxed">
           {copy.done}
-          {(action === 'renunt' || action === 'aleasa') && (
+          {(action === 'renunt' || action === 'aleasa' || statusCheck) && (
             <p className="mt-3">
               <Link href="/" className="underline hover:no-underline">
                 Înapoi la prima pagină
@@ -113,11 +187,37 @@ export default function ResponseConfirm({ action, id, token, valid }: ResponseCo
               />
             </label>
           )}
+          {action === 'altafirma' && (
+            <fieldset className="mt-5 space-y-2">
+              <legend className="sr-only">Ce s-a întâmplat?</legend>
+              {ALTA_FIRMA_OPTIONS.map((o) => (
+                <label
+                  key={o.value}
+                  className={`flex items-center gap-3 rounded-lg border px-4 py-3 text-sm cursor-pointer transition-colors ${
+                    motiv === o.value ? 'border-primary bg-amber-50 text-gray-900' : 'border-gray-300 text-gray-700 hover:border-gray-400'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="motiv"
+                    value={o.value}
+                    checked={motiv === o.value}
+                    onChange={() => {
+                      setMotiv(o.value);
+                      setError(null);
+                    }}
+                    className="accent-amber-500"
+                  />
+                  {o.label}
+                </label>
+              ))}
+            </fieldset>
+          )}
           {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
           <div className="mt-6">
             <Button
               type="button"
-              variant={action === 'renunt' || action === 'aleasa' ? 'outline' : 'primary'}
+              variant={action === 'renunt' || action === 'aleasa' || action === 'altafirma' ? 'outline' : 'primary'}
               size="lg"
               disabled={status === 'submitting'}
               onClick={() => void confirm()}

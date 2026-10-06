@@ -355,6 +355,11 @@ export async function markActiveCheckSent(timestamp: string, at = new Date().toI
   await setLeadCell(timestamp, 'AZ', at);
 }
 
+/** BB — „Ați găsit o ofertă bună?" a plecat; nu se retrimite. */
+export async function markStatusCheckSent(timestamp: string, at = new Date().toISOString()) {
+  await setLeadCell(timestamp, 'BB', at);
+}
+
 /** BA + AT — clientul a confirmat că încă vrea oferte: cererea urcă în feed de la `at`. */
 export async function markLeadConfirmedActive(timestamp: string, at = new Date().toISOString()) {
   await setLeadCells(timestamp, { BA: at, AT: `activa ${at}` });
@@ -518,7 +523,11 @@ export interface NewLead {
   checkinTrimise: number;
   /** AS — ISO al ultimului check-in (sau al ultimului „încă aștept"). */
   checkinLa: string;
-  /** AT — ultimul răspuns al clientului: „gata|astept|renunt <ISO>". */
+  /**
+   * AT — ultimul răspuns al clientului: „gata|astept|renunt|activa|aleasa <ISO>",
+   * iar din 6 oct și „semnat|decid|altafirma|necontactat <ISO>"; la „semnat"
+   * urmează și numele firmei, după ISO.
+   */
   raspunsClient: string;
   /** AU — ISO când au plecat alertele de reactivare către firmele cu județul bifat. */
   alerteReactivareLa: string;
@@ -530,6 +539,11 @@ export interface NewLead {
   verificareTrimisaLa: string;
   /** BA — ISO când clientul a confirmat că încă vrea oferte. Data „proaspătă" din feed. */
   confirmataLa: string;
+  /**
+   * BB — ISO când a plecat „Ați găsit o ofertă bună?" (6 oct 2026), pe cererile
+   * cu firme declarate în discuții/ofertă. Nu se retrimite. Vezi lib/verificare-status.
+   */
+  verificareStatusLa: string;
 }
 
 export interface NewListing {
@@ -617,6 +631,7 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     anuntProgramLa: r[47] || '',
     verificareTrimisaLa: r[51] || '',
     confirmataLa: r[52] || '',
+    verificareStatusLa: r[53] || '',
     ...readCrmFields(r),
   }));
 }

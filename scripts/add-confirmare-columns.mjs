@@ -35,6 +35,8 @@ const ID = env.GOOGLE_SHEETS_SPREADSHEET_ID;
 const HEADERS = {
   AZ: 'Verificare activă trimisă la',
   BA: 'Confirmată activă la',
+  // 6 oct 2026: „Ați găsit o ofertă bună?" (lib/verificare-status).
+  BB: 'Verificare status trimisă la',
 };
 
 const MIN_COLUMNS = 56; // BD

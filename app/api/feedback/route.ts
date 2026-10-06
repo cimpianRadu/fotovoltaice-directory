@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getClaims, getFullLeadById, hasFeedback, saveClientFeedback, saveFirmFeedback } from '@/lib/sheets';
 import { verifyFeedbackToken } from '@/lib/feedback-token';
+import { escapeHtml, sendEmail } from '@/lib/email';
 import {
   DATE_CORECTE_OPTIONS,
   DATE_LIPSA_OPTIONS,
@@ -69,11 +70,18 @@ export async function POST(request: Request) {
       }
       // Firma cu care a semnat nu se mai întreabă (16 sept 2026): linkul pleacă
       // abia după ce revendicarea ei e pe „câștigat", deci o citim de acolo.
-      const firmaSemnata = (await getClaims())
+      // Din 6 oct 2026 chestionarul vine și după „Am semnat cu X" din emailul
+      // „Ați găsit o ofertă bună?", unde firma n-a bifat neapărat „câștigat":
+      // atunci o luăm din răspunsul clientului (AT: „semnat <ISO> <firma>").
+      const fromClaims = (await getClaims())
         .filter((c) => c.leadId === id && c.firmStatus === 'castigat')
         .map((c) => c.numeFirma.trim())
         .filter(Boolean)
         .join(', ');
+      const fromClient = lead.raspunsClient.startsWith('semnat ')
+        ? lead.raspunsClient.split(' ').slice(2).join(' ').trim()
+        : '';
+      const firmaSemnata = fromClaims || fromClient;
       await saveClientFeedback({
         leadId: id,
         client: (lead.numeContact || lead.numeCompanie).trim(),
@@ -85,6 +93,17 @@ export async function POST(request: Request) {
         experienta: text(body.experienta),
         imbunatatiri: text(body.imbunatatiri),
         testimonial: body.testimonial,
+      });
+      // Emailul „Ați găsit o ofertă bună?" promite „citesc fiecare răspuns":
+      // să nu stea doar în Sheet.
+      await sendEmail({
+        to: 'contact@instalatori-fotovoltaice.ro',
+        subject: `[Feedback client] ${lead.judet}: ${satisfactie}/5${body.testimonial !== 'nu' ? ', acord de publicare' : ''}`,
+        html: `<p><strong>${escapeHtml((lead.numeContact || lead.numeCompanie).trim())}</strong>, ${escapeHtml(lead.judet)} (cererea ${escapeHtml(id)})</p>
+<p>Nota: <strong>${satisfactie}/5</strong> · oferte primite: ${escapeHtml(String(body.oferte))}${firmaSemnata ? ` · a semnat cu: ${escapeHtml(firmaSemnata)}` : ''}</p>
+<p><strong>Cum a fost:</strong><br>${escapeHtml(text(body.experienta))}</p>
+${text(body.imbunatatiri) ? `<p><strong>Ce să îmbunătățim:</strong><br>${escapeHtml(text(body.imbunatatiri))}</p>` : ''}
+<p>Publicare: <strong>${escapeHtml(String(body.testimonial))}</strong></p>`,
       });
     } else {
       if (!isOption(DATE_CORECTE_OPTIONS, body.dateCorecte)) {

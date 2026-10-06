@@ -13,7 +13,8 @@
 // actualizare a cererii, și linkul „nu mă mai contactați", care o închide.
 //
 // Plus, din 21 sept 2026, verificarea „mai căutați oferte?" pentru cererile
-// obișnuite (nu „mă informez"), trimisă din /api/admin/confirmare-activa.
+// obișnuite (nu „mă informez"), trimisă din /api/admin/confirmare-activa, și din
+// 6 oct 2026 „Ați găsit o ofertă bună?" (lib/verificare-status).
 
 import { sendEmail, escapeHtml, PORTAL_BASE_URL } from './email';
 import { clientLinkUrl } from './lead-client-token';
@@ -274,5 +275,82 @@ export async function sendActiveCheckEmail(lead: NewLead): Promise<{ ok: boolean
     replyTo: REPLY_TO,
   });
   if (!result.ok) console.warn('[email-client] verificare activă netrimisă:', result.reason);
+  return result;
+}
+
+/** „A", „A și B", „A, B și C". */
+function joinFirms(names: string[]): string {
+  const bold = names.map((n) => `<strong>${escapeHtml(n)}</strong>`);
+  if (bold.length <= 1) return bold.join('');
+  return `${bold.slice(0, -1).join(', ')} și ${bold[bold.length - 1]}`;
+}
+
+export interface StatusCheckLinks {
+  /** Câte un link „Am semnat cu…" pentru fiecare firmă, în ordinea din `firms`. */
+  semnat: string[];
+  decid: string;
+  altaFirma: string;
+  necontactat: string;
+}
+
+/**
+ * 5. „Cum v-a mers cu ofertele?" (6 oct 2026), pe cererile la care o firmă s-a
+ * declarat în portal „În discuții" sau „Ofertă trimisă" de mult timp. Firma își
+ * raportează singură statusul, iar clientul e singura confirmare independentă
+ * că a semnat. Butonul înregistrează răspunsul; chestionarul de feedback vine
+ * după, pe pagină. Firmele sunt numite „din ce ne-au transmis ele", nu ca fapt.
+ */
+export function statusCheckEmail(
+  lead: NewLead,
+  firms: string[],
+  links: StatusCheckLinks,
+): { subject: string; html: string } {
+  const putere = lead.putere ? ` de ${escapeHtml(lead.putere)} kW` : '';
+  const contact =
+    firms.length === 1
+      ? `Din ce ne-a transmis firma, ${joinFirms(firms)} a luat legătura cu dumneavoastră.`
+      : `Din ce ne-au transmis firmele, ${joinFirms(firms)} au luat legătura cu dumneavoastră.`;
+  const semnat = firms
+    .map(
+      (f, i) =>
+        `<a href="${links.semnat[i]}" style="display:block;margin:0 0 8px;padding:12px 20px;background:#f59e0b;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;text-align:center">${escapeHtml(`✅ Am semnat cu ${f}`)}</a>`,
+    )
+    .join('');
+  const body =
+    p('Bună ziua,') +
+    p(
+      `Pe ${escapeHtml(fmtDay(lead.timestamp))} ați trimis o cerere pe instalatori-fotovoltaice.ro pentru un sistem fotovoltaic${putere} în județul ${escapeHtml(lead.judet)}. ${contact}`,
+    ) +
+    p(
+      'Am vrea să știm dacă ați găsit ce căutați și cum vi s-a părut experiența cu ofertele primite. Începe cu un click:',
+    ) +
+    `<div style="margin:8px 0 12px">${semnat}</div>` +
+    `<div style="text-align:center;margin:0 0 20px">
+      ${secondaryButton(links.decid, '🤔 Încă mă decid')}
+      ${secondaryButton(links.altaFirma, '❌ Am ales altă firmă sau nu mai fac lucrarea')}
+      ${secondaryButton(links.necontactat, '📵 Nu m-a contactat nicio firmă')}
+    </div>` +
+    p('După click urmează câteva întrebări scurte, cam două minute. Dacă nu răspundeți, cererea rămâne așa cum e.') +
+    p('Vă promit că citesc fiecare răspuns. Dacă aveți și întrebări, scrieți-mi direct la acest email.');
+  return { subject: 'Ați găsit o ofertă bună pentru sistemul fotovoltaic?', html: layout(lead, body) };
+}
+
+/** Trimite „Ați găsit o ofertă bună?". `firms` = firmele numite, cu revendicarea fiecăreia. */
+export async function sendStatusCheckEmail(
+  lead: NewLead,
+  firms: { name: string; claimTs: string }[],
+): Promise<{ ok: boolean; reason?: string }> {
+  const { subject, html } = statusCheckEmail(
+    lead,
+    firms.map((f) => f.name),
+    {
+      semnat: firms.map((f) => clientLinkUrl(lead.timestamp, 'semnat', f.claimTs)),
+      decid: clientLinkUrl(lead.timestamp, 'decid'),
+      altaFirma: clientLinkUrl(lead.timestamp, 'altafirma'),
+      necontactat: clientLinkUrl(lead.timestamp, 'necontactat'),
+    },
+  );
+  const result = await sendEmail({ to: lead.email, subject, html, replyTo: REPLY_TO });
+  if (!result.ok) console.warn('[email-client] verificare status netrimisă:', result.reason);
   return result;
 }

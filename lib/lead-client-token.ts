@@ -8,10 +8,25 @@
 // Expirarea e lungă intenționat: omul care așteaptă Casa Verde Baterii apasă
 // linkul peste două luni, nu peste o zi. Tokenul nu deschide date de contact,
 // doar formularul de actualizare al propriei cereri.
+//
+// Din 6 oct 2026, și „Ați găsit o ofertă bună?" (lib/verificare-status):
+// „semnat" (cu o firmă anume), „decid", „altafirma", „necontactat". La
+// „semnat", revendicarea aleasă (timestampul ei) intră în semnătură ca `extra`,
+// altfel linkul ar putea fi rescris pe altă firmă.
 
 import { createHmac, timingSafeEqual } from 'node:crypto';
 
-export const CLIENT_LINK_ACTIONS = ['actualizare', 'astept', 'renunt', 'activa', 'aleasa'] as const;
+export const CLIENT_LINK_ACTIONS = [
+  'actualizare',
+  'astept',
+  'renunt',
+  'activa',
+  'aleasa',
+  'semnat',
+  'decid',
+  'altafirma',
+  'necontactat',
+] as const;
 export type ClientLinkAction = (typeof CLIENT_LINK_ACTIONS)[number];
 
 const TOKEN_TTL_MS = 180 * 24 * 60 * 60 * 1000;
@@ -22,9 +37,10 @@ function secret(): string {
   return value;
 }
 
-function sign(leadId: string, action: ClientLinkAction, exp: number): string {
+function sign(leadId: string, action: ClientLinkAction, exp: number, extra = ''): string {
+  // Fără `extra`, șirul semnat e cel dinainte, ca linkurile deja trimise să rămână valabile.
   return createHmac('sha256', secret())
-    .update(`lead-client:${leadId}:${action}:${exp}`)
+    .update(`lead-client:${leadId}:${action}:${exp}${extra ? `:${extra}` : ''}`)
     .digest('hex');
 }
 
@@ -34,18 +50,23 @@ function safeEqual(a: string, b: string): boolean {
   return ba.length === bb.length && timingSafeEqual(ba, bb);
 }
 
-export function createClientToken(leadId: string, action: ClientLinkAction): string {
+export function createClientToken(leadId: string, action: ClientLinkAction, extra = ''): string {
   const exp = Date.now() + TOKEN_TTL_MS;
-  return `${exp}.${sign(leadId, action, exp)}`;
+  return `${exp}.${sign(leadId, action, exp, extra)}`;
 }
 
-export function verifyClientToken(token: string, leadId: string, action: ClientLinkAction): boolean {
+export function verifyClientToken(
+  token: string,
+  leadId: string,
+  action: ClientLinkAction,
+  extra = '',
+): boolean {
   const dot = token.indexOf('.');
   if (dot === -1) return false;
   const exp = Number(token.slice(0, dot));
   if (!Number.isFinite(exp) || exp < Date.now()) return false;
   try {
-    return safeEqual(token.slice(dot + 1), sign(leadId, action, exp));
+    return safeEqual(token.slice(dot + 1), sign(leadId, action, exp, extra));
   } catch {
     return false;
   }
@@ -58,9 +79,10 @@ export function isClientLinkAction(s: string): s is ClientLinkAction {
 const BASE_URL = 'https://instalatori-fotovoltaice.ro';
 
 /** Adresa completă a unui link din email. Cererea și tokenul merg în query, ca la /cereri?cerere=. */
-export function clientLinkUrl(leadId: string, action: ClientLinkAction): string {
-  const token = createClientToken(leadId, action);
+export function clientLinkUrl(leadId: string, action: ClientLinkAction, extra = ''): string {
+  const token = createClientToken(leadId, action, extra);
   const params = new URLSearchParams({ id: leadId, t: token });
+  if (extra) params.set('f', extra);
   const path = action === 'actualizare' ? '/cerere/actualizare' : `/cerere/raspuns/${action}`;
   return `${BASE_URL}${path}?${params.toString()}`;
 }

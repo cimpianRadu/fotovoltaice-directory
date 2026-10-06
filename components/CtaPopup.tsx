@@ -12,7 +12,8 @@ import { trackEvent } from '@/lib/analytics';
 const STORAGE_KEY = 'cta-popup-dismissed';
 // `/portal` e ecranul firmei logate și `/pentru-instalatori` e pagina de
 // recrutare a firmelor: acolo cititorul e instalatorul, nu clientul, iar
-// „cauți un instalator?" e o ofertă adresată altcuiva.
+// „cauți un instalator?" e o ofertă adresată altcuiva. Pe `/cerere/` (pagini
+// deschise din emailurile către client) omul are deja o cerere trimisă.
 const HIDE_ON = [
   '/cere-oferta',
   '/listeaza-firma',
@@ -20,6 +21,7 @@ const HIDE_ON = [
   '/portal',
   '/pentru-instalatori',
   '/feedback',
+  '/cerere/',
 ];
 
 export default function CtaPopup() {
