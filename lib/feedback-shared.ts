@@ -30,9 +30,11 @@ export const TESTIMONIAL_OPTIONS: Option[] = [
   { value: 'nu', label: 'Nu' },
 ];
 
+// Firmele nu mai au varianta „fără nume" (7 oct 2026): un testimonial de firmă
+// anonim nu convinge pe nimeni. Răspunsurile vechi cu „da-fara-nume" rămân
+// în Sheets și se publică tot fără nume.
 export const FIRM_TESTIMONIAL_OPTIONS: Option[] = [
   { value: 'da', label: 'Da, cu numele firmei' },
-  { value: 'da-fara-nume', label: 'Da, dar fără numele firmei' },
   { value: 'nu', label: 'Nu' },
 ];
 

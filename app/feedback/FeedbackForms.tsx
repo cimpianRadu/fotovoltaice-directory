@@ -362,8 +362,8 @@ export function FirmFeedbackForm({
       />
       <PublishNote>
         Dacă alegeți „da", putem publica textul scris mai sus, județul, tipul lucrării și puterea
-        instalată și, doar la prima variantă, numele firmei cu link spre profilul ei. Studiile de caz
-        cu fotografii se stabilesc separat, în scris.
+        instalată, împreună cu numele firmei și un link spre profilul ei. Studiile de caz cu
+        fotografii se stabilesc separat, în scris.
       </PublishNote>
       {error && error.field !== 'experienta' && <p className="text-sm text-red-600">{error.message}</p>}
       <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full">
@@ -461,8 +461,8 @@ export function PlatformFeedbackForm({ token, firma }: { token: string; firma: s
         error={error?.field === 'testimonial'}
       />
       <PublishNote>
-        Dacă alegeți „da", putem publica textul scris mai sus, județul firmei și, doar la prima
-        variantă, numele firmei cu link spre profilul ei.
+        Dacă alegeți „da", putem publica textul scris mai sus și județul, împreună cu numele firmei
+        și un link spre profilul ei.
       </PublishNote>
       {error && error.field !== 'experienta' && <p className="text-sm text-red-600">{error.message}</p>}
       <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full">
