@@ -373,9 +373,13 @@ export function FirmFeedbackForm({
   );
 }
 
-// Părerea firmei despre platformă în general, fără o cerere anume: doar nota,
+// Părerea firmei despre platformă în general, fără o cerere anume: aceleași
+// întrebări despre date ca la /feedback/firma, puse la plural, plus nota,
 // textul și acordul de publicare.
 export function PlatformFeedbackForm({ token, firma }: { token: string; firma: string }) {
+  const [dateCorecte, setDateCorecte] = useState('');
+  const [dateUtile, setDateUtile] = useState('');
+  const [dateLipsa, setDateLipsa] = useState<string[]>([]);
   const [satisfactie, setSatisfactie] = useState('');
   const [experienta, setExperienta] = useState('');
   const [imbunatatiri, setImbunatatiri] = useState('');
@@ -385,6 +389,9 @@ export function PlatformFeedbackForm({ token, firma }: { token: string; firma: s
     id: 'platforma',
     token,
     firma,
+    dateCorecte,
+    dateUtile,
+    dateLipsa,
     satisfactie,
     experienta,
     imbunatatiri,
@@ -395,6 +402,29 @@ export function PlatformFeedbackForm({ token, firma }: { token: string; firma: s
 
   return (
     <form onSubmit={submit} className="space-y-5 rounded-xl border border-border bg-white p-5 sm:p-6">
+      <Choice
+        label="Datele din cererile primite sunt corecte?"
+        options={DATE_CORECTE_OPTIONS}
+        value={dateCorecte}
+        onChange={setDateCorecte}
+        required
+        error={error?.field === 'dateCorecte'}
+      />
+      <Choice
+        label="Ce puteți face de obicei cu datele din cereri?"
+        options={DATE_UTILE_OPTIONS}
+        value={dateUtile}
+        onChange={setDateUtile}
+        required
+        error={error?.field === 'dateUtile'}
+      />
+      <MultiChoice
+        label="Ce v-ar ajuta să mai știți din cereri?"
+        options={DATE_LIPSA_OPTIONS}
+        value={dateLipsa}
+        onChange={setDateLipsa}
+        hint="Puteți bifa mai multe."
+      />
       <Choice
         label="Cât de mulțumiți sunteți de platformă?"
         options={SATISFACTIE_OPTIONS}

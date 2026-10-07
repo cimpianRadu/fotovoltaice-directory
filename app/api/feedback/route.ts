@@ -32,6 +32,11 @@ function text(v: unknown, max = FEEDBACK_TEXT_MAX): string {
   return typeof v === 'string' ? v.trim().slice(0, max) : '';
 }
 
+// Ce a lipsit din cerere(i): doar slugurile cunoscute, separate prin virgulă.
+function dateLipsaList(v: unknown): string {
+  return Array.isArray(v) ? v.filter((x): x is string => isOption(DATE_LIPSA_OPTIONS, x)).join(', ') : '';
+}
+
 function bad(error: string, field?: string) {
   return NextResponse.json({ error, field }, { status: 400 });
 }
@@ -63,6 +68,12 @@ export async function POST(request: Request) {
     }
 
     if (role === 'platforma') {
+      if (!isOption(DATE_CORECTE_OPTIONS, body.dateCorecte)) {
+        return bad('Spuneți-ne dacă datele din cereri sunt corecte.', 'dateCorecte');
+      }
+      if (!isOption(DATE_UTILE_OPTIONS, body.dateUtile)) {
+        return bad('Spuneți-ne ce puteți face cu datele din cereri.', 'dateUtile');
+      }
       if (!isOption(FIRM_TESTIMONIAL_OPTIONS, body.testimonial)) {
         return bad('Alegeți dacă putem publica părerea dumneavoastră.', 'testimonial');
       }
@@ -74,9 +85,9 @@ export async function POST(request: Request) {
         firma,
         judet: '',
         putere: '',
-        dateCorecte: '',
-        dateUtile: '',
-        dateLipsa: '',
+        dateCorecte: body.dateCorecte,
+        dateUtile: body.dateUtile,
+        dateLipsa: dateLipsaList(body.dateLipsa),
         satisfactie,
         experienta: text(body.experienta),
         imbunatatiri: text(body.imbunatatiri),
@@ -86,7 +97,7 @@ export async function POST(request: Request) {
         to: 'contact@instalatori-fotovoltaice.ro',
         subject: `[Feedback platformă] ${firma}: ${satisfactie}/5${body.testimonial !== 'nu' ? ', acord de publicare' : ''}`,
         html: `<p><strong>${escapeHtml(firma)}</strong>, părere generală despre platformă</p>
-<p>Nota: <strong>${satisfactie}/5</strong></p>
+<p>Nota: <strong>${satisfactie}/5</strong> · date corecte: ${escapeHtml(String(body.dateCorecte))} · ce pot face cu ele: ${escapeHtml(String(body.dateUtile))}${dateLipsaList(body.dateLipsa) ? ` · ar mai vrea: ${escapeHtml(dateLipsaList(body.dateLipsa))}` : ''}</p>
 <p><strong>Cum e colaborarea:</strong><br>${escapeHtml(text(body.experienta))}</p>
 ${text(body.imbunatatiri) ? `<p><strong>Ce să îmbunătățim:</strong><br>${escapeHtml(text(body.imbunatatiri))}</p>` : ''}
 <p>Publicare: <strong>${escapeHtml(String(body.testimonial))}</strong></p>`,
@@ -157,9 +168,7 @@ ${text(body.imbunatatiri) ? `<p><strong>Ce să îmbunătățim:</strong><br>${es
       if (!isOption(FIRM_TESTIMONIAL_OPTIONS, body.testimonial)) {
         return bad('Alegeți dacă putem publica părerea dumneavoastră.', 'testimonial');
       }
-      const dateLipsa = Array.isArray(body.dateLipsa)
-        ? body.dateLipsa.filter((v): v is string => isOption(DATE_LIPSA_OPTIONS, v))
-        : [];
+
       const putereRaw = text(body.putere, 20).replace(',', '.');
       const putere = putereRaw && Number.isFinite(Number(putereRaw)) && Number(putereRaw) > 0 ? putereRaw : '';
       await saveFirmFeedback({
@@ -169,7 +178,7 @@ ${text(body.imbunatatiri) ? `<p><strong>Ce să îmbunătățim:</strong><br>${es
         putere,
         dateCorecte: body.dateCorecte,
         dateUtile: body.dateUtile,
-        dateLipsa: dateLipsa.join(', '),
+        dateLipsa: dateLipsaList(body.dateLipsa),
         satisfactie,
         experienta: text(body.experienta),
         imbunatatiri: text(body.imbunatatiri),
