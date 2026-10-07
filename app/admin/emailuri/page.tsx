@@ -7,7 +7,12 @@ import {
   type NamedFirm,
 } from '@/lib/verificare-status';
 import { formatShortDate } from '@/lib/utils-shared';
-import { ACTIVE_CHECK_PER_DAY, ACTIVE_CHECK_START, getActiveCheckQueue } from '@/lib/confirmare-activa';
+import {
+  ACTIVE_CHECK_PER_DAY,
+  ACTIVE_CHECK_RESEND_AFTER_DAYS,
+  ACTIVE_CHECK_START,
+  getActiveCheckQueue,
+} from '@/lib/confirmare-activa';
 import { bucharestDay, queueDayLabel } from '@/lib/client-email-schedule';
 
 export const dynamic = 'force-dynamic';
@@ -145,7 +150,12 @@ export default async function EmailuriAdminPage() {
   const activeSentToday =
     today < ACTIVE_CHECK_START
       ? ACTIVE_CHECK_PER_DAY
-      : activeChecks.filter((l) => bucharestDay(l.verificareTrimisaLa) === today).length;
+      : activeChecks.filter(
+          (l) =>
+            bucharestDay(l.verificareTrimisaLa) === today ||
+            (l.verificareRetrimisaLa && bucharestDay(l.verificareRetrimisaLa) === today),
+        ).length;
+  const activeResent = activeChecks.filter((l) => l.verificareRetrimisaLa).length;
   const activeQueueDay = (i: number) => queueDayLabel(i, ACTIVE_CHECK_PER_DAY, activeSentToday);
   const activeAnswered = activeChecks.filter((l) => activeResponse(l)).length;
   const activeClosed = activeChecks.filter((l) => {
@@ -250,12 +260,14 @@ export default async function EmailuriAdminPage() {
             Cererile obișnuite de peste 14 zile fără firmă în discuții (pe acelea le întreabă emailul de mai sus). Un lot de
             test pe 22 sept, apoi {ACTIVE_CHECK_PER_DAY} pe zi de pe {formatShortDate(ACTIVE_CHECK_START)}, la 09:00, fără
             duminică. „Încă vrea oferte” urcă cererea în feed și trimite alertă firmelor din județ; „A ales o firmă” și
-            „Nu mai vrea” o închid.
+            „Nu mai vrea” o închid. Cine n-a răspuns îl mai primește o singură dată, la minim{' '}
+            {ACTIVE_CHECK_RESEND_AFTER_DAYS} de zile, doar pe locurile rămase libere din cele {ACTIVE_CHECK_PER_DAY} pe zi.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
           <Stat label="Trimise" value={activeChecks.length} />
+          <Stat label="Retrimise" value={activeResent} hint="a doua și ultima oară" />
           <Stat
             label="Au răspuns"
             value={activeAnswered}
@@ -284,7 +296,12 @@ export default async function EmailuriAdminPage() {
                   <td className="px-3 py-2 whitespace-nowrap">
                     <LeadCell lead={lead} />
                   </td>
-                  <td className="px-3 py-2 whitespace-nowrap text-xs text-gray-600">{fmtDateTime(lead.verificareTrimisaLa)}</td>
+                  <td className="px-3 py-2 whitespace-nowrap text-xs text-gray-600">
+                    {fmtDateTime(lead.verificareTrimisaLa)}
+                    {lead.verificareRetrimisaLa && (
+                      <div className="text-gray-400">a doua oară: {fmtDateTime(lead.verificareRetrimisaLa)}</div>
+                    )}
+                  </td>
                   <td className="px-3 py-2 whitespace-nowrap">
                     <ResponseBadge response={activeResponse(lead)} />
                   </td>

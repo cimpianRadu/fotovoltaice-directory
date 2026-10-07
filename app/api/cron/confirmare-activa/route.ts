@@ -3,6 +3,7 @@ import {
   ACTIVE_CHECK_PER_DAY,
   ACTIVE_CHECK_START,
   activeChecksSentOn,
+  sendActiveCheckResends,
   sendActiveChecks,
 } from '@/lib/confirmare-activa';
 import { isClientEmailDay } from '@/lib/client-email-schedule';
@@ -16,7 +17,9 @@ import {
 // Loturile programate ale emailurilor către client cu cereri vechi. Rulează
 // zilnic la 06:00 UTC (09:00 în România, vara) și trimite:
 //   - „mai căutați oferte?" (21 sept 2026), ACTIVE_CHECK_PER_DAY pe zi de la
-//     ACTIVE_CHECK_START (până pe 7 oct doar pe loturi programate, a plecat unul);
+//     ACTIVE_CHECK_START (până pe 7 oct doar pe loturi programate, a plecat unul).
+//     Locurile rămase libere din lot, după cererile noi, merg la retrimiterea
+//     către cine n-a răspuns (o singură dată, la 30+ zile de primul email);
 //   - „Ați găsit o ofertă bună?" (6 oct 2026), STATUS_CHECK_PER_DAY pe zi de la
 //     STATUS_CHECK_START, până se termină cererile eligibile.
 // Duminica nu pleacă niciunul (lib/client-email-schedule).
@@ -47,8 +50,13 @@ export async function GET(request: Request) {
     if (today >= ACTIVE_CHECK_START) {
       const already = await activeChecksSentOn(today);
       const result = await sendActiveChecks({ limit: ACTIVE_CHECK_PER_DAY - already, dry });
-      console.log(`[cron/confirmare-activa] ${today}: ${dry ? 'dry ' : ''}${result.sent.length} trimise, ${result.failed.length} eșuate, ${already} deja azi`);
-      activeCheck = { already, ...result };
+      // Și încercările eșuate ocupă un loc: lotul zilei nu crește din cauza unei erori.
+      const left = ACTIVE_CHECK_PER_DAY - already - result.sent.length - result.failed.length;
+      const resend = await sendActiveCheckResends({ limit: left, dry });
+      console.log(
+        `[cron/confirmare-activa] ${today}: ${dry ? 'dry ' : ''}${result.sent.length} trimise, ${resend.sent.length} retrimise, ${result.failed.length + resend.failed.length} eșuate, ${already} deja azi`,
+      );
+      activeCheck = { already, ...result, resend };
     }
 
     let statusCheck: Record<string, unknown> = { skipped: `începe pe ${STATUS_CHECK_START}` };

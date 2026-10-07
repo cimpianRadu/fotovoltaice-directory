@@ -37,6 +37,8 @@ const HEADERS = {
   BA: 'Confirmată activă la',
   // 6 oct 2026: „Ați găsit o ofertă bună?" (lib/verificare-status).
   BB: 'Verificare status trimisă la',
+  // 7 oct 2026: „mai căutați oferte?" a doua oară, la cei care n-au răspuns.
+  BC: 'Verificare activă retrimisă la',
 };
 
 const MIN_COLUMNS = 56; // BD
@@ -61,7 +63,7 @@ if (columns < MIN_COLUMNS) {
   console.log(`Grila Leads are deja ${columns} coloane.`);
 }
 
-const res = await sheets.spreadsheets.values.get({ spreadsheetId: ID, range: 'Leads!AZ1:BA1' });
+const res = await sheets.spreadsheets.values.get({ spreadsheetId: ID, range: 'Leads!AZ1:BC1' });
 const existing = (res.data.values?.[0] || []);
 const cols = Object.keys(HEADERS);
 const data = [];
