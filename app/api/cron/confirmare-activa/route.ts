@@ -1,5 +1,11 @@
 import { NextResponse } from 'next/server';
-import { ACTIVE_CHECK_BATCHES, activeChecksSentOn, sendActiveChecks } from '@/lib/confirmare-activa';
+import {
+  ACTIVE_CHECK_PER_DAY,
+  ACTIVE_CHECK_START,
+  activeChecksSentOn,
+  sendActiveChecks,
+} from '@/lib/confirmare-activa';
+import { isClientEmailDay } from '@/lib/client-email-schedule';
 import {
   STATUS_CHECK_PER_DAY,
   STATUS_CHECK_START,
@@ -9,9 +15,11 @@ import {
 
 // Loturile programate ale emailurilor către client cu cereri vechi. Rulează
 // zilnic la 06:00 UTC (09:00 în România, vara) și trimite:
-//   - „mai căutați oferte?" (21 sept 2026), doar în zilele din ACTIVE_CHECK_BATCHES;
+//   - „mai căutați oferte?" (21 sept 2026), ACTIVE_CHECK_PER_DAY pe zi de la
+//     ACTIVE_CHECK_START (până pe 7 oct doar pe loturi programate, a plecat unul);
 //   - „Ați găsit o ofertă bună?" (6 oct 2026), STATUS_CHECK_PER_DAY pe zi de la
 //     STATUS_CHECK_START, până se termină cererile eligibile.
+// Duminica nu pleacă niciunul (lib/client-email-schedule).
 // Fiecare trimite doar cât mai lipsește din lotul zilei: o a doua rulare în
 // aceeași zi nu mai trimite nimic. `?dry=1` arată cui ar pleca.
 
@@ -30,12 +38,15 @@ export async function GET(request: Request) {
   const dry = new URL(request.url).searchParams.get('dry') === '1';
   const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Europe/Bucharest' });
 
+  if (!isClientEmailDay(today)) {
+    return NextResponse.json({ ok: true, today, dry, skipped: 'duminică: nu trimitem emailuri către clienți' });
+  }
+
   try {
-    let activeCheck: Record<string, unknown> = { skipped: 'nicio trimitere programată azi' };
-    const batch = ACTIVE_CHECK_BATCHES[today] ?? 0;
-    if (batch) {
+    let activeCheck: Record<string, unknown> = { skipped: `începe pe ${ACTIVE_CHECK_START}` };
+    if (today >= ACTIVE_CHECK_START) {
       const already = await activeChecksSentOn(today);
-      const result = await sendActiveChecks({ limit: batch - already, dry });
+      const result = await sendActiveChecks({ limit: ACTIVE_CHECK_PER_DAY - already, dry });
       console.log(`[cron/confirmare-activa] ${today}: ${dry ? 'dry ' : ''}${result.sent.length} trimise, ${result.failed.length} eșuate, ${already} deja azi`);
       activeCheck = { already, ...result };
     }

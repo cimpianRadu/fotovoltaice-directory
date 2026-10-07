@@ -53,7 +53,7 @@ const MIN_CLAIM_AGE_DAYS = 14;
 /** Cine a primit „mai căutați oferte?" de curând nu primește încă un email. */
 const ACTIVE_CHECK_GAP_DAYS = 14;
 /** Statusurile în care firma declară că a vorbit cu clientul. */
-const CONTACTED_STATUSES: readonly ClaimStatus[] = ['discutii', 'ofertat', 'castigat'];
+export const CONTACTED_STATUSES: readonly ClaimStatus[] = ['discutii', 'ofertat', 'castigat'];
 
 export interface NamedFirm {
   name: string;

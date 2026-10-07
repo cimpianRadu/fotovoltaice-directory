@@ -8,12 +8,20 @@
 //     în notă, și un email intern, fiindcă e singura confirmare de concretizare
 //     care nu vine de la firmă;
 //   - „Nu mai vreau" → același `renunt` ca la „mă informez".
-// Tăcerea nu închide nimic. Trimiterea e pe loturi mici (spam): automat prin
-// /api/cron/confirmare-activa în zilele din ACTIVE_CHECK_BATCHES, sau manual
-// din /api/admin/confirmare-activa. AZ oprește retrimiterea.
+// Tăcerea nu închide nimic. Trimiterea: un lot de test de 10 pe 22 sept, apoi
+// nimic până pe 7 oct, când Radu a cerut-o continuă: ACTIVE_CHECK_PER_DAY pe
+// zi de la ACTIVE_CHECK_START, fără duminică, prin /api/cron/confirmare-activa
+// (sau manual din /api/admin/confirmare-activa). AZ oprește retrimiterea.
+// E și unealta de curățenie a feedului: „am ales" și „nu mai vreau" închid
+// cererea singure.
+//
+// Cererile cu o firmă care declară că vorbește cu clientul nu intră aici: pe
+// ele le întreabă „Ați găsit o ofertă bună?" (lib/verificare-status), iar
+// clientul nu primește ambele emailuri.
 
 import { revalidatePath } from 'next/cache';
 import {
+  getClaims,
   getLeadsSince,
   isLeadClosed,
   isLeadHidden,
@@ -22,11 +30,15 @@ import {
   markLeadConfirmedActive,
   recordClientResponse,
   updateLeadCrm,
+  type LeadClaim,
   type NewLead,
 } from './sheets';
 import { isValidEmail } from './portal-auth';
 import { escapeHtml, sendEmail } from './email';
 import { sendActiveCheckEmail } from './email-client';
+import { CONTACTED_STATUSES } from './verificare-status';
+import { bucharestDay } from './client-email-schedule';
+import { alertCountyLeadConfirmedActive } from './informez';
 
 const DAY_MS = 86_400_000;
 const TEST_PREFIX = 'routine-test-';
@@ -34,23 +46,28 @@ const TEST_PREFIX = 'routine-test-';
 export const ACTIVE_CHECK_MIN_AGE_DAYS = 14;
 const INTERNAL_TO = 'contact@instalatori-fotovoltaice.ro';
 
-/**
- * Loturile programate: zi (ora României) → câte emailuri. Cronul rulează zilnic
- * la 09:00 și nu face nimic în zilele care nu sunt aici. Primul test, aprobat
- * de Radu pe 21 sept 2026: 10 cereri, cele mai vechi, ca să nu intrăm în spam.
- */
-export const ACTIVE_CHECK_BATCHES: Record<string, number> = {
-  '2026-09-22': 10,
-};
+/** Prima zi a trimiterii continue (ora României). Lotul de test din 22 sept e deja în AZ. */
+export const ACTIVE_CHECK_START = '2026-10-08';
+/** Câte pe zi, ca la „Ați găsit o ofertă bună?": anti-spam (Radu, 7 oct 2026). */
+export const ACTIVE_CHECK_PER_DAY = 5;
 
 /** Cereri rezolvate la telefon, încă nemarcate închise în CRM: nu le scriem. */
 export const ACTIVE_CHECK_EXCLUDE = [
   '2026-06-24T13:34:08.537Z', // hotelul din Prahova, concretizat prin Electro Prahova
 ];
 
-export function isActiveCheckCandidate(lead: NewLead, now: number): boolean {
+/** Cererile la care o firmă declară că vorbește cu clientul: le întreabă celălalt email. */
+export function contactedLeadIds(claims: LeadClaim[]): Set<string> {
+  return new Set(
+    claims.filter((c) => !c.releasedAt && CONTACTED_STATUSES.includes(c.firmStatus)).map((c) => c.leadId),
+  );
+}
+
+export function isActiveCheckCandidate(lead: NewLead, now: number, contacted: Set<string> = new Set()): boolean {
   return (
     !isLeadHidden(lead) &&
+    !contacted.has(lead.timestamp) &&
+    !lead.verificareStatusLa &&
     !isLeadClosed(lead.crmStatus) &&
     !isLeadInformez(lead) &&
     !lead.verificareTrimisaLa &&
@@ -84,8 +101,10 @@ export async function sendActiveChecks(opts: {
   const now = Date.now();
   const minDays = Math.max(opts.minDays ?? ACTIVE_CHECK_MIN_AGE_DAYS, ACTIVE_CHECK_MIN_AGE_DAYS);
   const maxDays = opts.maxDays ?? 365;
-  const leads = (await getLeadsSince(new Date(0))).filter((l) => {
-    if (!isActiveCheckCandidate(l, now)) return false;
+  const [allLeads, claims] = await Promise.all([getLeadsSince(new Date(0)), getClaims()]);
+  const contacted = contactedLeadIds(claims);
+  const leads = allLeads.filter((l) => {
+    if (!isActiveCheckCandidate(l, now, contacted)) return false;
     if (ACTIVE_CHECK_EXCLUDE.includes(l.timestamp) || opts.exclude?.includes(l.timestamp)) return false;
     const age = (now - Date.parse(l.timestamp)) / DAY_MS;
     return age >= minDays && age <= maxDays;
@@ -114,9 +133,21 @@ export async function sendActiveChecks(opts: {
 
 // ── Răspunsurile ────────────────────────────────────────────────────────────
 
+/**
+ * „Da, încă vreau oferte": cardul urcă în feed și, din 7 oct 2026, firmele din
+ * județ primesc alertă, ca la o cerere reactivată. Doar la prima confirmare: un
+ * al doilea click pe același link nu mai trimite nimic.
+ */
 export async function confirmLeadActive(lead: NewLead) {
   await markLeadConfirmedActive(lead.timestamp);
   revalidatePath('/cereri');
+  if (lead.confirmataLa) return;
+  // Eșecul alertei nu strică răspunsul clientului; se vede în loguri.
+  try {
+    await alertCountyLeadConfirmedActive(lead);
+  } catch (err) {
+    console.error('[confirmare-activa] alertă județ:', err);
+  }
 }
 
 export async function closeLeadChosenFirm(lead: NewLead, firma: string, now = new Date()) {
@@ -141,9 +172,13 @@ export async function closeLeadChosenFirm(lead: NewLead, firma: string, now = ne
 /** Câte verificări au plecat deja în ziua dată (ora României): lotul nu se trimite de două ori. */
 export async function activeChecksSentOn(day: string): Promise<number> {
   const leads = await getLeadsSince(new Date(0));
-  return leads.filter(
-    (l) =>
-      l.verificareTrimisaLa &&
-      new Date(l.verificareTrimisaLa).toLocaleDateString('en-CA', { timeZone: 'Europe/Bucharest' }) === day,
-  ).length;
+  return leads.filter((l) => l.verificareTrimisaLa && bucharestDay(l.verificareTrimisaLa) === day).length;
+}
+
+/** Coada pentru /admin/emailuri, în ordinea în care pleacă (cele mai vechi întâi). */
+export async function getActiveCheckQueue(): Promise<NewLead[]> {
+  const now = Date.now();
+  const [leads, claims] = await Promise.all([getLeadsSince(new Date(0)), getClaims()]);
+  const contacted = contactedLeadIds(claims);
+  return leads.filter((l) => isActiveCheckCandidate(l, now, contacted) && !ACTIVE_CHECK_EXCLUDE.includes(l.timestamp));
 }

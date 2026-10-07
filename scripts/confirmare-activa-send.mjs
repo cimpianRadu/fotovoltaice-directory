@@ -6,8 +6,8 @@
  *
  *   node scripts/confirmare-activa-send.mjs [--limit 10] [--send]
  *
- * Cere ADMIN_PASSWORD-ul de pe prod în .env.local. Loturile programate pleacă
- * singure prin /api/cron/confirmare-activa (vezi ACTIVE_CHECK_BATCHES).
+ * Cere ADMIN_PASSWORD-ul de pe prod în .env.local. Emailurile pleacă
+ * singure prin /api/cron/confirmare-activa, 5 pe zi (vezi ACTIVE_CHECK_PER_DAY).
  * Loturi mici (10), ca să nu ajungem în spam. Fiecare cerere primește emailul
  * o singură dată (coloana AZ), deci rulările repetate iau următoarele la rând.
  */

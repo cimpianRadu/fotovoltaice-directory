@@ -15,6 +15,7 @@
 import { revalidatePath } from 'next/cache';
 import {
   filterCountyAlertRecipients,
+  getClaims,
   findSubscriptionForCounty,
   getCountyAlertPrefs,
   getFirmEmailLinksForAlerts,
@@ -336,6 +337,28 @@ async function sendReactivationAlerts(
     );
   }
   await markReactivationAlertsSent(lead.timestamp, at);
+  return recipients.length;
+}
+
+/**
+ * „Da, încă vreau oferte" din emailul „mai căutați oferte?" (lib/confirmare-activa):
+ * cererea revine în fața feedului, deci județul primește alertă, ca la o
+ * reactivare. Fără firmele care au revendicat-o deja (o au în portal) și fără
+ * cele care o urmăresc. N-are marcaj propriu: BA (confirmată la) e scris o
+ * singură dată, iar apelantul trimite doar la prima confirmare.
+ */
+export async function alertCountyLeadConfirmedActive(lead: NewLead): Promise<number> {
+  const [{ prefs, links }, watches, claims] = await Promise.all([loadAlertPrefs(), getWatches(), getClaims()]);
+  const exclude = [
+    ...watches.filter((w) => w.leadId === lead.timestamp).map((w) => w.email),
+    ...claims.filter((c) => c.leadId === lead.timestamp && !c.releasedAt).map((c) => c.email),
+  ];
+  const recipients = filterCountyAlertRecipients(prefs, lead.judet, links, exclude);
+  if (recipients.length) {
+    const payload = countyAlertPayloadFromLead(lead);
+    await Promise.allSettled(recipients.map((to) => sendCountyLeadAlert({ to, ...payload, confirmedActive: true })));
+  }
+  console.log(`[informez] confirmată activă ${lead.judet} · ${lead.timestamp}: alertă la ${recipients.length} firme`);
   return recipients.length;
 }
 

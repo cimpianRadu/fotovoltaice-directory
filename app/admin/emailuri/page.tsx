@@ -7,6 +7,8 @@ import {
   type NamedFirm,
 } from '@/lib/verificare-status';
 import { formatShortDate } from '@/lib/utils-shared';
+import { ACTIVE_CHECK_PER_DAY, ACTIVE_CHECK_START, getActiveCheckQueue } from '@/lib/confirmare-activa';
+import { bucharestDay, queueDayLabel } from '@/lib/client-email-schedule';
 
 export const dynamic = 'force-dynamic';
 
@@ -113,10 +115,11 @@ function Stat({ label, value, hint }: { label: string; value: string | number; h
 }
 
 export default async function EmailuriAdminPage() {
-  const [overview, leads, feedbacks] = await Promise.all([
+  const [overview, leads, feedbacks, activeQueue] = await Promise.all([
     getStatusCheckOverview(),
     getLeadsSince(new Date(0)),
     getClientFeedbacks(),
+    getActiveCheckQueue(),
   ]);
   const { sent, queue, sentToday } = overview;
   const feedbackFor = (id: string) => feedbacks.find((f) => f.leadId === id);
@@ -124,13 +127,8 @@ export default async function EmailuriAdminPage() {
   const answered = sent.filter((r) => r.response).length;
   const questionnaires = sent.filter((r) => feedbackFor(r.lead.timestamp)).length;
   const signed = sent.filter((r) => r.response?.code === 'semnat').length;
-  // Ziua estimată pentru fiecare cerere din coadă: 5 pe zi, de mâine dacă lotul de azi e plin.
-  const startOffset = sentToday >= STATUS_CHECK_PER_DAY ? 1 : 0;
-  const queueDay = (i: number) => {
-    const d = new Date();
-    d.setDate(d.getDate() + startOffset + Math.floor(i / STATUS_CHECK_PER_DAY));
-    return d.toLocaleDateString('ro-RO', { timeZone: 'Europe/Bucharest', weekday: 'short', day: 'numeric', month: 'short' });
-  };
+  // Ziua estimată pentru fiecare cerere din coadă: 5 pe zi, fără duminică.
+  const queueDay = (i: number) => queueDayLabel(i, STATUS_CHECK_PER_DAY, sentToday);
 
   // AT ține doar ultimul răspuns, la oricare email: fiecare tabel își arată doar codurile lui.
   const ACTIVE_CODES = ['activa', 'aleasa', 'renunt'];
@@ -142,6 +140,18 @@ export default async function EmailuriAdminPage() {
   const activeChecks = leads
     .filter((l) => l.verificareTrimisaLa)
     .sort((a, b) => b.verificareTrimisaLa.localeCompare(a.verificareTrimisaLa));
+  const today = bucharestDay(Date.now());
+  // Înainte de start, lotul de azi nu pleacă: coada începe de la prima zi de trimitere.
+  const activeSentToday =
+    today < ACTIVE_CHECK_START
+      ? ACTIVE_CHECK_PER_DAY
+      : activeChecks.filter((l) => bucharestDay(l.verificareTrimisaLa) === today).length;
+  const activeQueueDay = (i: number) => queueDayLabel(i, ACTIVE_CHECK_PER_DAY, activeSentToday);
+  const activeAnswered = activeChecks.filter((l) => activeResponse(l)).length;
+  const activeClosed = activeChecks.filter((l) => {
+    const r = activeResponse(l);
+    return r?.code === 'aleasa' || r?.code === 'renunt';
+  }).length;
 
   return (
     <div className="space-y-10">
@@ -157,7 +167,7 @@ export default async function EmailuriAdminPage() {
         <div>
           <h2 className="text-lg font-semibold text-gray-900">„Ați găsit o ofertă bună?”</h2>
           <p className="text-sm text-gray-500">
-            Cererile cu firme în „În discuții” sau „Ofertă trimisă” de peste 14 zile. Pleacă {STATUS_CHECK_PER_DAY} pe zi, la 09:00.
+            Cererile cu firme în „În discuții” sau „Ofertă trimisă” de peste 14 zile. Pleacă {STATUS_CHECK_PER_DAY} pe zi, la 09:00, fără duminică.
           </p>
         </div>
 
@@ -236,7 +246,27 @@ export default async function EmailuriAdminPage() {
       <section className="space-y-4">
         <div>
           <h2 className="text-lg font-semibold text-gray-900">„Mai căutați oferte?”</h2>
-          <p className="text-sm text-gray-500">Lotul de test din 22 sept. Nu e programat niciun lot nou.</p>
+          <p className="text-sm text-gray-500">
+            Cererile obișnuite de peste 14 zile fără firmă în discuții (pe acelea le întreabă emailul de mai sus). Un lot de
+            test pe 22 sept, apoi {ACTIVE_CHECK_PER_DAY} pe zi de pe {formatShortDate(ACTIVE_CHECK_START)}, la 09:00, fără
+            duminică. „Încă vrea oferte” urcă cererea în feed și trimite alertă firmelor din județ; „A ales o firmă” și
+            „Nu mai vrea” o închid.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Stat label="Trimise" value={activeChecks.length} />
+          <Stat
+            label="Au răspuns"
+            value={activeAnswered}
+            hint={activeChecks.length ? `${Math.round((activeAnswered / activeChecks.length) * 100)}% din trimise` : undefined}
+          />
+          <Stat label="Închise din email" value={activeClosed} />
+          <Stat
+            label="În coadă"
+            value={activeQueue.length}
+            hint={activeQueue.length ? `ultimul ~${activeQueueDay(activeQueue.length - 1)}` : 'lista s-a terminat'}
+          />
         </div>
         <div className="overflow-x-auto rounded-xl border border-border bg-white">
           <table className="min-w-full text-sm">
@@ -266,6 +296,24 @@ export default async function EmailuriAdminPage() {
             </tbody>
           </table>
         </div>
+
+        {activeQueue.length > 0 && (
+          <details className="rounded-xl border border-border bg-white">
+            <summary className="cursor-pointer px-4 py-3 text-sm font-medium text-gray-900">
+              Urmează: {activeQueue.length} cereri (ziua e estimată, câte {ACTIVE_CHECK_PER_DAY} pe zi)
+            </summary>
+            <ul className="divide-y divide-border border-t border-border">
+              {activeQueue.map((lead, i) => (
+                <li key={lead.timestamp} className="flex flex-wrap items-start gap-x-6 gap-y-1 px-4 py-2 text-sm">
+                  <span className="w-24 shrink-0 text-xs text-gray-500">{activeQueueDay(i)}</span>
+                  <span className="w-48 shrink-0">
+                    <LeadCell lead={lead} />
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </details>
+        )}
       </section>
     </div>
   );

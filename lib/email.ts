@@ -744,6 +744,8 @@ export async function sendCountyLeadAlert(data: {
   informez?: { motiv: string };
   /** Clientul se informa și a apăsat „sunt gata": cererea a reintrat în feed. */
   reactivated?: boolean;
+  /** Clientul a răspuns „Da, încă vreau oferte" la emailul „mai căutați oferte?" (7 oct 2026). */
+  confirmedActive?: boolean;
 }): Promise<{ ok: boolean; reason?: string }> {
   const rezidential = data.segment === 'rezidential';
   const reserved = Boolean(data.reservedUntil);
@@ -758,7 +760,7 @@ export async function sendCountyLeadAlert(data: {
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
   <div style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
     <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#fffbeb">
-      <div style="font-size:12px;color:#92400e;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">${reserved ? 'Rezervată pentru tine' : data.unlocked ? 'Cerere deblocată' : data.reactivated ? 'Cerere reactivată' : informez ? 'Se informează' : 'Cerere nouă'} · ${escapeHtml(data.judet)}</div>
+      <div style="font-size:12px;color:#92400e;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">${reserved ? 'Rezervată pentru tine' : data.unlocked ? 'Cerere deblocată' : data.reactivated ? 'Cerere reactivată' : data.confirmedActive ? 'Confirmată activă' : informez ? 'Se informează' : 'Cerere nouă'} · ${escapeHtml(data.judet)}</div>
       <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${escapeHtml(data.tipProiectLabel)}</h1>
       <div style="margin-top:8px">${segmentBadge(rezidential ? 'rezidential' : 'comercial')}</div>
     </div>
@@ -790,7 +792,9 @@ export async function sendCountyLeadAlert(data: {
                 ? 'La întrebarea despre termen, clientul a ales „Deocamdată mă informez”. Poți urmări cererea din feed și primești primul vestea când spune că e gata de oferte.'
                 : data.reactivated
                   ? 'Clientul se informa, iar acum a spus că e gata pentru oferte și și-a actualizat cererea. Se ia de pe /cereri, primul venit.'
-                  : 'Cererea se ia de pe /cereri, primul venit. Datele clientului se deblochează după apelul nostru de confirmare.'
+                  : data.confirmedActive
+                    ? 'Cererea e mai veche, dar clientul ne-a confirmat azi pe email că încă vrea oferte. Se ia de pe /cereri, primul venit.'
+                    : 'Cererea se ia de pe /cereri, primul venit. Datele clientului se deblochează după apelul nostru de confirmare.'
         }
       </p>
     </div>
@@ -820,7 +824,9 @@ export async function sendCountyLeadAlert(data: {
       ? `Cerere deblocată în ${data.judet}`
       : data.reactivated
         ? `Cerere reactivată în ${data.judet}`
-        : informez
+        : data.confirmedActive
+          ? `Încă vrea oferte în ${data.judet}`
+          : informez
           ? `[Se informează] Cerere nouă în ${data.judet}`
           : `Cerere nouă în ${data.judet}`;
 
