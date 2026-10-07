@@ -226,3 +226,51 @@ export async function recordStatusResponse(
   });
   return {};
 }
+
+// ── Vederea din /admin/emailuri ─────────────────────────────────────────────
+
+export interface StatusCheckRow {
+  lead: NewLead;
+  /** Revendicările active pe cerere, cu statusul de azi al firmei. */
+  firms: NamedFirm[];
+  /** Răspunsul din AT, doar dacă a venit după emailul ăsta (AT ține ultimul răspuns, la orice email). */
+  response: { code: string; at: string; firma: string } | null;
+}
+
+/** Ultimul răspuns al clientului, dacă e mai nou decât `since`. */
+export function responseAfter(lead: NewLead, since: string): { code: string; at: string; firma: string } | null {
+  const [code = '', at = '', ...rest] = lead.raspunsClient.split(' ');
+  if (!code || !at || !since || at < since) return null;
+  return { code, at, firma: rest.join(' ') };
+}
+
+const STATUS_CODES = ['semnat', 'decid', 'altafirma', 'necontactat'];
+
+export async function getStatusCheckOverview(): Promise<{
+  sent: StatusCheckRow[];
+  queue: { lead: NewLead; firms: NamedFirm[] }[];
+  sentToday: number;
+}> {
+  const now = Date.now();
+  const [leads, claims] = await Promise.all([getLeadsSince(new Date(0)), getClaims()]);
+  const activeFirms = (lead: NewLead): NamedFirm[] =>
+    claims
+      .filter((c) => c.leadId === lead.timestamp && !c.releasedAt)
+      .sort((a, b) => a.timestamp.localeCompare(b.timestamp))
+      .map((c) => ({ name: firmDisplayName(c), claimTs: c.timestamp, status: c.firmStatus }));
+  const sent = leads
+    .filter((l) => l.verificareStatusLa)
+    .sort((a, b) => b.verificareStatusLa.localeCompare(a.verificareStatusLa))
+    .map((lead) => {
+      const response = responseAfter(lead, lead.verificareStatusLa);
+      const ours = response && STATUS_CODES.some((c) => response.code.startsWith(c));
+      return { lead, firms: activeFirms(lead), response: ours ? response : null };
+    });
+  const queue = leads
+    .filter((l) => isCandidate(l, now))
+    .map((lead) => ({ lead, firms: namedFirms(lead, claims, now) }))
+    .filter((x) => x.firms.length > 0);
+  const today = bucharestDay(now);
+  const sentToday = sent.filter((r) => bucharestDay(r.lead.verificareStatusLa) === today).length;
+  return { sent, queue, sentToday };
+}

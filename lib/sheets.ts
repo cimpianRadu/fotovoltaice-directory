@@ -1457,6 +1457,39 @@ export async function saveFirmFeedback(f: FirmFeedback) {
   ]);
 }
 
+export interface ClientFeedbackRow {
+  timestamp: string;
+  leadId: string;
+  oferte: string;
+  primulContact: string;
+  firmaSemnata: string;
+  satisfactie: string;
+  experienta: string;
+  imbunatatiri: string;
+  testimonial: string;
+}
+
+/** Răspunsurile din „Feedback clienți", pentru /admin/emailuri. Tab inexistent = niciunul. */
+export async function getClientFeedbacks(): Promise<ClientFeedbackRow[]> {
+  let rows: string[][];
+  try {
+    rows = await readRows(FEEDBACK_CLIENT_SHEET);
+  } catch {
+    return [];
+  }
+  return rows.slice(1).filter((r) => r[1]).map((r) => ({
+    timestamp: r[0] || '',
+    leadId: r[1] || '',
+    oferte: r[4] || '',
+    primulContact: r[5] || '',
+    firmaSemnata: r[6] || '',
+    satisfactie: r[7] || '',
+    experienta: r[8] || '',
+    imbunatatiri: r[9] || '',
+    testimonial: r[10] || '',
+  }));
+}
+
 /** Există deja un răspuns pentru cererea asta (și firma asta, pe tabul firmelor)? */
 export async function hasFeedback(role: 'client' | 'firma', leadId: string, firma = ''): Promise<boolean> {
   let rows: string[][];
