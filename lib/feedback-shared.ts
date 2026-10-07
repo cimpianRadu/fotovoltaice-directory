@@ -1,7 +1,9 @@
 // Opțiunile din formularele de feedback, comune paginii (client) și API-ului.
 // Valorile (slug-urile) se scriu în Sheets, etichetele doar se afișează.
 
-export type FeedbackRole = 'client' | 'firma';
+// `platforma`: părerea unei firme despre platformă în general, fără cerere
+// anume (/feedback/platforma, 7 oct 2026).
+export type FeedbackRole = 'client' | 'firma' | 'platforma';
 
 type Option = { value: string; label: string };
 

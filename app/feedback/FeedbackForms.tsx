@@ -372,3 +372,72 @@ export function FirmFeedbackForm({
     </form>
   );
 }
+
+// Părerea firmei despre platformă în general, fără o cerere anume: doar nota,
+// textul și acordul de publicare.
+export function PlatformFeedbackForm({ token, firma }: { token: string; firma: string }) {
+  const [satisfactie, setSatisfactie] = useState('');
+  const [experienta, setExperienta] = useState('');
+  const [imbunatatiri, setImbunatatiri] = useState('');
+  const [testimonial, setTestimonial] = useState('');
+  const { status, error, submit } = useSubmit(() => ({
+    role: 'platforma',
+    id: 'platforma',
+    token,
+    firma,
+    satisfactie,
+    experienta,
+    imbunatatiri,
+    testimonial,
+  }));
+
+  if (status === 'done') return <FeedbackThanks />;
+
+  return (
+    <form onSubmit={submit} className="space-y-5 rounded-xl border border-border bg-white p-5 sm:p-6">
+      <Choice
+        label="Cât de mulțumiți sunteți de platformă?"
+        options={SATISFACTIE_OPTIONS}
+        value={satisfactie}
+        onChange={setSatisfactie}
+        required
+        error={error?.field === 'satisfactie'}
+        hint="1 = deloc mulțumiți, 5 = foarte mulțumiți"
+      />
+      <Input
+        label="Cum vi se pare colaborarea cu platforma?"
+        name="experienta"
+        type="textarea"
+        value={experienta}
+        onChange={(e) => setExperienta(e.target.value)}
+        placeholder="Cererile primite, portalul, clienții, ce v-a ajutat..."
+        required
+        error={error?.field === 'experienta' ? error.message : undefined}
+      />
+      <Input
+        label="Ce ar trebui să îmbunătățim?"
+        name="imbunatatiri"
+        type="textarea"
+        value={imbunatatiri}
+        onChange={(e) => setImbunatatiri(e.target.value)}
+        placeholder="Opțional"
+      />
+      <Choice
+        label="Putem publica părerea dumneavoastră pe site și pe rețelele noastre sociale?"
+        options={FIRM_TESTIMONIAL_OPTIONS}
+        value={testimonial}
+        onChange={setTestimonial}
+        required
+        error={error?.field === 'testimonial'}
+      />
+      <PublishNote>
+        Dacă alegeți „da", putem publica textul scris mai sus, județul firmei și, doar la prima
+        variantă, numele firmei cu link spre profilul ei.
+      </PublishNote>
+      {error && error.field !== 'experienta' && <p className="text-sm text-red-600">{error.message}</p>}
+      <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full">
+        {status === 'submitting' ? 'Se trimite...' : 'Trimite răspunsul'}
+      </Button>
+    </form>
+  );
+}

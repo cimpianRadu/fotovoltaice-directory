@@ -350,9 +350,14 @@ export async function markReactivationAlertsSent(timestamp: string, at = new Dat
   await setLeadCell(timestamp, 'AU', at);
 }
 
-/** AZ — emailul „mai e activă cererea?" a plecat; nu se retrimite. */
+/** AZ — emailul „mai e activă cererea?" a plecat prima dată. */
 export async function markActiveCheckSent(timestamp: string, at = new Date().toISOString()) {
   await setLeadCell(timestamp, 'AZ', at);
+}
+
+/** BC — același email, a doua și ultima oară, la cine n-a răspuns. */
+export async function markActiveCheckResent(timestamp: string, at = new Date().toISOString()) {
+  await setLeadCell(timestamp, 'BC', at);
 }
 
 /** BB — „Ați găsit o ofertă bună?" a plecat; nu se retrimite. */
@@ -535,7 +540,7 @@ export interface NewLead {
   anuntProgramLa: string;
   // AZ-BA — verificarea „mai e activă cererea?" (21 sept 2026), pe cererile
   // care NU se informează. Vezi lib/confirmare-activa.
-  /** AZ — ISO când a plecat emailul de verificare. Nu se retrimite. */
+  /** AZ — ISO când a plecat emailul de verificare prima dată. */
   verificareTrimisaLa: string;
   /** BA — ISO când clientul a confirmat că încă vrea oferte. Data „proaspătă" din feed. */
   confirmataLa: string;
@@ -544,6 +549,11 @@ export interface NewLead {
    * cu firme declarate în discuții/ofertă. Nu se retrimite. Vezi lib/verificare-status.
    */
   verificareStatusLa: string;
+  /**
+   * BC — ISO când „mai căutați oferte?" a plecat a doua oară (7 oct 2026), la
+   * cine n-a răspuns primului. Ultima dată: a treia nu există.
+   */
+  verificareRetrimisaLa: string;
 }
 
 export interface NewListing {
@@ -632,6 +642,7 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     verificareTrimisaLa: r[51] || '',
     confirmataLa: r[52] || '',
     verificareStatusLa: r[53] || '',
+    verificareRetrimisaLa: r[54] || '',
     ...readCrmFields(r),
   }));
 }
@@ -1351,9 +1362,13 @@ export async function saveWatchToSheet(watch: { leadId: string; numeFirma: strin
 // cu care a semnat. Linkurile le scoate scripts/feedback-links.mjs, nu apar pe
 // site. Un rând per trimitere; pagina nu mai arată formularul dacă există deja
 // un rând pentru aceeași cerere (și aceeași firmă, pe tabul firmelor).
+// Părerea generală a unei firme despre platformă (/feedback/platforma) intră
+// tot în „Feedback firme", cu Lead ID = PLATFORM_FEEDBACK_ID și coloanele
+// legate de cerere goale.
 
 const FEEDBACK_CLIENT_SHEET = 'Feedback clienți';
 const FEEDBACK_FIRM_SHEET = 'Feedback firme';
+export const PLATFORM_FEEDBACK_ID = 'platforma';
 
 const FEEDBACK_CLIENT_HEADER = [
   'Timestamp',

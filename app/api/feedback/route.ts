@@ -1,5 +1,12 @@
 import { NextResponse } from 'next/server';
-import { getClaims, getFullLeadById, hasFeedback, saveClientFeedback, saveFirmFeedback } from '@/lib/sheets';
+import {
+  PLATFORM_FEEDBACK_ID,
+  getClaims,
+  getFullLeadById,
+  hasFeedback,
+  saveClientFeedback,
+  saveFirmFeedback,
+} from '@/lib/sheets';
 import { verifyFeedbackToken } from '@/lib/feedback-token';
 import { escapeHtml, sendEmail } from '@/lib/email';
 import {
@@ -18,6 +25,8 @@ import {
 // Feedbackul de după concretizare, trimis de pe /feedback/client sau
 // /feedback/firma. Tokenul din link dovedește cine răspunde; fără el nu se
 // scrie nimic. Nu atinge cererea, doar adaugă un rând în tabul de feedback.
+// Tot aici vine și /feedback/platforma: părerea generală a unei firme, fără
+// cerere, scrisă în „Feedback firme" cu Lead ID = PLATFORM_FEEDBACK_ID.
 
 function text(v: unknown, max = FEEDBACK_TEXT_MAX): string {
   return typeof v === 'string' ? v.trim().slice(0, max) : '';
@@ -30,9 +39,10 @@ function bad(error: string, field?: string) {
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as Record<string, unknown>;
-    const role = body.role === 'firma' ? 'firma' : body.role === 'client' ? 'client' : null;
-    const id = text(body.id, 100);
-    const firma = role === 'firma' ? text(body.firma, 200) : '';
+    const role =
+      body.role === 'firma' || body.role === 'client' || body.role === 'platforma' ? body.role : null;
+    const id = role === 'platforma' ? PLATFORM_FEEDBACK_ID : text(body.id, 100);
+    const firma = role === 'firma' || role === 'platforma' ? text(body.firma, 200) : '';
     const token = typeof body.token === 'string' ? body.token : '';
     if (!role || !id || !token || !verifyFeedbackToken(token, role, id, firma)) {
       return NextResponse.json(
@@ -50,6 +60,38 @@ export async function POST(request: Request) {
     // omul zice „da” la publicare (Tomuța Ciprian: 5/5, câmp gol).
     if (!text(body.experienta)) {
       return bad('Scrieți-ne în câteva cuvinte cum vi s-a părut.', 'experienta');
+    }
+
+    if (role === 'platforma') {
+      if (!isOption(FIRM_TESTIMONIAL_OPTIONS, body.testimonial)) {
+        return bad('Alegeți dacă putem publica părerea dumneavoastră.', 'testimonial');
+      }
+      if (await hasFeedback('firma', id, firma)) {
+        return NextResponse.json({ success: true, duplicate: true });
+      }
+      await saveFirmFeedback({
+        leadId: id,
+        firma,
+        judet: '',
+        putere: '',
+        dateCorecte: '',
+        dateUtile: '',
+        dateLipsa: '',
+        satisfactie,
+        experienta: text(body.experienta),
+        imbunatatiri: text(body.imbunatatiri),
+        testimonial: body.testimonial,
+      });
+      await sendEmail({
+        to: 'contact@instalatori-fotovoltaice.ro',
+        subject: `[Feedback platformă] ${firma}: ${satisfactie}/5${body.testimonial !== 'nu' ? ', acord de publicare' : ''}`,
+        html: `<p><strong>${escapeHtml(firma)}</strong>, părere generală despre platformă</p>
+<p>Nota: <strong>${satisfactie}/5</strong></p>
+<p><strong>Cum e colaborarea:</strong><br>${escapeHtml(text(body.experienta))}</p>
+${text(body.imbunatatiri) ? `<p><strong>Ce să îmbunătățim:</strong><br>${escapeHtml(text(body.imbunatatiri))}</p>` : ''}
+<p>Publicare: <strong>${escapeHtml(String(body.testimonial))}</strong></p>`,
+      });
+      return NextResponse.json({ success: true });
     }
 
     const lead = await getFullLeadById(id);

@@ -13,6 +13,10 @@
  *   node scripts/feedback-links.mjs --cerere 2026-08-12T16:15:01.284Z
  *   node scripts/feedback-links.mjs --cerere <ref> --firma "Electro Prahova"
  *   node scripts/feedback-links.mjs --cerere <ref> --base http://localhost:3000
+ *   node scripts/feedback-links.mjs --platforma --firma "SOLANUM SRL"
+ *
+ * Cu --platforma scoate linkul de părere generală a firmei despre platformă
+ * (/feedback/platforma), fără cerere anume.
  *
  * Fără --firma, ia firmele cu status „castigat” din tabul Revendicări.
  */
@@ -41,10 +45,15 @@ const arg = (name) => {
   const i = args.indexOf(name);
   return i !== -1 ? args[i + 1] : '';
 };
-const leadId = arg('--cerere');
+const platforma = args.includes('--platforma');
+const leadId = platforma ? 'platforma' : arg('--cerere');
 const firmaArg = arg('--firma');
 const base = (arg('--base') || 'https://instalatori-fotovoltaice.ro').replace(/\/$/, '');
 
+if (platforma && !firmaArg) {
+  console.error('Usage: node scripts/feedback-links.mjs --platforma --firma "Nume"');
+  process.exit(1);
+}
 if (!leadId) {
   console.error('Usage: node scripts/feedback-links.mjs --cerere <ref ISO> [--firma "Nume"] [--base URL]');
   process.exit(1);
@@ -60,6 +69,12 @@ function token(role, firma = '') {
     .update(`feedback:${role}:${leadId}:${firma}:${exp}`)
     .digest('hex');
   return `${exp}.${sig}`;
+}
+
+if (platforma) {
+  console.log(`\nFIRMĂ: ${firmaArg} · părere despre platformă`);
+  console.log(`  ${base}/feedback/platforma?${new URLSearchParams({ f: firmaArg, t: token('platforma', firmaArg) })}\n`);
+  process.exit(0);
 }
 
 const auth = new google.auth.JWT({
