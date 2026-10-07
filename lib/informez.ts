@@ -8,8 +8,9 @@
 //   - check-in la 30 de zile de la întâmpinare, al doilea la 30 de zile după
 //     primul, apoi, după încă 30 de zile fără răspuns, cererea se închide ca
 //     „inactivă". „Încă mă informez" repornește ceasul;
-//   - la „sunt gata" firmele care urmăresc află imediat, restul județului a
-//     doua zi dimineață, prin cron. Abonamentul pe județ își păstrează fereastra.
+//   - la „sunt gata" firmele care urmăresc și restul județului află imediat
+//     (din 7 oct 2026; înainte, restul județului a doua zi, prin cron).
+//     Abonamentul pe județ își păstrează fereastra.
 
 import { revalidatePath } from 'next/cache';
 import {
@@ -160,9 +161,11 @@ export async function closeLeadByClient(lead: NewLead, now = new Date()) {
 
 /**
  * „Sunt gata": scrie ce a actualizat, datează cererea de acum, anunță imediat
- * firmele care o urmăreau. Restul județului o află prin cronul de a doua zi
- * (announceReactivatedLeads), iar dacă județul are abonat, el o ia primul, în
- * fereastra lui, ca la o cerere nouă.
+ * firmele care o urmăreau și restul județului, ca la o cerere nouă. Până pe
+ * 7 oct 2026 restul județului afla abia a doua zi la 9, prin cron; acum cronul
+ * (announceReactivatedLeads) prinde doar ce n-a plecat aici. Dacă județul are
+ * abonat, el o ia primul, în fereastra lui, iar ceilalți o primesc prin cron
+ * după expirare.
  */
 export async function reactivateLead(
   lead: NewLead,
@@ -181,7 +184,8 @@ export async function reactivateLead(
     reactivataLa: at,
   };
 
-  const watches = (await getWatches()).filter((w) => w.leadId === lead.timestamp && !w.notifiedAt);
+  const allWatches = (await getWatches()).filter((w) => w.leadId === lead.timestamp);
+  const watches = allWatches.filter((w) => !w.notifiedAt);
   const uniqueEmails = [...new Set(watches.map((w) => w.email).filter(isValidEmail))];
   if (uniqueEmails.length) {
     await Promise.allSettled(
@@ -193,7 +197,8 @@ export async function reactivateLead(
   }
 
   let reservedFor: string | null = null;
-  const sub = findSubscriptionForCounty(await getLeadSubscriptions(), lead.judet);
+  const subs = await getLeadSubscriptions();
+  const sub = findSubscriptionForCounty(subs, lead.judet);
   if (sub) {
     const until = new Date(Date.now() + sub.windowHours * 60 * 60 * 1000).toISOString();
     await markLeadPriorityUntil(lead.timestamp, until);
@@ -205,6 +210,14 @@ export async function reactivateLead(
       reactivated: true,
     });
     reservedFor = sub.firma;
+  } else {
+    // Eșecul nu strică reactivarea: fără marcajul AU, cronul de dimineață reîncearcă.
+    try {
+      const { prefs, links } = await loadAlertPrefs();
+      await sendReactivationAlerts(updated, allWatches, prefs, links, subs, new Date().toISOString());
+    } catch (err) {
+      console.error('[informez] alerte reactivare:', err);
+    }
   }
 
   return { watchersNotified: uniqueEmails.length, reservedFor };
@@ -230,16 +243,12 @@ export async function runInformezDaily(
   opts: { dry: boolean; businessDay: boolean },
 ): Promise<InformezDailyResult> {
   const result: InformezDailyResult = { welcomes: [], checkins: [], closed: [], reactivated: [], failed: [] };
-  const [leads, watches, allPrefs, subs, links, deactivated] = await Promise.all([
+  const [leads, watches, { prefs, links }, subs] = await Promise.all([
     getLeadsSince(new Date(0)),
     getWatches(),
-    getCountyAlertPrefs(),
+    loadAlertPrefs(),
     getLeadSubscriptions(),
-    getFirmEmailLinksForAlerts(),
-    getDeactivatedEmailsForAlerts(),
   ]);
-  // Conturile dezactivate din /admin/portal nu mai primesc alerte.
-  const prefs = allPrefs.filter((p) => !deactivated.includes(p.email));
 
   await announceReactivatedLeads(leads, watches, prefs, links, subs, now, opts.dry, result);
   if (!opts.businessDay) return result;
@@ -282,11 +291,57 @@ export async function runInformezDaily(
   return result;
 }
 
+/** Preferințele de alertă, fără conturile dezactivate din /admin/portal. */
+async function loadAlertPrefs() {
+  const [allPrefs, links, deactivated] = await Promise.all([
+    getCountyAlertPrefs(),
+    getFirmEmailLinksForAlerts(),
+    getDeactivatedEmailsForAlerts(),
+  ]);
+  return { prefs: allPrefs.filter((p) => !deactivated.includes(p.email)), links };
+}
+
+function reactivationRecipients(
+  lead: NewLead,
+  watches: LeadWatch[],
+  prefs: Awaited<ReturnType<typeof getCountyAlertPrefs>>,
+  links: FirmEmailLink[],
+  subs: Awaited<ReturnType<typeof getLeadSubscriptions>>,
+): string[] {
+  const sub = findSubscriptionForCounty(subs, lead.judet);
+  const watching = watches.filter((w) => w.leadId === lead.timestamp).map((w) => w.email);
+  return filterCountyAlertRecipients(prefs, lead.judet, links, [sub?.email ?? '', ...watching]);
+}
+
 /**
- * Alertele pe județ pentru cererile reactivate ieri: către firmele cu județul
- * bifat, minus cele care urmăreau cererea (au primit deja emailul lor la
- * reactivare) și minus abonatul (a primit rezervarea). Marcajul AU se scrie și
- * când nu e nimeni de anunțat, ca rândul să nu se recitească zilnic.
+ * Alerta pe județ pentru o cerere reactivată: către firmele cu județul bifat,
+ * minus cele care urmăreau cererea (au primit emailul lor la reactivare) și
+ * minus abonatul (a primit rezervarea). Marcajul AU se scrie și când nu e
+ * nimeni de anunțat, ca rândul să nu fie reluat de cron. Întoarce numărul de
+ * firme anunțate.
+ */
+async function sendReactivationAlerts(
+  lead: NewLead,
+  watches: LeadWatch[],
+  prefs: Awaited<ReturnType<typeof getCountyAlertPrefs>>,
+  links: FirmEmailLink[],
+  subs: Awaited<ReturnType<typeof getLeadSubscriptions>>,
+  at: string,
+): Promise<number> {
+  const recipients = reactivationRecipients(lead, watches, prefs, links, subs);
+  if (recipients.length) {
+    const payload = countyAlertPayloadFromLead(lead);
+    await Promise.allSettled(
+      recipients.map((to) => sendCountyLeadAlert({ to, ...payload, reactivated: true })),
+    );
+  }
+  await markReactivationAlertsSent(lead.timestamp, at);
+  return recipients.length;
+}
+
+/**
+ * Plasa cronului: cererile reactivate a căror alertă n-a plecat la „sunt gata"
+ * (eroare, sau rezervarea abonatului a expirat între timp).
  */
 async function announceReactivatedLeads(
   leads: NewLead[],
@@ -307,25 +362,10 @@ async function announceReactivatedLeads(
       !isLeadClosed(l.crmStatus),
   );
   for (const lead of pending.slice(0, MAX_REACTIVATED_PER_RUN)) {
-    const sub = findSubscriptionForCounty(subs, lead.judet);
-    const watching = watches.filter((w) => w.leadId === lead.timestamp).map((w) => w.email);
-    const recipients = filterCountyAlertRecipients(prefs, lead.judet, links, [
-      sub?.email ?? '',
-      ...watching,
-    ]);
-    const label = `${lead.judet} · ${lead.timestamp} → ${recipients.length} firme`;
-    if (dry) {
-      result.reactivated.push(label);
-      continue;
-    }
-    if (recipients.length) {
-      const payload = countyAlertPayloadFromLead(lead);
-      await Promise.allSettled(
-        recipients.map((to) => sendCountyLeadAlert({ to, ...payload, reactivated: true })),
-      );
-    }
-    await markReactivationAlertsSent(lead.timestamp, new Date(now).toISOString());
-    result.reactivated.push(label);
+    const n = dry
+      ? reactivationRecipients(lead, watches, prefs, links, subs).length
+      : await sendReactivationAlerts(lead, watches, prefs, links, subs, new Date(now).toISOString());
+    result.reactivated.push(`${lead.judet} · ${lead.timestamp} → ${n} firme`);
   }
 }
 
