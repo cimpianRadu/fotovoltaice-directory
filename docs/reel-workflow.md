@@ -181,7 +181,12 @@ variate, maximum unul la 4 secunde, un singur whoosh pe tot reelul.
    - textul nu se rupe urât și nu iese din chenar (CTA-ul cu URL e recidivist);
    - `Spotlight` cade pe elementul corect;
    - animațiile de intrare sunt terminate în frame-ul reprezentativ, altfel
-     culorile par murdare la jumătatea spring-ului.
+     culorile par murdare la jumătatea spring-ului;
+   - **cadrul 0 arată hook-ul întreg** (`ffmpeg -i reel.mp4 -frames:v 1 cadru0.png`), nu
+     fundalul gol: Postiz nu are opțiune de copertă, iar Facebook și Instagram pot lua
+     primul cadru drept copertă. Scena-hook stă într-un `<Settled>` din `lib.tsx` (intrările
+     din prima ei secundă apar deja terminate). Un reel cu coperta goală, odată publicat,
+     nu se mai poate repara pe Facebook.
 3. **Geist: „I" majuscul se citește „l".** Evită „Ia" în text mare, scrie „Preia".
 4. Citește scriptul cu voce tare încă o dată, cu videoul pe mut.
 
