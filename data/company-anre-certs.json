@@ -2934,5 +2934,17 @@
    "isActive": true,
    "tipTarifRaw": "Tarif B"
   }
+ ],
+ "STARTGREEN|Iasi": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "21043",
+   "dataEmitere": "03/10/2023",
+   "dataExpirare": "03/10/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  }
  ]
 }

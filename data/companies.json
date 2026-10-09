@@ -16046,6 +16046,102 @@
         "societate": "ENERGYFIX",
         "judet": "Bucuresti"
       }
+    },
+    {
+      "id": "startgreen",
+      "slug": "startgreen",
+      "name": "StartGreen",
+      "cui": "RO45755590",
+      "logo": "/logos/startgreen.png",
+      "description": "StartGreen este o firmă de instalații electrice din Iași, înființată în 2022, care proiectează și execută sisteme fotovoltaice pentru locuințe și firme din Moldova. Deține atestat ANRE C2A nr. 21043, valabil până în octombrie 2028, pentru lucrări de joasă și medie tensiune, și certificări ISO 9001, ISO 14001 și ISO 45001. Pentru case oferă kituri la cheie de 3, 5 și 7 kW cu invertor hibrid și baterie LiFePO4 opțională, cu proiect, montaj și dosar de racordare incluse. Printre lucrările documentate se numără un sistem industrial de 250 kW cu stocare pentru Wonder Drift, în Iași, și un parc fotovoltaic de 320 kW în comuna Tomești, cu 780 de panouri Canadian Solar și invertoare Solplanet. Face și branșamente electrice de joasă și medie tensiune, se ocupă de avizul tehnic de racordare și de relația cu distribuitorul, instalează stații de încărcare pentru mașini electrice (opt stații în comuna Holboca) și asigură mentenanță și curățare pentru sistemele existente. Lucrează în special în județele Iași, Suceava, Bacău, Neamț, Vaslui și Botoșani. A ajuns la 17 angajați și o cifră de afaceri de 6,3 milioane de lei în 2025.",
+      "founded": 2022,
+      "employees": 17,
+      "location": {
+        "city": "Iași",
+        "county": "Iași",
+        "address": "Șos. Moara de Foc nr. 33, Iași 700520"
+      },
+      "contact": {
+        "phone": "+40756735053",
+        "email": "office@startgreen.ro",
+        "website": "https://startgreen.ro"
+      },
+      "coverage": [
+        "Iași",
+        "Suceava",
+        "Bacău",
+        "Neamț",
+        "Vaslui",
+        "Botoșani"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale"
+      ],
+      "certifications": [
+        "ISO-9001",
+        "ISO-14001",
+        "ISO-45001"
+      ],
+      "capacity": {
+        "minProjectKw": 3,
+        "maxProjectKw": 320,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 6340899,
+        "profit": 324933,
+        "history": [
+          {
+            "year": 2022,
+            "revenue": 705145,
+            "profit": 184905,
+            "employees": 1
+          },
+          {
+            "year": 2023,
+            "revenue": 3368599,
+            "profit": 646767,
+            "employees": 5
+          },
+          {
+            "year": 2024,
+            "revenue": 6337785,
+            "profit": 926510,
+            "employees": 13
+          },
+          {
+            "year": 2025,
+            "revenue": 6340899,
+            "profit": 324933,
+            "employees": 17
+          }
+        ]
+      },
+      "tags": [
+        "pv-rezidential",
+        "pv-comercial",
+        "parcuri-fotovoltaice",
+        "prosumator",
+        "on-grid",
+        "hibrid",
+        "stocare-baterii",
+        "statii-incarcare-ev",
+        "bransamente-electrice",
+        "medie-tensiune",
+        "proiectare",
+        "mentenanta-pv"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-10-09",
+      "updatedAt": "2026-10-09",
+      "segment": "ambele",
+      "anreMatch": {
+        "societate": "STARTGREEN",
+        "judet": "Iasi"
+      }
     }
   ]
 }
