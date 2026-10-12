@@ -669,7 +669,7 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 >
 > Ordinul Casa Verde Baterii are număr și e în Monitorul Oficial (**nr. 1.904/2026, MO nr. 775 din 14.09.2026**), deci triggerul pentru „update Casa Verde v2” de mai jos s-a produs deja — cu o săptămână în urmă. Ghidurile noastre spun încă „nepublicat în MO”: asta e eroare de fapt, deci corecția trece înaintea oricărui articol. #31 (PV + pompă de căldură, ~40/lună, vârf în noiembrie-ianuarie) se mută după #63; #63 are head-term-ul cu cel mai mare volum de pe site (`casa verde baterii 2026` **9.900 în august**).
 >
-> ### ⏭️ URMĂTORUL DE SCRIS (post-8 oct): ~~#64 Curățare/Spălare~~ ✅ publicat 5 oct → ~~#65 Certificat de Racordare~~ ✅ publicat 8 oct → **#72 Cronologia scumpirilor la curent** (sezon de vârf sept–nov, propus de user 8 oct) sau (430/lună, LOW competition 0.04-0.06, CPC 1,80 EUR) → **#66 Panouri Fotovoltaice de Balcon** (260/lună, +136% yearly, unghi ANRE Q&A) → **#67 Producția PV Iarna PVGIS** (70/lună, seasonal, complementar cu #31) → **UPDATE CVB v2** când AFM anunță sesiunea + **UPDATE Metodologie ANRE v3** când apare ordinul final în MO (triggers dependente, PASUL 0.5).
+> ### ⏭️ URMĂTORUL DE SCRIS (post-12 oct): ~~#64 Curățare/Spălare~~ ✅ publicat 5 oct → ~~#65 Certificat de Racordare~~ ✅ publicat 8 oct → ~~#72 Cronologia scumpirilor la curent~~ ✅ publicat 12 oct → **#66 Panouri Fotovoltaice de Balcon** (260/lună, +136% yearly, unghi ANRE Q&A) → **#67 Producția PV Iarna PVGIS** (70/lună, seasonal, complementar cu #31) → **UPDATE CVB v2** când AFM anunță sesiunea + **UPDATE Metodologie ANRE v3** când apare ordinul final în MO (triggers dependente, PASUL 0.5).
 >
 > **Slotul joi 1 oct a fost SĂRIT** (nu s-a scris #64; user-ul a fost prins cu alte priorități — studiu de caz Electro Prahova, pagini admin pentru comision, documente firme). Recuperat luni 5 oct direct cu **#64 Curățare și Spălare Panouri Fotovoltaice 2026** (cluster măsurat 29 sept: curatare 390 + spalare 320 + intretinere 40 = ~750/lună, vârf 1.210 în ianuarie). SERP verificat 5 oct: loc editorial confirmat (Karcher, blog Romstal, Veltol, Dionis rankează cu articole).
 >
@@ -788,8 +788,9 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 - **Linkuri interne:** /ghid/panouri-fotovoltaice-pompa-caldura-2026-dimensionare-cost (complementar direct), /ghid/legea-160-2026-prosumatori-compensare-lunara-gaz-surplus (compensare cantitativă), /ghid/sistem-fotovoltaic-3-5-10-kw-casa-pret-productie-amortizare-2026, /ghid/baterie-3-5-10-kw-dimensionare-dupa-puterea-sistemului-2026, /calculator-panouri-fotovoltaice?segment=rezidential.
 - **KPI:** impresii pe query-uri „panouri fotovoltaice ianuarie", „productie fotovoltaic decembrie", „zapada panouri fotovoltaice".
 
-#### #72 — Cronologia Scumpirilor la Curent 2021–2026: Cât a Costat kWh-ul la Fiecare Pas (și Ce Vine în 2027)
-- **Status:** `💡 idee` · propusă de user 2026-10-08 („o listă cu creșterile prețurilor la energie electrică, enumerate”) · sursă: Google Ads + SERP live via DataForSEO, RO/`ro`, 8 oct 2026
+#### ~~#72~~ — Cronologia Scumpirilor la Curent 2021–2026: Cât a Costat kWh-ul la Fiecare Pas (și Ce Vine în 2027) ✅ PUBLICAT 2026-10-12 → [/ghid/pret-energie-electrica-2021-2026-cronologie-scumpiri](/ghid/pret-energie-electrica-2021-2026-cronologie-scumpiri)
+- **Status:** ✅ publicat **2026-10-12** (rutina de luni). Detalii în „✅ Publicate recent”.
+- **Status inițial:** `💡 idee` · propusă de user 2026-10-08 („o listă cu creșterile prețurilor la energie electrică, enumerate”) · sursă: Google Ads + SERP live via DataForSEO, RO/`ro`, 8 oct 2026
 - **Verdict pe keywords: formularea „scumpire / creștere” NU are volum, head-term-ul de preț are.** Google Ads, medie lunară (vârf):
   - `pret energie electrica` **1.900** (vârf **3.600** sept–nov 2025; 1.000 în iun–aug 2026) · CPC 0,80 · MEDIUM
   - `pret kwh` **1.300** (vârf 1.900 oct 2025) · `pret curent electric` **880** (vârf 1.600) · `pretul energiei electrice` **390** (vârf 880)
@@ -1370,6 +1371,14 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Preț Energie Electrică 2021-2026: Cronologia Scumpirilor
+- **Publicat:** 2026-10-12 (rutina de luni) · **URL:** [/ghid/pret-energie-electrica-2021-2026-cronologie-scumpiri](/ghid/pret-energie-electrica-2021-2026-cronologie-scumpiri) · ~4.150 cuvinte, 12 secțiuni + 10 FAQ, hero JPEG
+- **Cluster GSC/Ads (8 oct):** `pret energie electrica` 1.900 (vârf 3.600 sept–nov) · `pret kwh` 1.300 · `pret curent electric` 880 · `pretul energiei electrice` 390 · `plafonare energie electrica` 170 (vârf 720) · `factura curent` 320 · `scumpire curent` 70 · `scumpire energie electrica` 50 · `cat costa kwh` 50
+- **Ce conține:** tabel cronologic cu actul normativ pe fiecare pas (OUG 1/2020, OUG 118/2021, Legea 259/2021, OUG 3/2022, OUG 27/2022, OUG 119/2022, Legea 357/2022, OUG 6/2025, Legea 141/2025, Ord. ANRE 73-78/2025); seria Eurostat nrg_pc_204 2020-S1 → 2026-S1 (0,7028 → 1,4584 lei/kWh); PZU OPCOM 2021-2025 + aug/sep 2026; tarife JT 2026 pe operatori; avertismentul Bușoi (secretar de stat MEn, 6 oct 2026) + scenariul AEI ~20% (12 oct, atribuit asociației); secțiune amortizare PV pe aritmetică din cifre Eurostat.
+- **Corecturi față de nota din propunere:** OUG 27/2022 e în MO 274 din **22** martie (nu 18, data adoptării); tranșa 1,30 vine din **Legea 357/2022** (din 1 ian 2023), nu din OUG 119; prelungirea până la 31 mar 2025 tot din Legea 357/2022; Bușoi e secretar de stat în Ministerul Energiei, nu ANRE (președinte ANRE = George Niculescu). ⚠️ Ghidul de liberalizare (`1-an-liberalizare-...`) scrie „OUG 27/2022 publicată în MO pe 18 martie” — de corectat la o trecere viitoare.
+- **Neconfirmat (lăsat afară):** preț mediu final ANRE pentru casnici înainte/după 1 ian 2021 și după 1 iul 2025.
+- **Next step:** `npm run indexnow -- --ghid pret-energie-electrica-2021-2026-cronologie-scumpiri` + **GSC Request Indexing manual**. Recheck CTR/poziție pe `pret energie electrica` la 14/30 zile (fereastra de vârf sept–nov). **Update obligatoriu** când apare semestrul Eurostat 2026-S2 (~apr 2027) sau un act normativ nou pe preț/TVA/plafonare.
 
 ### Certificat de Racordare Prosumator 2026: Acte, Termen, Cost
 - **Publicat:** 2026-10-08 → [/ghid/certificat-de-racordare-prosumator-2026](/ghid/certificat-de-racordare-prosumator-2026). Ghidul **#65** din batch-ul 2026-09-29, scris joi 8 oct la cererea userului (slotul de rutină de joi).
