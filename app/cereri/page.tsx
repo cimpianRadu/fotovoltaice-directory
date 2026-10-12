@@ -9,6 +9,7 @@ import {
   getClaims,
   getPublicLeads,
   getWatches,
+  rethrowIfSheetsConfigured,
   type PublicLead,
 } from '@/lib/sheets';
 import { informezMotiv } from '@/lib/lead-alerts';
@@ -77,7 +78,9 @@ export default async function CereriPage() {
     }
   } catch (err) {
     // Fără credențiale Sheets (build local, preview) pagina rămâne funcțională, cu feed gol.
+    // Cu credențiale, o eroare trecătoare nu mai salvează pagina goală (12 oct 2026).
     console.error('[cereri] failed to load leads:', err);
+    rethrowIfSheetsConfigured(err);
   }
 
   const cards: LeadCardData[] = leads.map((l) => {

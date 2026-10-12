@@ -275,6 +275,18 @@ async function setLeadCell(timestamp: string, column: string, value: string) {
   await setLeadCells(timestamp, { [column]: value });
 }
 
+/**
+ * Paginile ISR care citesc din Sheets (/cereri, prima pagină,
+ * /pentru-instalatori) prind eroarea ca să meargă și fără credențiale (build
+ * local, preview). Cu credențiale însă, o eroare trecătoare (429 de la Google)
+ * salva pagina goală pentru 5 minute: pe 12 oct 2026 /cereri a arătat „Nicio
+ * cerere activă". Cu credențiale eroarea urcă, iar Next păstrează ultima
+ * versiune bună a paginii.
+ */
+export function rethrowIfSheetsConfigured(err: unknown): void {
+  if (process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL) throw err;
+}
+
 /** Mai multe celule ale aceleiași cereri, într-un singur apel. */
 async function setLeadCells(timestamp: string, cells: Record<string, string>) {
   const { sheetRow } = await findLeadRow(timestamp);

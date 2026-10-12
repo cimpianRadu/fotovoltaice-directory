@@ -31,7 +31,7 @@ import {
   getFinancingTone,
   type FinancingTone,
 } from '@/lib/utils-shared';
-import { getPublicLeads, getLeadsSince, getClaims, type PublicLead } from '@/lib/sheets';
+import { getPublicLeads, getLeadsSince, getClaims, rethrowIfSheetsConfigured, type PublicLead } from '@/lib/sheets';
 import { generateOrganizationJsonLd, generateWebSiteJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { PRICING } from '@/lib/pricing';
 import HomeFinantareCta from '@/components/home/HomeFinantareCta';
@@ -122,6 +122,7 @@ export default async function HomePage() {
     cereri = leads.slice(0, 3);
   } catch (err) {
     console.error('[home] failed to load cereri teaser:', err);
+    rethrowIfSheetsConfigured(err);
   }
 
   // Dovada de activitate din capul paginii. Înainte stăteau acolo numărul de
@@ -150,6 +151,7 @@ export default async function HomePage() {
     }
   } catch (err) {
     console.error('[home] failed to load activity stats:', err);
+    rethrowIfSheetsConfigured(err);
   }
 
   return (

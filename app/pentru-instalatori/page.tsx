@@ -8,7 +8,7 @@ import TestimonialCarousel from '@/components/home/TestimonialCarousel';
 import { getTestimonialCards } from '@/lib/testimoniale';
 import { generateBreadcrumbJsonLd, generateFAQJsonLd } from '@/lib/seo';
 import { getTotalStats } from '@/lib/utils';
-import { MAX_CLAIMS_PER_LEAD, claimOccupiesLeadSlot, getClaims, getPublicLeads } from '@/lib/sheets';
+import { MAX_CLAIMS_PER_LEAD, claimOccupiesLeadSlot, getClaims, getPublicLeads, rethrowIfSheetsConfigured } from '@/lib/sheets';
 
 /**
  * Pagina de recrutare a instalatorilor.
@@ -120,6 +120,7 @@ export default async function PentruInstalatoriPage() {
     }
   } catch (err) {
     console.error('[pentru-instalatori] failed to load leads:', err);
+    rethrowIfSheetsConfigured(err);
     sheetsOk = false;
   }
 
