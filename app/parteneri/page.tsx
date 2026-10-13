@@ -20,9 +20,9 @@ const PARTNERS = [
   {
     href: '/parteneri/electroprep',
     name: 'ElectroPrep',
-    tag: 'Pentru instalatori',
+    tag: 'Electricieni și firme de montaj',
     description:
-      'Actele pentru distribuitor (dosarul de prosumator, notificarea, procesele-verbale) completate în PDF și pregătirea colegilor pentru autorizația ANRE.',
+      'Chestionare și simulări pentru examenul de autorizare ANRE, legislație căutabilă, locuri de muncă pentru electricieni și actele lucrării completate în PDF.',
   },
   {
     href: '/parteneri/helexia',
