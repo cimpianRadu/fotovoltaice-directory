@@ -206,6 +206,10 @@ Folderul `social/` nu se comite.
 
 ---
 
+## Conținut generat cu AI (din 13 oct 2026)
+
+Postările cu cadre sau imagini fotorealiste generate cu AI primesc un rând în descriere („Cadrele sunt generate cu AI.”) și eticheta de AI pe platformă, pusă de Radu din aplicație după publicare. Regula completă e în `~/.claude/CLAUDE.md`.
+
 ## Seria de luni: „Ce e nou?"
 
 Rezumatul săptămânal pentru instalatori (postat luni dimineață) e o serie cu
