@@ -14,12 +14,15 @@ const STORAGE_KEY = 'cta-popup-dismissed';
 // recrutare a firmelor: acolo cititorul e instalatorul, nu clientul, iar
 // „cauți un instalator?" e o ofertă adresată altcuiva. Pe `/cerere/` (pagini
 // deschise din emailurile către client) omul are deja o cerere trimisă.
+// `/parteneri/electroprep` vorbește tot cu instalatorul (actele lucrării,
+// electricieni autorizați), deci aceeași logică.
 const HIDE_ON = [
   '/cere-oferta',
   '/listeaza-firma',
   '/publicitate',
   '/portal',
   '/pentru-instalatori',
+  '/parteneri/electroprep',
   '/feedback',
   '/cerere/',
 ];

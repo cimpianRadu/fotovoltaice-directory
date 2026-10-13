@@ -27,6 +27,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/calculator-casa-verde-baterii`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.8 },
     { url: `${BASE_URL}/finantare`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
     { url: `${BASE_URL}/finantare/firme`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.7 },
+    { url: `${BASE_URL}/parteneri`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.4 },
+    { url: `${BASE_URL}/parteneri/electroprep`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.5 },
     { url: `${BASE_URL}/pret-panouri-fotovoltaice`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.9 },
     { url: `${BASE_URL}/rezidential`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.4 },
     { url: `${BASE_URL}/politica-confidentialitate`, lastModified: new Date(), changeFrequency: 'yearly' as const, priority: 0.3 },

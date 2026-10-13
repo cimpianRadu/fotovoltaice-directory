@@ -47,6 +47,7 @@ export default function Footer() {
               <li><Link href="/intrebari-frecvente" className={linkClass}>Întrebări Frecvente</Link></li>
               <li><Link href="/despre" className={linkClass}>Despre Noi</Link></li>
               <li><Link href="/publicitate" className={linkClass}>Publicitate</Link></li>
+              <li><Link href="/parteneri" className={linkClass}>Parteneri</Link></li>
             </ul>
           </FooterAccordion>
 

@@ -79,13 +79,13 @@ export default function HelexiaPage() {
       <JsonLd
         data={generateBreadcrumbJsonLd([
           { name: 'Acasă', url: '/' },
-          { name: 'Parteneri', url: '/parteneri/helexia' },
+          { name: 'Parteneri', url: '/parteneri' },
           { name: 'Helexia', url: '/parteneri/helexia' },
         ])}
       />
 
       <article className="max-w-4xl mx-auto px-4 py-6">
-        <Breadcrumbs items={[{ label: 'Parteneri' }, { label: 'Helexia' }]} />
+        <Breadcrumbs items={[{ label: 'Parteneri', href: '/parteneri' }, { label: 'Helexia' }]} />
 
         <header className="mt-6 mb-8">
           <div className="flex items-center gap-4 mb-4">
