@@ -669,7 +669,7 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 >
 > Ordinul Casa Verde Baterii are număr și e în Monitorul Oficial (**nr. 1.904/2026, MO nr. 775 din 14.09.2026**), deci triggerul pentru „update Casa Verde v2” de mai jos s-a produs deja — cu o săptămână în urmă. Ghidurile noastre spun încă „nepublicat în MO”: asta e eroare de fapt, deci corecția trece înaintea oricărui articol. #31 (PV + pompă de căldură, ~40/lună, vârf în noiembrie-ianuarie) se mută după #63; #63 are head-term-ul cu cel mai mare volum de pe site (`casa verde baterii 2026` **9.900 în august**).
 >
-> ### ⏭️ URMĂTORUL DE SCRIS (post-12 oct): ~~#64 Curățare/Spălare~~ ✅ publicat 5 oct → ~~#65 Certificat de Racordare~~ ✅ publicat 8 oct → ~~#72 Cronologia scumpirilor la curent~~ ✅ publicat 12 oct → **#66 Panouri Fotovoltaice de Balcon** (260/lună, +136% yearly, unghi ANRE Q&A) → **#67 Producția PV Iarna PVGIS** (70/lună, seasonal, complementar cu #31) → **UPDATE CVB v2** când AFM anunță sesiunea + **UPDATE Metodologie ANRE v3** când apare ordinul final în MO (triggers dependente, PASUL 0.5).
+> ### ⏭️ URMĂTORUL DE SCRIS (post-12 oct): ~~#64 Curățare/Spălare~~ ✅ publicat 5 oct → ~~#65 Certificat de Racordare~~ ✅ publicat 8 oct → ~~#72 Cronologia scumpirilor la curent~~ ✅ publicat 12 oct → ~~#66 Panouri Fotovoltaice de Balcon~~ ✅ publicat 15 oct → **#67 Producția PV Iarna PVGIS** (70/lună, seasonal, complementar cu #31) → **UPDATE CVB v2** când AFM anunță sesiunea + **UPDATE Metodologie ANRE v3** când apare ordinul final în MO (triggers dependente, PASUL 0.5).
 >
 > **Slotul joi 1 oct a fost SĂRIT** (nu s-a scris #64; user-ul a fost prins cu alte priorități — studiu de caz Electro Prahova, pagini admin pentru comision, documente firme). Recuperat luni 5 oct direct cu **#64 Curățare și Spălare Panouri Fotovoltaice 2026** (cluster măsurat 29 sept: curatare 390 + spalare 320 + intretinere 40 = ~750/lună, vârf 1.210 în ianuarie). SERP verificat 5 oct: loc editorial confirmat (Karcher, blog Romstal, Veltol, Dionis rankează cu articole).
 >
@@ -746,8 +746,9 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 - **Linkuri interne:** /ghid/aviz-tehnic-racordare-atr-prosumator-2026 (delimitare explicită), /ghid/legea-160-2026-prosumatori-compensare-lunara-gaz-surplus, /ghid/norme-anre-prosumator-2026-metodologie-consultare-publica, /verificare-anre, /firme, /cere-oferta.
 - **KPI:** impresii pe query-uri „cum obtin certificat de racordare", „durata certificat racordare", „cum apar prosumator pe factura".
 
-#### #66 — Panouri Fotovoltaice de Balcon și Apartament 2026: Ce Spune ANRE, Cine Le Poate Monta
-- **Status:** `💡 idee` · **cluster mic dar cu trending +136% yearly și unghi ANRE unic** · sursă: DataForSEO Labs, măsurat 2026-09-29 · promovat din backlog (#34)
+#### ~~#66~~ — Panouri Fotovoltaice de Balcon și Apartament 2026: Ce Spune ANRE, Cine Le Poate Monta ✅ PUBLICAT 2026-10-15 → [/ghid/panouri-fotovoltaice-balcon-apartament-2026-kit-plug-and-play-anre](/ghid/panouri-fotovoltaice-balcon-apartament-2026-kit-plug-and-play-anre)
+- **Status:** ✅ publicat **2026-10-15** (rutina de joi). Detalii în „✅ Publicate recent”.
+- **Status inițial:** `💡 idee` · **cluster mic dar cu trending +136% yearly și unghi ANRE unic** · sursă: DataForSEO Labs, măsurat 2026-09-29 · promovat din backlog (#34)
 - **Cluster cu volume măsurate:**
   - `kit fotovoltaic balcon` **170/lună medie, 260 în august** (yearly trend **+136%**, quarterly +86%)
   - `panouri fotovoltaice apartament` **50/lună**, vârf 90 în septembrie 2025 (monthly +350%)
@@ -1371,6 +1372,16 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Panouri Fotovoltaice Balcon 2026: Kit 800W și Regulile ANRE
+- **Publicat:** 2026-10-15 (rutina de joi) · **URL:** [/ghid/panouri-fotovoltaice-balcon-apartament-2026-kit-plug-and-play-anre](/ghid/panouri-fotovoltaice-balcon-apartament-2026-kit-plug-and-play-anre) · ~5.000 cuvinte, 12 secțiuni + 10 FAQ, 9 tabele, hero JPEG 1600 px
+- **Cluster (Labs, 28-29 sept):** `panouri fotovoltaice balcon` 260 (480 aug) · `kit fotovoltaic balcon` 170 (260 aug, +136% yearly) · `panouri fotovoltaice apartament` 50 · `panou solar plug and play` 40 · `panouri fotovoltaice bloc` 40 · `fotovoltaice balcon` 30. Related searches SERP 15 oct: „kit solar plug and play 800w”, „kit fotovoltaic la priza”, „panou solar cu priza 220v”, „kit solar balcon cu baterie”.
+- **SERP 15 oct:** AI Overview + magazine (solarone, instalmen, edimo, materialeelectrice, eMAG) + YouTube + un singur blog (echarged.ro, ian 2026). Niciun editorial cu documentul ANRE tradus → loc real.
+- **Sursa primară:** Q&A ANRE martie 2026 (PDF încă live la 15 oct, aceleași 9 întrebări) → tabel cu toate 9. **Date proprii:** PVGIS 5.3/SARAH3 rulat 15 oct pentru 800 Wp, 4 orașe × 5 orientări (vertical sud ~670-700 kWh/an = 66-70% din acoperiș 35°; est/vest 454-506) + lunar București (vertical sud ≥ acoperiș în dec/ian). Plafon economie = PVGIS × Eurostat 1,4584 lei/kWh (S1 2026), marcat explicit ca plafon, fără procent de autoconsum inventat.
+- **Prețuri kit (paginile produselor, 15 oct, cu TVA):** edimo 1.337,90 (1×470 Wp + Growatt NEO 800M-X, fără suport) · instalmen 2.492,16 · mysolarshop 4.900 · materialeelectrice doar prindere 456,92 (preț din Google). Hornbach (2×410 W) **lăsat afară**: scrape-ul a dat „800 RON”, neconfirmat la a doua citire. eMAG = captcha.
+- **Neconfirmat (lăsat afară):** cuantumul amenzii din Legea 123/2012 pentru montaj fără atestat; articolul din Legea 196/2018 despre fațadă; manopera electricianului (nu avem prețuri de la firme). Germania: doar ce confirmă Bundesnetzagentur/MaStR (fără obligația de anunțare a operatorului din 16 mai 2024, 800 W invertor / 2.000 W module); cine montează în DE marcat „neverificat”.
+- **Contor vechi:** declarația APCE (Pîrșan, Newsweek 27 mar 2026) atribuită ca atare; ANRE nu discută contoarele.
+- **Next step:** `npm run indexnow -- --ghid panouri-fotovoltaice-balcon-apartament-2026-kit-plug-and-play-anre` + **GSC Request Indexing manual**. Recheck ~29 oct / ~14 nov pe `panouri fotovoltaice balcon`, `kit fotovoltaic balcon`, `panouri fotovoltaice apartament`. **Trigger de update:** proiect de lege înregistrat pentru kituri de balcon / panouri pe bloc (vezi hot topic 28 sept) sau versiune nouă a Q&A ANRE.
 
 ### Preț Energie Electrică 2021-2026: Cronologia Scumpirilor
 - **Publicat:** 2026-10-12 (rutina de luni) · **URL:** [/ghid/pret-energie-electrica-2021-2026-cronologie-scumpiri](/ghid/pret-energie-electrica-2021-2026-cronologie-scumpiri) · ~4.150 cuvinte, 12 secțiuni + 10 FAQ, hero JPEG
