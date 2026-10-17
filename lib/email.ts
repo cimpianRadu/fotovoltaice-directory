@@ -3,8 +3,17 @@
 // becomes a no-op so form submissions still succeed in environments where
 // email isn't configured (local dev, preview deploys without secrets).
 
-import { getFinancingShort, getFinancingTone, getFirmSourceLabel, type FinancingTone } from './utils-shared';
+import {
+  cerereAgeLabel,
+  getFinancingShort,
+  getFinancingTone,
+  getFirmSourceLabel,
+  slugifyCity,
+  type FinancingTone,
+} from './utils-shared';
 import { CLAIM_REMINDER_MAX } from './sheets-shared';
+import { unsubscribeHeaders, unsubscribePageUrl } from './firm-unsubscribe-token';
+import { isUnsubscribed } from './firm-unsubscribe';
 
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 
@@ -22,6 +31,8 @@ export interface SendEmailOptions {
   html: string;
   from?: string;
   replyTo?: string;
+  /** Antete în plus, ex. List-Unsubscribe (lib/firm-unsubscribe-token). */
+  headers?: Record<string, string>;
 }
 
 export async function sendEmail(opts: SendEmailOptions): Promise<{ ok: boolean; reason?: string }> {
@@ -45,6 +56,7 @@ export async function sendEmail(opts: SendEmailOptions): Promise<{ ok: boolean; 
         subject: opts.subject,
         html: opts.html,
         ...(opts.replyTo ? { reply_to: opts.replyTo } : {}),
+        ...(opts.headers ? { headers: opts.headers } : {}),
       }),
     });
 
@@ -747,6 +759,7 @@ export async function sendCountyLeadAlert(data: {
   /** Clientul a răspuns „Da, încă vreau oferte" la emailul „mai căutați oferte?" (7 oct 2026). */
   confirmedActive?: boolean;
 }): Promise<{ ok: boolean; reason?: string }> {
+  if (await isUnsubscribed(data.to)) return { ok: false, reason: 'dezabonat' };
   const rezidential = data.segment === 'rezidential';
   const reserved = Boolean(data.reservedUntil);
   const informez = Boolean(data.informez);
@@ -801,7 +814,7 @@ export async function sendCountyLeadAlert(data: {
     <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280;line-height:1.5">
       Primești emailul pentru că ai bifat județul ${escapeHtml(data.judet)} la alertele din
       <a href="${PORTAL_BASE_URL}/portal" style="color:#2563eb">portal</a>. Tot de acolo le
-      schimbi sau le oprești.
+      schimbi sau le oprești, ori direct: <a href="${unsubscribePageUrl(data.to)}" style="color:#6b7280">nu mai vreau emailuri cu cereri</a>.
     </div>
   </div>
 </body>
@@ -834,12 +847,147 @@ export async function sendCountyLeadAlert(data: {
     to: data.to,
     subject: `${prefix}${subjectBits.length ? `: ${subjectBits.join(' · ')}` : ''}`,
     html,
+    headers: unsubscribeHeaders(data.to),
   });
 
   if (!result.ok) {
     console.warn('[email] County alert not sent:', result.reason);
   }
   return result;
+}
+
+/** Un rând din emailul cu cereri deschise. Fără date de contact, ca la alerta pe județ. */
+export interface DigestLeadRow {
+  id: string;
+  judet: string;
+  /** „Vilă · 10 kW" */
+  titlu: string;
+  /** „Fonduri proprii · Cât mai repede · consum 580 kWh" */
+  detalii: string;
+  ageDays: number;
+}
+
+/**
+ * - `saptamanal`: rezumatul de luni, firmelor cu alertele pe județ pornite;
+ * - `fara-alerte`: o dată, firmelor cu cont dar fără alerte (17 oct 2026);
+ * - `judet-nou`: firma tocmai a bifat județele în portal;
+ * - `partener`: firme fără cont, trecute de mână pe listă (JTS, 17 oct 2026).
+ */
+export type DigestVariant = 'saptamanal' | 'fara-alerte' | 'judet-nou' | 'partener';
+
+/**
+ * Cererile deschise din județele firmei, într-un singur email. Vezi
+ * lib/open-leads-digest.ts pentru cine îl primește și de ce.
+ */
+export async function sendOpenLeadsDigest(data: {
+  /** O singură adresă: linkul de dezabonare e al ei. */
+  to: string;
+  leads: DigestLeadRow[];
+  /** Alte cereri deschise din aceleași județe, care nu sunt în listă. */
+  restCount: number;
+  variant: DigestVariant;
+  /** MAX_CLAIMS_PER_LEAD, dat de apelant: email.ts nu importă lib/sheets. */
+  maxFirms: number;
+}): Promise<{ ok: boolean; reason?: string }> {
+  if (await isUnsubscribed(data.to)) return { ok: false, reason: 'dezabonat' };
+  const { subject, html } = renderOpenLeadsDigest(data);
+  const result = await sendEmail({ to: data.to, subject, html, headers: unsubscribeHeaders(data.to) });
+  if (!result.ok) {
+    console.warn('[email] Digest cereri deschise not sent:', result.reason);
+  }
+  return result;
+}
+
+/** Câte cereri intră în email; restul le vede pe /cereri. 40 de rânduri nu le citește nimeni. */
+const DIGEST_MAX_ROWS = 10;
+
+export function renderOpenLeadsDigest(data: Parameters<typeof sendOpenLeadsDigest>[0]): { subject: string; html: string } {
+  const judete = [...new Set(data.leads.map((l) => l.judet))];
+  // Peste 3 județe (partenerii din toată țara) lista nu mai încape în subiect.
+  const judeteText =
+    judete.length > 3
+      ? `${judete.length} județe`
+      : judete.length > 1
+        ? `${judete.slice(0, -1).join(', ')} și ${judete.at(-1)}`
+        : judete[0] || '';
+  const n = data.leads.length;
+  const judetNou = data.variant === 'judet-nou';
+  const shown = data.leads.slice(0, DIGEST_MAX_ROWS);
+  const overflow = data.leads.length - shown.length;
+  const rest = overflow + data.restCount;
+  const feedHref = `${PORTAL_BASE_URL}/cereri?judet=${judete.map(slugifyCity).join(',')}`;
+
+  const intro = judetNou
+    ? `Ai bifat ${escapeHtml(judeteText)} la alerte. Cererile noi de acolo îți vin de acum pe email, iar mai jos sunt cele care așteaptă deja o firmă.`
+    : `${n === 1 ? 'Un client plătește' : `${n} clienți plătesc`} din banii ${n === 1 ? 'lui' : 'lor'} și ${n === 1 ? 'vrea' : 'vor'} montajul cât mai repede. Cererile sunt încă deschise, în ${escapeHtml(judeteText)}.`;
+
+  const rows = shown
+    .map(
+      (l) => `<tr><td style="padding:12px 0;border-top:1px solid #f3f4f6">
+        <div style="font-size:15px;font-weight:600;color:#111827">${escapeHtml(l.titlu)}</div>
+        ${l.detalii ? `<div style="font-size:13px;color:#374151;margin-top:2px">${escapeHtml(l.detalii)}</div>` : ''}
+        <div style="font-size:12px;color:#6b7280;margin-top:2px">${escapeHtml(l.judet)} · ${escapeHtml(cerereAgeLabel(l.ageDays))} · <a href="${PORTAL_BASE_URL}/cereri?cerere=${encodeURIComponent(l.id)}" style="color:#2563eb">vezi cererea</a></div>
+      </td></tr>`,
+    )
+    .join('');
+
+  const restLine =
+    rest > 0
+      ? `<p style="font-size:13px;color:#6b7280;margin:8px 0 0;line-height:1.5">${
+          judetNou
+            ? `Și încă ${rest === 1 ? 'una' : rest} în aceleași județe, pe site.`
+            : overflow > 0
+              ? `Pe site mai ${overflow === 1 ? 'e una ca acestea' : `sunt ${overflow} ca acestea`}${data.restCount ? `, plus ${data.restCount} cu alte termene, pe Casa Verde Baterii sau de la oameni care se informează` : ''}.`
+              : `Pe site mai ${rest === 1 ? 'e o cerere deschisă' : `sunt ${rest} cereri deschise`} în județele tale: alte termene, Casa Verde Baterii sau oameni care se informează.`
+        }</p>`
+      : '';
+
+  const alertBox =
+    data.variant === 'fara-alerte' || data.variant === 'partener'
+      ? `<div style="margin-top:20px;padding:16px;border-radius:10px;background:#fffbeb;border:1px solid #fde68a">
+        <div style="font-size:14px;font-weight:600;color:#111827">Vrei să afli de ele când intră?</div>
+        <div style="font-size:13px;color:#374151;margin-top:4px;line-height:1.5">Bifează în portal județele în care lucrezi. Primești fiecare cerere nouă pe email, în momentul în care intră, iar lunea un rezumat ca acesta.</div>
+        <a href="${PORTAL_BASE_URL}/portal#alerte" style="display:inline-block;margin-top:10px;font-size:14px;font-weight:600;color:#b45309">Activează alertele pe județ →</a>
+      </div>`
+      : '';
+
+  const why =
+    data.variant === 'fara-alerte'
+      ? `Primești emailul o singură dată, pentru că ai cont în <a href="${PORTAL_BASE_URL}/portal" style="color:#2563eb">portal</a>.`
+      : data.variant === 'partener'
+        ? 'Primești emailul ca firmă parteneră Instalatori Fotovoltaice.'
+        : `Primești emailul pentru că ai alertele pe județ pornite în <a href="${PORTAL_BASE_URL}/portal#alerte" style="color:#2563eb">portal</a>. Tot de acolo le schimbi.`;
+  const footer = `${why} <a href="${unsubscribePageUrl(data.to)}" style="color:#6b7280">Nu mai vreau emailuri cu cereri</a>.`;
+
+  const html = `<!DOCTYPE html>
+<html>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
+  <div style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
+    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#fffbeb">
+      <div style="font-size:12px;color:#92400e;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">${judetNou ? 'Cereri deschise' : 'Fonduri proprii · cât mai repede'} · ${escapeHtml(judete.length > 3 ? judeteText : judete.join(', '))}</div>
+      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${n === 1 ? 'O cerere așteaptă o firmă' : `${n} cereri așteaptă o firmă`}</h1>
+    </div>
+    <div style="padding:20px 24px">
+      <p style="font-size:14px;color:#374151;margin:0 0 8px;line-height:1.5">${intro}</p>
+      <table style="border-collapse:collapse;width:100%">${rows}</table>
+      ${restLine}
+      <div style="text-align:center;margin-top:20px">
+        <a href="${feedHref}" style="display:inline-block;padding:12px 24px;background:#f59e0b;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">Vezi cererile și revendică</a>
+      </div>
+      <p style="font-size:13px;color:#6b7280;margin:16px 0 0;text-align:center;line-height:1.5">Primul venit: o cerere o pot lua cel mult ${data.maxFirms} firme.</p>
+      ${alertBox}
+    </div>
+    <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280;line-height:1.5">
+      ${footer}
+    </div>
+  </div>
+</body>
+</html>`;
+
+  const subject = judetNou
+    ? `${n === 1 ? 'O cerere deschisă' : `${n} cereri deschise`} în ${judeteText}`
+    : `${n === 1 ? 'O cerere' : `${n} cereri`} cu fonduri proprii, cât mai repede: ${judeteText}`;
+  return { subject, html };
 }
 
 /**

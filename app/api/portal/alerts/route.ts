@@ -1,6 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, after } from 'next/server';
 import { getPortalEmail } from '@/lib/portal-session';
-import { saveCountyAlertPrefs } from '@/lib/sheets';
+import { getCountyAlertPref, saveCountyAlertPrefs } from '@/lib/sheets';
+import { sendOpenLeadsForNewCounties } from '@/lib/open-leads-digest';
+import { recordResubscribeIfNeeded } from '@/lib/firm-unsubscribe';
 import { getCounties } from '@/lib/utils-shared';
 
 // Județele de interes ale firmei logate. Singura scriere din portal care nu
@@ -25,7 +27,16 @@ export async function POST(request: Request) {
     const known = getCounties();
     const selected = known.filter((c) => raw.includes(c));
 
+    const previous = await getCountyAlertPref(email);
     await saveCountyAlertPrefs(email, selected);
+    // Județele abia bifate vin cu cererile deschise de acolo (16 oct 2026):
+    // alerta pleacă doar la cererile noi, iar cele intrate înainte rămâneau
+    // necunoscute firmei. După răspuns, ca salvarea să nu aștepte emailul.
+    // Bifarea de județe după o dezabonare înseamnă că vrea emailurile înapoi.
+    after(async () => {
+      if (selected.length) await recordResubscribeIfNeeded(email).catch((err) => console.error('[dezabonare] reabonare:', err));
+      await sendOpenLeadsForNewCounties(email, previous?.active ? previous.counties : [], selected);
+    });
 
     return NextResponse.json({ success: true, counties: selected });
   } catch (err) {
