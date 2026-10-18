@@ -689,7 +689,7 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 >
 > Ordinul Casa Verde Baterii are număr și e în Monitorul Oficial (**nr. 1.904/2026, MO nr. 775 din 14.09.2026**), deci triggerul pentru „update Casa Verde v2” de mai jos s-a produs deja — cu o săptămână în urmă. Ghidurile noastre spun încă „nepublicat în MO”: asta e eroare de fapt, deci corecția trece înaintea oricărui articol. #31 (PV + pompă de căldură, ~40/lună, vârf în noiembrie-ianuarie) se mută după #63; #63 are head-term-ul cu cel mai mare volum de pe site (`casa verde baterii 2026` **9.900 în august**).
 >
-> ### ⏭️ URMĂTORUL DE SCRIS (post-12 oct): ~~#64 Curățare/Spălare~~ ✅ publicat 5 oct → ~~#65 Certificat de Racordare~~ ✅ publicat 8 oct → ~~#72 Cronologia scumpirilor la curent~~ ✅ publicat 12 oct → ~~#66 Panouri Fotovoltaice de Balcon~~ ✅ publicat 15 oct → **#67 Producția PV Iarna PVGIS** (70/lună, seasonal, complementar cu #31) → **UPDATE CVB v2** când AFM anunță sesiunea + **UPDATE Metodologie ANRE v3** când apare ordinul final în MO (triggers dependente, PASUL 0.5).
+> ### ⏭️ URMĂTORUL DE SCRIS (post-12 oct): ~~#64 Curățare/Spălare~~ ✅ publicat 5 oct → ~~#65 Certificat de Racordare~~ ✅ publicat 8 oct → ~~#72 Cronologia scumpirilor la curent~~ ✅ publicat 12 oct → ~~#66 Panouri Fotovoltaice de Balcon~~ ✅ publicat 15 oct → ~~#67 Producția PV Iarna PVGIS~~ ✅ publicat 19 oct → **⚠️ COADA EDITORIALĂ E GOALĂ după #67: de realimentat (news scan duminică / promovare din backlog)** → **UPDATE CVB v2** când AFM anunță sesiunea + **UPDATE Metodologie ANRE v3** când apare ordinul final în MO (triggers dependente, PASUL 0.5).
 >
 > **Slotul joi 1 oct a fost SĂRIT** (nu s-a scris #64; user-ul a fost prins cu alte priorități — studiu de caz Electro Prahova, pagini admin pentru comision, documente firme). Recuperat luni 5 oct direct cu **#64 Curățare și Spălare Panouri Fotovoltaice 2026** (cluster măsurat 29 sept: curatare 390 + spalare 320 + intretinere 40 = ~750/lună, vârf 1.210 în ianuarie). SERP verificat 5 oct: loc editorial confirmat (Karcher, blog Romstal, Veltol, Dionis rankează cu articole).
 >
@@ -790,8 +790,9 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 - **Linkuri interne:** /ghid/instalatori-autorizati-anre-panouri-fotovoltaice-2026, /ghid/verificare-instalator-panouri-fotovoltaice-2026, /ghid/aviz-tehnic-racordare-atr-prosumator-2026, /ghid/certificat-urbanism-autorizatie-construire-fotovoltaice-2026, /ghid/sistem-fotovoltaic-3-5-10-kw-casa-pret-productie-amortizare-2026, /verificare-anre, /firme.
 - **KPI:** impresii pe query-uri „e legal panouri balcon", „acord asociatie panouri", „kit 800W plug and play romania".
 
-#### #67 — Producția Panourilor Fotovoltaice Iarna: PVGIS Pe Lună, Zăpadă, Orientare
-- **Status:** `💡 idee` · **cluster mic dar seasonal + complementar cu #31 publicat 29 sept** · sursă: DataForSEO Labs
+#### ~~#67~~ — Producția Panourilor Fotovoltaice Iarna: PVGIS Pe Lună, Zăpadă, Orientare ✅ PUBLICAT 2026-10-19 → [/ghid/productie-panouri-fotovoltaice-iarna-2026-pvgis-zapada-orientare](/ghid/productie-panouri-fotovoltaice-iarna-2026-pvgis-zapada-orientare)
+- **Status:** ✅ publicat **2026-10-19** (rutina de luni). Detalii în „✅ Publicate recent”.
+- **Status inițial:** `💡 idee` · **cluster mic dar seasonal + complementar cu #31 publicat 29 sept** · sursă: DataForSEO Labs
 - **Cluster cu volume măsurate:**
   - `panouri fotovoltaice iarna` **10-40/lună**, vârf 40 în ianuarie
   - `cat produc panourile fotovoltaice iarna` **30/lună**, vârf 50 în septembrie (yearly -25%)
@@ -1407,6 +1408,14 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Panouri Fotovoltaice Iarna 2026: Cât Produc pe Lună (PVGIS)
+- **Publicat:** 2026-10-19 (rutina de luni) · **URL:** [/ghid/productie-panouri-fotovoltaice-iarna-2026-pvgis-zapada-orientare](/ghid/productie-panouri-fotovoltaice-iarna-2026-pvgis-zapada-orientare) · ~4.600 cuvinte, 12 secțiuni + 10 FAQ, 6 tabele, hero JPEG 1600 px
+- **Cluster (Labs, 29 sept):** `panouri fotovoltaice iarna` 10-40 (vârf ianuarie) · `cat produc panourile fotovoltaice iarna` 30 · țintite și „productie fotovoltaic decembrie”, „zapada panouri fotovoltaice”, „panouri fotovoltaice ianuarie”, „merita panouri fotovoltaice iarna” (în H2 + FAQ).
+- **Date proprii:** tabel lunar din `data/pvgis-monthly.json` (aceeași serie ca formă lunară a calculatorului) pe 8 orașe; Constanța lăsată afară (conflict cu `pvgis-yields.json`, vezi memoria PVGIS). Rulat live 19 oct PVGIS v5.2 (API-ul întoarce `PVGIS-SARAH2`, deși `_note` din `pvgis-monthly.json` zice SARAH3; valorile coincid cu fișierul) pentru București/Cluj/Suceava × 8 configurații: est/vest pierd 34-49% în dec-ian vs 18-22% pe an; 60° +19% în decembrie, -5-7% pe an; vertical > 30° în decembrie. Ghidul de balcon (15 oct) a folosit PVGIS 5.3/SARAH3, de unificat dacă apar diferențe.
+- **Zăpadă (surse măsurate):** Heidari, Gwamuri, Townsend, Pearce, IEEE J. Photovoltaics 5(6) 2015 (5-12% ridicate, 29-34% la sol) + Townsend & Powers 2011 via ScienceDaily (18% la 0°, ~12% la 39°). Zile cu strat de zăpadă ANM via HotNews 28 ian 2023 (Brașov 46, București-Băneasa 29, Sibiu 31, Constanța 11 pe 2013-2022). **Fără procent de pierdere pentru România** (niciun studiu măsurat găsit).
+- **Neconfirmat (lăsat afară):** încărcarea de zăpadă din normativ (CR 1-1-3) și sarcina mecanică din fișele panourilor; durata medie a zăpezii pe panouri în RO; ore de lumină pe zi (doar unghiul soarelui, calculat din latitudine).
+- **Next step:** `npm run indexnow -- --ghid productie-panouri-fotovoltaice-iarna-2026-pvgis-zapada-orientare` + **GSC Request Indexing manual**. Recheck ~2 nov / ~18 nov și în ianuarie (vârful sezonier). **Trigger de update:** metodologia ANRE finală în MO (secțiunea „Iarna pe factură”).
 
 ### Panouri Fotovoltaice Balcon 2026: Kit 800W și Regulile ANRE
 - **Publicat:** 2026-10-15 (rutina de joi) · **URL:** [/ghid/panouri-fotovoltaice-balcon-apartament-2026-kit-plug-and-play-anre](/ghid/panouri-fotovoltaice-balcon-apartament-2026-kit-plug-and-play-anre) · ~5.000 cuvinte, 12 secțiuni + 10 FAQ, 9 tabele, hero JPEG 1600 px
