@@ -127,6 +127,8 @@ export interface AccountLeadData extends AccountLeadSummary {
   numeContact: string;
   details: { label: string; value: string }[];
   informez: boolean;
+  /** Cererea e închisă ca lucrare semnată (V = castigata). */
+  won: boolean;
   firms: AccountFirm[];
   stats: { sentTo: number; clickVisitors: number; claimed: number };
   bump: { allowed: boolean; usedLast7: number; nextAt: string | null; lastAt: string | null };
@@ -244,6 +246,7 @@ export async function loadAccountLead(lead: NewLead, now = Date.now()): Promise<
     numeContact: lead.numeContact || lead.numeCompanie,
     details,
     informez: isLeadInformez(lead),
+    won: lead.crmStatus === 'castigata',
     firms,
     stats: {
       sentTo: Number(sends[0]?.n ?? 0),

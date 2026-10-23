@@ -6,6 +6,7 @@ import Button from '@/components/ui/Button';
 import { FIRM_REPORT_OPTIONS, BUMPS_PER_WEEK, type FirmReport } from '@/lib/client-account-shared';
 import { RENUNT_REASON_OPTIONS } from '@/lib/client-response-details';
 import { fileSizeLabel } from '@/lib/oferte-shared';
+import { slugifyCounty } from '@/lib/utils-shared';
 import type { AccountLeadData, AccountFirm } from '@/lib/client-account';
 
 // Pagina cererii din contul clientului (23 oct 2026). Datele vin gata făcute de pe
@@ -33,13 +34,65 @@ async function postJson(url: string, body: unknown) {
 
 const DEMO_NOTE = 'Exemplu: în contul real, apăsarea salvează răspunsul.';
 
-function Stat({ value, label, hint }: { value: string; label: string; hint?: string }) {
+/**
+ * Unde a ajuns cererea, ca un drum, nu ca niște casete: nu e nimic de apăsat
+ * aici (Radu, 23 oct: casetele arătau a butoane care nu fac nimic).
+ */
+function ProgressSteps({ data }: { data: AccountLeadData }) {
+  const offers = data.firms.reduce((n, f) => n + f.offers.length, 0);
+  const saidOffer = data.firms.some((f) => f.report === 'oferta' || f.report === 'semnat');
+  const { sentTo, clickVisitors, claimed } = data.stats;
+  const seen = [
+    sentTo ? `trimisă la ${sentTo} ${sentTo === 1 ? 'firmă' : 'firme'}` : '',
+    clickVisitors ? `${clickVisitors} ${clickVisitors === 1 ? 'instalator a apăsat' : 'instalatori au apăsat'} pe ea` : '',
+  ]
+    .filter(Boolean)
+    .join(' · ');
+  const raw = [
+    { label: 'Trimisă', detail: dayShort(data.createdAt), done: true },
+    { label: 'Văzută de instalatori', detail: seen || (claimed ? 'da' : 'încă nu'), done: Boolean(sentTo || clickVisitors) },
+    { label: 'Preluată', detail: claimed ? `de ${claimed} ${claimed === 1 ? 'firmă' : 'firme'}` : 'încă nu', done: claimed > 0 },
+    { label: 'Ofertă', detail: offers ? `${offers} prin platformă` : saidOffer ? 'primită' : 'încă nu', done: offers > 0 || saidOffer },
+    { label: 'Semnat', detail: data.won ? 'felicitări' : '', done: data.won },
+  ];
+  // Un pas făcut îi bifează și pe cei dinainte: o cerere preluată a fost și văzută.
+  const lastDone = raw.map((s) => s.done).lastIndexOf(true);
+  const steps = raw.map((s, i) => ({ ...s, done: i <= lastDone }));
+  const current = steps.findIndex((s) => !s.done);
+
   return (
-    <div className="rounded-xl border border-border bg-white px-4 py-3">
-      <p className="text-2xl font-bold tabular-nums text-gray-900">{value}</p>
-      <p className="mt-0.5 text-sm text-gray-600">{label}</p>
-      {hint && <p className="mt-0.5 text-xs text-gray-400">{hint}</p>}
-    </div>
+    <ol className="relative grid gap-4 sm:grid-cols-5 sm:gap-2">
+      {steps.map((step, i) => (
+        <li key={step.label} className="relative flex gap-3 sm:flex-col sm:items-center sm:gap-2 sm:text-center">
+          {/* Linia dintre pași: verticală pe telefon, orizontală pe ecran lat. */}
+          {i < steps.length - 1 && (
+            <span
+              aria-hidden
+              className={`absolute left-[11px] top-7 h-[calc(100%-4px)] w-0.5 sm:left-[calc(50%+16px)] sm:top-[11px] sm:h-0.5 sm:w-[calc(100%-24px)] ${
+                steps[i + 1].done ? 'bg-primary' : 'bg-gray-200'
+              }`}
+            />
+          )}
+          <span
+            className={`relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+              step.done
+                ? 'bg-primary text-white'
+                : i === current
+                  ? 'border-2 border-primary bg-white text-primary-dark'
+                  : 'border-2 border-gray-200 bg-white text-gray-400'
+            }`}
+          >
+            {step.done ? '✓' : i + 1}
+          </span>
+          <span>
+            <span className={`block text-sm font-semibold ${step.done || i === current ? 'text-gray-900' : 'text-gray-400'}`}>
+              {step.label}
+            </span>
+            {step.detail && <span className="block text-xs text-gray-500">{step.detail}</span>}
+          </span>
+        </li>
+      ))}
+    </ol>
   );
 }
 
@@ -190,26 +243,31 @@ function FirmCard({ leadId, firm, demo, open }: { leadId: string; firm: AccountF
   );
 }
 
-function BumpCard({ leadId, data, demo }: { leadId: string; data: AccountLeadData; demo: boolean }) {
+/**
+ * Pentru cine nu e sunat: întâi îl trimitem să sune chiar el firmele din județ,
+ * abia apoi oferim retrimiterea. Altfel omul apasă „încă vreau oferte” și așteaptă
+ * la nesfârșit (Radu, 23 oct 2026: „așa o să tot aștepte oamenii oferte”).
+ */
+function HelpCard({ data, demo }: { data: AccountLeadData; demo: boolean }) {
   const [state, setState] = useState(data.bump);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
-  const left = BUMPS_PER_WEEK - state.usedLast7;
+  const noFirm = data.firms.length === 0;
 
   async function bump() {
     if (demo) {
-      setMsg(`Exemplu: în contul real, cererea urcă în capul listei și pleacă din nou la firmele din ${data.judet} și din județele vecine.`);
+      setMsg(`Exemplu: în contul real, cererea pleacă din nou la firmele din ${data.judet} și din județele vecine.`);
       return;
     }
     setBusy(true);
     setMsg(null);
     try {
-      const json = await postJson('/api/cont/inca-vreau', { leadId });
-      setState((s) => ({ ...s, usedLast7: s.usedLast7 + 1, allowed: s.usedLast7 + 1 < BUMPS_PER_WEEK, lastAt: new Date().toISOString() }));
+      const json = await postJson('/api/cont/inca-vreau', { leadId: data.id });
+      setState((s) => ({ ...s, usedLast7: s.usedLast7 + 1, allowed: s.usedLast7 + 1 < BUMPS_PER_WEEK }));
       setMsg(
         json.firms
-          ? `Gata. Cererea e din nou în capul listei și am trimis-o la ${json.firms} ${json.firms === 1 ? 'firmă' : 'firme'}.`
-          : 'Gata. Cererea e din nou în capul listei pentru firmele care caută lucrări.',
+          ? `Am trimis-o din nou la ${json.firms} ${json.firms === 1 ? 'firmă' : 'firme'}. Între timp, nu așteptați: sunați și dumneavoastră.`
+          : 'Am urcat-o din nou în lista firmelor. Între timp, nu așteptați: sunați și dumneavoastră.',
       );
     } catch (err) {
       setMsg(err instanceof Error ? err.message : String(err));
@@ -220,23 +278,32 @@ function BumpCard({ leadId, data, demo }: { leadId: string; data: AccountLeadDat
 
   return (
     <section className="rounded-xl border border-border bg-white p-5">
-      <h2 className="text-base font-semibold text-gray-900">Încă așteptați oferte?</h2>
+      <h2 className="text-base font-semibold text-gray-900">
+        {noFirm ? 'Nu așteptați să vă sune cineva' : 'Firma nu v-a sunat?'}
+      </h2>
       <p className="mt-1 text-sm text-gray-600">
-        Urcăm cererea în capul listei și o trimitem din nou firmelor din {data.judet} și din județele vecine. Puteți
-        apăsa de {BUMPS_PER_WEEK} ori pe săptămână.
+        {noFirm
+          ? `Încă nu v-a preluat nicio firmă cererea. Cel mai repede ajungeți la o ofertă sunând chiar dumneavoastră firmele din ${data.judet}: au telefonul pe fișă.`
+          : `Am aflat și verificăm cu firma. Până atunci, puteți suna chiar dumneavoastră alte firme din ${data.judet}: au telefonul pe fișă.`}
       </p>
-      <div className="mt-3 flex flex-wrap items-center gap-3">
-        <Button onClick={() => void bump()} disabled={busy || !state.allowed}>
-          {busy ? 'Se trimite…' : 'Încă vreau oferte'}
-        </Button>
-        <span className="text-xs text-gray-500">
-          {state.allowed
-            ? `${left} ${left === 1 ? 'apăsare rămasă' : 'apăsări rămase'} săptămâna aceasta`
-            : state.nextAt
-              ? `Butonul revine pe ${dayTime(state.nextAt)}`
-              : ''}
-        </span>
+      <div className="mt-3">
+        <Button href={demo ? undefined : `/firme/judet/${slugifyCounty(data.judet)}`}>Vedeți firmele din {data.judet}</Button>
       </div>
+      {state.allowed ? (
+        <button
+          type="button"
+          onClick={() => void bump()}
+          disabled={busy}
+          className="mt-3 text-sm text-gray-600 underline hover:text-gray-900 disabled:opacity-60"
+        >
+          {busy ? 'Se trimite…' : `Sau trimitem cererea încă o dată firmelor din ${data.judet} și din județele vecine`}
+        </button>
+      ) : (
+        <p className="mt-3 text-xs text-gray-500">
+          Am retrimis-o deja de {BUMPS_PER_WEEK} ori săptămâna aceasta
+          {state.nextAt ? `; se poate din nou pe ${dayTime(state.nextAt)}` : ''}.
+        </p>
+      )}
       {msg && <p className="mt-2 text-sm text-gray-700">{msg}</p>}
     </section>
   );
@@ -378,18 +445,8 @@ export default function AccountLeadView({
         </p>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-3">
-        {data.stats.sentTo > 0 ? (
-          <Stat value={String(data.stats.sentTo)} label={data.stats.sentTo === 1 ? 'firmă a primit-o pe email' : 'firme au primit-o pe email'} />
-        ) : (
-          <Stat value="✓" label="Publicată pentru firme" hint="pe pagina de cereri a instalatorilor" />
-        )}
-        <Stat
-          value={String(data.stats.clickVisitors)}
-          label={data.stats.clickVisitors === 1 ? 'instalator a apăsat pe ea' : 'instalatori au apăsat pe ea'}
-          hint="pe pagina de cereri pentru instalatori"
-        />
-        <Stat value={String(data.stats.claimed)} label={data.stats.claimed === 1 ? 'firmă a preluat-o' : 'firme au preluat-o'} hint="maximum 3" />
+      <div className="rounded-xl border border-border bg-white px-5 py-5">
+        <ProgressSteps data={data} />
       </div>
 
       {data.informez && data.open && (
@@ -422,7 +479,9 @@ export default function AccountLeadView({
         )}
       </section>
 
-      {data.open && !data.informez && <BumpCard leadId={data.id} data={data} demo={demo} />}
+      {data.open && !data.informez && (data.firms.length === 0 || data.firms.every((f) => f.report === 'nesunat')) && (
+        <HelpCard data={data} demo={demo} />
+      )}
       {data.open && <CloseCard leadId={data.id} firms={data.firms} demo={demo} />}
 
       {data.details.length > 0 && (

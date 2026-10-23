@@ -38,6 +38,7 @@ const DEMO_DATA: AccountLeadData = {
   closedLabel: null,
   numeContact: 'Andrei Popescu',
   informez: false,
+  won: false,
   details: [
     { label: 'Tip clădire', value: 'Casă individuală' },
     { label: 'Lucrare', value: 'Sistem fotovoltaic nou (panouri + invertor)' },
@@ -83,6 +84,13 @@ const DEMO_DATA: AccountLeadData = {
   ],
   stats: { sentTo: 6, clickVisitors: 9, claimed: 2 },
   bump: { allowed: true, usedLast7: 0, nextAt: null, lastAt: null },
+};
+
+// Aceeași cerere, înainte să o preia cineva: atunci apare îndemnul să sune singur.
+const DEMO_DATA_EMPTY: AccountLeadData = {
+  ...DEMO_DATA,
+  firms: [],
+  stats: { sentTo: 4, clickVisitors: 3, claimed: 0 },
 };
 
 const LINK = 'https://instalatori-fotovoltaice.ro/cont/intrare?t=exemplu';
@@ -265,6 +273,18 @@ export default async function ContClientAdminPage() {
         <div className="mt-3 rounded-2xl border border-slate-200 bg-white p-4 sm:p-8">
           <div className="mx-auto max-w-3xl">
             <AccountLeadView data={DEMO_DATA} demo />
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-10">
+        <h2 className="text-sm font-semibold text-slate-900">Aceeași cerere, înainte să o preia o firmă</h2>
+        <p className="mt-0.5 text-xs text-slate-500">
+          Aici clientul e trimis să sune chiar el firmele din județ; retrimiterea e doar un link pe locul doi.
+        </p>
+        <div className="mt-3 rounded-2xl border border-slate-200 bg-white p-4 sm:p-8">
+          <div className="mx-auto max-w-3xl">
+            <AccountLeadView data={DEMO_DATA_EMPTY} demo />
           </div>
         </div>
       </section>
