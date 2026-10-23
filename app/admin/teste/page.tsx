@@ -39,6 +39,15 @@ const when = (iso: string) =>
 const seconds = (run: E2eRun) => Math.round((Date.parse(run.finishedAt) - Date.parse(run.startedAt)) / 1000);
 const targetLabel = (t: string) => (t === PROD ? 'producție' : t.replace(/^https?:\/\//, ''));
 const testKey = (r: Pick<E2eResult, 'suite' | 'name'>) => `${r.suite}::${r.name}`;
+const ALL_SUITES = Object.keys(SUITE_LABELS);
+const suitesOf = (run: E2eRun) => [...new Set(run.results.map((r) => r.suite))];
+
+/** „doar pagini publice, baza de date" când rularea n-a cuprins toate suitele. */
+function partialNote(run: E2eRun): string {
+  const ran = suitesOf(run);
+  if (ALL_SUITES.every((s) => ran.includes(s))) return '';
+  return ` · doar ${ran.map((s) => (SUITE_LABELS[s] ?? s).toLowerCase()).join(', ')}`;
+}
 
 const DOT: Record<E2eStatus | 'none', string> = {
   pass: 'bg-emerald-500',
@@ -88,7 +97,7 @@ export default async function TestePage({ searchParams }: Props) {
   for (const r of history) for (const t of r.results) if (!testNames.has(testKey(t))) testNames.set(testKey(t), t);
   const statusIn = (r: E2eRun, key: string): E2eStatus | 'none' => r.results.find((t) => testKey(t) === key)?.status ?? 'none';
 
-  const suites = selected ? [...new Set(selected.results.map((r) => r.suite))] : [];
+  const suites = selected ? suitesOf(selected) : [];
 
   return (
     <div>
@@ -130,6 +139,7 @@ export default async function TestePage({ searchParams }: Props) {
           <p className="mt-1 text-xs text-slate-600">
             Ultima rulare: {when(latest.startedAt)} · {targetLabel(latest.target)} ·{' '}
             {TRIGGER_LABELS[latest.trigger] ?? latest.trigger} · commit <Commit sha={latest.gitSha} /> · {seconds(latest)} s
+            {partialNote(latest)}
           </p>
           {latest.failed > 0 && (
             <ul className="mt-2 space-y-0.5 text-sm text-red-800">
@@ -162,7 +172,7 @@ export default async function TestePage({ searchParams }: Props) {
                       <span className="text-slate-400">{SUITE_LABELS[t.suite] ?? t.suite} · </span>
                       {t.name}
                     </td>
-                    <td className="px-3 py-1.5">
+                    <td className="w-full px-3 py-1.5">
                       <div className="flex gap-1">
                         {history.map((r) => (
                           <Link
@@ -190,6 +200,7 @@ export default async function TestePage({ searchParams }: Props) {
           <p className="mt-0.5 text-xs text-slate-500">
             {targetLabel(selected.target)} · {TRIGGER_LABELS[selected.trigger] ?? selected.trigger} · commit{' '}
             <Commit sha={selected.gitSha} /> · {selected.passed} trecute, {selected.failed} picate · {seconds(selected)} s
+            {partialNote(selected)}
           </p>
           <div className="mt-3 grid gap-3 lg:grid-cols-2">
             {suites.map((suite) => {
