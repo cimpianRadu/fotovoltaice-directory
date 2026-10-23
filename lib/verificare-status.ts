@@ -39,6 +39,7 @@ import { isValidEmail } from './portal-auth';
 import { escapeHtml, sendEmail } from './email';
 import { sendStatusCheckEmail } from './email-client';
 import { getCompanies } from './utils';
+import { DECID_HELP_OPTIONS, describeFirmContacts, optionLabel, type ResponseDetails } from './client-response-details';
 
 const DAY_MS = 86_400_000;
 const TEST_PREFIX = 'routine-test-';
@@ -75,7 +76,7 @@ function firmDisplayName(claim: LeadClaim): string {
   return claim.numeFirma.trim().replace(/^s\.?\s*c\.?\s+/i, '').trim() || claim.numeFirma.trim();
 }
 
-function namedFirms(lead: NewLead, claims: LeadClaim[], now: number): NamedFirm[] {
+function namedFirms(lead: Pick<NewLead, 'timestamp'>, claims: LeadClaim[], now: number): NamedFirm[] {
   return claims
     .filter(
       (c) =>
@@ -163,36 +164,76 @@ export async function findNamedClaim(leadId: string, claimTs: string): Promise<s
   return claim ? firmDisplayName(claim) : null;
 }
 
+/** Firmele numite în email, pentru întrebarea „ce s-a întâmplat cu fiecare firmă?" de pe pagină. */
+export async function declaredFirmsFor(leadId: string): Promise<{ claimTs: string; name: string }[]> {
+  const claims = await getClaims();
+  return namedFirms({ timestamp: leadId }, claims, Date.now()).map(({ claimTs, name }) => ({ claimTs, name }));
+}
+
+/**
+ * Toate firmele care au revendicat cererea, inclusiv cele care au renunțat
+ * (Solanum a renunțat la Caraș-Severin pe „nu răspunde", omul putea totuși să
+ * semneze cu ea), câte o dată pe firmă. Pentru „Am ales deja o firmă".
+ */
+export async function claimedFirmsFor(leadId: string): Promise<{ claimTs: string; name: string }[]> {
+  const seen = new Set<string>();
+  return (await getClaims())
+    .filter((c) => c.leadId === leadId)
+    .sort((a, b) => a.timestamp.localeCompare(b.timestamp))
+    .map((c) => ({ claimTs: c.timestamp, name: firmDisplayName(c) }))
+    .filter((f) => !seen.has(f.name) && seen.add(f.name));
+}
+
 /** Firmele care declarau contactul, pentru notă și emailul intern. */
-async function declaredFirms(lead: NewLead): Promise<string> {
-  const firms = namedFirms(lead, await getClaims(), Date.now());
+function declaredFirms(lead: NewLead, claims: LeadClaim[]): string {
+  const firms = namedFirms(lead, claims, Date.now());
   return firms.map((f) => `${f.name} (${CLAIM_STATUS_LABELS[f.status]})`).join(', ') || 'niciuna';
 }
 
 export async function recordStatusResponse(
   lead: NewLead,
   response: StatusResponse,
-  opts: { claimTs?: string; motiv?: AltaFirmaMotiv } = {},
+  opts: { claimTs?: string; motiv?: AltaFirmaMotiv; details?: ResponseDetails } = {},
   now = new Date(),
 ): Promise<{ error?: string }> {
   const at = now.toISOString();
   const when = nowBucharest(now);
-  const declared = await declaredFirms(lead);
+  // O singură citire a revendicărilor pentru tot răspunsul: limita Sheets e comună cu site-ul.
+  const claims = await getClaims();
+  const declared = declaredFirms(lead, claims);
+  const details = opts.details ?? {};
+  // Răspunsurile pe fiecare firmă se iau doar pentru firmele numite în email.
+  const names = Object.fromEntries(
+    namedFirms({ timestamp: lead.timestamp }, claims, Date.now()).map((f) => [f.claimTs, f.name]),
+  );
+  const perFirm = details.firme ? describeFirmContacts(details.firme, names) : '';
+  const notCalled = Object.entries(details.firme ?? {}).filter(([ts, v]) => names[ts] && v === 'nu').length;
   let status: LeadStatus | undefined;
   let note: string;
   let subject: string;
 
   if (response === 'semnat') {
-    const firma = opts.claimTs ? await findNamedClaim(lead.timestamp, opts.claimTs) : null;
+    const named = opts.claimTs ? claims.find((c) => c.leadId === lead.timestamp && c.timestamp === opts.claimTs) : undefined;
+    const firma = named ? firmDisplayName(named) : null;
     if (!firma) return { error: 'Nu am găsit firma din link. Scrieți-ne și rezolvăm manual.' };
     await recordClientResponse(lead.timestamp, `semnat`, `${at} ${firma}`);
     status = 'castigata';
-    note = `Clientul a confirmat în emailul „Ați găsit o ofertă bună?" că a semnat cu ${firma}.`;
+    note = `Clientul a confirmat în emailul „Ați găsit o ofertă bună?" că a semnat cu ${firma}.${
+      details.putere ? ` Puterea din contract, după client: ${details.putere} kW.` : ''
+    }`;
     subject = `[Semnat] ${lead.judet}: clientul confirmă că a semnat cu ${firma}`;
   } else if (response === 'decid') {
     await recordClientResponse(lead.timestamp, 'decid', at);
-    note = `Clientul a răspuns în emailul „Ați găsit o ofertă bună?": încă se decide. Firme declarate: ${declared}.`;
-    subject = `[Se decide] ${lead.judet}: clientul încă se decide`;
+    const ajutor = (details.ajutor ?? []).map((v) => optionLabel(DECID_HELP_OPTIONS, v).toLowerCase());
+    note =
+      `${notCalled ? 'ATENȚIE: ' : ''}Clientul a răspuns în emailul „Ați găsit o ofertă bună?": încă se decide. Firme declarate: ${declared}.` +
+      (perFirm ? ` După client: ${perFirm}.` : '') +
+      (ajutor.length ? ` L-ar ajuta: ${ajutor.join(', ')}.` : '') +
+      (details.suna ? ' Vrea să-l sunăm noi.' : '');
+    const tags = [details.suna && 'de sunat', details.ajutor?.includes('alta-firma') && 'vrea altă firmă', notCalled && 'firmă care nu l-a sunat']
+      .filter(Boolean)
+      .join(', ');
+    subject = `[Se decide${tags ? `: ${tags}` : ''}] ${lead.judet}: clientul încă se decide`;
   } else if (response === 'altafirma') {
     const motiv = opts.motiv;
     if (!motiv || !(ALTA_FIRMA_MOTIVE as readonly string[]).includes(motiv)) {
@@ -210,7 +251,9 @@ export async function recordStatusResponse(
         : `[Renunțat] ${lead.judet}: clientul nu mai face lucrarea`;
   } else {
     await recordClientResponse(lead.timestamp, 'necontactat', at);
-    note = `ATENȚIE: clientul spune în emailul „Ați găsit o ofertă bună?" că nu l-a contactat nicio firmă. Firmele declarau contact: ${declared}.`;
+    note =
+      `ATENȚIE: clientul spune în emailul „Ați găsit o ofertă bună?" că nu l-a contactat nicio firmă. Firmele declarau contact: ${declared}.` +
+      (perFirm ? ` Pe fiecare firmă, după client: ${perFirm}.` : '');
     subject = `[Necontactat] ${lead.judet}: clientul spune că nu l-a contactat nicio firmă`;
   }
 

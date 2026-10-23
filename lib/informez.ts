@@ -41,8 +41,9 @@ import {
   type NewLead,
 } from './sheets';
 import { isValidEmail } from './portal-auth';
-import { sendCountyLeadAlert, sendWatchActivatedEmail } from './email';
+import { escapeHtml, sendCountyLeadAlert, sendEmail, sendWatchActivatedEmail } from './email';
 import { logLeadSends } from './lead-sends';
+import { RENUNT_REASON_OPTIONS, optionLabel, type ResponseDetails } from './client-response-details';
 import {
   sendInformezCheckinEmail,
   sendInformezWelcomeEmail,
@@ -151,14 +152,24 @@ export async function recordStillWaiting(lead: NewLead) {
   await recordClientResponse(lead.timestamp, 'astept');
 }
 
-export async function closeLeadByClient(lead: NewLead, now = new Date()) {
+export async function closeLeadByClient(lead: NewLead, details: ResponseDetails = {}, now = new Date()) {
+  const motive = (details.motive ?? []).map((v) => optionLabel(RENUNT_REASON_OPTIONS, v).toLowerCase());
+  const nesunat = details.motive?.includes('nesunat');
+  const note =
+    `${nesunat ? 'ATENȚIE: ' : ''}Clientul a apăsat „nu mai vreau" în emailul platformei.` +
+    (motive.length ? ` Motiv: ${motive.join(', ')}.` : '') +
+    (details.altceva ? ` A scris: „${details.altceva}”.` : '');
   await recordClientResponse(lead.timestamp, 'renunt');
-  await updateLeadCrm(lead.timestamp, {
-    status: 'renuntat',
-    note: 'Clientul a apăsat „nu mai vreau" în emailul platformei.',
-    ...nowBucharest(now),
-  });
+  await updateLeadCrm(lead.timestamp, { status: 'renuntat', note, ...nowBucharest(now) });
   revalidatePath('/cereri');
+  // Fără motiv nu e nimic de citit. Cu motiv, mai ales „nu m-a sunat nicio
+  // firmă", e o problemă a platformei care altfel s-ar închide ca renunțare.
+  if (!motive.length && !details.altceva) return;
+  await sendEmail({
+    to: 'contact@instalatori-fotovoltaice.ro',
+    subject: `[Renunțat${nesunat ? ': nu l-a sunat nicio firmă' : ''}] ${lead.judet}: ${motive.join(', ') || 'motiv scris de client'}`,
+    html: `<p>${escapeHtml(note)}</p><p>Cererea <strong>${escapeHtml(lead.timestamp)}</strong>: ${escapeHtml(lead.judet)}, ${escapeHtml(lead.putere ? `${lead.putere} kW` : 'fără putere')}, ${escapeHtml(lead.numeContact || lead.numeCompanie)}, ${escapeHtml(lead.telefon)}. Închisă ca <code>renuntat</code>.</p>`,
+  });
 }
 
 /**

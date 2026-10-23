@@ -4,6 +4,7 @@ import { isClientLinkAction, verifyClientToken } from '@/lib/lead-client-token';
 import { closeLeadByClient, recordStillWaiting } from '@/lib/informez';
 import { closeLeadChosenFirm, confirmLeadActive } from '@/lib/confirmare-activa';
 import { recordStatusResponse, type AltaFirmaMotiv } from '@/lib/verificare-status';
+import { parseResponseDetails } from '@/lib/client-response-details';
 
 // Răspunsurile cu un click din emailurile către client: „încă mă informez"
 // (repornește ceasul check-in-urilor) și „nu mai vreau" (închide cererea).
@@ -14,6 +15,8 @@ import { recordStatusResponse, type AltaFirmaMotiv } from '@/lib/verificare-stat
 // urcă în feed) și „aleasa" (închisă, cu firma aleasă, opțional, în `firma`).
 // Din 6 oct 2026, și „Ați găsit o ofertă bună?": „semnat" (revendicarea în `f`,
 // semnată în token), „decid", „altafirma" (cu `motiv`) și „necontactat".
+// Din 12 oct 2026, `detalii` (opțional, lib/client-response-details): ce l-ar
+// ajuta, ce a făcut fiecare firmă, de ce renunță, cu ce firmă a semnat etc.
 
 export async function POST(request: Request) {
   try {
@@ -24,6 +27,7 @@ export async function POST(request: Request) {
     const firma = typeof body.firma === 'string' ? body.firma : '';
     const f = typeof body.f === 'string' ? body.f : '';
     const motiv = typeof body.motiv === 'string' ? (body.motiv as AltaFirmaMotiv) : undefined;
+    const details = parseResponseDetails(body.detalii);
 
     if (!isClientLinkAction(action) || action === 'actualizare') {
       return NextResponse.json({ error: 'Acțiune necunoscută.' }, { status: 400 });
@@ -40,14 +44,14 @@ export async function POST(request: Request) {
     if (isLeadClosed(lead.crmStatus)) return NextResponse.json({ success: true, alreadyClosed: true });
 
     if (action === 'semnat' || action === 'decid' || action === 'altafirma' || action === 'necontactat') {
-      const res = await recordStatusResponse(lead, action, { claimTs: f, motiv });
+      const res = await recordStatusResponse(lead, action, { claimTs: f, motiv, details });
       if (res.error) return NextResponse.json({ error: res.error }, { status: 400 });
       return NextResponse.json({ success: true });
     }
 
-    if (action === 'renunt') await closeLeadByClient(lead);
-    else if (action === 'activa') await confirmLeadActive(lead);
-    else if (action === 'aleasa') await closeLeadChosenFirm(lead, firma);
+    if (action === 'renunt') await closeLeadByClient(lead, details);
+    else if (action === 'activa') await confirmLeadActive(lead, details);
+    else if (action === 'aleasa') await closeLeadChosenFirm(lead, firma, details.firmaClaim);
     else await recordStillWaiting(lead);
 
     return NextResponse.json({ success: true });

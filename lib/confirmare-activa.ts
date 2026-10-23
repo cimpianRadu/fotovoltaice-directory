@@ -31,13 +31,16 @@ import {
   markLeadConfirmedActive,
   recordClientResponse,
   updateLeadCrm,
+  updateLeadTermen,
   type LeadClaim,
   type NewLead,
 } from './sheets';
 import { isValidEmail } from './portal-auth';
-import { escapeHtml, sendEmail } from './email';
+import { escapeHtml, PORTAL_BASE_URL, sendEmail } from './email';
 import { sendActiveCheckEmail } from './email-client';
-import { CONTACTED_STATUSES, responseAfter } from './verificare-status';
+import { CONTACTED_STATUSES, claimedFirmsFor, responseAfter } from './verificare-status';
+import { ACTIVA_TERMEN_OPTIONS, optionLabel, type ResponseDetails } from './client-response-details';
+import { TIMELINE_OPTIONS } from './utils-shared';
 import { bucharestDay } from './client-email-schedule';
 import { alertCountyLeadConfirmedActive } from './informez';
 
@@ -187,34 +190,75 @@ async function sendBatch(
  * județ primesc alertă, ca la o cerere reactivată. Doar la prima confirmare: un
  * al doilea click pe același link nu mai trimite nimic.
  */
-export async function confirmLeadActive(lead: NewLead) {
+export async function confirmLeadActive(lead: NewLead, details: ResponseDetails = {}, now = new Date()) {
   await markLeadConfirmedActive(lead.timestamp);
+  // Termenul din formular are luni: „peste 3 luni" scris în august nu mai e
+  // adevărat în octombrie. Dacă omul îl dă din nou, cardul îl arată pe cel nou.
+  const termenNou = details.termen && details.termen !== lead.termen ? details.termen : '';
+  if (termenNou) await updateLeadTermen(lead.timestamp, termenNou);
+  if (details.termen || details.contactat) {
+    const parts = ['Clientul a confirmat în emailul „mai căutați oferte?" că încă vrea oferte.'];
+    if (details.termen) {
+      parts.push(
+        termenNou
+          ? `Termen nou: ${optionLabel(ACTIVA_TERMEN_OPTIONS, details.termen).toLowerCase()} (era: ${lead.termen ? optionLabel(TIMELINE_OPTIONS, lead.termen).toLowerCase() : 'necompletat'}).`
+          : `Termen neschimbat: ${optionLabel(ACTIVA_TERMEN_OPTIONS, details.termen).toLowerCase()}.`,
+      );
+    }
+    if (details.contactat) {
+      parts.push(details.contactat === 'da' ? 'Spune că l-a sunat o firmă până acum.' : 'Spune că nu l-a sunat nicio firmă până acum.');
+    }
+    await updateLeadCrm(lead.timestamp, { note: parts.join(' '), ...nowBucharest(now) });
+  }
   revalidatePath('/cereri');
   if (lead.confirmataLa) return;
   // Eșecul alertei nu strică răspunsul clientului; se vede în loguri.
   try {
-    await alertCountyLeadConfirmedActive(lead);
+    await alertCountyLeadConfirmedActive(termenNou ? { ...lead, termen: termenNou } : lead);
   } catch (err) {
     console.error('[confirmare-activa] alertă județ:', err);
   }
 }
 
-export async function closeLeadChosenFirm(lead: NewLead, firma: string, now = new Date()) {
-  const clean = firma.trim().slice(0, 120);
+/**
+ * „Am ales deja o firmă". Dacă omul alege una dintre firmele care au revendicat
+ * cererea, e o lucrare concretizată prin platformă: `castigata`, ca la „Am
+ * semnat cu X". Altfel `altundeva`, cu numele scris de el, dacă l-a scris.
+ */
+export async function closeLeadChosenFirm(lead: NewLead, firma: string, firmaClaim = '', now = new Date()) {
+  const ours = firmaClaim ? (await claimedFirmsFor(lead.timestamp)).find((f) => f.claimTs === firmaClaim) : undefined;
+  const clean = ours ? ours.name : firma.trim().slice(0, 120);
   await recordClientResponse(lead.timestamp, 'aleasa', now.toISOString());
   await updateLeadCrm(lead.timestamp, {
-    status: 'altundeva',
-    note: clean
-      ? `Clientul a răspuns în email: a ales firma „${clean}”. De verificat dacă e una de la noi (atunci: castigata).`
-      : 'Clientul a răspuns în email: a ales deja o firmă, fără să spună care.',
+    status: ours ? 'castigata' : 'altundeva',
+    note: ours
+      ? `Clientul a răspuns în email: a ales firma „${clean}”, care a revendicat cererea la noi. Status pus automat pe castigata.`
+      : clean
+        ? `Clientul a răspuns în email: a ales firma „${clean}”. De verificat dacă e una de la noi (atunci: castigata).`
+        : 'Clientul a răspuns în email: a ales deja o firmă, fără să spună care.',
     ...nowBucharest(now),
   });
   revalidatePath('/cereri');
   // Singura confirmare de concretizare care nu vine de la firmă: să nu se piardă în Sheet.
+  // Rezumatul și linkul spre fișă: din timestamp + telefon nu-ți amintești despre ce cerere e.
+  const crmHref = `${PORTAL_BASE_URL}/admin/crm?filtru=toate#${encodeURIComponent(lead.timestamp)}`;
+  const rezumat = [
+    lead.tipProiect,
+    [lead.localitate, lead.judet].filter(Boolean).join(', '),
+    lead.putere ? `${lead.putere} kW` : lead.suprafata ? `${lead.suprafata} mp` : '',
+    lead.consumLunar ? `consum ${lead.consumLunar} kWh/lună` : '',
+  ]
+    .filter(Boolean)
+    .join(' · ');
+  const footer = `<p>Cererea: ${escapeHtml(rezumat)}<br><a href="${crmHref}">Deschide fișa în /admin/crm</a></p>`;
   await sendEmail({
     to: INTERNAL_TO,
-    subject: `[Cerere închisă] ${lead.judet}: clientul a ales ${clean ? `„${clean}”` : 'o firmă (nespecificată)'}`,
-    html: `<p>Cererea <strong>${escapeHtml(lead.timestamp)}</strong> (${escapeHtml(lead.judet)}, ${escapeHtml(lead.numeContact)}, ${escapeHtml(lead.telefon)}) a fost închisă ca <code>altundeva</code> din emailul „mai căutați oferte?".</p><p>Firma aleasă: <strong>${clean ? escapeHtml(clean) : 'nespecificată'}</strong>.</p><p>Dacă e o firmă care a revendicat cererea la noi, schimbă statusul în <code>castigata</code> din /admin/crm.</p>`,
+    subject: ours
+      ? `[Câștigată] ${lead.judet}: clientul a ales „${clean}”, firmă de la noi`
+      : `[Cerere închisă] ${lead.judet}: clientul a ales ${clean ? `„${clean}”` : 'o firmă (nespecificată)'}`,
+    html: ours
+      ? `<p>Cererea <strong>${escapeHtml(lead.timestamp)}</strong> (${escapeHtml(lead.judet)}, ${escapeHtml(lead.numeContact)}, ${escapeHtml(lead.telefon)}) a fost închisă ca <code>castigata</code> din emailul „mai căutați oferte?".</p><p>Clientul a ales <strong>${escapeHtml(clean)}</strong> din lista firmelor care au revendicat cererea. Dacă e un click greșit, schimbă statusul din /admin/crm.</p>${footer}`
+      : `<p>Cererea <strong>${escapeHtml(lead.timestamp)}</strong> (${escapeHtml(lead.judet)}, ${escapeHtml(lead.numeContact)}, ${escapeHtml(lead.telefon)}) a fost închisă ca <code>altundeva</code> din emailul „mai căutați oferte?".</p><p>Firma aleasă: <strong>${clean ? escapeHtml(clean) : 'nespecificată'}</strong>.</p><p>Nu e câștigată. Doar dacă afli că e o firmă care a revendicat cererea la noi, schimbă statusul în <code>castigata</code>.</p>${footer}`,
   });
 }
 
