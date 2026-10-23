@@ -43,11 +43,11 @@ export default async function ContPage({ searchParams }: Props) {
   if (!leads.length) {
     return (
       <div className="mx-auto max-w-md px-4 py-12">
-        <p className="text-xs font-semibold uppercase tracking-wide text-primary-dark">Pentru clienți</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-primary-dark">Pentru clienți · gratuit</p>
         <h1 className="mt-1 text-2xl font-bold text-gray-900">Contul meu</h1>
         <p className="mt-2 text-sm text-gray-600">
           Vedeți ce s-a întâmplat cu cererea dumneavoastră: firmele care au preluat-o, telefoanele lor și ofertele primite.
-          Intrați cu emailul cu care ați trimis cererea, fără parolă.
+          Intrați cu emailul cu care ați trimis cererea, fără parolă. Contul e gratuit, ca și cererea.
         </p>
         <div className="mt-6">
           <LoginForm message={eroare ? ERRORS[eroare] : undefined} />

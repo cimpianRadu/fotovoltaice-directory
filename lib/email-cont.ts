@@ -40,7 +40,7 @@ function where(lead: LeadForEmail): string {
 }
 
 const NO_PASSWORD = p(
-  'Nu aveți nevoie de parolă: butonul vă duce direct în contul dumneavoastră. Păstrați emailul, linkul rămâne valabil.',
+  'Contul e gratuit și nu are parolă: butonul vă duce direct în el. Păstrați emailul, linkul rămâne valabil.',
 );
 
 // ---------------------------------------------------------------------------

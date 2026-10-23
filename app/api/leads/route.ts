@@ -12,7 +12,7 @@ import {
 import { sendCountyLeadAlert } from '@/lib/email';
 import { createLeadPhotoToken } from '@/lib/lead-photos';
 import { CLIENT_LEAD_COOKIE, ensureAccount, leadGrantCookie } from '@/lib/client-auth';
-import { clientAccountLive } from '@/lib/client-account';
+import { clientAccountLive, clientEmailsLive } from '@/lib/client-account';
 import { sendConfirmationEmail } from '@/lib/email-cont';
 import { logLeadSends } from '@/lib/lead-sends';
 import { getCompanies } from '@/lib/utils';
@@ -204,7 +204,9 @@ export async function POST(request: Request) {
       success: true,
       id,
       photoToken,
-      ...(clientAccountLive() ? { contUrl: `/cont/cerere/${encodeURIComponent(id)}` } : {}),
+      ...(clientAccountLive()
+        ? { contUrl: `/cont/cerere/${encodeURIComponent(id)}`, contEmail: clientEmailsLive() }
+        : {}),
     });
     try {
       const grant = await leadGrantCookie(body.email, id, (await cookies()).get(CLIENT_LEAD_COOKIE)?.value);

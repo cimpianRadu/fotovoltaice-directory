@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import FollowRequestCTA from '@/components/cont/FollowRequestCTA';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
@@ -525,6 +526,8 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   // Pagina cererii din contul clientului (23 oct 2026). Vine de la /api/leads doar
   // după pornirea contului; până atunci butonul nu apare.
   const [contUrl, setContUrl] = useState<string | null>(null);
+  // Doar cu emailurile pornite promitem că linkul vine și pe email.
+  const [contEmail, setContEmail] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   // Un pas care se demontează și-ar pierde valorile din FormData, deci câmpurile
   // sunt controlate și corpul cererii se construiește din state, nu din formular.
@@ -761,6 +764,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
       setLeadRef(typeof json.id === 'string' ? json.id : null);
       setPhotoToken(typeof json.photoToken === 'string' ? json.photoToken : '');
       setContUrl(typeof json.contUrl === 'string' ? json.contUrl : null);
+      setContEmail(json.contEmail === true);
       // Pasul 5 începe de sus, ca orice pas; scrollăm cât formularul mai există.
       scrollToForm();
       setStatus('success');
@@ -1061,23 +1065,12 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
                 Am notat că doriți oferte de la {chosenFirms.join(', ')}.{' '}
               </>
             )}
-            Vă contactăm în cel mai scurt timp cu oferte de la firme care acoperă zona
-            dumneavoastră. Mai jos puteți completa câteva detalii, dar nu e obligatoriu.
+            Am trimis-o firmelor de instalare din zona dumneavoastră. Cele care o preiau vă
+            sună direct. Mai jos puteți completa câteva detalii, dar nu e obligatoriu.
           </p>
-          {contUrl && (
-            <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-emerald-200 pt-4">
-              <a
-                href={contUrl}
-                className="inline-flex min-h-[44px] items-center rounded-lg bg-emerald-700 px-4 text-sm font-semibold text-white hover:bg-emerald-800"
-              >
-                Urmăriți cererea
-              </a>
-              <p className="text-sm text-emerald-800">
-                Vedeți câte firme au primit-o, care au preluat-o și telefoanele lor. Linkul vi-l trimitem și pe email.
-              </p>
-            </div>
-          )}
         </div>
+
+        {contUrl && <FollowRequestCTA contUrl={contUrl} contEmail={contEmail} />}
 
         {/* Restul detaliilor, plus pozele. Fără buton de salvare: fiecare răspuns
             pleacă singur spre cerere, vezi scheduleSave. */}
