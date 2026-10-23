@@ -20,6 +20,7 @@ const TABS = [
   { href: '/admin/analytics/firme', label: 'Firme' },
   { href: '/admin/analytics/sponsori', label: 'Sponsori' },
   { href: '/admin/social', label: 'Social' },
+  { href: '/admin/teste', label: 'Teste' },
 ];
 
 export default function AdminNav() {

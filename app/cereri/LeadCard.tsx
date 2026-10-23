@@ -796,6 +796,9 @@ export default function LeadCard({
   return (
     <div
       ref={cardRef}
+      // Marcaj stabil pentru testele E2E (scripts/e2e-pages.mjs), care verifică
+      // că /cereri nu se salvează goală, ca pe 12 oct 2026.
+      data-cerere={lead.id}
       className={`bg-white rounded-xl border p-5 flex flex-col scroll-mt-24 ${
         focused ? 'border-primary ring-2 ring-primary/30' : 'border-border'
       } ${full && !claimedByMe ? 'opacity-75' : ''}`}
