@@ -49,6 +49,10 @@ const OBIECTII = [
     a: 'Contează puterea din contract, nu din cerere. Semnezi 8 kW, plătești treapta de sub 10 kW. Merge și invers: dacă din 8 kW ceruți se semnează 40, e treapta de 10–100 kW.',
   },
   {
+    q: '„Și dacă e doar baterie, fără panouri?”',
+    a: '500 lei plus TVA, ca treapta de sub 10 kW, oricâți kWh are. O lucrare Casa Verde Baterii minimă (10 kWh) e ~12.400 lei fără TVA, deci 3–4%, cât la un 6 kW on-grid.',
+  },
+  {
     q: '„Am deja destule cereri.”',
     a: 'Nu insista. E al treilea semnal (StratoSpark, 16 sept): firmele cu marketing propriu nu cumpără volum. Mulțumești și treci la următoarea.',
   },
