@@ -42,6 +42,7 @@ import {
 } from './sheets';
 import { isValidEmail } from './portal-auth';
 import { sendCountyLeadAlert, sendWatchActivatedEmail } from './email';
+import { logLeadSends } from './lead-sends';
 import {
   sendInformezCheckinEmail,
   sendInformezWelcomeEmail,
@@ -204,12 +205,13 @@ export async function reactivateLead(
     const until = new Date(Date.now() + sub.windowHours * 60 * 60 * 1000).toISOString();
     await markLeadPriorityUntil(lead.timestamp, until);
     revalidatePath('/cereri');
-    await sendCountyLeadAlert({
+    const sent = await sendCountyLeadAlert({
       to: sub.email,
       ...countyAlertPayloadFromLead(updated),
       reservedUntil: until,
       reactivated: true,
     });
+    if (sent.ok) await logLeadSends(lead.timestamp, [sub.email], 'retrimitere', sub.firma);
     reservedFor = sub.firma;
   } else {
     // Eșecul nu strică reactivarea: fără marcajul AU, cronul de dimineață reîncearcă.
@@ -332,9 +334,13 @@ async function sendReactivationAlerts(
   const recipients = reactivationRecipients(lead, watches, prefs, links, subs);
   if (recipients.length) {
     const payload = countyAlertPayloadFromLead(lead);
-    await Promise.allSettled(
+    const results = await Promise.allSettled(
       recipients.map((to) => sendCountyLeadAlert({ to, ...payload, reactivated: true })),
     );
+    await logLeadSends(lead.timestamp, recipients.filter((_, i) => {
+      const r = results[i];
+      return r.status === 'fulfilled' && r.value.ok;
+    }), 'retrimitere');
   }
   await markReactivationAlertsSent(lead.timestamp, at);
   return recipients.length;
@@ -356,7 +362,13 @@ export async function alertCountyLeadConfirmedActive(lead: NewLead): Promise<num
   const recipients = filterCountyAlertRecipients(prefs, lead.judet, links, exclude);
   if (recipients.length) {
     const payload = countyAlertPayloadFromLead(lead);
-    await Promise.allSettled(recipients.map((to) => sendCountyLeadAlert({ to, ...payload, confirmedActive: true })));
+    const results = await Promise.allSettled(
+      recipients.map((to) => sendCountyLeadAlert({ to, ...payload, confirmedActive: true })),
+    );
+    await logLeadSends(lead.timestamp, recipients.filter((_, i) => {
+      const r = results[i];
+      return r.status === 'fulfilled' && r.value.ok;
+    }), 'retrimitere');
   }
   console.log(`[informez] confirmată activă ${lead.judet} · ${lead.timestamp}: alertă la ${recipients.length} firme`);
   return recipients.length;

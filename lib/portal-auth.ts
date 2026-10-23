@@ -64,12 +64,19 @@ export function safeEqual(a: string, b: string): boolean {
  * JSON-ul, deci schimbarea kind-ului o invalidează.
  */
 export interface PortalTokenPayload {
-  kind: 'session' | 'login-link' | 'pending';
+  /**
+   * `client-*` sunt ale contului clientului (lib/client-auth.ts, din 23 oct 2026):
+   * același secret, dar un kind diferit, deci o sesiune de firmă nu trece drept
+   * sesiune de client și invers.
+   */
+  kind: 'session' | 'login-link' | 'pending' | 'client-session' | 'client-link' | 'client-lead';
   email: string;
   /** Unix ms. */
   exp: number;
   /** Doar pe `pending`: HMAC-ul codului de 6 cifre, nu codul în clar. */
   codeHash?: string;
+  /** Doar pe `client-lead`: cererile trimise din browserul ăsta, văzute fără email verificat. */
+  leads?: string[];
 }
 
 export async function createToken(

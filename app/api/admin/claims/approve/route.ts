@@ -1,4 +1,5 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, after } from 'next/server';
+import { notifyClientFirmTook } from '@/lib/client-notify';
 import { revalidatePath } from 'next/cache';
 import { getFullLeadById, setClaimApproved } from '@/lib/sheets';
 import { sendClaimApprovedEmail } from '@/lib/email';
@@ -30,6 +31,9 @@ export async function POST(request: Request) {
         : leadId;
       await sendClaimApprovedEmail({ to: claim.email, leadSummary });
     }
+    // Clientul află cine l-a preluat; o singură dată pe revendicare, chiar dacă
+    // aprobarea e scoasă și pusă la loc (lib/email-cont, client_emails).
+    if (approved) after(() => notifyClientFirmTook(leadId, claimTimestamp));
 
     revalidatePath('/admin/crm');
     // Același buton există și pe fișa de portal a firmei.

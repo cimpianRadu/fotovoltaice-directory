@@ -44,6 +44,7 @@ import {
 } from './sheets';
 import { getUnsubscribedEmails } from './firm-unsubscribe';
 import { sendOpenLeadsDigest, type DigestLeadRow, type DigestVariant } from './email';
+import { logLeadSends } from './lead-sends';
 import {
   calendarAgeDays,
   getCounties,
@@ -233,6 +234,8 @@ export async function sendOpenLeadsDigestPlan(plan: DigestPlanItem[]) {
     for (const to of item.to) {
       const r = await sendOpenLeadsDigest(digestEmailData(item, to));
       results.push({ to, ...r });
+      // „Trimisă la N firme” din contul clientului numără și rezumatul de luni.
+      if (r.ok) for (const l of item.hot) await logLeadSends(l.id, [to], 'rezumat', item.firma || undefined);
     }
   }
   return results;

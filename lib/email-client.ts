@@ -22,7 +22,7 @@ import { getKitPriceCurve, medianPricePerKwp } from './kit-price-curve';
 import { formatNumber, getProgramName } from './utils-shared';
 import type { NewLead } from './sheets';
 
-const REPLY_TO = 'contact@instalatori-fotovoltaice.ro';
+export const REPLY_TO = 'contact@instalatori-fotovoltaice.ro';
 
 /** Ghidurile spre care trimitem, pe segment. Slug-urile sunt cele din data/guides.json. */
 const LINKS = {
@@ -44,23 +44,23 @@ function programGuide(finantare: string): string {
   return LINKS.finantare;
 }
 
-function a(href: string, text: string): string {
+export function a(href: string, text: string): string {
   return `<a href="${href}" style="color:#1d4ed8">${escapeHtml(text)}</a>`;
 }
 
-function p(html: string): string {
+export function p(html: string): string {
   return `<p style="font-size:15px;line-height:1.6;color:#374151;margin:0 0 16px">${html}</p>`;
 }
 
-function button(href: string, text: string): string {
+export function button(href: string, text: string): string {
   return `<div style="text-align:center;margin:8px 0 20px"><a href="${href}" style="display:inline-block;padding:12px 24px;background:#f59e0b;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">${escapeHtml(text)}</a></div>`;
 }
 
-function secondaryButton(href: string, text: string): string {
+export function secondaryButton(href: string, text: string): string {
   return `<a href="${href}" style="display:inline-block;margin:4px;padding:11px 18px;background:#ffffff;border:1px solid #d1d5db;color:#111827;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none">${escapeHtml(text)}</a>`;
 }
 
-function fmtDay(iso: string): string {
+export function fmtDay(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
   return d.toLocaleDateString('ro-RO', { timeZone: 'Europe/Bucharest', day: 'numeric', month: 'long', year: 'numeric' });
@@ -69,6 +69,15 @@ function fmtDay(iso: string): string {
 /** Cadrul comun: antet, corp, semnătură, subsol cu motivul și linkul de renunț. */
 function layout(lead: NewLead, body: string): string {
   const renunt = clientLinkUrl(lead.timestamp, 'renunt');
+  return emailFrame(
+    body,
+    `Primiți acest mesaj pentru că ați trimis o cerere pe instalatori-fotovoltaice.ro pe ${escapeHtml(fmtDay(lead.timestamp))}.
+      Dacă nu mai doriți să fiți contactat, apăsați aici: <a href="${renunt}" style="color:#6b7280">nu mă mai contactați</a>.`,
+  );
+}
+
+/** Antetul, semnătura și subsolul, fără legătura cu o cerere anume (și pentru lib/email-cont). */
+export function emailFrame(body: string, footerHtml: string): string {
   return `<!DOCTYPE html>
 <html>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
@@ -79,8 +88,7 @@ function layout(lead: NewLead, body: string): string {
       <p style="font-size:15px;line-height:1.6;color:#374151;margin:0">Radu Cîmpian<br><span style="color:#6b7280">instalatori-fotovoltaice.ro</span></p>
     </div>
     <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280;line-height:1.5">
-      Primiți acest mesaj pentru că ați trimis o cerere pe instalatori-fotovoltaice.ro pe ${escapeHtml(fmtDay(lead.timestamp))}.
-      Dacă nu mai doriți să fiți contactat, apăsați aici: <a href="${renunt}" style="color:#6b7280">nu mă mai contactați</a>.
+      ${footerHtml}
     </div>
   </div>
 </body>

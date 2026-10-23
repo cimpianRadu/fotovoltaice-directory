@@ -7,6 +7,7 @@ import { trackEvent } from '@/lib/analytics';
 import { PORTAL_EMAIL_KEY } from '@/lib/portal-email-handoff';
 import { MAX_ACTIVE_CLAIMS_PER_FIRM } from '@/lib/sheets-shared';
 import { getAttribution } from '@/lib/attribution';
+import { trackLeadClick } from '@/lib/lead-clicks-client';
 import { FIRM_SOURCE_OPTIONS, isDoarMontaj } from '@/lib/utils-shared';
 import type { FinancingTone } from '@/lib/utils-shared';
 
@@ -572,7 +573,9 @@ export default function LeadCard({
   useEffect(() => {
     if (!focused) return;
     cardRef.current?.scrollIntoView({ block: 'center' });
-  }, [focused]);
+    // Cineva a deschis linkul direct spre cererea asta (alertă, rezumat, postare).
+    trackLeadClick(lead.id, 'link');
+  }, [focused, lead.id]);
 
   // Modal: Escape închide, scroll-ul paginii e blocat cât e deschis.
   const anyModal = modalOpen || watchOpen;
@@ -596,6 +599,7 @@ export default function LeadCard({
     setWatchOpen(true);
     setWatchError(null);
     trackEvent('lead_watch_opened', { county: lead.judet, project_type: lead.tipLabel });
+    trackLeadClick(lead.id, 'urmaresc');
   }
 
   async function handleWatchSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -638,6 +642,7 @@ export default function LeadCard({
   const [quickOpen, setQuickOpen] = useState(false);
 
   function startClaim() {
+    trackLeadClick(lead.id, 'vreau');
     if (!fromAccount) {
       handleOpen();
       return;

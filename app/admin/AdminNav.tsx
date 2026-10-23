@@ -14,6 +14,7 @@ const TABS = [
   { href: '/admin/portal', label: 'Portal' },
   { href: '/admin/informez', label: 'Informez' },
   { href: '/admin/emailuri', label: 'Emailuri' },
+  { href: '/admin/cont-client', label: 'Cont client' },
   { href: '/admin/sponsori', label: 'Parteneri' },
   { href: '/admin/analytics', label: 'Overview' },
   { href: '/admin/analytics/ghiduri', label: 'Ghiduri' },

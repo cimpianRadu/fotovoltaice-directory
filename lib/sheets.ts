@@ -357,6 +357,11 @@ export async function reactivateLeadFromClient(
   await setLeadCells(timestamp, cells);
 }
 
+/** AC — termenul nou, dat de client când confirmă că încă vrea oferte (12 oct 2026). */
+export async function updateLeadTermen(timestamp: string, termen: string) {
+  await setLeadCells(timestamp, { AC: termen });
+}
+
 /** AU — alertele către firmele cu județul bifat au plecat pentru reactivarea asta. */
 export async function markReactivationAlertsSent(timestamp: string, at = new Date().toISOString()) {
   await setLeadCell(timestamp, 'AU', at);
@@ -880,7 +885,17 @@ function isOpenForClaims(l: NewLead): boolean {
  * în fereastra aia cererea nu se publică și nu se dă nimănui altcuiva.
  */
 export function isPubliclyClaimable(l: NewLead): boolean {
-  return isOpenForClaims(l) && !isPriorityHeld(l);
+  return isOpenForClaims(l) && !isPriorityHeld(l) && !isTestLead(l);
+}
+
+/**
+ * Cererile de test (testele E2E, contul de client de probă) au emailul cu
+ * „routine-test-”. Nu primesc alerte, iar din 23 oct 2026 nici nu apar pe
+ * /cereri: o firmă reală putea apăsa „Vreau această cerere” pe una falsă în
+ * minutele dintre trimitere și ștergere.
+ */
+export function isTestLead(l: Pick<NewLead, 'email'>): boolean {
+  return (l.email || '').trim().toLowerCase().startsWith('routine-test-');
 }
 
 // Toate cererile, indiferent de vechime — la volumul actual feedul afișează

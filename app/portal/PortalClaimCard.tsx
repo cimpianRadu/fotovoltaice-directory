@@ -5,6 +5,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useState } from 'react';
+import PortalOfferBox from './PortalOfferBox';
 import Button from '@/components/ui/Button';
 import { trackEvent } from '@/lib/analytics';
 import {
@@ -18,6 +19,13 @@ import {
 } from '@/lib/sheets-shared';
 import { usePersistedToggle } from './usePersistedToggle';
 
+export interface PortalOffer {
+  id: number;
+  createdAt: string;
+  files: { name: string; size: number }[];
+  clientOpenedAt: string | null;
+}
+
 export interface PortalClaim {
   claimTimestamp: string;
   leadId: string;
@@ -30,6 +38,10 @@ export interface PortalClaim {
   /** ISO — când i s-au deblocat datele clientului. Gol pe cele neaprobate. */
   approvedAt: string;
   offeredAt: string;
+  /** Ofertele trimise prin platformă și când le-a deschis clientul (din 23 oct 2026). */
+  offers: PortalOffer[];
+  /** Firma poate urca o ofertă aici: din pilot, cu datele clientului deblocate. */
+  canSendOffer: boolean;
   firmStatus: ClaimStatus;
   notes: LeadNote[];
   tipLabel: string;
@@ -480,6 +492,10 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
           )}
           {statusError && <p className="mt-1 text-xs text-red-600">{statusError}</p>}
         </div>
+      )}
+
+      {claim.approved && !released && (
+        <PortalOfferBox leadId={claim.leadId} offers={claim.offers} canSend={claim.canSendOffer && !inactive} />
       )}
 
       {released && claim.releaseReason && (

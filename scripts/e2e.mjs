@@ -10,6 +10,8 @@
  *                                              „routine-test-” și își șterge rândurile din Sheets
  *   baza          aici                         Neon răspunde, migrațiile sunt aplicate,
  *                                              lista Țintă există
+ *   cont          scripts/e2e-cont.mjs         contul clientului și click-urile pe cereri;
+ *                                              nu trimite emailuri, își șterge rândul de click
  *
  * Suita „baza” verifică baza din .env.local, care e aceeași cu cea din producție.
  *
@@ -39,7 +41,7 @@ const option = (name) => {
   return i === -1 ? undefined : argv[i + 1];
 };
 const TRIGGER = option('--trigger') || 'manual';
-const ALL_SUITES = ['pagini', 'calculatoare', 'formulare', 'baza'];
+const ALL_SUITES = ['pagini', 'calculatoare', 'formulare', 'baza', 'cont'];
 const SUITES = option('--suite') ? option('--suite').split(',') : ALL_SUITES;
 // Câte rulări păstrăm. Una are câțiva KB.
 const KEEP = 300;
@@ -121,6 +123,17 @@ const SUITE_RUNNERS = {
       details: null,
     });
     return tests;
+  },
+
+  async cont() {
+    const out = await runScript('e2e-cont.mjs');
+    return out.tests.map((t) => ({
+      name: t.name,
+      status: status(t.pass),
+      ms: t.ms,
+      error: t.error || null,
+      details: null,
+    }));
   },
 
   async baza() {

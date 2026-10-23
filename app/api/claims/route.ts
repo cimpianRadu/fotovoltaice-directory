@@ -1,5 +1,6 @@
 import { NextResponse, after } from 'next/server';
 import { revalidatePath } from 'next/cache';
+import { notifyClientFirmTook } from '@/lib/client-notify';
 import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
   MAX_CLAIMS_PER_LEAD,
@@ -182,7 +183,7 @@ export async function POST(request: Request) {
       cumAflat,
       approvedAt: firmConfirmed ? new Date().toISOString() : '',
     };
-    await saveClaimToSheet(claim);
+    const claimTs = await saveClaimToSheet(claim);
 
     // Firma logată care n-are încă profil completează formularul o singură
     // dată: datele de acum devin profilul, iar următoarea revendicare e dintr-un
@@ -225,6 +226,8 @@ export async function POST(request: Request) {
     // teren; fără email ar afla din portal abia la următoarea intrare.
     if (firmConfirmed) {
       await sendClaimApprovedEmail({ to: claim.email, leadSummary });
+      // Și clientul află cine l-a preluat (contul de client, 23 oct 2026).
+      after(() => notifyClientFirmTook(leadId, claimTs));
     }
 
     // Fără asta, feedul rămâne pe ISR-ul de 5 minute și o altă firmă vede

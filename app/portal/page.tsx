@@ -46,6 +46,8 @@ import {
 } from '@/lib/utils-shared';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { type PortalClaim } from './PortalClaimCard';
+import { isOfferPilotFirm, offersForFirm } from '@/lib/oferte';
+import { clientAccountLive } from '@/lib/client-account';
 import PortalClaimList from './PortalClaimList';
 import PortalCountyAlerts from './PortalCountyAlerts';
 import PortalFirmEmails from './PortalFirmEmails';
@@ -131,14 +133,21 @@ export default async function PortalPage() {
   let newInCounties = 0;
 
   try {
-    const [claims, leads, photos, profiles] = await Promise.all([
+    const [claims, leads, photos, profiles, firmOffers] = await Promise.all([
       getClaims(),
       getLeadsSince(new Date(0)),
       // Tabul „Poze" ține doar căile din Blob; fișierele ies numai prin
       // /api/portal/poza, care verifică din nou cine întreabă.
       getLeadPhotos(),
       getFirmProfiles(),
+      // Ofertele trimise prin platformă (Neon, 23 oct 2026). Fără bază, portalul
+      // merge mai departe, doar fără ele.
+      offersForFirm([...mineEmails]).catch((err) => {
+        console.error('[portal] oferte:', err);
+        return [];
+      }),
     ]);
+    const offersLive = clientAccountLive();
     const leadById = new Map(leads.map((l) => [l.timestamp, l]));
     const photosByLead = new Map<string, { pathname: string; fileName: string }[]>();
     for (const p of photos) {
@@ -193,6 +202,16 @@ export default async function PortalPage() {
           // zile stă cererea neatinsă, pentru bannerul de pe card.
           approvedAt: c.approvedAt,
           offeredAt: c.offeredAt,
+          offers: firmOffers
+            .filter((o) => o.leadId === c.leadId && o.claimTs === c.timestamp)
+            .map((o) => ({
+              id: o.id,
+              createdAt: o.createdAt,
+              files: o.files.map((f) => ({ name: f.name, size: f.size })),
+              clientOpenedAt: o.clientOpenedAt,
+            })),
+          // Pilotul cu 3 firme, după pornirea contului de client (lib/oferte).
+          canSendOffer: approved && !c.releasedAt && offersLive && isOfferPilotFirm(c.numeFirma),
           firmStatus: c.firmStatus,
           notes: c.firmNotes,
           tipLabel: lead ? getProjectTypeLabel(lead.tipProiect) : 'Cerere',

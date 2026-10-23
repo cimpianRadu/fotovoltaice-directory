@@ -19,6 +19,7 @@ const SUITE_LABELS: Record<string, string> = {
   calculatoare: 'Calculatoare',
   formulare: 'Formulare',
   baza: 'Baza de date',
+  cont: 'Contul clientului',
 };
 
 const TRIGGER_LABELS: Record<string, string> = {

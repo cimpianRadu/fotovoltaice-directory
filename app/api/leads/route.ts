@@ -1,5 +1,6 @@
 import { NextResponse, after } from 'next/server';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
 import {
   findSubscriptionForCounty,
   getCountyAlertRecipients,
@@ -10,6 +11,10 @@ import {
 } from '@/lib/sheets';
 import { sendCountyLeadAlert } from '@/lib/email';
 import { createLeadPhotoToken } from '@/lib/lead-photos';
+import { CLIENT_LEAD_COOKIE, ensureAccount, leadGrantCookie } from '@/lib/client-auth';
+import { clientAccountLive } from '@/lib/client-account';
+import { sendConfirmationEmail } from '@/lib/email-cont';
+import { logLeadSends } from '@/lib/lead-sends';
 import { getCompanies } from '@/lib/utils';
 import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 import {
@@ -160,6 +165,27 @@ export async function POST(request: Request) {
       console.error('[leads] alerte județ:', err),
     ));
 
+    // Contul clientului (23 oct 2026): se creează singur din emailul cererii, iar
+    // confirmarea cu linkul spre cerere pleacă doar după pornire (clientAccountLive).
+    // La „mă informez" pleacă deja întâmpinarea, la pasul 5, deci nu și asta.
+    const testLead = (body.email || '').trim().toLowerCase().startsWith('routine-test-');
+    if (!testLead) {
+      after(async () => {
+        await ensureAccount(body.email).catch((err) => console.error('[leads] cont client:', err));
+        if (isSeInformeaza((body.termen || '').trim())) return;
+        await sendConfirmationEmail({
+          timestamp: id,
+          numeContact: body.numeContact || '',
+          numeCompanie: body.numeCompanie || '',
+          email: body.email,
+          judet: body.judet || '',
+          localitate: body.localitate || '',
+          tipLucrare: body.tipLucrare || '',
+          putere: body.putere || '',
+        }).catch((err) => console.error('[leads] confirmare client:', err));
+      });
+    }
+
     // `id` = timestamp-ul rândului, aceeași cheie folosită de /cereri și de
     // revendicări. Se întoarce ca să putem lega de cerere pozele trimise
     // ulterior; `photoToken` e dovada că cel care încarcă e chiar cel care
@@ -172,7 +198,21 @@ export async function POST(request: Request) {
       console.error('[leads] token poze:', err);
     }
 
-    return NextResponse.json({ success: true, id, photoToken });
+    // Browserul care a trimis cererea o poate vedea în cont fără să-și dovedească
+    // emailul (lib/client-auth, `client-lead`); celelalte cereri ale adresei, nu.
+    const res = NextResponse.json({
+      success: true,
+      id,
+      photoToken,
+      ...(clientAccountLive() ? { contUrl: `/cont/cerere/${encodeURIComponent(id)}` } : {}),
+    });
+    try {
+      const grant = await leadGrantCookie(body.email, id, (await cookies()).get(CLIENT_LEAD_COOKIE)?.value);
+      res.cookies.set(grant.name, grant.value, grant.options);
+    } catch (err) {
+      console.error('[leads] cookie cont:', err);
+    }
+    return res;
   } catch (err) {
     console.error('Lead API error:', err);
     return NextResponse.json(
@@ -230,6 +270,7 @@ async function notifyCountyAlerts(body: Record<string, string>, leadId: string) 
     // apărea public în fereastra dintre salvare și regenerare.
     revalidatePath('/cereri');
     const sent = await sendCountyLeadAlert({ to: sub.email, ...payload, reservedUntil: until });
+    if (sent.ok) await logLeadSends(leadId, [sub.email], 'creare', sub.firma);
     console.log(
       `[leads] ${judet}: rezervată pentru ${sub.firma} până ${until} (email: ${sent.ok ? 'trimis' : 'eșuat'})`,
     );
@@ -248,6 +289,14 @@ async function notifyCountyAlerts(body: Record<string, string>, leadId: string) 
     recipients.map((to) => sendCountyLeadAlert({ to, ...payload })),
   );
   const failed = results.filter((r) => r.status === 'rejected' || !r.value.ok).length;
+  await logLeadSends(
+    leadId,
+    recipients.filter((_, i) => {
+      const r = results[i];
+      return r.status === 'fulfilled' && r.value.ok;
+    }),
+    'creare',
+  );
   console.log(
     `[leads] alerte județ ${judet}: ${recipients.length - failed}/${recipients.length} trimise`,
   );

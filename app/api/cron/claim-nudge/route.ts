@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { logLeadSends } from '@/lib/lead-sends';
 import {
   CLAIM_REMINDER_MAX,
   claimOccupiesLeadSlot,
@@ -236,7 +237,7 @@ async function announceUnlockedLeads(
       continue;
     }
 
-    await Promise.allSettled(
+    const results = await Promise.allSettled(
       recipients.map((to) =>
         sendCountyLeadAlert({
           to,
@@ -261,6 +262,14 @@ async function announceUnlockedLeads(
           unlocked: true,
         }),
       ),
+    );
+    await logLeadSends(
+      lead.timestamp,
+      recipients.filter((_, i) => {
+        const r = results[i];
+        return r.status === 'fulfilled' && r.value.ok;
+      }),
+      'deblocare',
     );
     await markLeadAlertsSent(lead.timestamp);
     announced.push(`${label} → ${recipients.length} firme`);
