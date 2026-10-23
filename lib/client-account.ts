@@ -51,7 +51,7 @@ import { getLeadClickStats } from './lead-clicks';
 import { logLeadSends } from './lead-sends';
 import { offersForLead, type OfferForClient } from './oferte';
 import { RENUNT_REASON_OPTIONS, optionLabel } from './client-response-details';
-import { BUMPS_PER_WEEK, type FirmReport } from './client-account-shared';
+import { BUMPS_PER_WEEK, REFUZ_REASON_OPTIONS, type FirmReport, type RefuzReason } from './client-account-shared';
 
 export { FIRM_REPORT_OPTIONS, isFirmReport, BUMPS_PER_WEEK, type FirmReport } from './client-account-shared';
 
@@ -311,20 +311,24 @@ export async function reportFirm(opts: {
   claim: LeadClaim;
   status: FirmReport;
   putere?: string;
+  motiv?: RefuzReason;
 }): Promise<void> {
   const { lead, claim, status } = opts;
   const name = firmDisplayName(claim.numeFirma);
   const putere = status === 'semnat' && opts.putere ? opts.putere : null;
+  const motiv = status === 'refuzat' && opts.motiv ? opts.motiv : null;
   await db()`
-    INSERT INTO client_firm_reports (lead_id, claim_ts, firm_name, status, putere)
-    VALUES (${lead.timestamp}, ${claim.timestamp}, ${name}, ${status}, ${putere})
+    INSERT INTO client_firm_reports (lead_id, claim_ts, firm_name, status, putere, motiv)
+    VALUES (${lead.timestamp}, ${claim.timestamp}, ${name}, ${status}, ${putere}, ${motiv})
   `;
+  const motivLabel = motiv ? REFUZ_REASON_OPTIONS.find((o) => o.value === motiv)?.label.toLowerCase() : '';
 
   const days = Math.floor((Date.now() - Date.parse(claim.approvedAt || claim.timestamp)) / DAY_MS);
   const what: Record<FirmReport, string> = {
     nesunat: `${name} nu l-a sunat (preluată acum ${days} zile)`,
     sunat: `${name} l-a sunat, fără ofertă deocamdată`,
     oferta: `a primit ofertă de la ${name}`,
+    refuzat: `oferta lui ${name} nu i-a convenit${motivLabel ? ` (${motivLabel})` : ''}`,
     semnat: `a semnat cu ${name}${putere ? `, ${putere} kW după contract` : ''}`,
   };
   const note = `${status === 'nesunat' ? 'ATENȚIE: ' : ''}Din contul clientului: ${what[status]}. Firma declară: ${claim.firmStatus}.`;

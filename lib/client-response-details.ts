@@ -26,6 +26,7 @@ export const FIRM_CONTACT_OPTIONS: readonly Option[] = [
   { value: 'nu', label: 'Nu m-a sunat' },
   { value: 'fara-oferta', label: 'M-a sunat, n-am primit ofertă' },
   { value: 'oferta', label: 'Am primit ofertă' },
+  { value: 'refuzata', label: 'Oferta nu mi-a convenit' },
 ];
 
 /** Cum apare fiecare variantă în nota din CRM. */
@@ -33,6 +34,7 @@ const FIRM_CONTACT_NOTE: Record<string, string> = {
   nu: 'nu l-a sunat',
   'fara-oferta': 'l-a sunat, fără ofertă',
   oferta: 'a trimis ofertă',
+  refuzata: 'a trimis o ofertă care nu i-a convenit',
 };
 
 /** „Nu mai vreau": de ce. `nesunat` nu se arată la cererile „mă informez", unde firmele doar urmăresc. */

@@ -297,7 +297,8 @@ export default async function ContClientAdminPage() {
       <section className="mt-10">
         <h2 className="text-sm font-semibold text-slate-900">Aceeași cerere, înainte să o preia o firmă</h2>
         <p className="mt-0.5 text-xs text-slate-500">
-          Aici clientul e trimis să sune chiar el firmele din județ; retrimiterea e doar un link pe locul doi.
+          Clientul nu e trimis la firmele din director (ar ieși din platformă): poate cere retrimiterea prin noi, de 2
+          ori pe săptămână, fără promisiunea că o preia cineva.
         </p>
         <div className="mt-3 rounded-2xl border border-slate-200 bg-white p-4 sm:p-8">
           <div className="mx-auto max-w-3xl">

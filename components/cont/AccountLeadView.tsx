@@ -3,10 +3,15 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
-import { FIRM_REPORT_OPTIONS, BUMPS_PER_WEEK, type FirmReport } from '@/lib/client-account-shared';
+import {
+  FIRM_REPORT_OPTIONS,
+  BUMPS_PER_WEEK,
+  REFUZ_REASON_OPTIONS,
+  type FirmReport,
+  type RefuzReason,
+} from '@/lib/client-account-shared';
 import { RENUNT_REASON_OPTIONS } from '@/lib/client-response-details';
 import { fileSizeLabel } from '@/lib/oferte-shared';
-import { slugifyCounty } from '@/lib/utils-shared';
 import type { AccountLeadData, AccountFirm } from '@/lib/client-account';
 
 // Pagina cererii din contul clientului (23 oct 2026). Datele vin gata făcute de pe
@@ -40,7 +45,7 @@ const DEMO_NOTE = 'Exemplu: în contul real, apăsarea salvează răspunsul.';
  */
 function ProgressSteps({ data }: { data: AccountLeadData }) {
   const offers = data.firms.reduce((n, f) => n + f.offers.length, 0);
-  const saidOffer = data.firms.some((f) => f.report === 'oferta' || f.report === 'semnat');
+  const saidOffer = data.firms.some((f) => f.report === 'oferta' || f.report === 'refuzat' || f.report === 'semnat');
   const { sentTo, clickVisitors, claimed } = data.stats;
   const seen = [
     sentTo ? `trimisă la ${sentTo} ${sentTo === 1 ? 'firmă' : 'firme'}` : '',
@@ -100,6 +105,7 @@ function FirmCard({ leadId, firm, demo, open }: { leadId: string; firm: AccountF
   const [report, setReport] = useState<FirmReport | null>(firm.report);
   const [pending, setPending] = useState<FirmReport | null>(null);
   const [putere, setPutere] = useState('');
+  const [motiv, setMotiv] = useState<RefuzReason | null>(null);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
@@ -113,7 +119,13 @@ function FirmCard({ leadId, firm, demo, open }: { leadId: string; firm: AccountF
     setBusy(true);
     setMsg(null);
     try {
-      await postJson('/api/cont/firma', { leadId, claimTs: firm.claimTs, status, putere: status === 'semnat' ? putere : undefined });
+      await postJson('/api/cont/firma', {
+        leadId,
+        claimTs: firm.claimTs,
+        status,
+        putere: status === 'semnat' ? putere : undefined,
+        motiv: status === 'refuzat' ? motiv ?? undefined : undefined,
+      });
       setReport(status);
       setPending(null);
       setMsg(status === 'nesunat' ? 'Mulțumim. Am aflat și verificăm cu firma.' : 'Mulțumim, am notat.');
@@ -125,8 +137,9 @@ function FirmCard({ leadId, firm, demo, open }: { leadId: string; firm: AccountF
     }
   }
 
+  // „Am semnat” și „Oferta nu mi-a convenit” cer încă un pas (puterea, motivul), opțional.
   function choose(status: FirmReport) {
-    if (status === 'semnat') setPending('semnat');
+    if (status === 'semnat' || status === 'refuzat') setPending(status);
     else void save(status);
   }
 
@@ -233,6 +246,36 @@ function FirmCard({ leadId, firm, demo, open }: { leadId: string; firm: AccountF
               </Button>
             </div>
           )}
+          {pending === 'refuzat' && (
+            <div className="mt-3">
+              <p className="text-sm text-gray-700">De ce? (opțional)</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {REFUZ_REASON_OPTIONS.map((o) => (
+                  <button
+                    key={o.value}
+                    type="button"
+                    aria-pressed={motiv === o.value}
+                    onClick={() => setMotiv(motiv === o.value ? null : o.value)}
+                    className={`min-h-[36px] rounded-lg border px-3 py-1 text-sm ${
+                      motiv === o.value
+                        ? 'border-primary bg-primary/10 font-semibold text-gray-900'
+                        : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                    }`}
+                  >
+                    {o.label}
+                  </button>
+                ))}
+              </div>
+              <div className="mt-3 flex gap-2">
+                <Button size="sm" onClick={() => void save('refuzat')} disabled={busy}>
+                  Confirmați
+                </Button>
+                <Button size="sm" variant="ghost" onClick={() => setPending(null)}>
+                  Renunțați
+                </Button>
+              </div>
+            </div>
+          )}
           {firm.reportedAt && !msg && (
             <p className="mt-2 text-xs text-gray-400">Ultimul răspuns: {dayTime(firm.reportedAt)}</p>
           )}
@@ -248,11 +291,20 @@ function FirmCard({ leadId, firm, demo, open }: { leadId: string; firm: AccountF
  * abia apoi oferim retrimiterea. Altfel omul apasă „încă vreau oferte” și așteaptă
  * la nesfârșit (Radu, 23 oct 2026: „așa o să tot aștepte oamenii oferte”).
  */
+/**
+ * Pentru cine n-a fost sunat sau n-a primit o ofertă bună. Rămâne în platformă:
+ * îl îndemnăm să sune doar firmele care i-au preluat cererea (telefonul e pe card)
+ * și îi oferim retrimiterea prin noi, nu lista tuturor firmelor din județ (Radu,
+ * 23 oct: „asta ne cam scoate din schemă dacă sună ei direct”). Fără promisiuni:
+ * omul nu trebuie lăsat să aștepte la nesfârșit.
+ */
 function HelpCard({ data, demo }: { data: AccountLeadData; demo: boolean }) {
   const [state, setState] = useState(data.bump);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
   const noFirm = data.firms.length === 0;
+  const refused = !noFirm && data.firms.every((f) => f.report === 'refuzat');
+  const withPhone = data.firms.filter((f) => f.phone && f.report === 'nesunat');
 
   async function bump() {
     if (demo) {
@@ -266,8 +318,8 @@ function HelpCard({ data, demo }: { data: AccountLeadData; demo: boolean }) {
       setState((s) => ({ ...s, usedLast7: s.usedLast7 + 1, allowed: s.usedLast7 + 1 < BUMPS_PER_WEEK }));
       setMsg(
         json.firms
-          ? `Am trimis-o din nou la ${json.firms} ${json.firms === 1 ? 'firmă' : 'firme'}. Între timp, nu așteptați: sunați și dumneavoastră.`
-          : 'Am urcat-o din nou în lista firmelor. Între timp, nu așteptați: sunați și dumneavoastră.',
+          ? `Am trimis-o din nou la ${json.firms} ${json.firms === 1 ? 'firmă' : 'firme'}. Când o preia una, apare aici, cu telefonul ei.`
+          : 'Am urcat-o din nou în lista firmelor. Când o preia una, apare aici, cu telefonul ei.',
       );
     } catch (err) {
       setMsg(err instanceof Error ? err.message : String(err));
@@ -276,32 +328,34 @@ function HelpCard({ data, demo }: { data: AccountLeadData; demo: boolean }) {
     }
   }
 
+  const title = noFirm
+    ? 'Încă nu v-a preluat nicio firmă cererea'
+    : refused
+      ? 'Ofertele nu v-au convenit?'
+      : 'Firma nu v-a sunat?';
+  const body = noFirm
+    ? `Firmele din ${data.judet} o văd pe pagina de cereri. O putem trimite și pe email, din nou, firmelor din ${data.judet} și din județele vecine.`
+    : refused
+      ? `O putem trimite și altor firme din ${data.judet} și din județele vecine, ca să mai primiți oferte.`
+      : withPhone.length
+        ? `Am aflat și verificăm cu firma. Puteți suna și dumneavoastră: telefonul e mai sus, pe cardul firmei. Sau o trimitem și altor firme din zonă.`
+        : `Am aflat și verificăm cu firma. Între timp, o putem trimite și altor firme din ${data.judet} și din județele vecine.`;
+
   return (
     <section className="rounded-xl border border-border bg-white p-5">
-      <h2 className="text-base font-semibold text-gray-900">
-        {noFirm ? 'Nu așteptați să vă sune cineva' : 'Firma nu v-a sunat?'}
-      </h2>
-      <p className="mt-1 text-sm text-gray-600">
-        {noFirm
-          ? `Încă nu v-a preluat nicio firmă cererea. Cel mai repede ajungeți la o ofertă sunând chiar dumneavoastră firmele din ${data.judet}: au telefonul pe fișă.`
-          : `Am aflat și verificăm cu firma. Până atunci, puteți suna chiar dumneavoastră alte firme din ${data.judet}: au telefonul pe fișă.`}
-      </p>
-      <div className="mt-3">
-        <Button href={demo ? undefined : `/firme/judet/${slugifyCounty(data.judet)}`}>Vedeți firmele din {data.judet}</Button>
-      </div>
+      <h2 className="text-base font-semibold text-gray-900">{title}</h2>
+      <p className="mt-1 text-sm text-gray-600">{body}</p>
       {!state.emailWindow ? (
-        <p className="mt-3 text-xs text-gray-500">
-          Retrimiterea pe email o facem de luni până vineri, între 8 și 21.
-        </p>
+        <p className="mt-3 text-xs text-gray-500">Retrimiterea pe email o facem de luni până vineri, între 8 și 21.</p>
       ) : state.allowed ? (
-        <button
-          type="button"
-          onClick={() => void bump()}
-          disabled={busy}
-          className="mt-3 text-sm text-gray-600 underline hover:text-gray-900 disabled:opacity-60"
-        >
-          {busy ? 'Se trimite…' : `Sau trimitem cererea încă o dată firmelor din ${data.judet} și din județele vecine`}
-        </button>
+        <div className="mt-3">
+          <Button onClick={() => void bump()} disabled={busy}>
+            {busy ? 'Se trimite…' : 'Trimiteți cererea din nou'}
+          </Button>
+          <p className="mt-1.5 text-xs text-gray-500">
+            De {BUMPS_PER_WEEK} ori pe săptămână. Nu vă putem promite că o preia cineva, dar o vede fiecare firmă din zonă.
+          </p>
+        </div>
       ) : (
         <p className="mt-3 text-xs text-gray-500">
           Am retrimis-o deja de {BUMPS_PER_WEEK} ori săptămâna aceasta
@@ -483,7 +537,9 @@ export default function AccountLeadView({
         )}
       </section>
 
-      {data.open && !data.informez && (data.firms.length === 0 || data.firms.every((f) => f.report === 'nesunat')) && (
+      {data.open &&
+        !data.informez &&
+        (data.firms.length === 0 || data.firms.every((f) => f.report === 'nesunat' || f.report === 'refuzat')) && (
         <HelpCard data={data} demo={demo} />
       )}
       {data.open && <CloseCard leadId={data.id} firms={data.firms} demo={demo} />}

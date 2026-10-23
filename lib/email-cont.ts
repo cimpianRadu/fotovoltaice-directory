@@ -53,7 +53,7 @@ export function confirmationEmail(lead: LeadForEmail, link: string): { subject: 
       `Am primit cererea dumneavoastră pentru ${escapeHtml(describeLead(lead))} în ${where(lead)}. O trimitem acum firmelor de instalare care lucrează în județ.`,
     ) +
     p(
-      'Pe pagina cererii vedeți unde a ajuns: câte firme au primit-o, care au preluat-o și cum le puteți suna. Tot de acolo ne spuneți dacă v-a contactat cineva. Dacă nu vă sună nimeni, nu așteptați: acolo găsiți și firmele din județ, cu telefonul lor.',
+      'Pe pagina cererii vedeți unde a ajuns: câte firme au primit-o, care au preluat-o și cum le puteți suna. Tot de acolo ne spuneți dacă v-a contactat cineva, iar dacă nu o preia nimeni, o putem trimite din nou firmelor din zonă.',
     ) +
     button(link, 'Vedeți cererea') +
     NO_PASSWORD +

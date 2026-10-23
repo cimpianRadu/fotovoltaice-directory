@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getClaims } from '@/lib/sheets';
 import { deliveredClaims, isFirmReport, leadForViewer, reportFirm } from '@/lib/client-account';
+import { isRefuzReason } from '@/lib/client-account-shared';
 import { normalizeKw } from '@/lib/client-response-details';
 
 // Clientul spune ce a făcut o firmă care i-a preluat cererea: nu l-a sunat, l-a
@@ -22,7 +23,8 @@ export async function POST(request: Request) {
     const claim = deliveredClaims(await getClaims(), leadId).find((c) => c.timestamp === claimTs);
     if (!claim) return NextResponse.json({ error: 'Firma nu mai are cererea dumneavoastră.' }, { status: 404 });
     const putere = typeof body?.putere === 'string' ? normalizeKw(body.putere) : undefined;
-    await reportFirm({ lead: access.lead, claim, status, putere: putere || undefined });
+    const motiv = isRefuzReason(body?.motiv) ? body.motiv : undefined;
+    await reportFirm({ lead: access.lead, claim, status, putere: putere || undefined, motiv });
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error('[cont] firmă:', err);
