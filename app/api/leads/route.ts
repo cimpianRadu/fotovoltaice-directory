@@ -166,7 +166,7 @@ export async function POST(request: Request) {
     ));
 
     // Contul clientului (23 oct 2026): se creează singur din emailul cererii, iar
-    // confirmarea cu linkul spre cerere pleacă doar după pornire (clientAccountLive).
+    // confirmarea cu linkul spre cerere pleacă doar cu CLIENT_EMAILS=on (lib/email-cont).
     // La „mă informez" pleacă deja întâmpinarea, la pasul 5, deci nu și asta.
     const testLead = (body.email || '').trim().toLowerCase().startsWith('routine-test-');
     if (!testLead) {

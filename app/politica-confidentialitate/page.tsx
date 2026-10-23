@@ -15,7 +15,7 @@ export default function PoliticaConfidentialitate() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Politica de Confidențialitate</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 29 iulie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 23 octombrie 2026</p>
 
         <p>
           Instalatori Fotovoltaice România (&quot;noi&quot;, &quot;site-ul&quot;) operează site-ul{' '}
@@ -42,11 +42,21 @@ export default function PoliticaConfidentialitate() {
             <strong>Formularul de feedback după o lucrare semnată</strong> (deschis doar cu un link
             trimis de noi): răspunsurile la întrebări, părerea scrisă și opțiunea de publicare aleasă
           </li>
+          <li>
+            <strong>Contul de client:</strong> pe baza emailului din cerere vă creăm automat un cont
+            fără parolă, din care vedeți ce s-a întâmplat cu cererea. Păstrăm data primei intrări și a
+            ultimei vizite, ce ne spuneți despre fiecare firmă (dacă v-a sunat, dacă ați primit ofertă,
+            dacă ați semnat) și ofertele trimise de firme prin platformă
+          </li>
         </ul>
 
         <h3>Date colectate automat</h3>
         <ul>
           <li>Date anonime de navigare (pagini vizitate, durata sesiunii) prin analytics fără cookies</li>
+          <li>
+            Apăsările firmelor pe cererile din pagina de cereri: le numărăm cu un cod calculat din
+            adresa IP, browser și dată, care se schimbă zilnic și nu permite identificarea persoanei
+          </li>
           <li>Nu folosim cookie-uri de tracking sau publicitate</li>
         </ul>
 
@@ -60,6 +70,10 @@ export default function PoliticaConfidentialitate() {
             Transmiterea cererilor în care ați indicat că doriți finanțare, credit sau un program de
             sprijin, ori că nu ați decis încă, către un partener de finanțare, pentru ca acesta să vă
             contacteze cu opțiuni
+          </li>
+          <li>
+            Să vă arătăm stadiul cererii în contul de client și să verificăm, din răspunsurile
+            dumneavoastră, dacă firmele care au preluat-o v-au contactat
           </li>
           <li>Procesarea cererilor de listare a firmelor pe platformă</li>
           <li>Trimiterea de comunicări solicitate (newsletter)</li>
@@ -119,7 +133,8 @@ export default function PoliticaConfidentialitate() {
         <ul>
           <li><strong>Google (Google Workspace):</strong> stocarea cererilor și comunicare prin email</li>
           <li><strong>Resend:</strong> trimiterea notificărilor prin email</li>
-          <li><strong>Vercel:</strong> găzduirea site-ului</li>
+          <li><strong>Vercel:</strong> găzduirea site-ului și, prin Vercel Blob, fișierele ofertelor trimise de firme, accesibile doar clientului cererii</li>
+          <li><strong>Neon:</strong> baza de date a contului de client, găzduită în Frankfurt (UE)</li>
           <li><strong>Umami:</strong> analytics fără cookie-uri, pe date agregate</li>
         </ul>
         <p>
@@ -131,6 +146,10 @@ export default function PoliticaConfidentialitate() {
         <h2>6. Durata stocării</h2>
         <ul>
           <li>Cererile de ofertă: 12 luni de la trimitere</li>
+          <li>
+            Contul de client, răspunsurile despre firme și ofertele: cât timp e păstrată cererea, sau
+            până cereți ștergerea din cont
+          </li>
           <li>Datele firmelor listate: pe durata listării + 6 luni</li>
           <li>Email-uri newsletter: până la dezabonare</li>
         </ul>

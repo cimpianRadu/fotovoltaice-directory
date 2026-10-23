@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import AccountLeadView from '@/components/cont/AccountLeadView';
 import { db } from '@/lib/db';
-import { CLIENT_ACCOUNT_LIVE_FROM, clientAccountLive, type AccountLeadData } from '@/lib/client-account';
+import { clientAccountLive, clientEmailsLive, clientOffersLive, inMessagingWindow, type AccountLeadData } from '@/lib/client-account';
 import { claimEmail, confirmationEmail, loginCodeEmail, offerEmail, offerOpenedFirmEmail } from '@/lib/email-cont';
 import { OFFER_PILOT_FIRMS } from '@/lib/oferte';
 
@@ -83,7 +83,7 @@ const DEMO_DATA: AccountLeadData = {
     },
   ],
   stats: { sentTo: 6, clickVisitors: 9, claimed: 2 },
-  bump: { allowed: true, usedLast7: 0, nextAt: null, lastAt: null },
+  bump: { allowed: true, usedLast7: 0, nextAt: null, lastAt: null, emailWindow: true },
 };
 
 // Aceeași cerere, înainte să o preia cineva: atunci apare îndemnul să sune singur.
@@ -136,7 +136,9 @@ function EmailPreview({ title, email }: { title: string; email: { subject: strin
 
 export default async function ContClientAdminPage() {
   const live = clientAccountLive();
-  const envOn = process.env.CLIENT_ACCOUNT === 'on';
+  const emailsOn = clientEmailsLive();
+  const offersOn = clientOffersLive();
+  const windowOpen = inMessagingWindow();
   let data: Awaited<ReturnType<typeof overview>> | null = null;
   let dbError = '';
   try {
@@ -154,21 +156,36 @@ export default async function ContClientAdminPage() {
         câți instalatori au apăsat pe ea. Ne spune ce a făcut fiecare firmă și poate cere retrimiterea de 2 ori pe săptămână.
       </p>
 
-      <div
-        className={`mt-4 rounded-xl border px-4 py-3 text-sm ${
-          live ? 'border-emerald-200 bg-emerald-50 text-emerald-900' : 'border-amber-200 bg-amber-50 text-amber-900'
-        }`}
-      >
-        {live ? (
-          <>Pornit: emailurile către clienți pleacă, butonul „Urmăriți cererea” apare după formular.</>
-        ) : (
-          <>
-            <strong>Oprit.</strong> Nu pleacă niciun email către clienți și nicio retrimitere. Pornește când sunt îndeplinite
-            amândouă: <code>CLIENT_ACCOUNT=on</code> în Vercel ({envOn ? 'pus' : 'nepus încă'}) și data de start,{' '}
-            {when(CLIENT_ACCOUNT_LIVE_FROM)}. Click-urile pe cereri se numără de acum.
-          </>
-        )}
-      </div>
+      <ul className="mt-4 divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white text-sm">
+        {[
+          {
+            on: live,
+            name: 'CLIENT_ACCOUNT',
+            what: 'Contul se vede: butonul „Urmăriți cererea” după formular, pagina cererii.',
+          },
+          {
+            on: emailsOn,
+            name: 'CLIENT_EMAILS',
+            what: `Emailurile către clienți. Confirmarea și codul pleacă imediat; anunțurile și emailurile către firme doar luni–vineri, 08–21 (acum: ${
+              windowOpen ? 'în fereastră' : 'în afara ferestrei, pleacă la prima dimineață lucrătoare'
+            }).`,
+          },
+          { on: offersOn, name: 'CLIENT_OFFERS', what: 'Firmele din pilot pot trimite oferte din portal.' },
+        ].map((sw) => (
+          <li key={sw.name} className="flex items-start gap-3 px-4 py-2.5">
+            <span
+              className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold ${
+                sw.on ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-800'
+              }`}
+            >
+              {sw.on ? 'pornit' : 'oprit'}
+            </span>
+            <span>
+              <code className="text-xs">{sw.name}=on</code> <span className="text-slate-600">{sw.what}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
 
       {dbError && (
         <p className="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-xs text-amber-800">

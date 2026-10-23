@@ -4,8 +4,11 @@
 // Două feluri de funcții:
 //   *Email(...)   construiesc subiectul și HTML-ul, fără să trimită: le folosesc
 //                 și previzualizările din admin.
-//   send*(...)    trimit, doar după pornire (clientAccountLive) și o singură dată
-//                 pe cerere și fel (tabelul client_emails).
+//   send*(...)    trimit, doar cu CLIENT_EMAILS=on și o singură dată pe cerere și
+//                 fel (tabelul client_emails). Confirmarea și codul pleacă imediat;
+//                 anunțurile și emailurile către firme doar în fereastra de lucru
+//                 (inMessagingWindow), altfel le trimite cronul în prima dimineață
+//                 lucrătoare (lib/client-notify → sendPendingClientEmails).
 //
 // Formal-cald, cu „dumneavoastră”, ca restul emailurilor către clienți.
 
@@ -15,7 +18,7 @@ import { a, button, emailFrame, fmtDay, p, REPLY_TO } from './email-client';
 import { escapeHtml, PORTAL_BASE_URL, sendEmail } from './email';
 import { clientLinkUrl } from './lead-client-token';
 import { accountLink } from './client-auth';
-import { clientAccountLive, describeLead, firmDisplayName } from './client-account';
+import { clientEmailsLive, describeLead, firmDisplayName, inMessagingWindow } from './client-account';
 import type { NewLead } from './sheets';
 
 type LeadForEmail = Pick<NewLead, 'timestamp' | 'numeContact' | 'numeCompanie' | 'email' | 'judet' | 'localitate' | 'tipLucrare' | 'putere'>;
@@ -162,8 +165,17 @@ async function releaseSlot(leadId: string, kind: string): Promise<void> {
 
 const isTestEmail = (email: string) => email.trim().toLowerCase().startsWith('routine-test-');
 
-async function sendOnce(lead: LeadForEmail, kind: string, build: (link: string) => { subject: string; html: string }) {
-  if (!clientAccountLive() || !lead.email || isTestEmail(lead.email)) return { ok: false, reason: 'oprit' };
+/** `anunt`: din inițiativa noastră, deci doar în fereastra de lucru. `raspuns`: la ce tocmai a făcut omul. */
+type SendKind = 'raspuns' | 'anunt';
+
+async function sendOnce(
+  lead: LeadForEmail,
+  kind: string,
+  build: (link: string) => { subject: string; html: string },
+  type: SendKind,
+) {
+  if (!clientEmailsLive() || !lead.email || isTestEmail(lead.email)) return { ok: false, reason: 'oprit' };
+  if (type === 'anunt' && !inMessagingWindow()) return { ok: false, reason: 'în afara ferestrei' };
   if (!(await claimSlot(lead.timestamp, kind))) return { ok: false, reason: 'deja trimis' };
   const { subject, html } = build(await accountLink(lead.email, lead.timestamp));
   const res = await sendEmail({ to: lead.email, subject, html, replyTo: REPLY_TO });
@@ -173,27 +185,36 @@ async function sendOnce(lead: LeadForEmail, kind: string, build: (link: string) 
 }
 
 export function sendConfirmationEmail(lead: LeadForEmail) {
-  return sendOnce(lead, 'confirmare', (link) => confirmationEmail(lead, link));
+  return sendOnce(lead, 'confirmare', (link) => confirmationEmail(lead, link), 'raspuns');
 }
 
 export function sendClaimEmail(lead: LeadForEmail, claimTs: string, firm: FirmForEmail) {
-  return sendOnce(lead, `preluare:${claimTs}`, (link) => claimEmail(lead, firm, link));
+  return sendOnce(lead, `preluare:${claimTs}`, (link) => claimEmail(lead, firm, link), 'anunt');
 }
 
 export function sendOfferEmail(lead: LeadForEmail, offerId: number, firmName: string) {
-  return sendOnce(lead, `oferta:${offerId}`, (link) => offerEmail(lead, firmDisplayName(firmName), link));
+  return sendOnce(lead, `oferta:${offerId}`, (link) => offerEmail(lead, firmDisplayName(firmName), link), 'anunt');
 }
 
 export async function sendLoginCodeEmail(email: string, code: string) {
-  // Codul pleacă și înainte de pornire? Nu: înainte de pornire nimeni n-are de ce
-  // să intre în cont, iar pe local (aceeași bază ca producția) ar pleca emailuri reale.
-  if (!clientAccountLive()) return { ok: false, reason: 'oprit' };
+  // Pe local (aceeași bază ca producția) și înainte de pornire nu pleacă emailuri reale.
+  if (!clientEmailsLive()) return { ok: false, reason: 'oprit' };
   const { subject, html } = loginCodeEmail(code, await accountLink(email));
   return sendEmail({ to: email, subject, html, replyTo: REPLY_TO });
 }
 
-export async function sendOfferOpenedToFirm(to: string, o: Parameters<typeof offerOpenedFirmEmail>[0]) {
-  if (!clientAccountLive()) return { ok: false, reason: 'oprit' };
+/** Către firmă, o singură dată pe ofertă, doar în fereastra de lucru (altfel îl trimite cronul). */
+export async function sendOfferOpenedToFirm(
+  leadId: string,
+  offerId: number,
+  to: string,
+  o: Parameters<typeof offerOpenedFirmEmail>[0],
+) {
+  if (!clientEmailsLive() || !inMessagingWindow()) return { ok: false, reason: 'în afara ferestrei' };
+  const kind = `deschis:${offerId}`;
+  if (!(await claimSlot(leadId, kind))) return { ok: false, reason: 'deja trimis' };
   const { subject, html } = offerOpenedFirmEmail(o);
-  return sendEmail({ to, subject, html, replyTo: REPLY_TO });
+  const res = await sendEmail({ to, subject, html, replyTo: REPLY_TO });
+  if (!res.ok) await releaseSlot(leadId, kind);
+  return res;
 }

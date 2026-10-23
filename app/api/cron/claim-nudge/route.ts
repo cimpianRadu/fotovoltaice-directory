@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { logLeadSends } from '@/lib/lead-sends';
+import { sendPendingClientEmails } from '@/lib/client-notify';
 import {
   CLAIM_REMINDER_MAX,
   claimOccupiesLeadSlot,
@@ -107,6 +108,16 @@ export async function GET(request: Request) {
         unlocked,
         informez,
       });
+    }
+
+    // Contul clientului: anunțurile care n-au putut pleca în weekend sau noaptea
+    // (lib/client-notify). Doar în zilele lucrătoare, ca restul.
+    if (!dry) {
+      const clientEmails = await sendPendingClientEmails().catch((err) => {
+        console.error('[cron/claim-nudge] emailuri cont client:', err);
+        return null;
+      });
+      if (clientEmails) console.log('[cron/claim-nudge] emailuri cont client:', clientEmails);
     }
 
     // Înaintea reminderelor: primele revendicări care încă așteaptă apelul meu

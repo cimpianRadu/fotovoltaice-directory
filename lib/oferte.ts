@@ -13,7 +13,7 @@ import { db } from './db';
 import { normalizeFirmName } from './sheets-shared';
 import type { OfferFile } from './oferte-shared';
 import { getClaims, getFirmEmailGroup, type LeadClaim } from './sheets';
-import { clientAccountLive, deliveredClaims } from './client-account';
+import { clientOffersLive, deliveredClaims } from './client-account';
 
 /**
  * Firmele din pilot (decizia din 22-23 oct 2026): cele mai active pe cereri în
@@ -139,7 +139,7 @@ export async function readOfferFile(pathname: string) {
  * pilot, după pornirea contului de client. Altfel null.
  */
 export async function offerClaimFor(firmEmail: string, leadId: string): Promise<LeadClaim | null> {
-  if (!clientAccountLive()) return null;
+  if (!clientOffersLive()) return null;
   const [group, claims] = await Promise.all([getFirmEmailGroup(firmEmail), getClaims()]);
   const mine = new Set(group.map((e) => e.toLowerCase()));
   const claim = deliveredClaims(claims, leadId).find((c) => mine.has((c.email || '').toLowerCase()));

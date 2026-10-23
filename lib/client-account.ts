@@ -56,16 +56,45 @@ import { BUMPS_PER_WEEK, type FirmReport } from './client-account-shared';
 export { FIRM_REPORT_OPTIONS, isFirmReport, BUMPS_PER_WEEK, type FirmReport } from './client-account-shared';
 
 /**
- * Data de la care pot pleca emailurile noi către client și retrimiterile din
- * cont. Radu, 23 oct 2026 (vineri): „să nu le trimiți azi și nici în weekend”.
- * Luni 26 oct, 09:00 ora României (ora de iarnă, UTC+2). Pe lângă dată, trebuie
- * pus CLIENT_ACCOUNT=on în Vercel, după ce Radu a văzut contul de test.
+ * Trei comutatoare, puse în Vercel (decizia lui Radu, 23 oct 2026: „o vreau cât
+ * mai rapid”, dar „doar partea de mesaje nu vreau să fim activi în weekend”):
+ *   CLIENT_ACCOUNT=on  contul se vede: butonul „Urmăriți cererea” după formular.
+ *   CLIENT_EMAILS=on   pleacă emailurile către clienți, după ce Radu aprobă textele.
+ *   CLIENT_OFFERS=on   firmele din pilot pot trimite oferte din portal.
  */
-export const CLIENT_ACCOUNT_LIVE_FROM = '2026-10-26T07:00:00.000Z';
-
-export function clientAccountLive(now = new Date()): boolean {
-  return process.env.CLIENT_ACCOUNT === 'on' && now.getTime() >= Date.parse(CLIENT_ACCOUNT_LIVE_FROM);
+export function clientAccountLive(): boolean {
+  return process.env.CLIENT_ACCOUNT === 'on';
 }
+
+export function clientEmailsLive(): boolean {
+  return process.env.CLIENT_EMAILS === 'on';
+}
+
+export function clientOffersLive(): boolean {
+  return process.env.CLIENT_OFFERS === 'on';
+}
+
+/**
+ * Mesajele din inițiativa noastră (anunțuri către client, emailuri către firme)
+ * pleacă doar de luni până vineri, 08:00–21:00, ora României. Ce se întâmplă în
+ * afara ferestrei pleacă la prima rulare a cronului din fereastră
+ * (lib/client-notify → sendPendingClientEmails). Confirmarea cererii și codul de
+ * intrare nu așteaptă: sunt răspunsul la ce tocmai a făcut omul.
+ */
+export function inMessagingWindow(now = new Date()): boolean {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Bucharest',
+    weekday: 'short',
+    hour: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(now);
+  const weekday = parts.find((p) => p.type === 'weekday')?.value ?? '';
+  const hour = Number(parts.find((p) => p.type === 'hour')?.value ?? 0);
+  return !['Sat', 'Sun'].includes(weekday) && hour >= 8 && hour < 21;
+}
+
+/** Evenimentele de dinainte nu primesc anunțuri retroactiv, la prima rulare a cronului. */
+export const NOTIFY_EVENTS_SINCE = '2026-10-23T18:00:00.000Z';
 
 const INTERNAL_TO = 'contact@instalatori-fotovoltaice.ro';
 const DAY_MS = 86_400_000;
@@ -131,7 +160,7 @@ export interface AccountLeadData extends AccountLeadSummary {
   won: boolean;
   firms: AccountFirm[];
   stats: { sentTo: number; clickVisitors: number; claimed: number };
-  bump: { allowed: boolean; usedLast7: number; nextAt: string | null; lastAt: string | null };
+  bump: { allowed: boolean; usedLast7: number; nextAt: string | null; lastAt: string | null; emailWindow: boolean };
 }
 
 const CLOSED_LABELS: Partial<Record<LeadStatus, string>> = {
@@ -201,7 +230,13 @@ async function bumpState(leadId: string, now: number): Promise<AccountLeadData['
   const allowed = recent.length < BUMPS_PER_WEEK;
   // Se eliberează un loc când cea mai veche apăsare din ultimele 7 zile iese din fereastră.
   const nextAt = allowed ? null : new Date(Math.min(...recent) + 7 * DAY_MS).toISOString();
-  return { allowed, usedLast7: recent.length, nextAt, lastAt: times[0] ? new Date(times[0]).toISOString() : null };
+  return {
+    allowed,
+    usedLast7: recent.length,
+    nextAt,
+    lastAt: times[0] ? new Date(times[0]).toISOString() : null,
+    emailWindow: clientEmailsLive() && inMessagingWindow(new Date(now)),
+  };
 }
 
 export async function loadAccountLead(lead: NewLead, now = Date.now()): Promise<AccountLeadData> {
@@ -374,9 +409,15 @@ export type BumpResult = { ok: true; firms: number } | { ok: false; error: strin
 /** „Încă vreau oferte” din cont: urcă cererea în feed și o retrimite firmelor din zonă. */
 export async function bumpLead(lead: NewLead, email: string, now = new Date()): Promise<BumpResult> {
   if (isLeadClosed(lead.crmStatus)) return { ok: false, error: 'Cererea e închisă.' };
-  // Până la pornire (luni 26 oct, după aprobarea lui Radu) nu pleacă nimic la firme,
-  // deci nici cererea nu urcă: „Încă vreau oferte” fără retrimitere ar minți.
-  if (!clientAccountLive(now)) return { ok: false, error: 'Butonul pornește în curând.' };
+  // Retrimiterea e email către firme, deci doar cu emailurile pornite și în
+  // fereastra de lucru. Fără retrimitere nici cererea nu urcă: ar minți.
+  if (!clientAccountLive() || !clientEmailsLive()) return { ok: false, error: 'Retrimiterea pornește în curând.' };
+  if (!inMessagingWindow(now)) {
+    return {
+      ok: false,
+      error: 'Retrimiterea pe email o facem de luni până vineri, între 8 și 21. Până atunci, sunați firmele din listă.',
+    };
+  }
   const state = await bumpState(lead.timestamp, now.getTime());
   if (!state.allowed) {
     return { ok: false, error: 'Ați apăsat deja de 2 ori săptămâna aceasta. Butonul revine în câteva zile.' };

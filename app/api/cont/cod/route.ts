@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { generateLoginCode, isValidEmail, normalizeEmail } from '@/lib/portal-auth';
 import { issueLoginCode } from '@/lib/client-auth';
-import { clientAccountLive, getLeadsForEmail } from '@/lib/client-account';
+import { clientAccountLive, clientEmailsLive, getLeadsForEmail } from '@/lib/client-account';
 import { sendLoginCodeEmail } from '@/lib/email-cont';
 
 // Pasul 1 al intrării din /cont: emailul. Codul pleacă doar dacă adresa are o
@@ -19,8 +19,14 @@ export async function POST(request: Request) {
   if (!isValidEmail(raw)) {
     return NextResponse.json({ error: 'Scrieți adresa de email cu care ați trimis cererea.' }, { status: 400 });
   }
-  if (!clientAccountLive()) {
-    return NextResponse.json({ error: 'Contul pentru clienți pornește în curând.' }, { status: 503 });
+  if (!clientAccountLive() || !clientEmailsLive()) {
+    return NextResponse.json(
+      {
+        error:
+          'Intrarea cu cod pornește în curând. Până atunci, cererea se vede din browserul din care ați trimis-o.',
+      },
+      { status: 503 },
+    );
   }
   const email = normalizeEmail(raw);
   try {

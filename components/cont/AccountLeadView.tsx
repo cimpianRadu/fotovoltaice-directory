@@ -289,7 +289,11 @@ function HelpCard({ data, demo }: { data: AccountLeadData; demo: boolean }) {
       <div className="mt-3">
         <Button href={demo ? undefined : `/firme/judet/${slugifyCounty(data.judet)}`}>Vedeți firmele din {data.judet}</Button>
       </div>
-      {state.allowed ? (
+      {!state.emailWindow ? (
+        <p className="mt-3 text-xs text-gray-500">
+          Retrimiterea pe email o facem de luni până vineri, între 8 și 21.
+        </p>
+      ) : state.allowed ? (
         <button
           type="button"
           onClick={() => void bump()}

@@ -47,7 +47,7 @@ import {
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { type PortalClaim } from './PortalClaimCard';
 import { isOfferPilotFirm, offersForFirm } from '@/lib/oferte';
-import { clientAccountLive } from '@/lib/client-account';
+import { clientOffersLive } from '@/lib/client-account';
 import PortalClaimList from './PortalClaimList';
 import PortalCountyAlerts from './PortalCountyAlerts';
 import PortalFirmEmails from './PortalFirmEmails';
@@ -147,7 +147,7 @@ export default async function PortalPage() {
         return [];
       }),
     ]);
-    const offersLive = clientAccountLive();
+    const offersLive = clientOffersLive();
     const leadById = new Map(leads.map((l) => [l.timestamp, l]));
     const photosByLead = new Map<string, { pathname: string; fileName: string }[]>();
     for (const p of photos) {

@@ -15,7 +15,7 @@ export default function PoliticaCookies() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Politica de Cookies</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 29 iulie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 23 octombrie 2026</p>
 
         <h2>Ce sunt cookie-urile?</h2>
         <p>
@@ -73,6 +73,22 @@ export default function PoliticaCookies() {
               <td>Când închideți caruselul de parteneri</td>
               <td>Nu vi-l mai arătăm în sesiunea curentă</td>
               <td>Până închideți fila</td>
+            </tr>
+            <tr>
+              <td>
+                <code>cont_cereri</code> (cookie)
+              </td>
+              <td>Când trimiteți o cerere</td>
+              <td>Vă lasă să vedeți, din același browser, cererea trimisă, fără să intrați în cont</td>
+              <td>180 de zile</td>
+            </tr>
+            <tr>
+              <td>
+                <code>cont_session</code> (cookie)
+              </td>
+              <td>Când intrați în contul de client din email sau cu un cod</td>
+              <td>Vă ține în contul de client</td>
+              <td>180 de zile</td>
             </tr>
             <tr>
               <td>Cookie de autentificare</td>

@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     try {
       const first = await recordOfferView(offer.id, f, 'client');
       if (first) {
-        await sendOfferOpenedToFirm(offer.firmEmail, {
+        await sendOfferOpenedToFirm(offer.leadId, offer.id, offer.firmEmail, {
           firmName: offer.firmName,
           judet: access.lead.judet,
           descriere: describeLead(access.lead),
