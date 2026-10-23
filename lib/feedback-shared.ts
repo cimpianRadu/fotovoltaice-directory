@@ -34,8 +34,8 @@ export const TESTIMONIAL_OPTIONS: Option[] = [
 // anonim nu convinge pe nimeni. Răspunsurile vechi cu „da-fara-nume" rămân
 // în Sheets și se publică tot fără nume.
 export const FIRM_TESTIMONIAL_OPTIONS: Option[] = [
-  { value: 'da', label: 'Da, cu numele firmei' },
-  { value: 'nu', label: 'Nu' },
+  { value: 'da', label: 'Da, publicați-o' },
+  { value: 'nu', label: 'Nu, doar pentru uz intern' },
 ];
 
 export const DATE_CORECTE_OPTIONS: Option[] = [

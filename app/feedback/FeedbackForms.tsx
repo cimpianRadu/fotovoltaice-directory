@@ -19,6 +19,9 @@ import {
 
 type Option = { value: string; label: string };
 
+// `strong`: varianta scoasă în față (chenar și text în culoarea brandului cât
+// timp nu e aleasă), `subtle`: variantele lăsate discrete. Folosite la acordul
+// de publicare al firmelor (7 oct 2026); nimic nu e bifat dinainte.
 function Choice({
   label,
   options,
@@ -27,6 +30,8 @@ function Choice({
   required,
   error,
   hint,
+  strong,
+  subtle = [],
 }: {
   label: string;
   options: Option[];
@@ -35,6 +40,8 @@ function Choice({
   required?: boolean;
   error?: boolean;
   hint?: string;
+  strong?: string;
+  subtle?: string[];
 }) {
   return (
     <fieldset>
@@ -42,20 +49,25 @@ function Choice({
         {label}
         {required && <span className="text-red-500 ml-0.5">*</span>}
       </legend>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         {options.map((o) => {
           const selected = value === o.value;
+          const look = selected
+            ? 'border-primary bg-primary/10 font-semibold text-gray-900'
+            : o.value === strong
+              ? 'border-primary bg-white px-4 font-semibold text-primary-dark hover:bg-primary/5'
+              : subtle.includes(o.value)
+                ? 'border-transparent bg-transparent text-gray-500 hover:text-gray-700 hover:underline'
+                : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400';
           return (
             <button
               key={o.value}
               type="button"
               aria-pressed={selected}
               onClick={() => onChange(o.value)}
-              className={`rounded-lg border px-3 py-2 text-sm transition-colors ${
-                selected
-                  ? 'border-primary bg-primary/10 font-semibold text-gray-900'
-                  : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
-              } ${error && !value ? 'border-red-400' : ''}`}
+              className={`rounded-lg border px-3 py-2 text-sm transition-colors ${look} ${
+                error && !value && !subtle.includes(o.value) ? 'border-red-400' : ''
+              }`}
             >
               {o.label}
             </button>
@@ -353,12 +365,15 @@ export function FirmFeedbackForm({
         placeholder="Opțional"
       />
       <Choice
-        label="Putem publica părerea dumneavoastră pe site și pe rețelele noastre sociale?"
+        label="Putem publica părerea pe site și pe rețelele noastre sociale, cu numele firmei?"
         options={FIRM_TESTIMONIAL_OPTIONS}
         value={testimonial}
         onChange={setTestimonial}
         required
         error={error?.field === 'testimonial'}
+        hint="Apare pe prima pagină a site-ului, acolo unde intră clienții care cer oferte."
+        strong="da"
+        subtle={['nu']}
       />
       <PublishNote>
         Dacă alegeți „da", putem publica textul scris mai sus, județul, tipul lucrării și puterea
@@ -453,12 +468,15 @@ export function PlatformFeedbackForm({ token, firma }: { token: string; firma: s
         placeholder="Opțional"
       />
       <Choice
-        label="Putem publica părerea dumneavoastră pe site și pe rețelele noastre sociale?"
+        label="Putem publica părerea pe site și pe rețelele noastre sociale, cu numele firmei?"
         options={FIRM_TESTIMONIAL_OPTIONS}
         value={testimonial}
         onChange={setTestimonial}
         required
         error={error?.field === 'testimonial'}
+        hint="Apare pe prima pagină a site-ului, acolo unde intră clienții care cer oferte."
+        strong="da"
+        subtle={['nu']}
       />
       <PublishNote>
         Dacă alegeți „da", putem publica textul scris mai sus și județul, împreună cu numele firmei
