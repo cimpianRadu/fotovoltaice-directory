@@ -10,6 +10,7 @@ const TABS = [
   { href: '/admin/comision', label: 'Comision' },
   { href: '/admin/documente', label: 'Documente' },
   { href: '/admin/necesit', label: 'Necesit' },
+  { href: '/admin/tinta', label: 'Țintă' },
   { href: '/admin/portal', label: 'Portal' },
   { href: '/admin/informez', label: 'Informez' },
   { href: '/admin/emailuri', label: 'Emailuri' },

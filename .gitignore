@@ -77,3 +77,8 @@ facebook-posts-batch-1.md
 # scratchpad-ul sesiunii, nu rădăcina repo-ului: pot conține date reale de cereri.
 scratch-*.png
 scratch-*.jpg
+
+# Descărcări brute pentru scripturi (bilanțuri, ONRC — ~1 GB), se regenerează
+/data/raw/
+# Lista Țintă stă în Neon (tinta_snapshots), nu în repo-ul public
+/data/firme-tinta.json

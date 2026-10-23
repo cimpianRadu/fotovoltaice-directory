@@ -7,15 +7,22 @@ import SearchableSelect from '@/components/ui/SearchableSelect';
  * Județul e singurul filtru cu prea multe valori pentru pastile (41). Navighează
  * prin URL, ca restul filtrelor paginii — starea rămâne în link, deci o listă de
  * apeluri pe un județ se poate ține deschisă într-un tab.
+ *
+ * Îl folosesc și /admin/necesit, și /admin/tinta: `basePath` e pagina, iar
+ * `params` sunt celelalte filtre active, păstrate la schimbarea județului.
  */
 export default function CountyFilter({
   counties,
   value,
   filtru,
+  basePath = '/admin/necesit',
+  params = {},
 }: {
   counties: { value: string; label: string }[];
   value: string;
   filtru?: string;
+  basePath?: string;
+  params?: Record<string, string | undefined>;
 }) {
   const router = useRouter();
 
@@ -30,8 +37,9 @@ export default function CountyFilter({
           const qs = new URLSearchParams();
           if (v) qs.set('judet', v);
           if (filtru) qs.set('filtru', filtru);
+          for (const [k, val] of Object.entries(params)) if (val) qs.set(k, val);
           const q = qs.toString();
-          router.push(q ? `/admin/necesit?${q}` : '/admin/necesit');
+          router.push(q ? `${basePath}?${q}` : basePath);
         }}
       />
     </div>
