@@ -3,7 +3,9 @@
 // cererii, deci nu știm pe ce cerere s-a apăsat. Aici fiecare click are cererea.
 //
 // Un rând pe (cerere, tip, vizitator, zi): un om care apasă de cinci ori într-o
-// zi contează o dată. Roboții nu rulează JavaScript, deci nu ajung aici, iar
+// zi contează o dată. Vizitatorul e un hash zilnic făcut pe server (IP, browser,
+// ziua), nu un id păstrat în browser, deci aceeași persoană în două zile diferite
+// contează de două ori. Roboții nu rulează JavaScript, deci nu ajung aici, iar
 // apăsările din browserul cu sesiune de admin nu se salvează.
 
 import 'server-only';
@@ -31,7 +33,7 @@ export async function recordLeadClick(click: {
 }
 
 export interface LeadClickStats {
-  /** Vizitatori distincți care au apăsat ceva pe cerere, în total. */
+  /** Apăsări distincte: câte un vizitator pe zi, oricâte butoane ar fi apăsat. */
   visitors: number;
   /** Apăsări pe „Vreau această cerere”, câte una pe vizitator și zi. */
   vreau: number;

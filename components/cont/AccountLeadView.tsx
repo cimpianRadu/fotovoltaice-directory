@@ -44,7 +44,7 @@ function ProgressSteps({ data }: { data: AccountLeadData }) {
   const { sentTo, clickVisitors, claimed } = data.stats;
   const seen = [
     sentTo ? `trimisă la ${sentTo} ${sentTo === 1 ? 'firmă' : 'firme'}` : '',
-    clickVisitors ? `${clickVisitors} ${clickVisitors === 1 ? 'instalator a apăsat' : 'instalatori au apăsat'} pe ea` : '',
+    clickVisitors ? `${clickVisitors} ${clickVisitors === 1 ? 'apăsare' : 'apăsări'} de la instalatori` : '',
   ]
     .filter(Boolean)
     .join(' · ');

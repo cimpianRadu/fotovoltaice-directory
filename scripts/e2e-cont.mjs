@@ -69,19 +69,19 @@ await check('oferta-fara-acces', 'Un fișier de ofertă nu iese fără acces', a
 });
 
 await check('click', 'Click-ul pe o cerere ajunge în Neon (o dată pe zi)', async () => {
-  const visitor = `e2e-test-${Date.now()}`;
+  // O cerere care nu există, folosită doar de test; rândurile ei se șterg la final.
   const leadId = '2020-01-01T00:00:00.000Z';
   const send = () =>
     fetch(`${TARGET}/api/cereri/click`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ leadId, kind: 'vreau', visitor }),
+      headers: { 'Content-Type': 'application/json', 'User-Agent': 'e2e-cont' },
+      body: JSON.stringify({ leadId, kind: 'vreau' }),
     });
   const [a, b] = [await send(), await send()];
   if (a.status !== 204 || b.status !== 204) return `HTTP ${a.status}/${b.status}`;
   const sql = neon(databaseUrl());
-  const rows = await sql`SELECT count(*)::int AS n FROM lead_clicks WHERE visitor = ${visitor}`;
-  await sql`DELETE FROM lead_clicks WHERE visitor = ${visitor}`;
+  const rows = await sql`SELECT count(*)::int AS n FROM lead_clicks WHERE lead_id = ${leadId}`;
+  await sql`DELETE FROM lead_clicks WHERE lead_id = ${leadId}`;
   const n = rows[0].n;
   return n === 1 ? null : `${n} rânduri în loc de 1`;
 });

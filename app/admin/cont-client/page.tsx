@@ -192,7 +192,7 @@ export default async function ContClientAdminPage() {
                 <thead>
                   <tr className="text-left text-xs text-slate-500">
                     <th className="px-3 py-2 font-medium">Cererea</th>
-                    <th className="px-3 py-2 text-right font-medium">Vizitatori</th>
+                    <th className="px-3 py-2 text-right font-medium" title="un vizitator pe zi">Apăsări</th>
                     <th className="px-3 py-2 text-right font-medium">„Vreau”</th>
                     <th className="px-3 py-2 text-right font-medium">Firme logate</th>
                   </tr>

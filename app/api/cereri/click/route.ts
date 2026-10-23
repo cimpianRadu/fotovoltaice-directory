@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { ADMIN_COOKIE } from '@/lib/admin-auth';
@@ -9,14 +10,27 @@ import { isLeadClickKind, recordLeadClick } from '@/lib/lead-clicks';
 // date nu are de ce să ajungă în consola vizitatorului.
 
 const LEAD_ID_RE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/;
-const VISITOR_RE = /^[a-zA-Z0-9-]{8,64}$/;
+
+/**
+ * Vizitatorul, fără nimic scris în browser: un hash din IP, browser și ziua de
+ * azi, cu secretul nostru. Se schimbă la miezul nopții, deci nu urmărește pe
+ * nimeni de la o zi la alta; în aceeași zi, cinci apăsări contează o dată.
+ */
+function visitorFor(req: Request): string {
+  const ip = (req.headers.get('x-forwarded-for') || '').split(',')[0].trim() || req.headers.get('x-real-ip') || '';
+  const ua = req.headers.get('user-agent') || '';
+  const day = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Bucharest' }).format(new Date());
+  return createHash('sha256')
+    .update(`lead-click:${process.env.PORTAL_SECRET || ''}:${day}:${ip}:${ua}`)
+    .digest('hex')
+    .slice(0, 32);
+}
 
 export async function POST(req: Request) {
   const done = new NextResponse(null, { status: 204 });
-  const body = (await req.json().catch(() => null)) as { leadId?: unknown; kind?: unknown; visitor?: unknown } | null;
+  const body = (await req.json().catch(() => null)) as { leadId?: unknown; kind?: unknown } | null;
   const leadId = typeof body?.leadId === 'string' ? body.leadId : '';
-  const visitor = typeof body?.visitor === 'string' ? body.visitor : '';
-  if (!LEAD_ID_RE.test(leadId) || !VISITOR_RE.test(visitor) || !isLeadClickKind(body?.kind)) return done;
+  if (!LEAD_ID_RE.test(leadId) || !isLeadClickKind(body?.kind)) return done;
 
   const jar = await cookies();
   // Apăsările lui Radu din browserul de admin nu sunt interes de la firme.
@@ -32,7 +46,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    await recordLeadClick({ leadId, kind: body.kind, visitor, firmEmail });
+    await recordLeadClick({ leadId, kind: body.kind, visitor: visitorFor(req), firmEmail });
   } catch (err) {
     console.error('[cereri/click]', err);
   }
