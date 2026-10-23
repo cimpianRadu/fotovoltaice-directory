@@ -152,6 +152,11 @@ export default function Footer() {
             </a>
           </p>
         </div>
+
+        <p className="mt-4 text-xs text-gray-500 text-center sm:text-left">
+          Site operat de CÎMPIAN RADU GHEORGHE PERSOANĂ FIZICĂ AUTORIZATĂ · CIF RO45316713 · Nr.
+          Reg. Com. F01/1568/2021
+        </p>
       </div>
     </footer>
   );

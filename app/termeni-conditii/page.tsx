@@ -15,11 +15,17 @@ export default function TermeniConditii() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Termeni și Condiții</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 2 octombrie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 23 octombrie 2026</p>
 
         <p>
           Prin accesarea și utilizarea site-ului <strong>instalatori-fotovoltaice.ro</strong> acceptați
           acești termeni și condiții în totalitate.
+        </p>
+
+        <p>
+          Site-ul este operat de <strong>CÎMPIAN RADU GHEORGHE PERSOANĂ FIZICĂ AUTORIZATĂ</strong>,
+          CIF RO45316713, Nr. Reg. Com. F01/1568/2021, denumit în continuare „noi”. Contact:{' '}
+          <a href="mailto:contact@instalatori-fotovoltaice.ro">contact@instalatori-fotovoltaice.ro</a>.
         </p>
 
         <h2>1. Descrierea serviciului</h2>
@@ -136,8 +142,8 @@ export default function TermeniConditii() {
           nu documentele comerciale ale firmei.
         </p>
         <p>
-          <strong>Facturare.</strong> Comisionul se facturează de Cîmpian Radu Gheorghe PFA, CUI
-          45316713, plătitor de TVA, după confirmarea contractului. Termenul de plată este cel din
+          <strong>Facturare.</strong> Comisionul se facturează de CÎMPIAN RADU GHEORGHE PERSOANĂ
+          FIZICĂ AUTORIZATĂ, CIF RO45316713, plătitor de TVA, după confirmarea contractului. Termenul de plată este cel din
           acordul scris cu firma.
         </p>
         <p>
@@ -166,12 +172,12 @@ export default function TermeniConditii() {
         <ul>
           <li>
             <strong>De la client</strong> putem publica textul scris de el, județul, tipul și puterea
-            sistemului. Numele apare doar dacă a ales varianta „cu numele meu".
+            sistemului. Numele apare doar dacă a ales varianta „cu numele meu”.
           </li>
           <li>
             <strong>De la firma instalatoare</strong> putem publica părerea scrisă de ea, județul,
             tipul lucrării și puterea instalată. Numele firmei și linkul spre profilul ei apar doar
-            dacă a ales varianta „cu numele firmei". Studiile de caz cu fotografii de la montaj se
+            dacă a ales varianta „cu numele firmei”. Studiile de caz cu fotografii de la montaj se
             stabilesc separat, în scris, cu firma.
           </li>
           <li>
