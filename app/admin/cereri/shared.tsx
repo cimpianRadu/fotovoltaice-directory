@@ -4,6 +4,12 @@ import {
   type ClaimStatus,
   type LeadStatus,
 } from '@/lib/sheets-shared';
+import {
+  getFinancingShort,
+  getFinancingTone,
+  getTimelineLabel,
+  type FinancingTone,
+} from '@/lib/utils-shared';
 
 // Formatare și insigne comune listei și fișei din /admin/cereri.
 
@@ -88,4 +94,72 @@ export function Caption({ children }: { children: React.ReactNode }) {
 /** Calea fișei unei cereri. Id-ul e timestampul rândului din Leads. */
 export function cerereHref(id: string): string {
   return `/admin/cereri/${encodeURIComponent(id)}`;
+}
+
+// ── Finanțare și termen ────────────────────────────────────────────────────
+// Cele două întrebări care decid dacă o cerere se sună azi: cu ce bani și cât
+// de repede. Pe cererile de dinainte de 29 iul (finanțare) și 4 aug (termen)
+// lipsesc; lipsa se scrie, nu se ascunde.
+
+export const FINANCING_CHIP: Record<FinancingTone, string> = {
+  ready: 'bg-emerald-100 text-emerald-800',
+  credit: 'bg-sky-100 text-sky-800',
+  program: 'bg-amber-100 text-amber-800',
+  unknown: 'bg-slate-100 text-slate-500',
+};
+
+export const TIMELINE_CHIP: Record<string, string> = {
+  'cat-mai-repede': 'border-rose-300 bg-rose-50 text-rose-700',
+  '1-3-luni': 'border-slate-300 bg-white text-slate-700',
+  'peste-3-luni': 'border-slate-200 bg-white text-slate-500',
+  'ma-informez': 'border-violet-200 bg-violet-50 text-violet-700',
+};
+
+/** Fonduri proprii și „cât mai repede”: cererea care se închide. */
+export function isHot(lead: { finantare: string; termen: string }): boolean {
+  return getFinancingTone(lead.finantare) === 'ready' && lead.termen === 'cat-mai-repede';
+}
+
+/** Pentru sortarea „🔥 întâi”: banii (proprii 2, credit 1) plus graba (repede 2, 1-3 luni 1). */
+export function hotScore(lead: { finantare: string; termen: string }): number {
+  const tone = getFinancingTone(lead.finantare);
+  const money = tone === 'ready' ? 2 : tone === 'credit' ? 1 : 0;
+  const time = lead.termen === 'cat-mai-repede' ? 2 : lead.termen === '1-3-luni' ? 1 : 0;
+  return money + time;
+}
+
+export function FinancingBadge({ finantare, size = 'sm' }: { finantare: string; size?: 'sm' | 'md' }) {
+  const pad = size === 'md' ? 'px-2.5 py-1 text-xs' : 'px-1.5 py-0.5 text-[11px]';
+  if (!finantare) {
+    return (
+      <span className={`inline-block rounded border border-dashed border-slate-200 font-medium whitespace-nowrap text-slate-400 ${pad}`}>
+        finanțare nedeclarată
+      </span>
+    );
+  }
+  return (
+    <span className={`inline-block rounded font-semibold whitespace-nowrap ${FINANCING_CHIP[getFinancingTone(finantare)]} ${pad}`}>
+      {getFinancingShort(finantare)}
+    </span>
+  );
+}
+
+export function TimelineBadge({ termen, size = 'sm' }: { termen: string; size?: 'sm' | 'md' }) {
+  const pad = size === 'md' ? 'px-2.5 py-1 text-xs' : 'px-1.5 py-0.5 text-[11px]';
+  if (!termen) {
+    return (
+      <span className={`inline-block rounded border border-dashed border-slate-200 font-medium whitespace-nowrap text-slate-400 ${pad}`}>
+        termen nedeclarat
+      </span>
+    );
+  }
+  return (
+    <span
+      className={`inline-block rounded border font-semibold whitespace-nowrap ${
+        TIMELINE_CHIP[termen] ?? 'border-slate-200 bg-white text-slate-500'
+      } ${pad}`}
+    >
+      {getTimelineLabel(termen)}
+    </span>
+  );
 }

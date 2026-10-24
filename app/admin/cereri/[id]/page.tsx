@@ -40,7 +40,6 @@ import { getCompanies } from '@/lib/utils';
 import { matchFirmsForLead } from '@/lib/lead-match';
 import { matchNecesitFirms } from '@/lib/necesit-match';
 import { firmDisplayName } from '@/lib/client-account';
-import { FIRM_REPORT_OPTIONS } from '@/lib/client-account-shared';
 import {
   CLICKS_SINCE,
   CLIENT_VIEWS_SINCE,
@@ -55,7 +54,18 @@ import MergeLeadsButton from '../../crm/MergeLeadsButton';
 import { MatchList, NecesitList } from '../../crm/MatchLists';
 import { formatLeadForShare } from '../../crm/formatLead';
 import { buildTimeline, type TimelineKind } from '../timeline';
-import { Caption, LeadStatusBadge, ago, cerereHref, fmtDateTime, fmtDay } from '../shared';
+import FirmJourney from './FirmJourney';
+import {
+  Caption,
+  FinancingBadge,
+  LeadStatusBadge,
+  TimelineBadge,
+  ago,
+  cerereHref,
+  fmtDateTime,
+  fmtDay,
+  isHot,
+} from '../shared';
 
 export const dynamic = 'force-dynamic';
 
@@ -292,10 +302,6 @@ export default async function CererePage({ params }: Props) {
       );
   const timeline = buildTimeline(lead, leadClaims, watches, activity);
 
-  // Ce spune clientul despre fiecare firmă, ultimul răspuns pe revendicare.
-  const lastReport = new Map<string, NonNullable<typeof activity>['reports'][number]>();
-  for (const r of activity?.reports ?? []) lastReport.set(r.claimTs, r);
-
   const title = [lead.tipProiect ? getProjectTypeLabel(lead.tipProiect) : '(fără tip)', lead.putere && `${lead.putere} kW`]
     .filter(Boolean)
     .join(' · ');
@@ -325,7 +331,10 @@ export default async function CererePage({ params }: Props) {
 
       <header>
         <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-xl font-bold text-slate-900">{title}</h1>
+          <h1 className="text-xl font-bold text-slate-900">
+            {isHot(lead) && <span title="Fonduri proprii și cât mai repede">🔥 </span>}
+            {title}
+          </h1>
           <LeadStatusBadge status={lead.crmStatus} />
           {isLeadInformez(lead) && (
             <span className="rounded bg-violet-50 px-1.5 py-0.5 text-[11px] font-semibold text-violet-700">
@@ -341,7 +350,16 @@ export default async function CererePage({ params }: Props) {
             <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[11px] font-semibold text-slate-500">ascunsă</span>
           )}
         </div>
-        <p className="mt-1 text-sm text-slate-500">
+        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+          <FinancingBadge finantare={lead.finantare} size="md" />
+          <TimelineBadge termen={lead.termen} size="md" />
+          {lead.buget && getBudgetLabel(lead.buget) && (
+            <span className="rounded border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700">
+              buget {getBudgetLabel(lead.buget)}
+            </span>
+          )}
+        </div>
+        <p className="mt-2 text-sm text-slate-500">
           {lead.judet}
           {lead.localitate && `, ${lead.localitate}`} · {lead.numeContact || lead.numeCompanie || '—'} · intrată{' '}
           {fmtDateTime(lead.timestamp)} ({ago(lead.timestamp)})
@@ -371,31 +389,25 @@ export default async function CererePage({ params }: Props) {
           >
             <div className="space-y-3">
               {claimRows.length > 0 ? (
-                <ClaimList claims={claimRows} />
+                <div className="space-y-3">
+                  {claimRows.map((row) => (
+                    <div key={row.timestamp} className="rounded-xl border border-slate-200 p-2">
+                      <ClaimList claims={[row]} hideNotes />
+                      <FirmJourney
+                        claim={row}
+                        changes={(activity?.changes ?? []).filter(
+                          (c) => c.field === 'stare_firma' && c.claimTs === row.timestamp,
+                        )}
+                        reports={(activity?.reports ?? []).filter((r) => r.claimTs === row.timestamp)}
+                        offers={(activity?.offers ?? []).filter((o) => o.claimTs === row.timestamp)}
+                      />
+                    </div>
+                  ))}
+                </div>
               ) : (
                 <p className={`text-xs ${closed ? 'text-slate-400' : 'font-medium text-amber-700'}`}>
                   Nicio firmă n-a preluat cererea.
                 </p>
-              )}
-
-              {lastReport.size > 0 && (
-                <div className="space-y-1 rounded-lg bg-slate-50 px-3 py-2">
-                  <Caption>Ce spune clientul despre fiecare</Caption>
-                  <ul className="space-y-0.5 text-xs">
-                    {leadClaims
-                      .filter((c) => lastReport.has(c.timestamp))
-                      .map((c) => {
-                        const r = lastReport.get(c.timestamp)!;
-                        const label = FIRM_REPORT_OPTIONS.find((o) => o.value === r.status)?.label ?? r.status;
-                        return (
-                          <li key={c.timestamp}>
-                            <span className="font-medium text-slate-800">{firmDisplayName(c.numeFirma)}</span>:{' '}
-                            „{label}” <span className="text-slate-400">· {fmtDay(r.at)}</span>
-                          </li>
-                        );
-                      })}
-                  </ul>
-                </div>
               )}
 
               {watches.length > 0 && (

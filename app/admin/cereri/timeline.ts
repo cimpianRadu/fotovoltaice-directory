@@ -74,7 +74,7 @@ const CLICK_KIND_LABEL: Record<string, string> = {
 };
 
 /** Ziua și ora unei note, scrise în ora României, ca ISO. */
-function bucharestIso(date: string, time?: string): string {
+export function bucharestIso(date: string, time?: string): string {
   const guess = new Date(`${date}T${time || '12:00'}:00Z`);
   if (Number.isNaN(guess.getTime())) return date;
   const local = new Date(guess.toLocaleString('en-US', { timeZone: 'Europe/Bucharest' }));

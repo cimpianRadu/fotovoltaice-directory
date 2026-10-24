@@ -19,14 +19,18 @@ import { MAX_CLAIMS_PER_LEAD } from '@/lib/sheets';
 import { CLICKS_SINCE, getLeadsActivity, type LeadActivity } from '@/lib/admin-cereri';
 import { firmDisplayName } from '@/lib/client-account';
 import { normalizePhone } from '@/lib/sheets-shared';
-import { getProjectTypeLabel } from '@/lib/utils-shared';
+import { TIMELINE_OPTIONS, getFinancingTone, getProjectTypeLabel, type FinancingTone } from '@/lib/utils-shared';
 import {
+  FinancingBadge,
   FirmStatusChip,
   LeadStatusBadge,
+  TimelineBadge,
   ago,
   cerereHref,
   fmtDateTime,
   fmtDay,
+  hotScore,
+  isHot,
 } from './shared';
 
 export const dynamic = 'force-dynamic';
@@ -39,7 +43,14 @@ export const dynamic = 'force-dynamic';
 type StareFilter = '' | 'deschise' | 'inchise' | LeadStatus;
 type FirmeFilter = '' | 'fara' | 'cu' | 'pline';
 type ContFilter = '' | 'da' | 'nu';
-type Sort = 'intrare' | 'miscare';
+type Sort = 'intrare' | 'miscare' | 'hot';
+
+const FINANCING_FILTERS: { key: FinancingTone; label: string }[] = [
+  { key: 'ready', label: 'Fonduri proprii' },
+  { key: 'credit', label: 'Caută finanțare' },
+  { key: 'program', label: 'Așteaptă program' },
+  { key: 'unknown', label: 'Nu știe / necompletat' },
+];
 
 interface Props {
   searchParams: Promise<{
@@ -49,6 +60,9 @@ interface Props {
     judet?: string;
     q?: string;
     sort?: string;
+    bani?: string;
+    termen?: string;
+    hot?: string;
   }>;
 }
 
@@ -67,12 +81,18 @@ function lastActivity(lead: NewLead, claims: LeadClaim[], activity: LeadActivity
     .reduce((max, d) => (Date.parse(d) > Date.parse(max) ? d : max), lead.timestamp);
 }
 
-/** Când s-a schimbat ultima dată ce declară firma, după ce știm. */
-function claimChangedAt(c: LeadClaim, activity: LeadActivity | undefined): string {
-  const known = [c.timestamp, c.offeredAt, c.releasedAt, activity?.claimStatusChanges.get(c.timestamp) || ''];
-  return known
-    .filter((d) => d && Number.isFinite(Date.parse(d)))
-    .reduce((max, d) => (Date.parse(d) > Date.parse(max) ? d : max), c.timestamp);
+/**
+ * Când a ajuns firma în starea de acum, dacă se știe: din jurnal (din 24 oct),
+ * din data ofertei sau a renunțării, ori preluarea pentru „De sunat”. Altfel
+ * null: o dată pusă lângă „Concretizat” care e de fapt data ofertei ar minți.
+ */
+function claimStatusSince(c: LeadClaim, activity: LeadActivity | undefined): string | null {
+  const logged = activity?.claimStatusChanges.get(c.timestamp);
+  if (logged) return logged;
+  if (c.firmStatus === 'ofertat' && c.offeredAt) return c.offeredAt;
+  if (c.firmStatus === 'pierdut' && c.releasedAt) return c.releasedAt;
+  if (c.firmStatus === 'de_sunat') return c.timestamp;
+  return null;
 }
 
 function ClientCell({ activity, lead }: { activity: LeadActivity | undefined; lead: NewLead }) {
@@ -165,7 +185,10 @@ export default async function CereriPage({ searchParams }: Props) {
   const cont = (params.cont ?? '') as ContFilter;
   const judet = params.judet ?? '';
   const q = (params.q ?? '').trim();
-  const sort: Sort = params.sort === 'miscare' ? 'miscare' : 'intrare';
+  const sort: Sort = params.sort === 'miscare' || params.sort === 'hot' ? params.sort : 'intrare';
+  const bani = (params.bani ?? '') as FinancingTone | '';
+  const termen = params.termen ?? '';
+  const hot = params.hot === '1';
 
   let leads: NewLead[];
   let claims: LeadClaim[];
@@ -224,6 +247,10 @@ export default async function CereriPage({ searchParams }: Props) {
         if (cont === 'nu' && has) return false;
       }
       if (judet && lead.judet !== judet) return false;
+      if (bani && getFinancingTone(lead.finantare) !== bani) return false;
+      if (termen === 'nedeclarat' ? lead.termen !== '' : termen && lead.termen !== termen) return false;
+      // Hot = bani proprii și cât mai repede, pe cererile încă deschise.
+      if (hot && (!isHot(lead) || isLeadClosed(lead.crmStatus))) return false;
       if (needle) {
         const hay = [
           lead.numeContact,
@@ -241,11 +268,19 @@ export default async function CereriPage({ searchParams }: Props) {
       }
       return true;
     })
-    .sort((a, b) =>
-      sort === 'miscare'
-        ? Date.parse(b.last) - Date.parse(a.last)
-        : b.lead.timestamp.localeCompare(a.lead.timestamp),
-    );
+    .sort((a, b) => {
+      if (sort === 'miscare') return Date.parse(b.last) - Date.parse(a.last);
+      if (sort === 'hot') {
+        // Deschise înainte de închise, apoi bani + grabă, apoi cele mai noi.
+        const open = Number(isLeadClosed(a.lead.crmStatus)) - Number(isLeadClosed(b.lead.crmStatus));
+        if (open) return open;
+        const score = hotScore(b.lead) - hotScore(a.lead);
+        if (score) return score;
+      }
+      return b.lead.timestamp.localeCompare(a.lead.timestamp);
+    });
+
+  const hotCount = leads.filter((l) => isHot(l) && !isLeadClosed(l.crmStatus)).length;
 
   const open = rows.filter((r) => !isLeadClosed(r.lead.crmStatus));
   const openWithoutFirm = open.filter((r) => r.held === 0).length;
@@ -253,8 +288,21 @@ export default async function CereriPage({ searchParams }: Props) {
     (r) => r.activity?.account?.verifiedAt || (r.activity?.clientViews ?? 0) > 0,
   ).length;
 
-  const qs = (next: Partial<Record<'stare' | 'firme' | 'cont' | 'judet' | 'q' | 'sort', string>>) => {
-    const merged = { stare, firme, cont, judet, q, sort: sort === 'intrare' ? '' : sort, ...next };
+  const qs = (
+    next: Partial<Record<'stare' | 'firme' | 'cont' | 'judet' | 'q' | 'sort' | 'bani' | 'termen' | 'hot', string>>,
+  ) => {
+    const merged = {
+      stare,
+      firme,
+      cont,
+      judet,
+      q,
+      sort: sort === 'intrare' ? '' : sort,
+      bani,
+      termen,
+      hot: hot ? '1' : '',
+      ...next,
+    };
     const p = new URLSearchParams();
     for (const [k, v] of Object.entries(merged)) if (v) p.set(k, v);
     const s = p.toString();
@@ -283,7 +331,7 @@ export default async function CereriPage({ searchParams }: Props) {
 
       <div className="mt-4 space-y-2 rounded-xl border border-slate-200 bg-white px-4 py-3">
         <form action="/admin/cereri" className="flex flex-wrap items-center gap-2">
-          {Object.entries({ stare, firme, cont, judet, sort: sort === 'intrare' ? '' : sort })
+          {Object.entries({ stare, firme, cont, judet, sort: sort === 'intrare' ? '' : sort, bani, termen, hot: hot ? '1' : '' })
             .filter(([, v]) => v)
             .map(([k, v]) => (
               <input key={k} type="hidden" name={k} value={v} />
@@ -307,6 +355,47 @@ export default async function CereriPage({ searchParams }: Props) {
             </Link>
           )}
         </form>
+
+        <FilterRow label="Ordine">
+          <Pill href={qs({ hot: hot ? '' : '1' })} active={hot}>
+            🔥 Hot · {hotCount}
+          </Pill>
+          <span className="mx-1 h-4 w-px bg-slate-200" />
+          <Pill href={qs({ sort: '' })} active={sort === 'intrare'}>
+            Cele mai noi
+          </Pill>
+          <Pill href={qs({ sort: 'hot' })} active={sort === 'hot'}>
+            🔥 întâi
+          </Pill>
+          <Pill href={qs({ sort: 'miscare' })} active={sort === 'miscare'}>
+            Ultima mișcare
+          </Pill>
+        </FilterRow>
+
+        <FilterRow label="Bani">
+          <Pill href={qs({ bani: '' })} active={!bani}>
+            Toți
+          </Pill>
+          {FINANCING_FILTERS.map((f) => (
+            <Pill key={f.key} href={qs({ bani: f.key })} active={bani === f.key}>
+              {f.label}
+            </Pill>
+          ))}
+        </FilterRow>
+
+        <FilterRow label="Termen">
+          <Pill href={qs({ termen: '' })} active={!termen}>
+            Toate
+          </Pill>
+          {TIMELINE_OPTIONS.map((t) => (
+            <Pill key={t.value} href={qs({ termen: t.value })} active={termen === t.value}>
+              {t.label}
+            </Pill>
+          ))}
+          <Pill href={qs({ termen: 'nedeclarat' })} active={termen === 'nedeclarat'}>
+            Nedeclarat
+          </Pill>
+        </FilterRow>
 
         <FilterRow label="Stare">
           <Pill href={qs({ stare: '' })} active={!stare}>
@@ -375,6 +464,7 @@ export default async function CereriPage({ searchParams }: Props) {
                 </Link>
               </th>
               <th className="px-3 py-2 font-medium">Cerere</th>
+              <th className="px-3 py-2 font-medium">Bani · termen</th>
               <th className="px-3 py-2 font-medium">Stare</th>
               <th className="px-3 py-2 font-medium">Firme</th>
               <th className="px-3 py-2 font-medium" title="Contul clientului: și-a deschis pagina cererii sau a intrat din email">
@@ -406,6 +496,7 @@ export default async function CereriPage({ searchParams }: Props) {
                   </td>
                   <td className="max-w-64 px-3 py-2.5">
                     <Link href={href} className="font-medium text-slate-900 hover:underline">
+                      {isHot(lead) && <span title="Fonduri proprii și cât mai repede">🔥 </span>}
                       {lead.tipProiect ? getProjectTypeLabel(lead.tipProiect) : '(fără tip)'}
                       {lead.putere && ` · ${lead.putere} kW`}
                     </Link>
@@ -428,6 +519,12 @@ export default async function CereriPage({ searchParams }: Props) {
                       {lead.status === 'Ascuns' && (
                         <span className="rounded bg-slate-100 px-1 text-[10px] font-semibold text-slate-500">ascunsă</span>
                       )}
+                    </div>
+                  </td>
+                  <td className="px-3 py-2.5">
+                    <div className="flex flex-col items-start gap-1">
+                      <FinancingBadge finantare={lead.finantare} />
+                      <TimelineBadge termen={lead.termen} />
                     </div>
                   </td>
                   <td className="px-3 py-2.5 text-xs">
@@ -457,9 +554,27 @@ export default async function CereriPage({ searchParams }: Props) {
                               {firmDisplayName(c.numeFirma)}
                             </span>
                             <FirmStatusChip status={c.firmStatus} />
-                            <span className="text-[11px] text-slate-400">
-                              {fmtDay(claimChangedAt(c, activity))}
-                            </span>
+                            {(() => {
+                              const since = claimStatusSince(c, activity);
+                              return since ? (
+                                <span className="text-[11px] text-slate-400">{fmtDay(since)}</span>
+                              ) : (
+                                <span
+                                  className="text-[11px] text-slate-300"
+                                  title="Mutată înainte de 24 oct, când a pornit jurnalul: data nu se știe"
+                                >
+                                  ?
+                                </span>
+                              );
+                            })()}
+                            {c.firmNotes.length > 0 && (
+                              <span
+                                className="text-[11px] text-slate-500"
+                                title={c.firmNotes[0].text}
+                              >
+                                💬 {c.firmNotes.length}
+                              </span>
+                            )}
                           </li>
                         ))}
                         <li className="text-[11px] text-slate-400">

@@ -75,7 +75,7 @@ function fmtDay(ymd: string): string {
   return d.toLocaleDateString('ro-RO', { day: 'numeric', month: 'short' });
 }
 
-function Claim({ claim }: { claim: ClaimRow }) {
+function Claim({ claim, hideNotes }: { claim: ClaimRow; hideNotes?: boolean }) {
   const [contactedAt, setContactedAt] = useState(claim.contactedAt);
   const [approvedAt, setApprovedAt] = useState(claim.approvedAt);
   const [state, setState] = useState<'idle' | 'saving' | 'error'>('idle');
@@ -241,7 +241,7 @@ function Claim({ claim }: { claim: ClaimRow }) {
       )}
 
       {/* Jurnalul firmei din portal — derivat, doar afișare. */}
-      {claim.firmNotes.length > 0 && (
+      {!hideNotes && claim.firmNotes.length > 0 && (
         <div className="mt-1 space-y-0.5 border-t border-slate-100 pt-1">
           {claim.firmNotes.map((n, i) => (
             <div key={`${n.date}-${i}`} className="text-slate-500">
@@ -306,14 +306,15 @@ function Claim({ claim }: { claim: ClaimRow }) {
   );
 }
 
-export default function ClaimList({ claims }: { claims: ClaimRow[] }) {
+/** `hideNotes`: fișa din /admin/cereri arată notele firmei în istoricul ei, nu aici. */
+export default function ClaimList({ claims, hideNotes }: { claims: ClaimRow[]; hideNotes?: boolean }) {
   if (claims.length === 0) {
     return <p className="text-xs text-slate-400">Nerevendicat</p>;
   }
   return (
     <div className="space-y-1.5">
       {claims.map((c) => (
-        <Claim key={`${c.leadId}-${c.timestamp}`} claim={c} />
+        <Claim key={`${c.leadId}-${c.timestamp}`} claim={c} hideNotes={hideNotes} />
       ))}
     </div>
   );
