@@ -1,6 +1,8 @@
 import {
   CLAIM_STATUS_LABELS,
   LEAD_STATUS_LABELS,
+  claimOccupiesLeadSlot,
+  isLeadClosed,
   type ClaimStatus,
   type LeadStatus,
 } from '@/lib/sheets-shared';
@@ -160,6 +162,76 @@ export function TimelineBadge({ termen, size = 'sm' }: { termen: string; size?: 
       } ${pad}`}
     >
       {getTimelineLabel(termen)}
+    </span>
+  );
+}
+
+// ── Etapa cererii ──────────────────────────────────────────────────────────
+// O singură stare pe cerere, din ce au făcut firmele (Radu, 24 oct 2026: „avem
+// prea multe statusuri și e greu de urmărit; care e marcată concretizată de
+// firmă, aia e”). Starea din coloana V rămâne doar pentru final: câștigată de
+// mână sau închisă (altundeva, renunțat, inactivă).
+
+export type Etapa = 'fara_firma' | 'preluata' | 'discutii' | 'oferta' | 'concretizata' | 'inchisa';
+
+export const ETAPE: { key: Etapa; label: string; hint: string; chip: string }[] = [
+  {
+    key: 'fara_firma',
+    label: 'Fără firmă',
+    hint: 'deschisă, nicio firmă nu o are acum',
+    chip: 'bg-amber-100 text-amber-800',
+  },
+  {
+    key: 'preluata',
+    label: 'Preluată',
+    hint: 'o firmă o are, dar n-a ajuns la discuții (de sunat, nu răspunde)',
+    chip: 'bg-slate-200 text-slate-700',
+  },
+  { key: 'discutii', label: 'În discuții', hint: 'o firmă vorbește cu clientul', chip: 'bg-indigo-100 text-indigo-700' },
+  { key: 'oferta', label: 'Ofertă trimisă', hint: 'o firmă i-a trimis oferta', chip: 'bg-sky-100 text-sky-800' },
+  {
+    key: 'concretizata',
+    label: 'Concretizată',
+    hint: 'o firmă a marcat „Concretizat”, sau ai pus-o tu pe câștigată',
+    chip: 'bg-emerald-600 text-white',
+  },
+  {
+    key: 'inchisa',
+    label: 'Închisă',
+    hint: 'și-a rezolvat altundeva, a renunțat sau n-a mai răspuns',
+    chip: 'bg-slate-100 text-slate-400',
+  },
+];
+
+export function isEtapaOpen(e: Etapa): boolean {
+  return e !== 'concretizata' && e !== 'inchisa';
+}
+
+export function leadEtapa(
+  lead: { crmStatus: LeadStatus },
+  claims: { firmStatus: ClaimStatus; releasedAt: string }[],
+): Etapa {
+  if (lead.crmStatus === 'castigata' || claims.some((c) => c.firmStatus === 'castigat' && !c.releasedAt)) {
+    return 'concretizata';
+  }
+  if (isLeadClosed(lead.crmStatus)) return 'inchisa';
+  const active = claims.filter(claimOccupiesLeadSlot);
+  if (active.some((c) => c.firmStatus === 'ofertat')) return 'oferta';
+  if (active.some((c) => c.firmStatus === 'discutii')) return 'discutii';
+  if (active.length) return 'preluata';
+  return 'fara_firma';
+}
+
+export function EtapaBadge({ etapa, size = 'sm' }: { etapa: Etapa; size?: 'sm' | 'md' }) {
+  const e = ETAPE.find((x) => x.key === etapa)!;
+  return (
+    <span
+      title={e.hint}
+      className={`inline-block rounded-full font-semibold whitespace-nowrap ${e.chip} ${
+        size === 'md' ? 'px-3 py-1 text-xs' : 'px-2 py-0.5 text-[11px]'
+      }`}
+    >
+      {e.label}
     </span>
   );
 }

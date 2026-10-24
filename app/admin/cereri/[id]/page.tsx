@@ -57,14 +57,16 @@ import { buildTimeline, type TimelineKind } from '../timeline';
 import FirmJourney from './FirmJourney';
 import {
   Caption,
+  EtapaBadge,
   FinancingBadge,
-  LeadStatusBadge,
   TimelineBadge,
   ago,
   cerereHref,
   fmtDateTime,
   fmtDay,
+  isEtapaOpen,
   isHot,
+  leadEtapa,
 } from '../shared';
 
 export const dynamic = 'force-dynamic';
@@ -260,7 +262,10 @@ export default async function CererePage({ params }: Props) {
   const lead = leads.find((l) => l.timestamp === id);
   if (!lead) notFound();
 
-  const closed = isLeadClosed(lead.crmStatus);
+  const leadClaims = claims.filter((c) => c.leadId === id);
+  const etapa = leadEtapa(lead, leadClaims);
+  // Concretizată sau închisă: nu mai caut firme pentru ea.
+  const closed = !isEtapaOpen(etapa);
   const [photos, watches, portalAccounts, crmFirms, listings, activityResult] = await Promise.all([
     getPhotosForLead(id).catch(() => []),
     getWatches().then((w) => w.filter((x) => x.leadId === id)),
@@ -274,7 +279,6 @@ export default async function CererePage({ params }: Props) {
   ]);
   const { activity, error: dbError } = activityResult;
 
-  const leadClaims = claims.filter((c) => c.leadId === id);
   const claimRows: ClaimRow[] = leadClaims.map((c) => ({
     ...c,
     firmActive: countActiveClaimsForFirm(claims, c),
@@ -335,7 +339,7 @@ export default async function CererePage({ params }: Props) {
             {isHot(lead) && <span title="Fonduri proprii și cât mai repede">🔥 </span>}
             {title}
           </h1>
-          <LeadStatusBadge status={lead.crmStatus} />
+          <EtapaBadge etapa={etapa} size="md" />
           {isLeadInformez(lead) && (
             <span className="rounded bg-violet-50 px-1.5 py-0.5 text-[11px] font-semibold text-violet-700">
               se informează
@@ -353,6 +357,11 @@ export default async function CererePage({ params }: Props) {
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
           <FinancingBadge finantare={lead.finantare} size="md" />
           <TimelineBadge termen={lead.termen} size="md" />
+          {parseRequestedFirms(lead.preselectedCompany).length > 0 && (
+            <span className="rounded bg-indigo-50 px-2.5 py-1 text-xs font-medium text-indigo-700">
+              a cerut: {parseRequestedFirms(lead.preselectedCompany).join(', ')}
+            </span>
+          )}
           {lead.buget && getBudgetLabel(lead.buget) && (
             <span className="rounded border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700">
               buget {getBudgetLabel(lead.buget)}
@@ -371,6 +380,7 @@ export default async function CererePage({ params }: Props) {
           {/* Sus și în coloana lată: banda cu cele 7 stări nu încape în cea îngustă. */}
           <section className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
             <LeadCrm
+              statusMode="close"
               id={id}
               status={lead.crmStatus}
               contacted={lead.contactedByFirm}
@@ -391,7 +401,10 @@ export default async function CererePage({ params }: Props) {
               {claimRows.length > 0 ? (
                 <div className="space-y-3">
                   {claimRows.map((row) => (
-                    <div key={row.timestamp} className="rounded-xl border border-slate-200 p-2">
+                    <div
+                      key={row.timestamp}
+                      className="grid gap-4 rounded-xl border border-slate-200 p-3 md:grid-cols-[16rem_1fr]"
+                    >
                       <ClaimList claims={[row]} hideNotes />
                       <FirmJourney
                         claim={row}

@@ -9,11 +9,9 @@ import {
   type NewLead,
 } from '@/lib/sheets';
 import {
-  LEAD_STATUSES,
   LEAD_STATUS_LABELS,
   claimOccupiesLeadSlot,
-  isLeadClosed,
-  type LeadStatus,
+  parseRequestedFirms,
 } from '@/lib/sheets-shared';
 import { MAX_CLAIMS_PER_LEAD } from '@/lib/sheets';
 import { CLICKS_SINCE, getLeadsActivity, type LeadActivity } from '@/lib/admin-cereri';
@@ -21,16 +19,20 @@ import { firmDisplayName } from '@/lib/client-account';
 import { normalizePhone } from '@/lib/sheets-shared';
 import { TIMELINE_OPTIONS, getFinancingTone, getProjectTypeLabel, type FinancingTone } from '@/lib/utils-shared';
 import {
+  ETAPE,
+  EtapaBadge,
   FinancingBadge,
   FirmStatusChip,
-  LeadStatusBadge,
   TimelineBadge,
   ago,
   cerereHref,
   fmtDateTime,
   fmtDay,
   hotScore,
+  isEtapaOpen,
   isHot,
+  leadEtapa,
+  type Etapa,
 } from './shared';
 
 export const dynamic = 'force-dynamic';
@@ -40,8 +42,7 @@ export const dynamic = 'force-dynamic';
 // cererea din cont și de câte ori a fost apăsată pe /cereri. Fișa fiecărei
 // cereri (/admin/cereri/[id]) are restul: detaliile, cronologia și acțiunile.
 
-type StareFilter = '' | 'deschise' | 'inchise' | LeadStatus;
-type FirmeFilter = '' | 'fara' | 'cu' | 'pline';
+type EtapaFilter = '' | 'deschise' | Etapa;
 type ContFilter = '' | 'da' | 'nu';
 type Sort = 'intrare' | 'miscare' | 'hot';
 
@@ -54,8 +55,7 @@ const FINANCING_FILTERS: { key: FinancingTone; label: string }[] = [
 
 interface Props {
   searchParams: Promise<{
-    stare?: string;
-    firme?: string;
+    etapa?: string;
     cont?: string;
     judet?: string;
     q?: string;
@@ -180,8 +180,7 @@ function FilterRow({ label, children }: { label: string; children: React.ReactNo
 
 export default async function CereriPage({ searchParams }: Props) {
   const params = await searchParams;
-  const stare = (params.stare ?? '') as StareFilter;
-  const firme = (params.firme ?? '') as FirmeFilter;
+  const etapa = (params.etapa ?? '') as EtapaFilter;
   const cont = (params.cont ?? '') as ContFilter;
   const judet = params.judet ?? '';
   const q = (params.q ?? '').trim();
@@ -230,17 +229,14 @@ export default async function CereriPage({ searchParams }: Props) {
         lead,
         claims: all,
         held: all.filter(claimOccupiesLeadSlot).length,
+        etapa: leadEtapa(lead, all),
         activity,
         last: lastActivity(lead, all, activity),
       };
     })
-    .filter(({ lead, claims: cl, held, activity }) => {
-      if (stare === 'deschise' && isLeadClosed(lead.crmStatus)) return false;
-      if (stare === 'inchise' && !isLeadClosed(lead.crmStatus)) return false;
-      if (stare && stare !== 'deschise' && stare !== 'inchise' && lead.crmStatus !== stare) return false;
-      if (firme === 'fara' && held > 0) return false;
-      if (firme === 'cu' && held === 0) return false;
-      if (firme === 'pline' && held < MAX_CLAIMS_PER_LEAD) return false;
+    .filter(({ lead, claims: cl, activity, etapa: e }) => {
+      if (etapa === 'deschise' && !isEtapaOpen(e)) return false;
+      if (etapa && etapa !== 'deschise' && e !== etapa) return false;
       if (cont) {
         const has = Boolean(activity?.account?.verifiedAt || (activity?.clientViews ?? 0) > 0);
         if (cont === 'da' && !has) return false;
@@ -250,7 +246,7 @@ export default async function CereriPage({ searchParams }: Props) {
       if (bani && getFinancingTone(lead.finantare) !== bani) return false;
       if (termen === 'nedeclarat' ? lead.termen !== '' : termen && lead.termen !== termen) return false;
       // Hot = bani proprii și cât mai repede, pe cererile încă deschise.
-      if (hot && (!isHot(lead) || isLeadClosed(lead.crmStatus))) return false;
+      if (hot && (!isHot(lead) || !isEtapaOpen(e))) return false;
       if (needle) {
         const hay = [
           lead.numeContact,
@@ -272,7 +268,7 @@ export default async function CereriPage({ searchParams }: Props) {
       if (sort === 'miscare') return Date.parse(b.last) - Date.parse(a.last);
       if (sort === 'hot') {
         // Deschise înainte de închise, apoi bani + grabă, apoi cele mai noi.
-        const open = Number(isLeadClosed(a.lead.crmStatus)) - Number(isLeadClosed(b.lead.crmStatus));
+        const open = Number(!isEtapaOpen(a.etapa)) - Number(!isEtapaOpen(b.etapa));
         if (open) return open;
         const score = hotScore(b.lead) - hotScore(a.lead);
         if (score) return score;
@@ -280,20 +276,21 @@ export default async function CereriPage({ searchParams }: Props) {
       return b.lead.timestamp.localeCompare(a.lead.timestamp);
     });
 
-  const hotCount = leads.filter((l) => isHot(l) && !isLeadClosed(l.crmStatus)).length;
+  const hotCount = leads.filter(
+    (l) => isHot(l) && isEtapaOpen(leadEtapa(l, claimsByLead.get(l.timestamp) ?? [])),
+  ).length;
 
-  const open = rows.filter((r) => !isLeadClosed(r.lead.crmStatus));
-  const openWithoutFirm = open.filter((r) => r.held === 0).length;
+  const open = rows.filter((r) => isEtapaOpen(r.etapa));
+  const openWithoutFirm = open.filter((r) => r.etapa === 'fara_firma').length;
   const inAccount = rows.filter(
     (r) => r.activity?.account?.verifiedAt || (r.activity?.clientViews ?? 0) > 0,
   ).length;
 
   const qs = (
-    next: Partial<Record<'stare' | 'firme' | 'cont' | 'judet' | 'q' | 'sort' | 'bani' | 'termen' | 'hot', string>>,
+    next: Partial<Record<'etapa' | 'cont' | 'judet' | 'q' | 'sort' | 'bani' | 'termen' | 'hot', string>>,
   ) => {
     const merged = {
-      stare,
-      firme,
+      etapa,
       cont,
       judet,
       q,
@@ -331,7 +328,7 @@ export default async function CereriPage({ searchParams }: Props) {
 
       <div className="mt-4 space-y-2 rounded-xl border border-slate-200 bg-white px-4 py-3">
         <form action="/admin/cereri" className="flex flex-wrap items-center gap-2">
-          {Object.entries({ stare, firme, cont, judet, sort: sort === 'intrare' ? '' : sort, bani, termen, hot: hot ? '1' : '' })
+          {Object.entries({ etapa, cont, judet, sort: sort === 'intrare' ? '' : sort, bani, termen, hot: hot ? '1' : '' })
             .filter(([, v]) => v)
             .map(([k, v]) => (
               <input key={k} type="hidden" name={k} value={v} />
@@ -355,6 +352,21 @@ export default async function CereriPage({ searchParams }: Props) {
             </Link>
           )}
         </form>
+
+        <FilterRow label="Etapă">
+          <Pill href={qs({ etapa: '' })} active={!etapa}>
+            Toate
+          </Pill>
+          <Pill href={qs({ etapa: 'deschise' })} active={etapa === 'deschise'}>
+            Deschise
+          </Pill>
+          <span className="mx-1 h-4 w-px bg-slate-200" />
+          {ETAPE.map((e) => (
+            <Pill key={e.key} href={qs({ etapa: e.key })} active={etapa === e.key}>
+              {e.label}
+            </Pill>
+          ))}
+        </FilterRow>
 
         <FilterRow label="Ordine">
           <Pill href={qs({ hot: hot ? '' : '1' })} active={hot}>
@@ -397,39 +409,6 @@ export default async function CereriPage({ searchParams }: Props) {
           </Pill>
         </FilterRow>
 
-        <FilterRow label="Stare">
-          <Pill href={qs({ stare: '' })} active={!stare}>
-            Toate
-          </Pill>
-          <Pill href={qs({ stare: 'deschise' })} active={stare === 'deschise'}>
-            Deschise
-          </Pill>
-          <Pill href={qs({ stare: 'inchise' })} active={stare === 'inchise'}>
-            Închise
-          </Pill>
-          <span className="mx-1 h-4 w-px bg-slate-200" />
-          {LEAD_STATUSES.map((s) => (
-            <Pill key={s} href={qs({ stare: s })} active={stare === s}>
-              {LEAD_STATUS_LABELS[s]}
-            </Pill>
-          ))}
-        </FilterRow>
-
-        <FilterRow label="Firme">
-          <Pill href={qs({ firme: '' })} active={!firme}>
-            Toate
-          </Pill>
-          <Pill href={qs({ firme: 'fara' })} active={firme === 'fara'}>
-            Fără nicio firmă
-          </Pill>
-          <Pill href={qs({ firme: 'cu' })} active={firme === 'cu'}>
-            Preluate
-          </Pill>
-          <Pill href={qs({ firme: 'pline' })} active={firme === 'pline'}>
-            Pline ({MAX_CLAIMS_PER_LEAD}/{MAX_CLAIMS_PER_LEAD})
-          </Pill>
-        </FilterRow>
-
         <FilterRow label="Client">
           <Pill href={qs({ cont: '' })} active={!cont}>
             Toți
@@ -465,7 +444,7 @@ export default async function CereriPage({ searchParams }: Props) {
               </th>
               <th className="px-3 py-2 font-medium">Cerere</th>
               <th className="px-3 py-2 font-medium">Bani · termen</th>
-              <th className="px-3 py-2 font-medium">Stare</th>
+              <th className="px-3 py-2 font-medium">Etapă</th>
               <th className="px-3 py-2 font-medium">Firme</th>
               <th className="px-3 py-2 font-medium" title="Contul clientului: și-a deschis pagina cererii sau a intrat din email">
                 Client în cont
@@ -481,8 +460,10 @@ export default async function CereriPage({ searchParams }: Props) {
             </tr>
           </thead>
           <tbody>
-            {rows.map(({ lead, claims: cl, held, activity, last }) => {
-              const closed = isLeadClosed(lead.crmStatus);
+            {rows.map(({ lead, claims: cl, held, activity, last, etapa: e }) => {
+              const closed = !isEtapaOpen(e);
+              const wonBy = cl.filter((c) => c.firmStatus === 'castigat' && !c.releasedAt);
+              const requested = parseRequestedFirms(lead.preselectedCompany);
               const href = cerereHref(lead.timestamp);
               return (
                 <tr
@@ -506,6 +487,14 @@ export default async function CereriPage({ searchParams }: Props) {
                       {' · '}
                       {lead.numeContact || lead.numeCompanie || '—'}
                     </div>
+                    {requested.length > 0 && (
+                      <div
+                        className="mt-1 max-w-60 truncate rounded bg-indigo-50 px-1.5 py-0.5 text-[11px] font-medium text-indigo-700"
+                        title={requested.join(' · ')}
+                      >
+                        a cerut: {requested.join(', ')}
+                      </div>
+                    )}
                     <div className="mt-0.5 flex flex-wrap gap-1">
                       {lead.segment === 'comercial' && (
                         <span className="rounded bg-amber-50 px-1 text-[10px] font-semibold text-amber-700">comercial</span>
@@ -528,9 +517,22 @@ export default async function CereriPage({ searchParams }: Props) {
                     </div>
                   </td>
                   <td className="px-3 py-2.5 text-xs">
-                    <LeadStatusBadge status={lead.crmStatus} />
-                    {activity?.lastStatusChange && (
-                      <div className="mt-0.5 text-[11px] text-slate-400">din {fmtDay(activity.lastStatusChange)}</div>
+                    <EtapaBadge etapa={e} />
+                    {e === 'concretizata' && wonBy.length > 0 && (
+                      <div className="mt-0.5 max-w-32 truncate text-[11px] text-slate-500">
+                        de {wonBy.map((c) => firmDisplayName(c.numeFirma)).join(', ')}
+                      </div>
+                    )}
+                    {/* Pusă de mână pe câștigată, dar nicio firmă n-a marcat: de verificat. */}
+                    {e === 'concretizata' && wonBy.length === 0 && (
+                      <div className="mt-0.5 max-w-32 text-[11px] font-medium text-amber-700">
+                        pusă de mână, nicio firmă n-a marcat
+                      </div>
+                    )}
+                    {e === 'inchisa' && (
+                      <div className="mt-0.5 text-[11px] text-slate-400">
+                        {LEAD_STATUS_LABELS[lead.crmStatus].toLowerCase()}
+                      </div>
                     )}
                   </td>
                   <td className="px-3 py-2.5 text-xs">

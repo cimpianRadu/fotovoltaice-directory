@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { getPortalEmail } from '@/lib/portal-session';
-import { getClaims, getFirmEmailGroup, setClaimFirmStatus } from '@/lib/sheets';
+import { bucharestStamp, getPortalEmail } from '@/lib/portal-session';
+import { getClaims, getFirmEmailGroup, setClaimFirmStatus, updateLeadCrm } from '@/lib/sheets';
 import { CLAIM_STATUSES, type ClaimStatus } from '@/lib/sheets-shared';
 
 /**
@@ -44,6 +44,19 @@ export async function POST(request: Request) {
     }
 
     const updated = await setClaimFirmStatus(claimTimestamp, leadId, status);
+
+    // Firma a marcat „Concretizat”: cererea e câștigată (Radu, 24 oct 2026: „care
+    // e marcată ca și concretizată de firmă, aia e”). Până atunci așteptam
+    // confirmarea clientului, iar starea cererii rămânea în urmă.
+    if (status === 'castigat' && claim.firmStatus !== 'castigat') {
+      await updateLeadCrm(leadId, {
+        status: 'castigata',
+        note: `${claim.numeFirma} a marcat „Concretizat” în portal. Cererea a trecut singură pe câștigată.`,
+        by: 'firma',
+        ...bucharestStamp(),
+      });
+      revalidatePath('/cereri');
+    }
 
     revalidatePath('/admin/crm');
     revalidatePath('/admin/firme');

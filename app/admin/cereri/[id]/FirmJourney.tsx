@@ -61,14 +61,14 @@ function buildSteps(
     steps.push({
       at: ch.at,
       kind: 'stare',
-      label: 'A mutat în',
+      label: 'A trecut pe',
       status: ch.to as ClaimStatus,
       text: ch.detail?.replace(/^a renunțat: /, '') || undefined,
     });
   }
   // Oferta și renunțarea au coloana lor din Sheets, deci au dată și înainte de jurnal.
   if (claim.offeredAt && !changes.some((c) => c.to === 'ofertat' && near(c.at, claim.offeredAt, 5 * 60_000))) {
-    steps.push({ at: claim.offeredAt, kind: 'stare', label: 'A marcat', status: 'ofertat' });
+    steps.push({ at: claim.offeredAt, kind: 'stare', label: 'A trecut pe', status: 'ofertat' });
   }
   if (claim.releasedAt && !changes.some((c) => c.to === 'pierdut' && near(c.at, claim.releasedAt, 5 * 60_000))) {
     steps.push({
@@ -89,7 +89,7 @@ function buildSteps(
       ? steps.find((s) => s.kind === 'stare' && s.at && !s.text && near(s.at, at, NOTE_JOIN_MS))
       : undefined;
     if (box) box.text = n.text;
-    else steps.push({ at, kind: 'comentariu', label: 'Comentariu', text: n.text, dayOnly: !n.time });
+    else steps.push({ at, kind: 'comentariu', label: 'A scris', text: n.text, dayOnly: !n.time });
   }
 
   for (const o of offers) {
@@ -103,7 +103,11 @@ function buildSteps(
     });
   }
 
-  if (claim.approvedAt) steps.push({ at: claim.approvedAt, kind: 'noi', label: 'Date deblocate de noi' });
+  if (claim.approvedAt) {
+    // Revendicarea manuală se deblochează în aceeași clipă: un singur rând.
+    if (near(claim.approvedAt, claim.timestamp, 60_000)) steps[0].text = `${steps[0].text}, cu datele deblocate`;
+    else steps.push({ at: claim.approvedAt, kind: 'noi', label: 'Date deblocate de noi' });
+  }
   if (claim.contactedAt) {
     steps.push({ at: claim.contactedAt, kind: 'noi', label: 'Apel confirmat de noi', dayOnly: claim.contactedAt.length === 10 });
   }
@@ -131,20 +135,20 @@ function buildSteps(
       kind: 'acum',
       label: 'Acum e pe',
       status: claim.firmStatus,
-      text: 'data mutării nu se știe: s-a întâmplat înainte de 24 oct, când a pornit jurnalul',
+      text: 'mutată înainte de 24 oct, când a pornit jurnalul, deci fără dată',
     });
   }
   return steps;
 }
 
-const BOX: Record<StepKind, string> = {
-  preluare: 'border-slate-300 bg-white',
-  stare: 'border-slate-300 bg-white',
-  comentariu: 'border-slate-200 bg-white',
-  oferta_urcata: 'border-sky-200 bg-sky-50/50',
-  noi: 'border-dashed border-slate-200 bg-slate-50',
-  client: 'border-emerald-200 bg-emerald-50/60',
-  acum: 'border-dashed border-slate-300 bg-white',
+const DOT: Record<StepKind, string> = {
+  preluare: 'bg-slate-900',
+  stare: 'bg-indigo-500',
+  comentariu: 'border-2 border-slate-300 bg-white',
+  oferta_urcata: 'bg-sky-500',
+  noi: 'bg-slate-300',
+  client: 'bg-emerald-500',
+  acum: 'border-2 border-dashed border-slate-400 bg-white',
 };
 
 export default function FirmJourney({
@@ -160,46 +164,57 @@ export default function FirmJourney({
 }) {
   const steps = buildSteps(claim, changes, reports, offers);
   return (
-    <div className="mt-2 px-1">
-      <Caption>Ce a făcut firma, pas cu pas</Caption>
-      <ol className="mt-1.5 flex flex-wrap items-stretch gap-y-2">
-        {steps.map((s, i) => (
-          <li key={`${s.kind}-${s.at}-${i}`} className="flex items-stretch">
-            {i > 0 && <span className="self-center px-1 text-slate-300">→</span>}
-            <div className={`flex w-48 flex-col rounded-lg border px-2.5 py-2 text-xs ${BOX[s.kind]}`}>
-              <div className="flex flex-wrap items-center gap-1">
-                <span
-                  className={`text-[10px] font-semibold tracking-wide uppercase ${
-                    s.kind === 'noi' ? 'text-slate-400' : s.kind === 'client' ? 'text-emerald-700' : 'text-slate-500'
-                  }`}
-                >
-                  {s.label}
-                </span>
-                {s.status && (
-                  <span className={`rounded px-1.5 py-0.5 text-[10px] font-semibold ${FIRM_STATUS_CHIP[s.status]}`}>
-                    {CLAIM_STATUS_LABELS[s.status]}
-                  </span>
-                )}
+    <div>
+      <Caption>Istoricul firmei</Caption>
+      <ol className="mt-2">
+        {steps.map((s, i) => {
+          const lastStep = i === steps.length - 1;
+          const quiet = s.kind === 'noi';
+          return (
+            <li key={`${s.kind}-${s.at}-${i}`} className="grid grid-cols-[6.5rem_1rem_1fr] gap-x-2">
+              <div className="pt-px text-right text-[11px] leading-5 text-slate-400 tabular-nums">
+                {s.at ? (s.dayOnly ? fmtDay(s.at) : fmtDateTime(s.at).replace(/ \d{4},/, ',')) : 'acum'}
               </div>
-              {s.at ? (
-                <div className="mt-0.5 text-[11px] text-slate-500 tabular-nums">
-                  {s.dayOnly ? fmtDay(s.at) : fmtDateTime(s.at)}
+              <div className="relative flex justify-center">
+                {!lastStep && <span className="absolute top-3 bottom-0 w-px bg-slate-200" />}
+                <span className={`relative mt-1.5 h-2.5 w-2.5 rounded-full ${DOT[s.kind]}`} />
+              </div>
+              <div className={`min-w-0 ${lastStep ? '' : 'pb-3'}`}>
+                <div className="flex flex-wrap items-center gap-1.5 leading-5">
+                  <span
+                    className={`text-xs ${
+                      quiet
+                        ? 'text-slate-400'
+                        : s.kind === 'client'
+                          ? 'font-medium text-emerald-700'
+                          : 'font-medium text-slate-800'
+                    }`}
+                  >
+                    {s.label}
+                  </span>
+                  {s.status && (
+                    <span className={`rounded px-1.5 py-px text-[10px] font-semibold ${FIRM_STATUS_CHIP[s.status]}`}>
+                      {CLAIM_STATUS_LABELS[s.status]}
+                    </span>
+                  )}
+                  {s.text && (s.kind === 'preluare' || s.kind === 'oferta_urcata' || s.kind === 'noi') && (
+                    <span className="text-xs text-slate-400">· {s.text}</span>
+                  )}
                 </div>
-              ) : null}
-              {s.text && (
-                <p
-                  className={`mt-1 leading-snug ${
-                    s.kind === 'comentariu' || (s.kind === 'stare' && s.text)
-                      ? 'text-slate-800'
-                      : 'text-slate-500'
-                  }`}
-                >
-                  {s.kind === 'comentariu' || s.kind === 'stare' ? `„${s.text}”` : s.text}
-                </p>
-              )}
-            </div>
-          </li>
-        ))}
+                {s.text && (s.kind === 'comentariu' || s.kind === 'stare' || s.kind === 'client') && (
+                  <p
+                    className={`mt-1 max-w-prose rounded-lg rounded-tl-sm px-3 py-1.5 text-xs leading-relaxed ${
+                      s.kind === 'client' ? 'bg-emerald-50 text-emerald-900' : 'bg-slate-100 text-slate-700'
+                    }`}
+                  >
+                    {s.text}
+                  </p>
+                )}
+                {s.kind === 'acum' && s.text && <p className="mt-0.5 text-[11px] text-slate-400">{s.text}</p>}
+              </div>
+            </li>
+          );
+        })}
       </ol>
     </div>
   );

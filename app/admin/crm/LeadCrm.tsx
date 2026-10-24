@@ -42,8 +42,15 @@ export default function LeadCrm({
   contacted: initialContacted,
   poze: initialPoze,
   notes: initialNotes,
+  statusMode = 'band',
 }: {
   id: string;
+  /**
+   * `band` = toate cele 7 stări (CRM-ul vechi). `close` = doar închiderea și
+   * redeschiderea: în /admin/cereri etapa vine din ce au făcut firmele (24 oct
+   * 2026, „prea multe statusuri”), iar mâna pune doar finalul.
+   */
+  statusMode?: 'band' | 'close';
   status: LeadStatus;
   contacted: ContactState;
   poze: string;
@@ -96,6 +103,9 @@ export default function LeadCrm({
     <div className="space-y-3">
       {/* Banda de stare ține toată lățimea: cu șase trepte, orice coloană
           alăturată i-ar tăia etichetele („În ofertare" e cea mai lungă). */}
+      {statusMode === 'close' ? (
+        <CloseControl status={status} disabled={busy} onPick={(s) => save({ status: s })} />
+      ) : (
       <div className="space-y-1">
         <Caption>Stare</Caption>
         <Band
@@ -117,6 +127,7 @@ export default function LeadCrm({
           </p>
         )}
       </div>
+      )}
 
       <div className="flex items-center gap-3">
         <Caption>Contactat de firmă</Caption>
@@ -196,6 +207,61 @@ function PozeField({
         placeholder={'link folder Drive, sau „da” până le urci'}
         className="w-full rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs text-slate-700 transition outline-none placeholder:text-slate-400 focus:border-slate-400 focus:bg-white focus:ring-2 focus:ring-slate-900/5"
       />
+    </div>
+  );
+}
+
+const CLOSE_OPTIONS: { value: LeadStatus; label: string; tone: string }[] = [
+  { value: 'castigata', label: 'Câștigată', tone: 'hover:border-emerald-400 hover:text-emerald-700' },
+  { value: 'altundeva', label: 'Altundeva', tone: 'hover:border-orange-400 hover:text-orange-700' },
+  { value: 'renuntat', label: 'Renunțat', tone: 'hover:border-slate-400 hover:text-slate-900' },
+];
+
+/** Închiderea de mână, în fișa din /admin/cereri. Redeschiderea o pune înapoi pe „Nouă”. */
+function CloseControl({
+  status,
+  disabled,
+  onPick,
+}: {
+  status: LeadStatus;
+  disabled: boolean;
+  onPick: (s: LeadStatus) => void;
+}) {
+  if (isLeadClosed(status)) {
+    return (
+      <div className="flex flex-wrap items-center gap-2">
+        <Caption>Închisă de mână</Caption>
+        <span className="rounded bg-slate-200 px-2 py-0.5 text-xs font-semibold text-slate-700">
+          {LEAD_STATUS_LABELS[status]}
+        </span>
+        <span className="text-[11px] text-slate-400">{LEAD_STATUS_HINTS[status]}</span>
+        <button
+          type="button"
+          disabled={disabled}
+          onClick={() => onPick('noua')}
+          className="ml-auto rounded-md border border-slate-300 bg-white px-2.5 py-1 text-xs text-slate-600 transition hover:border-slate-400 hover:text-slate-900 disabled:cursor-wait"
+        >
+          Redeschide
+        </button>
+      </div>
+    );
+  }
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <Caption>Închide cererea</Caption>
+      {CLOSE_OPTIONS.map((o) => (
+        <button
+          key={o.value}
+          type="button"
+          disabled={disabled}
+          title={LEAD_STATUS_HINTS[o.value]}
+          onClick={() => onPick(o.value)}
+          className={`rounded-md border border-slate-300 bg-white px-2.5 py-1 text-xs text-slate-600 transition disabled:cursor-wait ${o.tone}`}
+        >
+          {o.label}
+        </button>
+      ))}
+      <span className="text-[10px] text-slate-400">iese din /cereri</span>
     </div>
   );
 }
