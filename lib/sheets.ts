@@ -43,16 +43,37 @@ async function withRetry<T>(op: () => Promise<T>, label: string): Promise<T> {
   const DELAYS_MS = [400, 1200, 3000];
   for (let attempt = 0; ; attempt++) {
     try {
-      return await op();
+      const result = await op();
+      // Orice scriere golește memoria scurtă a citirilor (readRows), ca pagina de
+      // după o modificare să nu arate datele de dinainte.
+      if (!label.startsWith('read ')) clearReadCache();
+      return result;
     } catch (err) {
       const status = (err as { code?: number; status?: number }).code
         ?? (err as { status?: number }).status;
       const retriable = status === 429 || status === 503;
+      if (retriable) logQuotaEvent(label, status, attempt, attempt >= DELAYS_MS.length);
       if (!retriable || attempt >= DELAYS_MS.length) throw err;
       console.warn(`[sheets] ${label}: ${status}, reîncerc în ${DELAYS_MS[attempt]}ms`);
       await new Promise((r) => setTimeout(r, DELAYS_MS[attempt]));
     }
   }
+}
+
+/**
+ * Notează în Neon fiecare 429/503 (24 oct 2026), ca să știm cât de des lovim
+ * limita pe site înainte să mutăm cererile din Sheets. Fără să aștepte și fără
+ * să arunce: măsurătoarea nu are voie să încetinească sau să strice citirea.
+ * Local nu scrie nimic: scripturile și `next dev` ar amesteca cifrele.
+ */
+function logQuotaEvent(label: string, status: number, attempt: number, final: boolean) {
+  if (!process.env.VERCEL || !process.env.DATABASE_URL) return;
+  void import('./db')
+    .then(({ db }) => db()`
+      INSERT INTO sheets_quota_events (label, status, attempt, final)
+      VALUES (${label}, ${status}, ${attempt}, ${final})
+    `)
+    .catch(() => {});
 }
 
 async function appendRow(sheetName: string, values: string[]) {
@@ -71,7 +92,40 @@ async function appendRow(sheetName: string, values: string[]) {
   }), `append ${sheetName}`);
 }
 
+/**
+ * Memoria scurtă a citirilor (24 oct 2026). Limita Google e de 60 de citiri pe
+ * minut, comună pentru site, admin, cronuri și scripturile locale, iar o singură
+ * pagină citea același tab de mai multe ori (portalul, o revendicare, un răspuns
+ * din email). Acum, în aceeași instanță, citirile aceluiași tab din 5 secunde
+ * împart o singură cerere spre Google, iar cele simultane așteaptă aceeași.
+ *
+ * Funcțiile care citesc ca să scrie pe un rând anume (findLeadRow, findClaimRow,
+ * upsert-urile) folosesc readRowsFresh: un rând mutat între timp ar însemna
+ * scrierea în rândul greșit. Orice scriere golește memoria (withRetry).
+ */
+const READ_CACHE_MS = 5_000;
+const readCache = new Map<string, { at: number; rows: Promise<string[][]> }>();
+
+function clearReadCache() {
+  readCache.clear();
+}
+
 async function readRows(sheetName: string): Promise<string[][]> {
+  const hit = readCache.get(sheetName);
+  const pending =
+    hit && Date.now() - hit.at < READ_CACHE_MS
+      ? hit.rows
+      : (() => {
+          const rows = readRowsFresh(sheetName);
+          readCache.set(sheetName, { at: Date.now(), rows });
+          rows.catch(() => readCache.delete(sheetName));
+          return rows;
+        })();
+  // Copie pentru fiecare apelant: unele funcții modifică rândurile primite.
+  return (await pending).map((r) => r.slice());
+}
+
+async function readRowsFresh(sheetName: string): Promise<string[][]> {
   const auth = getAuth();
   const sheets = google.sheets({ version: 'v4', auth });
 
@@ -1190,7 +1244,7 @@ async function findClaimRow(
   claimTimestamp: string,
   leadId: string,
 ): Promise<{ row: string[]; sheetRow: number }> {
-  const rows = await readRows(CLAIMS_SHEET);
+  const rows = await readRowsFresh(CLAIMS_SHEET);
   const index = rows.findIndex((r) => r[0] === claimTimestamp && r[1] === leadId);
   if (index === -1) throw new Error('Revendicarea nu există în tabul Revendicări.');
   return { row: rows[index], sheetRow: index + 1 };
@@ -1547,7 +1601,7 @@ export async function hasFeedback(role: 'client' | 'firma', leadId: string, firm
 
 /** Marchează (coloana E) toate urmăririle cererii ca anunțate. */
 export async function markWatchersNotified(leadId: string, at = new Date().toISOString()) {
-  const rows = await readRows(WATCHES_SHEET);
+  const rows = await readRowsFresh(WATCHES_SHEET);
   const data = rows
     .map((r, i) => (i > 0 && r[1] === leadId && !r[4] ? { range: `${WATCHES_SHEET}!E${i + 1}`, values: [[at]] } : null))
     .filter((d): d is { range: string; values: string[][] } => d !== null);
@@ -1782,7 +1836,7 @@ export async function setAccountsDeactivated(
 
   let rows: string[][];
   try {
-    rows = await readRows(DEACTIVATED_SHEET);
+    rows = await readRowsFresh(DEACTIVATED_SHEET);
   } catch {
     if (!deactivated) return;
     await createSheetTab(DEACTIVATED_SHEET);
@@ -2016,7 +2070,7 @@ export async function addFirmEmailLink(input: {
 
   let rows: string[][];
   try {
-    rows = await readRows(FIRM_EMAILS_SHEET);
+    rows = await readRowsFresh(FIRM_EMAILS_SHEET);
   } catch {
     await createSheetTab(FIRM_EMAILS_SHEET);
     await appendRow(FIRM_EMAILS_SHEET, FIRM_EMAILS_HEADER);
@@ -2068,7 +2122,7 @@ export async function renameFirmEmailAlias(
   if (next === account) throw new FirmEmailInputError('Adresa nouă e chiar contul principal.');
   if (next === previous) return;
 
-  const rows = await readRows(FIRM_EMAILS_SHEET);
+  const rows = await readRowsFresh(FIRM_EMAILS_SHEET);
   if (findFirmEmailRow(rows, account, next)) {
     throw new FirmEmailInputError('Adresa asta e deja pe cont.');
   }
@@ -2105,7 +2159,7 @@ export async function renameFirmEmailAlias(
 export async function unlinkFirmEmail(a: string, b: string, note?: string): Promise<void> {
   const first = a.trim().toLowerCase();
   const second = b.trim().toLowerCase();
-  const rows = await readRows(FIRM_EMAILS_SHEET);
+  const rows = await readRowsFresh(FIRM_EMAILS_SHEET);
   const found = findFirmEmailRow(rows, first, second);
   if (!found) throw new FirmEmailInputError('Legătura nu există.');
 
@@ -2145,7 +2199,7 @@ async function reassignEmailColumn(
 
   let rows: string[][];
   try {
-    rows = await readRows(sheet);
+    rows = await readRowsFresh(sheet);
   } catch {
     return 0; // Tabul nu există, deci n-are ce muta.
   }
@@ -2250,7 +2304,7 @@ export async function saveFirmProfile(
 
   let rows: string[][];
   try {
-    rows = await readRows(FIRM_PROFILE_SHEET);
+    rows = await readRowsFresh(FIRM_PROFILE_SHEET);
   } catch {
     await createSheetTab(FIRM_PROFILE_SHEET);
     await appendRow(FIRM_PROFILE_SHEET, FIRM_PROFILE_HEADER);
@@ -2500,7 +2554,7 @@ export async function saveCountyAlertPrefs(email: string, counties: string[]): P
 
   let rows: string[][];
   try {
-    rows = await readRows(ALERTS_SHEET);
+    rows = await readRowsFresh(ALERTS_SHEET);
   } catch {
     await createSheetTab(ALERTS_SHEET);
     await appendRow(ALERTS_SHEET, ALERTS_HEADER);
@@ -2707,7 +2761,7 @@ export async function addLeadPhoto(photo: Omit<LeadPhoto, 'uploadedAt'>): Promis
   ];
 
   try {
-    await readRows(PHOTOS_SHEET);
+    await readRowsFresh(PHOTOS_SHEET);
     await appendRow(PHOTOS_SHEET, values);
   } catch {
     await createSheetTab(PHOTOS_SHEET);
@@ -2799,7 +2853,7 @@ export async function toggleSocialPlatform(
   platform: SocialPlatform,
   today: string,
 ): Promise<SocialPost[]> {
-  const rows = await readRows(SOCIAL_SHEET);
+  const rows = await readRowsFresh(SOCIAL_SHEET);
   const rowIndex = rows.findIndex((r, i) => i > 0 && Number(r[0]) === id);
   if (rowIndex === -1) throw new Error(`Postarea #${id} nu există în tabul ${SOCIAL_SHEET}.`);
 
@@ -2918,7 +2972,7 @@ function serializeNotes(notes: LeadNote[]): string {
 }
 
 async function findLeadRow(timestamp: string): Promise<{ row: string[]; sheetRow: number }> {
-  const rows = await readRows('Leads');
+  const rows = await readRowsFresh('Leads');
   const index = rows.findIndex((r, i) => i > 0 && r[0] === timestamp);
   if (index === -1) throw new Error('Cererea nu există în tabul Leads.');
   return { row: rows[index], sheetRow: index + 1 };
@@ -3121,7 +3175,7 @@ export async function mergeLeads(
     throw new LeadMergeError('Cererea păstrată nu poate fi și retrimitere.');
   }
 
-  const rows = await readRows('Leads');
+  const rows = await readRowsFresh('Leads');
   const byId = new Map<string, { row: string[]; sheetRow: number }>();
   rows.forEach((r, i) => {
     if (i > 0 && Number.isFinite(Date.parse(r[0] || ''))) byId.set(r[0], { row: r, sheetRow: i + 1 });
@@ -3332,7 +3386,7 @@ export async function updateCrmFirm(
     time?: string;
   },
 ): Promise<CrmFirm> {
-  const rows = await readRows(FIRMS_SHEET);
+  const rows = await readRowsFresh(FIRMS_SHEET);
   const index = rows.findIndex((r, i) => i > 0 && r[0] === timestamp);
   if (index === -1) throw new Error('Firma nu există în tabul CRM Firme.');
   const row = rows[index];
@@ -3460,7 +3514,7 @@ export async function updateTodo(
   timestamp: string,
   changes: { done?: boolean; due?: string; text?: string },
 ): Promise<TodoItem> {
-  const rows = await readRows(TODO_SHEET);
+  const rows = await readRowsFresh(TODO_SHEET);
   const index = rows.findIndex((r, i) => i > 0 && r[0] === timestamp);
   if (index === -1) throw new Error('Sarcina nu există în tabul Todo.');
   const row = rows[index];

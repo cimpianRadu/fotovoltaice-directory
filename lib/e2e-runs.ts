@@ -61,3 +61,29 @@ export async function getE2eRun(id: number): Promise<E2eRun | null> {
   `;
   return rows[0] ? toRun(rows[0]) : null;
 }
+
+export interface SheetsQuotaStats {
+  /** Răspunsuri 429/503 de la Google în ultimele 7 zile, inclusiv cele salvate de reîncercare. */
+  hits: number;
+  /** Cele la care au picat toate reîncercările: utilizatorul a văzut eroarea. */
+  failed: number;
+  last: string | null;
+  topLabels: { label: string; n: number }[];
+}
+
+/** Limita Google Sheets pe site (tabelul sheets_quota_events, din 24 oct 2026). */
+export async function getSheetsQuotaStats(): Promise<SheetsQuotaStats> {
+  const q = db();
+  const [[totals], top] = await Promise.all([
+    q`SELECT count(*)::int AS hits, count(*) FILTER (WHERE final)::int AS failed, max(at) AS last
+      FROM sheets_quota_events WHERE at > now() - interval '7 days'`,
+    q`SELECT label, count(*)::int AS n FROM sheets_quota_events WHERE at > now() - interval '7 days'
+      GROUP BY label ORDER BY n DESC LIMIT 5`,
+  ]);
+  return {
+    hits: Number(totals?.hits ?? 0),
+    failed: Number(totals?.failed ?? 0),
+    last: totals?.last ? new Date(totals.last as string).toISOString() : null,
+    topLabels: top.map((r) => ({ label: String(r.label), n: Number(r.n) })),
+  };
+}

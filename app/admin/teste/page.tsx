@@ -1,5 +1,13 @@
 import Link from 'next/link';
-import { getE2eRun, getE2eRuns, type E2eResult, type E2eRun, type E2eStatus } from '@/lib/e2e-runs';
+import {
+  getE2eRun,
+  getE2eRuns,
+  getSheetsQuotaStats,
+  type E2eResult,
+  type E2eRun,
+  type E2eStatus,
+  type SheetsQuotaStats,
+} from '@/lib/e2e-runs';
 
 export const dynamic = 'force-dynamic';
 
@@ -81,9 +89,10 @@ export default async function TestePage({ searchParams }: Props) {
 
   let runs: E2eRun[] = [];
   let selected: E2eRun | null = null;
+  let quota: SheetsQuotaStats | null = null;
   let dbError = '';
   try {
-    runs = await getE2eRuns(30);
+    [runs, quota] = await Promise.all([getE2eRuns(30), getSheetsQuotaStats()]);
     const wanted = Number(runParam);
     selected = Number.isInteger(wanted) && wanted > 0 ? (runs.find((r) => r.id === wanted) ?? (await getE2eRun(wanted))) : (runs[0] ?? null);
   } catch (err) {
@@ -155,6 +164,24 @@ export default async function TestePage({ searchParams }: Props) {
             </ul>
           )}
         </div>
+      )}
+
+      {quota && (
+        <section
+          className={`mt-6 rounded-xl border px-5 py-3 text-sm ${
+            quota.failed ? 'border-red-200 bg-red-50' : quota.hits ? 'border-amber-200 bg-amber-50' : 'border-slate-200 bg-white'
+          }`}
+        >
+          <p className="font-semibold text-slate-900">Limita Google Sheets, ultimele 7 zile</p>
+          <p className="mt-0.5 text-slate-700">
+            {quota.hits
+              ? `${quota.hits} răspunsuri „prea multe cereri”, dintre care ${quota.failed} au ajuns la utilizator ca eroare (au picat și reîncercările). Ultima: ${when(quota.last as string)}.`
+              : 'Nicio lovitură a limitei pe site. Se măsoară din 24 oct.'}
+          </p>
+          {quota.topLabels.length > 0 && (
+            <p className="mt-1 text-xs text-slate-500">Unde: {quota.topLabels.map((t) => `${t.label} (${t.n})`).join(' · ')}</p>
+          )}
+        </section>
       )}
 
       {history.length > 1 && (
