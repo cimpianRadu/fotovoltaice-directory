@@ -167,7 +167,7 @@ export default async function ContClientAdminPage() {
       <h1 className="text-xl font-bold text-slate-900">Clienții și pagina cererii</h1>
       <p className="mt-2 max-w-3xl text-sm text-slate-600">
         Fiecare om care trimite o cerere are automat o pagină a ei, gratuită și fără parolă. Aici vezi, pe fiecare client,
-        dacă și-a deschis pagina, când a fost ultima dată, ce a făcut acolo și cum arată pagina pentru el.
+        dacă și-a deschis pagina, când a fost ultima dată, ce a făcut acolo și cum arată pagina pentru client.
       </p>
 
       {dbError && (
