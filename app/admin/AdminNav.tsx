@@ -44,6 +44,7 @@ const GROUPS: { label: string; tabs: { href: string; label: string }[] }[] = [
   {
     label: 'Analytics',
     tabs: [
+      { href: '/admin/analytics/cereri', label: 'Cereri pe săptămâni' },
       { href: '/admin/analytics', label: 'Overview' },
       { href: '/admin/analytics/ghiduri', label: 'Ghiduri' },
       { href: '/admin/analytics/firme', label: 'Firme' },

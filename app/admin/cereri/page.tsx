@@ -19,6 +19,7 @@ import { MAX_CLAIMS_PER_LEAD } from '@/lib/sheets';
 import { CLICKS_SINCE, getLeadsActivity, type LeadActivity } from '@/lib/admin-cereri';
 import { firmDisplayName } from '@/lib/client-account';
 import { normalizePhone } from '@/lib/sheets-shared';
+import { getProjectTypeLabel } from '@/lib/utils-shared';
 import {
   FirmStatusChip,
   LeadStatusBadge,
@@ -405,7 +406,7 @@ export default async function CereriPage({ searchParams }: Props) {
                   </td>
                   <td className="max-w-64 px-3 py-2.5">
                     <Link href={href} className="font-medium text-slate-900 hover:underline">
-                      {lead.tipProiect || '(fără tip)'}
+                      {lead.tipProiect ? getProjectTypeLabel(lead.tipProiect) : '(fără tip)'}
                       {lead.putere && ` · ${lead.putere} kW`}
                     </Link>
                     <div className="text-xs text-slate-500">

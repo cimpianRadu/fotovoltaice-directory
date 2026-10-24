@@ -29,6 +29,7 @@ import {
   getConnectionLabel,
   getFinancingLabel,
   getPhaseLabel,
+  getProjectTypeLabel,
   getRoofTypeLabel,
   getScopLabel,
   getTimelineLabel,
@@ -110,11 +111,12 @@ function Field({ label, value }: { label: string; value: React.ReactNode }) {
 
 function Details({ lead }: { lead: NewLead }) {
   const requested = parseRequestedFirms(lead.preselectedCompany);
-  const unit = (v: string, u: string) => (v ? `${v} ${u}` : '');
+  // Unii clienți scriu și unitatea („1385 kWh”): atunci cifra rămâne cum e.
+  const unit = (v: string, u: string) => (!v ? '' : /[a-z]/i.test(v) ? v : `${v} ${u}`);
   return (
     <dl className="divide-y divide-slate-50">
       <Field label="Segment" value={lead.segment === 'rezidential' ? 'Rezidențial' : 'Comercial'} />
-      <Field label="Tip proiect" value={lead.tipProiect} />
+      <Field label="Tip proiect" value={lead.tipProiect && getProjectTypeLabel(lead.tipProiect)} />
       <Field label="Lucrare" value={lead.tipLucrare && getWorkTypeLabel(lead.tipLucrare)} />
       <Field label="Județ" value={lead.judet} />
       <Field label="Localitate" value={lead.localitate} />
@@ -294,7 +296,7 @@ export default async function CererePage({ params }: Props) {
   const lastReport = new Map<string, NonNullable<typeof activity>['reports'][number]>();
   for (const r of activity?.reports ?? []) lastReport.set(r.claimTs, r);
 
-  const title = [lead.tipProiect || '(fără tip)', lead.putere && `${lead.putere} kW`]
+  const title = [lead.tipProiect ? getProjectTypeLabel(lead.tipProiect) : '(fără tip)', lead.putere && `${lead.putere} kW`]
     .filter(Boolean)
     .join(' · ');
 
@@ -348,6 +350,17 @@ export default async function CererePage({ params }: Props) {
 
       <div className="grid items-start gap-4 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
+          {/* Sus și în coloana lată: banda cu cele 7 stări nu încape în cea îngustă. */}
+          <section className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+            <LeadCrm
+              id={id}
+              status={lead.crmStatus}
+              contacted={lead.contactedByFirm}
+              poze={lead.poze}
+              notes={lead.notes}
+            />
+          </section>
+
           <Card
             title="Firme"
             aside={
@@ -435,16 +448,6 @@ export default async function CererePage({ params }: Props) {
         </div>
 
         <div className="space-y-4">
-          <section className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
-            <LeadCrm
-              id={id}
-              status={lead.crmStatus}
-              contacted={lead.contactedByFirm}
-              poze={lead.poze}
-              notes={lead.notes}
-            />
-          </section>
-
           <Card title="Client">
             <div className="space-y-0.5 text-sm">
               <div className="font-medium text-slate-900">{lead.numeContact || '—'}</div>
