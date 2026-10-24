@@ -19,11 +19,11 @@ const INK = { primary: '#0b0b0b', secondary: '#52514e', muted: '#898781', grid: 
 const HEIGHT = 300;
 const M = { top: 16, right: 112, bottom: 30, left: 36 };
 
-function niceMax(v: number): number {
-  if (v <= 5) return 5;
-  const step = Math.pow(10, Math.floor(Math.log10(v)));
-  for (const m of [1, 2, 2.5, 5, 10]) if (v <= m * step) return m * step;
-  return 10 * step;
+/** Pas rotund (1, 2, 5, 10 × 10ⁿ) pentru ~4 diviziuni: 0, 10, 20, 30, 40, nu 13, 25, 38. */
+function niceStep(raw: number): number {
+  const p = Math.pow(10, Math.floor(Math.log10(raw)));
+  for (const m of [1, 2, 5, 10]) if (raw <= m * p) return m * p;
+  return 10 * p;
 }
 
 function shortDay(ymd: string): string {
@@ -50,8 +50,10 @@ export default function WeeklyChart({ weeks }: { weeks: WeekPoint[] }) {
 
   const plotW = width - M.left - M.right;
   const plotH = HEIGHT - M.top - M.bottom;
-  const max = niceMax(Math.max(1, ...data.flatMap((w) => visible.map((s) => w[s.key]))));
-  const ticks = [0, 0.25, 0.5, 0.75, 1].map((f) => Math.round(max * f)).filter((v, i, a) => a.indexOf(v) === i);
+  const top = Math.max(1, ...data.flatMap((w) => visible.map((s) => w[s.key])));
+  const step = Math.max(1, niceStep(top / 4));
+  const max = Math.ceil(top / step) * step;
+  const ticks = Array.from({ length: max / step + 1 }, (_, i) => i * step);
   const x = (i: number) => M.left + (data.length === 1 ? plotW / 2 : (i * plotW) / (data.length - 1));
   const y = (v: number) => M.top + plotH - (v / max) * plotH;
   const labelEvery = Math.max(1, Math.ceil(data.length / Math.max(2, Math.floor(plotW / 70))));
