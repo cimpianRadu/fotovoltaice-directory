@@ -19,6 +19,7 @@ import {
 } from './sheets-shared';
 import { google } from 'googleapis';
 import type { Attribution } from './attribution';
+import { logLeadChange, type LeadChangeBy } from './lead-history';
 
 function getAuth() {
   return new google.auth.GoogleAuth({
@@ -1275,11 +1276,21 @@ export async function releaseClaim(
   reason: string,
 ): Promise<LeadClaim> {
   const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
+  const before = readClaimRow(row).firmStatus;
   const releasedAt = new Date().toISOString();
   await updateClaimCells(`${CLAIMS_SHEET}!J${sheetRow}:K${sheetRow}`, [[releasedAt, reason]]);
   // Renunțarea E statusul „pierdut" — dacă F ar rămâne pe altceva, aceeași
   // revendicare ar spune două lucruri diferite în portal și în CRM.
   await updateClaimCells(`${CLAIMS_SHEET}!F${sheetRow}`, [['pierdut']]);
+  await logLeadChange({
+    leadId,
+    claimTs: claimTimestamp,
+    field: 'stare_firma',
+    from: before,
+    to: 'pierdut',
+    by: 'firma',
+    detail: `a renunțat: ${reason}`,
+  });
   row[5] = 'pierdut';
   row[9] = releasedAt;
   row[10] = reason;
@@ -1299,7 +1310,16 @@ export async function setClaimFirmStatus(
   status: ClaimStatus,
 ): Promise<LeadClaim> {
   const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
+  const before = readClaimRow(row).firmStatus;
   await updateClaimCells(`${CLAIMS_SHEET}!F${sheetRow}`, [[status]]);
+  await logLeadChange({
+    leadId,
+    claimTs: claimTimestamp,
+    field: 'stare_firma',
+    from: before,
+    to: status,
+    by: 'firma',
+  });
   row[5] = status;
 
   const currentOffer = row[13] || '';
@@ -3024,9 +3044,12 @@ export async function updateLeadCrm(
     today?: string;
     /** HH:MM, ora României — se scrie doar pe notele nou adăugate. */
     time?: string;
+    /** Cine schimbă starea, pentru jurnalul din /admin/cereri. Cronurile nu-l dau. */
+    by?: LeadChangeBy;
   },
 ): Promise<LeadCrmFields & { poze: string }> {
   const { row, sheetRow } = await findLeadRow(timestamp);
+  const before = readCrmFields(row);
   const data: { range: string; values: string[][] }[] = [];
 
   if (changes.status) {
@@ -3085,6 +3108,20 @@ export async function updateLeadCrm(
         }),
       'update CRM',
     );
+  }
+
+  const by = changes.by ?? 'automat';
+  if (changes.status) {
+    await logLeadChange({ leadId: timestamp, field: 'stare', from: before.crmStatus, to: changes.status, by });
+  }
+  if (changes.contacted !== undefined) {
+    await logLeadChange({
+      leadId: timestamp,
+      field: 'contactat',
+      from: before.contactedByFirm,
+      to: changes.contacted,
+      by,
+    });
   }
 
   return { ...readCrmFields(row), poze: row[LEAD_POZE_COL] || '' };

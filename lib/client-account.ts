@@ -336,7 +336,7 @@ export async function reportFirm(opts: {
   const note = `${status === 'nesunat' ? 'ATENȚIE: ' : ''}Din contul clientului: ${what[status]}. Firma declară: ${claim.firmStatus}.`;
   if (status === 'semnat') {
     await recordClientResponse(lead.timestamp, 'semnat', `${new Date().toISOString()} ${name}`);
-    await updateLeadCrm(lead.timestamp, { status: 'castigata', note, ...bucharestStamp() });
+    await updateLeadCrm(lead.timestamp, { status: 'castigata', note, by: 'client', ...bucharestStamp() });
     revalidatePath('/cereri');
   } else {
     await updateLeadCrm(lead.timestamp, { note, ...bucharestStamp() });
@@ -490,7 +490,7 @@ export async function closeFromAccount(lead: NewLead, req: CloseRequest): Promis
     const note = ours
       ? `Din contul clientului: a ales ${name}, care a preluat cererea la noi. Status pus automat pe castigata.`
       : `Din contul clientului: a ales ${name ? `firma „${name}”` : 'o firmă, fără să spună care'}. De verificat dacă e una de la noi.`;
-    await updateLeadCrm(lead.timestamp, { status: ours ? 'castigata' : 'altundeva', note, ...bucharestStamp() });
+    await updateLeadCrm(lead.timestamp, { status: ours ? 'castigata' : 'altundeva', note, by: 'client', ...bucharestStamp() });
     revalidatePath('/cereri');
     await sendEmail({
       to: INTERNAL_TO,
@@ -509,7 +509,7 @@ export async function closeFromAccount(lead: NewLead, req: CloseRequest): Promis
     (labels.length ? ` Motiv: ${labels.join(', ')}.` : '') +
     (altceva ? ` A scris: „${altceva}”.` : '');
   await recordClientResponse(lead.timestamp, 'renunt', at);
-  await updateLeadCrm(lead.timestamp, { status: 'renuntat', note, ...bucharestStamp() });
+  await updateLeadCrm(lead.timestamp, { status: 'renuntat', note, by: 'client', ...bucharestStamp() });
   revalidatePath('/cereri');
   if (labels.length || altceva) {
     await sendEmail({

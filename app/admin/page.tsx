@@ -1,63 +1,7 @@
-import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
-const SECTIONS = [
-  {
-    href: '/admin/azi',
-    label: 'Azi',
-    desc: 'Agenda zilei: cereri de calificat, reveniri promise, firme de sunat, clienți de întrebat, plus sarcinile scrise de mână.',
-  },
-  {
-    href: '/admin/crm',
-    label: 'CRM',
-    desc: 'Cereri, listări și revendicări din Sheets, într-un singur loc.',
-  },
-  {
-    href: '/admin/social',
-    label: 'Social',
-    desc: 'Pipeline postări: coadă, întârziate, postate, idei. Marchezi postările direct de aici.',
-  },
-  {
-    href: '/admin/analytics',
-    label: 'Analytics · Overview',
-    desc: 'Vizitatori, pagini și referrers din Umami.',
-  },
-  {
-    href: '/admin/analytics/ghiduri',
-    label: 'Analytics · Ghiduri',
-    desc: 'Ce ghiduri trag trafic.',
-  },
-  {
-    href: '/admin/analytics/firme',
-    label: 'Analytics · Firme',
-    desc: 'Ce profile de firmă sunt vizitate.',
-  },
-  {
-    href: '/admin/analytics/sponsori',
-    label: 'Analytics · Sponsori',
-    desc: 'Afișări și click-uri pe bannerele de sponsor.',
-  },
-];
-
+// Pagina de start a adminului e lista de cereri (24 oct 2026). Cardurile de
+// aici repetau meniul de sus.
 export default function AdminHome() {
-  return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Admin</h1>
-        <p className="text-sm text-slate-500 mt-1">Panourile interne ale platformei.</p>
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2">
-        {SECTIONS.map((s) => (
-          <Link
-            key={s.href}
-            href={s.href}
-            className="rounded-lg border border-slate-200 bg-white px-4 py-3 transition hover:border-slate-400"
-          >
-            <div className="font-medium text-slate-900">{s.label}</div>
-            <p className="text-sm text-slate-500 mt-1">{s.desc}</p>
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
+  redirect('/admin/cereri');
 }

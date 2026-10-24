@@ -257,7 +257,7 @@ export async function recordStatusResponse(
     subject = `[Necontactat] ${lead.judet}: clientul spune că nu l-a contactat nicio firmă`;
   }
 
-  await updateLeadCrm(lead.timestamp, { ...(status ? { status } : {}), note, ...when });
+  await updateLeadCrm(lead.timestamp, { ...(status ? { status } : {}), note, by: 'client', ...when });
   if (status) revalidatePath('/cereri');
 
   await sendEmail({

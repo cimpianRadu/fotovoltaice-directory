@@ -89,6 +89,7 @@ export async function POST(request: Request) {
     }
 
     const fields = await updateLeadCrm(id, {
+      by: 'admin',
       status: status as LeadStatus | undefined,
       contacted: contacted as ContactState | undefined,
       poze,

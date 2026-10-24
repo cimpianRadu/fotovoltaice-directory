@@ -160,7 +160,7 @@ export async function closeLeadByClient(lead: NewLead, details: ResponseDetails 
     (motive.length ? ` Motiv: ${motive.join(', ')}.` : '') +
     (details.altceva ? ` A scris: „${details.altceva}”.` : '');
   await recordClientResponse(lead.timestamp, 'renunt');
-  await updateLeadCrm(lead.timestamp, { status: 'renuntat', note, ...nowBucharest(now) });
+  await updateLeadCrm(lead.timestamp, { status: 'renuntat', note, by: 'client', ...nowBucharest(now) });
   revalidatePath('/cereri');
   // Fără motiv nu e nimic de citit. Cu motiv, mai ales „nu m-a sunat nicio
   // firmă", e o problemă a platformei care altfel s-ar închide ca renunțare.

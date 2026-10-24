@@ -236,6 +236,7 @@ export async function closeLeadChosenFirm(lead: NewLead, firma: string, firmaCla
       : clean
         ? `Clientul a răspuns în email: a ales firma „${clean}”. De verificat dacă e una de la noi (atunci: castigata).`
         : 'Clientul a răspuns în email: a ales deja o firmă, fără să spună care.',
+    by: 'client',
     ...nowBucharest(now),
   });
   revalidatePath('/cereri');
