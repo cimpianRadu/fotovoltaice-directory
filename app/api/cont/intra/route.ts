@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { isValidEmail, normalizeEmail } from '@/lib/portal-auth';
 import { consumeLoginCode, ensureAccount, sessionCookie } from '@/lib/client-auth';
+import { recordClientEvent } from '@/lib/client-events';
 
 // Pasul 2 al intrării din /cont: emailul și codul primit. Maximum 5 încercări pe
 // cod (lib/client-auth), apoi trebuie cerut altul.
@@ -20,6 +21,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Codul a expirat sau a fost încercat de prea multe ori. Cereți altul.' }, { status: 400 });
     }
     await ensureAccount(email, true);
+    await recordClientEvent(null, 'cod_intrat');
     const res = NextResponse.json({ ok: true });
     const session = await sessionCookie(email);
     res.cookies.set(session.name, session.value, session.options);

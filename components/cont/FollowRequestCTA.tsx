@@ -1,7 +1,25 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
+import { trackEvent } from '@/lib/analytics';
+
 // Îndemnul spre contul clientului, pe ecranul de după cerere (23 oct 2026).
 // Radu: „mai mare și mai evident, mai catchy, cu un mic preview și o listă de
 // beneficii”. Previzualizarea e un desen al paginii cererii, pe date de exemplu,
 // ca omul să vadă ce primește înainte să apese.
+//
+// Trimite două evenimente pentru verdictul experimentului (lib/client-events):
+// blocul văzut și blocul apăsat.
+
+function sendEvent(leadId: string, event: 'cta_vazut' | 'cta_click') {
+  try {
+    const body = JSON.stringify({ leadId, event });
+    if (navigator.sendBeacon?.('/api/cont/eveniment', new Blob([body], { type: 'application/json' }))) return;
+    void fetch('/api/cont/eveniment', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true }).catch(() => {});
+  } catch {
+    // Măsurătoarea nu are voie să strice ecranul.
+  }
+}
 
 const BENEFITS = [
   'Vedeți câte firme au primit cererea și câți instalatori s-au uitat pe ea',
@@ -68,7 +86,22 @@ function Preview() {
   );
 }
 
-export default function FollowRequestCTA({ contUrl, contEmail }: { contUrl: string; contEmail: boolean }) {
+export default function FollowRequestCTA({
+  contUrl,
+  contEmail,
+  leadId,
+}: {
+  contUrl: string;
+  contEmail: boolean;
+  leadId: string | null;
+}) {
+  const seen = useRef(false);
+  useEffect(() => {
+    if (!leadId || seen.current) return;
+    seen.current = true;
+    sendEvent(leadId, 'cta_vazut');
+  }, [leadId]);
+
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-primary bg-gradient-to-br from-amber-50 via-white to-white shadow-sm">
       <div className="grid gap-6 p-5 sm:p-7 md:grid-cols-[1.2fr_1fr] md:items-center">
@@ -93,6 +126,10 @@ export default function FollowRequestCTA({ contUrl, contEmail }: { contUrl: stri
           </ul>
           <a
             href={contUrl}
+            onClick={() => {
+              if (leadId) sendEvent(leadId, 'cta_click');
+              trackEvent('cont_cta_click');
+            }}
             className="mt-5 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 text-base font-bold text-white shadow-sm transition-colors hover:bg-primary-dark sm:w-auto"
           >
             Urmăriți cererea gratuit <span aria-hidden>→</span>

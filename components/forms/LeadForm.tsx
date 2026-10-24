@@ -1070,7 +1070,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
           </p>
         </div>
 
-        {contUrl && <FollowRequestCTA contUrl={contUrl} contEmail={contEmail} />}
+        {contUrl && <FollowRequestCTA contUrl={contUrl} contEmail={contEmail} leadId={leadRef} />}
 
         {/* Restul detaliilor, plus pozele. Fără buton de salvare: fiecare răspuns
             pleacă singur spre cerere, vezi scheduleSave. */}

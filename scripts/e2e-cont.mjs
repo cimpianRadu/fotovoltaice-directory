@@ -86,6 +86,20 @@ await check('click', 'Click-ul pe o cerere ajunge în Neon (o dată pe zi)', asy
   return n === 1 ? null : `${n} rânduri în loc de 1`;
 });
 
+await check('eveniment', 'Evenimentul „blocul văzut” ajunge în Neon', async () => {
+  const leadId = '2020-01-01T00:00:00.000Z';
+  const res = await fetch(`${TARGET}/api/cont/eveniment`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ leadId, event: 'cta_vazut' }),
+  });
+  if (res.status !== 204) return `HTTP ${res.status}`;
+  const sql = neon(databaseUrl());
+  const rows = await sql`SELECT count(*)::int AS n FROM client_events WHERE lead_id = ${leadId} AND event = 'cta_vazut'`;
+  await sql`DELETE FROM client_events WHERE lead_id = ${leadId}`;
+  return rows[0].n >= 1 ? null : 'evenimentul nu s-a salvat';
+});
+
 const allPass = tests.every((t) => t.pass);
 console.log(JSON.stringify({ target: TARGET, allPass, tests }, null, 2));
 process.exit(allPass ? 0 : 1);

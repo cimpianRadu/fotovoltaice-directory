@@ -18,6 +18,7 @@ type EventName =
   // Ce vrea să rezolve, de la pasul 5 (17 sept 2026), slugurile cu virgulă.
   | 'lead_scop'
   | 'lead_claim_opened'
+  | 'cont_cta_click'
   | 'lead_claim_submitted'
   // Urmărirea unei cereri pe care clientul se informează (14 sept 2026).
   | 'lead_watch_opened'

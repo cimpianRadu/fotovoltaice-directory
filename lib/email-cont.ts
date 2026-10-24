@@ -20,6 +20,7 @@ import { clientLinkUrl } from './lead-client-token';
 import { accountLink } from './client-auth';
 import { clientEmailsLive, describeLead, firmDisplayName, inMessagingWindow } from './client-account';
 import type { NewLead } from './sheets';
+import { recordClientEvent } from './client-events';
 
 type LeadForEmail = Pick<NewLead, 'timestamp' | 'numeContact' | 'numeCompanie' | 'email' | 'judet' | 'localitate' | 'tipLucrare' | 'putere'>;
 
@@ -181,6 +182,7 @@ async function sendOnce(
   const res = await sendEmail({ to: lead.email, subject, html, replyTo: REPLY_TO });
   // Dacă n-a plecat, eliberăm locul, ca o încercare ulterioară să mai poată trimite.
   if (!res.ok) await releaseSlot(lead.timestamp, kind);
+  else await recordClientEvent(lead.timestamp, 'email_trimis', { kind: kind.split(':')[0] });
   return res;
 }
 
@@ -216,5 +218,6 @@ export async function sendOfferOpenedToFirm(
   const { subject, html } = offerOpenedFirmEmail(o);
   const res = await sendEmail({ to, subject, html, replyTo: REPLY_TO });
   if (!res.ok) await releaseSlot(leadId, kind);
+  else await recordClientEvent(leadId, 'email_trimis', { kind: 'deschis' });
   return res;
 }

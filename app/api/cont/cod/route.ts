@@ -3,6 +3,7 @@ import { generateLoginCode, isValidEmail, normalizeEmail } from '@/lib/portal-au
 import { issueLoginCode } from '@/lib/client-auth';
 import { clientAccountLive, clientEmailsLive, getLeadsForEmail } from '@/lib/client-account';
 import { sendLoginCodeEmail } from '@/lib/email-cont';
+import { recordClientEvent } from '@/lib/client-events';
 
 // Pasul 1 al intrării din /cont: emailul. Codul pleacă doar dacă adresa are o
 // cerere, dar răspunsul e același oricum, ca nimeni să nu poată afla din pagină
@@ -30,7 +31,9 @@ export async function POST(request: Request) {
   }
   const email = normalizeEmail(raw);
   try {
-    if (!(await getLeadsForEmail(email)).length) return NextResponse.json(SAME_ANSWER);
+    const leads = await getLeadsForEmail(email);
+    await recordClientEvent(leads[0]?.timestamp ?? null, 'cod_cerut', { areCereri: leads.length > 0 });
+    if (!leads.length) return NextResponse.json(SAME_ANSWER);
     const code = generateLoginCode();
     if (!(await issueLoginCode(email, code))) {
       return NextResponse.json(

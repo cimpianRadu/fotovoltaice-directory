@@ -50,6 +50,7 @@ import { escapeHtml, sendEmail, sendCountyLeadAlert } from './email';
 import { getLeadClickStats } from './lead-clicks';
 import { logLeadSends } from './lead-sends';
 import { offersForLead, type OfferForClient } from './oferte';
+import { recordClientEvent } from './client-events';
 import { RENUNT_REASON_OPTIONS, optionLabel } from './client-response-details';
 import { BUMPS_PER_WEEK, REFUZ_REASON_OPTIONS, type FirmReport, type RefuzReason } from './client-account-shared';
 
@@ -322,6 +323,7 @@ export async function reportFirm(opts: {
     VALUES (${lead.timestamp}, ${claim.timestamp}, ${name}, ${status}, ${putere}, ${motiv})
   `;
   const motivLabel = motiv ? REFUZ_REASON_OPTIONS.find((o) => o.value === motiv)?.label.toLowerCase() : '';
+  await recordClientEvent(lead.timestamp, 'raspuns_firma', { status, motiv, firma: name });
 
   const days = Math.floor((Date.now() - Date.parse(claim.approvedAt || claim.timestamp)) / DAY_MS);
   const what: Record<FirmReport, string> = {
@@ -440,6 +442,7 @@ export async function bumpLead(lead: NewLead, email: string, now = new Date()): 
   });
   const firms = sent.length;
   await logLeadSends(lead.timestamp, sent, 'retrimitere');
+  await recordClientEvent(lead.timestamp, 'retrimitere', { firms });
   await db()`
     INSERT INTO lead_bumps (lead_id, email, at, firms_notified)
     VALUES (${lead.timestamp}, ${normalizeEmail(email)}, ${at}, ${firms})
@@ -478,6 +481,7 @@ export type CloseRequest =
  */
 export async function closeFromAccount(lead: NewLead, req: CloseRequest): Promise<void> {
   const at = new Date().toISOString();
+  await recordClientEvent(lead.timestamp, 'inchisa', { kind: req.kind });
   if (req.kind === 'aleasa') {
     const claims = req.claimTs ? deliveredClaims(await getClaims(), lead.timestamp) : [];
     const ours = claims.find((c) => c.timestamp === req.claimTs);
@@ -526,6 +530,7 @@ export async function closeFromAccount(lead: NewLead, req: CloseRequest): Promis
  */
 export async function requestAccountDeletion(email: string, leads: NewLead[]): Promise<void> {
   await db()`UPDATE client_accounts SET deleted_at = now() WHERE email = ${normalizeEmail(email)}`;
+  await recordClientEvent(leads[0]?.timestamp ?? null, 'stergere', { cereri: leads.length });
   await sendEmail({
     to: INTERNAL_TO,
     subject: `[GDPR] Clientul cere ștergerea datelor: ${email}`,
@@ -533,4 +538,157 @@ export async function requestAccountDeletion(email: string, leads: NewLead[]): P
       `<p>${escapeHtml(email)} a apăsat „Ștergeți contul și datele mele” din cont. Răspunsul legal e în 30 de zile.</p>` +
       `<p>Cererile adresei:</p><ul>${leads.map((l) => `<li>${internalLeadLine(l)}</li>`).join('')}</ul>`,
   });
+}
+
+// ---------------------------------------------------------------------------
+// Vizitele pe pagina cererii
+
+/**
+ * Notează că omul și-a deschis cererea (24 oct 2026). Fără asta nu știam dacă
+ * cineva care a intrat din browserul de după formular a văzut pagina. Nu oprește
+ * pagina dacă baza nu răspunde.
+ */
+export async function recordLeadView(lead: Pick<NewLead, 'timestamp' | 'email'>, verified: boolean): Promise<void> {
+  try {
+    await db()`
+      INSERT INTO client_lead_views (lead_id, via, day)
+      VALUES (${lead.timestamp}, ${verified ? 'cont' : 'formular'}, (now() AT TIME ZONE 'Europe/Bucharest')::date)
+      ON CONFLICT (lead_id, via, day) DO UPDATE SET last_at = now(), views = client_lead_views.views + 1
+    `;
+    await db()`UPDATE client_accounts SET last_seen_at = now() WHERE email = ${normalizeEmail(lead.email)}`;
+  } catch (err) {
+    console.error('[cont] vizită:', err);
+  }
+  await recordClientEvent(lead.timestamp, 'pagina_cerere', { via: verified ? 'cont' : 'formular' });
+}
+
+export interface AccountActivity {
+  email: string;
+  createdAt: string;
+  verifiedAt: string | null;
+  deletedAt: string | null;
+  leads: {
+    id: string;
+    views: number;
+    firstView: string | null;
+    lastView: string | null;
+    via: string[];
+    reports: { firm: string; status: string; motiv: string | null; at: string }[];
+    bumps: { at: string; firms: number }[];
+    clicks: number;
+    sentTo: number;
+  }[];
+}
+
+/** Pentru /admin/cont-client: fiecare cont, cererile lui și ce a făcut în cont. */
+export async function getAccountActivity(limit = 50): Promise<AccountActivity[]> {
+  const q = db();
+  const accounts = await q`
+    SELECT email, created_at, verified_at, deleted_at FROM client_accounts ORDER BY created_at DESC LIMIT ${limit}
+  `;
+  if (!accounts.length) return [];
+  const emails = accounts.map((a) => String(a.email));
+  const leads = (await getLeadsSince(new Date(0))).filter((l) => emails.includes(normalizeEmail(l.email || '')));
+  const ids = leads.map((l) => l.timestamp);
+  const [views, reports, bumps, clicks, sends] = await Promise.all([
+    q`SELECT lead_id, via, sum(views)::int AS views, min(first_at) AS first_at, max(last_at) AS last_at
+      FROM client_lead_views WHERE lead_id = ANY(${ids}) GROUP BY lead_id, via`,
+    q`SELECT lead_id, firm_name, status, motiv, created_at FROM client_firm_reports WHERE lead_id = ANY(${ids}) ORDER BY created_at`,
+    q`SELECT lead_id, at, firms_notified FROM lead_bumps WHERE lead_id = ANY(${ids}) ORDER BY at`,
+    getLeadClickStats(ids),
+    q`SELECT lead_id, count(DISTINCT firm_email)::int AS n FROM lead_sends WHERE lead_id = ANY(${ids}) GROUP BY lead_id`,
+  ]);
+  const iso = (v: unknown) => (v ? new Date(v as string).toISOString() : null);
+
+  return accounts.map((a) => {
+    const email = String(a.email);
+    return {
+      email,
+      createdAt: iso(a.created_at) as string,
+      verifiedAt: iso(a.verified_at),
+      deletedAt: iso(a.deleted_at),
+      leads: leads
+        .filter((l) => normalizeEmail(l.email || '') === email)
+        .sort((x, y) => y.timestamp.localeCompare(x.timestamp))
+        .map((l) => {
+          const v = views.filter((r) => r.lead_id === l.timestamp);
+          const firsts = v.map((r) => iso(r.first_at)).filter(Boolean) as string[];
+          const lasts = v.map((r) => iso(r.last_at)).filter(Boolean) as string[];
+          return {
+            id: l.timestamp,
+            views: v.reduce((n, r) => n + Number(r.views), 0),
+            firstView: firsts.sort()[0] ?? null,
+            lastView: lasts.sort().at(-1) ?? null,
+            via: v.map((r) => String(r.via)),
+            reports: reports
+              .filter((r) => r.lead_id === l.timestamp)
+              .map((r) => ({ firm: String(r.firm_name), status: String(r.status), motiv: (r.motiv as string) ?? null, at: iso(r.created_at) as string })),
+            bumps: bumps.filter((b) => b.lead_id === l.timestamp).map((b) => ({ at: iso(b.at) as string, firms: Number(b.firms_notified) })),
+            clicks: clicks.get(l.timestamp)?.visitors ?? 0,
+            sentTo: Number(sends.find((s) => s.lead_id === l.timestamp)?.n ?? 0),
+          };
+        }),
+    };
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Experimentul: verdict pe 7 noiembrie 2026
+
+/** De când se numără evenimentele (deploy-ul din 24 oct 2026). */
+export const EXPERIMENT_START = '2026-10-24T10:00:00.000Z';
+export const EXPERIMENT_VERDICT = '2026-11-07';
+
+export interface ExperimentFunnel {
+  since: string;
+  steps: { key: string; label: string; leads: number }[];
+  nesunat: number;
+  refuzat: number;
+}
+
+/**
+ * Pâlnia, pe cereri distincte, de la EXPERIMENT_START: cereri noi (din Sheets,
+ * fără cele de test și ascunse), apoi fiecare pas din client_events. Pentru
+ * verdictul din /admin/cont-client.
+ */
+export async function getExperimentFunnel(since = EXPERIMENT_START): Promise<ExperimentFunnel> {
+  const q = db();
+  const leads = (await getLeadsSince(new Date(since))).filter(
+    (l) => !isLeadHidden(l) && !(l.email || '').toLowerCase().startsWith('routine-test-'),
+  );
+  const ids = leads.map((l) => l.timestamp);
+  const [events, revisits, reports, used] = await Promise.all([
+    q`SELECT event, count(DISTINCT lead_id)::int AS n FROM client_events
+      WHERE at >= ${since} AND lead_id = ANY(${ids}) GROUP BY event`,
+    q`SELECT count(*)::int AS n FROM (
+        SELECT lead_id FROM client_lead_views WHERE lead_id = ANY(${ids}) GROUP BY lead_id HAVING count(DISTINCT day) >= 2
+      ) t`,
+    q`SELECT status, count(DISTINCT lead_id)::int AS n FROM client_firm_reports
+      WHERE lead_id = ANY(${ids}) GROUP BY status`,
+    // „Folosită” (regula de decizie): un răspuns despre o firmă sau o revenire în altă zi.
+    q`SELECT count(DISTINCT lead_id)::int AS n FROM (
+        SELECT lead_id FROM client_firm_reports WHERE lead_id = ANY(${ids})
+        UNION
+        SELECT lead_id FROM client_lead_views WHERE lead_id = ANY(${ids}) GROUP BY lead_id HAVING count(DISTINCT day) >= 2
+      ) t`,
+  ]);
+  const n = (event: string) => Number(events.find((e) => e.event === event)?.n ?? 0);
+  const r = (status: string) => Number(reports.find((x) => x.status === status)?.n ?? 0);
+  return {
+    since,
+    steps: [
+      { key: 'cereri', label: 'Cereri noi', leads: ids.length },
+      { key: 'cta_vazut', label: 'Au văzut blocul după formular', leads: n('cta_vazut') },
+      { key: 'cta_click', label: 'Au apăsat „Urmăriți cererea”', leads: n('cta_click') },
+      { key: 'pagina_cerere', label: 'Și-au deschis pagina cererii', leads: n('pagina_cerere') },
+      { key: 'revenire', label: 'Au revenit în altă zi', leads: Number(revisits[0]?.n ?? 0) },
+      { key: 'intrare_link', label: 'Au intrat din linkul din email', leads: n('intrare_link') },
+      { key: 'raspuns_firma', label: 'Au spus ce a făcut o firmă', leads: n('raspuns_firma') },
+      { key: 'retrimitere', label: 'Au cerut retrimiterea', leads: n('retrimitere') },
+      { key: 'inchisa', label: 'Au închis cererea din cont', leads: n('inchisa') },
+      { key: 'folosite', label: 'Folosite (răspuns sau revenire)', leads: Number(used[0]?.n ?? 0) },
+    ],
+    nesunat: r('nesunat'),
+    refuzat: r('refuzat'),
+  };
 }

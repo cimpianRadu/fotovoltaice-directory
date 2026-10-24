@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { ensureAccount, sessionCookie, verifyAccountLink } from '@/lib/client-auth';
+import { recordClientEvent } from '@/lib/client-events';
 
 // Linkul din emailurile către client: `/cont/intrare?t=<token>&cerere=<id>`.
 // Tokenul dovedește că omul are acces la căsuța de email a cererii, deci primește
@@ -24,6 +25,7 @@ export async function GET(request: NextRequest) {
   }
 
   const cerere = url.searchParams.get('cerere') || '';
+  await recordClientEvent(LEAD_ID_RE.test(cerere) ? cerere : null, 'intrare_link');
   const dest = LEAD_ID_RE.test(cerere) ? `/cont/cerere/${encodeURIComponent(cerere)}` : '/cont';
   const res = NextResponse.redirect(new URL(dest, url));
   const session = await sessionCookie(email);

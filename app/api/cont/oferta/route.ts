@@ -2,6 +2,7 @@ import { NextResponse, after, type NextRequest } from 'next/server';
 import { getOffer, readOfferFile, recordOfferView } from '@/lib/oferte';
 import { describeLead, leadForViewer } from '@/lib/client-account';
 import { sendOfferOpenedToFirm } from '@/lib/email-cont';
+import { recordClientEvent } from '@/lib/client-events';
 
 // Singura poartă prin care clientul deschide un fișier de ofertă. Store-ul e
 // privat; aici se verifică dacă browserul are voie să vadă cererea, se notează
@@ -26,6 +27,7 @@ export async function GET(request: NextRequest) {
   after(async () => {
     try {
       const first = await recordOfferView(offer.id, f, 'client');
+      await recordClientEvent(offer.leadId, 'oferta_deschisa', { offerId: offer.id, prima: first });
       if (first) {
         await sendOfferOpenedToFirm(offer.leadId, offer.id, offer.firmEmail, {
           firmName: offer.firmName,

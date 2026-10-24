@@ -1,7 +1,19 @@
 import Link from 'next/link';
 import AccountLeadView from '@/components/cont/AccountLeadView';
 import { db } from '@/lib/db';
-import { clientAccountLive, clientEmailsLive, clientOffersLive, inMessagingWindow, type AccountLeadData } from '@/lib/client-account';
+import {
+  clientAccountLive,
+  clientEmailsLive,
+  clientOffersLive,
+  getAccountActivity,
+  getExperimentFunnel,
+  EXPERIMENT_VERDICT,
+  inMessagingWindow,
+  type ExperimentFunnel,
+  type AccountActivity,
+  type AccountLeadData,
+} from '@/lib/client-account';
+import { FIRM_REPORT_OPTIONS, REFUZ_REASON_OPTIONS } from '@/lib/client-account-shared';
 import { claimEmail, confirmationEmail, loginCodeEmail, offerEmail, offerOpenedFirmEmail } from '@/lib/email-cont';
 import { OFFER_PILOT_FIRMS } from '@/lib/oferte';
 
@@ -140,9 +152,11 @@ export default async function ContClientAdminPage() {
   const offersOn = clientOffersLive();
   const windowOpen = inMessagingWindow();
   let data: Awaited<ReturnType<typeof overview>> | null = null;
+  let activity: AccountActivity[] = [];
+  let funnel: ExperimentFunnel | null = null;
   let dbError = '';
   try {
-    data = await overview();
+    [data, activity, funnel] = await Promise.all([overview(), getAccountActivity(), getExperimentFunnel()]);
   } catch (err) {
     dbError = err instanceof Error ? err.message : String(err);
   }
@@ -192,6 +206,142 @@ export default async function ContClientAdminPage() {
           Baza de date nu răspunde ({dbError}).
         </p>
       )}
+
+      {funnel && (
+        <section className="mt-6">
+          <h2 className="text-sm font-semibold text-slate-900">
+            Experiment · verdict pe {EXPERIMENT_VERDICT.split('-').reverse().join('.')}
+          </h2>
+          <p className="mt-0.5 text-xs text-slate-500">
+            Cereri distincte de la {when(funnel.since)}, fără cele de test. Procentul e din cererile noi.
+          </p>
+          <div className="mt-2 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+            <ol className="divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white text-sm">
+              {funnel.steps.map((st) => {
+                const base = funnel.steps[0].leads;
+                const pct = base ? Math.round((st.leads / base) * 100) : 0;
+                return (
+                  <li key={st.key} className="flex items-center gap-3 px-3 py-2">
+                    <span className="w-56 shrink-0 text-slate-700">{st.label}</span>
+                    <span className="h-2 flex-1 rounded-full bg-slate-100">
+                      <span className="block h-2 rounded-full bg-amber-500" style={{ width: `${Math.min(100, pct)}%` }} />
+                    </span>
+                    <span className="w-20 text-right tabular-nums text-slate-900">
+                      {st.leads}
+                      {st.key !== 'cereri' && base ? <span className="text-slate-400"> · {pct}%</span> : null}
+                    </span>
+                  </li>
+                );
+              })}
+              <li className="px-3 py-2 text-xs text-slate-500">
+                Răspunsuri „nu m-a sunat”: {funnel.nesunat} cereri · „oferta nu mi-a convenit”: {funnel.refuzat} cereri
+              </li>
+            </ol>
+            <div className="rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-700">
+              <p className="font-semibold text-slate-900">Regula de decizie, fixată pe 24 oct</p>
+              <p className="mt-1 text-xs text-slate-500">
+                „Folosit” = cererea are un răspuns despre o firmă sau o revenire în altă zi. Pragul de 1 din 5 e rata de
+                răspuns de acum la emailurile către clienți (6 din 33 și 3 din 10).
+              </p>
+              <ul className="mt-2 space-y-1.5">
+                <li>
+                  <strong>Cel puțin 1 din 5</strong> cereri noi folosite: contul merge; păstrăm și construim peste el.
+                </li>
+                <li>
+                  <strong>Între 1 din 10 și 1 din 5</strong>: pornim emailurile (dacă nu sunt pornite) și mai măsurăm 2
+                  săptămâni.
+                </li>
+                <li>
+                  <strong>Sub 1 din 10</strong>: oamenii nu revin singuri. Devenim mai agresivi: email de revenire la 2-3 zile
+                  („V-a sunat firma X?”), cu butoanele direct în email.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className="mt-6">
+        <h2 className="text-sm font-semibold text-slate-900">Conturile și ce a făcut fiecare</h2>
+        <p className="mt-0.5 text-xs text-slate-500">
+          Contul se creează singur la fiecare cerere nouă. Vizitele pe pagina cererii se notează din 24 oct;
+          „formular” = a intrat din browserul cu care a trimis cererea, „cont” = din link sau cu cod.
+        </p>
+        <div className="mt-2 overflow-x-auto rounded-xl border border-slate-200 bg-white">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-slate-200 text-left text-xs text-slate-500">
+                <th className="px-3 py-2 font-medium">Cont</th>
+                <th className="px-3 py-2 font-medium">Cererea</th>
+                <th className="px-3 py-2 font-medium">Și-a deschis pagina</th>
+                <th className="px-3 py-2 font-medium">Ce a spus despre firme</th>
+                <th className="px-3 py-2 font-medium">Retrimiteri</th>
+                <th className="px-3 py-2 text-right font-medium">La firme / apăsări</th>
+              </tr>
+            </thead>
+            <tbody>
+              {activity.flatMap((a) =>
+                (a.leads.length ? a.leads : [null]).map((l, i) => (
+                  <tr key={`${a.email}-${l?.id ?? 'fara'}`} className="border-t border-slate-100 align-top">
+                    <td className="px-3 py-2">
+                      {i === 0 && (
+                        <>
+                          <span className="text-slate-800">{a.email}</span>
+                          <span className="block text-[11px] text-slate-400">
+                            {a.verifiedAt ? `a intrat cu link/cod ${when(a.verifiedAt)}` : 'doar din formular'}
+                            {a.deletedAt ? ' · a cerut ștergerea' : ''}
+                          </span>
+                        </>
+                      )}
+                    </td>
+                    <td className="px-3 py-2">
+                      {l ? (
+                        <Link href={`/cereri?cerere=${encodeURIComponent(l.id)}`} className="underline">
+                          {when(l.id)}
+                        </Link>
+                      ) : (
+                        <span className="text-slate-400">—</span>
+                      )}
+                    </td>
+                    <td className="px-3 py-2">
+                      {l && l.views ? (
+                        <>
+                          da, de {l.views} ori <span className="text-slate-400">({l.via.join(', ')})</span>
+                          <span className="block text-[11px] text-slate-400">ultima dată {when(l.lastView as string)}</span>
+                        </>
+                      ) : (
+                        <span className="text-slate-400">nu încă</span>
+                      )}
+                    </td>
+                    <td className="px-3 py-2">
+                      {l?.reports.length ? (
+                        l.reports.map((r, k) => (
+                          <span key={k} className="block">
+                            {r.firm}: <strong>{FIRM_REPORT_OPTIONS.find((o) => o.value === r.status)?.label ?? r.status}</strong>
+                            {r.motiv ? ` (${REFUZ_REASON_OPTIONS.find((o) => o.value === r.motiv)?.label.toLowerCase() ?? r.motiv})` : ''}
+                            <span className="text-[11px] text-slate-400"> · {when(r.at)}</span>
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-slate-400">nimic</span>
+                      )}
+                    </td>
+                    <td className="px-3 py-2">
+                      {l?.bumps.length ? l.bumps.map((b, k) => <span key={k} className="block">{when(b.at)} → {b.firms} firme</span>) : <span className="text-slate-400">—</span>}
+                    </td>
+                    <td className="px-3 py-2 text-right tabular-nums">{l ? `${l.sentTo} / ${l.clicks}` : ''}</td>
+                  </tr>
+                )),
+              )}
+              {!activity.length && (
+                <tr>
+                  <td colSpan={6} className="px-3 py-3 text-slate-500">Niciun cont încă.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       {data && (
         <>

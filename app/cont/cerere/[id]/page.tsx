@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import AccountLeadView from '@/components/cont/AccountLeadView';
 import LoginForm from '@/components/cont/LoginForm';
-import { leadForViewer, loadAccountLead } from '@/lib/client-account';
-import { touchAccount } from '@/lib/client-auth';
+import { leadForViewer, loadAccountLead, recordLeadView } from '@/lib/client-account';
 import { clientLinkUrl } from '@/lib/lead-client-token';
 
 // Pagina unei cereri în contul clientului. Fără acces (alt browser, cookie șters)
@@ -40,7 +39,7 @@ export default async function ContCererePage({ params }: Props) {
   }
 
   const data = await loadAccountLead(access.lead);
-  if (access.viewer.email) await touchAccount(access.viewer.email).catch(() => {});
+  await recordLeadView(access.lead, Boolean(access.viewer.email));
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:py-12">
