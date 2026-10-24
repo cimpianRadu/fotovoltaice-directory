@@ -63,6 +63,40 @@ export function confirmationEmail(lead: LeadForEmail, link: string): { subject: 
 }
 
 // ---------------------------------------------------------------------------
+// 1b. Invitația în cont, trimisă de Radu din admin (24 oct 2026), pentru
+// cererile de dinainte de pornirea emailurilor, care n-au primit niciun link.
+
+export function invitationEmail(lead: LeadForEmail, link: string): { subject: string; html: string } {
+  const body =
+    greeting(lead) +
+    p(
+      `Cererea dumneavoastră pentru ${escapeHtml(describeLead(lead))} în ${where(lead)} are acum o pagină a ei, unde o puteți urmări pas cu pas.`,
+    ) +
+    p(
+      'Acolo vedeți câte firme au primit-o, câți instalatori s-au uitat pe ea și care au preluat-o, cu numele și telefonul lor. Tot de acolo ne spuneți dacă v-a sunat cineva sau dacă oferta nu v-a convenit.',
+    ) +
+    button(link, 'Vedeți cererea') +
+    NO_PASSWORD +
+    p('Dacă aveți întrebări, răspundeți la acest email. Îl citește un om.');
+  return { subject: 'Urmăriți-vă cererea, gratuit', html: emailFrame(body, leadFooter(lead)) };
+}
+
+/**
+ * Trimisă doar la apăsarea lui Radu, o singură dată pe cerere, și doar în
+ * fereastra de lucru (luni–vineri, 08–21): e un mesaj din inițiativa noastră.
+ */
+export async function sendInvitationEmail(lead: LeadForEmail): Promise<{ ok: boolean; reason?: string }> {
+  if (!lead.email || isTestEmail(lead.email)) return { ok: false, reason: 'fără adresă' };
+  if (!inMessagingWindow()) return { ok: false, reason: 'Se poate trimite de luni până vineri, între 8 și 21.' };
+  if (!(await claimSlot(lead.timestamp, 'invitatie'))) return { ok: false, reason: 'Invitația a plecat deja.' };
+  const { subject, html } = invitationEmail(lead, await accountLink(lead.email, lead.timestamp));
+  const res = await sendEmail({ to: lead.email, subject, html, replyTo: REPLY_TO });
+  if (!res.ok) await releaseSlot(lead.timestamp, 'invitatie');
+  else await recordClientEvent(lead.timestamp, 'email_trimis', { kind: 'invitatie' });
+  return res;
+}
+
+// ---------------------------------------------------------------------------
 // 2. O firmă a preluat cererea
 
 export interface FirmForEmail {

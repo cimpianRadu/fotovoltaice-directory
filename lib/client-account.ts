@@ -692,3 +692,82 @@ export async function getExperimentFunnel(since = EXPERIMENT_START): Promise<Exp
     refuzat: r('refuzat'),
   };
 }
+
+// ---------------------------------------------------------------------------
+// Cardurile din /admin/cont-client: cine e omul, dacă și-a deschis pagina și ce a făcut
+
+export interface ClientCardEvent {
+  at: string;
+  event: string;
+  props: Record<string, unknown> | null;
+}
+
+export interface ClientCard {
+  leadId: string;
+  email: string;
+  name: string;
+  judet: string;
+  localitate: string;
+  descriere: string;
+  open: boolean;
+  closedLabel: string | null;
+  /** A intrat cu link sau cod (nu doar din browserul de după formular). */
+  verifiedAt: string | null;
+  views: number;
+  lastView: string | null;
+  /** Firmele care au primit-o pe email și cele care au preluat-o. */
+  sentTo: number;
+  claimed: number;
+  events: ClientCardEvent[];
+  /** Cererea e de dinainte să notăm vizitele: nu știm dacă și-a deschis pagina. */
+  beforeTracking: boolean;
+}
+
+/** Cererile din ultimele `days` zile ale oamenilor cu cont, cea mai nouă prima. */
+export async function getClientCards(days = 30): Promise<ClientCard[]> {
+  const q = db();
+  const accounts = await q`SELECT email, verified_at FROM client_accounts WHERE deleted_at IS NULL`;
+  if (!accounts.length) return [];
+  const verified = new Map(accounts.map((a) => [String(a.email), a.verified_at ? new Date(a.verified_at as string).toISOString() : null]));
+  const since = new Date(Date.now() - days * DAY_MS);
+  const leads = (await getLeadsSince(since))
+    .filter((l) => verified.has(normalizeEmail(l.email || '')) && !isLeadHidden(l))
+    .sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+  if (!leads.length) return [];
+  const ids = leads.map((l) => l.timestamp);
+  const [events, views, sends, claims] = await Promise.all([
+    q`SELECT lead_id, event, props, at FROM client_events WHERE lead_id = ANY(${ids}) ORDER BY at`,
+    q`SELECT lead_id, sum(views)::int AS views, max(last_at) AS last_at FROM client_lead_views
+      WHERE lead_id = ANY(${ids}) GROUP BY lead_id`,
+    q`SELECT lead_id, count(DISTINCT firm_email)::int AS n FROM lead_sends WHERE lead_id = ANY(${ids}) GROUP BY lead_id`,
+    getClaims(),
+  ]);
+  const trackingFrom = Date.parse(EXPERIMENT_START);
+  return leads.map((l) => {
+    const s = leadSummaryFor(l);
+    const v = views.find((r) => r.lead_id === l.timestamp);
+    return {
+      leadId: l.timestamp,
+      email: normalizeEmail(l.email || ''),
+      name: l.numeContact || l.numeCompanie || '',
+      judet: l.judet,
+      localitate: l.localitate,
+      descriere: s.descriere,
+      open: s.open,
+      closedLabel: s.closedLabel,
+      verifiedAt: verified.get(normalizeEmail(l.email || '')) ?? null,
+      views: Number(v?.views ?? 0),
+      lastView: v?.last_at ? new Date(v.last_at as string).toISOString() : null,
+      sentTo: Number(sends.find((r) => r.lead_id === l.timestamp)?.n ?? 0),
+      claimed: deliveredClaims(claims, l.timestamp).length,
+      events: events
+        .filter((e) => e.lead_id === l.timestamp)
+        .map((e) => ({
+          at: new Date(e.at as string).toISOString(),
+          event: String(e.event),
+          props: (e.props as Record<string, unknown> | null) ?? null,
+        })),
+      beforeTracking: Date.parse(l.timestamp) < trackingFrom,
+    };
+  });
+}

@@ -5,16 +5,16 @@ import {
   clientAccountLive,
   clientEmailsLive,
   clientOffersLive,
-  getAccountActivity,
+  getClientCards,
   getExperimentFunnel,
   EXPERIMENT_VERDICT,
   inMessagingWindow,
   type ExperimentFunnel,
-  type AccountActivity,
+  type ClientCard,
   type AccountLeadData,
 } from '@/lib/client-account';
-import { FIRM_REPORT_OPTIONS, REFUZ_REASON_OPTIONS } from '@/lib/client-account-shared';
-import { claimEmail, confirmationEmail, loginCodeEmail, offerEmail, offerOpenedFirmEmail } from '@/lib/email-cont';
+import ClientCards from './ClientCards';
+import { claimEmail, confirmationEmail, invitationEmail, loginCodeEmail, offerEmail, offerOpenedFirmEmail } from '@/lib/email-cont';
 import { OFFER_PILOT_FIRMS } from '@/lib/oferte';
 
 export const dynamic = 'force-dynamic';
@@ -152,11 +152,11 @@ export default async function ContClientAdminPage() {
   const offersOn = clientOffersLive();
   const windowOpen = inMessagingWindow();
   let data: Awaited<ReturnType<typeof overview>> | null = null;
-  let activity: AccountActivity[] = [];
+  let cards: ClientCard[] = [];
   let funnel: ExperimentFunnel | null = null;
   let dbError = '';
   try {
-    [data, activity, funnel] = await Promise.all([overview(), getAccountActivity(), getExperimentFunnel()]);
+    [data, cards, funnel] = await Promise.all([overview(), getClientCards(), getExperimentFunnel()]);
   } catch (err) {
     dbError = err instanceof Error ? err.message : String(err);
   }
@@ -164,48 +164,22 @@ export default async function ContClientAdminPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold text-slate-900">Contul clientului</h1>
+      <h1 className="text-xl font-bold text-slate-900">Clienții și pagina cererii</h1>
       <p className="mt-2 max-w-3xl text-sm text-slate-600">
-        Clientul își vede cererea fără parolă: firmele care au preluat-o, telefoanele lor, ofertele trimise prin platformă,
-        câți instalatori au apăsat pe ea. Ne spune ce a făcut fiecare firmă și poate cere retrimiterea de 2 ori pe săptămână.
+        Fiecare om care trimite o cerere are automat o pagină a ei, gratuită și fără parolă. Aici vezi, pe fiecare client,
+        dacă și-a deschis pagina, când a fost ultima dată, ce a făcut acolo și cum arată pagina pentru el.
       </p>
-
-      <ul className="mt-4 divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white text-sm">
-        {[
-          {
-            on: live,
-            name: 'CLIENT_ACCOUNT',
-            what: 'Contul se vede: butonul „Urmăriți cererea” după formular, pagina cererii.',
-          },
-          {
-            on: emailsOn,
-            name: 'CLIENT_EMAILS',
-            what: `Emailurile către clienți. Confirmarea și codul pleacă imediat; anunțurile și emailurile către firme doar luni–vineri, 08–21 (acum: ${
-              windowOpen ? 'în fereastră' : 'în afara ferestrei, pleacă la prima dimineață lucrătoare'
-            }).`,
-          },
-          { on: offersOn, name: 'CLIENT_OFFERS', what: 'Firmele din pilot pot trimite oferte din portal.' },
-        ].map((sw) => (
-          <li key={sw.name} className="flex items-start gap-3 px-4 py-2.5">
-            <span
-              className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold ${
-                sw.on ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-800'
-              }`}
-            >
-              {sw.on ? 'pornit' : 'oprit'}
-            </span>
-            <span>
-              <code className="text-xs">{sw.name}=on</code> <span className="text-slate-600">{sw.what}</span>
-            </span>
-          </li>
-        ))}
-      </ul>
 
       {dbError && (
         <p className="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-xs text-amber-800">
           Baza de date nu răspunde ({dbError}).
         </p>
       )}
+
+      <section className="mt-6">
+        <h2 className="text-sm font-semibold text-slate-900">Clienții din ultimele 30 de zile</h2>
+        <ClientCards cards={cards} windowOpen={windowOpen} />
+      </section>
 
       {funnel && (
         <section className="mt-6">
@@ -261,88 +235,45 @@ export default async function ContClientAdminPage() {
         </section>
       )}
 
-      <section className="mt-6">
-        <h2 className="text-sm font-semibold text-slate-900">Conturile și ce a făcut fiecare</h2>
-        <p className="mt-0.5 text-xs text-slate-500">
-          Contul se creează singur la fiecare cerere nouă. Vizitele pe pagina cererii se notează din 24 oct;
-          „formular” = a intrat din browserul cu care a trimis cererea, „cont” = din link sau cu cod.
-        </p>
-        <div className="mt-2 overflow-x-auto rounded-xl border border-slate-200 bg-white">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-slate-200 text-left text-xs text-slate-500">
-                <th className="px-3 py-2 font-medium">Cont</th>
-                <th className="px-3 py-2 font-medium">Cererea</th>
-                <th className="px-3 py-2 font-medium">Și-a deschis pagina</th>
-                <th className="px-3 py-2 font-medium">Ce a spus despre firme</th>
-                <th className="px-3 py-2 font-medium">Retrimiteri</th>
-                <th className="px-3 py-2 text-right font-medium">La firme / apăsări</th>
-              </tr>
-            </thead>
-            <tbody>
-              {activity.flatMap((a) =>
-                (a.leads.length ? a.leads : [null]).map((l, i) => (
-                  <tr key={`${a.email}-${l?.id ?? 'fara'}`} className="border-t border-slate-100 align-top">
-                    <td className="px-3 py-2">
-                      {i === 0 && (
-                        <>
-                          <span className="text-slate-800">{a.email}</span>
-                          <span className="block text-[11px] text-slate-400">
-                            {a.verifiedAt ? `a intrat cu link/cod ${when(a.verifiedAt)}` : 'doar din formular'}
-                            {a.deletedAt ? ' · a cerut ștergerea' : ''}
-                          </span>
-                        </>
-                      )}
-                    </td>
-                    <td className="px-3 py-2">
-                      {l ? (
-                        <Link href={`/cereri?cerere=${encodeURIComponent(l.id)}`} className="underline">
-                          {when(l.id)}
-                        </Link>
-                      ) : (
-                        <span className="text-slate-400">—</span>
-                      )}
-                    </td>
-                    <td className="px-3 py-2">
-                      {l && l.views ? (
-                        <>
-                          da, de {l.views} ori <span className="text-slate-400">({l.via.join(', ')})</span>
-                          <span className="block text-[11px] text-slate-400">ultima dată {when(l.lastView as string)}</span>
-                        </>
-                      ) : (
-                        <span className="text-slate-400">nu încă</span>
-                      )}
-                    </td>
-                    <td className="px-3 py-2">
-                      {l?.reports.length ? (
-                        l.reports.map((r, k) => (
-                          <span key={k} className="block">
-                            {r.firm}: <strong>{FIRM_REPORT_OPTIONS.find((o) => o.value === r.status)?.label ?? r.status}</strong>
-                            {r.motiv ? ` (${REFUZ_REASON_OPTIONS.find((o) => o.value === r.motiv)?.label.toLowerCase() ?? r.motiv})` : ''}
-                            <span className="text-[11px] text-slate-400"> · {when(r.at)}</span>
-                          </span>
-                        ))
-                      ) : (
-                        <span className="text-slate-400">nimic</span>
-                      )}
-                    </td>
-                    <td className="px-3 py-2">
-                      {l?.bumps.length ? l.bumps.map((b, k) => <span key={k} className="block">{when(b.at)} → {b.firms} firme</span>) : <span className="text-slate-400">—</span>}
-                    </td>
-                    <td className="px-3 py-2 text-right tabular-nums">{l ? `${l.sentTo} / ${l.clicks}` : ''}</td>
-                  </tr>
-                )),
-              )}
-              {!activity.length && (
-                <tr>
-                  <td colSpan={6} className="px-3 py-3 text-slate-500">Niciun cont încă.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </section>
+      <details className="mt-8 rounded-xl border border-slate-200 bg-white px-4 py-3">
+        <summary className="cursor-pointer text-sm font-semibold text-slate-900">Comutatoare: ce e pornit</summary>
+      <ul className="mt-3 divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white text-sm">
+        {[
+          {
+            on: live,
+            name: 'CLIENT_ACCOUNT',
+            what: 'Contul se vede: butonul „Urmăriți cererea” după formular, pagina cererii.',
+          },
+          {
+            on: emailsOn,
+            name: 'CLIENT_EMAILS',
+            what: `Emailurile către clienți. Confirmarea și codul pleacă imediat; anunțurile și emailurile către firme doar luni–vineri, 08–21 (acum: ${
+              windowOpen ? 'în fereastră' : 'în afara ferestrei, pleacă la prima dimineață lucrătoare'
+            }).`,
+          },
+          { on: offersOn, name: 'CLIENT_OFFERS', what: 'Firmele din pilot pot trimite oferte din portal.' },
+        ].map((sw) => (
+          <li key={sw.name} className="flex items-start gap-3 px-4 py-2.5">
+            <span
+              className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold ${
+                sw.on ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-800'
+              }`}
+            >
+              {sw.on ? 'pornit' : 'oprit'}
+            </span>
+            <span>
+              <code className="text-xs">{sw.name}=on</code> <span className="text-slate-600">{sw.what}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
 
+      </details>
+
+      <details className="mt-3 rounded-xl border border-slate-200 bg-white px-4 py-3">
+        <summary className="cursor-pointer text-sm font-semibold text-slate-900">
+          Mai multe cifre: click-uri pe cereri, răspunsuri, oferte, retrimiteri
+        </summary>
       {data && (
         <>
           <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -431,6 +362,10 @@ export default async function ContClientAdminPage() {
         </>
       )}
 
+      </details>
+
+      <details className="mt-3 rounded-xl border border-slate-200 bg-white px-4 py-3">
+        <summary className="cursor-pointer text-sm font-semibold text-slate-900">Exemple pe date inventate: pagina și emailurile</summary>
       <section className="mt-10">
         <h2 className="text-sm font-semibold text-slate-900">Așa vede clientul cererea (date inventate)</h2>
         <p className="mt-0.5 text-xs text-slate-500">
@@ -460,6 +395,7 @@ export default async function ContClientAdminPage() {
       <section className="mt-10">
         <h2 className="text-sm font-semibold text-slate-900">Emailurile noi (date inventate)</h2>
         <div className="mt-3 grid gap-4 lg:grid-cols-2">
+          <EmailPreview title="Invitația în cont (o trimiți tu, din cardul clientului)" email={invitationEmail(DEMO_LEAD, LINK)} />
           <EmailPreview title="1. La trimiterea cererii (nu la „mă informez”)" email={confirmationEmail(DEMO_LEAD, LINK)} />
           <EmailPreview title="2. Când o firmă preia cererea" email={claimEmail(DEMO_LEAD, firm, LINK)} />
           <EmailPreview title="3. Când firma trimite oferta prin platformă" email={offerEmail(DEMO_LEAD, firm.name, LINK)} />
@@ -475,6 +411,7 @@ export default async function ContClientAdminPage() {
           />
         </div>
       </section>
+      </details>
     </div>
   );
 }
