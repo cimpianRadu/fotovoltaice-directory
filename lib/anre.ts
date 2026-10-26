@@ -54,10 +54,23 @@ function normalizeForMatch(s: string): string {
 }
 
 /**
+ * Numele mai scurt trebuie să apară în cel lung ca cuvinte întregi și să
+ * acopere cel puțin jumătate din cuvintele lui. Un simplu `includes` lega
+ * „Exclusive Prokonstrukt Invest" de firma „INVEST" din același județ
+ * (26 oct 2026): formularul de listare arăta atestatul altei firme.
+ */
+function isPartialNameMatch(a: string, b: string): boolean {
+  const [shorter, longer] = a.length <= b.length ? [a, b] : [b, a];
+  if (!` ${longer} `.includes(` ${shorter} `)) return false;
+  return shorter.split(' ').length * 2 >= longer.split(' ').length;
+}
+
+/**
  * Diacritic-insensitive lookup of ANRE firms by name within a county.
  * Used by the listing form to verify a firm has an ANRE entry on submit.
- * Returns matches where the normalized firm name equals or contains the
- * normalized query (or vice versa). Empty if name shorter than 3 chars.
+ * Returns matches where the normalized firm name equals the normalized query,
+ * or one contains the other as whole words (see isPartialNameMatch).
+ * Empty if name shorter than 3 chars.
  */
 export function findAnreFirmsByName(rawName: string, judet: string): AnreFirm[] {
   if (!rawName || !judet) return [];
@@ -73,7 +86,7 @@ export function findAnreFirmsByName(rawName: string, judet: string): AnreFirm[] 
     if (!firmNorm) continue;
     if (firmNorm === targetName) {
       exact.push(f);
-    } else if (firmNorm.includes(targetName) || targetName.includes(firmNorm)) {
+    } else if (isPartialNameMatch(firmNorm, targetName)) {
       partial.push(f);
     }
   }

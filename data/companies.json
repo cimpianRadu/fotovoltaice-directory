@@ -16142,6 +16142,65 @@
         "societate": "STARTGREEN",
         "judet": "Iasi"
       }
+    },
+    {
+      "id": "exclusive-prokonstrukt-invest",
+      "slug": "exclusive-prokonstrukt-invest",
+      "name": "Exclusive Prokonstrukt Invest",
+      "cui": "RO52942159",
+      "logo": "/logos/exclusive-prokonstrukt-invest.png",
+      "description": "Exclusive Prokonstrukt Invest este o firmă din Timișoara, înființată în noiembrie 2025, care montează sisteme fotovoltaice la cheie pentru locuințe din județele Timiș și Arad, sub numele Prokonstrukt Solar. Oferă pachete de 5 până la 15 kW cu invertor hibrid și aplicație de monitorizare a producției, iar la varianta cu stocare adaugă o baterie LiFePO4 de 5 până la 10 kWh, cu alimentare de rezervă la căderea rețelei. Dosarul de prosumator este inclus în pachet. Firma anunță că montajul se face cu echipa proprie și că lucrarea se plătește integral după recepția tehnică, fără avans. A depus cererea pentru atestatul ANRE de tip B, care la 26 octombrie 2026 figura în registrul ANRE ca înregistrată, fără atestat emis.",
+      "founded": 2025,
+      "employees": 0,
+      "location": {
+        "city": "Timișoara",
+        "county": "Timiș",
+        "address": "Calea Dorobanților nr. 20, et. V, ap. 27, birou 1, Timișoara 300298"
+      },
+      "contact": {
+        "phone": "+40734070429",
+        "email": "exclusiveprokonstruktinvest@outlook.com",
+        "website": "https://www.prokonstrukt.ro"
+      },
+      "coverage": [
+        "Timiș",
+        "Arad"
+      ],
+      "specializations": [
+        "rezidential"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 5,
+        "maxProjectKw": 15,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 0,
+        "profit": -13713,
+        "history": [
+          {
+            "year": 2025,
+            "revenue": 0,
+            "profit": -13713,
+            "employees": 0
+          }
+        ]
+      },
+      "tags": [
+        "pv-rezidential",
+        "prosumator",
+        "hibrid",
+        "stocare-baterii",
+        "monitorizare-inclusa"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-10-26",
+      "updatedAt": "2026-10-26",
+      "segment": "rezidential",
+      "anreMatch": null
     }
   ]
 }
