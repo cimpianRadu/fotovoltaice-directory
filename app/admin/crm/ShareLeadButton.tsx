@@ -4,7 +4,15 @@ import { useState } from 'react';
 
 type Feedback = 'idle' | 'copied' | 'error';
 
-export default function ShareLeadButton({ text }: { text: string }) {
+export default function ShareLeadButton({
+  text,
+  label = 'Copiază detalii',
+  title = 'Copiază în clipboard textul cu toate detaliile cererii, gata de lipit în WhatsApp',
+}: {
+  text: string;
+  label?: string;
+  title?: string;
+}) {
   const [feedback, setFeedback] = useState<Feedback>('idle');
 
   async function copy() {
@@ -30,14 +38,14 @@ export default function ShareLeadButton({ text }: { text: string }) {
       ? 'Copiat'
       : feedback === 'error'
         ? 'Blocat — permite clipboard'
-        : 'Copiază detalii';
+        : label;
 
   return (
     <div className="flex flex-wrap items-center gap-1.5">
       <button
         type="button"
         onClick={copy}
-        title="Copiază în clipboard textul cu toate detaliile cererii, gata de lipit în WhatsApp"
+        title={title}
         className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-1 text-[11px] font-medium transition ${
           feedback === 'copied'
             ? 'border-emerald-200 bg-emerald-50 text-emerald-700'

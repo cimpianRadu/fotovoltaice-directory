@@ -4,7 +4,9 @@ import {
   getLeadsSince,
   isLeadInformez,
   isPriorityHeld,
+  isPubliclyClaimable,
   isTestLead,
+  leadFreshSince,
   type LeadClaim,
   type NewLead,
 } from '@/lib/sheets';
@@ -17,7 +19,18 @@ import { MAX_CLAIMS_PER_LEAD } from '@/lib/sheets';
 import { CLICKS_SINCE, getLeadsActivity, type LeadActivity } from '@/lib/admin-cereri';
 import { firmDisplayName } from '@/lib/client-account';
 import { normalizePhone } from '@/lib/sheets-shared';
-import { TIMELINE_OPTIONS, getFinancingTone, getProjectTypeLabel, type FinancingTone } from '@/lib/utils-shared';
+import {
+  SITE_URL,
+  TIMELINE_OPTIONS,
+  getFinancingTone,
+  getProjectTypeLabel,
+  isRetrofit,
+  type FinancingTone,
+} from '@/lib/utils-shared';
+import { mountingForRoof, parseConsumLunar, sizeKwp } from '@/lib/pv-estimate';
+import { digestRow } from '@/lib/open-leads-digest';
+import ShareLeadButton from '../crm/ShareLeadButton';
+import CopyLinkButton from './CopyLinkButton';
 import {
   ETAPE,
   EtapaBadge,
@@ -43,6 +56,11 @@ export const dynamic = 'force-dynamic';
 // cererea din cont și de câte ori a fost apăsată pe /cereri. Fișa fiecărei
 // cereri (/admin/cereri/[id]) are restul: detaliile, cronologia și acțiunile.
 // Click pe un rând arată cronologia într-un modal, fără să pleci din listă.
+//
+// 26 oct 2026, tot Radu: cererea reconfirmată de client („încă vreau oferte”)
+// sau reactivată („sunt gata”) se ordonează după data aceea, ca în /cereri, și
+// scrie lângă dată că e reconfirmată. Linkurile publice se copiază de aici,
+// pentru firmele care le cer pe WhatsApp (East Solar: „dă-mi link-urile”).
 
 type EtapaFilter = '' | 'deschise' | Etapa;
 type ContFilter = '' | 'da' | 'nu';
@@ -65,7 +83,39 @@ interface Props {
     bani?: string;
     termen?: string;
     hot?: string;
+    kw?: string;
   }>;
+}
+
+const KW_FILTERS = [10, 30, 100];
+
+/**
+ * Puterea cererii, pentru filtrul „Putere”: cea declarată sau, fără ea,
+ * estimarea din consum pe care o vede și firma pe /cereri. La extindere și
+ * doar baterie puterea declarată e a sistemului pe care omul îl are deja, nu
+ * lucrarea cerută, deci nu trece de niciun prag.
+ */
+function leadKw(lead: NewLead): { kw: number; estimated: boolean } {
+  if (isRetrofit(lead.tipLucrare)) return { kw: 0, estimated: false };
+  const declared = Number.parseFloat(lead.putere);
+  if (declared > 0) return { kw: declared, estimated: false };
+  const consum = parseConsumLunar(lead.consumLunar);
+  if (!consum) return { kw: 0, estimated: false };
+  return { kw: sizeKwp(consum.kwhLunar, lead.judet, mountingForRoof(lead.tipAcoperis)), estimated: true };
+}
+
+/** Linkul public al cererii cu cele două rânduri din rezumatul de luni, fără date de contact. */
+function shareBlock(lead: NewLead): string {
+  const row = digestRow(lead);
+  return [`${row.judet} · ${row.titlu}`, row.detalii, `${SITE_URL}/cereri?cerere=${lead.timestamp}`]
+    .filter(Boolean)
+    .join('\n');
+}
+
+/** „reconfirmată” (emailul „mai căutați oferte?”) sau „reactivată” (după „mă informez”). */
+function freshLabel(lead: NewLead, fresh: string): string | null {
+  if (fresh === lead.timestamp) return null;
+  return fresh === lead.confirmataLa ? 'reconfirmată' : 'reactivată';
 }
 
 /** Ultima mișcare reală pe cerere: oamenii, nu emailurile automate. */
@@ -190,6 +240,7 @@ export default async function CereriPage({ searchParams }: Props) {
   const bani = (params.bani ?? '') as FinancingTone | '';
   const termen = params.termen ?? '';
   const hot = params.hot === '1';
+  const kwMin = Number(params.kw) > 0 ? Number(params.kw) : 0;
 
   let leads: NewLead[];
   let claims: LeadClaim[];
@@ -227,16 +278,25 @@ export default async function CereriPage({ searchParams }: Props) {
     .map((lead) => {
       const all = claimsByLead.get(lead.timestamp) ?? [];
       const activity = activityById?.get(lead.timestamp);
+      const held = all.filter(claimOccupiesLeadSlot).length;
+      const e = leadEtapa(lead, all);
       return {
         lead,
         claims: all,
-        held: all.filter(claimOccupiesLeadSlot).length,
-        etapa: leadEtapa(lead, all),
+        held,
+        etapa: e,
         activity,
         last: lastActivity(lead, all, activity),
+        fresh: leadFreshSince(lead),
+        power: leadKw(lead),
+        // Are rost de trimis doar ce o firmă poate revendica din link: vizibilă pe /cereri și cu loc liber.
+        // Etapa deschisă pe deasupra: o firmă poate marca „Concretizat” fără ca cererea să fie
+        // închisă în CRM, iar atunci ea stă încă pe /cereri (Constanța, 31 aug).
+        shareable: isPubliclyClaimable(lead) && held < MAX_CLAIMS_PER_LEAD && isEtapaOpen(e),
       };
     })
-    .filter(({ lead, claims: cl, activity, etapa: e }) => {
+    .filter(({ lead, claims: cl, activity, etapa: e, power }) => {
+      if (kwMin && power.kw < kwMin) return false;
       if (etapa === 'deschise' && !isEtapaOpen(e)) return false;
       if (etapa && etapa !== 'deschise' && e !== etapa) return false;
       if (cont) {
@@ -275,8 +335,11 @@ export default async function CereriPage({ searchParams }: Props) {
         const score = hotScore(b.lead) - hotScore(a.lead);
         if (score) return score;
       }
-      return b.lead.timestamp.localeCompare(a.lead.timestamp);
+      return b.fresh.localeCompare(a.fresh);
     });
+
+  const shareRows = rows.filter((r) => r.shareable);
+  const shareText = shareRows.map((r) => shareBlock(r.lead)).join('\n\n');
 
   const hotCount = leads.filter(
     (l) => isHot(l) && isEtapaOpen(leadEtapa(l, claimsByLead.get(l.timestamp) ?? [])),
@@ -289,7 +352,7 @@ export default async function CereriPage({ searchParams }: Props) {
   ).length;
 
   const qs = (
-    next: Partial<Record<'etapa' | 'cont' | 'judet' | 'q' | 'sort' | 'bani' | 'termen' | 'hot', string>>,
+    next: Partial<Record<'etapa' | 'cont' | 'judet' | 'q' | 'sort' | 'bani' | 'termen' | 'hot' | 'kw', string>>,
   ) => {
     const merged = {
       etapa,
@@ -300,6 +363,7 @@ export default async function CereriPage({ searchParams }: Props) {
       bani,
       termen,
       hot: hot ? '1' : '',
+      kw: kwMin ? String(kwMin) : '',
       ...next,
     };
     const p = new URLSearchParams();
@@ -330,7 +394,16 @@ export default async function CereriPage({ searchParams }: Props) {
 
       <div className="mt-4 space-y-2 rounded-xl border border-slate-200 bg-white px-4 py-3">
         <form action="/admin/cereri" className="flex flex-wrap items-center gap-2">
-          {Object.entries({ etapa, cont, judet, sort: sort === 'intrare' ? '' : sort, bani, termen, hot: hot ? '1' : '' })
+          {Object.entries({
+            etapa,
+            cont,
+            judet,
+            sort: sort === 'intrare' ? '' : sort,
+            bani,
+            termen,
+            hot: hot ? '1' : '',
+            kw: kwMin ? String(kwMin) : '',
+          })
             .filter(([, v]) => v)
             .map(([k, v]) => (
               <input key={k} type="hidden" name={k} value={v} />
@@ -411,6 +484,17 @@ export default async function CereriPage({ searchParams }: Props) {
           </Pill>
         </FilterRow>
 
+        <FilterRow label="Putere">
+          <Pill href={qs({ kw: '' })} active={!kwMin}>
+            Toate
+          </Pill>
+          {KW_FILTERS.map((k) => (
+            <Pill key={k} href={qs({ kw: String(k) })} active={kwMin === k}>
+              {k}+ kW
+            </Pill>
+          ))}
+        </FilterRow>
+
         <FilterRow label="Client">
           <Pill href={qs({ cont: '' })} active={!cont}>
             Toți
@@ -433,6 +517,21 @@ export default async function CereriPage({ searchParams }: Props) {
             </Pill>
           ))}
         </FilterRow>
+      </div>
+
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
+        <span>
+          {shareRows.length > 0
+            ? `${shareRows.length} din ${rows.length} se pot trimite unei firme: sunt pe /cereri și au loc liber`
+            : 'Nicio cerere din filtru nu se poate trimite: nu sunt pe /cereri sau sunt pline'}
+        </span>
+        {shareRows.length > 0 && (
+          <ShareLeadButton
+            text={shareText}
+            label={`Copiază linkurile (${shareRows.length})`}
+            title="Linkurile publice spre cererile din filtru, cu județul, puterea, banii și termenul. Fără nume sau telefon: firma le revendică de pe site."
+          />
+        )}
       </div>
 
       <ActivityTable>
@@ -463,8 +562,9 @@ export default async function CereriPage({ searchParams }: Props) {
             </tr>
           </thead>
           <tbody>
-            {rows.map(({ lead, claims: cl, held, activity, last, etapa: e }) => {
+            {rows.map(({ lead, claims: cl, held, activity, last, etapa: e, fresh, power, shareable }) => {
               const closed = !isEtapaOpen(e);
+              const freshAs = freshLabel(lead, fresh);
               const wonBy = cl.filter((c) => c.firmStatus === 'castigat' && !c.releasedAt);
               const requested = parseRequestedFirms(lead.preselectedCompany);
               const href = cerereHref(lead.timestamp);
@@ -478,12 +578,31 @@ export default async function CereriPage({ searchParams }: Props) {
                   <td className="px-3 py-2.5 text-xs whitespace-nowrap tabular-nums">
                     <div className="text-slate-700">{fmtDateTime(lead.timestamp)}</div>
                     <div className="text-slate-400">{ago(lead.timestamp)}</div>
+                    {freshAs && (
+                      <div
+                        className="mt-1 inline-block rounded bg-emerald-50 px-1.5 py-0.5 text-[11px] font-medium text-emerald-700"
+                        title={
+                          freshAs === 'reconfirmată'
+                            ? 'Clientul a răspuns „încă vreau oferte” la emailul de verificare. Lista o ordonează după data asta, ca /cereri.'
+                            : 'Clientul se informa și a spus „sunt gata”. Lista o ordonează după data asta, ca /cereri.'
+                        }
+                      >
+                        ✓ {freshAs} {fmtDay(fresh)}
+                        <span className="font-normal text-emerald-600"> · {ago(fresh)}</span>
+                      </div>
+                    )}
                   </td>
                   <td className="max-w-64 px-3 py-2.5">
                     <Link href={href} className="font-medium text-slate-900 hover:underline">
                       {isHot(lead) && <span title="Fonduri proprii și cât mai repede">🔥 </span>}
                       {lead.tipProiect ? getProjectTypeLabel(lead.tipProiect) : '(fără tip)'}
                       {lead.putere && ` · ${lead.putere} kW`}
+                      {power.estimated && (
+                        <span className="font-normal text-slate-400" title="Estimată din consum, cum o vede și firma pe /cereri">
+                          {' '}
+                          · ≈{Math.round(power.kw)} kW
+                        </span>
+                      )}
                     </Link>
                     <div className="text-xs text-slate-500">
                       {lead.judet}
@@ -512,6 +631,7 @@ export default async function CereriPage({ searchParams }: Props) {
                       {lead.status === 'Ascuns' && (
                         <span className="rounded bg-slate-100 px-1 text-[10px] font-semibold text-slate-500">ascunsă</span>
                       )}
+                      {shareable && <CopyLinkButton text={shareBlock(lead)} />}
                     </div>
                   </td>
                   <td className="px-3 py-2.5">
