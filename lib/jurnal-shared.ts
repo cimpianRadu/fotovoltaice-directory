@@ -35,8 +35,9 @@ export const JOURNAL_SUBJECT_EVENT = 'jurnal:subiect';
 export const JOURNAL_NOTED_EVENT = 'jurnal:notat';
 
 /**
- * Cheia unui rând din agendă. Cu numele inclus: în CRM Firme câteva fișe au
- * același timestamp (importate deodată), iar „notat” nu trebuie să apară pe toate.
+ * Cheia unui rând din agendă. Cu numele inclus: până pe 26 oct 2026 două fișe
+ * din CRM Firme aveau același timestamp (scrise deodată de un script de mână),
+ * iar „notat” nu trebuie să apară pe amândouă dacă se mai întâmplă.
  */
 export function subjectKey(s: { kind: string; id: string; label: string }): string {
   return `${s.kind}:${s.id}:${s.label}`;
