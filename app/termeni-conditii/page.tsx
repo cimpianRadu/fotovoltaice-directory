@@ -15,7 +15,7 @@ export default function TermeniConditii() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Termeni și Condiții</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 23 octombrie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 26 octombrie 2026</p>
 
         <p>
           Prin accesarea și utilizarea site-ului <strong>instalatori-fotovoltaice.ro</strong> acceptați
@@ -119,6 +119,14 @@ export default function TermeniConditii() {
         </ul>
         <p>
           Nu vindem cereri la bucată. O cerere revendicată nu se plătește, indiferent ce iese din ea.
+        </p>
+        <p>
+          <strong>Ce află clientul.</strong> Când o firmă preia o cerere și primește datele
+          clientului, clientul primește pe email numele firmei și telefonul public de pe fișa ei din
+          director, ca să știe cine îl va suna. În contul lui, clientul ne poate spune dacă firma l-a
+          contactat. Ofertele trimise prin portal le vede doar clientul cererii și noi: nu le arătăm
+          altor firme și nu le publicăm. Valorile din oferte le folosim doar adunate, fără numele
+          firmei.
         </p>
         <p>
           <strong>Când apare un cost.</strong> Firma datorează un comision doar dacă semnează un

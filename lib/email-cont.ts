@@ -112,7 +112,7 @@ export function claimEmail(lead: LeadForEmail, firm: FirmForEmail, link: string)
   const profile = firm.profileSlug ? a(`${PORTAL_BASE_URL}/firme/${firm.profileSlug}`, 'fișa firmei') : '';
   const body =
     greeting(lead) +
-    p(`<strong>${name}</strong>${from} a preluat cererea dumneavoastră pentru ${escapeHtml(describeLead(lead))} și vă va suna în zilele următoare.`) +
+    p(`<strong>${name}</strong>${from} a preluat cererea dumneavoastră pentru ${escapeHtml(describeLead(lead))}. Are acum datele dumneavoastră și vă poate contacta.`) +
     (firm.phone
       ? p(`Dacă preferați să îi sunați dumneavoastră: <strong>${escapeHtml(firm.phone)}</strong>${profile ? ` · ${profile}` : ''}`)
       : profile
