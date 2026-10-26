@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import { trackEvent } from '@/lib/analytics';
 import { usePortalLoggedIn } from '@/lib/portal-hint';
+import { BellIcon, NoutatiCount, NoutatiModal, useNoutati } from '@/components/noutati/Noutati';
 
 // În bara principală stau destinațiile pentru clientul care caută, plus pagina
 // de instalatori: firmele sunt jumătatea de piață care lipsește, iar cererile
@@ -15,12 +16,12 @@ import { usePortalLoggedIn } from '@/lib/portal-hint';
 // rămâne. /cere-oferta nu e link aici: e CTA-ul amber al headerului, pe ambele
 // lățimi — conversia principală a site-ului nu concurează cu propriul link.
 // `badge` marchează o intrare nouă. E temporar prin natura lui: un „NOU" lăsat
-// permanent nu mai înseamnă nimic și începe să arate neîngrijit. De scos pe la
-// mijlocul lui octombrie 2026.
+// permanent nu mai înseamnă nimic și începe să arate neîngrijit. Ultimul,
+// pe „Pentru instalatori”, a ieșit pe 26 oct 2026.
 const primaryLinks: { href: string; label: string; badge?: string }[] = [
   { href: '/firme', label: 'Firme' },
   { href: '/cereri', label: 'Cereri Clienți' },
-  { href: '/pentru-instalatori', label: 'Pentru instalatori', badge: 'NOU' },
+  { href: '/pentru-instalatori', label: 'Pentru instalatori' },
   { href: '/studii-de-caz', label: 'Studii de Caz' },
   // Listarea a ieșit din „Mai multe": e intrarea firmei în director, deci
   // capătul comercial al site-ului, nu o unealtă. Stă înaintea ghidurilor
@@ -69,6 +70,26 @@ export default function Header() {
   // Portalul e al firmelor: eticheta spune asta înainte de click, ca un client
   // care caută instalator să nu intre acolo crezând că e contul lui.
   const portalLabel = portalLoggedIn ? 'Contul meu' : 'Acces instalatori';
+  // Noutățile platformei sunt pentru firme, deci apar în meniu doar cât firma e
+  // logată. Clientul care caută instalator n-are ce face cu ele.
+  const noutati = useNoutati('meniu');
+  const noutatiDot = portalLoggedIn && noutati.unreadCount > 0;
+  const noutatiDesktopRef = useRef<HTMLButtonElement>(null);
+  const noutatiMobileRef = useRef<HTMLButtonElement>(null);
+
+  // Modalul ia locul meniului din care a fost deschis: meniul se închide, iar
+  // la închiderea modalului (X, Esc, fundal) firma se întoarce în meniu, pe
+  // același rând. După un link din modal meniul rămâne închis.
+  function openNoutati(from: 'desktop' | 'mobile') {
+    const reopen = from === 'desktop' ? setMoreOpen : setMobileOpen;
+    const item = from === 'desktop' ? noutatiDesktopRef : noutatiMobileRef;
+    reopen(false);
+    noutati.open(() => {
+      reopen(true);
+      // După randarea care scoate `hidden` de pe meniu: ascuns, rândul nu ia focus.
+      setTimeout(() => item.current?.focus(), 0);
+    });
+  }
 
   // Close "Mai multe" dropdown on outside click
   useEffect(() => {
@@ -149,6 +170,7 @@ export default function Header() {
               aria-haspopup="menu"
             >
               Mai multe
+              {noutatiDot && <span className="h-2 w-2 rounded-full bg-primary" aria-label="noutăți nevăzute" />}
               <svg
                 className={`w-4 h-4 transition-transform ${moreOpen ? 'rotate-180' : ''}`}
                 fill="none"
@@ -166,6 +188,23 @@ export default function Header() {
                 moreOpen ? 'block' : 'hidden'
               }`}
             >
+              {portalLoggedIn && (
+                <button
+                  type="button"
+                  role="menuitem"
+                  aria-haspopup="dialog"
+                  ref={noutatiDesktopRef}
+                  onClick={() => openNoutati('desktop')}
+                  className="mb-1 flex w-full items-center justify-between gap-2 border-b border-border px-4 pb-3 pt-2.5 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-surface hover:text-secondary-dark"
+                >
+                  {/* Scurt: în lista de 240px, „în platformă” rupea rândul în două. */}
+                  <span className="inline-flex items-center gap-2">
+                    <BellIcon className="h-4 w-4 text-gray-400" />
+                    Noutăți
+                  </span>
+                  <NoutatiCount count={noutati.unreadCount} />
+                </button>
+              )}
               {moreLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -232,10 +271,13 @@ export default function Header() {
           </Link>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -mr-2 rounded-lg hover:bg-surface"
+            className="relative inline-flex items-center justify-center min-w-[44px] min-h-[44px] -mr-2 rounded-lg hover:bg-surface"
             aria-label="Meniu"
             aria-expanded={mobileOpen}
           >
+            {noutatiDot && !mobileOpen && (
+              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-primary" aria-label="noutăți nevăzute" />
+            )}
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               {mobileOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -263,6 +305,21 @@ export default function Header() {
               </span>
             </span>
           </Link>
+          {portalLoggedIn && (
+            <button
+              type="button"
+              aria-haspopup="dialog"
+              ref={noutatiMobileRef}
+              onClick={() => openNoutati('mobile')}
+              className="mb-2 flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-left text-base font-medium text-gray-700 hover:bg-surface"
+            >
+              <span className="inline-flex items-center gap-3">
+                <BellIcon className="h-5 w-5 shrink-0 text-gray-400" />
+                Noutăți în platformă
+              </span>
+              <NoutatiCount count={noutati.unreadCount} />
+            </button>
+          )}
           {primaryLinks.map((link) => (
             <Link
               key={link.href}
@@ -306,6 +363,8 @@ export default function Header() {
           ))}
         </nav>
       </div>
+
+      <NoutatiModal {...noutati.modalProps} />
     </header>
   );
 }

@@ -44,6 +44,7 @@ import {
 } from './sheets';
 import { getUnsubscribedEmails } from './firm-unsubscribe';
 import { sendOpenLeadsDigest, type DigestLeadRow, type DigestVariant } from './email';
+import { noutatiForWeeklyDigest, type Noutate } from './noutati';
 import { logLeadSends } from './lead-sends';
 import {
   calendarAgeDays,
@@ -151,6 +152,8 @@ export interface DigestPlanItem {
   hot: DigestLeadRow[];
   /** Restul cererilor deschise din aceleași județe, doar numărate. */
   restCount: number;
+  /** Noutățile platformei din săptămâna dinainte, aceleași pentru toate firmele. */
+  noutati: Noutate[];
 }
 
 /**
@@ -174,6 +177,7 @@ export async function planOpenLeadsDigest(
     getUnsubscribedEmails(),
   ]);
   const off = new Set(deactivated);
+  const noutati = noutatiForWeeklyDigest(now);
   const leadById = new Map(leads.map((l) => [l.timestamp, l]));
 
   const seen = new Set<string>();
@@ -206,6 +210,7 @@ export async function planOpenLeadsDigest(
       variant: hasAlerts ? 'saptamanal' : 'fara-alerte',
       hot: hot.map((l) => digestRow(l, now)),
       restCount: open.length - hot.length,
+      noutati,
     });
   }
 
@@ -222,6 +227,7 @@ export async function planOpenLeadsDigest(
       variant: 'partener',
       hot: hot.map((l) => digestRow(l, now)),
       restCount: open.length - hot.length,
+      noutati,
     });
   }
   return plan;
@@ -248,6 +254,7 @@ export function digestEmailData(item: DigestPlanItem, to: string) {
     restCount: item.restCount,
     variant: item.variant,
     maxFirms: MAX_CLAIMS_PER_LEAD,
+    noutati: item.noutati,
   };
 }
 

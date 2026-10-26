@@ -62,6 +62,11 @@ type EventName =
   | 'portal_email_added'
   | 'portal_email_removed'
   | 'portal_reserved_taken'
+  // Modalul cu noutățile platformei (26 oct 2026), din meniu sau din portal:
+  // `sursa` = de unde, `noi` = câte erau nevăzute la deschidere, `data` =
+  // intrarea pe al cărei link a dat firma.
+  | 'noutati_open'
+  | 'noutati_click'
   // Butonul flotant care duce la calculatorul de baterii. `source` separă
   // varianta de desktop de cea de mobil, ca să se vadă care dintre ele produce.
   | 'battery_fab_click';

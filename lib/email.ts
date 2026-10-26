@@ -14,6 +14,7 @@ import {
 import { CLAIM_REMINDER_MAX } from './sheets-shared';
 import { unsubscribeHeaders, unsubscribePageUrl } from './firm-unsubscribe-token';
 import { isUnsubscribed } from './firm-unsubscribe';
+import type { Noutate } from './noutati';
 
 const RESEND_ENDPOINT = 'https://api.resend.com/emails';
 
@@ -888,6 +889,8 @@ export async function sendOpenLeadsDigest(data: {
   variant: DigestVariant;
   /** MAX_CLAIMS_PER_LEAD, dat de apelant: email.ts nu importă lib/sheets. */
   maxFirms: number;
+  /** Noutățile platformei din săptămâna dinainte; doar în rezumatul de luni. */
+  noutati?: Noutate[];
 }): Promise<{ ok: boolean; reason?: string }> {
   if (await isUnsubscribed(data.to)) return { ok: false, reason: 'dezabonat' };
   const { subject, html } = renderOpenLeadsDigest(data);
@@ -951,6 +954,26 @@ export function renderOpenLeadsDigest(data: Parameters<typeof sendOpenLeadsDiges
       </div>`
       : '';
 
+  // Sub cereri, nu deasupra: emailul e despre cererile de sunat azi, iar
+  // noutatea e un rând în plus pentru cine a ajuns până jos.
+  const noutati = data.noutati?.length
+    ? `<div style="margin-top:20px;padding-top:16px;border-top:1px solid #f3f4f6">
+        <div style="font-size:12px;color:#92400e;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">Nou în platformă</div>
+        ${data.noutati
+          .map(
+            (n) => `<div style="margin-top:8px">
+          <div style="font-size:14px;font-weight:600;color:#111827">${escapeHtml(n.titlu)}</div>
+          <div style="font-size:13px;color:#374151;margin-top:2px;line-height:1.5">${escapeHtml(n.text)}${
+            n.link
+              ? ` <a href="${PORTAL_BASE_URL}${n.link}" style="color:#2563eb">${escapeHtml(n.linkText || 'Vezi')}</a>`
+              : ''
+          }</div>
+        </div>`,
+          )
+          .join('')}
+      </div>`
+    : '';
+
   const why =
     data.variant === 'fara-alerte'
       ? `Primești emailul o singură dată, pentru că ai cont în <a href="${PORTAL_BASE_URL}/portal" style="color:#2563eb">portal</a>.`
@@ -976,6 +999,7 @@ export function renderOpenLeadsDigest(data: Parameters<typeof sendOpenLeadsDiges
       </div>
       <p style="font-size:13px;color:#6b7280;margin:16px 0 0;text-align:center;line-height:1.5">Primul venit: o cerere o pot lua cel mult ${data.maxFirms} firme.</p>
       ${alertBox}
+      ${noutati}
     </div>
     <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280;line-height:1.5">
       ${footer}

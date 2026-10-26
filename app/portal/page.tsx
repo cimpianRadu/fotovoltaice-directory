@@ -57,6 +57,7 @@ import PortalReservedLeads, { type ReservedLead } from './PortalReservedLeads';
 import LogoutButton from './LogoutButton';
 import PortalTabs from './PortalTabs';
 import PortalFirmProfile from './PortalFirmProfile';
+import PortalNoutati from './PortalNoutati';
 
 /** Fereastra „cereri noi" din cardul contului: cât de proaspătă e o cerere care merită sunată azi. */
 const NEW_LEADS_DAYS = 7;
@@ -350,6 +351,8 @@ export default async function PortalPage() {
           </span>
           <span aria-hidden className="text-lg">→</span>
         </Link>
+
+        <PortalNoutati />
       </section>
 
       {reserved.length > 0 && (

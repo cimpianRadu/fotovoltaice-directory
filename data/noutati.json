@@ -1,0 +1,23 @@
+[
+  {
+    "data": "2026-10-26",
+    "titlu": "Filtre noi pe cereri: termen, finanțare și putere",
+    "text": "Pe pagina de cereri alegi acum și cât de repede vrea clientul montajul, cum plătește și puterea sistemului, pe lângă județ și data cererii. Lângă fiecare opțiune vezi câte cereri sunt. Linkul păstrează filtrele, deci îl poți trimite unui coleg.",
+    "link": "/cereri",
+    "linkText": "Vezi cererile"
+  },
+  {
+    "data": "2026-10-17",
+    "titlu": "Lunea, cererile bune încă deschise din județele tale",
+    "text": "Lunea dimineață primești pe email cererile din ultimele două săptămâni din județele tale la care clientul plătește din banii lui, vrea montajul cât mai repede și mai e loc pentru o firmă. Când bifezi un județ nou, primești pe loc și cererile deschise de acolo, nu doar pe cele care intră de acum.",
+    "link": "/portal#alerte",
+    "linkText": "Alege județele"
+  },
+  {
+    "data": "2026-09-17",
+    "titlu": "Colegii tăi, în același cont",
+    "text": "Adaugi din portal adresele colegilor. Fiecare intră cu emailul lui și vede aceleași cereri, iar alertele pe județ sunt ale firmei, nu ale unei singure adrese.",
+    "link": "/portal#adrese",
+    "linkText": "Adaugă un coleg"
+  }
+]

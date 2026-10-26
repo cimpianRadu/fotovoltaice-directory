@@ -35,6 +35,7 @@ scripts/        # company-tools, anre-* pipeline, targetare-contacts
 - Markdown: `<Markdown content={...} />` (react-markdown + remark-gfm)
 - Certificări ANRE: **nu** hardcodate în `certifications[]` — live lookup via `anreMatch` din `anre-atestate.json`
 - Bundle client: componentele `'use client'` NU importă `lib/anre` (registru 8,3 MB, `server-only`) sau `lib/utils` (trage `companies.json`) — folosesc `lib/anre-shared`, `lib/anre-certs` (map derivat, regenerat la prebuild de `scripts/generate-company-anre-certs.js`) și `lib/utils-shared`
+- Noutăți pentru firme: o schimbare pe care o vede sau o primește o firmă (`/cereri`, `/portal`, emailurile către firme) primește o intrare în `data/noutati.json`, în același commit. Apare în modalul „Noutăți” (meniul site-ului pentru firmele logate și cardul contului din portal) și în rezumatul de luni. Scrisă ca ce primește firma, nu cum funcționează; fără schimbări din `/admin`
 - Sheets: timestamp-ul din coloana A e cheia rândului (Leads, CRM Firme, Revendicări + Lead ID, Todo). Un script care adaugă mai multe rânduri dă fiecăruia timestamp-ul lui, nu un `now` comun și nici o oră rotundă (pe 5 aug 2026 așa au apărut două fișe cu aceeași cheie)
 
 ## Referințe
