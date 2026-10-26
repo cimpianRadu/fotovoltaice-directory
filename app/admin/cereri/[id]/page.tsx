@@ -38,7 +38,8 @@ import {
 } from '@/lib/utils-shared';
 import { getCompanies } from '@/lib/utils';
 import { matchFirmsForLead } from '@/lib/lead-match';
-import { matchNecesitFirms } from '@/lib/necesit-match';
+import { matchNecesitFirms, necesitGeneratedAt } from '@/lib/necesit-match';
+import { fitRequestedFirms } from '@/lib/requested-firm-fit';
 import { firmDisplayName } from '@/lib/client-account';
 import {
   CLICKS_SINCE,
@@ -55,6 +56,7 @@ import { MatchList, NecesitList } from '../../crm/MatchLists';
 import { formatLeadForShare } from '../../crm/formatLead';
 import { buildTimeline, type TimelineKind } from '../timeline';
 import FirmJourney from './FirmJourney';
+import RequestedFirms from './RequestedFirms';
 import {
   Caption,
   EtapaBadge,
@@ -305,6 +307,11 @@ export default async function CererePage({ params }: Props) {
           o.timestamp !== id && !o.duplicatAl && !isLeadClosed(o.crmStatus) && isSameClient(lead, o),
       );
   const timeline = buildTimeline(lead, leadClaims, watches, activity);
+  // Pe cererile închise nu se citesc CRM-ul și listările, deci scorul ar ieși
+  // mai mic decât e: acolo nu mai decide nimic, nu-l arătăm.
+  const requestedFits = closed
+    ? []
+    : fitRequestedFirms(lead, id, companies, { claims, crmFirms, portalAccounts, listings });
 
   const title = [lead.tipProiect ? getProjectTypeLabel(lead.tipProiect) : '(fără tip)', lead.putere && `${lead.putere} kW`]
     .filter(Boolean)
@@ -388,6 +395,15 @@ export default async function CererePage({ params }: Props) {
               notes={lead.notes}
             />
           </section>
+
+          {requestedFits.length > 0 && (
+            <Card
+              title={requestedFits.length === 1 ? 'Firma cerută de client' : 'Firmele cerute de client'}
+              aside={<span className="text-xs text-slate-400">are sens s-o suni?</span>}
+            >
+              <RequestedFirms fits={requestedFits} necesitScannedAt={fmtDay(necesitGeneratedAt)} />
+            </Card>
+          )}
 
           <Card
             title="Firme"
