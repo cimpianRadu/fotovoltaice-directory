@@ -18,6 +18,8 @@
 - Pentru firme continuă postările care au mers (poze cu cereri pe județ, rezumatul de luni) plus un obicei nou: reelul de final de lună despre pachetul de partener, cu cifrele lunii.
 - Idee nouă, pentru clienți: la început de săptămână, reel cu câte oferte au primit cererile săptămâna trecută, doar când numărul e decent.
 - Ideile stau în `social/IDEI.md`.
+- **Cadența din 26 oct 2026 (decizia lui Radu):** o postare pe zi, luni–sâmbătă, dimineața între 08:15 și 09:00, duminica nimic. Luni 09:00 rezumatul (firme), marți și miercuri 08:45 proprietari, joi 08:15 cereri pe județ, vineri 08:15 locuri promo, sâmbătă 09:00 proprietari. Grila completă e în rutina `instalatori-noapte-coada`.
+- **Stories, tot din 26 oct:** fiecare postare din feed primește un story la 15 minute după ea, iar fiecare ghid nou un story în dimineața de după publicare (09:30). Format 9:16, fără link (Facebook nu pune link pe story-urile din API), deci imaginea spune unde se găsește. Folderul are `story` în nume (`<data>-story-<sursa>`) și se programează cu `"postType":"story"`; hub-ul nu le numără în ritmul pe săptămână.
 
 ## 🎯 Focus strategic 2: instalatori (decizie user 2026-09-07, înlocuit pe 2026-10-06)
 
