@@ -699,7 +699,7 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 >
 > Ordinul Casa Verde Baterii are număr și e în Monitorul Oficial (**nr. 1.904/2026, MO nr. 775 din 14.09.2026**), deci triggerul pentru „update Casa Verde v2” de mai jos s-a produs deja — cu o săptămână în urmă. Ghidurile noastre spun încă „nepublicat în MO”: asta e eroare de fapt, deci corecția trece înaintea oricărui articol. #31 (PV + pompă de căldură, ~40/lună, vârf în noiembrie-ianuarie) se mută după #63; #63 are head-term-ul cu cel mai mare volum de pe site (`casa verde baterii 2026` **9.900 în august**).
 >
-> ### ⏭️ URMĂTORUL DE SCRIS (post-12 oct): ~~#64 Curățare/Spălare~~ ✅ publicat 5 oct → ~~#65 Certificat de Racordare~~ ✅ publicat 8 oct → ~~#72 Cronologia scumpirilor la curent~~ ✅ publicat 12 oct → ~~#66 Panouri Fotovoltaice de Balcon~~ ✅ publicat 15 oct → ~~#67 Producția PV Iarna PVGIS~~ ✅ publicat 19 oct → ~~#35 Prosumatori pe județe (din backlog)~~ ✅ publicat 22 oct → **⚠️ COADA EDITORIALĂ E GOALĂ după #35 (luni 26 oct nu are articol pregătit): de realimentat (news scan duminică / promovare din backlog)** → **UPDATE CVB v2** când AFM anunță sesiunea + **UPDATE Metodologie ANRE v3** când apare ordinul final în MO (triggers dependente, PASUL 0.5).
+> ### ⏭️ URMĂTORUL DE SCRIS (post-12 oct): ~~#64 Curățare/Spălare~~ ✅ publicat 5 oct → ~~#65 Certificat de Racordare~~ ✅ publicat 8 oct → ~~#72 Cronologia scumpirilor la curent~~ ✅ publicat 12 oct → ~~#66 Panouri Fotovoltaice de Balcon~~ ✅ publicat 15 oct → ~~#67 Producția PV Iarna PVGIS~~ ✅ publicat 19 oct → ~~#35 Prosumatori pe județe (din backlog)~~ ✅ publicat 22 oct → ~~#77 Microinvertor vs string vs optimizatoare (ales de rutină)~~ ✅ publicat 26 oct → **⚠️ COADA EDITORIALĂ E GOALĂ după #77 (joi 29 oct nu are articol pregătit): de realimentat (news scan duminică / promovare din backlog)** → **UPDATE CVB v2** când AFM anunță sesiunea + **UPDATE Metodologie ANRE v3** când apare ordinul final în MO (triggers dependente, PASUL 0.5).
 >
 > **Slotul joi 1 oct a fost SĂRIT** (nu s-a scris #64; user-ul a fost prins cu alte priorități — studiu de caz Electro Prahova, pagini admin pentru comision, documente firme). Recuperat luni 5 oct direct cu **#64 Curățare și Spălare Panouri Fotovoltaice 2026** (cluster măsurat 29 sept: curatare 390 + spalare 320 + intretinere 40 = ~750/lună, vârf 1.210 în ianuarie). SERP verificat 5 oct: loc editorial confirmat (Karcher, blog Romstal, Veltol, Dionis rankează cu articole).
 >
@@ -730,6 +730,17 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 > **Nou 21 aug — batch „serie pe MODELE de baterii" (#52-#56), adăugat mai jos.** NU deplasează #39 din capul cozii; e o pistă paralelă, cu fereastră (termenii de brand scad trimestrial). Primul din serie, **#52 Livoltek**, e singurul cu dovadă că un articol editorial rankează în SERP-ul lui. **Fiecare intrare din serie are o poartă obligatorie de verificat înainte de scris** (tipul de SERP) — citește capul batch-ului, nu sări direct la intrare.
 >
 > **Fereastră următoare:** publicarea **ordinului FINAL** ANRE în Monitorul Oficial (~24 septembrie 2026) — proiectul e deja în consultare din 20 aug, deci pasul rămas e aprobarea. Va declanșa v2 pe #57 și v3 obligatoriu pe #44 + #37. Recheck ambele la 14/30 zile pentru poziție GSC pe cluster preț + cluster furnizori.
+
+### Batch 2026-10-26 — coada goală, topic ales de rutina de luni (Google Ads + SERP live)
+
+#### ~~#77~~ — Microinvertor vs Invertor Clasic (String) vs Optimizatoare 2026: Preț, Avantaje, Când Merită ✅ PUBLICAT 2026-10-26 → [/ghid/microinvertor-vs-invertor-string-optimizatoare-2026-pret-cand-merita](/ghid/microinvertor-vs-invertor-string-optimizatoare-2026-pret-cand-merita)
+- **Status:** ✅ publicat **2026-10-26** (rutina de luni). Detalii în „✅ Publicate recent”.
+- **Status inițial:** `💡 idee` → în scriere 2026-10-26 (rutina de luni; coada activă era goală, backlog-ul verificat: #64 baterie 10 kWh dublură cu #56, #32 retrofit acoperit de #45 + #56 și fără volum, #75 marcat explicit ca extindere)
+- **Cluster (Google Ads, RO/`ro`, măsurat 2026-10-26):** `microinvertor` **880/lună medie**, vârf **1.900 în ian 2026**, 1.600 în dec 2025, 1.300 în mar 2026 · `microinvertoare` 110 (210 în ian) · `optimizatoare panouri fotovoltaice` 110 (170 în nov-dec 2025) · `hoymiles` 110 · `solaredge` 170. Total ≈ 1.100/lună, sezon de vârf dec-mar, care începe acum.
+- **SERP `microinvertor` (26 oct):** AI Overview + magazine (solidvolt, utb-shop, OLX, eMAG), dar și editorial: deye.com/ro blog, lessosolar, a2t.ro (nov 2024). Loc pentru un ghid de decizie actual, cu prețuri și reguli ANRE.
+- **Delimitare:** `/ghid/panouri-fotovoltaice-balcon-apartament-2026-kit-plug-and-play-anre` acoperă microinvertorul DOAR pentru kitul de balcon ≤800 W; aici e decizia pentru acoperișul casei (3-10 kW). `/ghid/invertor-hibrid-2026-pret-cand-merita-casa-verde` = hibrid vs on-grid; aici = topologie (string vs micro vs optimizatoare) + compatibilitate cu bateria.
+- **Linkuri interne:** /ghid/invertor-hibrid-2026-pret-cand-merita-casa-verde, /ghid/panouri-fotovoltaice-balcon-apartament-2026-kit-plug-and-play-anre, /ghid/kit-panouri-fotovoltaice-3-5-10-kw-pret-montaj-2026, /ghid/ce-baterie-stocare-alegi-panouri-fotovoltaice-2026-comparativ-modele, /firme, /cere-oferta.
+- **Never-invent:** prețuri doar din magazine cu link + dată sau `data/kit-prices.json`; garanții și randamente doar din fișele producătorilor.
 
 ### Batch 2026-09-29 — coadă completată pentru 5-6 sloturi (news scan + DataForSEO Labs)
 
@@ -1432,6 +1443,12 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Microinvertor 2026: Preț, vs Invertor și Optimizatoare
+- **Publicat:** 2026-10-26 (rutina de luni, #77, topic ales de rutină: coada activă era goală) → [/ghid/microinvertor-vs-invertor-string-optimizatoare-2026-pret-cand-merita](/ghid/microinvertor-vs-invertor-string-optimizatoare-2026-pret-cand-merita)
+- **Conținut:** 12 secțiuni + 10 FAQ, ~4.180 cuvinte. Tabel prețuri din 6 magazine (citite 26 oct 2026, TVA marcat pe fiecare rând), calcul pe 5,5 kW / 13 panouri (configurația E.ON Solar Home: string 2.599 lei, string + optimizatoare Huawei 5.326-6.952 lei, microinvertoare 3.762-7.670 lei), garanții din fișe (Hoymiles 12→25, Deye 15, ATMOCE ≤25, Enphase IQ8 25, SolarEdge 25, invertoare E.ON 10), umbră (5-20% = cifră de producător ATMOCE via E.ON), siguranță ELV, baterie AC-coupled + Casa Verde Baterii.
+- **Cluster GSC de urmărit (Google Ads 26 oct):** `microinvertor` 880 (vârf 1.900 ian) · `microinvertoare` 110 · `optimizatoare panouri fotovoltaice` 110 · `hoymiles` 110 · `solaredge` 170 · related: microinvertor pret / 800w / 2000w / hibrid / deye / atmoce / huawei.
+- **KPI:** impresii + poziție pe `microinvertor` la 14/30 zile (fereastra sezonieră dec-ian); recheck prețurile peste 30 de zile.
 
 ### Prosumatori România 2026: Câți Sunt, pe Județe (ANRE)
 - **Publicat:** 2026-10-22 (rutina de joi; #35 promovat din backlog, coada era goală) · **URL:** [/ghid/cati-prosumatori-are-romania-2026-judete-putere-baterii](/ghid/cati-prosumatori-are-romania-2026-judete-putere-baterii) · ~2.700 cuvinte de text + 11 tabele (inclusiv tabelul complet pe 42 de județe cu link spre `/firme/judet/*`), 11 secțiuni + 10 FAQ, hero JPEG 1600 px
