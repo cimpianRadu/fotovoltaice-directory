@@ -7,10 +7,13 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  /** Lățimea maximă, ca clasă Tailwind. */
+  width?: string;
 }
 
-export default function Modal({ open, onClose, title, children }: ModalProps) {
+export default function Modal({ open, onClose, title, children, width = 'max-w-lg' }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const downOnBackdrop = useRef(false);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -35,7 +38,16 @@ export default function Modal({ open, onClose, title, children }: ModalProps) {
     <dialog
       ref={dialogRef}
       onClose={onClose}
-      className="fixed inset-0 z-50 w-full max-w-lg mx-auto my-auto p-0 rounded-xl shadow-2xl backdrop:bg-black/50 open:flex open:flex-col"
+      // Click pe fundalul întunecat închide: acolo ținta e chiar dialogul. Și
+      // apăsarea trebuie să fi început tot acolo, altfel o selecție de text
+      // trasă din modal până pe fundal l-ar închide.
+      onMouseDown={(e) => {
+        downOnBackdrop.current = e.target === e.currentTarget;
+      }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget && downOnBackdrop.current) onClose();
+      }}
+      className={`fixed inset-0 z-50 w-full ${width} mx-auto my-auto p-0 rounded-xl shadow-2xl backdrop:bg-black/50 open:flex open:flex-col`}
     >
       <div className="flex items-center justify-between p-4 border-b border-border">
         <h2 className="text-lg font-bold text-gray-900">{title}</h2>

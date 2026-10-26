@@ -34,6 +34,7 @@ import {
   leadEtapa,
   type Etapa,
 } from './shared';
+import ActivityTable from './ActivityTable';
 
 export const dynamic = 'force-dynamic';
 
@@ -41,6 +42,7 @@ export const dynamic = 'force-dynamic';
 // stare e, ce firme au preluat-o și unde e fiecare, dacă clientul își urmărește
 // cererea din cont și de câte ori a fost apăsată pe /cereri. Fișa fiecărei
 // cereri (/admin/cereri/[id]) are restul: detaliile, cronologia și acțiunile.
+// Click pe un rând arată cronologia într-un modal, fără să pleci din listă.
 
 type EtapaFilter = '' | 'deschise' | Etapa;
 type ContFilter = '' | 'da' | 'nu';
@@ -433,6 +435,7 @@ export default async function CereriPage({ searchParams }: Props) {
         </FilterRow>
       </div>
 
+      <ActivityTable>
       <div className="mt-4 overflow-x-auto rounded-xl border border-slate-200 bg-white">
         <table className="w-full text-sm">
           <thead className="bg-slate-50 text-left text-[11px] tracking-wide text-slate-500 uppercase">
@@ -469,7 +472,8 @@ export default async function CereriPage({ searchParams }: Props) {
                 <tr
                   key={lead.timestamp}
                   id={lead.timestamp}
-                  className={`border-t border-slate-100 align-top hover:bg-slate-50 ${closed ? 'text-slate-500' : ''}`}
+                  data-cerere={lead.timestamp}
+                  className={`cursor-pointer border-t border-slate-100 align-top hover:bg-slate-50 ${closed ? 'text-slate-500' : ''}`}
                 >
                   <td className="px-3 py-2.5 text-xs whitespace-nowrap tabular-nums">
                     <div className="text-slate-700">{fmtDateTime(lead.timestamp)}</div>
@@ -604,6 +608,7 @@ export default async function CereriPage({ searchParams }: Props) {
           <p className="px-4 py-8 text-center text-sm text-slate-500">Nicio cerere pentru filtrele alese.</p>
         )}
       </div>
+      </ActivityTable>
     </div>
   );
 }

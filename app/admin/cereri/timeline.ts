@@ -26,6 +26,19 @@ export interface TimelineItem {
   dayOnly?: boolean;
 }
 
+/** Ce trimite /api/admin/cereri/activitate modalului din listă. */
+export interface CerereActivitate {
+  title: string;
+  hot: boolean;
+  place: string;
+  contact: string;
+  enteredAt: string;
+  mesaj: string;
+  timeline: TimelineItem[];
+  /** Neon n-a răspuns: lipsesc jurnalele, emailurile și vizitele. */
+  dbError: string;
+}
+
 const BY_LABEL: Record<LeadChangeBy, string> = {
   admin: 'tu',
   firma: 'firma',

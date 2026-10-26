@@ -54,7 +54,8 @@ import ShareLeadButton from '../../crm/ShareLeadButton';
 import MergeLeadsButton from '../../crm/MergeLeadsButton';
 import { MatchList, NecesitList } from '../../crm/MatchLists';
 import { formatLeadForShare } from '../../crm/formatLead';
-import { buildTimeline, type TimelineKind } from '../timeline';
+import { buildTimeline } from '../timeline';
+import TimelineList from '../TimelineList';
 import FirmJourney from './FirmJourney';
 import RequestedFirms from './RequestedFirms';
 import {
@@ -80,26 +81,6 @@ export const dynamic = 'force-dynamic';
 interface Props {
   params: Promise<{ id: string }>;
 }
-
-const KIND_DOT: Record<TimelineKind, string> = {
-  intrare: 'bg-slate-900',
-  firma: 'bg-indigo-500',
-  client: 'bg-emerald-500',
-  email: 'bg-sky-400',
-  stare: 'bg-amber-500',
-  nota: 'bg-slate-300',
-  vizita: 'bg-violet-400',
-};
-
-const KIND_LABEL: Record<TimelineKind, string> = {
-  intrare: 'Intrare',
-  firma: 'Firmă',
-  client: 'Client',
-  email: 'Email',
-  stare: 'Stare',
-  nota: 'Notă',
-  vizita: 'Vizită',
-};
 
 function Card({ title, children, aside }: { title: string; children: React.ReactNode; aside?: React.ReactNode }) {
   return (
@@ -461,25 +442,7 @@ export default async function CererePage({ params }: Props) {
           )}
 
           <Card title="Cronologie" aside={<span className="text-xs text-slate-400">{timeline.length} momente</span>}>
-            <ol className="relative space-y-3 border-l border-slate-200 pl-4">
-              {timeline.map((t, i) => (
-                <li key={`${t.at}-${i}`} className="relative">
-                  <span
-                    className={`absolute top-1.5 -left-[21px] h-2.5 w-2.5 rounded-full ring-2 ring-white ${KIND_DOT[t.kind]}`}
-                  />
-                  <div className="flex flex-wrap items-baseline gap-x-2">
-                    <span className="text-xs whitespace-nowrap text-slate-400 tabular-nums">
-                      {t.dayOnly ? fmtDay(t.at) : fmtDateTime(t.at)}
-                    </span>
-                    <span className="text-[10px] font-semibold tracking-wide text-slate-400 uppercase">
-                      {KIND_LABEL[t.kind]}
-                    </span>
-                  </div>
-                  <div className="text-sm text-slate-800">{t.title}</div>
-                  {t.detail && <div className="text-xs whitespace-pre-line text-slate-500">{t.detail}</div>}
-                </li>
-              ))}
-            </ol>
+            <TimelineList items={timeline} />
             <p className="mt-4 text-[11px] leading-relaxed text-slate-400">
               Schimbările de stare (ale cererii și ale firmelor) au oră exactă din 24 oct 2026. Înainte se vedea
               doar starea de acum, plus datele care aveau coloană proprie: preluare, deblocare, ofertă, renunțare,
