@@ -9,6 +9,7 @@ import {
 import { normalizeFirmName } from '@/lib/sheets-shared';
 import { getCompanies } from '@/lib/utils';
 import { allNecesitFirms, necesitGeneratedAt, type NecesitFirm } from '@/lib/necesit-match';
+import { getNecesitFin, type NecesitFin, type NecesitFinData } from '@/lib/necesit-fin';
 import NecesitCrm, { type FirmCard } from './NecesitCrm';
 import CountyFilter from './CountyFilter';
 
@@ -40,6 +41,52 @@ function offersWeight(offers: string): number {
   return Number.isFinite(n) ? Math.min(4, Math.round(n / 150) + 2) : 0;
 }
 
+/**
+ * Mărimea după cifra de afaceri din ultimul bilanț. Banda vine din firmele care au
+ * ajuns la ofertă din cererile noastre (Enera 4,3 mil., East Solar 4,7, Voltech
+ * 12,3, AXIONET 12,7, Stratospark 25,4; 6–20 angajați), citite pe 21 aug 2026.
+ * Peste 40 mil. e JTS: 22 de cereri revendicate, niciuna lucrată.
+ */
+type SizeBand = 'mica' | 'sub' | 'banda' | 'peste' | 'mare';
+
+const BAND: Record<SizeBand, { label: string; points: number; tone: string }> = {
+  mica: { label: 'mică, sub 1 mil.', points: -2, tone: 'bg-slate-100 text-slate-500' },
+  sub: { label: 'sub bandă, 1–4 mil.', points: 1, tone: 'bg-slate-100 text-slate-600' },
+  banda: { label: 'în bandă, 4–25 mil.', points: 4, tone: 'bg-emerald-100 text-emerald-700' },
+  peste: { label: 'peste bandă, 25–40 mil.', points: 0, tone: 'bg-slate-100 text-slate-600' },
+  mare: { label: 'mare, peste 40 mil.', points: -2, tone: 'bg-slate-100 text-slate-500' },
+};
+
+function sizeBand(ca: number): SizeBand {
+  if (ca < 1_000_000) return 'mica';
+  if (ca < 4_000_000) return 'sub';
+  if (ca <= 25_000_000) return 'banda';
+  if (ca <= 40_000_000) return 'peste';
+  return 'mare';
+}
+
+/** Ultimul an cu bilanț, plus scăderea față de vârful anilor de dinainte (ca la /admin/tinta). */
+function lastYear(size: NecesitFin | undefined) {
+  if (!size) return null;
+  const years = Object.keys(size.fin).sort();
+  const year = years.at(-1);
+  if (!year) return null;
+  const peakYear = years.slice(0, -1).sort((a, b) => size.fin[b].ca - size.fin[a].ca)[0];
+  const peak = peakYear ? size.fin[peakYear].ca : 0;
+  const drop = peak >= 300_000 && size.fin[year].ca <= peak * 0.7 ? Math.round((1 - size.fin[year].ca / peak) * 100) : 0;
+  return { year, ...size.fin[year], band: sizeBand(size.fin[year].ca), drop, peakYear };
+}
+
+type Tier = 1 | 2 | 3;
+
+interface Verdict {
+  tier: Tier;
+  label: string;
+  score: number;
+  /** De unde vine scorul, punct cu punct. Apare la hover pe verdict. */
+  points: { label: string; pts: number }[];
+}
+
 interface Row {
   firm: NecesitFirm;
   /** Toate județele în care apare firma pe necesit — acoperă mai multe orașe. */
@@ -49,25 +96,99 @@ interface Row {
   phoneSource: string;
   company: { id: string; slug: string; name: string } | undefined;
   card: CrmFirm | null;
-  score: number;
+  size: NecesitFin | undefined;
+  verdict: Verdict;
 }
 
-/** Ordinea de apelare: cine cumpără mai mult, e pe fotovoltaice și poate fi sunat. */
-function scoreRow(f: NecesitFirm, phone: string): number {
-  let score = 0;
-  if (f.partner) score += 3;
-  score += offersWeight(f.offers);
-  if (f.responds) score += 2;
-  if (f.verified) score += 1;
-  if (f.pvOnly) score += 2;
-  if (f.afm) score += 2;
-  if (f.lastReviewMonths !== null && f.lastReviewMonths <= 12) score += 1;
+/**
+ * Merită sunată? Treapta spune cu cine începi, scorul ordonează în treaptă.
+ * Sună prima: plătește deja pentru cereri ȘI are mărimea firmelor care le lucrează.
+ * Merită: una din cele două. La urmă: fără telefon, închisă, refuzată sau în afara benzii.
+ */
+function judge(f: NecesitFirm, phone: string, size: NecesitFin | undefined, card: CrmFirm | null): Verdict {
+  const points: Verdict['points'] = [];
+  const add = (label: string, pts: number) => points.push({ label, pts });
+
+  if (f.partner) add('plătește pentru cereri pe necesit', 3);
+  const offers = offersWeight(f.offers);
+  if (offers) add(`${f.offers} oferte trimise`, offers);
+  if (f.responds) add(`răspunde în ${f.responds}`, 2);
+  if (f.verified) add('verificat necesit', 1);
+  if (f.pvOnly) add('doar fotovoltaice', 2);
+  if (f.afm) add('validată AFM Casa Verde', 2);
+  if (f.lastReviewMonths !== null && f.lastReviewMonths <= 12) add('recenzie în ultimul an', 1);
   if (phone) {
-    if (f.phone && f.anreActive) score += 1;
+    if (f.phone && f.anreActive) add('ANRE activ', 1);
   } else {
-    score -= 4;
+    add('fără telefon', -4);
   }
-  return score;
+
+  const last = lastYear(size);
+  if (last) {
+    add(`${BAND[last.band].label} lei (${last.year})`, BAND[last.band].points);
+    if (last.emp <= 2) add(`${last.emp} angajați`, -1);
+    else if (last.emp >= 6 && last.emp <= 20) add(`${last.emp} angajați`, 1);
+    if (last.drop) add(`cifra −${last.drop}% față de ${last.peakYear}: caută lucrări`, 1);
+  }
+  const closed = size?.status.length ? size.status.join(', ') : '';
+  if (closed) add(`ONRC: ${closed}`, -6);
+
+  const score = points.reduce((s, p) => s + p.pts, 0);
+  const band = last?.band;
+
+  if (card?.status === 'refuzat') return { tier: 3, label: 'a refuzat', score, points };
+  if (card?.status === 'client') return { tier: 3, label: 'deja client', score, points };
+  if (!phone) return { tier: 3, label: 'fără telefon', score, points };
+  if (closed) return { tier: 3, label: 'firmă închisă', score, points };
+  if (f.partner && band === 'banda') return { tier: 1, label: 'sună prima', score, points };
+  if ((f.partner && band !== 'mare') || band === 'banda') return { tier: 2, label: 'merită sunată', score, points };
+  return { tier: 3, label: 'la urmă', score, points };
+}
+
+const TIER_TONE: Record<Tier, string> = {
+  1: 'bg-emerald-600 text-white',
+  2: 'bg-amber-100 text-amber-800',
+  3: 'bg-slate-100 text-slate-500',
+};
+
+const lei = (n: number) =>
+  Math.abs(n) >= 1_000_000
+    ? `${(n / 1_000_000).toLocaleString('ro-RO', { maximumFractionDigits: 1 })} mil. lei`
+    : `${Math.round(n / 1000).toLocaleString('ro-RO')} mii lei`;
+
+function SizeLine({ size, loaded }: { size: NecesitFin | undefined; loaded: boolean }) {
+  if (!loaded) return null;
+  if (!size) {
+    return <p className="mt-1.5 text-[11px] text-slate-400">mărime necunoscută: n-am găsit firma în ONRC după nume</p>;
+  }
+  const last = lastYear(size);
+  const where = `${size.name}, ${size.judet} · ${size.via === 'director' ? 'CUI din directorul nostru' : 'potrivită pe nume și județ în ONRC'}`;
+  return (
+    <p className="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-[11px] text-slate-600">
+      {last ? (
+        <>
+          <Badge tone={BAND[last.band].tone}>{BAND[last.band].label}</Badge>
+          <span>
+            <strong className="font-semibold text-slate-800">{lei(last.ca)}</strong> cifră de afaceri {last.year}
+            {last.drop > 0 && <span className="text-red-600"> (−{last.drop}% față de {last.peakYear})</span>}
+          </span>
+          <span className="text-slate-300">·</span>
+          <span>{last.emp} angajați</span>
+          <span className="text-slate-300">·</span>
+          <span className={last.profit < 0 ? 'text-red-600' : ''}>
+            {last.profit < 0 ? 'pierdere' : 'profit'} {lei(Math.abs(last.profit))}
+          </span>
+        </>
+      ) : (
+        <span className="text-slate-400">fără bilanț depus în ultimii 3 ani</span>
+      )}
+      <span className="text-slate-300">·</span>
+      <span className="text-slate-400" title={where}>
+        CUI {size.cui}
+      </span>
+      {size.status.length > 0 && <span className="font-semibold text-red-600">ONRC: {size.status.join(', ')}</span>}
+    </p>
+  );
 }
 
 function Stat({ label, value, hint }: { label: string; value: number; hint?: string }) {
@@ -106,8 +227,9 @@ function Badge({ tone, title, children }: { tone: string; title?: string; childr
   );
 }
 
-function FirmCard_({ row }: { row: Row }) {
-  const { firm, counties, phone, phoneSource, company, card } = row;
+function FirmCard_({ row, sizesLoaded }: { row: Row; sizesLoaded: boolean }) {
+  const { firm, counties, phone, phoneSource, company, card, size, verdict } = row;
+  const breakdown = verdict.points.map((p) => `${p.pts > 0 ? '+' : ''}${p.pts}  ${p.label}`).join('\n');
   const buys = [firm.offers && `${firm.offers} oferte trimise`, firm.responds && `răspunde în ${firm.responds}`]
     .filter(Boolean)
     .join(' · ');
@@ -132,11 +254,19 @@ function FirmCard_({ row }: { row: Row }) {
               {!phone && <span className="text-slate-400"> · fără telefon</span>}
             </p>
           </div>
-          {card && (
-            <span className="shrink-0 rounded-full bg-slate-900 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-white uppercase">
-              {FIRM_STATUS_LABELS[card.status]}
+          <div className="flex shrink-0 flex-col items-end gap-1">
+            <span
+              title={`Scor ${verdict.score}:\n${breakdown}`}
+              className={`cursor-help rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase ${TIER_TONE[verdict.tier]}`}
+            >
+              {verdict.label} · {verdict.score}
             </span>
-          )}
+            {card && (
+              <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-white uppercase">
+                {FIRM_STATUS_LABELS[card.status]}
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
@@ -167,6 +297,8 @@ function FirmCard_({ row }: { row: Row }) {
           )}
         </div>
 
+        <SizeLine size={size} loaded={sizesLoaded} />
+
         {buys && <p className="mt-1.5 text-[11px] text-slate-500">{buys}</p>}
 
         <p className="mt-1.5 text-[11px]">
@@ -196,6 +328,12 @@ export default async function NecesitPage({ searchParams }: Props) {
     ? (filtru as Filter)
     : 'platesc';
 
+  // Mărimea e un plus: dacă baza nu răspunde, lista de apeluri merge și fără ea.
+  const sizesPromise = getNecesitFin().catch((err): NecesitFinData | null => {
+    console.error('[admin/necesit] mărimea firmelor din Neon:', err);
+    return null;
+  });
+
   let cards: CrmFirm[];
   let listingPhones: Map<string, string>;
   try {
@@ -214,6 +352,7 @@ export default async function NecesitPage({ searchParams }: Props) {
     );
   }
 
+  const sizes = await sizesPromise;
   const companies = getCompanies();
   const byName = new Map(companies.map((c) => [normalizeFirmName(c.name), c]));
 
@@ -249,6 +388,7 @@ export default async function NecesitPage({ searchParams }: Props) {
           ? 'formular de listare'
           : '';
     const card = cards.find((c) => isSameFirm(c, { numeFirma: firm.name, telefon: phone })) ?? null;
+    const size = sizes?.firms[firm.slug];
     return {
       firm,
       counties: firmCounties.sort((a, b) => a.localeCompare(b, 'ro')),
@@ -256,7 +396,8 @@ export default async function NecesitPage({ searchParams }: Props) {
       phoneSource,
       company: company && { id: company.id, slug: company.slug, name: company.name },
       card,
-      score: scoreRow(firm, phone),
+      size,
+      verdict: judge(firm, phone, size, card),
     };
   });
 
@@ -270,7 +411,12 @@ export default async function NecesitPage({ searchParams }: Props) {
       if (activeFilter === 'fisa') return r.card !== null;
       return true;
     })
-    .sort((a, b) => b.score - a.score || a.firm.name.localeCompare(b.firm.name, 'ro'));
+    .sort(
+      (a, b) =>
+        a.verdict.tier - b.verdict.tier ||
+        b.verdict.score - a.verdict.score ||
+        a.firm.name.localeCompare(b.firm.name, 'ro'),
+    );
 
   const partners = countyRows.filter((r) => r.firm.partner);
   const qs = (f: Filter) => {
@@ -303,8 +449,27 @@ export default async function NecesitPage({ searchParams }: Props) {
         deci apar și acolo.
       </p>
 
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <p className="mt-2 max-w-3xl text-sm text-slate-600">
+        <strong>Sună prima</strong> = plătește pentru cereri <em>și</em> are 4–25 mil. lei cifră de afaceri, mărimea
+        firmelor care au ajuns la ofertă din cererile noastre. <strong>Merită sunată</strong> = una din cele două.
+        Restul (fără telefon, peste 40 mil., închise, refuzate) sunt la urmă. Cifra de lângă verdict e scorul care
+        ordonează lista; ține mouse-ul pe el ca să vezi din ce e făcut.
+      </p>
+
+      {!sizes && (
+        <p className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+          Mărimea firmelor lipsește, deci verdictul ține cont doar de semnalele de pe necesit. Se generează cu{' '}
+          <code className="rounded bg-amber-100 px-1 py-0.5 text-[10px]">node scripts/necesit-fin.mjs</code>.
+        </p>
+      )}
+
+      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-5">
         <Stat label="Firme scanate" value={countyRows.length} hint={judet ? `în ${judet}` : '41 de județe'} />
+        <Stat
+          label="Sună prima"
+          value={countyRows.filter((r) => r.verdict.tier === 1).length}
+          hint="plătesc + 4–25 mil. lei + telefon"
+        />
         <Stat label="Plătesc pentru cereri" value={partners.length} />
         <Stat label="Cu telefon" value={countyRows.filter((r) => r.phone).length} hint="ANRE + director + listări" />
         <Stat label="Contactate (au fișă)" value={countyRows.filter((r) => r.card).length} />
@@ -331,7 +496,7 @@ export default async function NecesitPage({ searchParams }: Props) {
 
       <div className="mt-2 grid items-start gap-3 xl:grid-cols-2">
         {visible.map((row) => (
-          <FirmCard_ key={row.firm.slug} row={row} />
+          <FirmCard_ key={row.firm.slug} row={row} sizesLoaded={sizes !== null} />
         ))}
       </div>
 
