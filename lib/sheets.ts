@@ -147,6 +147,29 @@ async function readRowsFresh(sheetName: string): Promise<string[][]> {
   return (res.data.values as string[][] | undefined) ?? [];
 }
 
+/**
+ * Indexul singurului rând (după header) pe care se potrivește cheia, -1 dacă
+ * nu e niciunul. Timestamp-ul din coloana A e cheia rândului peste tot, dar
+ * Sheets nu-l ține unic: pe 5 aug 2026 un script scris de mână a dat aceeași
+ * oră la două fișe din CRM Firme și la două revendicări pe aceeași cerere, iar
+ * findIndex scria mereu pe prima. La două potriviri refuzăm: altfel statusul
+ * sau nota ajung în fișa altei firme.
+ */
+function findUniqueRow(rows: string[][], match: (r: string[]) => boolean, sheetName: string): number {
+  let index = -1;
+  for (let i = 1; i < rows.length; i++) {
+    if (!match(rows[i])) continue;
+    if (index !== -1) {
+      throw new Error(
+        `Rândurile ${index + 1} și ${i + 1} din tabul ${sheetName} au aceeași cheie (${rows[i][0]}). ` +
+          'Dă-le timestamp-uri diferite în Sheet, apoi încearcă din nou.',
+      );
+    }
+    index = i;
+  }
+  return index;
+}
+
 export async function saveLeadToSheet(lead: {
   numeCompanie?: string;
   numeContact: string;
@@ -1246,7 +1269,7 @@ async function findClaimRow(
   leadId: string,
 ): Promise<{ row: string[]; sheetRow: number }> {
   const rows = await readRowsFresh(CLAIMS_SHEET);
-  const index = rows.findIndex((r) => r[0] === claimTimestamp && r[1] === leadId);
+  const index = findUniqueRow(rows, (r) => r[0] === claimTimestamp && r[1] === leadId, CLAIMS_SHEET);
   if (index === -1) throw new Error('Revendicarea nu există în tabul Revendicări.');
   return { row: rows[index], sheetRow: index + 1 };
 }
@@ -2993,7 +3016,7 @@ function serializeNotes(notes: LeadNote[]): string {
 
 async function findLeadRow(timestamp: string): Promise<{ row: string[]; sheetRow: number }> {
   const rows = await readRowsFresh('Leads');
-  const index = rows.findIndex((r, i) => i > 0 && r[0] === timestamp);
+  const index = findUniqueRow(rows, (r) => r[0] === timestamp, 'Leads');
   if (index === -1) throw new Error('Cererea nu există în tabul Leads.');
   return { row: rows[index], sheetRow: index + 1 };
 }
@@ -3392,7 +3415,11 @@ export async function addCrmFirm(firm: {
     throw new Error('Firma are deja o fișă în CRM.');
   }
 
-  const timestamp = new Date().toISOString();
+  // Timestamp-ul e cheia fișei (updateCrmFirm), deci nu are voie să mai existe.
+  const taken = new Set(existing.map((f) => f.timestamp));
+  let ms = Date.now();
+  while (taken.has(new Date(ms).toISOString())) ms++;
+  const timestamp = new Date(ms).toISOString();
   const values = [timestamp, firm.firmId || '', firm.numeFirma, firm.telefon, 'de_sunat', '', ''];
   try {
     await appendRow(FIRMS_SHEET, values);
@@ -3424,7 +3451,7 @@ export async function updateCrmFirm(
   },
 ): Promise<CrmFirm> {
   const rows = await readRowsFresh(FIRMS_SHEET);
-  const index = rows.findIndex((r, i) => i > 0 && r[0] === timestamp);
+  const index = findUniqueRow(rows, (r) => r[0] === timestamp, FIRMS_SHEET);
   if (index === -1) throw new Error('Firma nu există în tabul CRM Firme.');
   const row = rows[index];
   const sheetRow = index + 1;
@@ -3552,7 +3579,7 @@ export async function updateTodo(
   changes: { done?: boolean; due?: string; text?: string },
 ): Promise<TodoItem> {
   const rows = await readRowsFresh(TODO_SHEET);
-  const index = rows.findIndex((r, i) => i > 0 && r[0] === timestamp);
+  const index = findUniqueRow(rows, (r) => r[0] === timestamp, TODO_SHEET);
   if (index === -1) throw new Error('Sarcina nu există în tabul Todo.');
   const row = rows[index];
   const sheetRow = index + 1;
