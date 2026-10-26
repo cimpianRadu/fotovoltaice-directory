@@ -24,7 +24,10 @@ import {
   getProjectTypeLabel,
   getTimelineLabel,
 } from '@/lib/utils-shared';
+import { getJournalDay, getLatestJournalDigest, type JournalEntry, type JournalSubject } from '@/lib/jurnal';
+import { subjectKey } from '@/lib/jurnal-shared';
 import TodoPanel from './TodoPanel';
+import JournalPanel, { NoteButton } from './JournalPanel';
 
 export const dynamic = 'force-dynamic';
 
@@ -100,8 +103,44 @@ function Phone({ value }: { value: string }) {
   );
 }
 
-function LeadLine({ lead, claims }: { lead: AgendaLead; claims?: LeadClaim[] }) {
+type ClaimBrief = Pick<LeadClaim, 'numeFirma' | 'firmStatus'>;
+
+function leadSubject(lead: AgendaLead, section: string, claims?: ClaimBrief[]): JournalSubject {
   const who = lead.numeCompanie ? `${lead.numeContact} · ${lead.numeCompanie}` : lead.numeContact;
+  return {
+    kind: 'cerere',
+    id: lead.timestamp,
+    label: `${who || '(fără nume)'} · ${lead.judet}`,
+    meta: {
+      sectiune: section,
+      telefon: lead.telefon,
+      judet: lead.judet,
+      segment: lead.segment,
+      putere: lead.putere ? `${lead.putere} kW` : '',
+      proiect: lead.tipProiect ? getProjectTypeLabel(lead.tipProiect) : '',
+      intrata: lead.timestamp.slice(0, 10),
+      firme: (claims ?? []).map((c) => `${c.numeFirma} (${CLAIM_STATUS_LABELS[c.firmStatus].toLowerCase()})`).join(', '),
+      ultimaNota: lead.notes[0] ? `[${lead.notes[0].date}] ${lead.notes[0].text}` : '',
+    },
+  };
+}
+
+function LeadLine({
+  lead,
+  claims,
+  hideClaims = false,
+  section,
+  noted,
+}: {
+  lead: AgendaLead;
+  claims?: ClaimBrief[];
+  /** Firmele merg doar în notă: secțiunea le arată ea, cu altă formulare. */
+  hideClaims?: boolean;
+  section: string;
+  noted: Map<string, string>;
+}) {
+  const who = lead.numeCompanie ? `${lead.numeContact} · ${lead.numeCompanie}` : lead.numeContact;
+  const subject = leadSubject(lead, section, claims);
   const bits = [
     lead.segment === 'comercial' ? 'comercial' : 'rezidențial',
     lead.putere ? `${lead.putere} kW` : '',
@@ -117,15 +156,18 @@ function LeadLine({ lead, claims }: { lead: AgendaLead; claims?: LeadClaim[] }) 
         <span className="font-medium text-slate-900">{who || '(fără nume)'}</span>
         <Phone value={lead.telefon} />
         <span className="text-slate-500">{lead.judet}</span>
-        <Link
-          href={`/admin/crm?judet=${encodeURIComponent(lead.judet)}`}
-          className="ml-auto text-xs text-amber-700 hover:underline"
-        >
-          în CRM
-        </Link>
+        <span className="ml-auto flex items-baseline gap-3">
+          <NoteButton subject={subject} notedAt={noted.get(subjectKey(subject))} />
+          <Link
+            href={`/admin/crm?judet=${encodeURIComponent(lead.judet)}`}
+            className="text-xs text-amber-700 hover:underline"
+          >
+            în CRM
+          </Link>
+        </span>
       </div>
       <p className="text-xs text-slate-500">{bits.join(' · ')}</p>
-      {claims && claims.length > 0 && (
+      {!hideClaims && claims && claims.length > 0 && (
         <p className="text-xs text-slate-400">
           {claims
             .map((c) => `${c.numeFirma} (${CLAIM_STATUS_LABELS[c.firmStatus].toLowerCase()})`)
@@ -148,12 +190,28 @@ export default async function AziPage() {
   const today = bucharestDay(now);
   const cutoff = new Date(now - LOOKBACK_DAYS * 86_400_000);
 
-  const [allLeads, claims, firms, todos] = await Promise.all([
+  const [allLeads, claims, firms, todos, journal, digest] = await Promise.all([
     getLeadsSince(cutoff),
     getClaims(),
     getCrmFirms(),
     getTodos(),
+    // Jurnalul e în Neon: dacă baza nu răspunde, agenda din Sheets se vede oricum.
+    getJournalDay(today).catch((err): JournalEntry[] => {
+      console.error('[azi] jurnal', err);
+      return [];
+    }),
+    getLatestJournalDigest(today).catch((err) => {
+      console.error('[azi] digest jurnal', err);
+      return null;
+    }),
   ]);
+  // Ora ultimei note de azi pe fiecare rând (notele vin cea mai nouă prima).
+  const noted = new Map<string, string>();
+  for (const e of journal) {
+    if (!e.subject) continue;
+    const key = subjectKey(e.subject);
+    if (!noted.has(key)) noted.set(key, e.at);
+  }
   const leads: NewLead[] = allLeads.filter((l) => !isLeadHidden(l));
   const claimsByLead = new Map<string, LeadClaim[]>();
   for (const c of claims) {
@@ -197,6 +255,11 @@ export default async function AziPage() {
         <Stat label="Rezervări expiră azi" value={agenda.expiringHolds.length} href="#rezervari" />
       </div>
 
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-start">
+      <aside className="lg:sticky lg:top-4 lg:order-last lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
+        <JournalPanel today={today} initial={journal} digest={digest} />
+      </aside>
+      <div className="min-w-0 space-y-6">
       <Section
         id="sarcini"
         title="Sarcini scrise"
@@ -228,8 +291,20 @@ export default async function AziPage() {
             {agenda.firmsDue.map((f) => {
               const overdue = f.followUp < today;
               const last = f.notes[0];
+              const subject: JournalSubject = {
+                kind: 'firma',
+                id: f.timestamp,
+                label: f.numeFirma,
+                meta: {
+                  sectiune: 'firme de sunat',
+                  telefon: f.telefon,
+                  status: FIRM_STATUS_LABELS[f.status],
+                  followUp: f.followUp,
+                  ultimaNota: last ? `[${last.date}] ${last.text}` : '',
+                },
+              };
               return (
-                <li key={f.timestamp} className="space-y-0.5 py-2">
+                <li key={subjectKey(subject)} className="space-y-0.5 py-2">
                   <div className="flex flex-wrap items-baseline gap-x-3 text-sm">
                     <span className="font-medium text-slate-900">{f.numeFirma}</span>
                     <Phone value={f.telefon} />
@@ -239,9 +314,12 @@ export default async function AziPage() {
                         restant din {fmtDay(f.followUp)}
                       </span>
                     )}
-                    <Link href="/admin/firme?filtru=restante" className="ml-auto text-xs text-amber-700 hover:underline">
-                      fișa
-                    </Link>
+                    <span className="ml-auto flex items-baseline gap-3">
+                      <NoteButton subject={subject} notedAt={noted.get(subjectKey(subject))} />
+                      <Link href="/admin/firme?filtru=restante" className="text-xs text-amber-700 hover:underline">
+                        fișa
+                      </Link>
+                    </span>
                   </div>
                   {last && (
                     <p className="line-clamp-2 text-xs text-slate-500">
@@ -260,7 +338,7 @@ export default async function AziPage() {
             </summary>
             <ul className="mt-1 space-y-1">
               {agenda.firmsUpcoming.map((f) => (
-                <li key={f.timestamp} className="text-xs text-slate-600">
+                <li key={`${f.timestamp}:${f.numeFirma}`} className="text-xs text-slate-600">
                   <span className="tabular-nums text-slate-400">{fmtDay(f.followUp)}</span> {f.numeFirma}
                 </li>
               ))}
@@ -281,7 +359,7 @@ export default async function AziPage() {
           <ul className="divide-y divide-slate-100">
             {agenda.toQualify.map((l) => (
               <li key={l.timestamp} className="py-2">
-                <LeadLine lead={l} claims={claimsByLead.get(l.timestamp)} />
+                <LeadLine lead={l} claims={claimsByLead.get(l.timestamp)} section="de calificat" noted={noted} />
               </li>
             ))}
           </ul>
@@ -300,7 +378,7 @@ export default async function AziPage() {
           <ul className="divide-y divide-slate-100">
             {agenda.revin.map(({ lead, due, note }) => (
               <li key={lead.timestamp} className="space-y-1 py-2">
-                <LeadLine lead={lead} claims={claimsByLead.get(lead.timestamp)} />
+                <LeadLine lead={lead} claims={claimsByLead.get(lead.timestamp)} section="revin azi" noted={noted} />
                 <p className="text-xs text-slate-500">
                   {due < today && (
                     <span className="mr-2 rounded bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-700">
@@ -327,7 +405,13 @@ export default async function AziPage() {
           <ul className="divide-y divide-slate-100">
             {agenda.toVerify.map(({ lead, reason, claims: cs }) => (
               <li key={lead.timestamp} className="space-y-1 py-2">
-                <LeadLine lead={lead} />
+                <LeadLine
+                  lead={lead}
+                  claims={cs}
+                  hideClaims
+                  section={reason === 'oferta' ? 'de întrebat: a primit oferta?' : 'de întrebat: l-a sunat cineva?'}
+                  noted={noted}
+                />
                 <p className="text-xs">
                   <span
                     className={`mr-2 rounded px-1.5 py-0.5 text-[10px] font-medium ${
@@ -365,12 +449,14 @@ export default async function AziPage() {
           <ul className="divide-y divide-slate-100">
             {agenda.expiringHolds.map((l) => (
               <li key={l.timestamp} className="py-2">
-                <LeadLine lead={l} claims={claimsByLead.get(l.timestamp)} />
+                <LeadLine lead={l} claims={claimsByLead.get(l.timestamp)} section="rezervare expiră azi" noted={noted} />
               </li>
             ))}
           </ul>
         )}
       </Section>
+      </div>
+      </div>
     </div>
   );
 }
