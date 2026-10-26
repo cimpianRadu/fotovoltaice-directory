@@ -56,6 +56,12 @@ function formatKw(kwp: number): string {
   return kwp >= 10 ? String(Math.round(kwp)) : String(kwp).replace('.', ',');
 }
 
+// Câmpul e text liber în Sheets („10", „5,5", „10 kW"): contează primul număr.
+function parsePutere(raw: string): number | null {
+  const n = parseFloat(raw.replace(',', '.'));
+  return Number.isFinite(n) && n > 0 ? n : null;
+}
+
 export default async function CereriPage() {
   let leads: PublicLead[] = [];
   const claimCounts: Record<string, number> = {};
@@ -121,11 +127,13 @@ export default async function CereriPage() {
       id: l.id,
       tipLabel: getProjectTypeLabel(l.tipProiect),
       judet: l.judet,
+      putereKw: retrofit ? null : parsePutere(l.putere) ?? kwpEstimat,
       putereLabel: l.putere
         ? `${retrofit ? 'are ' : ''}${l.putere} kW`
         : kwpEstimat
-          ? `≈${formatKw(kwpEstimat)} kW estimat`
+          ? `≈${formatKw(kwpEstimat)} kW`
           : '',
+      putereEstimata: !l.putere && Boolean(kwpEstimat),
       // Cifra clientului bate orice calcul de-al nostru: dacă a spus câți kWh
       // vrea, aia e cererea. Estimarea intră doar când n-a spus, iar la AFM
       // pornește de la pragul programului, nu de la necesarul din consum.
@@ -136,6 +144,7 @@ export default async function CereriPage() {
           : subPragAfm
             ? `baterie ≈${PROGRAM.minKwh} kWh (pragul AFM)`
             : `baterie ≈${bMin === bMax ? bMin : `${bMin}-${bMax}`} kWh`,
+      bateriaEstimata: doarBaterie && !l.capacitateBaterie && Boolean(baterie),
       tipLucrare: l.tipLucrare,
       tipLucrareLabel: l.tipLucrare ? getWorkTypeShort(l.tipLucrare) : '',
       suprafata: l.suprafata,
@@ -162,6 +171,7 @@ export default async function CereriPage() {
         : l.segment === 'rezidential'
           ? `${consum.label} (${consum.echivalent})`
           : consum.label,
+      finantare: l.finantare || '',
       finantareLabel: l.finantare ? getFinancingShort(l.finantare) : '',
       finantareTone: getFinancingTone(l.finantare),
       stocareLabel: l.stocare ? getYesNoLabel(l.stocare) : '',

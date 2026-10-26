@@ -15,10 +15,24 @@ export interface LeadCardData {
   id: string;
   tipLabel: string;
   judet: string;
-  /** Gata de afișat: „15 kW", „are 6 kW" la retrofit, sau „≈2,3 kW estimat". */
+  /** Gata de afișat: „15 kW", „are 6 kW" la retrofit, sau „≈2,3 kW" estimat. */
   putereLabel: string;
+  /**
+   * Puterea e calculată de noi din consum, nu spusă de client. Cardul o scoate
+   * din rândul de detalii și o arată separat, marcată „Estimare platformă":
+   * pusă lângă județ, „≈2,3 kW" se citea ca cifra clientului (26 oct 2026).
+   */
+  putereEstimata: boolean;
+  /**
+   * Puterea sistemului cerut, pentru filtrul „Putere": cea declarată sau, fără
+   * ea, estimarea din consum. `null` la retrofit (puterea e a sistemului
+   * existent) și când nu se știe nici una, nici alta.
+   */
+  putereKw: number | null;
   /** „≈5-7 kWh necesar" — capacitatea din tabelul de dimensionare, la „doar baterie". */
   bateriaLabel: string;
+  /** Capacitatea bateriei vine din tabelul nostru, nu de la client. Ca `putereEstimata`. */
+  bateriaEstimata: boolean;
   tipLucrare: string;
   tipLucrareLabel: string;
   suprafata: string;
@@ -30,6 +44,8 @@ export interface LeadCardData {
   fazareLabel: string;
   bransamentLabel: string;
   consumLunar: string;
+  /** Slugul din FINANCING_*; filtrul „Finanțare" din feed. */
+  finantare: string;
   finantareLabel: string;
   finantareTone: FinancingTone;
   stocareLabel: string;
@@ -770,12 +786,18 @@ export default function LeadCard({
     }
   }
 
+  const estimates = [
+    lead.putereEstimata ? lead.putereLabel : null,
+    lead.bateriaEstimata ? lead.bateriaLabel : null,
+  ].filter(Boolean) as string[];
   const details = [
     lead.judet,
-    lead.putereLabel || null,
-    lead.bateriaLabel || null,
+    !lead.putereEstimata ? lead.putereLabel || null : null,
+    !lead.bateriaEstimata ? lead.bateriaLabel || null : null,
     lead.suprafata ? `${lead.suprafata} mp` : null,
   ].filter(Boolean);
+  // Rezumatul de o linie din confirmări: estimarea rămâne, cu cuvântul lângă ea.
+  const summary = [...details, ...estimates.map((e) => `${e} estimat`)].join(' · ');
 
   // Detalii de ofertare, adăugate în formular în iulie 2026 — cererile mai vechi
   // nu le au, așa că rândul dispare complet când niciunul nu e completat.
@@ -888,6 +910,18 @@ export default function LeadCard({
 
       <h3 className="mt-3 font-semibold text-gray-900">{lead.tipLabel}</h3>
       <p className="mt-1 text-sm text-gray-600">{details.join(' · ')}</p>
+      {estimates.length > 0 && (
+        <p
+          className="mt-1.5 flex w-fit flex-wrap items-center gap-x-1.5 gap-y-0.5 rounded-md border border-dashed border-gray-300 bg-gray-50 px-2 py-1 text-xs text-gray-500"
+          title="Clientul n-a completat cifra. Am calculat-o noi din consumul lunar declarat, cu aceeași formulă ca în calculatoarele de pe site (la bateriile prin AFM, de la pragul programului). Dimensionarea reală o face instalatorul."
+        >
+          <span className="text-[10px] font-semibold uppercase tracking-wide text-gray-500">
+            Estimare platformă
+          </span>
+          <span className="font-semibold text-gray-800">{estimates.join(' · ')}</span>
+          <span>calculată de noi, nu spusă de client</span>
+        </p>
+      )}
       {/* Cererile de dinainte de 29 iul 2026 n-au câmpul — rândul dispare de tot. */}
       {lead.finantareLabel && (
         <FinancingLine label={lead.finantareLabel} tone={lead.finantareTone} />
@@ -1045,7 +1079,7 @@ export default function LeadCard({
               </button>
             </div>
             <p className="text-sm text-gray-600 mb-4">
-              {lead.tipLabel} · {details.join(' · ')} · {lead.postedLabel}
+              {lead.tipLabel} · {summary} · {lead.postedLabel}
               {lead.informezMotiv && ` · ${lead.informezMotiv}`}
             </p>
             {watchStatus === 'success' ? (
@@ -1120,7 +1154,7 @@ export default function LeadCard({
             </div>
 
             <p className="text-sm text-gray-600 mb-4">
-              {lead.tipLabel} · {details.join(' · ')} · {lead.postedLabel}
+              {lead.tipLabel} · {summary} · {lead.postedLabel}
               {lead.finantareLabel && ` · ${lead.finantareLabel}`}
             </p>
 
