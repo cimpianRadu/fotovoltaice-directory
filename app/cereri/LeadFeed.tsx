@@ -417,7 +417,7 @@ export default function LeadFeed({ cards, claimCounts, watchCounts, maxClaims }:
             options={putereOptions}
             selected={filters.putere}
             onChange={(next) => update({ putere: next })}
-            note="Unde clientul n-a spus puterea, folosim estimarea platformei, calculată din consumul lui. Pe card e marcată „Estimare platformă”."
+            note="Unde clientul n-a spus puterea, folosim estimarea platformei, calculată din consumul lui. Pe card e marcată „Estimare”."
           />
           <FilterDropdown
             title="Primită"

@@ -19,7 +19,7 @@ export interface LeadCardData {
   putereLabel: string;
   /**
    * Puterea e calculată de noi din consum, nu spusă de client. Cardul o scoate
-   * din rândul de detalii și o arată separat, marcată „Estimare platformă":
+   * din rândul de detalii și o arată separat, marcată „Estimare":
    * pusă lângă județ, „≈2,3 kW" se citea ca cifra clientului (26 oct 2026).
    */
   putereEstimata: boolean;
@@ -916,10 +916,10 @@ export default function LeadCard({
           title="Clientul n-a completat cifra. Am calculat-o noi din consumul lunar declarat, cu aceeași formulă ca în calculatoarele de pe site (la bateriile prin AFM, de la pragul programului). Dimensionarea reală o face instalatorul."
         >
           <span className="text-[10px] font-semibold uppercase tracking-wide text-gray-500">
-            Estimare platformă
+            Estimare
           </span>
           <span className="font-semibold text-gray-800">{estimates.join(' · ')}</span>
-          <span>calculată de noi, nu spusă de client</span>
+          <span>nespecificat de beneficiar</span>
         </p>
       )}
       {/* Cererile de dinainte de 29 iul 2026 n-au câmpul — rândul dispare de tot. */}
