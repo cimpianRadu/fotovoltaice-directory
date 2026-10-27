@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Input from '@/components/ui/Input';
+import PhoneInput, { phoneInputOk } from '@/components/ui/PhoneInput';
 import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
 import Toast from '@/components/ui/Toast';
@@ -57,9 +58,10 @@ export default function AdInquiryForm() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (!(await phoneInputOk(form))) return;
     setStatus('submitting');
 
-    const form = e.currentTarget;
     const data = new FormData(form);
     const body = Object.fromEntries(data.entries());
 
@@ -118,7 +120,7 @@ export default function AdInquiryForm() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input label="Persoană contact" name="numeContact" required placeholder="Ion Popescu" />
-            <Input label="Telefon" name="telefon" type="tel" required placeholder="0740 123 456" />
+            <PhoneInput label="Telefon" name="telefon" required placeholder="0740 123 456" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

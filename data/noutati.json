@@ -1,5 +1,12 @@
 [
   {
+    "data": "2026-10-27",
+    "titlu": "Cererile vin cu un număr la care se poate suna",
+    "text": "Clientul nu mai poate trimite cererea cu o cifră în plus sau lipsă în telefon, ori cu numele scris în locul numărului. Numerele din străinătate apar cu prefixul țării, ca să le poți suna direct.",
+    "link": "/cereri",
+    "linkText": "Vezi cererile"
+  },
+  {
     "data": "2026-10-26",
     "titlu": "Filtre noi pe cereri: termen, finanțare și putere",
     "text": "Pe pagina de cereri alegi acum și cât de repede vrea clientul montajul, cum plătește și puterea sistemului, pe lângă județ și data cererii. Lângă fiecare opțiune vezi câte cereri sunt. Linkul păstrează filtrele, deci îl poți trimite unui coleg.",

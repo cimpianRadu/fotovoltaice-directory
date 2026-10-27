@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Input from '@/components/ui/Input';
+import PhoneInput, { phoneInputOk } from '@/components/ui/PhoneInput';
 import Button from '@/components/ui/Button';
 import { trackEvent } from '@/lib/analytics';
 import { PORTAL_EMAIL_KEY } from '@/lib/portal-email-handoff';
@@ -749,10 +750,13 @@ export default function LeadCard({
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    // Din cont formularul n-are câmp de telefon, deci verificarea trece.
+    if (!(await phoneInputOk(form))) return;
     setStatus('submitting');
     setError(null);
 
-    const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+    const data = Object.fromEntries(new FormData(form).entries());
 
     try {
       const res = await fetch('/api/claims', {
@@ -1192,14 +1196,7 @@ export default function LeadCard({
                   <>
                     <Input label="Nume firmă" name="numeFirma" required placeholder="SC Firma SRL" />
                     <Input label="Persoană contact" name="numeContact" required placeholder="Ion Popescu" />
-                    <Input
-                      label="Telefon"
-                      name="telefon"
-                      type="tel"
-                      required
-                      placeholder="0740 123 456"
-                      autoComplete="tel"
-                    />
+                    <PhoneInput label="Telefon" name="telefon" required placeholder="0740 123 456" />
                     <Input
                       label="Email firmă"
                       name="email"

@@ -4,9 +4,9 @@ import { lookupAnreForListing, getAnreCodeLabel } from '@/lib/anre';
 import { sendListingNotification } from '@/lib/email';
 import { sanitizeAttribution } from '@/lib/attribution';
 import { isFirmSource } from '@/lib/utils-shared';
+import { cleanPhone, PHONE_ERROR } from '@/lib/phone';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const PHONE_RE = /^(?:\+?40|0040|0)\s*[0-9](?:[\s\-()]*[0-9]){8}$/;
 const CUI_RE = /^(RO)?\d{2,10}$/i;
 
 export async function POST(request: Request) {
@@ -47,8 +47,10 @@ export async function POST(request: Request) {
     if (!EMAIL_RE.test(String(email).trim())) {
       return NextResponse.json({ error: 'Adresă de email invalidă.' }, { status: 400 });
     }
-    if (!PHONE_RE.test(String(telefon).trim())) {
-      return NextResponse.json({ error: 'Număr de telefon invalid.' }, { status: 400 });
+    // Acceptă și numerele din străinătate (lib/phone); în Sheet intră forma curată.
+    const telefonCurat = cleanPhone(String(telefon));
+    if (!telefonCurat) {
+      return NextResponse.json({ error: PHONE_ERROR }, { status: 400 });
     }
 
     if (!gdpr && gdpr !== 'on') {
@@ -73,7 +75,7 @@ export async function POST(request: Request) {
       cui: String(cui),
       numeContact: String(numeContact),
       email: String(email),
-      telefon: String(telefon),
+      telefon: telefonCurat,
       judet: String(judet),
       functie: body.functie ? String(body.functie) : undefined,
       website: website ? String(website) : undefined,

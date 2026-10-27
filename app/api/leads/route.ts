@@ -17,6 +17,7 @@ import { sendConfirmationEmail } from '@/lib/email-cont';
 import { logLeadSends } from '@/lib/lead-sends';
 import { getCompanies } from '@/lib/utils';
 import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
+import { cleanPhone, PHONE_ERROR } from '@/lib/phone';
 import {
   getConnectionLabel,
   getFinancingLabel,
@@ -83,6 +84,14 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    // Aceeași verificare ca în formular (lib/phone), și pentru un formular vechi
+    // din cache care n-o are. În Sheet intră numărul în forma curată.
+    const telefonCurat = cleanPhone(String(telefon));
+    if (!telefonCurat) {
+      return NextResponse.json({ error: PHONE_ERROR, field: 'telefon' }, { status: 400 });
+    }
+    body.telefon = telefonCurat;
 
     // Finanțarea, termenul și puterea sunt obligatorii din 18 aug 2026, cu
     // răspuns onest de „nu știu" la fiecare. Motivul e măsurat pe cererile din

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { saveAdInquiryToSheet } from '@/lib/sheets';
+import { cleanPhone, PHONE_ERROR } from '@/lib/phone';
 
 const ALLOWED_TIERS = ['waitlist', 'popup', 'premium', 'casestudy'] as const;
 
@@ -19,6 +20,11 @@ export async function POST(request: Request) {
       );
     }
 
+    const telefonCurat = cleanPhone(String(telefon));
+    if (!telefonCurat) {
+      return NextResponse.json({ error: PHONE_ERROR }, { status: 400 });
+    }
+
     if (!gdpr && gdpr !== 'on') {
       return NextResponse.json(
         { error: 'Trebuie să acceptați prelucrarea datelor personale.' },
@@ -26,7 +32,7 @@ export async function POST(request: Request) {
       );
     }
 
-    await saveAdInquiryToSheet(body);
+    await saveAdInquiryToSheet({ ...body, telefon: telefonCurat });
 
     return NextResponse.json({ success: true });
   } catch (err) {

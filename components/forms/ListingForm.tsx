@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import Input from '@/components/ui/Input';
+import PhoneInput, { checkPhoneInput } from '@/components/ui/PhoneInput';
 import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
 import Toast from '@/components/ui/Toast';
@@ -74,9 +75,6 @@ type AnreCheckResponse = {
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-// Romanian phone: 07XXXXXXXX, 02/03 + 8 digits, or +40 / 0040 prefix.
-// Allows spaces / dashes / parens for readability.
-const PHONE_RE = /^(?:\+?40|0040|0)\s*[0-9](?:[\s\-()]*[0-9]){8}$/;
 const CUI_RE = /^(RO)?\d{2,10}$/i;
 const URL_RE = /^https?:\/\/[^\s.]+\.[^\s]{2,}$/i;
 
@@ -98,8 +96,8 @@ function validateField(name: keyof FormValues, value: string | boolean, all: For
       if (!EMAIL_RE.test(String(value).trim())) return 'Adresă de email invalidă.';
       return '';
     case 'telefon':
+      // Formatul îl verifică PhoneInput (lib/phone), care acceptă și numerele din străinătate.
       if (!String(value).trim()) return 'Telefonul este obligatoriu.';
-      if (!PHONE_RE.test(String(value).trim())) return 'Număr de telefon invalid (ex: 0740 123 456).';
       return '';
     case 'judet':
       if (!String(value).trim()) return 'Selectați județul sediului social.';
@@ -219,7 +217,10 @@ export default function ListingForm() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!validateAll()) {
+    const phoneError = await checkPhoneInput(e.currentTarget.elements.namedItem('telefon'));
+    const fieldsOk = validateAll();
+    if (phoneError) setErrors((prev) => ({ ...prev, telefon: prev.telefon || phoneError }));
+    if (!fieldsOk || phoneError) {
       setToast({ message: 'Verificați câmpurile marcate cu roșu și încercați din nou.', type: 'error' });
       return;
     }
@@ -331,18 +332,15 @@ export default function ListingForm() {
             inputMode="email"
             autoComplete="email"
           />
-          <Input
+          <PhoneInput
             label="Telefon"
             name="telefon"
-            type="tel"
             required
             placeholder="0740 123 456"
             value={values.telefon}
             onChange={(e) => setField('telefon', e.target.value)}
             onBlur={() => handleBlur('telefon')}
             error={errors.telefon}
-            inputMode="tel"
-            autoComplete="tel"
           />
         </div>
 

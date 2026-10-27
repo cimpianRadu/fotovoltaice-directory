@@ -24,6 +24,7 @@ import { isValidEmail, normalizeEmail } from '@/lib/portal-auth';
 import { peekPortalEmail } from '@/lib/portal-session';
 import { sanitizeAttribution } from '@/lib/attribution';
 import { isFirmSource } from '@/lib/utils-shared';
+import { cleanPhone, PHONE_ERROR } from '@/lib/phone';
 import { sendClaimApprovedEmail, sendClaimNotification } from '@/lib/email';
 import {
   getConnectionLabel,
@@ -66,6 +67,14 @@ export async function POST(request: Request) {
       numeFirma = identity.numeFirma;
       numeContact = identity.numeContact;
       telefon = identity.telefon;
+    } else if (telefon?.trim()) {
+      // Doar telefonul scris acum în formular. Cel din cont vine din revendicări
+      // vechi: o firmă cu un număr vechi nestandard nu e blocată din revendicat.
+      const telefonCurat = cleanPhone(telefon);
+      if (!telefonCurat) {
+        return NextResponse.json({ error: PHONE_ERROR }, { status: 400 });
+      }
+      telefon = telefonCurat;
     }
 
     if (!leadId || !numeFirma?.trim() || !numeContact?.trim() || !telefon?.trim() || !email?.trim()) {

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getPortalEmail } from '@/lib/portal-session';
 import { saveFirmProfile } from '@/lib/sheets';
+import { cleanPhone, PHONE_ERROR } from '@/lib/phone';
 
 // Datele cu care revendică firma dintr-un click: nume, persoană de contact,
 // telefon. Se salvează pe adresa logată și valorează pentru toată firma.
@@ -23,9 +24,11 @@ export async function POST(request: Request) {
     if (!profile.numeFirma || !profile.numeContact || !profile.telefon) {
       return NextResponse.json({ error: 'Completează numele firmei, persoana de contact și telefonul.' }, { status: 400 });
     }
-    if (profile.telefon.replace(/\D/g, '').length < 9) {
-      return NextResponse.json({ error: 'Telefonul pare incomplet.' }, { status: 400 });
+    const telefonCurat = cleanPhone(profile.telefon);
+    if (!telefonCurat) {
+      return NextResponse.json({ error: PHONE_ERROR }, { status: 400 });
     }
+    profile.telefon = telefonCurat;
     await saveFirmProfile(email, profile);
     revalidatePath('/portal');
     return NextResponse.json({ ok: true, profile });

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import FollowRequestCTA from '@/components/cont/FollowRequestCTA';
 import Input from '@/components/ui/Input';
+import PhoneInput, { checkPhoneInput } from '@/components/ui/PhoneInput';
 import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
 import Toast from '@/components/ui/Toast';
@@ -639,8 +640,11 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     window.scrollTo({ top: Math.max(top, 0), behavior: 'instant' });
   }
 
-  function goNext() {
+  async function goNext() {
     const form = formRef.current;
+    // Telefonul are o verificare proprie (PhoneInput), pusă pe câmp ca validare
+    // nativă: trece prin același checkValidity și apare în aceeași bulă.
+    if (form) await checkPhoneInput(form.elements.namedItem('telefon'));
     // noValidate ține bula nativă sub controlul nostru, dar regulile rămân cele
     // de pe câmpuri. Doar pasul curent e montat, deci se validează doar el.
     if (form && !form.checkValidity()) {
@@ -1313,13 +1317,10 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
             )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input
+              <PhoneInput
                 label="Telefon"
                 name="telefon"
-                type="tel"
                 required
-                inputMode="tel"
-                autoComplete="tel"
                 placeholder="0740 123 456"
                 value={values.telefon}
                 onChange={(e) => set('telefon', e.target.value)}

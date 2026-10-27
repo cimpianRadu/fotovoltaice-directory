@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Input from '@/components/ui/Input';
+import PhoneInput, { phoneInputOk } from '@/components/ui/PhoneInput';
 import Button from '@/components/ui/Button';
 
 interface Profile {
@@ -26,9 +27,11 @@ export default function PortalFirmProfile({ initial, saved }: { initial: Profile
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (!(await phoneInputOk(form))) return;
     setBusy(true);
     setError(null);
-    const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+    const data = Object.fromEntries(new FormData(form).entries());
     try {
       const res = await fetch('/api/portal/profile', {
         method: 'POST',
@@ -80,7 +83,7 @@ export default function PortalFirmProfile({ initial, saved }: { initial: Profile
       </div>
       <Input label="Nume firmă" name="numeFirma" required defaultValue={profile.numeFirma} placeholder="SC Firma SRL" />
       <Input label="Persoană contact" name="numeContact" required defaultValue={profile.numeContact} placeholder="Ion Popescu" />
-      <Input label="Telefon" name="telefon" type="tel" required defaultValue={profile.telefon} placeholder="0740 123 456" autoComplete="tel" />
+      <PhoneInput label="Telefon" name="telefon" required defaultValue={profile.telefon} placeholder="0740 123 456" />
       {error && <p className="text-xs text-red-600">{error}</p>}
       <div className="flex gap-2">
         <Button type="submit" variant="primary" disabled={busy} className="flex-1 sm:flex-none">
