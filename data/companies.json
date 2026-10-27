@@ -16171,8 +16171,8 @@
       ],
       "certifications": [],
       "capacity": {
-        "minProjectKw": 5,
-        "maxProjectKw": 15,
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
         "projectsCompleted": 0
       },
       "financials": {
