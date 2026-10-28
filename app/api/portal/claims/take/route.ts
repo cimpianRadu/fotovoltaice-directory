@@ -3,7 +3,7 @@ import { revalidatePath } from 'next/cache';
 import { getPortalEmail } from '@/lib/portal-session';
 import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
-  MAX_CLAIMS_PER_LEAD,
+  maxClaimsForLead,
   countActiveClaimsForFirm,
   findSubscriptionForCounty,
   getClaims,
@@ -116,7 +116,7 @@ export async function POST(request: Request) {
         scopLabel: getScopLabel(lead.scop, lead.scopDetalii),
       },
       claimCount: allClaims.filter((c) => c.leadId === leadId).length + 1,
-      maxClaims: MAX_CLAIMS_PER_LEAD,
+      maxClaims: maxClaimsForLead(leadId),
     });
 
     return NextResponse.json({ success: true });

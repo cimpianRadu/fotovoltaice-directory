@@ -13,6 +13,7 @@ import {
   LEAD_STATUSES,
   LEAD_STATUS_LABELS,
   MAX_CLAIMS_PER_LEAD,
+  maxClaimsForLead,
   type NewLead,
   type NewListing,
   type LeadClaim,
@@ -156,7 +157,8 @@ function LeadCard({
   const specs = [lead.putere && `${lead.putere} kW`, lead.suprafata && `${lead.suprafata} mp`]
     .filter(Boolean)
     .join(' · ');
-  const full = claims.length >= MAX_CLAIMS_PER_LEAD;
+  const maxClaims = maxClaimsForLead(lead.timestamp);
+  const full = claims.length >= maxClaims;
   const shareText = formatLeadForShare(lead);
   const requested = parseRequestedFirms(lead.preselectedCompany);
 
@@ -339,7 +341,7 @@ function LeadCard({
                 full ? 'text-emerald-600' : claims.length > 0 ? 'text-slate-700' : 'text-slate-400'
               }`}
             >
-              {claims.length}/{MAX_CLAIMS_PER_LEAD}
+              {claims.length}/{maxClaims}
             </span>
           </div>
           <ClaimList claims={claims} />
@@ -569,7 +571,7 @@ export default async function CrmPage({ searchParams }: Props) {
     const n = claimsByLead.get(l.timestamp)?.length ?? 0;
     if (activeFilter === 'nerevendicate') return n === 0;
     if (activeFilter === 'revendicate') return n > 0;
-    if (activeFilter === 'pline') return n >= MAX_CLAIMS_PER_LEAD;
+    if (activeFilter === 'pline') return n >= maxClaimsForLead(l.timestamp);
     return true;
   });
 

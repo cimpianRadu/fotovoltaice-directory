@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { slugifyCity, getFinancingShort, isRetrofit } from '@/lib/utils-shared';
+import { maxClaimsForLead } from '@/lib/sheets-shared';
 import LeadCard, { type LeadCardData, type PortalMe } from './LeadCard';
 import FilterDropdown, { type FilterOption } from './FilterDropdown';
 
@@ -10,7 +11,6 @@ interface LeadFeedProps {
   cards: LeadCardData[];
   claimCounts: Record<string, number>;
   watchCounts: Record<string, number>;
-  maxClaims: number;
 }
 
 type AgeFilter = 'toate' | '7' | '14' | '14-30' | '30+';
@@ -154,7 +154,7 @@ function matches(c: LeadCardData, f: Filters): boolean {
   );
 }
 
-export default function LeadFeed({ cards, claimCounts, watchCounts, maxClaims }: LeadFeedProps) {
+export default function LeadFeed({ cards, claimCounts, watchCounts }: LeadFeedProps) {
   // Firma logată în portal (cookie httpOnly, deci se află doar de la server).
   // Pagina e ISR, așa că nu se poate citi cookie-ul la randare; un singur
   // apel la încărcare, iar până răspunde cardurile arată formularul complet.
@@ -307,7 +307,7 @@ export default function LeadFeed({ cards, claimCounts, watchCounts, maxClaims }:
         ).length
       : 0;
 
-  const disponibile = visible.filter((c) => (claimCounts[c.id] || 0) < maxClaims).length;
+  const disponibile = visible.filter((c) => (claimCounts[c.id] || 0) < maxClaimsForLead(c.id)).length;
 
   const filtered =
     age !== DEFAULT_AGE ||
@@ -472,7 +472,7 @@ export default function LeadFeed({ cards, claimCounts, watchCounts, maxClaims }:
               lead={card}
               initialClaims={claimCounts[card.id] || 0}
               initialWatches={watchCounts[card.id] || 0}
-              maxClaims={maxClaims}
+              maxClaims={maxClaimsForLead(card.id)}
               focused={card.id === focusId}
               me={me}
             />

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
-  MAX_CLAIMS_PER_LEAD,
+  maxClaimsForLead,
   claimsHeldForLead,
   countActiveClaimsForFirm,
   getClaims,
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
     // revendicările încă ținute, spre deosebire de fluxul public.
     const claimsForLead = claimsHeldForLead(allClaims, leadId);
 
-    if (!override && claimsForLead.length >= MAX_CLAIMS_PER_LEAD) {
+    if (!override && claimsForLead.length >= maxClaimsForLead(leadId)) {
       return NextResponse.json(
         { error: 'Cererea are deja numărul maxim de revendicări.', full: true },
         { status: 409 },

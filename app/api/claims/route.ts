@@ -3,7 +3,7 @@ import { revalidatePath } from 'next/cache';
 import { notifyClientFirmTook } from '@/lib/client-notify';
 import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
-  MAX_CLAIMS_PER_LEAD,
+  maxClaimsForLead,
   claimsHeldForLead,
   countActiveClaimsForFirm,
   findSubscriptionForCounty,
@@ -133,7 +133,7 @@ export async function POST(request: Request) {
     const allClaimsForLead = allClaims.filter((c) => c.leadId === leadId);
     const claimsForLead = claimsHeldForLead(allClaims, leadId);
 
-    if (claimsForLead.length >= MAX_CLAIMS_PER_LEAD) {
+    if (claimsForLead.length >= maxClaimsForLead(leadId)) {
       return NextResponse.json(
         { error: 'Cererea a fost deja revendicată de numărul maxim de firme.', full: true },
         { status: 409 }
@@ -266,7 +266,7 @@ export async function POST(request: Request) {
         scopLabel: getScopLabel(lead.scop, lead.scopDetalii),
       },
       claimCount,
-      maxClaims: MAX_CLAIMS_PER_LEAD,
+      maxClaims: maxClaimsForLead(leadId),
       firmHasPortalAccount,
       firmConfirmed,
     });

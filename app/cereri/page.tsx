@@ -4,7 +4,6 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 import {
-  MAX_CLAIMS_PER_LEAD,
   claimOccupiesLeadSlot,
   getClaims,
   getPublicLeads,
@@ -243,7 +242,6 @@ export default async function CereriPage() {
             cards={cards}
             claimCounts={claimCounts}
             watchCounts={watchCounts}
-            maxClaims={MAX_CLAIMS_PER_LEAD}
           />
         )}
 

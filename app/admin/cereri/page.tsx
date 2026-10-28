@@ -15,7 +15,7 @@ import {
   claimOccupiesLeadSlot,
   parseRequestedFirms,
 } from '@/lib/sheets-shared';
-import { MAX_CLAIMS_PER_LEAD } from '@/lib/sheets';
+import { maxClaimsForLead } from '@/lib/sheets';
 import { CLICKS_SINCE, getLeadsActivity, type LeadActivity } from '@/lib/admin-cereri';
 import { firmDisplayName } from '@/lib/client-account';
 import { normalizePhone } from '@/lib/sheets-shared';
@@ -292,7 +292,7 @@ export default async function CereriPage({ searchParams }: Props) {
         // Are rost de trimis doar ce o firmă poate revendica din link: vizibilă pe /cereri și cu loc liber.
         // Etapa deschisă pe deasupra: o firmă poate marca „Concretizat” fără ca cererea să fie
         // închisă în CRM, iar atunci ea stă încă pe /cereri (Constanța, 31 aug).
-        shareable: isPubliclyClaimable(lead) && held < MAX_CLAIMS_PER_LEAD && isEtapaOpen(e),
+        shareable: isPubliclyClaimable(lead) && held < maxClaimsForLead(lead.timestamp) && isEtapaOpen(e),
       };
     })
     .filter(({ lead, claims: cl, activity, etapa: e, power }) => {
@@ -704,7 +704,7 @@ export default async function CereriPage({ searchParams }: Props) {
                           </li>
                         ))}
                         <li className="text-[11px] text-slate-400">
-                          {held}/{MAX_CLAIMS_PER_LEAD} locuri ocupate
+                          {held}/{maxClaimsForLead(lead.timestamp)} locuri ocupate
                         </li>
                       </ul>
                     )}

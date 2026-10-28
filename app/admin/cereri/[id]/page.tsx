@@ -11,7 +11,7 @@ import {
   getWatches,
   isLeadInformez,
   isPriorityHeld,
-  MAX_CLAIMS_PER_LEAD,
+  maxClaimsForLead,
   type LeadClaim,
   type NewLead,
 } from '@/lib/sheets';
@@ -268,7 +268,8 @@ export default async function CererePage({ params }: Props) {
     hasPortalAccount: portalAccounts.has((c.email || '').trim().toLowerCase()),
   }));
   const held = leadClaims.filter(claimOccupiesLeadSlot).length;
-  const full = held >= MAX_CLAIMS_PER_LEAD;
+  const maxClaims = maxClaimsForLead(id);
+  const full = held >= maxClaims;
 
   const companies = getCompanies();
   const firms: FirmOption[] = companies
@@ -390,7 +391,7 @@ export default async function CererePage({ params }: Props) {
             title="Firme"
             aside={
               <span className={`text-xs font-semibold tabular-nums ${full ? 'text-emerald-600' : 'text-slate-500'}`}>
-                {held}/{MAX_CLAIMS_PER_LEAD} locuri ocupate
+                {held}/{maxClaims} locuri ocupate
               </span>
             }
           >

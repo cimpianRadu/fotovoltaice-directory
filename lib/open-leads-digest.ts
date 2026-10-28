@@ -27,6 +27,7 @@
 
 import {
   MAX_CLAIMS_PER_LEAD,
+  maxClaimsForLead,
   claimOccupiesLeadSlot,
   getClaims,
   getCountyAlertPrefs,
@@ -112,7 +113,7 @@ export function openLeadsForFirm(
   return leads
     .filter(isPubliclyClaimable)
     .filter((l) => keys.has(countyKey(l.judet || '')))
-    .filter((l) => !mine.has(l.timestamp) && (taken.get(l.timestamp) || 0) < MAX_CLAIMS_PER_LEAD)
+    .filter((l) => !mine.has(l.timestamp) && (taken.get(l.timestamp) || 0) < maxClaimsForLead(l.timestamp))
     .filter((l) => calendarAgeDays(leadFreshSince(l), now) <= maxAgeDays)
     .sort((a, b) => leadFreshSince(b).localeCompare(leadFreshSince(a)));
 }

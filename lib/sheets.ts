@@ -791,8 +791,6 @@ export async function getListingsSince(cutoff: Date): Promise<NewListing[]> {
 
 // --- Cereri publice (/cereri) + revendicări ---
 
-export const MAX_CLAIMS_PER_LEAD = 3;
-
 // Anonimizat prin construcție: tipul nu conține nume, email, telefon sau
 // companie. Mesajul apare DOAR trecut prin sanitizeMesajPublic (redactare +
 // trunchiere) și poate fi retras per lead prin coloana MesajAscuns.
@@ -2951,6 +2949,8 @@ export {
   LEAD_CLOSED_STATUSES,
   CONTACT_STATES,
   MAX_ACTIVE_CLAIMS_PER_FIRM,
+  MAX_CLAIMS_PER_LEAD,
+  maxClaimsForLead,
   CLAIM_SOURCES,
   CLAIM_STATUSES,
   CLAIM_STATUS_LABELS,

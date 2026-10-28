@@ -15,7 +15,7 @@ import {
   getFirmProfiles,
   latestClaimIdentity,
   resolveGroupProfile,
-  MAX_CLAIMS_PER_LEAD,
+  maxClaimsForLead,
   isPriorityHeld,
   sanitizeMesajPublic,
   type NewLead,
@@ -275,7 +275,7 @@ export default async function PortalPage() {
         isPubliclyClaimable(l) &&
         calendarAgeDays(l.reactivataLa || l.timestamp) <= NEW_LEADS_DAYS &&
         !claimedByMe.has(l.timestamp) &&
-        (heldByLead.get(l.timestamp) || 0) < MAX_CLAIMS_PER_LEAD,
+        (heldByLead.get(l.timestamp) || 0) < maxClaimsForLead(l.timestamp),
     ).length;
   } catch (err) {
     console.error('[portal] failed to load claims:', err);

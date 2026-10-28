@@ -16,7 +16,7 @@ import {
   isLeadClosed,
   isLeadHidden,
   isSameFirm,
-  MAX_CLAIMS_PER_LEAD,
+  maxClaimsForLead,
   type PortalAccessEvent,
   type LeadClaim,
   type CrmFirm,
@@ -673,7 +673,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       : openLeads
           .filter((l) => {
             const held = heldByLead.get(l.timestamp) ?? [];
-            if (held.length >= MAX_CLAIMS_PER_LEAD) return false;
+            if (held.length >= maxClaimsForLead(l.timestamp)) return false;
             return !held.some((c) => isSameFirm(c, identity) || members.includes(c.email));
           })
           .map((l) => {
@@ -683,7 +683,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
             return {
               id: l.timestamp,
               label: leadLabel(l, l.timestamp),
-              slots: MAX_CLAIMS_PER_LEAD - (heldByLead.get(l.timestamp)?.length ?? 0),
+              slots: maxClaimsForLead(l.timestamp) - (heldByLead.get(l.timestamp)?.length ?? 0),
               score: m?.score ?? 0,
               reasons: m?.reasons ?? [],
               warnings: m?.warnings ?? [],

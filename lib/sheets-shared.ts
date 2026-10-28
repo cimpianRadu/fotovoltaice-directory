@@ -239,8 +239,26 @@ export function countActiveClaimsForFirm<
   ).length;
 }
 
+/** Câte firme pot ține o cerere în același timp. */
+export const MAX_CLAIMS_PER_LEAD = 3;
+
 /**
- * Revendicarea ține unul din cele MAX_CLAIMS_PER_LEAD locuri ale cererii.
+ * Cererile cu mai multe locuri decât MAX_CLAIMS_PER_LEAD, puse de mână. Cheia e
+ * ID-ul cererii (timestamp-ul din coloana A a tabului Leads). Plafonul rămâne
+ * regula; aici intră doar cereri la care clientul încă vrea oferte după ce
+ * locurile s-au umplut, iar firmele care le țin nu le-au mutat din „de sunat".
+ */
+const LEAD_CLAIM_LIMITS: Record<string, number> = {
+  // Călărași, 8 kW: clientul a reconfirmat pe 28 oct 2026 că vrea oferte.
+  '2026-10-06T14:02:59.055Z': 5,
+};
+
+export function maxClaimsForLead(leadId: string): number {
+  return LEAD_CLAIM_LIMITS[leadId] ?? MAX_CLAIMS_PER_LEAD;
+}
+
+/**
+ * Revendicarea ține unul din locurile cererii (`maxClaimsForLead`).
  * Renunțarea îl eliberează, la fel și `pierdut`: o firmă care a marcat că
  * clientul a ales pe altcineva sau a amânat n-are ce discuta cu el, iar locul
  * ținut de ea arăta cererea ca plină în feed degeaba. Apelul confirmat NU
