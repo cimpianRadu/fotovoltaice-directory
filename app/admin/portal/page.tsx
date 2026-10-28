@@ -7,7 +7,10 @@ import {
   getCountyAlertPrefs,
   getFirmEmailLinks,
   getDeactivatedAccounts,
+  getFirmProfiles,
+  resolveGroupProfile,
   type DeactivatedAccount,
+  type FirmProfile,
   resolveEmailGroup,
   resolveGroupAlertPref,
   type CountyAlertPref,
@@ -94,6 +97,11 @@ interface PortalAccount {
   /** Revendicări cu datele deblocate de 2+ zile pe care firma nu le-a atins. */
   untouched: number;
   company: Company | undefined;
+  /**
+   * Ce a declarat firma în portal („Profil Firmă"): nume, persoană, telefon.
+   * Singura identitate a unui cont care n-a revendicat nimic și nu e în director.
+   */
+  profile: FirmProfile | null;
   crmFirm: CrmFirm | undefined;
   /**
    * Județele pentru alerte, ale FIRMEI: lista salvată cel mai recent de pe
@@ -350,18 +358,24 @@ function AccountCard({
   leadById: Map<string, NewLead>;
 }) {
   const state = stateOf(account);
-  // Numele firmei: din revendicări (identitatea ei reală în portal), altfel din
-  // director dacă emailul e cel public al unei firme listate.
+  // Numele firmei: din revendicări (identitatea ei reală în portal), apoi din
+  // profilul completat în portal, altfel din director dacă emailul e cel public
+  // al unei firme listate.
   const identityClaim = account.claims.find((c) => c.numeFirma);
-  const firmName = identityClaim?.numeFirma || account.company?.name || '';
+  const firmName =
+    identityClaim?.numeFirma || account.profile?.numeFirma || account.company?.name || '';
   const phone =
-    account.claims.find((c) => c.telefon)?.telefon || account.company?.contact.phone || '';
+    account.claims.find((c) => c.telefon)?.telefon ||
+    account.profile?.telefon ||
+    account.company?.contact.phone ||
+    '';
   // Omul din spatele contului: la telefon pe el îl cauți, nu firma. Îl iau de pe
   // revendicarea care a dat numele firmei, ca să fie aceeași persoană cu ea;
   // dacă acolo lipsește („-" = necompletat), de pe oricare alta.
   const contactName =
     (identityClaim?.numeContact !== '-' ? identityClaim?.numeContact : '') ||
     account.claims.find((c) => c.numeContact && c.numeContact !== '-')?.numeContact ||
+    account.profile?.numeContact ||
     '';
 
   const rows: PortalClaimRow[] = account.claims
@@ -567,16 +581,19 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   let alertPrefs: CountyAlertPref[];
   let emailLinks: FirmEmailLink[];
   let deactivatedList: DeactivatedAccount[];
+  let profiles: FirmProfile[];
   try {
-    [events, claims, firms, leads, alertPrefs, emailLinks, deactivatedList] = await Promise.all([
-      getPortalAccessEvents(),
-      getClaims(),
-      getCrmFirms(),
-      getLeadsSince(new Date(0)),
-      getCountyAlertPrefs(),
-      getFirmEmailLinks(),
-      getDeactivatedAccounts(),
-    ]);
+    [events, claims, firms, leads, alertPrefs, emailLinks, deactivatedList, profiles] =
+      await Promise.all([
+        getPortalAccessEvents(),
+        getClaims(),
+        getCrmFirms(),
+        getLeadsSince(new Date(0)),
+        getCountyAlertPrefs(),
+        getFirmEmailLinks(),
+        getDeactivatedAccounts(),
+        getFirmProfiles(),
+      ]);
   } catch (err) {
     return (
       <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
@@ -650,11 +667,14 @@ export default async function PortalAccessPage({ searchParams }: Props) {
             isSameFirm({ numeFirma: c.name, telefon: c.contact.phone }, mine[0]),
           )
         : undefined);
+    const profile = resolveGroupProfile(profiles, members);
     const identity = mine[0]
       ? { numeFirma: mine[0].numeFirma, telefon: mine[0].telefon }
-      : company
-        ? { numeFirma: company.name, telefon: company.contact.phone }
-        : undefined;
+      : profile
+        ? { numeFirma: profile.numeFirma, telefon: profile.telefon }
+        : company
+          ? { numeFirma: company.name, telefon: company.contact.phone }
+          : undefined;
 
     // Fără nume și telefon n-am ce scrie în „Revendicări", deci butonul de
     // atribuire nu apare: un email singur nu identifică o firmă.
@@ -663,7 +683,9 @@ export default async function PortalAccessPage({ searchParams }: Props) {
           email,
           numeFirma: identity.numeFirma,
           numeContact:
-            mine.find((c) => c.numeContact && c.numeContact !== '-')?.numeContact || '-',
+            mine.find((c) => c.numeContact && c.numeContact !== '-')?.numeContact ||
+            profile?.numeContact ||
+            '-',
           telefon: identity.telefon,
         }
       : null;
@@ -716,6 +738,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         isClaimUntouched({ ...c, noteCount: c.firmNotes.length }),
       ).length,
       company,
+      profile,
       crmFirm: identity ? firms.find((f) => isSameFirm(f, identity)) : undefined,
       identity,
       // Completat după ce toate conturile există (are nevoie de ele, două câte două).

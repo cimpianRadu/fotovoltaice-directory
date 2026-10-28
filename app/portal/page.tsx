@@ -52,6 +52,7 @@ import PortalClaimList from './PortalClaimList';
 import PortalCountyAlerts from './PortalCountyAlerts';
 import PortalFirmEmails from './PortalFirmEmails';
 import { MAX_FIRM_EMAILS } from '@/lib/portal-firm-emails';
+import { getCompanies } from '@/lib/utils';
 import PortalLanding from './PortalLanding';
 import PortalReservedLeads, { type ReservedLead } from './PortalReservedLeads';
 import LogoutButton from './LogoutButton';
@@ -128,6 +129,9 @@ export default async function PortalPage() {
   let firmName = '';
   let profile = { numeFirma: '', numeContact: '', telefon: '' };
   let profileSaved = false;
+  // Contul fără nicio identitate (nici profil, nici revendicare) nu vede
+  // portalul până nu spune ce firmă e și la ce telefon o găsim.
+  let needsProfile = false;
   let slotsUsed = 0;
   // Cereri revendicabile acum, din județele bifate, din ultima săptămână, pe
   // care firma nu le are deja: motivul de a deschide /cereri azi.
@@ -256,10 +260,16 @@ export default async function PortalPage() {
     const saved = resolveGroupProfile(profiles, emails);
     const identity = saved ?? latestClaimIdentity(claims, emails);
     profileSaved = Boolean(saved);
+    needsProfile = !identity;
+    // Firma listată care intră prima dată cu adresa publică: îi precompletăm
+    // numele și telefonul din director, ca doar să le confirme.
+    const listed = needsProfile
+      ? getCompanies().find((c) => mineEmails.has(c.contact.email?.trim().toLowerCase() || ''))
+      : undefined;
     profile = {
-      numeFirma: identity?.numeFirma || '',
+      numeFirma: identity?.numeFirma || listed?.name || '',
       numeContact: identity?.numeContact || '',
-      telefon: identity?.telefon || '',
+      telefon: identity?.telefon || listed?.contact.phone || '',
     };
     firmName = identity?.numeFirma || '';
     slotsUsed = identity ? countActiveClaimsForFirm(claims, identity) : 0;
@@ -286,26 +296,43 @@ export default async function PortalPage() {
     ? `/cereri?judet=${alertCounties.map(slugifyCity).join(',')}`
     : '/cereri';
 
+  const accountHeader = (
+    <div className="flex items-start justify-between gap-3">
+      <div className="min-w-0">
+        <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+          Contul firmei
+        </p>
+        <h1 className="mt-0.5 line-clamp-2 text-xl font-bold leading-tight text-gray-900 sm:text-2xl">
+          {firmName || 'Cererile firmei tale'}
+        </h1>
+        <p className="mt-0.5 truncate text-xs text-gray-500">
+          {email}
+          {linked.length > 0 && ` + ${linked.length} ${linked.length === 1 ? 'coleg' : 'colegi'}`}
+        </p>
+      </div>
+      <LogoutButton />
+    </div>
+  );
+
+  // Poarta: doar formularul, fără cereri, alerte sau adrese. După salvare
+  // pagina se reîmprospătează și firma intră în portalul întreg.
+  if (needsProfile) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 pt-6 pb-10 sm:pt-8">
+        <section className="rounded-2xl border border-border bg-white p-4 sm:p-5">
+          {accountHeader}
+          <PortalFirmProfile initial={profile} saved={false} gate />
+        </section>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-3xl mx-auto px-4 pt-6 pb-10 sm:pt-8">
       {/* Contul: cine ești, ce ai în lucru, cât loc mai ai. Pe telefon e tot ce
           încape în primul ecran, deci doar cifrele și acțiunea următoare. */}
       <section className="rounded-2xl border border-border bg-white p-4 sm:p-5">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">
-              Contul firmei
-            </p>
-            <h1 className="mt-0.5 line-clamp-2 text-xl font-bold leading-tight text-gray-900 sm:text-2xl">
-              {firmName || 'Cererile firmei tale'}
-            </h1>
-            <p className="mt-0.5 truncate text-xs text-gray-500">
-              {email}
-              {linked.length > 0 && ` + ${linked.length} ${linked.length === 1 ? 'coleg' : 'colegi'}`}
-            </p>
-          </div>
-          <LogoutButton />
-        </div>
+        {accountHeader}
 
         {!loadError && <PortalFirmProfile initial={profile} saved={profileSaved} />}
 

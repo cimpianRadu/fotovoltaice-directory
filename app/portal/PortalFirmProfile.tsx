@@ -16,8 +16,19 @@ interface Profile {
  * Datele firmei din cardul contului: cu ele revendici dintr-un click pe
  * /cereri. Fără profil complet, formularul e deschis din prima, pentru că
  * altfel prima revendicare ar cere oricum aceleași trei câmpuri.
+ *
+ * `gate`: contul n-are nicio identitate (nici profil, nici revendicare), deci
+ * portalul arată doar formularul ăsta până e completat (28 oct 2026).
  */
-export default function PortalFirmProfile({ initial, saved }: { initial: Profile; saved: boolean }) {
+export default function PortalFirmProfile({
+  initial,
+  saved,
+  gate = false,
+}: {
+  initial: Profile;
+  saved: boolean;
+  gate?: boolean;
+}) {
   const router = useRouter();
   const [profile, setProfile] = useState(initial);
   const [open, setOpen] = useState(!saved);
@@ -75,10 +86,16 @@ export default function PortalFirmProfile({ initial, saved }: { initial: Profile
     <form onSubmit={submit} className="mt-3 space-y-3 rounded-xl border border-primary/40 bg-primary/5 p-3 sm:p-4">
       <div>
         <p className="text-sm font-semibold text-gray-900">
-          {isSaved ? 'Datele firmei' : 'Completează o dată datele firmei'}
+          {gate
+            ? 'Un pas înainte de cereri: datele firmei'
+            : isSaved
+              ? 'Datele firmei'
+              : 'Completează o dată datele firmei'}
         </p>
         <p className="text-xs text-gray-600">
-          Le folosim la fiecare revendicare, ca să nu le mai scrii în formular.
+          {gate
+            ? 'Le completezi o singură dată. Apoi revendici orice cerere dintr-un click, fără formular.'
+            : 'Le folosim la fiecare revendicare, ca să nu le mai scrii în formular.'}
         </p>
       </div>
       <Input label="Nume firmă" name="numeFirma" required defaultValue={profile.numeFirma} placeholder="SC Firma SRL" />
