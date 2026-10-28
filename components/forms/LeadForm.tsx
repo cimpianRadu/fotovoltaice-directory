@@ -32,7 +32,7 @@ import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 import { DEFAULT_TARIFF_RON_PER_KWH } from '@/lib/pv-constants';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
-import LeadPhotoUpload from './LeadPhotoUpload';
+import LeadPhotoUpload, { PHOTO_CARD_CLASS, PhotoPitch } from './LeadPhotoUpload';
 import { trackEvent } from '@/lib/analytics';
 import { getAttribution } from '@/lib/attribution';
 import {
@@ -1074,10 +1074,28 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
           </p>
         </div>
 
+        {/* Pozele, primele după confirmare (28 oct 2026): sunt singurul detaliu
+            care schimbă câte firme preiau cererea, vezi PhotoPitch. Încărcarea
+            are nevoie de cererea salvată și de tokenul ei; fără ele (răspuns
+            vechi din cache, PORTAL_SECRET lipsă) rămâne varianta pe email. */}
+        {leadRef && photoToken ? (
+          <LeadPhotoUpload leadId={leadRef} token={photoToken} mailtoFallback={mailto} />
+        ) : (
+          <div className={PHOTO_CARD_CLASS}>
+            <PhotoPitch />
+            <a
+              href={mailto}
+              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
+            >
+              Trimite pozele pe email
+            </a>
+          </div>
+        )}
+
         {contUrl && <FollowRequestCTA contUrl={contUrl} contEmail={contEmail} leadId={leadRef} />}
 
-        {/* Restul detaliilor, plus pozele. Fără buton de salvare: fiecare răspuns
-            pleacă singur spre cerere, vezi scheduleSave. */}
+        {/* Restul detaliilor. Fără buton de salvare: fiecare răspuns pleacă
+            singur spre cerere, vezi scheduleSave. */}
         <div className="rounded-xl border border-border bg-white p-5 sm:p-6">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -1112,28 +1130,6 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
             ))}
           </div>
 
-          {/* Încărcarea are nevoie de cererea salvată și de tokenul ei; fără
-              ele (răspuns vechi din cache, PORTAL_SECRET lipsă) rămâne varianta
-              pe email, care a funcționat până acum. */}
-          {leadRef && photoToken ? (
-            <LeadPhotoUpload leadId={leadRef} token={photoToken} mailtoFallback={mailto} />
-          ) : (
-            <div className="mt-6 pt-5 border-t border-border">
-              <p className="font-semibold text-gray-900 text-sm">
-                Poze cu acoperișul și tabloul electric
-              </p>
-              <p className="mt-1 text-sm text-gray-700 leading-relaxed">
-                Două-trei poze: una cu acoperișul văzut din exterior, una cu tabloul electric și
-                contorul. Cu ele, instalatorii pot calcula montajul fără să mai vină întâi în vizită.
-              </p>
-              <a
-                href={mailto}
-                className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
-              >
-                Trimite pozele pe email
-              </a>
-            </div>
-          )}
         </div>
 
         {/* Nimic promoțional nu stă lângă formular: pagina are o singură treabă,

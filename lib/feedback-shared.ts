@@ -30,13 +30,10 @@ export const TESTIMONIAL_OPTIONS: Option[] = [
   { value: 'nu', label: 'Nu' },
 ];
 
-// Firmele nu mai au varianta „fără nume" (7 oct 2026): un testimonial de firmă
-// anonim nu convinge pe nimeni. Răspunsurile vechi cu „da-fara-nume" rămân
-// în Sheets și se publică tot fără nume.
-export const FIRM_TESTIMONIAL_OPTIONS: Option[] = [
-  { value: 'da', label: 'Da, publicați-o' },
-  { value: 'nu', label: 'Nu, doar pentru uz intern' },
-];
+// Firmele nu mai aleg da/nu la publicare (28 oct 2026): scriu, opțional, o
+// recomandare anume pentru site (coloana M din „Feedback firme"), iar coloana L
+// se scrie singură, „da" când recomandarea există. Rândurile vechi păstrează
+// „da" / „da-fara-nume" / „nu" și se publică după regula lor, vezi lib/testimoniale.
 
 export const DATE_CORECTE_OPTIONS: Option[] = [
   { value: 'da', label: 'Da, corecte' },

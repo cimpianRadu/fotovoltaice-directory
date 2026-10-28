@@ -182,6 +182,7 @@ export default async function CereriPage() {
       // Fără textul de la „Altceva”: pe feedul public rămâne doar eticheta.
       scopLabel: getScopLabel(l.scop),
       arePoze: l.arePoze,
+      nrPoze: l.nrPoze,
       verificata: l.verificata,
     };
   });

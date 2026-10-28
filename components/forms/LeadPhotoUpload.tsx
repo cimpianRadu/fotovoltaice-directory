@@ -31,6 +31,39 @@ function mbLabel(bytes: number): string {
   return `${Math.round(bytes / (1024 * 1024))} MB`;
 }
 
+export const PHOTO_CARD_CLASS = 'rounded-xl border-2 border-primary/40 bg-amber-50/60 p-5 sm:p-6';
+
+/**
+ * De ce merită pozele, spus cu cifra noastră, nu cu una estimată. Cererile
+ * primite între 9 sept și 21 oct 2026 (neascunse, nedublate, cel puțin 7 zile
+ * vechime): cele 19 cu poze au fost preluate în medie de 1,16 firme, cele 123
+ * fără poze de 0,65, deci +78%. Sunt firme care au cerut contactul, nu oferte,
+ * iar consumul și bugetul n-au schimbat nimic în aceleași date. Dacă pică sub
+ * ~60% la o recalculare, propoziția se rescrie.
+ */
+export function PhotoPitch() {
+  return (
+    <>
+      <p className="flex items-center gap-2 font-semibold text-gray-900">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0 text-primary-dark">
+          <path d="M3 8.8A1.8 1.8 0 0 1 4.8 7h1.9l1.4-2h7.8l1.4 2h1.9A1.8 1.8 0 0 1 21 8.8v8.4A1.8 1.8 0 0 1 19.2 19H4.8A1.8 1.8 0 0 1 3 17.2z" />
+          <circle cx="12" cy="13" r="3.2" />
+        </svg>
+        Adăugați 2-3 poze cu acoperișul
+      </p>
+      <p className="mt-2 text-sm text-gray-800 leading-relaxed">
+        În septembrie și octombrie, cererile cu poze au atras în medie{' '}
+        <strong>cu aproape 80% mai multe firme</strong> decât cele fără.
+      </p>
+      <p className="mt-2 text-sm text-gray-700 leading-relaxed">
+        Una cu acoperișul văzut din exterior, una cu tabloul electric și contorul. Cu ele,
+        instalatorii pot calcula montajul fără să mai vină întâi în vizită. Le vede doar
+        instalatorul care preia cererea.
+      </p>
+    </>
+  );
+}
+
 export default function LeadPhotoUpload({
   leadId,
   token,
@@ -92,14 +125,8 @@ export default function LeadPhotoUpload({
   }
 
   return (
-    <div className="mt-6 pt-5 border-t border-border">
-      <p className="font-semibold text-gray-900 text-sm">
-        Poze cu acoperișul și tabloul electric
-      </p>
-      <p className="mt-1 text-sm text-gray-700 leading-relaxed">
-        Două-trei poze: una cu acoperișul văzut din exterior, una cu tabloul electric și
-        contorul. Cu ele, instalatorii pot calcula montajul fără să mai vină întâi în vizită.
-      </p>
+    <div className={PHOTO_CARD_CLASS}>
+      <PhotoPitch />
 
       {done.length > 0 && (
         <ul className="mt-4 flex flex-wrap gap-2">

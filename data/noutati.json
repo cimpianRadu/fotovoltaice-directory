@@ -1,5 +1,17 @@
 [
   {
+    "data": "2026-10-28",
+    "titlu": "Vezi pe card dacă cererea are poze",
+    "text": "Pe pagina de cereri vezi acum câte poze cu acoperișul a urcat clientul, cu o miniatură estompată. Le vezi întregi în portal, după ce preiei cererea.",
+    "link": "/cereri",
+    "linkText": "Vezi cererile"
+  },
+  {
+    "data": "2026-10-28",
+    "titlu": "Recomandarea ta, pe prima pagină",
+    "text": "După o lucrare semnată prin platformă, în formularul de feedback poți lăsa o recomandare. O afișăm pe prima pagină a site-ului, acolo unde intră clienții care cer oferte, cu numele firmei tale. Restul răspunsurilor rămân la noi."
+  },
+  {
     "data": "2026-10-27",
     "titlu": "Cererile vin cu un număr la care se poate suna",
     "text": "Clientul nu mai poate trimite cererea cu o cifră în plus sau lipsă în telefon, ori cu numele scris în locul numărului. Numerele din străinătate apar cu prefixul țării, ca să le poți suna direct.",

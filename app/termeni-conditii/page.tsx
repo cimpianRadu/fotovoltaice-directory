@@ -183,10 +183,11 @@ export default function TermeniConditii() {
             sistemului. Numele apare doar dacă a ales varianta „cu numele meu”.
           </li>
           <li>
-            <strong>De la firma instalatoare</strong> putem publica părerea scrisă de ea, județul,
-            tipul lucrării și puterea instalată. Numele firmei și linkul spre profilul ei apar doar
-            dacă a ales varianta „cu numele firmei”. Studiile de caz cu fotografii de la montaj se
-            stabilesc separat, în scris, cu firma.
+            <strong>De la firma instalatoare</strong> publicăm doar recomandarea scrisă de ea în
+            câmpul dedicat din formular, dacă l-a completat, cu numele firmei și linkul spre profilul
+            ei, plus județul, tipul lucrării și puterea instalată. Celelalte răspunsuri ale firmei
+            rămân interne. Studiile de caz cu fotografii de la montaj se stabilesc separat, în scris,
+            cu firma.
           </li>
           <li>
             Nu publicăm niciodată numărul de telefon, adresa de email sau adresa exactă a lucrării.

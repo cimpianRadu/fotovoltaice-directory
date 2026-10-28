@@ -12,10 +12,12 @@ import type { TestimonialCard } from '@/components/home/TestimonialCarousel';
 //   „da-fara-nume” numele se scoate. Firma cu care a semnat NU se numește pe
 //   cardul clientului: acordul e al clientului, nu al firmei.
 // - Firme: vin din tabul „Feedback firme” (formularul /feedback/firma) și intră
-//   în data/testimoniale-firme.json DOAR cu „da” în coloana L; la
+//   în data/testimoniale-firme.json DOAR cu „da” în coloana L. Din 28 oct 2026
+//   textul publicat e recomandarea din coloana M, nu „Experiență” (J), care
+//   rămâne internă; la rândurile de dinainte, textul e J, iar la
 //   „da-fara-nume” numele firmei se scoate. `slug` e profilul din director
-//   (acordul „cu numele firmei” acoperă și linkul); null când firma nu e
-//   listată. Clientul NU se numește pe cardul firmei.
+//   (acordul acoperă și linkul); null când firma nu e listată. Clientul NU se
+//   numește pe cardul firmei.
 // - Părerea generală a unei firme (/feedback/platforma, id „platforma”) n-are
 //   lucrare: `tip` și `putere` sunt null, cardul arată doar județul.
 //   La „da-fara-nume” `firma` e null. Cardurile astea stau mereu la coadă,

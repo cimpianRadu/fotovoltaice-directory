@@ -14,7 +14,6 @@ import {
   DATE_LIPSA_OPTIONS,
   DATE_UTILE_OPTIONS,
   FEEDBACK_TEXT_MAX,
-  FIRM_TESTIMONIAL_OPTIONS,
   OFERTE_OPTIONS,
   PRIMUL_CONTACT_OPTIONS,
   SATISFACTIE_VALUES,
@@ -74,9 +73,7 @@ export async function POST(request: Request) {
       if (!isOption(DATE_UTILE_OPTIONS, body.dateUtile)) {
         return bad('Spuneți-ne ce puteți face cu datele din cereri.', 'dateUtile');
       }
-      if (!isOption(FIRM_TESTIMONIAL_OPTIONS, body.testimonial)) {
-        return bad('Alegeți dacă putem publica părerea dumneavoastră.', 'testimonial');
-      }
+      const recomandare = text(body.recomandare);
       if (await hasFeedback('firma', id, firma)) {
         return NextResponse.json({ success: true, duplicate: true });
       }
@@ -91,16 +88,17 @@ export async function POST(request: Request) {
         satisfactie,
         experienta: text(body.experienta),
         imbunatatiri: text(body.imbunatatiri),
-        testimonial: body.testimonial,
+        testimonial: recomandare ? 'da' : 'nu',
+        recomandare,
       });
       await sendEmail({
         to: 'contact@instalatori-fotovoltaice.ro',
-        subject: `[Feedback platformă] ${firma}: ${satisfactie}/5${body.testimonial !== 'nu' ? ', acord de publicare' : ''}`,
+        subject: `[Feedback platformă] ${firma}: ${satisfactie}/5${recomandare ? ', recomandare pentru site' : ''}`,
         html: `<p><strong>${escapeHtml(firma)}</strong>, părere generală despre platformă</p>
 <p>Nota: <strong>${satisfactie}/5</strong> · date corecte: ${escapeHtml(String(body.dateCorecte))} · ce pot face cu ele: ${escapeHtml(String(body.dateUtile))}${dateLipsaList(body.dateLipsa) ? ` · ar mai vrea: ${escapeHtml(dateLipsaList(body.dateLipsa))}` : ''}</p>
 <p><strong>Cum e colaborarea:</strong><br>${escapeHtml(text(body.experienta))}</p>
 ${text(body.imbunatatiri) ? `<p><strong>Ce să îmbunătățim:</strong><br>${escapeHtml(text(body.imbunatatiri))}</p>` : ''}
-<p>Publicare: <strong>${escapeHtml(String(body.testimonial))}</strong></p>`,
+${recomandare ? `<p><strong>Recomandare pentru site:</strong><br>${escapeHtml(recomandare)}</p>` : '<p>Fără recomandare pentru site.</p>'}`,
       });
       return NextResponse.json({ success: true });
     }
@@ -165,9 +163,7 @@ ${text(body.imbunatatiri) ? `<p><strong>Ce să îmbunătățim:</strong><br>${es
       if (!isOption(DATE_UTILE_OPTIONS, body.dateUtile)) {
         return bad('Spuneți-ne ce ați putut face cu datele din cerere.', 'dateUtile');
       }
-      if (!isOption(FIRM_TESTIMONIAL_OPTIONS, body.testimonial)) {
-        return bad('Alegeți dacă putem publica părerea dumneavoastră.', 'testimonial');
-      }
+      const recomandare = text(body.recomandare);
 
       const putereRaw = text(body.putere, 20).replace(',', '.');
       const putere = putereRaw && Number.isFinite(Number(putereRaw)) && Number(putereRaw) > 0 ? putereRaw : '';
@@ -182,7 +178,8 @@ ${text(body.imbunatatiri) ? `<p><strong>Ce să îmbunătățim:</strong><br>${es
         satisfactie,
         experienta: text(body.experienta),
         imbunatatiri: text(body.imbunatatiri),
-        testimonial: body.testimonial,
+        testimonial: recomandare ? 'da' : 'nu',
+        recomandare,
       });
     }
 

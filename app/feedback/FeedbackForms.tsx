@@ -7,7 +7,6 @@ import {
   DATE_CORECTE_OPTIONS,
   DATE_LIPSA_OPTIONS,
   DATE_UTILE_OPTIONS,
-  FIRM_TESTIMONIAL_OPTIONS,
   OFERTE_OPTIONS,
   PRIMUL_CONTACT_OPTIONS,
   SATISFACTIE_VALUES,
@@ -120,6 +119,35 @@ function MultiChoice({
       </div>
       {hint && <p className="mt-1 text-xs text-gray-500">{hint}</p>}
     </fieldset>
+  );
+}
+
+// Ce publicăm de la o firmă (din 28 oct 2026): doar textul scris aici, nu
+// răspunsurile de mai sus. Până atunci firma alegea da/nu pentru tot formularul,
+// iar cine avea ceva critic de spus (Cromo, 3/5) alegea „nu", deci n-aveam nici
+// testimonial, nici o separare între ce e intern și ce e de afișat. Acum
+// feedbackul rămâne sincer și intern, iar recomandarea e opțională, scrisă
+// anume pentru site, prezentată ca vizibilitate pentru firmă.
+function RecommendationField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <div className="border-t border-border pt-5">
+      <p className="font-semibold text-gray-900">Vreți să apăreți pe prima pagină?</p>
+      <p className="mt-1 text-sm text-gray-600 leading-relaxed">
+        Scrieți câteva cuvinte despre cum a fost. Le afișăm pe prima pagină a site-ului, acolo
+        unde intră clienții care cer oferte, semnate cu numele firmei dumneavoastră. E vizibilitate
+        gratuită pentru firmă.
+      </p>
+      <div className="mt-3">
+        <Input
+          label="Recomandarea dumneavoastră"
+          name="recomandare"
+          type="textarea"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="Opțional"
+        />
+      </div>
+    </div>
   );
 }
 
@@ -285,7 +313,7 @@ export function FirmFeedbackForm({
   const [satisfactie, setSatisfactie] = useState('');
   const [experienta, setExperienta] = useState('');
   const [imbunatatiri, setImbunatatiri] = useState('');
-  const [testimonial, setTestimonial] = useState('');
+  const [recomandare, setRecomandare] = useState('');
   const { status, error, submit } = useSubmit(() => ({
     role: 'firma',
     id,
@@ -298,7 +326,7 @@ export function FirmFeedbackForm({
     satisfactie,
     experienta,
     imbunatatiri,
-    testimonial,
+    recomandare,
   }));
 
   if (status === 'done') return <FeedbackThanks />;
@@ -354,6 +382,7 @@ export function FirmFeedbackForm({
         onChange={(e) => setExperienta(e.target.value)}
         placeholder="Ce a mers bine, ce nu..."
         required
+        hint="Rămâne la noi, nu o publicăm. Ne ajută să reparăm ce nu merge."
         error={error?.field === 'experienta' ? error.message : undefined}
       />
       <Input
@@ -364,21 +393,11 @@ export function FirmFeedbackForm({
         onChange={(e) => setImbunatatiri(e.target.value)}
         placeholder="Opțional"
       />
-      <Choice
-        label="Putem publica părerea pe site și pe rețelele noastre sociale, cu numele firmei?"
-        options={FIRM_TESTIMONIAL_OPTIONS}
-        value={testimonial}
-        onChange={setTestimonial}
-        required
-        error={error?.field === 'testimonial'}
-        hint="Apare pe prima pagină a site-ului, acolo unde intră clienții care cer oferte."
-        strong="da"
-        subtle={['nu']}
-      />
+      <RecommendationField value={recomandare} onChange={setRecomandare} />
       <PublishNote>
-        Dacă alegeți „da", putem publica textul scris mai sus, județul, tipul lucrării și puterea
-        instalată, împreună cu numele firmei și un link spre profilul ei. Studiile de caz cu
-        fotografii se stabilesc separat, în scris.
+        Publicăm doar recomandarea, pe site și pe rețelele noastre sociale, cu numele firmei și
+        linkul spre pagina ei, plus județul, tipul lucrării și puterea instalată. Răspunsurile de
+        mai sus rămân la noi. Studiile de caz cu fotografii se stabilesc separat, în scris.
       </PublishNote>
       {error && error.field !== 'experienta' && <p className="text-sm text-red-600">{error.message}</p>}
       <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full">
@@ -398,7 +417,7 @@ export function PlatformFeedbackForm({ token, firma }: { token: string; firma: s
   const [satisfactie, setSatisfactie] = useState('');
   const [experienta, setExperienta] = useState('');
   const [imbunatatiri, setImbunatatiri] = useState('');
-  const [testimonial, setTestimonial] = useState('');
+  const [recomandare, setRecomandare] = useState('');
   const { status, error, submit } = useSubmit(() => ({
     role: 'platforma',
     id: 'platforma',
@@ -410,7 +429,7 @@ export function PlatformFeedbackForm({ token, firma }: { token: string; firma: s
     satisfactie,
     experienta,
     imbunatatiri,
-    testimonial,
+    recomandare,
   }));
 
   if (status === 'done') return <FeedbackThanks />;
@@ -457,6 +476,7 @@ export function PlatformFeedbackForm({ token, firma }: { token: string; firma: s
         onChange={(e) => setExperienta(e.target.value)}
         placeholder="Cererile primite, portalul, clienții, ce v-a ajutat..."
         required
+        hint="Rămâne la noi, nu o publicăm. Ne ajută să reparăm ce nu merge."
         error={error?.field === 'experienta' ? error.message : undefined}
       />
       <Input
@@ -467,20 +487,10 @@ export function PlatformFeedbackForm({ token, firma }: { token: string; firma: s
         onChange={(e) => setImbunatatiri(e.target.value)}
         placeholder="Opțional"
       />
-      <Choice
-        label="Putem publica părerea pe site și pe rețelele noastre sociale, cu numele firmei?"
-        options={FIRM_TESTIMONIAL_OPTIONS}
-        value={testimonial}
-        onChange={setTestimonial}
-        required
-        error={error?.field === 'testimonial'}
-        hint="Apare pe prima pagină a site-ului, acolo unde intră clienții care cer oferte."
-        strong="da"
-        subtle={['nu']}
-      />
+      <RecommendationField value={recomandare} onChange={setRecomandare} />
       <PublishNote>
-        Dacă alegeți „da", putem publica textul scris mai sus și județul, împreună cu numele firmei
-        și un link spre profilul ei.
+        Publicăm doar recomandarea, pe site și pe rețelele noastre sociale, cu numele firmei,
+        linkul spre pagina ei și județul. Răspunsurile de mai sus rămân la noi.
       </PublishNote>
       {error && error.field !== 'experienta' && <p className="text-sm text-red-600">{error.message}</p>}
       <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full">

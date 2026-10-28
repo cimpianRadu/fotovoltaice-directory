@@ -828,6 +828,12 @@ export interface PublicLead {
   // Doar semnal (există/nu există) — pozele în sine se trimit firmei, nu public.
   arePoze: boolean;
   /**
+   * Câte poze a urcat clientul, din rezumatul coloanei AD („3 poze"). 0 când AD
+   * zice doar „da" (a promis poze, nu le-a urcat): atunci nu există nici
+   * miniatura estompată de pe card.
+   */
+  nrPoze: number;
+  /**
    * Am vorbit noi cu clientul la telefon și cererea stă în picioare. E singurul
    * lucru pe care o firmă nu poate să-l afle uitându-se la card, și exact ce
    * lipsea din propunerea de valoare: până acum feedul arăta la fel o cerere
@@ -999,6 +1005,7 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       tipLucrare: l.tipLucrare,
       capacitateBaterie: l.capacitateBaterie,
       arePoze: Boolean(l.poze.trim()),
+      nrPoze: Number(l.poze.match(/\d+/)?.[0]) || 0,
       // „ofertare" înseamnă tot că am vorbit cu el; stările închise nu ajung
       // până aici, sunt filtrate de `isOpenForClaims`.
       verificata: l.crmStatus === 'valida' || l.crmStatus === 'ofertare',
@@ -1519,6 +1526,7 @@ const FEEDBACK_FIRM_HEADER = [
   'Experiență',
   'Îmbunătățiri',
   'Testimonial',
+  'Recomandare',
 ];
 
 export interface ClientFeedback {
@@ -1547,8 +1555,13 @@ export interface FirmFeedback {
   satisfactie: string;
   experienta: string;
   imbunatatiri: string;
-  /** Acordul firmei de a publica părerea: da / da-fara-nume / nu. */
+  /**
+   * Acordul de publicare. Din 28 oct 2026: „da" când firma a scris o
+   * recomandare, „nu" altfel. Rândurile vechi: da / da-fara-nume / nu.
+   */
   testimonial: string;
+  /** Textul scris de firmă anume pentru site; singurul care se publică. */
+  recomandare: string;
 }
 
 async function appendWithHeader(sheetName: string, header: string[], values: string[]) {
@@ -1591,6 +1604,7 @@ export async function saveFirmFeedback(f: FirmFeedback) {
     f.experienta,
     f.imbunatatiri,
     f.testimonial,
+    f.recomandare,
   ]);
 }
 

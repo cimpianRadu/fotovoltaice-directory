@@ -60,6 +60,8 @@ export interface LeadCardData {
   /** Ce vrea clientul să rezolve (pasul 5, din 17 sept 2026); gol pe cererile vechi. */
   scopLabel: string;
   arePoze: boolean;
+  /** Câte poze a urcat clientul; peste 0, cardul arată miniatura estompată. */
+  nrPoze: number;
   verificata: boolean;
   /**
    * Clientul a bifat „Deocamdată mă informez” la termen (14 sept 2026). Cardul
@@ -240,6 +242,70 @@ const ICON_POZE = (
     <circle cx="12" cy="13" r="3.2" />
   </BadgeIcon>
 );
+
+/**
+ * Miniatura pozelor clientului: pete de culoare estompate pe server (vezi
+ * /api/cereri/miniatura), cu lacăt. Nu se mărește: un clic duce în același
+ * formular ca „Vreau această cerere", pentru că pozele se văd abia după
+ * preluare, din portal. Fără `onOpen` (cerere plină, deja preluată) rămâne
+ * doar informație. Dacă miniatura nu vine (HEIC, poza ștearsă), rămâne iconița.
+ */
+function PhotoTeaser({
+  leadId,
+  count,
+  note,
+  onOpen,
+}: {
+  leadId: string;
+  count: number;
+  note: string;
+  onOpen?: () => void;
+}) {
+  const [failed, setFailed] = useState(false);
+  const content = (
+    <>
+      <span className="relative flex h-12 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-sky-50 text-sky-700">
+        {failed ? (
+          <span className="scale-[1.8]">{ICON_POZE}</span>
+        ) : (
+          // Nimic de optimizat: ruta trimite deja un JPEG de câțiva KB.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={`/api/cereri/miniatura?cerere=${encodeURIComponent(leadId)}`}
+            alt=""
+            loading="lazy"
+            onError={() => setFailed(true)}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        )}
+        <span className="relative flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-sm">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="5" y="11" width="14" height="9.5" rx="2" />
+            <path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3" />
+          </svg>
+        </span>
+      </span>
+      <span className="min-w-0">
+        <span className="block text-xs font-semibold text-gray-800">
+          {count === 1 ? '1 poză de la client' : `${count} poze de la client`}
+        </span>
+        <span className="block text-[11px] text-gray-500">{note}</span>
+      </span>
+    </>
+  );
+  const box = 'mt-3 flex w-full items-center gap-3 rounded-lg border border-border p-2 text-left';
+  return onOpen ? (
+    <button
+      type="button"
+      onClick={onOpen}
+      className={`${box} transition-colors hover:border-gray-300 hover:bg-surface`}
+    >
+      {content}
+    </button>
+  ) : (
+    <div className={box}>{content}</div>
+  );
+}
 
 // Cheia franceză: manoperă. Nu un panou și nu o casă, ca să nu se confunde cu
 // „i" în cerc: iconița de informație pe care o știe toată lumea. Ochiul de
@@ -707,6 +773,9 @@ export default function LeadCard({
     }
   }
 
+  // Miniatura pozelor deschide revendicarea doar când și cardul o oferă.
+  const photoOpensClaim = !quickOpen && !claimedByMe && !watchedByMe && !full;
+
   const quickBox = quickOpen && me && (
     <div className="rounded-lg border border-primary/40 bg-primary/5 p-3 text-sm">
       <p className="text-gray-700">
@@ -951,6 +1020,27 @@ export default function LeadCard({
       )}
       {lead.mesaj && (
         <p className="mt-2 text-sm text-gray-500 italic leading-relaxed">„{lead.mesaj}”</p>
+      )}
+      {lead.nrPoze > 0 && (
+        <PhotoTeaser
+          leadId={lead.id}
+          count={lead.nrPoze}
+          note={
+            claimedByMe
+              ? 'Le găsești în contul tău, alături de datele clientului'
+              : full
+                ? 'Le văd firmele care au preluat cererea'
+                : 'Le vezi după ce preiei cererea'
+          }
+          onOpen={
+            photoOpensClaim
+              ? () => {
+                  trackEvent('lead_photo_teaser_click', { county: lead.judet, project_type: lead.tipLabel });
+                  startClaim();
+                }
+              : undefined
+          }
+        />
       )}
 
       {/* Bara de locuri. La „se informează" apare doar după prima revendicare:
