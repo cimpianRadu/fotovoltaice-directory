@@ -12,7 +12,11 @@ import type { TestimonialCard } from '@/components/home/TestimonialCarousel';
 //   „da-fara-nume” numele se scoate. Din 29 oct 2026 textul publicat e
 //   recomandarea din coloana L, nu „Experiență” (I), care rămâne internă; la
 //   rândurile de dinainte, textul e I. Firma cu care a semnat NU se numește pe
-//   cardul clientului: acordul e al clientului, nu al firmei.
+//   cardul clientului: acordul e al clientului, nu al firmei. La „da-fara-nume”
+//   `nume` e null și cardul scrie „Client”; inițialele doar dacă omul le acceptă
+//   separat (Balint, Cluj: „fără nume” în formular, „G.B.” acceptat când l-a
+//   întrebat Radu, 29 oct 2026). `putere` e null când n-o știm din cerere, din
+//   contract sau de la firmă: nu se ghicește din suprafață.
 // - Firme: vin din tabul „Feedback firme” (formularul /feedback/firma) și intră
 //   în data/testimoniale-firme.json DOAR cu „da” în coloana L. Din 28 oct 2026
 //   textul publicat e recomandarea din coloana M, nu „Experiență” (J), care
@@ -38,9 +42,9 @@ export function getTestimonialCards(): TestimonialCard[] {
       nota: t.nota,
       badge: 'Contract semnat',
       text: t.text,
-      nume: t.nume,
+      nume: t.nume ?? 'Client',
       href: null,
-      meta: [t.tip, `${t.putere} kW`, t.judet].join(' · '),
+      meta: [t.tip, t.putere ? `${t.putere} kW` : null, t.judet].filter(Boolean).join(' · '),
       extra: `${t.oferte} oferte primite`,
       general: false,
     })),
