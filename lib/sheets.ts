@@ -1511,6 +1511,7 @@ const FEEDBACK_CLIENT_HEADER = [
   'Experiență',
   'Îmbunătățiri',
   'Testimonial',
+  'Recomandare',
 ];
 
 const FEEDBACK_FIRM_HEADER = [
@@ -1539,7 +1540,13 @@ export interface ClientFeedback {
   satisfactie: string;
   experienta: string;
   imbunatatiri: string;
+  /**
+   * Acordul de publicare. Din 29 oct 2026: „da" / „da-fara-nume" (cum semnăm)
+   * când clientul a scris o recomandare, „nu" altfel.
+   */
   testimonial: string;
+  /** Textul scris de client anume pentru site; singurul care se publică. */
+  recomandare: string;
 }
 
 export interface FirmFeedback {
@@ -1587,6 +1594,7 @@ export async function saveClientFeedback(f: ClientFeedback) {
     f.experienta,
     f.imbunatatiri,
     f.testimonial,
+    f.recomandare,
   ]);
 }
 
@@ -1618,6 +1626,7 @@ export interface ClientFeedbackRow {
   experienta: string;
   imbunatatiri: string;
   testimonial: string;
+  recomandare: string;
 }
 
 /** Răspunsurile din „Feedback clienți", pentru /admin/emailuri. Tab inexistent = niciunul. */
@@ -1638,6 +1647,7 @@ export async function getClientFeedbacks(): Promise<ClientFeedbackRow[]> {
     experienta: r[8] || '',
     imbunatatiri: r[9] || '',
     testimonial: r[10] || '',
+    recomandare: r[11] || '',
   }));
 }
 

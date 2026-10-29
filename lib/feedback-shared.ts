@@ -22,12 +22,14 @@ export const PRIMUL_CONTACT_OPTIONS: Option[] = [
   { value: 'peste-o-saptamana', label: 'După mai mult de o săptămână' },
 ];
 
-// Consimțământul de publicare: ce apare public e scris explicit sub întrebare
-// și în /termeni-conditii#testimoniale. Valoarea se scrie în Sheets ca atare.
-export const TESTIMONIAL_OPTIONS: Option[] = [
-  { value: 'da', label: 'Da, cu numele meu' },
-  { value: 'da-fara-nume', label: 'Da, dar fără nume' },
-  { value: 'nu', label: 'Nu' },
+// Clienții nu mai aleg da/nu pentru tot formularul (29 oct 2026): scriu,
+// opțional, o recomandare pentru cei care caută o firmă (coloana L din
+// „Feedback clienți") și aleg doar cum o semnăm. Coloana K primește valoarea
+// de aici, sau „nu" când recomandarea lipsește. Ce apare public e scris sub
+// întrebare și în /termeni-conditii#testimoniale.
+export const SEMNATURA_OPTIONS: Option[] = [
+  { value: 'da', label: 'Cu numele meu' },
+  { value: 'da-fara-nume', label: 'Fără nume' },
 ];
 
 // Firmele nu mai aleg da/nu la publicare (28 oct 2026): scriu, opțional, o

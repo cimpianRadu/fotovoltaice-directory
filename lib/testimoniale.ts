@@ -9,7 +9,9 @@ import type { TestimonialCard } from '@/components/home/TestimonialCarousel';
 // Reguli de conținut:
 // - Clienți: vin din tabul „Feedback clienți” (formularul /feedback/client) și
 //   intră în data/testimoniale.json DOAR cu „da” în coloana K; la
-//   „da-fara-nume” numele se scoate. Firma cu care a semnat NU se numește pe
+//   „da-fara-nume” numele se scoate. Din 29 oct 2026 textul publicat e
+//   recomandarea din coloana L, nu „Experiență” (I), care rămâne internă; la
+//   rândurile de dinainte, textul e I. Firma cu care a semnat NU se numește pe
 //   cardul clientului: acordul e al clientului, nu al firmei.
 // - Firme: vin din tabul „Feedback firme” (formularul /feedback/firma) și intră
 //   în data/testimoniale-firme.json DOAR cu „da” în coloana L. Din 28 oct 2026

@@ -100,6 +100,11 @@ function FeedbackCell({ feedback }: { feedback: ClientFeedbackRow | undefined })
         </span>
       </div>
       {feedback.experienta && <p className="mt-1 text-xs text-gray-700 italic">„{feedback.experienta}”</p>}
+      {feedback.recomandare && (
+        <p className="mt-1 text-xs text-emerald-800">
+          <span className="font-medium">Recomandare pentru site:</span> „{feedback.recomandare}”
+        </p>
+      )}
       {feedback.imbunatatiri && (
         <p className="mt-1 text-xs text-gray-500">
           <span className="font-medium">De îmbunătățit:</span> {feedback.imbunatatiri}

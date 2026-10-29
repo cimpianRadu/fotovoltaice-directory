@@ -15,7 +15,7 @@ export default function TermeniConditii() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Termeni și Condiții</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 26 octombrie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 29 octombrie 2026</p>
 
         <p>
           Prin accesarea și utilizarea site-ului <strong>instalatori-fotovoltaice.ro</strong> acceptați
@@ -179,8 +179,10 @@ export default function TermeniConditii() {
         </p>
         <ul>
           <li>
-            <strong>De la client</strong> putem publica textul scris de el, județul, tipul și puterea
-            sistemului. Numele apare doar dacă a ales varianta „cu numele meu”.
+            <strong>De la client</strong> publicăm doar recomandarea scrisă de el în câmpul dedicat
+            din formular, dacă l-a completat, cu județul, tipul și puterea sistemului. Numele apare
+            doar dacă a ales varianta „cu numele meu”. Celelalte răspunsuri ale clientului rămân
+            interne.
           </li>
           <li>
             <strong>De la firma instalatoare</strong> publicăm doar recomandarea scrisă de ea în

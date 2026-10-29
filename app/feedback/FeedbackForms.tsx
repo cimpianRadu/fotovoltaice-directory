@@ -10,7 +10,7 @@ import {
   OFERTE_OPTIONS,
   PRIMUL_CONTACT_OPTIONS,
   SATISFACTIE_VALUES,
-  TESTIMONIAL_OPTIONS,
+  SEMNATURA_OPTIONS,
 } from '@/lib/feedback-shared';
 
 // Formularele de feedback de după o cerere concretizată. Întrebările cu puține
@@ -20,7 +20,8 @@ type Option = { value: string; label: string };
 
 // `strong`: varianta scoasă în față (chenar și text în culoarea brandului cât
 // timp nu e aleasă), `subtle`: variantele lăsate discrete. Folosite la acordul
-// de publicare al firmelor (7 oct 2026); nimic nu e bifat dinainte.
+// de publicare al firmelor (7 oct 2026) și la semnătura recomandării
+// clientului (29 oct 2026); nimic nu e bifat dinainte.
 function Choice({
   label,
   options,
@@ -151,6 +152,27 @@ function RecommendationField({ value, onChange }: { value: string; onChange: (v:
   );
 }
 
+// Același pas la client (29 oct 2026): până atunci un singur da/nu acoperea
+// tot ce scrisese, iar Tomuța (5/5) a ales „nu". Acum „Cum a fost?" rămâne
+// intern, iar recomandarea e scrisă anume pentru cei care caută o firmă.
+function ClientRecommendationField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <div className="border-t border-border pt-5">
+      <p className="font-semibold text-gray-900">Putem publica părerea dumneavoastră?</p>
+      <div className="mt-3">
+        <Input
+          label="Recomandarea dumneavoastră"
+          name="recomandare"
+          type="textarea"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="Opțional. De exemplu: cum ați ales firma, ce v-a ajutat să vă decideți"
+        />
+      </div>
+    </div>
+  );
+}
+
 // Ce anume se publică, spus lângă întrebare, nu doar în termeni: cine bifează
 // „da" trebuie să știe exact ce apare. Aceeași listă e în /termeni-conditii.
 function PublishNote({ children }: { children: React.ReactNode }) {
@@ -218,6 +240,7 @@ export function ClientFeedbackForm({ id, token }: { id: string; token: string })
   const [satisfactie, setSatisfactie] = useState('');
   const [experienta, setExperienta] = useState('');
   const [imbunatatiri, setImbunatatiri] = useState('');
+  const [recomandare, setRecomandare] = useState('');
   const [testimonial, setTestimonial] = useState('');
   const { status, error, submit } = useSubmit(() => ({
     role: 'client',
@@ -228,7 +251,8 @@ export function ClientFeedbackForm({ id, token }: { id: string; token: string })
     satisfactie,
     experienta,
     imbunatatiri,
-    testimonial,
+    recomandare,
+    testimonial: recomandare.trim() ? testimonial : '',
   }));
 
   if (status === 'done') return <FeedbackThanks />;
@@ -265,6 +289,7 @@ export function ClientFeedbackForm({ id, token }: { id: string; token: string })
         onChange={(e) => setExperienta(e.target.value)}
         placeholder="Ce a mers bine, ce nu, cum v-au tratat firmele..."
         required
+        hint="Rămâne la noi, nu o publicăm. Ne ajută să reparăm ce nu merge."
         error={error?.field === 'experienta' ? error.message : undefined}
       />
       <Input
@@ -275,18 +300,23 @@ export function ClientFeedbackForm({ id, token }: { id: string; token: string })
         onChange={(e) => setImbunatatiri(e.target.value)}
         placeholder="Opțional"
       />
-      <Choice
-        label="Putem publica părerea dumneavoastră pe site și pe rețelele noastre sociale?"
-        options={TESTIMONIAL_OPTIONS}
-        value={testimonial}
-        onChange={setTestimonial}
-        required
-        error={error?.field === 'testimonial'}
-      />
-      <PublishNote>
-        Dacă alegeți „da", putem publica textul scris mai sus, județul, tipul și puterea sistemului
-        și, doar la prima variantă, numele dumneavoastră.
-      </PublishNote>
+      <ClientRecommendationField value={recomandare} onChange={setRecomandare} />
+      {recomandare.trim() && (
+        <Choice
+          label="Cum o semnăm?"
+          options={SEMNATURA_OPTIONS}
+          value={testimonial}
+          onChange={setTestimonial}
+          required
+          error={error?.field === 'testimonial'}
+          strong="da"
+        />
+      )}
+      {/* La client, doar fraza asta (decizia userului, 29 oct 2026); restul
+          regulilor de publicare stă în /termeni-conditii#testimoniale. */}
+      <p className="-mt-3 text-xs font-semibold text-gray-700">
+        Nu publicăm niciodată telefonul, emailul sau adresa exactă.
+      </p>
       {error && error.field !== 'experienta' && <p className="text-sm text-red-600">{error.message}</p>}
       <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full">
         {status === 'submitting' ? 'Se trimite...' : 'Trimite răspunsul'}
