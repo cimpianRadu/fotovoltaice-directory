@@ -16201,6 +16201,79 @@
       "updatedAt": "2026-10-26",
       "segment": "rezidential",
       "anreMatch": null
+    },
+    {
+      "id": "sun-bit",
+      "slug": "sun-bit",
+      "name": "Sun Bit",
+      "cui": "RO32562066",
+      "logo": "/logos/sun-bit.png",
+      "description": "Sun Bit este o firmă din satul Craiva, comuna Cricău, lângă Alba Iulia, care proiectează și montează sisteme fotovoltaice în Alba Iulia și în restul județului Alba. Lucrează cu panouri Canadian Solar și invertoare Deye, iar cele mai multe sisteme pe care le prezintă sunt hibride, cu baterii LiFePO4. Lucrările documentate pe site merg de la sisteme de 11 kWp cu 16 până la 32 kWh de stocare, în Șard, Aiud, Poșaga, Micești și Alba Iulia, și unul de 15 kWp în Râmeți, până la un sistem de 20 kWp cu 96 kWh de stocare și unul de 30 kWp montat pe structură metalică la sol, ambele în Alba Iulia. Panourile se montează pe acoperiș sau pe structuri la sol. Pe lângă montajul la cheie, firma face instalații electrice și tablouri, configurează invertoare, integrează pompe de căldură și se ocupă de diagnoză, reparații și mentenanță pentru sistemele existente. Cifra de afaceri a ajuns la 0,54 milioane de lei în 2025, de la 0,15 milioane în 2024.",
+      "founded": 2013,
+      "employees": 1,
+      "location": {
+        "city": "Craiva",
+        "county": "Alba",
+        "address": "Sat Craiva, Com. Cricău, Nr. 18"
+      },
+      "contact": {
+        "phone": "+40757793959",
+        "email": "contact@sunbit.ro",
+        "website": "https://www.sunbit.ro"
+      },
+      "coverage": [
+        "Alba"
+      ],
+      "specializations": [
+        "rezidential"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 30,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 541732,
+        "profit": 101092,
+        "history": [
+          {
+            "year": 2023,
+            "revenue": 13100,
+            "profit": -2401,
+            "employees": 1
+          },
+          {
+            "year": 2024,
+            "revenue": 146829,
+            "profit": 21054,
+            "employees": 1
+          },
+          {
+            "year": 2025,
+            "revenue": 541732,
+            "profit": 101092,
+            "employees": 1
+          }
+        ]
+      },
+      "tags": [
+        "pv-rezidential",
+        "on-grid",
+        "off-grid",
+        "hibrid",
+        "stocare-baterii",
+        "pompe-caldura",
+        "instalatii-electrice",
+        "mentenanta-pv"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-10-30",
+      "updatedAt": "2026-10-30",
+      "segment": "rezidential",
+      "anreMatch": null
     }
   ]
 }
