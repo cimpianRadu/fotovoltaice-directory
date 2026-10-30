@@ -36,6 +36,8 @@ function sentence(e: ClientCardEvent): string {
       const motiv = p.motiv ? REFUZ_REASON_OPTIONS.find((o) => o.value === p.motiv)?.label.toLowerCase() : '';
       return `A spus despre ${String(p.firma ?? 'o firmă')}: „${label}”${motiv ? ` (${motiv})` : ''}`;
     }
+    case 'notita_firma':
+      return `A scris o notiță despre ${String(p.firma ?? 'o firmă')}: „${String(p.nota ?? '')}”`;
     case 'retrimitere':
       return `A cerut retrimiterea; a plecat la ${Number(p.firms ?? 0)} firme`;
     case 'inchisa':

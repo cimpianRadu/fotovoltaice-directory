@@ -17,6 +17,7 @@ export const CLIENT_EVENTS = [
   'pagina_cerere',
   // ce face în cont
   'raspuns_firma',
+  'notita_firma',
   'retrimitere',
   'inchisa',
   'stergere',

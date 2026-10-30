@@ -29,5 +29,9 @@ export function isRefuzReason(s: unknown): s is RefuzReason {
   return typeof s === 'string' && REFUZ_REASON_OPTIONS.some((o) => o.value === s);
 }
 
+/** O notiță a clientului despre o firmă (30 oct 2026), și câte poate lăsa pe o cerere. */
+export const NOTE_MAX = 1000;
+export const NOTES_PER_LEAD = 100;
+
 /** „Încă vreau oferte”: de 2 ori în 7 zile (Radu, 23 oct 2026). */
 export const BUMPS_PER_WEEK = 2;

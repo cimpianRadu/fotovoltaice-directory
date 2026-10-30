@@ -52,7 +52,13 @@ import { logLeadSends } from './lead-sends';
 import { offersForLead, type OfferForClient } from './oferte';
 import { recordClientEvent } from './client-events';
 import { RENUNT_REASON_OPTIONS, optionLabel } from './client-response-details';
-import { BUMPS_PER_WEEK, REFUZ_REASON_OPTIONS, type FirmReport, type RefuzReason } from './client-account-shared';
+import {
+  BUMPS_PER_WEEK,
+  NOTES_PER_LEAD,
+  REFUZ_REASON_OPTIONS,
+  type FirmReport,
+  type RefuzReason,
+} from './client-account-shared';
 
 export { FIRM_REPORT_OPTIONS, isFirmReport, BUMPS_PER_WEEK, type FirmReport } from './client-account-shared';
 
@@ -127,6 +133,16 @@ export function deliveredClaims(claims: LeadClaim[], leadId: string): LeadClaim[
     .sort((a, b) => a.timestamp.localeCompare(b.timestamp));
 }
 
+/**
+ * Firmele de pe pagina clientului: toate cele care i-au primit datele, inclusiv
+ * cele care au renunțat apoi (Radu, 30 oct: „vreau să își vadă tot journey-ul”).
+ */
+export function shownClaims(claims: LeadClaim[], leadId: string): LeadClaim[] {
+  return claims
+    .filter((c) => c.leadId === leadId && c.approvedAt)
+    .sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+}
+
 // ---------------------------------------------------------------------------
 // Datele paginii
 
@@ -136,11 +152,25 @@ export interface AccountFirm {
   /** Telefonul public de pe fișa din director. Nu mobilul din revendicare (decizia din 22 oct). */
   phone: string | null;
   profileSlug: string | null;
+  /** Logoul de pe fișa din director, dacă firma e listată și are unul. */
+  logo: string | null;
   city: string | null;
   claimedAt: string;
+  /** Firma a renunțat la cerere după ce i-a primit datele (coloana J din Revendicări). Motivul nu-l arătăm. */
+  withdrawnAt: string | null;
   report: FirmReport | null;
   reportedAt: string | null;
+  /** Tot ce a răspuns clientul despre firmă, în ordine, pentru istoricul ei. */
+  reports: { status: FirmReport; at: string; motiv: RefuzReason | null; putere: string | null }[];
+  /** Notițele clientului despre firmă. Firma nu le vede. */
+  notes: AccountNote[];
   offers: OfferForClient[];
+}
+
+export interface AccountNote {
+  id: number;
+  text: string;
+  at: string;
 }
 
 export interface AccountLeadSummary {
@@ -160,7 +190,10 @@ export interface AccountLeadData extends AccountLeadSummary {
   /** Cererea e închisă ca lucrare semnată (V = castigata). */
   won: boolean;
   firms: AccountFirm[];
-  stats: { sentTo: number; clickVisitors: number; claimed: number };
+  /** Notițele se pot citi și scrie (tabelul din migrarea 013 există). */
+  notesReady: boolean;
+  /** `claimed`: firmele care lucrează acum la cerere, fără cele care au renunțat. */
+  stats: { sentTo: number; clickVisitors: number; claimed: number; withdrawn: number };
   bump: { allowed: boolean; usedLast7: number; nextAt: string | null; lastAt: string | null; emailWindow: boolean };
 }
 
@@ -211,15 +244,43 @@ export async function getAccountLead(id: string): Promise<NewLead | undefined> {
   return getFullLeadById(id);
 }
 
-async function latestReports(leadId: string): Promise<Map<string, { status: FirmReport; at: string }>> {
+/** Răspunsurile clientului pe fiecare firmă, cel mai vechi primul (ultimul e starea de acum). */
+async function firmReports(leadId: string): Promise<Map<string, AccountFirm['reports']>> {
   const rows = await db()`
-    SELECT DISTINCT ON (claim_ts) claim_ts, status, created_at
+    SELECT claim_ts, status, motiv, putere, created_at
     FROM client_firm_reports WHERE lead_id = ${leadId}
-    ORDER BY claim_ts, created_at DESC
+    ORDER BY created_at
   `;
-  return new Map(
-    rows.map((r) => [String(r.claim_ts), { status: r.status as FirmReport, at: new Date(r.created_at as string).toISOString() }]),
-  );
+  const out = new Map<string, AccountFirm['reports']>();
+  for (const r of rows) {
+    const list = out.get(String(r.claim_ts)) ?? [];
+    list.push({
+      status: r.status as FirmReport,
+      at: new Date(r.created_at as string).toISOString(),
+      motiv: (r.motiv as RefuzReason) || null,
+      putere: (r.putere as string) || null,
+    });
+    out.set(String(r.claim_ts), list);
+  }
+  return out;
+}
+
+/** Null dacă nu se pot citi (de exemplu înainte de migrarea 013): pagina merge mai departe, fără caseta de notițe. */
+async function firmNotes(leadId: string): Promise<Map<string, AccountNote[]> | null> {
+  const out = new Map<string, AccountNote[]>();
+  const rows = await db()`
+    SELECT id, claim_ts, nota, created_at FROM client_firm_notes WHERE lead_id = ${leadId} ORDER BY created_at
+  `.catch((err: unknown) => {
+    console.error('[cont] notițe:', err);
+    return null;
+  });
+  if (!rows) return null;
+  for (const r of rows) {
+    const list = out.get(String(r.claim_ts)) ?? [];
+    list.push({ id: Number(r.id), text: String(r.nota), at: new Date(r.created_at as string).toISOString() });
+    out.set(String(r.claim_ts), list);
+  }
+  return out;
 }
 
 async function bumpState(leadId: string, now: number): Promise<AccountLeadData['bump']> {
@@ -243,30 +304,37 @@ async function bumpState(leadId: string, now: number): Promise<AccountLeadData['
 export async function loadAccountLead(lead: NewLead, now = Date.now()): Promise<AccountLeadData> {
   const summary = leadSummaryFor(lead);
   const companies = getCompanies();
-  const [claims, reports, clicks, sends, bump, offers] = await Promise.all([
+  const [claims, reports, notes, clicks, sends, bump, offers] = await Promise.all([
     getClaims(),
-    latestReports(lead.timestamp),
+    firmReports(lead.timestamp),
+    firmNotes(lead.timestamp),
     getLeadClickStats([lead.timestamp]),
     db()`SELECT count(DISTINCT firm_email)::int AS n FROM lead_sends WHERE lead_id = ${lead.timestamp}`,
     bumpState(lead.timestamp, now),
     offersForLead(lead.timestamp),
   ]);
 
-  const firms: AccountFirm[] = deliveredClaims(claims, lead.timestamp).map((c) => {
+  const firms: AccountFirm[] = shownClaims(claims, lead.timestamp).map((c) => {
     const company = companyForClaim(c, companies);
-    const report = reports.get(c.timestamp);
+    const history = reports.get(c.timestamp) ?? [];
+    const report = history[history.length - 1];
     return {
       claimTs: c.timestamp,
       name: company?.name ?? firmDisplayName(c.numeFirma),
       phone: company?.contact.phone || null,
       profileSlug: company?.slug ?? null,
+      logo: company?.logo || null,
       city: company?.location.city ?? null,
       claimedAt: c.approvedAt || c.timestamp,
+      withdrawnAt: c.releasedAt || null,
       report: report?.status ?? null,
       reportedAt: report?.at ?? null,
+      reports: history,
+      notes: notes?.get(c.timestamp) ?? [],
       offers: offers.filter((o) => o.claimTs === c.timestamp),
     };
   });
+  const active = firms.filter((f) => !f.withdrawnAt);
 
   const details = [
     { label: 'Tip clădire', value: lead.tipProiect ? getProjectTypeLabel(lead.tipProiect) : '' },
@@ -284,10 +352,12 @@ export async function loadAccountLead(lead: NewLead, now = Date.now()): Promise<
     informez: isLeadInformez(lead),
     won: lead.crmStatus === 'castigata',
     firms,
+    notesReady: notes !== null,
     stats: {
       sentTo: Number(sends[0]?.n ?? 0),
       clickVisitors: clicks.get(lead.timestamp)?.visitors ?? 0,
-      claimed: firms.length,
+      claimed: active.length,
+      withdrawn: firms.length - active.length,
     },
     bump: summary.open ? bump : { ...bump, allowed: false },
   };
@@ -352,6 +422,34 @@ export async function reportFirm(opts: {
       html: `<p>${escapeHtml(note)}</p><p>${internalLeadLine(lead)}</p>`,
     });
   }
+}
+
+/**
+ * O notiță a clientului despre o firmă („am vorbit cu X, mi-a zis că...”). Merge
+ * și la firmele care au renunțat și după ce cererea s-a închis: e jurnalul lui.
+ * Nu pleacă niciun email; Radu o vede în cardul clientului din /admin/cont-client.
+ */
+export async function addFirmNote(opts: {
+  lead: NewLead;
+  claim: LeadClaim;
+  nota: string;
+}): Promise<{ ok: true; note: AccountNote } | { ok: false; error: string }> {
+  const { lead, claim, nota } = opts;
+  const [{ n }] = await db()`SELECT count(*)::int AS n FROM client_firm_notes WHERE lead_id = ${lead.timestamp}`;
+  if (Number(n) >= NOTES_PER_LEAD) return { ok: false, error: 'Ați ajuns la numărul maxim de notițe pe această cerere.' };
+  const [row] = await db()`
+    INSERT INTO client_firm_notes (lead_id, claim_ts, nota)
+    VALUES (${lead.timestamp}, ${claim.timestamp}, ${nota})
+    RETURNING id, created_at
+  `;
+  await recordClientEvent(lead.timestamp, 'notita_firma', { firma: firmDisplayName(claim.numeFirma), nota });
+  return { ok: true, note: { id: Number(row.id), text: nota, at: new Date(row.created_at as string).toISOString() } };
+}
+
+/** Clientul își șterge o notiță. Fals dacă nu e pe cererea lui. */
+export async function deleteFirmNote(leadId: string, id: number): Promise<boolean> {
+  const rows = await db()`DELETE FROM client_firm_notes WHERE id = ${id} AND lead_id = ${leadId} RETURNING id`;
+  return rows.length > 0;
 }
 
 /**

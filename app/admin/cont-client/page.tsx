@@ -64,10 +64,16 @@ const DEMO_DATA: AccountLeadData = {
       name: 'Exemplu Solar SRL',
       phone: '0700 000 001',
       profileSlug: null,
+      logo: null,
       city: 'Ploiești',
       claimedAt: '2026-10-20T10:40:00.000Z',
+      withdrawnAt: null,
       report: 'oferta',
       reportedAt: '2026-10-22T17:05:00.000Z',
+      reports: [{ status: 'oferta', at: '2026-10-22T17:05:00.000Z', motiv: null, putere: null }],
+      notes: [
+        { id: 1, text: 'Au venit la măsurători a doua zi. Oferta e clară, mă mai gândesc la baterie.', at: '2026-10-22T17:08:00.000Z' },
+      ],
       offers: [
         {
           id: 0,
@@ -87,14 +93,19 @@ const DEMO_DATA: AccountLeadData = {
       name: 'Demo Energie Verde',
       phone: null,
       profileSlug: null,
+      logo: null,
       city: null,
       claimedAt: '2026-10-21T08:05:00.000Z',
+      withdrawnAt: '2026-10-23T09:30:00.000Z',
       report: null,
       reportedAt: null,
+      reports: [],
+      notes: [],
       offers: [],
     },
   ],
-  stats: { sentTo: 6, clickVisitors: 9, claimed: 2 },
+  notesReady: true,
+  stats: { sentTo: 6, clickVisitors: 9, claimed: 1, withdrawn: 1 },
   bump: { allowed: true, usedLast7: 0, nextAt: null, lastAt: null, emailWindow: true },
 };
 
@@ -102,7 +113,7 @@ const DEMO_DATA: AccountLeadData = {
 const DEMO_DATA_EMPTY: AccountLeadData = {
   ...DEMO_DATA,
   firms: [],
-  stats: { sentTo: 4, clickVisitors: 3, claimed: 0 },
+  stats: { sentTo: 4, clickVisitors: 3, claimed: 0, withdrawn: 0 },
 };
 
 const LINK = 'https://instalatori-fotovoltaice.ro/cont/intrare?t=exemplu';
