@@ -144,9 +144,6 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
   const [releaseBusy, setReleaseBusy] = useState(false);
   const [releaseError, setReleaseError] = useState<string | null>(null);
   const [released, setReleased] = useState(Boolean(claim.releasedAt));
-  // Notele se strâng pe telefon: jurnalul întreg plus câmpul de scris ocupau
-  // jumătate de card sub butonul de apel. Rămâne la vedere ultima notă.
-  const [notesOpen, setNotesOpen] = useState(false);
   const [detailsOpen, setDetailsOpen] = usePersistedToggle('portal-card-details-open', false);
 
   async function addNote(e: React.FormEvent) {
@@ -264,11 +261,24 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
         />
       </div>
 
+      {/* Ce a scris clientul cu mâna lui: singurul lucru de pe card care nu se
+          deduce din specificații, deci stă la vedere, nu sub „Detalii proiect”. */}
+      {claim.mesaj && (
+        <div className="mt-3 rounded-lg border border-amber-200 border-l-4 border-l-primary bg-amber-50/60 px-3 py-2.5 sm:px-4 sm:py-3">
+          <div className="text-[11px] font-semibold uppercase tracking-wide text-amber-800">
+            Mesajul clientului
+          </div>
+          <p className="mt-1 whitespace-pre-line break-words text-sm leading-relaxed text-gray-900">
+            {claim.mesaj}
+          </p>
+        </div>
+      )}
+
       {/* Detaliile proiectului se citesc o dată, la primul contact, apoi cardul
           e despre apel, status și note. Pe telefon ocupau jumătate de ecran
           înaintea datelor clientului, deci se pot strânge; alegerea se ține
           minte pentru toate cardurile, nu o repeți la fiecare cerere. */}
-      {(claim.specs.length > 0 || claim.mesaj) && (
+      {claim.specs.length > 0 && (
         <div className="mt-3">
           <button
             type="button"
@@ -277,11 +287,9 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
             className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-gray-400 hover:text-gray-600"
           >
             Detalii proiect
-            {claim.specs.length > 0 && (
-              <span className="font-normal normal-case tracking-normal">
-                ({claim.specs.length})
-              </span>
-            )}
+            <span className="font-normal normal-case tracking-normal">
+              ({claim.specs.length})
+            </span>
             <svg
               className={`h-3.5 w-3.5 transition-transform ${detailsOpen ? 'rotate-180' : ''}`}
               fill="none"
@@ -295,23 +303,16 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
           </button>
 
           {detailsOpen && (
-            <>
-              {claim.specs.length > 0 && (
-                <ul className="mt-2 flex flex-wrap gap-1.5">
-                  {claim.specs.map((s) => (
-                    <li
-                      key={s.label}
-                      className="rounded-md bg-surface border border-border px-2 py-0.5 text-[11px] text-gray-600"
-                    >
-                      <span className="text-gray-400">{s.label}:</span> {s.value}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {claim.mesaj && (
-                <p className="mt-2 text-sm text-gray-500 italic leading-relaxed">„{claim.mesaj}”</p>
-              )}
-            </>
+            <ul className="mt-2 flex flex-wrap gap-1.5">
+              {claim.specs.map((s) => (
+                <li
+                  key={s.label}
+                  className="rounded-md bg-surface border border-border px-2 py-0.5 text-[11px] text-gray-600"
+                >
+                  <span className="text-gray-400">{s.label}:</span> {s.value}
+                </li>
+              ))}
+            </ul>
           )}
         </div>
       )}
@@ -504,72 +505,47 @@ export default function PortalClaimCard({ claim }: { claim: PortalClaim }) {
         </div>
       )}
 
-      {/* Jurnalul de note — vizibil și pentru noi în CRM, deci ce scrii aici chiar ajută la realocare. */}
-      <div className="mt-4 border-t border-border pt-3">
-        <button
-          type="button"
-          onClick={() => setNotesOpen(!notesOpen)}
-          aria-expanded={notesOpen}
-          className="flex w-full items-center justify-between gap-2 py-1 text-left"
-        >
-          <span className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+      {/* Jurnalul de note — vizibil și pentru noi în CRM, deci ce scrii aici chiar ajută la realocare.
+          Mereu deschis, cu câmpul la vedere (Radu, 2 nov 2026): un click în plus
+          înseamnă note nescrise. Câmpul stă deasupra pentru că notele noi apar primele. */}
+      {(!inactive || notes.length > 0) && (
+        <div className="mt-4 border-t border-border pt-3">
+          <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
             Notele tale{notes.length > 0 ? ` (${notes.length})` : ''}
-          </span>
-          <span className="flex items-center gap-1 text-xs text-gray-500">
-            {notesOpen ? 'Ascunde' : inactive ? 'Arată' : notes.length ? 'Arată / adaugă' : 'Adaugă'}
-            <svg
-              className={`h-3.5 w-3.5 transition-transform ${notesOpen ? 'rotate-180' : ''}`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.5}
-              aria-hidden="true"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </span>
-        </button>
-        {!notesOpen && notes[0] && (
-          <p className="mt-1 truncate text-sm text-gray-600">
-            <span className="mr-2 text-xs text-gray-400">{notes[0].date}</span>
-            {notes[0].text}
-          </p>
-        )}
-        {notesOpen && (
-          <div className="mt-2">
-            {notes.length > 0 && (
-              <ul className="space-y-2 mb-3">
-                {notes.map((n, i) => (
-                  <li key={`${n.date}-${i}`} className="text-sm text-gray-700">
-                    <span className="text-xs text-gray-400 mr-2">
-                      {n.date}
-                      {n.time ? ` ${n.time}` : ''}
-                    </span>
-                    {n.text}
-                  </li>
-                ))}
-              </ul>
-            )}
-            {/* Pe 375px input + buton pe același rând lăsau ~198px de scris, în
-                care nici placeholderul nu încăpea. Se stivuiesc pe telefon. */}
-            {!inactive && (
-              <form onSubmit={addNote} className="flex flex-col gap-2 sm:flex-row">
-                <input
-                  type="text"
-                  value={noteText}
-                  onChange={(e) => setNoteText(e.target.value)}
-                  placeholder="Ex: am sunat, nu răspunde, reîncerc mâine"
-                  className="flex-1 rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none sm:py-2"
-                />
-                <Button type="submit" variant="outline" disabled={noteBusy || !noteText.trim()}>
-                  {noteBusy ? '...' : 'Adaugă nota'}
-                </Button>
-              </form>
-            )}
           </div>
-        )}
-        {noteError && <p className="mt-1 text-xs text-red-600">{noteError}</p>}
-      </div>
+          {/* Pe 375px input + buton pe același rând lăsau ~198px de scris, în
+              care nici placeholderul nu încăpea. Se stivuiesc pe telefon. */}
+          {!inactive && (
+            <form onSubmit={addNote} className="flex flex-col gap-2 sm:flex-row">
+              <input
+                type="text"
+                value={noteText}
+                onChange={(e) => setNoteText(e.target.value)}
+                placeholder="Ex: am sunat, nu răspunde, reîncerc mâine"
+                aria-label="Notă nouă"
+                className="flex-1 rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none sm:py-2"
+              />
+              <Button type="submit" variant="outline" disabled={noteBusy || !noteText.trim()}>
+                {noteBusy ? '...' : 'Adaugă nota'}
+              </Button>
+            </form>
+          )}
+          {noteError && <p className="mt-1 text-xs text-red-600">{noteError}</p>}
+          {notes.length > 0 && (
+            <ul className={`space-y-2 ${inactive ? '' : 'mt-3'}`}>
+              {notes.map((n, i) => (
+                <li key={`${n.date}-${i}`} className="text-sm text-gray-700">
+                  <span className="text-xs text-gray-400 mr-2">
+                    {n.date}
+                    {n.time ? ` ${n.time}` : ''}
+                  </span>
+                  {n.text}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
 
       {!inactive && (
         <div className="mt-4 border-t border-border pt-3">

@@ -1,5 +1,12 @@
 [
   {
+    "data": "2026-11-02",
+    "titlu": "Mesajul clientului și notele tale, la vedere în portal",
+    "text": "Pe fiecare cerere din portal vezi direct ce a scris clientul, iar notele le citești și le scrii fără niciun click în plus. Cererile le filtrezi după status dintr-o singură listă.",
+    "link": "/portal",
+    "linkText": "Deschide portalul"
+  },
+  {
     "data": "2026-10-28",
     "titlu": "Vezi pe card dacă cererea are poze",
     "text": "Pe pagina de cereri vezi acum câte poze cu acoperișul a urcat clientul, cu o miniatură estompată. Le vezi întregi în portal, după ce preiei cererea.",

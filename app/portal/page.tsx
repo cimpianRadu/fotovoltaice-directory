@@ -226,7 +226,14 @@ export default async function PortalPage() {
           // Separat de `specs`: nu e o caracteristică a proiectului, ci
           // instrucțiunea de apel. Se randează lângă butonul de sunat.
           intervalApel: lead?.intervalApel ? getCallWindowLabel(lead.intervalApel) : '',
-          mesaj: lead && !lead.mesajAscuns ? lead.mesaj : '',
+          // Mesajul stă la vedere pe card, iar omul își poate scrie în el telefonul
+          // sau numele: până la aprobare iese curățat, ca pe /cereri.
+          mesaj:
+            lead && !lead.mesajAscuns
+              ? approved
+                ? lead.mesaj
+                : sanitizeMesajPublic(lead.mesaj, lead)
+              : '',
           // Datele de contact ale clientului pleacă spre client DOAR pe
           // revendicările aprobate — gate-ul telefonic din /admin/crm.
           client: approved && lead

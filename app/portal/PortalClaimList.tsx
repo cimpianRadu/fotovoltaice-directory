@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import SearchableSelect from '@/components/ui/SearchableSelect';
 import { trackEvent } from '@/lib/analytics';
 import {
   CLAIM_STATUSES,
@@ -80,10 +81,9 @@ function StatusLegend() {
 }
 
 /**
- * Contorul și filtrul sunt același lucru (feedback 17 sept 2026): căsuțele cu
- * cifre sunt butoane, cu exact etichetele statusurilor de pe carduri. Înainte
- * erau cifre de „rezumat" cu alți termeni deasupra unui rând separat de
- * filtre, deci două vocabulare pentru aceleași cereri.
+ * Un singur filtru, cu text explicit (Radu, 2 nov 2026): grila de 9 căsuțe cu
+ * cifre nu se citea ca un filtru și lua un ecran întreg pe telefon. Etichetele
+ * sunt cele de pe carduri, ca aceeași stare să nu aibă două nume.
  */
 type View = 'toate' | 'aprobare' | ClaimStatus | 'renuntate';
 
@@ -106,15 +106,10 @@ function inView(c: PortalClaim, view: View): boolean {
   }
 }
 
-const VIEWS: { id: View; label: string; dot?: string }[] = [
-  { id: 'toate', label: 'Toate' },
-  { id: 'aprobare', label: 'Se aprobă', dot: 'bg-amber-300' },
-  ...CLAIM_STATUSES.map((s) => ({
-    id: s as View,
-    label: CLAIM_STATUS_LABELS[s],
-    dot: STATUS_TONE[s],
-  })),
-  { id: 'renuntate', label: 'Renunțate', dot: 'bg-gray-300' },
+const VIEWS: { id: View; label: string }[] = [
+  { id: 'aprobare', label: 'Așteaptă apelul' },
+  ...CLAIM_STATUSES.map((s) => ({ id: s as View, label: CLAIM_STATUS_LABELS[s] })),
+  { id: 'renuntate', label: 'Renunțate' },
 ];
 
 export default function PortalClaimList({ claims }: { claims: PortalClaim[] }) {
@@ -127,45 +122,33 @@ export default function PortalClaimList({ claims }: { claims: PortalClaim[] }) {
     .sort((a, b) => Number(isClosed(a)) - Number(isClosed(b)));
   const showLegend = claims.some((c) => c.approved && !c.releasedAt);
 
-  function pick(id: View) {
-    // Al doilea tap pe aceeași căsuță scoate filtrul.
-    const next = id === view ? 'toate' : id;
+  // Doar stările în care firma chiar are cereri. Cea aleasă rămâne în listă și
+  // dacă s-a golit, altfel filtrul ar arăta „Toate" peste o listă filtrată.
+  const options = VIEWS.filter((v) => v.id === view || count(v.id) > 0).map((v) => ({
+    value: v.id,
+    label: `${v.label} (${count(v.id)})`,
+  }));
+
+  function pick(value: string) {
+    const next = (value || 'toate') as View;
     setView(next);
     if (next !== 'toate') trackEvent('portal_filter_applied', { filtru: 'status', valoare: next });
   }
 
   return (
     <>
-      <div className="mb-4 grid grid-cols-3 gap-1.5 sm:gap-2">
-        {VIEWS.map((v) => {
-          const n = count(v.id);
-          const active = view === v.id;
-          return (
-            <button
-              key={v.id}
-              type="button"
-              onClick={() => pick(v.id)}
-              aria-pressed={active}
-              disabled={n === 0 && !active}
-              className={`flex min-h-[58px] flex-col items-center justify-center rounded-xl border px-1 py-2 text-center transition-colors disabled:opacity-40 ${
-                active
-                  ? 'border-secondary bg-secondary text-white'
-                  : 'border-border bg-white text-gray-900 hover:border-secondary/40'
-              }`}
-            >
-              <span className="text-lg font-bold leading-none tabular-nums sm:text-xl">{n}</span>
-              <span
-                className={`mt-1 flex items-center gap-1 text-[11px] leading-tight ${
-                  active ? 'text-white/90' : 'text-gray-500'
-                }`}
-              >
-                {v.dot && <span className={`hidden h-1.5 w-1.5 shrink-0 rounded-full sm:inline-block ${v.dot}`} />}
-                {v.label}
-              </span>
-            </button>
-          );
-        })}
-      </div>
+      {/* Cu toate cererile în aceeași stare, filtrul n-ar avea ce să filtreze. */}
+      {options.length > 1 && (
+        <SearchableSelect
+          name="portal-status"
+          label="Filtrează cererile după status"
+          placeholder={`Toate cererile (${claims.length})`}
+          options={options}
+          value={view === 'toate' ? '' : view}
+          onValueChange={pick}
+          className="mb-4 sm:max-w-xs"
+        />
+      )}
 
       {visible.length === 0 ? (
         <div className="bg-surface rounded-xl border border-border p-8 text-center text-sm text-gray-500">

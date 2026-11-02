@@ -79,7 +79,7 @@ export default function PortalFirmEmails({
           onClick={() => setOpen((o) => !o)}
           className="shrink-0 rounded-lg border border-border bg-white px-3 py-2 text-xs font-semibold text-gray-600 transition-colors hover:border-secondary/40 hover:text-secondary-dark"
         >
-          {open ? 'Ascunde' : 'Schimbă'}
+          {open ? 'Ascunde' : others.length > 0 ? 'Adaugă sau scoate' : 'Adaugă coleg'}
         </button>
       </div>
 
@@ -168,7 +168,9 @@ export default function PortalFirmEmails({
                 value={newEmail}
                 onChange={(e) => setNewEmail(e.target.value)}
                 placeholder="coleg@firma.ro"
+                aria-label="Emailul colegului"
                 autoComplete="off"
+                autoFocus
                 className="min-w-0 flex-1 rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-gray-900 focus:border-secondary focus:outline-none sm:py-2"
               />
               <button
@@ -176,7 +178,7 @@ export default function PortalFirmEmails({
                 disabled={busy !== null || !newEmail.trim()}
                 className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50 sm:py-2"
               >
-                {busy === '__add' ? 'Adaug…' : 'Adaugă adresa'}
+                {busy === '__add' ? 'Adaug…' : 'Adaugă coleg'}
               </button>
             </form>
           )}
