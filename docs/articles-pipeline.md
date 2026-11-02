@@ -1445,6 +1445,15 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 
 ## ✅ Publicate recent (pentru referință CTR)
 
+### Baterie Sungrow 2026: SBR, SBH, SBS, Prețuri, Invertoare
+- **Publicat:** 2026-11-02 (rutina de luni, #79 din batch-ul greenlead) → [/ghid/baterie-sungrow-modele-sbr-sbh-sbs-compatibilitate-2026](/ghid/baterie-sungrow-modele-sbr-sbh-sbs-compatibilitate-2026)
+- **Conținut:** 12 secțiuni + 10 FAQ, ~3.350 de cuvinte, tabele pe model, compatibilitate pe serii de invertor, extindere, Casa Verde Baterii, prețuri citite pe 2 nov. **Fără hero:** nano-banana și API-ul Gemini au dat 403, problemă de facturare la proiectul Google; de rulat `/guide-image` după rezolvare.
+- **Poartă SERP (2 nov):** pagina 1 pe `baterie sungrow` e integral magazine, deci ținta e coada: `baterie sungrow 3.2 kw`, `5 kw`, `9.6 kw`, `10 kw`, compatibilitate. Articolul nu mai promite head-term-ul.
+- **Never-invent:** fișele SBR/SBH/SBS nu dau cicluri, spus explicit; scrisoarea de garanție pentru Europa negăsită. SBS050: versiunea 5 a fișei are 4,9 kWh utilizabili, versiunea 6 a scos rândul, deci 2 module sunt „neclar” la pragul de 10 kWh. Tabelul pentru SH-RT, manualul SBR și manualul SH-RL sunt preluate din sursele citite pentru #78 pe 30 oct (pagini `support.sungrowpower.com` care nu s-au mai deschis din WebFetch).
+- **De urmărit:** (a) când #78 ajunge live, #79 primește link spre el și invers; (b) ghidul de program definește capacitatea ca „cantitatea totală” de energie, iar ghidul Livoltek scrie că „cifra care contează la program e cea utilizabilă”, de reconciliat la următoarea atingere.
+- **Cluster GSC de urmărit (Google Ads RO, 2 nov):** `baterie sungrow` 480 · `baterii sungrow` 480 · `baterie sungrow 3.2 kw` 260 (vârf 590 aug 2026) · `baterie sungrow 5 kw` 210 · `baterie sungrow 9.6 kw` 140 · `acumulator sungrow` 140 · `baterie sungrow 10 kw` 110.
+- **KPI:** impresii + poziție pe coada de capacitate la 14/30 zile; recheck prețurile peste 30 de zile.
+
 ### Invertor Monofazat sau Trifazat 2026: Ce Alegi la Casă
 - **Publicat:** 2026-10-29 (rutina de joi, #33 promovat din backlog: coada activă era goală) → [/ghid/sistem-fotovoltaic-monofazat-vs-trifazat-casa-2026-invertor-trecere](/ghid/sistem-fotovoltaic-monofazat-vs-trifazat-casa-2026-invertor-trecere)
 - **Conținut:** 12 secțiuni + 10 FAQ, ~3.900 de cuvinte cu tabele, 7 tabele, hero JPEG 1600 px. Reguli citite din acte: Ord. ANRE 228/2018 art. 12 (max 16 A dezechilibru între faze pe trifazat; soluții: invertor trifazat sau monofazate cu comunicație), Procedura ANRE 19/2022 cap. IV (notificare fără creștere de putere) vs cap. V (cerere + ATR la creștere), Ord. ANRE 70/2023 cap. VI^1 (≤10,8 kW „sau echivalent”, echivalentul NEcuantificat în ordin; termene 7/15 zile, 1 lună PIF, 14 zile certificat). Prețuri Huawei L1 vs M1 la solarone.ro (29 oct): 5 kW 3.912 vs 6.490 lei. Cost trecere la trifazat: doar reper public bransam.ro (iun 2026, de la 2.900 + 900 + 1.200 lei, fără tariful operatorului). Statistica proprie: 53% trifazat din 91 de cereri (raportul din 1 oct).
