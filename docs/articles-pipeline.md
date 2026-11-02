@@ -695,6 +695,65 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 
 ## 🎯 Propuneri active
 
+### Batch 2026-10-30 — recuperare față de greenlead.ro (3 articole/săptămână până se golește)
+
+> **Decizia lui Radu, 30 oct 2026:** trecem la 3 articole pe săptămână (luni, joi, sâmbătă) până se golește batch-ul ăsta. Rutinele iau de aici primul `💡 idee`, înaintea oricărei alte intrări din coadă. Rutina de sâmbătă (`sambata-articol-instalatori`, creată pe 30 oct, rulează sâmbătă și duminică) e doar pentru batch-ul ăsta: e acoperită când fereastra joi–duminică are 2 ghiduri publicate, iar când batch-ul nu mai are niciun `💡 idee`, se oprește și cere dezactivarea.
+>
+> **De ce:** greenlead.ro are ETV 575 față de 221 la noi (DataForSEO Labs, 30 oct). Distanța a crescut de la 2,3x (7 sept) la 2,6x. Volumul lor de publicare nu explică singur diferența: 2 articole de compatibilitate baterie-invertor le aduc ~29% din trafic. Fiecare intrare de mai jos are cuvântul cheie măsurat și poziția lor. Analiza completă e în memorie, `reference_greenlead_competitor.md`, secțiunea din 30 oct.
+>
+> **Nu sunt articole, se fac separat, nu de rutine:** (a) „casa verde 2026” (5.400/lună): Google afișează ghidul de baterii CVB (poz. 34), nu hub-ul `casa-verde-fotovoltaice-2026`; întâi exportul GSC pe query, apoi linkuri interne spre hub, fără schimbări de titlu în clusterul CVB. (b) `/finantare` pe clusterul „în rate”: greenlead e pe 2-4 la „sistem fotovoltaic in rate” (110), „panouri fotovoltaice in rate hidroelectrica” (140), „kit panouri fotovoltaice in rate” (90); noi suntem pe 17 la „panouri fotovoltaice in rate persoane fizice”. (c) `/pret-panouri-fotovoltaice` nu rankează pe nimic; „panouri fotovoltaice pret” are 2.400/lună, greenlead e pe 24.
+
+> **Prioritizare (2 nov 2026, cerută de Radu):** ordinea vine din ETV-ul greenlead pe pagină (DataForSEO Labs, primele 70 din 127 de cuvinte) și din pagina 1 citită live pe 2 nov. Pozițiile greenlead din intrări sunt instantanee Labs din aug–oct: în căutarea live de pe desktop din 2 nov, greenlead nu apare în top 10 pe `panouri fotovoltaice in rate`, `panouri fotovoltaice second hand`, `kit panouri fotovoltaice 5 kw pret cu montaj`, `pzu`, `smart meter` și `citire contor prosumator`. #78 + #79 acoperă deja compatibilitatea (ETV greenlead 45,7). Rutinele iau articolele în ordinea din fișier, deci ordinea de mai jos e ordinea reală.
+>
+> | Ordine | Ce | ETV greenlead | De ce aici |
+> |---|---|---|---|
+> | Separat 1 | (a) `casa verde 2026`: hub în loc de ghidul de baterii | 96,5 (`/casa-verde-baterii` + `/casa-verde-fotovoltaice`) | cel mai mare gol; linkuri interne, fără text nou |
+> | Separat 2 | (b) `/finantare` pe clusterul „în rate” | 71,3 | 45,1 vin dintr-un singur articol de comparație; noi suntem pe 17 pe o singură variantă |
+> | Separat 3 | (c) `/pret-panouri-fotovoltaice` | 11,5 | 2.400/lună, iar greenlead e abia pe 24 |
+> | Rutine 1 | #80 sistem 5 kW | 11,8 | cel mai aproape de o cerere de ofertă; pe pagina 1 sunt magazine și un articol din 2024 |
+> | Rutine 2 | #81 second hand | 25,1 | cel mai mare ETV rămas la articole, dar pagina 1 e mai ales OLX și Facebook |
+> | Rutine 3 | #84 panouri la bloc | 2,7 | volum mic, dar poate aduce asociații de proprietari care cer oferte |
+> | Rutine 4 | #82 contor | 9,9, din care 8,7 pe `smart meter` | `smart meter` e numai magazine; rămâne `citire contor prosumator`, 140/lună, public deja prosumator |
+> | Parcat | #83 PZU | 11,1 | pagina 1 e numai OPCOM, deci poarta din intrare spune că se renunță |
+
+#### #78 — Compatibilitate Baterie-Invertor 2026: Tabel pe Mărci, din Listele Producătorilor
+- **Status:** ✅ publicat **2026-11-02** (scris pe 30 oct în sesiune manuală, necomis până pe 2 nov). Detalii în „✅ Publicate recent”.
+- **Cluster (DataForSEO, RO/`ro`, 30 oct):** `baterie compatibila invertor huawei` 320/lună (greenlead poz. 1), `baterie compatibila invertor huawei forum` 140 (greenlead 3), `acumulator compatibil invertor huawei` 90 (greenlead 3).
+- **De ce:** pagina lor (`/blog/compatibilitate-baterii-invertoare-2026-tabel-complet`, aprilie 2026, ~1.450 cuvinte) nu citează nicio sursă oficială: tabele DA/Parțial/NU fără documente. La noi fiecare rând are documentul producătorului, cu versiune sau dată.
+- **Linkuri interne:** /ghid/baterie-huawei-luna2000-modele-capacitati-casa-verde-2026, /ghid/baterie-livoltek-modele-capacitati-casa-verde-2026, /ghid/ce-baterie-stocare-alegi-panouri-fotovoltaice-2026-comparativ-modele, /ghid/invertor-hibrid-2026-pret-cand-merita-casa-verde, /ghid/casa-verde-baterii-2026-program-stocare-afm.
+
+#### #79 — Baterie Sungrow 2026: Modele, Capacități și Ce Invertoare o Acceptă
+- **Status:** ✅ publicat **2026-11-02** (rutina de luni). Detalii în „✅ Publicate recent”.
+- **Cluster:** `baterie sungrow` 480/lună (greenlead poz. 3, cu `/blog/baterii-compatibile-invertor-sungrow-2026`).
+- **Poartă SERP obligatorie:** dacă pagina 1 e integral magazine (ca la „baterie huawei” pe 21 aug), ținta devine coada („compatibil”, numele seriilor) și articolul se scurtează.
+- **Delimitare:** #78 = matricea pe toate mărcile; #79 = un singur brand, modele, capacități și reguli de extindere, pe șablonul ghidului Huawei LUNA2000.
+- **Never-invent:** doar fișele și listele de compatibilitate Sungrow; prețuri doar din magazine cu link + dată.
+
+#### #80 — Sistem Fotovoltaic 5 kW: Preț cu Montaj 2026, cu și fără Baterie
+- **Status:** 💡 idee
+- **Cluster:** `kit panouri fotovoltaice 5 kw pret cu montaj` 720/lună (greenlead poz. 10), `panouri fotovoltaice 5 kw pret cu montaj` 140 (greenlead 7), `cat costa o instalatie de panouri fotovoltaice de 5 kw` 140 (greenlead 17), `sistem fotovoltaic 5 kw pret` 50.
+- **Poartă SERP (2 nov):** pe `kit panouri fotovoltaice 5 kw pret cu montaj` sunt magazine, plus electricup.ro (februarie 2024) și necesit.ro. Trece: niciun articol recent care să arate prețul cu montaj și cu ce se compune.
+- **Structură de preluat** de la panourifotovoltaice.net/ghid/cat-costa-un-sistem-fotovoltaic.html (articolul lor nu rankează, structura e bună): tabel cu și fără baterie, din ce se compune prețul, ce scumpește instalarea (acoperiș, distanța până la tablou, trecerea la trifazat, optimizatoare, baterie), costurile de cerut explicit în ofertă, cuprins.
+- **Delimitare:** hub-ul #38 `kit-panouri-fotovoltaice-3-5-10-kw-pret-montaj-2026` rămâne pe 3/5/10 kW; #80 merge în adâncime doar pe 5 kW. În aceeași zi, hub-ul primește link spre #80 cu ancora „sistem fotovoltaic 5 kW cu montaj” (lecția de canibalizare din 18 aug).
+- **Never-invent:** prețuri doar din `data/kit-prices.json` (normalizat cu `scripts/normalize-kit-prices.mjs`) sau din magazine cu link + dată; fără intervale „observate în piață”.
+
+#### #81 — Panouri Fotovoltaice Second Hand 2026: Merită? Riscuri, Garanție, Ce Verifici
+- **Status:** 💡 idee
+- **Cluster:** `panouri fotovoltaice second hand` 260/lună (greenlead poz. 3).
+- **Poartă SERP (2 nov):** pagina 1 e mai ales OLX, Facebook și magazine; editorial sunt doar Newsweek (iunie 2025) și un blog din 2018. Trece, cu ținta pe „merită?”, riscuri și ce verifici, nu pe cumpărare.
+- **Never-invent:** garanții și degradare doar din fișele producătorilor; regulile programelor despre echipamente noi doar din ghidurile oficiale.
+
+#### #84 — Panouri Fotovoltaice la Bloc 2026: Asociația de Proprietari, Acte, Cine Plătește
+- **Status:** 💡 idee
+- **Cluster:** `panouri fotovoltaice la bloc` 90/lună (greenlead 6), `proiect panouri fotovoltaice` 170 (greenlead 21, cu același articol).
+- **Legătură:** watch-ul „panouri pe bloc / balcon discutate în Parlament” (28 sept). Delimitare față de ghidul de balcon.
+- **Never-invent:** doar ce scrie în legea asociațiilor de proprietari și în normele ANRE; proiectele din Parlament se marchează ca proiecte.
+
+#### #82 — Contor Inteligent la Prosumator 2026: Cum Citești Contorul
+- **Status:** 💡 idee
+- **Cluster:** `citire contor prosumator` 140/lună (greenlead 18), `smart meter` 720 (generic, greenlead 13), `factura prosumator` 70 (greenlead 30).
+- **Poartă SERP (2 nov):** `smart meter` e dominat de magazine cu contoare pentru invertor, nu de operatori, deci nu e țintă. Ținta rămâne `citire contor prosumator` + ce arată display-ul, doar din documentele operatorilor. Pe pagina 1 sunt surse vechi (Softpedia și Antena 3, 2022), iar răspunsul AI de sus dă codurile 1.8.0 și 2.8.0, deci articolul trebuie să meargă dincolo de ele.
+
 > ### ⏭️ ACTUALIZARE NEWS SCAN 2026-09-21: **luni 22 sept = PASUL 0.5, corecția „ordinul e în MO” (TOP în „🔧 De extins”), apoi #63 în slotul de joi 24 sept, înaintea #31.**
 >
 > Ordinul Casa Verde Baterii are număr și e în Monitorul Oficial (**nr. 1.904/2026, MO nr. 775 din 14.09.2026**), deci triggerul pentru „update Casa Verde v2” de mai jos s-a produs deja — cu o săptămână în urmă. Ghidurile noastre spun încă „nepublicat în MO”: asta e eroare de fapt, deci corecția trece înaintea oricărui articol. #31 (PV + pompă de căldură, ~40/lună, vârf în noiembrie-ianuarie) se mută după #63; #63 are head-term-ul cu cel mai mare volum de pe site (`casa verde baterii 2026` **9.900 în august**).
@@ -1445,12 +1504,19 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 
 ## ✅ Publicate recent (pentru referință CTR)
 
+### Baterie Compatibilă cu Invertor Huawei, Sungrow, Deye 2026
+- **Publicat:** 2026-11-02 (#78 din batch-ul greenlead, scris pe 30 oct în sesiune manuală) → [/ghid/baterie-compatibila-invertor-huawei-sungrow-deye-2026-tabel](/ghid/baterie-compatibila-invertor-huawei-sungrow-deye-2026-tabel)
+- **Conținut:** 13 secțiuni + 10 FAQ, ~5.000 de cuvinte, tabel pe 10 mărci de invertoare, cu documentul și versiunea la fiecare rând, citite pe 30 oct.
+- **Verificare la publicare (2 nov):** recitite din documentele originale Deye LV, GoodWe, Solis, Fronius, Victron, SMA SBSE și fișa Huawei LUNA2000-S1. Corectat „Deye are cea mai lungă listă”: Solis are mai multe mărci (numărare aproximativă, ~167 față de ~118 pe 48 V). Growatt, SolarEdge și restul manualelor nu au fost recitite. 33 din 35 de linkuri externe răspund; ghidul de mapare Huawei și pagina SolarEdge dau 403 la cereri automate.
+- **Linkuri:** spre #78 din ghidurile Huawei, invertor hibrid, comparativ baterii și #79; din #78 spre #79.
+- **Cluster GSC de urmărit (DataForSEO, 30 oct):** `baterie compatibila invertor huawei` 320 (greenlead 1) · `baterie compatibila invertor huawei forum` 140 (greenlead 3) · `acumulator compatibil invertor huawei` 70 (greenlead 3).
+
 ### Baterie Sungrow 2026: SBR, SBH, SBS, Prețuri, Invertoare
 - **Publicat:** 2026-11-02 (rutina de luni, #79 din batch-ul greenlead) → [/ghid/baterie-sungrow-modele-sbr-sbh-sbs-compatibilitate-2026](/ghid/baterie-sungrow-modele-sbr-sbh-sbs-compatibilitate-2026)
 - **Conținut:** 12 secțiuni + 10 FAQ, ~3.350 de cuvinte, tabele pe model, compatibilitate pe serii de invertor, extindere, Casa Verde Baterii, prețuri citite pe 2 nov. **Fără hero:** nano-banana și API-ul Gemini au dat 403, problemă de facturare la proiectul Google; de rulat `/guide-image` după rezolvare.
 - **Poartă SERP (2 nov):** pagina 1 pe `baterie sungrow` e integral magazine, deci ținta e coada: `baterie sungrow 3.2 kw`, `5 kw`, `9.6 kw`, `10 kw`, compatibilitate. Articolul nu mai promite head-term-ul.
 - **Never-invent:** fișele SBR/SBH/SBS nu dau cicluri, spus explicit; scrisoarea de garanție pentru Europa negăsită. SBS050: versiunea 5 a fișei are 4,9 kWh utilizabili, versiunea 6 a scos rândul, deci 2 module sunt „neclar” la pragul de 10 kWh. Tabelul pentru SH-RT, manualul SBR și manualul SH-RL sunt preluate din sursele citite pentru #78 pe 30 oct (pagini `support.sungrowpower.com` care nu s-au mai deschis din WebFetch).
-- **De urmărit:** (a) când #78 ajunge live, #79 primește link spre el și invers; (b) ghidul de program definește capacitatea ca „cantitatea totală” de energie, iar ghidul Livoltek scrie că „cifra care contează la program e cea utilizabilă”, de reconciliat la următoarea atingere.
+- **De urmărit:** (a) ✅ #78 e live din 2 nov, linkurile dintre #78 și #79 sunt puse; (b) ghidul de program definește capacitatea ca „cantitatea totală” de energie, iar ghidul Livoltek scrie că „cifra care contează la program e cea utilizabilă”, de reconciliat la următoarea atingere.
 - **Cluster GSC de urmărit (Google Ads RO, 2 nov):** `baterie sungrow` 480 · `baterii sungrow` 480 · `baterie sungrow 3.2 kw` 260 (vârf 590 aug 2026) · `baterie sungrow 5 kw` 210 · `baterie sungrow 9.6 kw` 140 · `acumulator sungrow` 140 · `baterie sungrow 10 kw` 110.
 - **KPI:** impresii + poziție pe coada de capacitate la 14/30 zile; recheck prețurile peste 30 de zile.
 
@@ -1851,6 +1917,7 @@ Vezi `MEMORY.md` — secțiunea "Content Status" are lista completă de ghiduri.
 
 ## 🔴 Ideei respinse / parcate
 
+- **⛔ #83 PZU pe OPCOM pentru Prosumatori — parcat 2026-11-02.** Batch-ul greenlead cerea renunțarea dacă `pzu` (1.300/lună) e navigațional: pe 2 nov, toate rezultatele organice de pe pagina 1 sunt OPCOM, iar sus e un răspuns AI. Greenlead nu apare în top 10 live (Labs îl avea pe 11 pe 1 sept). Se redeschide doar pe o coadă măsurată, de exemplu `opcom pret pzu` sau `pret pzu energie electrica`. Delimitare de păstrat: ghidul `pret-kw-prosumator-2026-per-furnizor-eon-hidro-ppc-electrica-premier` explică ce plătesc furnizorii; un articol PZU ar explica piața din care vine prețul.
 - **⛔ Comunitățile de energie — parcat 2026-10-12.** Volum zero pe ambele baze (14 sept), toate semnalele sunt ordine/proiecte ANRE (Ord. 50/2026, Ord. 58/2026, regulile comerciale v3 în consultare până la 16 oct). Ce rămâne: nota de actualizare în `legea-prosumatorilor-2026-firma-plata-lunara-dezechilibre`. Se redeschide doar la un val de presă de consum sau volum măsurat.
 - **⛔ Electric Up Ciclul 3 — parcat 2026-10-05.** energie.gov.ro/category/electricup are ca ultimă postare tot 20 mai 2024, verificat de zece ori la rând (iul–oct 2026). Decizia din 24 aug („dacă nici la 1 oct nu se schimbă nimic, se parchează”) s-a aplicat. Se redeschide doar la un anunț de apel.
 
