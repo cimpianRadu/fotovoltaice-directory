@@ -11,6 +11,7 @@ import {
   getClaims,
   getFirmEmailGroup,
   getFullLeadById,
+  getProbaClaims,
   getFirmIdentity,
   getLeadSubscriptions,
   hasPortalAccount,
@@ -20,7 +21,7 @@ import {
   saveClaimToSheet,
   saveFirmProfile,
 } from '@/lib/sheets';
-import { isValidEmail, normalizeEmail } from '@/lib/portal-auth';
+import { isProbaAccount, isValidEmail, normalizeEmail } from '@/lib/portal-auth';
 import { peekPortalEmail } from '@/lib/portal-session';
 import { sanitizeAttribution } from '@/lib/attribution';
 import { isFirmSource } from '@/lib/utils-shared';
@@ -125,7 +126,10 @@ export async function POST(request: Request) {
       }
     }
 
-    const allClaims = await getClaims();
+    // Contul de probă se măsoară doar cu rândurile lui: regulile firmei rămân
+    // (duplicat, plafonul pe firmă), dar nu ia locul nimănui. Vezi `isProbaAccount`.
+    const proba = isProbaAccount(email);
+    const allClaims = proba ? await getProbaClaims() : await getClaims();
     // Renunțările nu ocupă locuri — dar rămân în `allClaimsForLead` pentru
     // regula de duplicat: cine a renunțat nu-și mai ia înapoi aceeași cerere
     // singur (ne scrie, o dăm manual — altfel renunțatul devine un buton de
@@ -175,11 +179,13 @@ export async function POST(request: Request) {
     // ia de la firmă: cronul de dimineață mă sună pe mine, cu lista de apeluri
     // (`remindMeToCall`). Firma a făcut ce trebuia, deci nu ea plătește.
     const firmEmails = await getFirmEmailGroup(normalizeEmail(email));
-    const firmConfirmed = firmIsConfirmed(allClaims, {
-      emails: firmEmails,
-      numeFirma,
-      telefon,
-    });
+    const firmConfirmed =
+      proba ||
+      firmIsConfirmed(allClaims, {
+        emails: firmEmails,
+        numeFirma,
+        telefon,
+      });
 
     const claim = {
       leadId,
@@ -191,6 +197,7 @@ export async function POST(request: Request) {
       attribution,
       cumAflat,
       approvedAt: firmConfirmed ? new Date().toISOString() : '',
+      proba,
     };
     const claimTs = await saveClaimToSheet(claim);
 
@@ -229,6 +236,20 @@ export async function POST(request: Request) {
     const leadSummary = `${getProjectTypeLabel(lead.tipProiect)} · ${lead.judet}${
       lead.putere ? ` · ${lead.putere} kW` : ''
     }`;
+
+    // Contul de probă primește emailul firmei și atât: clientul nu află, feedul
+    // nu se schimbă, iar eu nu primesc notificarea de revendicare. Numărul de pe
+    // card rămâne cel real, plus revendicarea asta, cum l-ar vedea o firmă.
+    if (proba) {
+      await sendClaimApprovedEmail({ to: claim.email, leadSummary });
+      const realHeld = claimsHeldForLead(await getClaims(), leadId).length;
+      return NextResponse.json({
+        success: true,
+        claims: realHeld + 1,
+        hasAccount: true,
+        unlocked: true,
+      });
+    }
 
     // Deblocarea automată îi spune firmei același lucru pe care i-l spunea
     // emailul de după aprobarea manuală. Firma închide pagina și pleacă pe

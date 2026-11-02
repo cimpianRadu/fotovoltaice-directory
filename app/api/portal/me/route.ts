@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { peekPortalEmail } from '@/lib/portal-session';
-import { getClaims, getFirmIdentity } from '@/lib/sheets';
+import { getClaimsForAccount, getFirmIdentity } from '@/lib/sheets';
 import { MAX_ACTIVE_CLAIMS_PER_FIRM, countActiveClaimsForFirm } from '@/lib/sheets-shared';
 
 // Cine e firma logată, pentru /cereri: cu cont, revendicarea și urmărirea se
@@ -17,7 +17,7 @@ export async function GET() {
     const email = await peekPortalEmail();
     if (!email) return NextResponse.json({ me: null }, { headers });
 
-    const [claims, identity] = await Promise.all([getClaims(), getFirmIdentity(email)]);
+    const [claims, identity] = await Promise.all([getClaimsForAccount(email), getFirmIdentity(email)]);
     return NextResponse.json(
       {
         me: {

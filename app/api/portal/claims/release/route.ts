@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getPortalEmail } from '@/lib/portal-session';
-import { getClaims, getFirmEmailGroup, getFullLeadById, releaseClaim } from '@/lib/sheets';
+import { getClaimsForAccount, getFirmEmailGroup, getFullLeadById, releaseClaim } from '@/lib/sheets';
 import { sendClaimReleaseNotification } from '@/lib/email';
 import { getProjectTypeLabel } from '@/lib/utils-shared';
 
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const [claims, emails] = await Promise.all([getClaims(), getFirmEmailGroup(email)]);
+    const [claims, emails] = await Promise.all([getClaimsForAccount(email), getFirmEmailGroup(email)]);
     const claim = claims.find((c) => c.timestamp === claimTimestamp && c.leadId === leadId);
     if (!claim || !emails.includes(claim.email)) {
       return NextResponse.json({ error: 'Revendicarea nu există.' }, { status: 404 });
@@ -37,7 +37,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Ai renunțat deja la această cerere.' }, { status: 409 });
     }
 
-    const updated = await releaseClaim(claimTimestamp, leadId, motiv);
+    const updated = await releaseClaim(claimTimestamp, leadId, motiv, claim.proba);
+    // Contul de probă n-a ținut niciun loc și n-are de ce să mă anunțe.
+    if (claim.proba) return NextResponse.json({ ok: true, releasedAt: updated.releasedAt });
 
     // Locul cererii s-a eliberat — feedul public trebuie să o arate din nou
     // disponibilă, nu peste 5 minute de ISR.

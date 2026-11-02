@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { bucharestStamp, getPortalEmail } from '@/lib/portal-session';
-import { getClaims, getFirmEmailGroup, setClaimFirmStatus, updateLeadCrm } from '@/lib/sheets';
+import { getClaimsForAccount, getFirmEmailGroup, setClaimFirmStatus, updateLeadCrm } from '@/lib/sheets';
 import { CLAIM_STATUSES, type ClaimStatus } from '@/lib/sheets-shared';
 
 /**
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Status necunoscut.' }, { status: 400 });
     }
 
-    const [claims, emails] = await Promise.all([getClaims(), getFirmEmailGroup(email)]);
+    const [claims, emails] = await Promise.all([getClaimsForAccount(email), getFirmEmailGroup(email)]);
     const claim = claims.find((c) => c.timestamp === claimTimestamp && c.leadId === leadId);
     if (!claim || !emails.includes(claim.email)) {
       return NextResponse.json({ error: 'Revendicarea nu există.' }, { status: 404 });
@@ -43,12 +43,12 @@ export async function POST(request: Request) {
       );
     }
 
-    const updated = await setClaimFirmStatus(claimTimestamp, leadId, status);
+    const updated = await setClaimFirmStatus(claimTimestamp, leadId, status, claim.proba);
 
     // Firma a marcat „Concretizat”: cererea e câștigată (Radu, 24 oct 2026: „care
     // e marcată ca și concretizată de firmă, aia e”). Până atunci așteptam
     // confirmarea clientului, iar starea cererii rămânea în urmă.
-    if (status === 'castigat' && claim.firmStatus !== 'castigat') {
+    if (!claim.proba && status === 'castigat' && claim.firmStatus !== 'castigat') {
       await updateLeadCrm(leadId, {
         status: 'castigata',
         note: `${claim.numeFirma} a marcat „Concretizat” în portal. Cererea a trecut singură pe câștigată.`,

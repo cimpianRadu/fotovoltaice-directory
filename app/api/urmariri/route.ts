@@ -7,7 +7,7 @@ import {
   isLeadInformez,
   saveWatchToSheet,
 } from '@/lib/sheets';
-import { isValidEmail, normalizeEmail } from '@/lib/portal-auth';
+import { isProbaAccount, isValidEmail, normalizeEmail } from '@/lib/portal-auth';
 import { peekPortalEmail } from '@/lib/portal-session';
 
 // „Urmărește cererea": firma își pune un semn pe o cerere pe care clientul se
@@ -59,6 +59,10 @@ export async function POST(request: Request) {
         { status: 409 },
       );
     }
+
+    // Contul de probă vede confirmarea, dar urmărirea nu se scrie: ar apărea
+    // în feedul public și în lista celor anunțați la reactivare.
+    if (isProbaAccount(email)) return NextResponse.json({ success: true });
 
     const watches = await getWatches();
     if (watches.some((w) => w.leadId === leadId && w.email === email)) {

@@ -4,7 +4,7 @@
 
 import { cookies } from 'next/headers';
 import { after } from 'next/server';
-import { PORTAL_COOKIE, normalizeEmail, verifyToken } from './portal-auth';
+import { PORTAL_COOKIE, isProbaAccount, normalizeEmail, verifyToken } from './portal-auth';
 import { isPortalEmailDeactivated, logPortalVisit } from './sheets';
 
 /** Data și ora României pentru jurnalul de note — același format ca în /admin/crm. */
@@ -36,7 +36,7 @@ export async function getPortalEmail(): Promise<string | null> {
   if (!email) return null;
   // Localul scrie în același Sheet ca producția: o verificare din `next dev`
   // pe contul unei firme ar apărea în jurnal ca vizită a firmei.
-  if (process.env.NODE_ENV === 'development') return email;
+  if (process.env.NODE_ENV === 'development' || isProbaAccount(email)) return email;
   after(() =>
     logPortalVisit(email).catch((err) => console.error('[portal] jurnal vizită:', err)),
   );
@@ -58,6 +58,6 @@ export async function peekPortalEmail(): Promise<string | null> {
   const email = normalizeEmail(payload.email);
   // Contul dezactivat din /admin/portal: sesiunea de 30 de zile e încă semnată
   // valid, dar nu mai e recunoscută. Firma vede fața publică a portalului.
-  if (await isPortalEmailDeactivated(email)) return null;
+  if (!isProbaAccount(email) && (await isPortalEmailDeactivated(email))) return null;
   return email;
 }

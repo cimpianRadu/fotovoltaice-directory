@@ -9,7 +9,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { isLeadPhotoPath, readLeadPhoto } from '@/lib/lead-photos';
 import { getPortalEmail } from '@/lib/portal-session';
-import { getClaims, getFirmEmailGroup, getPhotosForLead } from '@/lib/sheets';
+import { getClaimsForAccount, getFirmEmailGroup, getPhotosForLead } from '@/lib/sheets';
 
 export async function GET(request: NextRequest) {
   const email = await getPortalEmail();
@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
   // Aceleași adrese ale aceleiași firme ca în portal: omul revendică de pe o
   // adresă și intră de pe alta.
   const mine = new Set(await getFirmEmailGroup(email));
-  const claims = await getClaims();
+  const claims = await getClaimsForAccount(email);
   const allowed = claims.some(
     (c) => c.leadId === leadId && mine.has(c.email) && c.approvedAt && !c.releasedAt,
   );

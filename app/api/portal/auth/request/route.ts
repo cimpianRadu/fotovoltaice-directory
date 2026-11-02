@@ -5,6 +5,7 @@ import {
   createToken,
   generateLoginCode,
   hashLoginCode,
+  isProbaAccount,
   isValidEmail,
   normalizeEmail,
   portalCookieOptions,
@@ -36,7 +37,7 @@ export async function POST(request: Request) {
 
     // Cont dezactivat din /admin/portal: nu trimitem cod. Aici endpointul spune
     // că adresa există, dar numai cui o are deja și a fost oprit de noi.
-    if (await isPortalEmailDeactivated(email)) {
+    if (!isProbaAccount(email) && (await isPortalEmailDeactivated(email))) {
       return NextResponse.json(
         {
           error:

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { bucharestStamp, getPortalEmail } from '@/lib/portal-session';
-import { addClaimNote, getClaims, getFirmEmailGroup } from '@/lib/sheets';
+import { addClaimNote, getClaimsForAccount, getFirmEmailGroup } from '@/lib/sheets';
 
 export async function POST(request: Request) {
   try {
@@ -19,14 +19,14 @@ export async function POST(request: Request) {
     // Poți scrie doar pe revendicările firmei tale (emailul din sesiune plus
     // adresele legate de el) — id-urile vin din client, deci verificarea de
     // proprietate e obligatorie.
-    const [claims, emails] = await Promise.all([getClaims(), getFirmEmailGroup(email)]);
+    const [claims, emails] = await Promise.all([getClaimsForAccount(email), getFirmEmailGroup(email)]);
     const claim = claims.find((c) => c.timestamp === claimTimestamp && c.leadId === leadId);
     if (!claim || !emails.includes(claim.email)) {
       return NextResponse.json({ error: 'Revendicarea nu există.' }, { status: 404 });
     }
 
     const { today, time } = bucharestStamp();
-    const updated = await addClaimNote(claimTimestamp, leadId, text, today, time);
+    const updated = await addClaimNote(claimTimestamp, leadId, text, today, time, claim.proba);
     return NextResponse.json({ ok: true, notes: updated.firmNotes });
   } catch (err) {
     console.error('[portal] claim note error:', err);

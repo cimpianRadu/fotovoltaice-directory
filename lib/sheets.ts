@@ -20,6 +20,7 @@ import {
 import { google } from 'googleapis';
 import type { Attribution } from './attribution';
 import { logLeadChange, type LeadChangeBy } from './lead-history';
+import { isProbaAccount } from './portal-auth';
 
 function getAuth() {
   return new google.auth.GoogleAuth({
@@ -1028,8 +1029,16 @@ export async function getFullLeadById(id: string): Promise<NewLead | undefined> 
 }
 
 const CLAIMS_SHEET = 'Revendicări';
+/**
+ * Revendicările contului de probă (`isProbaAccount`), cu aceleași coloane. Tab
+ * separat, nu un marcaj în „Revendicări”: `getClaims` și scripturile citesc tot
+ * tabul, iar un rând de probă de acolo ar ocupa locuri și ar ajunge la client.
+ */
+const PROBA_CLAIMS_SHEET = 'Revendicări Probă';
 
 export interface LeadClaim {
+  /** Rând din „Revendicări Probă”. Îl pun doar `getProbaClaims`. */
+  proba?: boolean;
   timestamp: string;
   leadId: string;
   numeFirma: string;
@@ -1144,6 +1153,29 @@ export async function getClaims(): Promise<LeadClaim[]> {
     .map(readClaimRow);
 }
 
+export async function getProbaClaims(): Promise<LeadClaim[]> {
+  let rows: string[][];
+  try {
+    rows = await readRows(PROBA_CLAIMS_SHEET);
+  } catch {
+    return [];
+  }
+  return rows
+    .filter((r) => Number.isFinite(Date.parse(r[0] || '')))
+    .map((r) => ({ ...readClaimRow(r), proba: true }));
+}
+
+/**
+ * Revendicările așa cum le vede contul logat: pentru contul de probă se adaugă
+ * rândurile lui. Doar pentru ce vede și face firma în propriul cont; restul
+ * aplicației rămâne pe `getClaims`, ca să nu afle de ele.
+ */
+export async function getClaimsForAccount(email: string): Promise<LeadClaim[]> {
+  if (!isProbaAccount(email)) return getClaims();
+  const [claims, proba] = await Promise.all([getClaims(), getProbaClaims()]);
+  return [...claims, ...proba];
+}
+
 async function createSheetTab(title: string) {
   const auth = getAuth();
   const sheets = google.sheets({ version: 'v4', auth });
@@ -1195,7 +1227,10 @@ export async function saveClaimToSheet(claim: {
    * firme noi, care așteaptă apelul.
    */
   approvedAt?: string;
+  /** Contul de probă: rândul merge în „Revendicări Probă”. */
+  proba?: boolean;
 }): Promise<string> {
+  const sheet = claim.proba ? PROBA_CLAIMS_SHEET : CLAIMS_SHEET;
   const timestamp = new Date().toISOString();
   const values = [
     timestamp,
@@ -1220,12 +1255,12 @@ export async function saveClaimToSheet(claim: {
     claim.cumAflat || '', // T — Cum a aflat (răspunsul firmei, opțional)
   ];
   try {
-    await appendRow(CLAIMS_SHEET, values);
+    await appendRow(sheet, values);
   } catch {
     // Tabul „Revendicări" nu există încă — îl creăm cu header și reîncercăm o dată.
-    await createSheetTab(CLAIMS_SHEET);
-    await appendRow(CLAIMS_SHEET, CLAIMS_HEADER);
-    await appendRow(CLAIMS_SHEET, values);
+    await createSheetTab(sheet);
+    await appendRow(sheet, CLAIMS_HEADER);
+    await appendRow(sheet, values);
   }
   return timestamp;
 }
@@ -1272,10 +1307,11 @@ export async function markClaimContacted(
 async function findClaimRow(
   claimTimestamp: string,
   leadId: string,
+  sheet: string = CLAIMS_SHEET,
 ): Promise<{ row: string[]; sheetRow: number }> {
-  const rows = await readRowsFresh(CLAIMS_SHEET);
-  const index = findUniqueRow(rows, (r) => r[0] === claimTimestamp && r[1] === leadId, CLAIMS_SHEET);
-  if (index === -1) throw new Error('Revendicarea nu există în tabul Revendicări.');
+  const rows = await readRowsFresh(sheet);
+  const index = findUniqueRow(rows, (r) => r[0] === claimTimestamp && r[1] === leadId, sheet);
+  if (index === -1) throw new Error(`Revendicarea nu există în tabul ${sheet}.`);
   return { row: rows[index], sheetRow: index + 1 };
 }
 
@@ -1302,23 +1338,27 @@ export async function releaseClaim(
   claimTimestamp: string,
   leadId: string,
   reason: string,
+  proba = false,
 ): Promise<LeadClaim> {
-  const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
+  const sheet = proba ? PROBA_CLAIMS_SHEET : CLAIMS_SHEET;
+  const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId, sheet);
   const before = readClaimRow(row).firmStatus;
   const releasedAt = new Date().toISOString();
-  await updateClaimCells(`${CLAIMS_SHEET}!J${sheetRow}:K${sheetRow}`, [[releasedAt, reason]]);
+  await updateClaimCells(`${sheet}!J${sheetRow}:K${sheetRow}`, [[releasedAt, reason]]);
   // Renunțarea E statusul „pierdut" — dacă F ar rămâne pe altceva, aceeași
   // revendicare ar spune două lucruri diferite în portal și în CRM.
-  await updateClaimCells(`${CLAIMS_SHEET}!F${sheetRow}`, [['pierdut']]);
-  await logLeadChange({
-    leadId,
-    claimTs: claimTimestamp,
-    field: 'stare_firma',
-    from: before,
-    to: 'pierdut',
-    by: 'firma',
-    detail: `a renunțat: ${reason}`,
-  });
+  await updateClaimCells(`${sheet}!F${sheetRow}`, [['pierdut']]);
+  if (!proba) {
+    await logLeadChange({
+      leadId,
+      claimTs: claimTimestamp,
+      field: 'stare_firma',
+      from: before,
+      to: 'pierdut',
+      by: 'firma',
+      detail: `a renunțat: ${reason}`,
+    });
+  }
   row[5] = 'pierdut';
   row[9] = releasedAt;
   row[10] = reason;
@@ -1336,18 +1376,22 @@ export async function setClaimFirmStatus(
   claimTimestamp: string,
   leadId: string,
   status: ClaimStatus,
+  proba = false,
 ): Promise<LeadClaim> {
-  const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
+  const sheet = proba ? PROBA_CLAIMS_SHEET : CLAIMS_SHEET;
+  const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId, sheet);
   const before = readClaimRow(row).firmStatus;
-  await updateClaimCells(`${CLAIMS_SHEET}!F${sheetRow}`, [[status]]);
-  await logLeadChange({
-    leadId,
-    claimTs: claimTimestamp,
-    field: 'stare_firma',
-    from: before,
-    to: status,
-    by: 'firma',
-  });
+  await updateClaimCells(`${sheet}!F${sheetRow}`, [[status]]);
+  if (!proba) {
+    await logLeadChange({
+      leadId,
+      claimTs: claimTimestamp,
+      field: 'stare_firma',
+      from: before,
+      to: status,
+      by: 'firma',
+    });
+  }
   row[5] = status;
 
   const currentOffer = row[13] || '';
@@ -1357,7 +1401,7 @@ export async function setClaimFirmStatus(
       ? currentOffer || new Date().toISOString()
       : currentOffer;
   if (nextOffer !== currentOffer) {
-    await updateClaimCells(`${CLAIMS_SHEET}!N${sheetRow}`, [[nextOffer]]);
+    await updateClaimCells(`${sheet}!N${sheetRow}`, [[nextOffer]]);
     row[13] = nextOffer;
   }
 
@@ -1371,15 +1415,17 @@ export async function addClaimNote(
   text: string,
   today: string,
   time?: string,
+  proba = false,
 ): Promise<LeadClaim> {
-  const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId);
+  const sheet = proba ? PROBA_CLAIMS_SHEET : CLAIMS_SHEET;
+  const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId, sheet);
   const existing = parseNotes(row[11] || '');
   const next: LeadNote[] = [
     { date: today, ...(time ? { time } : {}), text: text.trim() },
     ...existing,
   ];
   const serialized = serializeNotes(next);
-  await updateClaimCells(`${CLAIMS_SHEET}!L${sheetRow}`, [[serialized]]);
+  await updateClaimCells(`${sheet}!L${sheetRow}`, [[serialized]]);
   row[11] = serialized;
   return readClaimRow(row);
 }
@@ -2404,7 +2450,7 @@ export async function getFirmIdentity(
   email: string,
 ): Promise<{ numeFirma: string; numeContact: string; telefon: string; fromProfile: boolean } | null> {
   const [claims, group, profiles] = await Promise.all([
-    getClaims(),
+    getClaimsForAccount(email),
     getFirmEmailGroup(email),
     getFirmProfiles(),
   ]);

@@ -118,6 +118,19 @@ export function normalizeEmail(s: string): string {
   return s.trim().toLowerCase();
 }
 
+/**
+ * Contul de probă al lui Radu: intră în portal ca orice firmă și vede exact ce
+ * vede ea, dar revendicările lui stau în tabul „Revendicări Probă”. Nu ocupă
+ * locul nimănui, nu ajung la client și nu apar în CRM sau în rapoarte.
+ * Rămâne în „Conturi Dezactivate”, ca să nu primească alerte și să nu apară în
+ * listele de lucru din /admin/portal; dezactivarea doar nu-l oprește să intre.
+ */
+const PORTAL_PROBA_EMAIL = 'radu.cimpian94@gmail.com';
+
+export function isProbaAccount(email: string): boolean {
+  return normalizeEmail(email) === PORTAL_PROBA_EMAIL;
+}
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function isValidEmail(s: string): boolean {

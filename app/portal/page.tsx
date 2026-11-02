@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { getPortalEmail } from '@/lib/portal-session';
 import {
   findSubscriptionForCounty,
-  getClaims,
+  getClaimsForAccount,
   getCountyAlertPref,
   getFirmEmailGroup,
   getLeadPhotos,
@@ -139,7 +139,7 @@ export default async function PortalPage() {
 
   try {
     const [claims, leads, photos, profiles, firmOffers] = await Promise.all([
-      getClaims(),
+      getClaimsForAccount(email),
       getLeadsSince(new Date(0)),
       // Tabul „Poze" ține doar căile din Blob; fișierele ies numai prin
       // /api/portal/poza, care verifică din nou cine întreabă.
