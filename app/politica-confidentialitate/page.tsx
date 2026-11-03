@@ -15,7 +15,7 @@ export default function PoliticaConfidentialitate() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Politica de Confidențialitate</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 23 octombrie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 3 noiembrie 2026</p>
 
         <p>
           Instalatori Fotovoltaice România (&quot;noi&quot;, &quot;site-ul&quot;) operează site-ul{' '}
@@ -46,7 +46,9 @@ export default function PoliticaConfidentialitate() {
             <strong>Contul de client:</strong> pe baza emailului din cerere vă creăm automat un cont
             fără parolă, din care vedeți ce s-a întâmplat cu cererea. Păstrăm data primei intrări și a
             ultimei vizite, ce ne spuneți despre fiecare firmă (dacă v-a sunat, dacă ați primit ofertă,
-            dacă ați semnat) și ofertele trimise de firme prin platformă
+            dacă ați semnat), notițele pe care le scrieți despre o firmă și ofertele trimise de firme
+            prin platformă. Notițele sunt text liber: le citim doar noi, firma nu le vede, iar
+            dumneavoastră le puteți șterge oricând din pagina cererii
           </li>
         </ul>
 
@@ -72,8 +74,8 @@ export default function PoliticaConfidentialitate() {
             contacteze cu opțiuni
           </li>
           <li>
-            Să vă arătăm stadiul cererii în contul de client și să verificăm, din răspunsurile
-            dumneavoastră, dacă firmele care au preluat-o v-au contactat
+            Să vă arătăm stadiul cererii în contul de client și să verificăm, din răspunsurile și
+            notițele dumneavoastră, dacă firmele care au preluat-o v-au contactat
           </li>
           <li>Procesarea cererilor de listare a firmelor pe platformă</li>
           <li>Trimiterea de comunicări solicitate (newsletter)</li>
@@ -147,8 +149,8 @@ export default function PoliticaConfidentialitate() {
         <ul>
           <li>Cererile de ofertă: 12 luni de la trimitere</li>
           <li>
-            Contul de client, răspunsurile despre firme și ofertele: cât timp e păstrată cererea, sau
-            până cereți ștergerea din cont
+            Contul de client, răspunsurile și notițele despre firme și ofertele: cât timp e păstrată
+            cererea, sau până cereți ștergerea din cont
           </li>
           <li>Datele firmelor listate: pe durata listării + 6 luni</li>
           <li>Email-uri newsletter: până la dezabonare</li>
