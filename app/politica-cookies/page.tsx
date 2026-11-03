@@ -13,7 +13,7 @@ export default function PoliticaCookies() {
     <div className="max-w-3xl mx-auto px-4 py-6">
       <Breadcrumbs items={[{ label: 'Politica de Cookies' }]} />
 
-      <article className="mt-6 prose prose-gray max-w-none">
+      <article className="mt-6 prose prose-gray max-w-none prose-code:before:content-none prose-code:after:content-none">
         <h1>Politica de Cookies</h1>
         <p className="text-sm text-gray-500">Ultima actualizare: 23 octombrie 2026</p>
 
@@ -40,64 +40,66 @@ export default function PoliticaCookies() {
           Nimic din tabelul de mai jos nu conține date personale și nimic nu se scrie înainte să
           interacționați cu elementul respectiv.
         </p>
-        <table>
-          <thead>
-            <tr>
-              <th>Ce</th>
-              <th>Când apare</th>
-              <th>La ce folosește</th>
-              <th>Durată</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <code>segment</code> (cookie)
-              </td>
-              <td>Când alegeți „Casă" sau „Firmă"</td>
-              <td>Site-ul vă arată în continuare secțiunea aleasă</td>
-              <td>1 an</td>
-            </tr>
-            <tr>
-              <td>
-                <code>cta-popup-dismissed</code> (stocare locală)
-              </td>
-              <td>Când închideți fereastra de sugestie</td>
-              <td>Nu v-o mai arătăm</td>
-              <td>Până ștergeți datele browserului</td>
-            </tr>
-            <tr>
-              <td>
-                <code>partner-carousel</code> (stocare de sesiune)
-              </td>
-              <td>Când închideți caruselul de parteneri</td>
-              <td>Nu vi-l mai arătăm în sesiunea curentă</td>
-              <td>Până închideți fila</td>
-            </tr>
-            <tr>
-              <td>
-                <code>cont_cereri</code> (cookie)
-              </td>
-              <td>Când trimiteți o cerere</td>
-              <td>Vă lasă să vedeți, din același browser, cererea trimisă, fără să intrați în cont</td>
-              <td>180 de zile</td>
-            </tr>
-            <tr>
-              <td>
-                <code>cont_session</code> (cookie)
-              </td>
-              <td>Când intrați în contul de client din email sau cu un cod</td>
-              <td>Vă ține în contul de client</td>
-              <td>180 de zile</td>
-            </tr>
-            <tr>
-              <td>Cookie de autentificare</td>
-              <td>Doar la administrarea site-ului</td>
-              <td>Menține sesiunea de administrator</td>
-              <td>Sesiune</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="overflow-x-auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Ce</th>
+                <th>Când apare</th>
+                <th>La ce folosește</th>
+                <th>Durată</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <code>segment</code> (cookie)
+                </td>
+                <td>Când alegeți „Casă" sau „Firmă"</td>
+                <td>Site-ul vă arată în continuare secțiunea aleasă</td>
+                <td>1 an</td>
+              </tr>
+              <tr>
+                <td>
+                  <code>cta-popup-dismissed</code> (stocare locală)
+                </td>
+                <td>Când închideți fereastra de sugestie</td>
+                <td>Nu v-o mai arătăm</td>
+                <td>Până ștergeți datele browserului</td>
+              </tr>
+              <tr>
+                <td>
+                  <code>partner-carousel</code> (stocare de sesiune)
+                </td>
+                <td>Când închideți caruselul de parteneri</td>
+                <td>Nu vi-l mai arătăm în sesiunea curentă</td>
+                <td>Până închideți fila</td>
+              </tr>
+              <tr>
+                <td>
+                  <code>cont_cereri</code> (cookie)
+                </td>
+                <td>Când trimiteți o cerere</td>
+                <td>Vă lasă să vedeți, din același browser, cererea trimisă, fără să intrați în cont</td>
+                <td>180 de zile</td>
+              </tr>
+              <tr>
+                <td>
+                  <code>cont_session</code> (cookie)
+                </td>
+                <td>Când intrați în contul de client din email sau cu un cod</td>
+                <td>Vă ține în contul de client</td>
+                <td>180 de zile</td>
+              </tr>
+              <tr>
+                <td>Cookie de autentificare</td>
+                <td>Doar la administrarea site-ului</td>
+                <td>Menține sesiunea de administrator</td>
+                <td>Sesiune</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <h3>Analiza traficului</h3>
         <p>
