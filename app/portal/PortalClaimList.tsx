@@ -9,7 +9,7 @@ import {
   CLAIM_STATUS_LABELS,
   type ClaimStatus,
 } from '@/lib/sheets-shared';
-import PortalClaimCard, { STATUS_TONE, type PortalClaim } from './PortalClaimCard';
+import PortalClaimCard, { StatusIcon, type ClaimPatch, type PortalClaim } from './PortalClaimCard';
 import { usePersistedToggle } from './usePersistedToggle';
 
 function ChevronIcon({ open }: { open: boolean }) {
@@ -59,7 +59,7 @@ function StatusLegend() {
           <ul className="grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
             {CLAIM_STATUSES.map((s) => (
               <li key={s} className="flex items-start gap-2 text-[13px] leading-snug">
-                <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${STATUS_TONE[s]}`} />
+                <StatusIcon status={s} className="mt-0.5 h-4 w-4 shrink-0" />
                 <span>
                   <span className="font-medium text-gray-800">{CLAIM_STATUS_LABELS[s]}</span>
                   <span className="text-gray-500"> — {CLAIM_STATUS_HINTS[s]}</span>
@@ -112,13 +112,39 @@ const VIEWS: { id: View; label: string }[] = [
   { id: 'renuntate', label: 'Renunțate' },
 ];
 
-export default function PortalClaimList({ claims }: { claims: PortalClaim[] }) {
-  const [view, setView] = useState<View>('toate');
+const claimKey = (c: PortalClaim) => `${c.leadId}-${c.claimTimestamp}`;
 
-  const count = (id: View) => claims.filter((c) => inView(c, id)).length;
+export default function PortalClaimList({
+  claims,
+  recommended,
+}: {
+  claims: PortalClaim[];
+  /** Cererile noi de luat, între „De actualizat” și lista firmei. */
+  recommended?: React.ReactNode;
+}) {
+  const [view, setView] = useState<View>('toate');
+  // Ce intră în filtru se fixează când îl alegi: un rând mutat pe alt status nu
+  // dispare de sub mână, cât timp firma poate vrea să-i lase și o notă.
+  const [viewKeys, setViewKeys] = useState<Set<string> | null>(null);
+  const [patches, setPatches] = useState<Record<string, ClaimPatch>>({});
+  const [oldOpen, setOldOpen] = useState(false);
+
+  const live = (c: PortalClaim): PortalClaim => ({ ...c, ...patches[claimKey(c)] });
+  const patch = (key: string, p: ClaimPatch) =>
+    setPatches((prev) => ({ ...prev, [key]: { ...prev[key], ...p } }));
+
+  const count = (id: View) => claims.filter((c) => inView(live(c), id)).length;
+  const filtering = view !== 'toate';
+
+  // Rândurile rămân în „De actualizat” până la următoarea încărcare, cu „Am notat”
+  // pe ele: dacă ar sări din listă la primul click, firma ar pierde rândul din ochi.
+  const asks = claims.filter((c) => c.update?.recent);
+  const oldAsks = claims.filter((c) => c.update && !c.update.recent);
+  const pending = asks.filter((c) => !patches[claimKey(c)]).length;
+
   // În „Toate", cele la care s-a renunțat coboară la final: lista e de lucru.
-  const visible = claims
-    .filter((c) => inView(c, view))
+  const rows = claims
+    .filter((c) => (filtering ? viewKeys?.has(claimKey(c)) : !c.update))
     .sort((a, b) => Number(isClosed(a)) - Number(isClosed(b)));
   const showLegend = claims.some((c) => c.approved && !c.releasedAt);
 
@@ -132,8 +158,24 @@ export default function PortalClaimList({ claims }: { claims: PortalClaim[] }) {
   function pick(value: string) {
     const next = (value || 'toate') as View;
     setView(next);
+    setViewKeys(
+      next === 'toate'
+        ? null
+        : new Set(claims.filter((c) => inView(live(c), next)).map(claimKey)),
+    );
     if (next !== 'toate') trackEvent('portal_filter_applied', { filtru: 'status', valoare: next });
   }
+
+  const renderRow = (c: PortalClaim, inAsks: boolean) => (
+    <PortalClaimCard
+      key={claimKey(c)}
+      claim={live(c)}
+      ask={inAsks ? c.update : null}
+      acted={Boolean(patches[claimKey(c)])}
+      sursa={inAsks ? 'de_actualizat' : 'lista'}
+      onPatch={(p) => patch(claimKey(c), p)}
+    />
+  );
 
   return (
     <>
@@ -150,16 +192,72 @@ export default function PortalClaimList({ claims }: { claims: PortalClaim[] }) {
         />
       )}
 
-      {visible.length === 0 ? (
-        <div className="bg-surface rounded-xl border border-border p-8 text-center text-sm text-gray-500">
-          Nicio cerere aici.
+      {!filtering && (asks.length > 0 || oldAsks.length > 0) && (
+        <section className="mb-5 rounded-xl border border-amber-300 bg-amber-50/60 p-2 sm:p-3">
+          <div className="px-1 pb-2">
+            <h2 className="text-sm font-semibold text-gray-900">
+              {pending > 0
+                ? `De actualizat (${pending})`
+                : asks.length > 0
+                  ? 'Gata, sunt la zi'
+                  : 'De actualizat'}
+            </h2>
+            {(pending > 0 || asks.length === 0 || oldOpen) && (
+              <p className="mt-0.5 text-[13px] leading-relaxed text-gray-700">
+                Mută statusul sau lasă o notă. Nu mai lucrezi la una? Alege „
+                {CLAIM_STATUS_LABELS.pierdut}”.
+              </p>
+            )}
+          </div>
+
+          {asks.length > 0 && (
+            <div className="divide-y divide-border rounded-lg border border-border bg-white">
+              {asks.map((c) => renderRow(c, true))}
+            </div>
+          )}
+
+          {oldAsks.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setOldOpen(!oldOpen)}
+              aria-expanded={oldOpen}
+              className={`flex w-full items-center justify-between gap-2 rounded-lg px-1 py-2 text-left text-[13px] font-medium text-amber-900 hover:underline ${
+                asks.length > 0 ? 'mt-1' : ''
+              }`}
+            >
+              {oldAsks.length === 1
+                ? 'Încă o cerere mai veche de o lună, fără noutăți'
+                : `Încă ${oldAsks.length} cereri mai vechi de o lună, fără noutăți`}
+              <ChevronIcon open={oldOpen} />
+            </button>
+          )}
+
+          {oldOpen && (
+            <div className="divide-y divide-border rounded-lg border border-border bg-white">
+              {oldAsks.map((c) => renderRow(c, true))}
+            </div>
+          )}
+        </section>
+      )}
+
+      {!filtering && recommended}
+
+      {rows.length > 0 ? (
+        <div className="divide-y divide-border rounded-xl border border-border bg-white">
+          {/* Aceleași coloane ca rândurile din PortalClaimCard. */}
+          <div className="hidden grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_11.5rem] gap-3 px-4 py-2 pr-12 text-[11px] font-semibold uppercase tracking-wide text-gray-400 sm:grid">
+            <span>Cerere</span>
+            <span>Client</span>
+            <span>Status</span>
+          </div>
+          {rows.map((c) => renderRow(c, false))}
         </div>
       ) : (
-        <div className="space-y-3 sm:space-y-4">
-          {visible.map((c) => (
-            <PortalClaimCard key={`${c.leadId}-${c.claimTimestamp}`} claim={c} />
-          ))}
-        </div>
+        filtering && (
+          <div className="bg-surface rounded-xl border border-border p-8 text-center text-sm text-gray-500">
+            Nicio cerere aici.
+          </div>
+        )
       )}
 
       {showLegend && (

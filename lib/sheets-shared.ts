@@ -497,6 +497,48 @@ export function isClaimUntouched(
 }
 
 /**
+ * „Mai lucrezi la ea?”, secțiunea „De actualizat” din portal (Radu, 3 nov 2026).
+ * Pe 3 nov, 93 din 143 de cereri în lucru n-aveau nicio mișcare de 7+ zile, iar
+ * bannerul de până atunci prindea doar „De sunat” fără note. Dintre ele, 65 erau
+ * revendicate acum peste o lună: dacă le punem pe toate pe ecran, firma vede un
+ * perete, nu o întrebare. Așa că cele vechi stau strânse sub un singur rând.
+ */
+export const CLAIM_UPDATE_DAYS = 7;
+export const CLAIM_UPDATE_RECENT_DAYS = 30;
+
+export interface ClaimUpdateAsk {
+  /** `neatinsa` = are datele și n-a atins nimic (zile lucrătoare); restul, zile calendaristice. */
+  kind: 'neatinsa' | 'fara_noutati';
+  days: number;
+  /** Revendicată în ultimele CLAIM_UPDATE_RECENT_DAYS zile. */
+  recent: boolean;
+}
+
+export function claimUpdateAsk(
+  claim: {
+    timestamp: string;
+    approvedAt: string;
+    releasedAt: string;
+    firmStatus: ClaimStatus;
+    noteCount: number;
+    /** Ultima mișcare a firmei, unix ms, cu tot cu mutările de status din `lead_history`. */
+    lastMoveAt: number;
+  },
+  now: number = Date.now(),
+): ClaimUpdateAsk | null {
+  if (!claim.approvedAt || claim.releasedAt) return null;
+  if (claim.firmStatus === 'castigat' || claim.firmStatus === 'pierdut') return null;
+  const DAY = 86_400_000;
+  const recent = (now - Date.parse(claim.timestamp)) / DAY <= CLAIM_UPDATE_RECENT_DAYS;
+  // Mutată înapoi pe „De sunat” înseamnă că firma a atins-o, deci nu e „neatinsă”.
+  if (isClaimUntouched(claim, now) && claim.lastMoveAt <= Date.parse(claim.approvedAt)) {
+    return { kind: 'neatinsa', days: claimIdleBusinessDays(claim.approvedAt, now), recent };
+  }
+  const days = Math.floor((now - claim.lastMoveAt) / DAY);
+  return days >= CLAIM_UPDATE_DAYS ? { kind: 'fara_noutati', days, recent } : null;
+}
+
+/**
  * Firma a mutat statusul (deci și-a eliberat slotul), dar n-a scris nicio notă,
  * n-a marcat ofertă și clientul nu ne-a confirmat niciun apel. Nu e o acuzație:
  * de cele mai multe ori a sunat și n-a apucat să scrie. Dar e exact forma pe care

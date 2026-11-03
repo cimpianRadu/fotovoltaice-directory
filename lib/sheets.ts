@@ -1382,16 +1382,14 @@ export async function setClaimFirmStatus(
   const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId, sheet);
   const before = readClaimRow(row).firmStatus;
   await updateClaimCells(`${sheet}!F${sheetRow}`, [[status]]);
-  if (!proba) {
-    await logLeadChange({
-      leadId,
-      claimTs: claimTimestamp,
-      field: 'stare_firma',
-      from: before,
-      to: status,
-      by: 'firma',
-    });
-  }
+  await logLeadChange({
+    leadId,
+    claimTs: claimTimestamp,
+    field: 'stare_firma',
+    from: before,
+    to: status,
+    by: proba ? 'proba' : 'firma',
+  });
   row[5] = status;
 
   const currentOffer = row[13] || '';

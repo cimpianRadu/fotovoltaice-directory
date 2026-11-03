@@ -59,6 +59,11 @@ type EventName =
   | 'portal_note_added'
   | 'portal_status_set'
   | 'portal_filter_applied'
+  // Rândul cererii deschis pentru detalii, și clicul pe o cerere recomandată
+  // (3 nov 2026). Statusul și nota au `sursa` = de_actualizat | lista, ca să se
+  // vadă dacă firmele chiar răspund la „mai lucrezi la ea?”.
+  | 'portal_row_opened'
+  | 'portal_recommended_click'
   | 'portal_claim_released'
   | 'portal_alerts_saved'
   | 'portal_email_added'

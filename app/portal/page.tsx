@@ -24,10 +24,14 @@ import {
 import { informezMotiv } from '@/lib/lead-alerts';
 import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
+  claimLastActivity,
   claimOccupiesLeadSlot,
+  claimUpdateAsk,
   countActiveClaimsForFirm,
   isPozeLink,
 } from '@/lib/sheets-shared';
+import { getFirmStatusMoves } from '@/lib/lead-history';
+import { digestRow, isHotLead } from '@/lib/open-leads-digest';
 import {
   getCounties,
   getConnectionShort,
@@ -54,6 +58,7 @@ import PortalFirmEmails from './PortalFirmEmails';
 import { MAX_FIRM_EMAILS } from '@/lib/portal-firm-emails';
 import { getCompanies } from '@/lib/utils';
 import PortalLanding from './PortalLanding';
+import PortalRecommended, { type RecommendedLead } from './PortalRecommended';
 import PortalReservedLeads, { type ReservedLead } from './PortalReservedLeads';
 import LogoutButton from './LogoutButton';
 import PortalTabs from './PortalTabs';
@@ -62,6 +67,7 @@ import PortalNoutati from './PortalNoutati';
 
 /** Fereastra „cereri noi" din cardul contului: cât de proaspătă e o cerere care merită sunată azi. */
 const NEW_LEADS_DAYS = 7;
+const RECOMMENDED_ROWS = 3;
 
 // Datele firmei logate nu au voie în cache-ul static — mereu proaspete, per sesiune.
 export const dynamic = 'force-dynamic';
@@ -136,6 +142,8 @@ export default async function PortalPage() {
   // Cereri revendicabile acum, din județele bifate, din ultima săptămână, pe
   // care firma nu le are deja: motivul de a deschide /cereri azi.
   let newInCounties = 0;
+  let recommended: RecommendedLead[] = [];
+  let recommendedTotal = 0;
 
   try {
     const [claims, leads, photos, profiles, firmOffers] = await Promise.all([
@@ -189,12 +197,43 @@ export default async function PortalPage() {
       }))
       .reverse();
 
-    mine = claims
-      .filter((c) => mineEmails.has(c.email))
+    const now = Date.now();
+    const firmClaims = claims.filter((c) => mineEmails.has(c.email));
+    const statusMoves = await getFirmStatusMoves(firmClaims.map((c) => c.timestamp));
+
+    mine = firmClaims
       .map((c) => {
         const lead = leadById.get(c.leadId);
         const approved = Boolean(c.approvedAt);
+        const claimOffers = firmOffers.filter((o) => o.leadId === c.leadId && o.claimTs === c.timestamp);
+        // Ultima mișcare: notă, ofertă, apel sau statusul mutat. Revendicarea și
+        // deblocarea datelor nu sunt mișcări ale firmei, de-aia `updatedDays` e
+        // null până când ea chiar face ceva.
+        const lastMoveAt = Math.max(
+          claimLastActivity(c),
+          statusMoves?.get(c.timestamp) || 0,
+          ...claimOffers.map((o) => Date.parse(o.createdAt) || 0),
+        );
+        const moved = lastMoveAt > Math.max(Date.parse(c.timestamp) || 0, Date.parse(c.approvedAt) || 0);
         return {
+          pozeCount: photosByLead.get(c.leadId)?.length || 0,
+          cuPoze: photosByLead.has(c.leadId) || Boolean(lead?.poze.trim()),
+          updatedDays: moved ? calendarAgeDays(new Date(lastMoveAt).toISOString()) : null,
+          // Fără `lead_history` nu știm dacă statusul s-a mutat: mai bine nu
+          // întrebăm nimic decât să întrebăm o firmă care tocmai l-a schimbat.
+          update: statusMoves
+            ? claimUpdateAsk(
+                {
+                  timestamp: c.timestamp,
+                  approvedAt: c.approvedAt,
+                  releasedAt: c.releasedAt,
+                  firmStatus: c.firmStatus,
+                  noteCount: c.firmNotes.length,
+                  lastMoveAt,
+                },
+                now,
+              )
+            : null,
           claimTimestamp: c.timestamp,
           leadId: c.leadId,
           numeFirma: c.numeFirma,
@@ -207,14 +246,12 @@ export default async function PortalPage() {
           // zile stă cererea neatinsă, pentru bannerul de pe card.
           approvedAt: c.approvedAt,
           offeredAt: c.offeredAt,
-          offers: firmOffers
-            .filter((o) => o.leadId === c.leadId && o.claimTs === c.timestamp)
-            .map((o) => ({
-              id: o.id,
-              createdAt: o.createdAt,
-              files: o.files.map((f) => ({ name: f.name, size: f.size })),
-              clientOpenedAt: o.clientOpenedAt,
-            })),
+          offers: claimOffers.map((o) => ({
+            id: o.id,
+            createdAt: o.createdAt,
+            files: o.files.map((f) => ({ name: f.name, size: f.size })),
+            clientOpenedAt: o.clientOpenedAt,
+          })),
           // Pilotul cu 3 firme, după pornirea contului de client (lib/oferte).
           canSendOffer: approved && !c.releasedAt && offersLive && isOfferPilotFirm(c.numeFirma),
           firmStatus: c.firmStatus,
@@ -286,14 +323,32 @@ export default async function PortalPage() {
     for (const c of claims) {
       if (claimOccupiesLeadSlot(c)) heldByLead.set(c.leadId, (heldByLead.get(c.leadId) || 0) + 1);
     }
-    newInCounties = leads.filter(
-      (l) =>
-        wanted.has(l.judet) &&
-        isPubliclyClaimable(l) &&
-        calendarAgeDays(l.reactivataLa || l.timestamp) <= NEW_LEADS_DAYS &&
-        !claimedByMe.has(l.timestamp) &&
-        (heldByLead.get(l.timestamp) || 0) < maxClaimsForLead(l.timestamp),
-    ).length;
+    const isNewForFirm = (l: NewLead) =>
+      isPubliclyClaimable(l) &&
+      calendarAgeDays(l.reactivataLa || l.timestamp) <= NEW_LEADS_DAYS &&
+      !claimedByMe.has(l.timestamp) &&
+      (heldByLead.get(l.timestamp) || 0) < maxClaimsForLead(l.timestamp);
+    newInCounties = leads.filter((l) => wanted.has(l.judet) && isNewForFirm(l)).length;
+
+    // Fără județe bifate alegem după județele cererilor pe care le-a luat, ca în
+    // rezumatul de luni. Cu locurile pline n-ar avea ce face cu o recomandare.
+    if (slotsUsed < MAX_ACTIVE_CLAIMS_PER_FIRM) {
+      const pool = alertCounties.length
+        ? wanted
+        : new Set(firmClaims.map((c) => leadById.get(c.leadId)?.judet || '').filter(Boolean));
+      const fresh = leads
+        .filter((l) => pool.has(l.judet) && isNewForFirm(l))
+        .sort(
+          (a, b) =>
+            Number(isHotLead(b)) - Number(isHotLead(a)) ||
+            (b.reactivataLa || b.timestamp).localeCompare(a.reactivataLa || a.timestamp),
+        );
+      recommendedTotal = fresh.length;
+      recommended = fresh.slice(0, RECOMMENDED_ROWS).map((l) => {
+        const { id, judet, titlu, detalii, ageDays } = digestRow(l);
+        return { id, judet, titlu, detalii, ageDays };
+      });
+    }
   } catch (err) {
     console.error('[portal] failed to load claims:', err);
     loadError = true;
@@ -302,6 +357,16 @@ export default async function PortalPage() {
   const cereriHref = alertCounties.length
     ? `/cereri?judet=${alertCounties.map(slugifyCity).join(',')}`
     : '/cereri';
+
+  const recommendedBlock =
+    recommended.length > 0 ? (
+      <PortalRecommended
+        leads={recommended}
+        total={recommendedTotal}
+        href={cereriHref}
+        fromClaims={alertCounties.length === 0}
+      />
+    ) : null;
 
   const accountHeader = (
     <div className="flex items-start justify-between gap-3">
@@ -367,24 +432,27 @@ export default async function PortalPage() {
           </div>
         )}
 
-        <Link
-          href={cereriHref}
-          className="mt-4 flex items-center justify-between gap-3 rounded-xl bg-primary px-4 py-3 text-white transition-colors hover:bg-primary-dark"
-        >
-          <span className="text-sm font-semibold leading-snug">
-            {alertCounties.length === 0
-              ? 'Vezi cererile noi de pe site'
-              : newInCounties > 0
-                ? `${newInCounties} ${newInCounties === 1 ? 'cerere nouă' : 'cereri noi'} în județele tale`
-                : 'Vezi cererile din județele tale'}
-            {alertCounties.length > 0 && (
-              <span className="block text-xs font-normal opacity-90">
-                {newInCounties > 0 ? `din ultimele ${NEW_LEADS_DAYS} zile, revendici dintr-un click` : 'nimic nou în ultimele 7 zile'}
-              </span>
-            )}
-          </span>
-          <span aria-hidden className="text-lg">→</span>
-        </Link>
+        {/* Când sunt cereri de recomandat, rândurile lor iau locul butonului. */}
+        {recommended.length === 0 && (
+          <Link
+            href={cereriHref}
+            className="mt-4 flex items-center justify-between gap-3 rounded-xl bg-primary px-4 py-3 text-white transition-colors hover:bg-primary-dark"
+          >
+            <span className="text-sm font-semibold leading-snug">
+              {alertCounties.length === 0
+                ? 'Vezi cererile noi de pe site'
+                : newInCounties > 0
+                  ? `${newInCounties} ${newInCounties === 1 ? 'cerere nouă' : 'cereri noi'} în județele tale`
+                  : 'Vezi cererile din județele tale'}
+              {alertCounties.length > 0 && (
+                <span className="block text-xs font-normal opacity-90">
+                  {newInCounties > 0 ? `din ultimele ${NEW_LEADS_DAYS} zile, revendici dintr-un click` : 'nimic nou în ultimele 7 zile'}
+                </span>
+              )}
+            </span>
+            <span aria-hidden className="text-lg">→</span>
+          </Link>
+        )}
 
         <PortalNoutati />
       </section>
@@ -407,6 +475,8 @@ export default async function PortalPage() {
                 </div>
               )}
 
+              {mine.length === 0 && recommendedBlock}
+
               {!loadError && mine.length === 0 && (
                 <div className="bg-surface rounded-xl border border-border p-6 text-center sm:p-10">
                   <p className="text-gray-600 font-medium">Nicio cerere revendicată încă.</p>
@@ -428,13 +498,13 @@ export default async function PortalPage() {
                 </div>
               )}
 
-              {mine.length > 0 && <PortalClaimList claims={mine} />}
+              {mine.length > 0 && <PortalClaimList claims={mine} recommended={recommendedBlock} />}
 
               {mine.length > 0 && (
                 <p className="mt-8 text-xs text-gray-400 leading-relaxed">
                   Datele clienților apar pe loc când revendici, fără să mai aștepți nimic de la noi.
                   Statusul pe care îl setezi tu ne spune unde ești cu clientul. Locul se eliberează
-                  când renunți, cu un motiv, sau când marchezi că ai pierdut clientul.
+                  când marchezi cererea „Neconcretizat”, cu un motiv.
                 </p>
               )}
             </>

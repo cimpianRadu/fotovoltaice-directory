@@ -5,13 +5,17 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 interface SearchableSelectProps {
   label?: string;
   name: string;
-  options: { value: string; label: string }[];
+  options: { value: string; label: string; icon?: React.ReactNode }[];
   required?: boolean;
   value?: string;
   onValueChange?: (value: string) => void;
   placeholder?: string;
   className?: string;
   error?: string;
+  /** Lista n-are opțiunea de golire: valoarea e mereu una dintre opțiuni (ex. un status). */
+  noReset?: boolean;
+  triggerClassName?: string;
+  ariaLabel?: string;
 }
 
 // Peste atâtea opțiuni lista primește căsuță de căutare. Sub prag încap toate
@@ -28,6 +32,9 @@ export default function SearchableSelect({
   placeholder = 'Selectează...',
   className = '',
   error,
+  noReset = false,
+  triggerClassName = '',
+  ariaLabel,
 }: SearchableSelectProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -116,11 +123,13 @@ export default function SearchableSelect({
       <button
         type="button"
         onClick={() => setOpen(!open)}
+        aria-label={ariaLabel}
+        aria-expanded={open}
         className={`w-full rounded-lg border px-3 py-2.5 text-sm text-left bg-white focus:ring-1 outline-none transition-colors pr-10 relative ${
           error
             ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
             : 'border-gray-300 focus:border-primary focus:ring-primary'
-        }`}
+        } ${triggerClassName}`}
       >
         <span className={selectedLabel ? 'text-gray-900' : 'text-gray-500'}>
           {selectedLabel || placeholder}
@@ -157,22 +166,24 @@ export default function SearchableSelect({
               ar ieși sub marginea de jos a ferestrei. */}
           <ul className="max-h-[min(26rem,60vh)] overflow-y-auto py-1">
             {/* "All" / reset option */}
-            <li>
-              <button
-                type="button"
-                onClick={() => select('')}
-                className={`w-full text-left px-3 py-2 text-sm hover:bg-primary/5 transition-colors flex items-center gap-2 ${
-                  !currentValue ? 'text-primary font-medium bg-primary/5' : 'text-gray-600'
-                }`}
-              >
-                {!currentValue && (
-                  <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                  </svg>
-                )}
-                <span className={!currentValue ? '' : 'pl-6'}>{placeholder}</span>
-              </button>
-            </li>
+            {!noReset && (
+              <li>
+                <button
+                  type="button"
+                  onClick={() => select('')}
+                  className={`w-full text-left px-3 py-2 text-sm hover:bg-primary/5 transition-colors flex items-center gap-2 ${
+                    !currentValue ? 'text-primary font-medium bg-primary/5' : 'text-gray-600'
+                  }`}
+                >
+                  {!currentValue && (
+                    <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                    </svg>
+                  )}
+                  <span className={!currentValue ? '' : 'pl-6'}>{placeholder}</span>
+                </button>
+              </li>
+            )}
 
             {filtered.length === 0 ? (
               <li className="px-3 py-3 text-sm text-gray-400 text-center">
@@ -193,7 +204,16 @@ export default function SearchableSelect({
                         <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                       </svg>
                     )}
-                    <span className={currentValue === opt.value ? '' : 'pl-6'}>{opt.label}</span>
+                    <span className={currentValue === opt.value ? '' : 'pl-6'}>
+                      {opt.icon ? (
+                        <span className="inline-flex items-center gap-2 whitespace-nowrap">
+                          {opt.icon}
+                          {opt.label}
+                        </span>
+                      ) : (
+                        opt.label
+                      )}
+                    </span>
                   </button>
                 </li>
               ))

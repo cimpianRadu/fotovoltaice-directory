@@ -27,7 +27,8 @@ export async function logLeadChange(change: {
   field: LeadChangeField;
   from: string;
   to: string;
-  by: LeadChangeBy;
+  // `proba` = contul de probă: rândul servește doar portalului lui, /admin/cereri nu-l vede.
+  by: LeadChangeBy | 'proba';
   detail?: string;
 }): Promise<void> {
   if (change.from === change.to) return;
@@ -42,13 +43,34 @@ export async function logLeadChange(change: {
   }
 }
 
+/**
+ * Când și-a mutat firma ultima dată statusul, pe revendicare. Sheets ține doar
+ * statusul de acum, iar fără data asta portalul ar întreba „mai lucrezi la ea?”
+ * o firmă care tocmai l-a mutat. `null` = baza n-a răspuns, deci nu știm: portalul
+ * nu întreabă nimic, în loc să întrebe greșit.
+ */
+export async function getFirmStatusMoves(claimTss: string[]): Promise<Map<string, number> | null> {
+  if (!claimTss.length) return new Map();
+  try {
+    const rows = await db()`
+      SELECT claim_ts, max(at) AS at FROM lead_history
+      WHERE field = 'stare_firma' AND by IN ('firma', 'proba') AND claim_ts = ANY(${claimTss})
+      GROUP BY claim_ts
+    `;
+    return new Map(rows.map((r) => [String(r.claim_ts), new Date(r.at as string).getTime()]));
+  } catch (err) {
+    console.error('[istoric] mutările firmei:', err);
+    return null;
+  }
+}
+
 export async function getLeadChanges(leadIds: string[]): Promise<LeadChange[]> {
   if (!leadIds.length) return [];
   let rows: Record<string, unknown>[];
   try {
     rows = await db()`
       SELECT lead_id, claim_ts, field, from_value, to_value, by, detail, at
-      FROM lead_history WHERE lead_id = ANY(${leadIds}) ORDER BY at
+      FROM lead_history WHERE lead_id = ANY(${leadIds}) AND by <> 'proba' ORDER BY at
     `;
   } catch (err) {
     // Tabelul încă nu există (migrația 007 nu s-a aplicat): jurnal gol, nu eroare.
