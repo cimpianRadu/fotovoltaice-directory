@@ -446,9 +446,21 @@ export async function addFirmNote(opts: {
   return { ok: true, note: { id: Number(row.id), text: nota, at: new Date(row.created_at as string).toISOString() } };
 }
 
-/** Clientul își șterge o notiță. Fals dacă nu e pe cererea lui. */
+/**
+ * Clientul își șterge o notiță. Fals dacă nu e pe cererea lui. Textul dispare și din
+ * evenimentul ei, pe care îl citește cardul din /admin/cont-client: politica de
+ * confidențialitate îi spune clientului că o poate șterge.
+ */
 export async function deleteFirmNote(leadId: string, id: number): Promise<boolean> {
-  const rows = await db()`DELETE FROM client_firm_notes WHERE id = ${id} AND lead_id = ${leadId} RETURNING id`;
+  const rows = await db()`
+    WITH gone AS (
+      DELETE FROM client_firm_notes WHERE id = ${id} AND lead_id = ${leadId} RETURNING id, nota
+    ), events AS (
+      DELETE FROM client_events e USING gone
+      WHERE e.lead_id = ${leadId} AND e.event = 'notita_firma' AND e.props->>'nota' = gone.nota
+    )
+    SELECT id FROM gone
+  `;
   return rows.length > 0;
 }
 
