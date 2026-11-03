@@ -76,6 +76,7 @@ export default function RootLayout({
           defer
           src="https://cloud.umami.is/script.js"
           data-website-id="49a078c7-23dc-4a96-9c37-73bb15e9b7ba"
+          data-domains="instalatori-fotovoltaice.ro"
         />
       </head>
       <body className={`${geistSans.variable} antialiased`}>
