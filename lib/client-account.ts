@@ -633,20 +633,36 @@ export async function closeFromAccount(lead: NewLead, req: CloseRequest): Promis
 // ---------------------------------------------------------------------------
 // Ștergerea contului
 
+/** Rândul despre notițe din emailul de ștergere. O eroare la numărare nu oprește emailul. */
+async function deletionNotesLine(leadIds: string[]): Promise<string> {
+  const rows = await db()`SELECT count(*)::int AS n FROM client_firm_notes WHERE lead_id = ANY(${leadIds})`.catch(
+    (err: unknown) => {
+      console.error('[cont] notițe la ștergere:', err);
+      return null;
+    },
+  );
+  if (!rows) return 'Notițele clientului nu s-au putut număra: verifică în Neon <code>client_firm_notes</code>, după cererile de mai sus.';
+  const n = Number(rows[0].n);
+  if (n === 0) return 'Notițe ale clientului în Neon: niciuna.';
+  return `Notițe ale clientului în Neon: <strong>${n}</strong>. Se șterg și ele, pe lângă Sheets: <code>client_firm_notes</code> și evenimentele <code>notita_firma</code> din <code>client_events</code>.`;
+}
+
 /**
- * „Ștergeți contul și datele mele”. Contul se închide pe loc; datele din Sheets
- * le șterge Radu de mână (cererile sunt și ale firmelor care le-au preluat, iar
- * o ștergere automată dintr-un buton e prea ușor de apăsat din greșeală).
+ * „Ștergeți contul și datele mele”. Contul se închide pe loc; datele din Sheets și
+ * notițele din Neon le șterge Radu de mână (cererile sunt și ale firmelor care le-au
+ * preluat, iar o ștergere automată dintr-un buton e prea ușor de apăsat din greșeală).
  */
 export async function requestAccountDeletion(email: string, leads: NewLead[]): Promise<void> {
   await db()`UPDATE client_accounts SET deleted_at = now() WHERE email = ${normalizeEmail(email)}`;
   await recordClientEvent(leads[0]?.timestamp ?? null, 'stergere', { cereri: leads.length });
+  const notesLine = await deletionNotesLine(leads.map((l) => l.timestamp));
   await sendEmail({
     to: INTERNAL_TO,
     subject: `[GDPR] Clientul cere ștergerea datelor: ${email}`,
     html:
       `<p>${escapeHtml(email)} a apăsat „Ștergeți contul și datele mele” din cont. Răspunsul legal e în 30 de zile.</p>` +
-      `<p>Cererile adresei:</p><ul>${leads.map((l) => `<li>${internalLeadLine(l)}</li>`).join('')}</ul>`,
+      `<p>Cererile adresei:</p><ul>${leads.map((l) => `<li>${internalLeadLine(l)}</li>`).join('')}</ul>` +
+      `<p>${notesLine}</p>`,
   });
 }
 
