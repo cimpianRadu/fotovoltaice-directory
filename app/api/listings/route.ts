@@ -98,10 +98,13 @@ export async function POST(request: Request) {
     await saveListingToSheet(listingPayload);
 
     // Best-effort email notification — don't fail the request if it errors out.
-    // The listing is already in the sheet.
-    sendListingNotification(listingPayload).catch((err) => {
-      console.warn('[listings] notification failed:', err);
-    });
+    // The listing is already in the sheet. Rândurile de test (scripts/e2e-forms.mjs)
+    // nu trimit nimic: Radu vrea email doar când verificarea pică.
+    if (!listingPayload.email.trim().toLowerCase().startsWith('routine-test-')) {
+      sendListingNotification(listingPayload).catch((err) => {
+        console.warn('[listings] notification failed:', err);
+      });
+    }
 
     return NextResponse.json({ success: true, anreVerified });
   } catch (err) {
