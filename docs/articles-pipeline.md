@@ -145,8 +145,8 @@ _(Notă: există un draft vechi în `guides.json` „energie-solara-vs-retea-com
 
 ## 🔧 De extins (ghiduri existente)
 
-### 🔴 CORECȚIE OBLIGATORIE — măsurile de siguranță au fost prelungite până la 30 noiembrie (HG 938/2026), ghidurile spun „30 octombrie” 🔝 TOP, ÎNAINTEA ORICĂRUI ARTICOL · adăugat 2026-11-02 (news scan)
-- **Status:** `💡` de executat la primul PASUL 0.5 (slotul de joi 5 nov).
+### ~~🔴 CORECȚIE OBLIGATORIE — măsurile de siguranță au fost prelungite până la 30 noiembrie (HG 938/2026), ghidurile spun „30 octombrie” · adăugat 2026-11-02 (news scan)~~ ✅ EXECUTAT 2026-11-05 (rutina joi)
+- **Status:** ✅ executat 2026-11-05, vezi „✅ Extinse recent”. Inițial: de executat la primul PASUL 0.5 (slotul de joi 5 nov).
 - **Sursă primară:** [informarea gov.ro, ședința din 30 octombrie 2026](https://gov.ro/ro/guvernul/sedinte-guvern/informatie-de-presa-privind-actele-normative-adoptate-in-edinta-guvernului-romaniei-din-30-octombrie-2026) (prelungire cu 30 de zile a aplicării HG 782/2026, „până la 30 noiembrie 2026”) + [comunicatul Guvernului via Agerpres, 30 oct](https://agerpres.ro/comunicate/2026/10/30/comunicat-de-presa---guvern--1608594).
 - **Numărul actului:** **HG nr. 938/2026, MO Partea I nr. 911 din 30.10.2026**, din [lista Monitorului Oficial pe lege5.ro](https://lege5.ro/monitoroficial). Informarea gov.ro nu dă numărul. Separat, **HG nr. 945/2026, MO nr. 914 din 30.10.2026** (măsuri pentru SEN 1 nov 2026 – 31 mar 2027; informarea spune că actul constituie Comandamentul energetic de iarnă). ⚠️ E **prelungire a HG 782/2026**, nu act nou ca pe 1 oct.
 - **Ce spune comunicatul:** vârf de consum de seară până la **8.500 MW** în noiembrie; deficit de producție dispecerizabilă în orele de vârf **17:00–21:00**; repornirea unei unități la Cernavodă nu e asigurată în noiembrie; **până acum nu a fost necesar ca Transelectrica să aplice Normativul de limitare**. Ordinea celor 5 măsuri e aceeași, limitarea în tranșe rămâne ultima.
@@ -155,8 +155,8 @@ _(Notă: există un draft vechi în `guides.json` „energie-solara-vs-retea-com
 - **Colateral de verificat, nu din HG:** `apel-150-milioane-euro-baterii-stocare-stand-alone-2026` are depunerea până la 30.10.2026, deci termenul a trecut. Prelungirea apelului nu a putut fi verificată (categoria energie.gov.ro nu și-a livrat lista prin curl, căutarea n-a găsit nimic). Citește întâi anunțul, apoi pune o notă.
 - **Următorul punct de verificare:** 30 noiembrie 2026.
 
-### 🔴 CORECȚIE OBLIGATORIE — Casa Verde Baterii: octombrie a trecut fără sesiune, iar un ghid spune încă „nepublicat în MO” 🔝 TOP, imediat după corecția de mai sus · adăugat 2026-11-02 (news scan)
-- **Status:** `💡` de executat la PASUL 0.5 după HG 938.
+### ~~🔴 CORECȚIE OBLIGATORIE — Casa Verde Baterii: octombrie a trecut fără sesiune, iar un ghid spune încă „nepublicat în MO” · adăugat 2026-11-02 (news scan)~~ ✅ EXECUTAT 2026-11-05 (rutina joi)
+- **Status:** ✅ executat 2026-11-05, vezi „✅ Extinse recent”.
 - **Fapt verificat 2 nov:** [afm.ro/baterii_comunicate.php](https://www.afm.ro/baterii_comunicate.php) și `baterii_legislatie.php` goale; pe prima pagină AFM ultimele comunicate sunt despre Rabla și finanțări generale. Nicio dispoziție de sesiune, nici pentru instalatori, nici pentru solicitanți.
 - **Eroare de fapt, scăpată la corecția din 24 sept:** `ce-baterie-stocare-alegi-panouri-fotovoltaice-2026-comparativ-modele` (`updatedAt` 21 sept) spune de două ori că ordinul e „nepublicat în Monitorul Oficial”. Corect: **Ordinul 1.904/2026, MO nr. 775 din 14.09.2026**.
 - **Formulări depășite de calendar:**
@@ -271,6 +271,14 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 ## ✅ Extinse recent
 
 > Recheck poziția în GSC peste 14/30 zile pentru fiecare. Fă Request Indexing manual după push.
+
+### HG 938/2026 până la 30 noiembrie + Casa Verde Baterii fără sesiune în octombrie + apel BESS prelungit (2026-11-05, rutina joi, commit `8a7bcc2`)
+- **HG 938:** corectate `limitare-consum-energie-firme-hotarare-guvern-august-2026` (title „(30 Noiembrie)”, meta, hero, secțiune nouă `update-5-noiembrie-2026-hg-938`, cronologie, FAQ), `alerta-energetica-august-2026-panouri-fotovoltaice-baterie-backup-pana-curent`, `baterie-stocare-casa-backup-dimensionare-independenta-energetica-2026`, `pret-energie-electrica-2021-2026-cronologie-scumpiri`. Sursă citită: informarea gov.ro din 30 oct. Textele HG 938 și HG 945 NU au fost citite, iar numerele vin din lista lege5 din 2 nov; în ghid scrie explicit. Reparat și un link rupt `({GOV})` din secțiunea din 5 oct.
+- **De citit la următoarea trecere:** informarea spune că HG 945/2026 are în vedere și „măsuri de siguranță” aplicate de Transelectrica între 1 nov 2026 și 31 mar 2027. Dacă textul confirmă, următorul punct de verificare nu mai e doar 30 noiembrie.
+- **Apel BESS:** [anunțul Ministerului Energiei din 22 oct](https://energie.gov.ro/wp-content/uploads/2026/10/Anunt-prelungire-apel-proiecte-STOCARE-STAND-ALONE.docx) a prelungit depunerea până la **15 noiembrie 2026, ora 23:59**. Corectat `apel-150-milioane-euro-baterii-stocare-stand-alone-2026`. De revenit după 15 noiembrie.
+- **Casa Verde Baterii:** afm.ro recitit pe 5 nov, tot fără dispoziție de sesiune. Corectate `ce-baterie-stocare-alegi-...` (scria „nepublicat în MO”), `merita-bateria-...` (verdictul „aștepți” schimbat, 12 sept → 11 sept), `invertor-hibrid-...`, `casa-verde-baterii-2026-inscriere-acte-punctaj-strategie`, hub `casa-verde-fotovoltaice-2026` (tabel calendar și un FAQ care spunea „ordinul nu a apărut”), `baterie-3-5-10-kw-...`.
+- **Atribuirea verificată pe TVR Info:** pe 21 sept ministra a spus „anul acesta”, nu „luna octombrie”; „luna octombrie” vine doar din anunțul din 11 sept (Agerpres). Corectat în `inscriere` și în hub.
+- **Recheck:** poziție GSC peste 14/30 zile; Request Indexing pe `limitare-consum-...` și `casa-verde-fotovoltaice-2026`.
 
 ### HG 603/2026 expirată → HG 782/2026 până la 30 octombrie, corectat pe 3 ghiduri + colateral E.ON (2026-10-05)
 - **Sursa primară citită integral:** [HG nr. 782/2026, MO nr. 835 din 1 octombrie 2026, pe lege5.ro](https://lege5.ro/Gratuit/ge4tqojygu2tg/hotararea-nr-782-2026-privind-punerea-in-aplicare-a-unor-masuri-de-siguranta-pe-piata-de-energie-electrica) + [informarea gov.ro din 1 oct](https://gov.ro/ro/guvernul/sedinte-guvern/informatie-de-presa-privind-actele-normative-adoptate-in-edinta-guvernului-romaniei-din-1-octombrie-2026). legislatie.just.ro și universuljuridic.ro n-au putut fi scrapate (eroare HTTP/2 / blocare).
@@ -768,12 +776,8 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 - **Never-invent:** doar fișele și listele de compatibilitate Sungrow; prețuri doar din magazine cu link + dată.
 
 #### #80 — Sistem Fotovoltaic 5 kW: Preț cu Montaj 2026, cu și fără Baterie
-- **Status:** 💡 idee
+- **Status:** ✅ publicat **2026-11-05** (rutina de joi). Detalii în „✅ Publicate recent”.
 - **Cluster:** `kit panouri fotovoltaice 5 kw pret cu montaj` 720/lună (greenlead poz. 10), `panouri fotovoltaice 5 kw pret cu montaj` 140 (greenlead 7), `cat costa o instalatie de panouri fotovoltaice de 5 kw` 140 (greenlead 17), `sistem fotovoltaic 5 kw pret` 50.
-- **Poartă SERP (2 nov):** pe `kit panouri fotovoltaice 5 kw pret cu montaj` sunt magazine, plus electricup.ro (februarie 2024) și necesit.ro. Trece: niciun articol recent care să arate prețul cu montaj și cu ce se compune.
-- **Structură de preluat** de la panourifotovoltaice.net/ghid/cat-costa-un-sistem-fotovoltaic.html (articolul lor nu rankează, structura e bună): tabel cu și fără baterie, din ce se compune prețul, ce scumpește instalarea (acoperiș, distanța până la tablou, trecerea la trifazat, optimizatoare, baterie), costurile de cerut explicit în ofertă, cuprins.
-- **Delimitare:** hub-ul #38 `kit-panouri-fotovoltaice-3-5-10-kw-pret-montaj-2026` rămâne pe 3/5/10 kW; #80 merge în adâncime doar pe 5 kW. În aceeași zi, hub-ul primește link spre #80 cu ancora „sistem fotovoltaic 5 kW cu montaj” (lecția de canibalizare din 18 aug).
-- **Never-invent:** prețuri doar din `data/kit-prices.json` (normalizat cu `scripts/normalize-kit-prices.mjs`) sau din magazine cu link + dată; fără intervale „observate în piață”.
 
 #### #81 — Panouri Fotovoltaice Second Hand 2026: Merită? Riscuri, Garanție, Ce Verifici
 - **Status:** 💡 idee
@@ -1567,6 +1571,13 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Sistem Fotovoltaic 5 kW: Preț cu Montaj 2026, cu Baterie
+- **Publicat:** 2026-11-05 (rutina de joi, #80 din batch-ul greenlead) → [/ghid/sistem-fotovoltaic-5-kw-pret-cu-montaj-cu-fara-baterie-2026](/ghid/sistem-fotovoltaic-5-kw-pret-cu-montaj-cu-fara-baterie-2026)
+- **Conținut:** 13 secțiuni + 10 FAQ, ~4.450 de cuvinte. Prețuri citite pe 5 nov de la VoltGrid, Solar1000, VoltExpert, X-Energy, Genway și Kilowat, aduse la TVA 21%: fără baterie 13.640-23.750 lei, cu baterie de la ~25.300 lei.
+- **Descoperit:** VoltExpert a scos pagina `5-kw-deye-trifazic-on-grid` (15.559 lei în hub, din 11 aug); în locul ei apare un kit Deye trifazic hibrid la 23.750 lei. Hub-ul spune că pagina nu mai există. **De refăcut tabelul din hub** la următorul scrape (`scripts/scrape-kit-prices.mjs` + normalizare); `data/kit-prices.json` e din 17 aug.
+- **Linkuri:** hub `kit-panouri-fotovoltaice-3-5-10-kw-pret-montaj-2026` → #80 cu ancora „sistem fotovoltaic 5 kW cu montaj”.
+- **Cluster GSC de urmărit (DataForSEO, 30 oct):** `kit panouri fotovoltaice 5 kw pret cu montaj` 720 (greenlead 10) · `panouri fotovoltaice 5 kw pret cu montaj` 140 (greenlead 7) · `cat costa o instalatie de panouri fotovoltaice de 5 kw` 140 (greenlead 17) · `sistem fotovoltaic 5 kw pret` 50. Recheck CTR la 14/30 zile.
 
 ### Baterie Compatibilă cu Invertor Huawei, Sungrow, Deye 2026
 - **Publicat:** 2026-11-02 (#78 din batch-ul greenlead, scris pe 30 oct în sesiune manuală) → [/ghid/baterie-compatibila-invertor-huawei-sungrow-deye-2026-tabel](/ghid/baterie-compatibila-invertor-huawei-sungrow-deye-2026-tabel)
