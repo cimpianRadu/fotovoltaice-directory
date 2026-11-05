@@ -42,7 +42,7 @@ const FAQS = [
   {
     question: 'De ce firma X nu apare în clasament?',
     answer:
-      'Clasamentul de pe această pagină arată doar top 10 după criteriul selectat — firmele mai mici după cifra de afaceri nu intră în top, dar sunt listate în /firme cu filtre după județ, specializare și certificări. Selecția firmelor din director se face manual pe baza activității reale pe segmentul comercial/industrial și a unui atestat ANRE valid. Dacă administrezi o firmă de instalare fotovoltaică cu experiență C&I care nu e listată, poți solicita adăugarea prin formularul de la /listeaza-firma.',
+      'Clasamentul de pe această pagină arată doar top 10 după criteriul selectat — firmele mai mici după cifra de afaceri nu intră în top, dar sunt listate în /firme cu filtre după județ, specializare și certificări. Selecția firmelor din director se face manual, pe baza activității reale în instalări fotovoltaice, iar atestatul ANRE apare pe fișa firmei când îl găsim în registru. Dacă administrezi o firmă de instalare fotovoltaică care nu e listată, poți solicita adăugarea prin formularul de la /listeaza-firma.',
   },
   {
     question: 'Firmele plătesc ca să apară mai sus?',
@@ -244,7 +244,7 @@ export default function ClasamentPage() {
           <h2>Despre clasamentul firmelor de panouri fotovoltaice</h2>
           <p>
             Pe această pagină afișăm <strong>top 10 firme de instalare panouri fotovoltaice</strong>{' '}
-            comerciale și industriale din România după criteriul ales (implicit, cifra de afaceri),
+            din România după criteriul ales (implicit, cifra de afaceri),
             din cele {rows.length} de firme listate în director. Datele sunt reale și verificabile
             independent. Spre deosebire de alte topuri, <strong>nu acceptăm plăți pentru poziționare</strong> —
             firmele marcate „Partener Verificat" apar separat, deasupra tabelului, clar etichetate.

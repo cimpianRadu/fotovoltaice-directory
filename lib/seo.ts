@@ -20,7 +20,7 @@ export function generateOrganizationJsonLd() {
     name: SITE_NAME,
     url: SITE_URL,
     description:
-      'Platforma #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale din România.',
+      'Platforma prin care proprietarii de case și firmele primesc oferte de la instalatori de panouri fotovoltaice verificați din România.',
     sameAs: [],
   };
 }

@@ -12,7 +12,7 @@ import guidesData from '@/data/guides.json';
 
 export const metadata: Metadata = {
   title: 'Publicitate - Promovează-ți Firma pe Instalatori Fotovoltaice',
-  description: `Promovare pe Instalatori Fotovoltaice România: listare Free pentru instalatori, Slot Popup ${PRICING.popup.monthly}€/lună (vizibil pe toate paginile), Premium ${PRICING.premium.monthly}€/lună (vizibilitate peste tot + profil complet) și Studiu de caz colaborativ (preț la cerere). Audiență 100% nișată B2B fotovoltaic, preponderent din căutări Google.`,
+  description: `Promovare pe Instalatori Fotovoltaice România: listare Free pentru instalatori, Slot Popup ${PRICING.popup.monthly}€/lună (vizibil pe toate paginile), Premium ${PRICING.premium.monthly}€/lună (vizibilitate peste tot + profil complet) și Studiu de caz colaborativ (preț la cerere). Audiență din nișa fotovoltaică, preponderent din căutări Google.`,
   alternates: { canonical: '/publicitate' },
 };
 
@@ -254,14 +254,14 @@ export default function AdvertisePage() {
               <p className="text-sm text-gray-500">Ghiduri publicate</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-primary-dark">B2B</p>
-              <p className="text-sm text-gray-500">Focus comercial</p>
+              <p className="text-2xl font-bold text-primary-dark">Case + firme</p>
+              <p className="text-sm text-gray-500">Cine cere oferte</p>
             </div>
           </div>
           <p className="text-sm text-gray-600 leading-relaxed">
-            Vizitatorii noștri sunt <strong>manageri de facilități, directori tehnici, antreprenori
-            și consultanți energetici</strong> care caută activ instalatori fotovoltaici și
-            informații despre investiții în energie solară. Trafic preponderent din{' '}
+            Vizitatorii noștri sunt <strong>proprietari de case, antreprenori și firme de
+            instalare</strong>: unii caută instalatori fotovoltaici și informații despre investiții
+            în energie solară, alții cereri de preluat. Trafic preponderent din{' '}
             <strong>căutări Google</strong> (intenție mare) — plus oameni care ajung la noi din
             răspunsurile asistenților AI (ChatGPT, Claude, Gemini).
           </p>

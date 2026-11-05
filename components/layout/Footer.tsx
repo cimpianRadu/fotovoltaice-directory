@@ -27,7 +27,7 @@ export default function Footer() {
         <div className="mb-8">
           <h3 className="font-bold text-lg mb-2">Instalatori Fotovoltaice</h3>
           <p className="text-sm text-gray-300 leading-relaxed max-w-md">
-            Platforma #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale din România.
+            Platforma prin care proprietarii de case și firmele primesc oferte de la instalatori de panouri fotovoltaice verificați din România.
           </p>
         </div>
 

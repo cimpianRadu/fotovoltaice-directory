@@ -838,4 +838,4 @@ export function clampMeta(text: string, max = 155): string {
 export const SITE_NAME = 'Instalatori Fotovoltaice România';
 export const SITE_URL = 'https://instalatori-fotovoltaice.ro';
 export const SITE_DESCRIPTION =
-  'Platforma #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale din România. Găsește instalatorul potrivit pentru proiectul tău.';
+  'Platforma prin care proprietarii de case și firmele primesc oferte de la instalatori de panouri fotovoltaice verificați din România.';

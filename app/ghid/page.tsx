@@ -22,9 +22,9 @@ function getHeroImage(slug: string): string | null {
 }
 
 export const metadata: Metadata = {
-  title: 'Ghiduri Panouri Fotovoltaice Comerciale | Articole și Resurse 2026',
+  title: 'Ghiduri Panouri Fotovoltaice pentru Case și Firme | Articole 2026',
   description:
-    'Ghiduri despre panouri fotovoltaice comerciale și industriale: costuri, legislație, subvenții, alegerea instalatorului. Informații verificate și actualizate.',
+    'Ghiduri despre panouri fotovoltaice pentru case și firme: costuri, legislație, subvenții, alegerea instalatorului. Informații verificate și actualizate.',
   alternates: { canonical: '/ghid' },
 };
 
@@ -46,10 +46,10 @@ export default function GhidIndexPage() {
 
         <div className="mt-6 mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            Ghiduri Fotovoltaice Comerciale
+            Ghiduri despre Panouri Fotovoltaice
           </h1>
           <p className="text-gray-500 mt-2">
-            Articole și resurse pentru firme care vor să investească în energie solară
+            Articole și resurse pentru proprietari de case și firme care vor să investească în energie solară
           </p>
         </div>
 
