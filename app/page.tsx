@@ -369,7 +369,7 @@ export default async function HomePage() {
                 </span>
               </div>
               <p className="text-sm text-gray-700 leading-relaxed">
-                Listare <strong>gratuită</strong> pentru instalatori. Pentru vizibilitate mai mare: Slot Popup <strong>{PRICING.popup.monthly}€</strong>, Premium <strong>{PRICING.premium.monthly}€</strong> (peste tot pe site) sau un studiu de caz colaborativ. Audiență 100% nișată B2B fotovoltaic.
+                Listare <strong>gratuită</strong> pentru instalatori. Pentru vizibilitate mai mare: Slot Popup <strong>{PRICING.popup.monthly}€</strong>, Premium <strong>{PRICING.premium.monthly}€</strong> (peste tot pe site) sau un studiu de caz colaborativ. Audiență din nișa fotovoltaică.
               </p>
             </Link>
 
