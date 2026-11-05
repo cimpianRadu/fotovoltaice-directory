@@ -80,6 +80,24 @@ export default function DesprePage() {
             </section>
 
             <section>
+              <h2 className="text-lg font-bold text-gray-900 mb-3">Cine e în spatele platformei</h2>
+              <p className="text-gray-600 leading-relaxed">
+                Platforma e construită și întreținută de{' '}
+                <a
+                  href="https://www.digitalu.io/despre/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  Digital U
+                </a>
+                . Nu suntem instalatori și nu vindem panouri: construim și întreținem directorul, verificăm
+                datele firmelor listate și scriem ghidurile. Dacă vezi o informație greșită pe un listing,
+                scrie-ne și o corectăm.
+              </p>
+            </section>
+
+            <section>
               <h2 className="text-lg font-bold text-gray-900 mb-3">Ești instalator?</h2>
               <p className="text-gray-600 leading-relaxed">
                 Dacă ești o firmă de instalare panouri fotovoltaice comerciale și dorești să fii listat
