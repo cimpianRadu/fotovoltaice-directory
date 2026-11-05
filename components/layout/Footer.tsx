@@ -141,17 +141,9 @@ export default function Footer() {
             Informațiile de pe acest site sunt cu caracter informativ.
           </p>
           <p className="text-xs text-gray-400">
-            {/* Rămâne pe toate paginile și fără `nofollow`: digitalu.io e site-ul lui
-                Radu, decizia lui din 5 nov 2026, după ce commitul 5169ae0 îl scosese. */}
-            Platformă construită de{' '}
-            <a
-              href="https://digitalu.io"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-300 hover:text-amber-400 transition-colors"
-            >
-              digitalu.io
-            </a>
+            {/* Text, nu link: 340 de linkuri identice din subsol făceau, cu cele de pe
+                clinici-estetice.ro, aproape tot profilul digitalu.io. Linkul stă în /despre. */}
+            Platformă construită de Digital U
           </p>
         </div>
 
