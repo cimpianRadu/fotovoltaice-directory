@@ -110,6 +110,106 @@ const HOME_FINANCING_DOT: Record<FinancingTone, string> = {
   unknown: 'bg-white/30',
 };
 
+/**
+ * Cereri active. Mutate sub hero pe 25 aug 2026, în locul celor trei bife generice
+ * („Firme din zona ta", „Calculator potrivit", „Ghiduri pe înțelesul tău"), care nu
+ * spuneau nimic verificabil. Din 1 nov 2026 stau în hero, în locul benzii „Sunteți
+ * instalator?": firma vede direct ce ar putea prelua, iar pagina scapă de o secțiune.
+ *
+ * Din 16 sept 2026 blocul se adresează INSTALATORULUI: butonul mare duce în feedul
+ * de cereri („Vezi toate cererile"), nu în formularul de ofertă. Clientul are deja
+ * cardurile din hero și butonul „Cere oferte" din header. (Între 25 aug și 16 sept
+ * butonul zicea „Cere și dumneavoastră o ofertă”, pe ideea că două audiențe lipite
+ * se anulează; decizia userului a fost să dea secțiunea firmelor.)
+ *
+ * Cardurile duc din 3 sept 2026 în cererea respectivă din feed
+ * (`/cereri?cerere=<id>`), nu tot în formular: cine dă click pe o cerere anume vrea
+ * cererea aia, iar un click care ateriza în formularul de ofertă era o promisiune
+ * ruptă. Instalatorul ajunge direct la butonul de revendicare; clientul ajunge
+ * într-o pagină care îi explică ce e feedul și îi dă înapoi linkul spre Cere Ofertă.
+ */
+function RecentRequests({ cereri, total }: { cereri: PublicLead[]; total: number }) {
+  return (
+    <div className="mt-6 pt-5 border-t border-white/10">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:mb-3">
+        <div>
+          <p className="text-xs font-semibold text-primary-light uppercase tracking-wider mb-1">
+            Cereri primite recent
+          </p>
+          <h2 className="text-lg sm:text-xl font-bold text-white">
+            {total} de cereri de ofertă în așteptare
+          </h2>
+          <p className="text-white/70 mt-0.5 text-sm">
+            Oameni care caută instalator chiar acum. Firmele cu atestat ANRE le pot prelua
+            gratuit, cu datele complete ale cererii.
+          </p>
+        </div>
+        <Link
+          href="/cereri"
+          data-umami-event="home_cereri_click"
+          data-umami-event-tinta="toate"
+          className="shrink-0 self-start sm:self-auto inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors"
+        >
+          Vezi toate cererile
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </Link>
+      </div>
+
+      {/* Cardurile doar de la `sm` în sus: pe telefon ar împinge și mai jos slotul de
+          partener de sub hero, iar titlul și butonul spun deja ce e de văzut. */}
+      <div className="hidden sm:grid gap-3 sm:grid-cols-3">
+        {cereri.map((c) => (
+          <Link
+            key={c.id}
+            href={`/cereri?cerere=${encodeURIComponent(c.id)}`}
+            data-umami-event="home_cereri_click"
+            data-umami-event-tinta="card"
+            className="rounded-xl bg-white/5 border border-white/10 hover:border-primary/50 hover:bg-white/10 transition-all p-3"
+          >
+            <div className="flex items-center justify-between gap-2 mb-1.5">
+              <span
+                className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold ${
+                  c.segment === 'rezidential'
+                    ? 'bg-emerald-400/15 text-emerald-300'
+                    : 'bg-primary/20 text-primary'
+                }`}
+              >
+                {c.segment === 'rezidential' ? 'Rezidențial' : 'Comercial'}
+              </span>
+              <span className="text-xs text-white/50">{cerereAgeLabel(calendarAgeDays(c.id))}</span>
+            </div>
+            <p className="font-semibold text-white text-sm">{getProjectTypeLabel(c.tipProiect)}</p>
+            <p className="text-white/60 text-sm mt-0.5">
+              {[c.judet, c.putere ? `${c.putere} kW` : null, c.suprafata ? `${c.suprafata} mp` : null]
+                .filter(Boolean)
+                .join(' · ')}
+            </p>
+            {/* Aceeași informație ca pe /cereri, dar pe fundal navy: tonurile
+                din LeadCard sunt pentru fundal alb și n-ar avea contrast aici. */}
+            {c.finantare && (
+              <p
+                className={`mt-1 flex items-center gap-1.5 text-xs font-medium ${
+                  HOME_FINANCING_TEXT[getFinancingTone(c.finantare)]
+                }`}
+              >
+                <span
+                  aria-hidden
+                  className={`h-1.5 w-1.5 rounded-full ${
+                    HOME_FINANCING_DOT[getFinancingTone(c.finantare)]
+                  }`}
+                />
+                {getFinancingShort(c.finantare)}
+              </p>
+            )}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default async function HomePage() {
   const hasPremium = getPremiumCompanies().length > 0;
 
@@ -166,6 +266,7 @@ export default async function HomePage() {
         activity={activity}
         installerCount={COMPANY_COUNT}
         anreCount={ANRE_COUNT}
+        requests={cereri.length > 0 ? <RecentRequests cereri={cereri} total={cereriTotal} /> : null}
       />
 
       {/* Sponsor. Prima oprire după hero, din 3 sept 2026. Înainte stătea deasupra
@@ -185,109 +286,15 @@ export default async function HomePage() {
         <HomeFindInstaller firms={FIRM_INDEX} counties={COUNTY_INDEX} topCounties={TOP_COUNTIES} />
       </section>
 
-      {/* Cereri active, mutate sub hero pe 25 aug 2026, în locul celor trei bife
-          generice („Firme din zona ta", „Calculator potrivit", „Ghiduri pe înțelesul
-          tău"), care nu spuneau nimic verificabil.
-
-          Din 16 sept 2026 secțiunea se adresează INSTALATORULUI: butonul mare duce
-          în feedul de cereri („Vezi toate cererile"), nu în formularul de ofertă.
-          Clientul are deja hero-ul și butonul „Cere oferte" din header; aici e
-          singurul loc de pe homepage unde firma vede că există cereri de preluat.
-          (Între 25 aug și 16 sept butonul zicea „Cere și dumneavoastră o ofertă”,
-          pe ideea că două audiențe lipite se anulează; decizia userului a fost
-          să dea secțiunea firmelor.)
-
-          Cardurile duc din 3 sept 2026 în cererea respectivă din feed
-          (`/cereri?cerere=<id>`), nu tot în formular: cine dă click pe o cerere
-          anume vrea cererea aia, iar un click care ateriza în formularul de ofertă
-          era o promisiune ruptă. Instalatorul ajunge direct la butonul de
-          revendicare; clientul ajunge într-o pagină care îi explică ce e feedul și
-          îi dă înapoi linkul spre Cere Ofertă. */}
-      {cereri.length > 0 && (
-        <section className="bg-secondary">
-          <div className="max-w-7xl mx-auto px-4 py-14">
-            <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
-              <div>
-                <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
-                  Cereri primite recent
-                </p>
-                <h2 className="text-2xl font-bold text-white">
-                  {cereriTotal} de cereri de ofertă în așteptare
-                </h2>
-                <p className="text-white/70 mt-1 text-sm">
-                  Oameni care caută instalator chiar acum. Firmele cu atestat ANRE le pot prelua
-                  gratuit, cu datele complete ale clientului.
-                </p>
-              </div>
-              <Link
-                href="/cereri"
-                className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors"
-              >
-                Vezi toate cererile
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </Link>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              {cereri.map((c) => (
-                <Link
-                  key={c.id}
-                  href={`/cereri?cerere=${encodeURIComponent(c.id)}`}
-                  className="rounded-xl bg-white/5 border border-white/10 hover:border-primary/50 hover:bg-white/10 transition-all p-4"
-                >
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <span
-                      className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold ${
-                        c.segment === 'rezidential'
-                          ? 'bg-emerald-400/15 text-emerald-300'
-                          : 'bg-primary/20 text-primary'
-                      }`}
-                    >
-                      {c.segment === 'rezidential' ? 'Rezidențial' : 'Comercial'}
-                    </span>
-                    <span className="text-xs text-white/50">{cerereAgeLabel(calendarAgeDays(c.id))}</span>
-                  </div>
-                  <p className="font-semibold text-white text-sm">{getProjectTypeLabel(c.tipProiect)}</p>
-                  <p className="text-white/60 text-sm mt-0.5">
-                    {[c.judet, c.putere ? `${c.putere} kW` : null, c.suprafata ? `${c.suprafata} mp` : null]
-                      .filter(Boolean)
-                      .join(' · ')}
-                  </p>
-                  {/* Aceeași informație ca pe /cereri, dar pe fundal navy: tonurile
-                      din LeadCard sunt pentru fundal alb și n-ar avea contrast aici. */}
-                  {c.finantare && (
-                    <p
-                      className={`mt-1.5 flex items-center gap-1.5 text-xs font-medium ${
-                        HOME_FINANCING_TEXT[getFinancingTone(c.finantare)]
-                      }`}
-                    >
-                      <span
-                        aria-hidden
-                        className={`h-1.5 w-1.5 rounded-full ${
-                          HOME_FINANCING_DOT[getFinancingTone(c.finantare)]
-                        }`}
-                      />
-                      {getFinancingShort(c.finantare)}
-                    </p>
-                  )}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Banda pentru instalatori, urcată aici pe 10 septembrie 2026. Înainte,
           singurul lucru adresat firmelor stătea la finalul paginii („Listează-ți
           firma gratuit"), iar /pentru-instalatori, pagina care chiar explică
           înțelegerea, a primit 3 vizualizări în 30 de zile fiindcă nu ducea nimic
-          spre ea. Stă imediat sub cererile reale, fiindcă ăsta e argumentul: omul
-          tocmai a văzut cine cere oferte chiar acum.
+          spre ea. Din 1 nov 2026 e singura ușă spre pagina aia de pe homepage:
+          cea din hero a făcut loc cererilor reale.
 
-          Nu e o a doua pâlnie pusă peste cea de client: heroul și banda de cereri
-          vorbesc cu clientul, asta e o singură bandă, o singură dată. */}
+          Nu e o a doua pâlnie pusă peste cea de client: heroul vorbește cu
+          clientul, asta e o singură bandă, o singură dată. */}
       <section className="max-w-7xl mx-auto px-4 py-10">
         <div className="rounded-2xl border-2 border-primary/25 bg-primary/5 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
           <div>

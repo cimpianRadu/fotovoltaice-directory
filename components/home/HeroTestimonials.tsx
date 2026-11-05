@@ -11,11 +11,15 @@ export default function HeroTestimonials() {
   if (cards.length === 0) return null;
 
   return (
-    <div className="mt-8 pt-6 border-t border-white/10 max-w-3xl mx-auto">
+    <div className="mt-5 pt-5 border-t border-white/10">
       <p className="text-xs font-semibold text-primary-light uppercase tracking-wider mb-3 text-center sm:text-left">
         Cum e experiența pe platformă
       </p>
-      <TestimonialCarousel cards={cards} tone="dark" />
+      {/* Săgețile caruselului ies în afara lui; padding-ul le ține în lățimea
+          heroului, altfel pe ecrane de ~1024px pagina capătă derulare orizontală. */}
+      <div className="sm:px-5 lg:px-6">
+        <TestimonialCarousel cards={cards} tone="dark" />
+      </div>
     </div>
   );
 }
