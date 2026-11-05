@@ -15,7 +15,7 @@ export default function TermeniConditii() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Termeni și Condiții</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 29 octombrie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 5 noiembrie 2026</p>
 
         <p>
           Prin accesarea și utilizarea site-ului <strong>instalatori-fotovoltaice.ro</strong> acceptați
@@ -31,7 +31,7 @@ export default function TermeniConditii() {
         <h2>1. Descrierea serviciului</h2>
         <p>
           Instalatori Fotovoltaice România este o platformă online care listează firme de instalare
-          panouri fotovoltaice comerciale și industriale din România. Site-ul oferă:
+          panouri fotovoltaice din România. Site-ul oferă:
         </p>
         <ul>
           <li>Informații despre firmele de instalare (profil, certificări, acoperire geografică)</li>
