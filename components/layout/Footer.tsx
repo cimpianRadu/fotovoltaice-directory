@@ -141,7 +141,17 @@ export default function Footer() {
             Informațiile de pe acest site sunt cu caracter informativ.
           </p>
           <p className="text-xs text-gray-400">
-            Platformă construită de Digital U
+            {/* Rămâne pe toate paginile și fără `nofollow`: digitalu.io e site-ul lui
+                Radu, decizia lui din 5 nov 2026, după ce commitul 5169ae0 îl scosese. */}
+            Platformă construită de{' '}
+            <a
+              href="https://digitalu.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-amber-400 transition-colors"
+            >
+              digitalu.io
+            </a>
           </p>
         </div>
 
