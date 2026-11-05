@@ -3,12 +3,13 @@ import Link from 'next/link';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import JsonLd from '@/components/seo/JsonLd';
 import LeadForm from '@/components/forms/LeadForm';
+import { PRICING } from '@/lib/pricing';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Despre Noi - Instalatori Fotovoltaice România',
   description:
-    'Despre proiectul Instalatori Fotovoltaice România - platforma #1 pentru firme de instalare panouri fotovoltaice comerciale și industriale.',
+    'Despre Instalatori Fotovoltaice România: platforma prin care proprietarii de case și firmele primesc oferte de la instalatori de panouri fotovoltaice verificați.',
   alternates: { canonical: '/despre' },
 };
 
@@ -37,18 +38,17 @@ export default function DesprePage() {
             <section>
               <h2 className="text-lg font-bold text-gray-900 mb-3">Misiunea noastră</h2>
               <p className="text-gray-600 leading-relaxed">
-                Instalatori Fotovoltaice România este platforma #1 dedicată exclusiv segmentului comercial și industrial
-                al pieței de energie solară din România. Misiunea noastră este să conectăm companiile care doresc
-                să investească în energie solară cu cei mai buni instalatori verificați din țară.
+                Instalatori Fotovoltaice România este platforma prin care proprietarii de case și firmele găsesc
+                instalatori de panouri fotovoltaice din zona lor și primesc oferte de la ei. Misiunea noastră este
+                să facem alegerea mai simplă și mai sigură, pe baza unor date verificate.
               </p>
             </section>
 
             <section>
               <h2 className="text-lg font-bold text-gray-900 mb-3">De ce existăm?</h2>
               <p className="text-gray-600 leading-relaxed mb-3">
-                Piața de fotovoltaice comerciale din România crește rapid, dar găsirea unui instalator de încredere
-                pentru un proiect industrial rămâne o provocare. Informațiile sunt fragmentate, iar diferențele
-                de calitate între instalatori pot fi enorme.
+                Găsirea unui instalator de încredere rămâne o provocare, fie că e vorba de o casă, fie de o hală.
+                Informațiile sunt fragmentate, iar diferențele de calitate între instalatori pot fi enorme.
               </p>
               <p className="text-gray-600 leading-relaxed">
                 Am creat această platformă pentru a oferi transparență și a facilita procesul de selecție.
@@ -62,7 +62,7 @@ export default function DesprePage() {
               <ul className="text-gray-600 space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-primary font-bold mt-0.5">1.</span>
-                  <span><strong>Focus exclusiv pe comercial/industrial</strong> - nu rezidențial, nu panouri pentru casă</span>
+                  <span><strong>Pentru case și pentru firme</strong> - de la sisteme pentru locuințe până la hale industriale</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary font-bold mt-0.5">2.</span>
@@ -70,7 +70,7 @@ export default function DesprePage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary font-bold mt-0.5">3.</span>
-                  <span><strong>Gratuit pentru companii</strong> - cererea de ofertă este gratuită și fără obligații</span>
+                  <span><strong>Gratuit pentru clienți</strong> - cererea de ofertă este gratuită și fără obligații</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary font-bold mt-0.5">4.</span>
@@ -100,8 +100,10 @@ export default function DesprePage() {
             <section>
               <h2 className="text-lg font-bold text-gray-900 mb-3">Ești instalator?</h2>
               <p className="text-gray-600 leading-relaxed">
-                Dacă ești o firmă de instalare panouri fotovoltaice comerciale și dorești să fii listat
-                pe platforma noastră, completează formularul de contact de mai jos sau trimite-ne un email
+                Dacă ești o firmă de instalare panouri fotovoltaice și dorești să fii listat
+                pe platforma noastră, completează{' '}
+                <Link href="/listeaza-firma" className="text-primary hover:underline">formularul de listare</Link>{' '}
+                sau trimite-ne un email
                 la <a href="mailto:contact@instalatori-fotovoltaice.ro" className="text-primary hover:underline">contact@instalatori-fotovoltaice.ro</a>.
                 Listarea de bază este gratuită.
               </p>
@@ -111,21 +113,20 @@ export default function DesprePage() {
               <h2 className="text-lg font-bold text-gray-900 mb-3">Promovează-ți firma</h2>
               <p className="text-gray-600 leading-relaxed mb-4">
                 Vrei să fii mai vizibil în fața clienților care caută instalatori fotovoltaici?
-                Oferim pachete de promovare adaptate nevoilor tale — de la badge &quot;Partener Verificat&quot;
-                și poziție prioritară în listă, până la bannere pe ghiduri și articole sponsorizate.
+                Listarea de bază e gratuită, iar peste ea sunt două pachete de promovare și un studiu de caz.
               </p>
               <ul className="text-sm text-gray-600 space-y-2 mb-5">
                 <li className="flex items-start gap-2">
                   <span className="text-green-500 shrink-0">&#10003;</span>
-                  <span><strong>Listing Sponsor</strong> — logo și link pe toate ghidurile (de la 29 EUR/lună)</span>
+                  <span><strong>Slot Popup</strong> — vizibil pe toate paginile ({PRICING.popup.monthly} EUR/lună + TVA)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-500 shrink-0">&#10003;</span>
-                  <span><strong>Profil Premium</strong> — badge verificat, poziție prioritară, lead-uri (de la 49 EUR/lună)</span>
+                  <span><strong>Premium</strong> — vizibilitate peste tot pe site și profil complet ({PRICING.premium.monthly} EUR/lună + TVA)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-500 shrink-0">&#10003;</span>
-                  <span><strong>Enterprise</strong> — tot din Premium + banner pe ghiduri și articol dedicat (de la 99 EUR/lună)</span>
+                  <span><strong>Studiu de caz</strong> — colaborativ, despre o lucrare reală (preț la cerere)</span>
                 </li>
               </ul>
               <Link
