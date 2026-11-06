@@ -24,7 +24,7 @@ export function LocationPitch() {
       </p>
       <p className="mt-2 text-sm text-gray-700 leading-relaxed">
         Cu adresa, instalatorul se uită la acoperiș din satelit: vede orientarea, umbrele și
-        suprafața liberă, și vă poate estima montajul fără o vizită în plus. O vede doar
+        suprafața liberă, și vă poate propune un sistem potrivit acoperișului. O vede doar
         instalatorul care preia cererea ca să vă facă oferta, nu apare pe site.
       </p>
     </>

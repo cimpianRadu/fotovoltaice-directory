@@ -37,7 +37,8 @@ export const PHOTO_CARD_CLASS = 'rounded-xl border-2 border-primary/40 bg-amber-
  * De ce merită pozele, spus cu cifra noastră, nu cu una estimată. Cererile
  * primite între 9 sept și 21 oct 2026 (neascunse, nedublate, cel puțin 7 zile
  * vechime): cele 19 cu poze au fost preluate în medie de 1,16 firme, cele 123
- * fără poze de 0,65, deci +78%. Sunt firme care au cerut contactul, nu oferte,
+ * fără poze de 0,65, deci +78%; pe site îi spunem „vă cresc șansele de oferte cu 78%" (Radu, 6 nov:
+ * doar asta, scurt). Sunt firme care au cerut contactul, nu oferte,
  * iar consumul și bugetul n-au schimbat nimic în aceleași date. Dacă pică sub
  * ~60% la o recalculare, propoziția se rescrie.
  */
@@ -52,12 +53,10 @@ export function PhotoPitch() {
         Adăugați 2-3 poze cu acoperișul
       </p>
       <p className="mt-2 text-sm text-gray-800 leading-relaxed">
-        În septembrie și octombrie, cererile cu poze au atras în medie{' '}
-        <strong>cu aproape 80% mai multe firme</strong> decât cele fără.
+        Din ce am văzut pe site, pozele vă cresc șansele de oferte <strong>cu 78%</strong>.
       </p>
       <p className="mt-2 text-sm text-gray-700 leading-relaxed">
-        Una cu acoperișul văzut din exterior, una cu tabloul electric și contorul. Cu ele,
-        instalatorii pot calcula montajul fără să mai vină întâi în vizită. Le vede doar
+        Una cu acoperișul văzut din exterior, una cu tabloul electric și contorul. Le vede doar
         instalatorul care preia cererea.
       </p>
     </>

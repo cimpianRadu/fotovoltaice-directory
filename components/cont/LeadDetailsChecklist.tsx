@@ -1,7 +1,8 @@
 'use client';
 
-// Ce îi mai lipsește cererii ca firmele s-o preia și să-i dea un preț fără o
-// vizită în plus: pozele și adresa (6 nov 2026, cerute de un instalator).
+// Ce îi mai lipsește cererii ca firmele s-o preia și să-i dea o ofertă mai
+// exactă: pozele și adresa (6 nov 2026, cerute de un instalator). Fără „fără
+// vizită" în texte: pentru client nu sună a avantaj (Radu, 6 nov).
 // Cifra de la poze e a noastră, vezi PhotoPitch; la adresă nu punem cifră
 // până nu avem date.
 
@@ -68,7 +69,7 @@ export default function LeadDetailsChecklist({
           <p className="mt-1 text-sm text-gray-600">
             {doneCount === 2
               ? 'Cererea are tot ce le trebuie instalatorilor ca să vă dea un preț.'
-              : 'Cu aceste detalii, instalatorii vă pot da un preț fără o vizită în plus.'}
+              : 'Cu aceste detalii, instalatorii vă pot face o ofertă mai exactă.'}
           </p>
         </div>
         <span className={`shrink-0 text-sm font-semibold tabular-nums ${doneCount === 2 ? 'text-emerald-700' : 'text-amber-700'}`}>
@@ -96,9 +97,8 @@ export default function LeadDetailsChecklist({
               </div>
               {initialPhotoCount === 0 && uploaded === 0 && (
                 <p className="mt-1 text-sm text-gray-700 leading-relaxed">
-                  În septembrie și octombrie, cererile cu poze au atras în medie{' '}
-                  <strong>cu aproape 80% mai multe firme</strong> decât cele fără. Una cu acoperișul
-                  din exterior, una cu tabloul și contorul.
+                  Din ce am văzut pe site, pozele vă cresc șansele de oferte <strong>cu 78%</strong>.
+                  Una cu acoperișul din exterior, una cu tabloul și contorul.
                 </p>
               )}
               {photosOpen && (
