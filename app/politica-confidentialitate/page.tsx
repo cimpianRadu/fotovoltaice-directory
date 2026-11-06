@@ -15,7 +15,7 @@ export default function PoliticaConfidentialitate() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Politica de Confidențialitate</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 3 noiembrie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 6 noiembrie 2026</p>
 
         <p>
           Instalatori Fotovoltaice România (&quot;noi&quot;, &quot;site-ul&quot;) operează site-ul{' '}
@@ -139,8 +139,8 @@ export default function PoliticaConfidentialitate() {
         <ul>
           <li><strong>Google (Google Workspace):</strong> stocarea cererilor și comunicare prin email</li>
           <li><strong>Resend:</strong> trimiterea notificărilor prin email</li>
-          <li><strong>Vercel:</strong> găzduirea site-ului și, prin Vercel Blob, fișierele ofertelor trimise de firme, accesibile doar clientului cererii</li>
-          <li><strong>Neon:</strong> baza de date a contului de client, găzduită în Frankfurt (UE)</li>
+          <li><strong>Vercel:</strong> găzduirea site-ului și, prin Vercel Blob, pozele adăugate la cerere (accesibile doar firmei care o preia) și fișierele ofertelor trimise de firme (accesibile doar clientului cererii)</li>
+          <li><strong>Neon:</strong> baza de date a contului de client și adresa montajului, găzduită în Frankfurt (UE)</li>
           <li><strong>Umami:</strong> analytics fără cookie-uri, pe date agregate</li>
         </ul>
         <p>
@@ -151,7 +151,8 @@ export default function PoliticaConfidentialitate() {
 
         <h2>6. Durata stocării</h2>
         <ul>
-          <li>Cererile de ofertă: 12 luni de la trimitere</li>
+          <li>Cererile de ofertă, împreună cu pozele adăugate: 12 luni de la trimitere</li>
+          <li>Adresa montajului: cât e păstrată cererea, sau până o ștergeți din contul de client</li>
           <li>
             Contul de client, răspunsurile și notițele despre firme și ofertele: cât timp e păstrată
             cererea, sau până cereți ștergerea din cont
