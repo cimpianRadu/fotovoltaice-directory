@@ -33,6 +33,7 @@ import { DEFAULT_TARIFF_RON_PER_KWH } from '@/lib/pv-constants';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import LeadPhotoUpload, { PHOTO_CARD_CLASS, PhotoPitch } from './LeadPhotoUpload';
+import LeadLocationField, { LOCATION_CARD_CLASS, LocationPitch } from './LeadLocationField';
 import { trackEvent } from '@/lib/analytics';
 import { getAttribution } from '@/lib/attribution';
 import {
@@ -1089,6 +1090,18 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
             >
               Trimite pozele pe email
             </a>
+          </div>
+        )}
+
+        {/* Adresa, imediat după poze (6 nov 2026, cerută de un instalator): cu
+            ea firma se uită la acoperiș din satelit. Aceeași autorizare ca la
+            poze, deci fără token nu apare deloc; se poate adăuga și din cont. */}
+        {leadRef && photoToken && (
+          <div className={LOCATION_CARD_CLASS}>
+            <LocationPitch />
+            <div className="mt-4">
+              <LeadLocationField leadId={leadRef} token={photoToken} sursa="confirmare" />
+            </div>
           </div>
         )}
 

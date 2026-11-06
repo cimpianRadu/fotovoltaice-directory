@@ -32,7 +32,7 @@ export const LEAD_STATUS_HINTS: Record<LeadStatus, string> = {
   valida: 'am vorbit cu el, încă vrea ofertă',
   ofertare: 'o firmă discută deja cu el',
   castigata: 'a semnat, printr-o firmă de la noi',
-  altundeva: 'și-a rezolvat în afara platformei',
+  altundeva: 'a ales o firmă din afara platformei',
   renuntat: 'nu mai face investiția',
   inactiva: 'se informa, n-a răspuns la check-in-uri',
 };

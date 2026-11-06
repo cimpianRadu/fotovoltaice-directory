@@ -105,12 +105,18 @@ export async function POST(request: Request) {
     }
 
     // Cererea poate fi închisă între generarea feedului (ISR de 5 minute) și
-    // click — clientul a semnat, s-a rezolvat altundeva sau a renunțat.
+    // click — clientul a semnat, a ales altă firmă sau a renunțat. Firma
+    // află exact care din ele, nu un „s-a rezolvat" vag.
     if (isLeadClosed(lead.crmStatus)) {
-      return NextResponse.json(
-        { error: 'Clientul și-a rezolvat deja proiectul. Cererea a fost închisă.' },
-        { status: 409 },
-      );
+      const motiv =
+        lead.crmStatus === 'castigata'
+          ? 'Clientul a semnat deja cu o firmă de pe platformă.'
+          : lead.crmStatus === 'altundeva'
+            ? 'Clientul a ales deja altă firmă.'
+            : lead.crmStatus === 'renuntat'
+              ? 'Clientul nu mai face lucrarea.'
+              : 'Clientul nu a mai răspuns.';
+      return NextResponse.json({ error: `${motiv} Cererea a fost închisă.` }, { status: 409 });
     }
 
     // Cererea rezervată unui abonat nu apare pe /cereri, dar id-ul ei poate fi

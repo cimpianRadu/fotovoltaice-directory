@@ -22,6 +22,8 @@ import {
   isLeadInformez,
 } from '@/lib/sheets';
 import { informezMotiv } from '@/lib/lead-alerts';
+import { satelliteMapUrl } from '@/lib/lead-location-shared';
+import { getLeadLocations, type LeadLocation } from '@/lib/lead-location';
 import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
   claimLastActivity,
@@ -168,6 +170,14 @@ export default async function PortalPage() {
       list.push({ pathname: p.pathname, fileName: p.fileName });
       photosByLead.set(p.leadId, list);
     }
+    // Adresa montajului (Neon, 6 nov 2026), doar pe cererile firmei; pleacă
+    // spre browser tot numai pe revendicările aprobate, ca telefonul.
+    const locations = await getLeadLocations(
+      claims.filter((c) => mineEmails.has(c.email)).map((c) => c.leadId),
+    ).catch((err) => {
+      console.error('[portal] locații:', err);
+      return new Map<string, LeadLocation>();
+    });
 
     // Cererile ținute pentru abonamentul firmei: încă în fereastră, încă
     // deschise și nepreluate de ea. Feedul public nu le arată nimănui, deci
@@ -280,6 +290,17 @@ export default async function PortalPage() {
                 telefon: lead.telefon,
                 email: lead.email,
                 localitate: [lead.localitate, lead.judet].filter(Boolean).join(', '),
+                // Locul lucrării, tot după aprobare, ca telefonul: e adresa
+                // unei case. Doar coordonate, fără adresă: rămâne localitatea.
+                adresa: locations.get(c.leadId)?.adresa
+                  ? [locations.get(c.leadId)?.adresa, lead.localitate, lead.judet].filter(Boolean).join(', ')
+                  : '',
+                hartaUrl: satelliteMapUrl({
+                  adresa: locations.get(c.leadId)?.adresa ?? '',
+                  coordonate: locations.get(c.leadId)?.coordonate ?? '',
+                  localitate: lead.localitate,
+                  judet: lead.judet,
+                }),
                 // Trei surse, în ordinea încrederii: pozele urcate de client
                 // din formular, un link pus de noi în coloana AD, sau doar
                 // marcajul că există poze pe email. Ultimele două sunt

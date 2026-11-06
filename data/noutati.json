@@ -1,6 +1,20 @@
 [
   {
     "data": "2026-11-06",
+    "titlu": "Adresa clientului și acoperișul din satelit",
+    "text": "Clienții pot adăuga acum adresa montajului, după ce trimit cererea sau din contul lor. Când preiei o cerere care are adresă, o vezi în portal cu un link spre acoperiș din satelit, ca să estimezi montajul înainte să suni.",
+    "link": "/portal",
+    "linkText": "Deschide portalul"
+  },
+  {
+    "data": "2026-11-06",
+    "titlu": "Renunți la o cerere dintr-un click",
+    "text": "Când marchezi o cerere „Neconcretizat”, alegi motivul dintr-o listă scurtă. Câteva cuvinte în plus poți scrie, dar nu mai e obligatoriu.",
+    "link": "/portal",
+    "linkText": "Deschide portalul"
+  },
+  {
+    "data": "2026-11-06",
     "titlu": "Meniu mai simplu cât ești conectat",
     "text": "Cât ești conectat, meniul site-ului are doar cererile noi, noutățile și contul firmei. Logoul te duce direct în portal, la cererile tale.",
     "link": "/portal",

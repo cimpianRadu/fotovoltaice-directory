@@ -9,6 +9,7 @@ import PortalOfferBox from './PortalOfferBox';
 import Button from '@/components/ui/Button';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 import { trackEvent } from '@/lib/analytics';
+import { MIN_OTHER_REASON_LENGTH, RELEASE_REASONS } from '@/lib/portal-release-reasons';
 import {
   CLAIM_STATUSES,
   CLAIM_STATUS_HINTS,
@@ -65,6 +66,10 @@ export interface PortalClaim {
     telefon: string;
     email: string;
     localitate: string;
+    /** Adresa montajului, dacă a dat-o clientul (BD), cu localitatea și județul după. */
+    adresa: string;
+    /** Google Maps pe satelit, din coordonate sau din adresă. Null fără niciuna. */
+    hartaUrl: string | null;
     /** Pozele urcate de client din formular. Se cer prin /api/portal/poza. */
     pozeUrcate: { pathname: string; fileName: string }[];
     /** Moștenire: link pus de noi în coloana AD, pentru pozele venite pe email. */
@@ -257,7 +262,8 @@ export default function PortalClaimCard({
   const [statusError, setStatusError] = useState<string | null>(null);
 
   const [releaseOpen, setReleaseOpen] = useState(false);
-  const [motiv, setMotiv] = useState('');
+  const [motivId, setMotivId] = useState('');
+  const [detalii, setDetalii] = useState('');
   const [releaseBusy, setReleaseBusy] = useState(false);
   const [releaseError, setReleaseError] = useState<string | null>(null);
   const [justReleased, setJustReleased] = useState(false);
@@ -334,6 +340,10 @@ export default function PortalClaimCard({
 
   async function release(e: React.FormEvent) {
     e.preventDefault();
+    if (!motivId) {
+      setReleaseError('Alege motivul.');
+      return;
+    }
     setReleaseBusy(true);
     setReleaseError(null);
     try {
@@ -343,7 +353,8 @@ export default function PortalClaimCard({
         body: JSON.stringify({
           claimTimestamp: claim.claimTimestamp,
           leadId: claim.leadId,
-          motiv,
+          motivId,
+          detalii,
         }),
       });
       const json = await res.json().catch(() => ({}));
@@ -351,7 +362,7 @@ export default function PortalClaimCard({
         setReleaseError(json.error || 'A apărut o eroare. Încearcă din nou.');
         return;
       }
-      trackEvent('portal_claim_released', { sursa });
+      trackEvent('portal_claim_released', { sursa, motiv: motivId });
       onPatch({ releasedAt: new Date().toISOString(), firmStatus: 'pierdut', updatedDays: 0 });
       setJustReleased(true);
       setReleaseOpen(false);
@@ -525,19 +536,48 @@ export default function PortalClaimCard({
 
       {releaseOpen && !released && (
         <form onSubmit={release} className="mt-3 space-y-2 rounded-lg border border-border bg-surface p-3">
-          <label htmlFor={`motiv-${claim.claimTimestamp}`} className="block text-sm font-medium text-gray-700">
-            De ce nu a mers această cerere?
-          </label>
-          <textarea
-            id={`motiv-${claim.claimTimestamp}`}
-            value={motiv}
-            onChange={(e) => setMotiv(e.target.value)}
-            required
-            autoFocus
-            rows={2}
-            placeholder="Ex: clientul nu răspunde după 3 încercări / prea departe de zona noastră / a ales altă ofertă"
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
-          />
+          <fieldset>
+            <legend className="text-sm font-medium text-gray-700">De ce nu a mers această cerere?</legend>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {RELEASE_REASONS.map((r) => {
+                const picked = motivId === r.id;
+                return (
+                  <button
+                    key={r.id}
+                    type="button"
+                    aria-pressed={picked}
+                    onClick={() => {
+                      setMotivId(r.id);
+                      setReleaseError(null);
+                    }}
+                    className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                      picked
+                        ? 'border-primary bg-primary/10 font-medium text-gray-900'
+                        : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                    }`}
+                  >
+                    {r.label}
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+          {motivId && (
+            <div>
+              <label htmlFor={`motiv-${claim.claimTimestamp}`} className="block text-xs text-gray-600">
+                {motivId === 'altul' ? 'Scrie pe scurt motivul' : 'Detalii (opțional)'}
+              </label>
+              <textarea
+                id={`motiv-${claim.claimTimestamp}`}
+                value={detalii}
+                onChange={(e) => setDetalii(e.target.value)}
+                required={motivId === 'altul'}
+                minLength={motivId === 'altul' ? MIN_OTHER_REASON_LENGTH : undefined}
+                rows={2}
+                className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+              />
+            </div>
+          )}
           {releaseError && <p className="text-xs text-red-600">{releaseError}</p>}
           <div className="flex gap-2">
             <button
@@ -556,7 +596,7 @@ export default function PortalClaimCard({
 
       {justReleased && (
         <p className="mt-2 text-sm text-emerald-700">
-          Locul a fost eliberat. Mulțumim că ai lăsat motivul, ne ajută să realocăm cererea.
+          Locul a fost eliberat. Mulțumim, motivul ne ajută să realocăm cererea.
         </p>
       )}
 
@@ -594,7 +634,24 @@ export default function PortalClaimCard({
 
           {claim.client && (
             <div className="space-y-1 text-sm text-gray-800">
-              {claim.client.localitate && <p className="text-gray-600">{claim.client.localitate}</p>}
+              {claim.client.adresa ? (
+                <p className="text-gray-700">{claim.client.adresa}</p>
+              ) : (
+                claim.client.localitate && <p className="text-gray-600">{claim.client.localitate}</p>
+              )}
+              {claim.client.hartaUrl && (
+                <p>
+                  <a
+                    href={claim.client.hartaUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent('portal_harta_deschisa', { sursa })}
+                    className="inline-flex items-center gap-1 font-medium text-primary-dark hover:underline"
+                  >
+                    Vezi acoperișul din satelit ↗
+                  </a>
+                </p>
+              )}
               <p>
                 <a
                   href={`mailto:${claim.client.email}`}

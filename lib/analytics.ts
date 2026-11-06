@@ -65,6 +65,10 @@ type EventName =
   | 'portal_row_opened'
   | 'portal_recommended_click'
   | 'portal_claim_released'
+  // Locul lucrării (6 nov 2026): clientul salvează adresa/GPS (`sursa` =
+  // confirmare | cont), firma deschide harta pe satelit din rând.
+  | 'lead_locatie_salvata'
+  | 'portal_harta_deschisa'
   | 'portal_alerts_saved'
   | 'portal_email_added'
   | 'portal_email_removed'

@@ -68,18 +68,27 @@ export default function LeadPhotoUpload({
   leadId,
   token,
   mailtoFallback,
+  existingCount = 0,
+  bare = false,
+  onUploaded,
 }: {
   leadId: string;
   token: string;
   /** Varianta pe email, pentru cine nu poate încărca (browser vechi, blocaje). */
   mailtoFallback: string;
+  /** Pozele urcate deja pe cerere (din cont): intră în plafon. */
+  existingCount?: number;
+  /** Fără card și fără PhotoPitch, când pagina le are deja pe ale ei (contul). */
+  bare?: boolean;
+  /** După fiecare poză legată de cerere. */
+  onUploaded?: () => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [done, setDone] = useState<Uploaded[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const left = LEAD_PHOTO_MAX - done.length;
+  const left = LEAD_PHOTO_MAX - existingCount - done.length;
 
   async function handleFiles(files: FileList | null) {
     if (!files?.length) return;
@@ -114,6 +123,7 @@ export default function LeadPhotoUpload({
           ...prev,
           { pathname: blob.pathname, name: file.name, preview: URL.createObjectURL(file) },
         ]);
+        onUploaded?.();
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Nu s-a putut încărca poza.');
       }
@@ -125,8 +135,8 @@ export default function LeadPhotoUpload({
   }
 
   return (
-    <div className={PHOTO_CARD_CLASS}>
-      <PhotoPitch />
+    <div className={bare ? '' : PHOTO_CARD_CLASS}>
+      {!bare && <PhotoPitch />}
 
       {done.length > 0 && (
         <ul className="mt-4 flex flex-wrap gap-2">
@@ -163,7 +173,7 @@ export default function LeadPhotoUpload({
           onClick={() => inputRef.current?.click()}
           className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-dark disabled:opacity-60"
         >
-          {busy ? 'Se încarcă...' : done.length ? 'Mai adaug poze' : 'Adaugă poze'}
+          {busy ? 'Se încarcă...' : done.length || existingCount ? 'Mai adaug poze' : 'Adaugă poze'}
         </button>
       ) : (
         <p className="mt-4 text-sm text-gray-700">

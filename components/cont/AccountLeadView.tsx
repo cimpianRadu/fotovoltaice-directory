@@ -661,8 +661,8 @@ function CloseCard({ leadId, firms, demo }: { leadId: string; firms: AccountFirm
 
   return (
     <section className="rounded-xl border border-border bg-white p-5">
-      <h2 className="text-base font-semibold text-gray-900">Ați rezolvat?</h2>
-      <p className="mt-1 text-sm text-gray-600">Închidem cererea, iar firmele nu vă mai caută.</p>
+      <h2 className="text-base font-semibold text-gray-900">Ați ales o firmă sau renunțați?</h2>
+      <p className="mt-1 text-sm text-gray-600">Spuneți-ne și închidem cererea, iar firmele nu vă mai caută.</p>
       <div className="mt-3 flex flex-wrap gap-2">
         <button type="button" className={chip(mode === 'aleasa')} onClick={() => setMode('aleasa')}>
           Am ales o firmă
@@ -736,11 +736,14 @@ export default function AccountLeadView({
   data,
   demo = false,
   readyUrl,
+  details,
 }: {
   data: AccountLeadData;
   demo?: boolean;
   /** La „mă informez”: linkul „Sunt gata pentru oferte” (lib/lead-client-token). */
   readyUrl?: string;
+  /** Checklistul cu poze și adresă, construit de pagină (are nevoie de token). */
+  details?: React.ReactNode;
 }) {
   // Firmele care au renunțat rămân pe pagină, dedesubt (Radu, 30 oct: „să își vadă tot journey-ul”).
   const active = data.firms.filter((f) => !f.withdrawnAt);
@@ -784,6 +787,8 @@ export default function AccountLeadView({
           )}
         </section>
       )}
+
+      {data.open && details}
 
       <section>
         <h2 className="text-lg font-semibold text-gray-900">Firmele care v-au preluat cererea</h2>

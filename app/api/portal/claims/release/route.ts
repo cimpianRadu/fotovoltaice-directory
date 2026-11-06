@@ -5,8 +5,7 @@ import { getClaimsForAccount, getFirmEmailGroup, getFullLeadById, releaseClaim }
 import { sendClaimReleaseNotification } from '@/lib/email';
 import { getProjectTypeLabel } from '@/lib/utils-shared';
 
-/** Un „nu mai vreau" fără explicație nu ne spune nimic — motivul e minimul de politețe. */
-const MIN_REASON_LENGTH = 10;
+import { composeReleaseReason } from '@/lib/portal-release-reasons';
 
 export async function POST(request: Request) {
   try {
@@ -17,13 +16,18 @@ export async function POST(request: Request) {
 
     const body = await request.json();
     const { claimTimestamp, leadId } = body as Record<string, string>;
-    const motiv = String(body?.motiv || '').trim();
     if (!claimTimestamp || !leadId) {
       return NextResponse.json({ error: 'Revendicarea nu există.' }, { status: 400 });
     }
-    if (motiv.length < MIN_REASON_LENGTH) {
+    // Motivul e un click; detaliile sunt opționale, mai puțin la „Alt motiv".
+    const motiv = composeReleaseReason(String(body?.motivId || ''), String(body?.detalii || ''));
+    if (!motiv) {
       return NextResponse.json(
-        { error: 'Scrie pe scurt motivul renunțării (de ce nu a mers cererea asta).' },
+        {
+          error: body?.motivId === 'altul'
+            ? 'Scrie pe scurt motivul (de ce nu a mers cererea asta).'
+            : 'Alege motivul renunțării.',
+        },
         { status: 400 },
       );
     }

@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import AccountLeadView from '@/components/cont/AccountLeadView';
+import LeadDetailsChecklist from '@/components/cont/LeadDetailsChecklist';
 import LoginForm from '@/components/cont/LoginForm';
+import { createLeadPhotoToken } from '@/lib/lead-photos';
+import { getLeadLocation } from '@/lib/lead-location';
 import { leadForViewer, loadAccountLead, recordLeadView } from '@/lib/client-account';
 import { clientLinkUrl } from '@/lib/lead-client-token';
 
@@ -41,11 +44,39 @@ export default async function ContCererePage({ params }: Props) {
   const data = await loadAccountLead(access.lead);
   await recordLeadView(access.lead, Boolean(access.viewer.email));
 
+  // Același token ca pe ecranul de confirmare, emis din nou acum că sesiunea e
+  // verificată: cu el clientul adaugă poze și adresa oricând, nu doar în ziua
+  // în care a trimis cererea. Fără PORTAL_SECRET checklistul lipsește.
+  const lead = access.lead;
+  let detailsToken = '';
+  try {
+    detailsToken = createLeadPhotoToken(lead.timestamp);
+  } catch (err) {
+    console.error('[cont] token detalii:', err);
+  }
+  // Fără Neon (bază suspendată, eroare trecătoare) checklistul pornește gol,
+  // pagina nu cade: adresa se poate oricum salva din nou.
+  const location = await getLeadLocation(lead.timestamp).catch((err) => {
+    console.error('[cont] locație:', err);
+    return null;
+  });
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:py-12">
       <AccountLeadView
         data={data}
-        readyUrl={data.informez ? clientLinkUrl(access.lead.timestamp, 'actualizare') : undefined}
+        readyUrl={data.informez ? clientLinkUrl(lead.timestamp, 'actualizare') : undefined}
+        details={
+          detailsToken ? (
+            <LeadDetailsChecklist
+              leadId={lead.timestamp}
+              token={detailsToken}
+              photoCount={Number(lead.poze.match(/\d+/)?.[0]) || 0}
+              adresa={location?.adresa ?? ''}
+              coordonate={location?.coordonate ?? ''}
+            />
+          ) : undefined
+        }
       />
       <p className="mt-10 text-center text-xs text-gray-400">
         Întrebări? Scrieți-ne la{' '}
