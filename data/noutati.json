@@ -1,5 +1,12 @@
 [
   {
+    "data": "2026-11-06",
+    "titlu": "Meniu mai simplu cât ești conectat",
+    "text": "Cât ești conectat, meniul site-ului are doar cererile noi, noutățile și contul firmei. Logoul te duce direct în portal, la cererile tale.",
+    "link": "/portal",
+    "linkText": "Deschide portalul"
+  },
+  {
     "data": "2026-11-03",
     "titlu": "Cererile tale, pe rânduri",
     "text": "În portal fiecare cerere e acum un rând: suni, schimbi statusul și lași o notă direct de acolo, iar detaliile le deschizi doar când ai nevoie de ele. Sus vezi cererile care așteaptă o noutate de la tine și cererile noi din județele tale.",

@@ -43,6 +43,20 @@ const moreLinks = [
   { href: '/despre', label: 'Despre noi' },
 ];
 
+// Firma logată vine pentru cereri, nu ca să caute instalator: bara ei are doar
+// cererile, noutățile și contul (feedback de la un instalator, 6 nov 2026).
+// Restul site-ului rămâne la un click, în „Mai multe".
+const firmPrimaryLinks: { href: string; label: string; badge?: string }[] = [
+  { href: '/cereri', label: 'Cereri noi' },
+  { href: '/ghid', label: 'Ghiduri' },
+];
+
+const firmMoreLinks = [
+  { href: '/firme', label: 'Firme' },
+  { href: '/studii-de-caz', label: 'Studii de Caz' },
+  ...moreLinks,
+];
+
 function PersonIcon({ className }: { className: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
@@ -64,12 +78,14 @@ export default function Header() {
     return pathname.startsWith(href);
   }
 
-  const isMoreActive = moreLinks.some((l) => isActive(l.href));
   // Se recitește la fiecare randare, deci și după navigarea din login spre /portal.
   const portalLoggedIn = usePortalLoggedIn();
+  const navLinks = portalLoggedIn ? firmPrimaryLinks : primaryLinks;
+  const navMoreLinks = portalLoggedIn ? firmMoreLinks : moreLinks;
+  const isMoreActive = navMoreLinks.some((l) => isActive(l.href));
   // Portalul e al firmelor: eticheta spune asta înainte de click, ca un client
   // care caută instalator să nu intre acolo crezând că e contul lui.
-  const portalLabel = portalLoggedIn ? 'Contul meu' : 'Acces instalatori';
+  const portalLabel = portalLoggedIn ? 'Contul firmei' : 'Acces instalatori';
   // Noutățile platformei sunt pentru firme, deci apar în meniu doar cât firma e
   // logată. Clientul care caută instalator n-are ce face cu ele.
   const noutati = useNoutati('meniu');
@@ -77,17 +93,20 @@ export default function Header() {
   const noutatiDesktopRef = useRef<HTMLButtonElement>(null);
   const noutatiMobileRef = useRef<HTMLButtonElement>(null);
 
-  // Modalul ia locul meniului din care a fost deschis: meniul se închide, iar
-  // la închiderea modalului (X, Esc, fundal) firma se întoarce în meniu, pe
-  // același rând. După un link din modal meniul rămâne închis.
+  // Pe desktop Noutățile au buton în bară: la închiderea modalului focusul se
+  // întoarce pe el. Pe mobil modalul ia locul meniului, iar la închidere (X,
+  // Esc, fundal) firma se întoarce în meniu, pe același rând. După un link din
+  // modal meniul rămâne închis.
   function openNoutati(from: 'desktop' | 'mobile') {
-    const reopen = from === 'desktop' ? setMoreOpen : setMobileOpen;
-    const item = from === 'desktop' ? noutatiDesktopRef : noutatiMobileRef;
-    reopen(false);
+    if (from === 'desktop') {
+      noutati.open(() => noutatiDesktopRef.current?.focus());
+      return;
+    }
+    setMobileOpen(false);
     noutati.open(() => {
-      reopen(true);
+      setMobileOpen(true);
       // După randarea care scoate `hidden` de pe meniu: ascuns, rândul nu ia focus.
-      setTimeout(() => item.current?.focus(), 0);
+      setTimeout(() => noutatiMobileRef.current?.focus(), 0);
     });
   }
 
@@ -116,7 +135,11 @@ export default function Header() {
   return (
     <header ref={headerRef} className="sticky top-0 z-50 bg-white border-b border-border">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-bold text-lg text-secondary-dark shrink-0">
+        {/* Pentru firma logată „acasă" e portalul: acolo îi sunt cererile. */}
+        <Link
+          href={portalLoggedIn ? '/portal' : '/'}
+          className="flex items-center gap-2 font-bold text-lg text-secondary-dark shrink-0"
+        >
           <Image src="/logo.svg" alt="Instalatori Fotovoltaice" width={32} height={32} className="w-8 h-8" />
           {/* Între lg și xl textul logo-ului dispare — nav-ul are prioritate */}
           <span className="hidden sm:inline lg:hidden xl:inline whitespace-nowrap">Instalatori Fotovoltaice</span>
@@ -124,8 +147,12 @@ export default function Header() {
 
         {/* Desktop nav */}
         {/* Desktop nav de la lg în sus — linkuri + toggle + CTA nu încap sub 1024px */}
-        <nav className="hidden lg:flex items-center gap-2.5 xl:gap-3 min-[1440px]:gap-5">
-          {primaryLinks.map((link) =>
+        <nav
+          className={`hidden lg:flex items-center ${
+            portalLoggedIn ? 'gap-5 xl:gap-6' : 'gap-2.5 xl:gap-3 min-[1440px]:gap-5'
+          }`}
+        >
+          {navLinks.map((link) =>
             link.badge ? (
               // Bordură neutră, ca structură, iar singurul accent de culoare e
               // cuvântul călare pe linia de sus. Eticheta are fundal alb ca să
@@ -157,6 +184,20 @@ export default function Header() {
             )
           )}
 
+          {portalLoggedIn && (
+            <button
+              type="button"
+              aria-haspopup="dialog"
+              ref={noutatiDesktopRef}
+              onClick={() => openNoutati('desktop')}
+              className="inline-flex items-center gap-1.5 text-sm font-medium whitespace-nowrap text-gray-600 transition-colors hover:text-secondary-dark"
+            >
+              <BellIcon className="h-4 w-4 text-gray-400" />
+              Noutăți
+              <NoutatiCount count={noutati.unreadCount} />
+            </button>
+          )}
+
           {/* "Mai multe" dropdown */}
           <div ref={moreRef} className="relative">
             <button
@@ -170,7 +211,6 @@ export default function Header() {
               aria-haspopup="menu"
             >
               Mai multe
-              {noutatiDot && <span className="h-2 w-2 rounded-full bg-primary" aria-label="noutăți nevăzute" />}
               <svg
                 className={`w-4 h-4 transition-transform ${moreOpen ? 'rotate-180' : ''}`}
                 fill="none"
@@ -188,24 +228,7 @@ export default function Header() {
                 moreOpen ? 'block' : 'hidden'
               }`}
             >
-              {portalLoggedIn && (
-                <button
-                  type="button"
-                  role="menuitem"
-                  aria-haspopup="dialog"
-                  ref={noutatiDesktopRef}
-                  onClick={() => openNoutati('desktop')}
-                  className="mb-1 flex w-full items-center justify-between gap-2 border-b border-border px-4 pb-3 pt-2.5 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-surface hover:text-secondary-dark"
-                >
-                  {/* Scurt: în lista de 240px, „în platformă” rupea rândul în două. */}
-                  <span className="inline-flex items-center gap-2">
-                    <BellIcon className="h-4 w-4 text-gray-400" />
-                    Noutăți
-                  </span>
-                  <NoutatiCount count={noutati.unreadCount} />
-                </button>
-              )}
-              {moreLinks.map((link) => (
+              {navMoreLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -226,49 +249,66 @@ export default function Header() {
           <Link
             href="/portal"
             title={portalLoggedIn ? 'Contul firmei în Portalul Instalatorilor' : 'Portalul e doar pentru firmele de instalare'}
-            className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-sm font-semibold whitespace-nowrap transition-colors ${
+            className={
               portalLoggedIn
-                ? 'border-primary bg-primary/10 text-primary-dark hover:bg-primary/20'
-                : 'border-primary/60 text-primary-dark hover:bg-primary/10'
-            }`}
+                ? // Butonul principal al firmei, în locul lui „Cere oferte".
+                  'inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold whitespace-nowrap text-white transition-colors hover:bg-primary-dark'
+                : 'inline-flex items-center gap-1.5 rounded-lg border border-primary/60 px-2.5 py-1.5 text-sm font-semibold whitespace-nowrap text-primary-dark transition-colors hover:bg-primary/10'
+            }
           >
             <PersonIcon className="h-4 w-4" />
-            {/* Între lg și xl bara nu mai are loc de text: rămâne iconița. */}
-            <span className="sr-only xl:not-sr-only">{portalLabel}</span>
+            {/* Între lg și xl bara publică nu mai are loc de text: rămâne iconița.
+                Bara firmei are puține linkuri, deci textul încape mereu. */}
+            <span className={portalLoggedIn ? '' : 'sr-only xl:not-sr-only'}>{portalLabel}</span>
           </Link>
 
-          <Link
-            href="/cere-oferta?sursa=header"
-            onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_desktop' })}
-            className="bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-4 py-2 rounded-lg whitespace-nowrap transition-colors"
-          >
-            Cere oferte
-          </Link>
+          {/* Firma nu cere oferte: pentru ea butonul principal e contul. */}
+          {!portalLoggedIn && (
+            <Link
+              href="/cere-oferta?sursa=header"
+              onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_desktop' })}
+              className="bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-4 py-2 rounded-lg whitespace-nowrap transition-colors"
+            >
+              Cere oferte
+            </Link>
+          )}
         </nav>
 
         {/* Mobile hamburger */}
         <div className="flex items-center gap-2 lg:hidden">
-          {/* Doar iconița pe telefon: textul „Acces instalatori" nu încape lângă
-              „Cere oferte" pe 375px. Eticheta completă e în meniu. */}
-          <Link
-            href="/portal"
-            aria-label={portalLabel}
-            className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border ${
-              portalLoggedIn ? 'border-primary bg-primary/10 text-primary-dark' : 'border-primary/60 text-primary-dark'
-            }`}
-          >
-            <PersonIcon className="h-5 w-5" />
-          </Link>
-          <Link
-            href="/cere-oferta?sursa=header"
-            onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_mobile' })}
-            className="inline-flex items-center gap-1.5 justify-center bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-3 min-h-[44px] rounded-lg transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            Cere oferte
-          </Link>
+          {portalLoggedIn ? (
+            // Firma are un singur buton, contul, cu text: fără „Cere oferte"
+            // lângă el, eticheta încape și pe 375px.
+            <Link
+              href="/portal"
+              className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-lg bg-primary px-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
+            >
+              <PersonIcon className="h-4 w-4" />
+              {portalLabel}
+            </Link>
+          ) : (
+            <>
+              {/* Doar iconița pe telefon: textul „Acces instalatori" nu încape lângă
+                  „Cere oferte" pe 375px. Eticheta completă e în meniu. */}
+              <Link
+                href="/portal"
+                aria-label={portalLabel}
+                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-primary/60 text-primary-dark"
+              >
+                <PersonIcon className="h-5 w-5" />
+              </Link>
+              <Link
+                href="/cere-oferta?sursa=header"
+                onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_mobile' })}
+                className="inline-flex items-center gap-1.5 justify-center bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-3 min-h-[44px] rounded-lg transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Cere oferte
+              </Link>
+            </>
+          )}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="relative inline-flex items-center justify-center min-w-[44px] min-h-[44px] -mr-2 rounded-lg hover:bg-surface"
@@ -320,7 +360,7 @@ export default function Header() {
               <NoutatiCount count={noutati.unreadCount} />
             </button>
           )}
-          {primaryLinks.map((link) => (
+          {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -347,7 +387,7 @@ export default function Header() {
           <p className="text-xs font-semibold text-gray-400 px-3 pt-4 pb-1 border-t border-border mt-2">
             Mai multe
           </p>
-          {moreLinks.map((link) => (
+          {navMoreLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
