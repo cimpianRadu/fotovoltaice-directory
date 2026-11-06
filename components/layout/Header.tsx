@@ -47,7 +47,7 @@ const moreLinks = [
 // cererile, noutățile și contul (feedback de la un instalator, 6 nov 2026).
 // Restul site-ului rămâne la un click, în „Mai multe".
 const firmPrimaryLinks: { href: string; label: string; badge?: string }[] = [
-  { href: '/cereri', label: 'Cereri noi' },
+  { href: '/cereri', label: 'Cereri Clienți' },
   { href: '/ghid', label: 'Ghiduri' },
 ];
 
@@ -135,11 +135,9 @@ export default function Header() {
   return (
     <header ref={headerRef} className="sticky top-0 z-50 bg-white border-b border-border">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-        {/* Pentru firma logată „acasă" e portalul: acolo îi sunt cererile. */}
-        <Link
-          href={portalLoggedIn ? '/portal' : '/'}
-          className="flex items-center gap-2 font-bold text-lg text-secondary-dark shrink-0"
-        >
+        {/* Logoul duce pe prima pagină și pentru firma logată: în portal intră
+            din „Contul firmei" (Radu, 6 nov 2026). */}
+        <Link href="/" className="flex items-center gap-2 font-bold text-lg text-secondary-dark shrink-0">
           <Image src="/logo.svg" alt="Instalatori Fotovoltaice" width={32} height={32} className="w-8 h-8" />
           {/* Între lg și xl textul logo-ului dispare — nav-ul are prioritate */}
           <span className="hidden sm:inline lg:hidden xl:inline whitespace-nowrap">Instalatori Fotovoltaice</span>

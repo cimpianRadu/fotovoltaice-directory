@@ -23,7 +23,7 @@
   {
     "data": "2026-11-06",
     "titlu": "Meniu mai simplu cât ești conectat",
-    "text": "Cât ești conectat, meniul site-ului are doar cererile noi, noutățile și contul firmei. Logoul te duce direct în portal, la cererile tale.",
+    "text": "Cât ești conectat, meniul site-ului are doar cererile clienților, ghidurile, noutățile și contul firmei. Restul paginilor sunt în „Mai multe”.",
     "link": "/portal",
     "linkText": "Deschide portalul"
   },
