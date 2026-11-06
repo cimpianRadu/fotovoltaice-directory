@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import AccountLeadView from '@/components/cont/AccountLeadView';
+import LeadDetailsChecklist from '@/components/cont/LeadDetailsChecklist';
 import { getAccountLead, loadAccountLead } from '@/lib/client-account';
+import { getLeadLocation } from '@/lib/lead-location';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,6 +22,7 @@ export default async function AdminClientViewPage({ params }: Props) {
   const lead = await getAccountLead(decodeURIComponent(id));
   if (!lead) notFound();
   const data = await loadAccountLead(lead);
+  const location = await getLeadLocation(lead.timestamp).catch(() => null);
 
   return (
     <div>
@@ -33,7 +36,20 @@ export default async function AdminClientViewPage({ params }: Props) {
         </Link>
       </div>
       <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-slate-200 bg-white p-4 sm:p-8">
-        <AccountLeadView data={data} demo />
+        <AccountLeadView
+          data={data}
+          demo
+          details={
+            <LeadDetailsChecklist
+              leadId={lead.timestamp}
+              token=""
+              photoCount={Number(lead.poze.match(/\d+/)?.[0]) || 0}
+              adresa={location?.adresa ?? ''}
+              coordonate={location?.coordonate ?? ''}
+              demo
+            />
+          }
+        />
       </div>
     </div>
   );

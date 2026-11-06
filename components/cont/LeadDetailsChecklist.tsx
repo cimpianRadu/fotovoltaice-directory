@@ -29,6 +29,7 @@ export default function LeadDetailsChecklist({
   photoCount: initialPhotoCount,
   adresa: initialAdresa,
   coordonate: initialCoordonate,
+  demo = false,
 }: {
   leadId: string;
   /** Tokenul de detalii (lib/lead-photos), emis de pagină după verificarea sesiunii. */
@@ -36,6 +37,8 @@ export default function LeadDetailsChecklist({
   photoCount: number;
   adresa: string;
   coordonate: string;
+  /** Previzualizarea din /admin: aceeași pagină, dar nimic nu se încarcă sau salvează. */
+  demo?: boolean;
 }) {
   // Bifele se aprind pe loc, nu după reîncărcare. `photoCount` rămâne cel de
   // la încărcarea paginii: e plafonul pe care îl știe LeadPhotoUpload, care își
@@ -73,6 +76,7 @@ export default function LeadDetailsChecklist({
         </span>
       </div>
 
+      <fieldset disabled={demo} className="m-0 min-w-0 border-0 p-0">
       <ul className="mt-4 divide-y divide-border border-t border-border">
         <li className="py-4">
           <div className="flex items-start gap-3">
@@ -143,6 +147,7 @@ export default function LeadDetailsChecklist({
           </div>
         </li>
       </ul>
+      </fieldset>
     </section>
   );
 }
