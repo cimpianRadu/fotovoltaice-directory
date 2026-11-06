@@ -3,11 +3,14 @@
 // Locul lucrării, opțional, după trimiterea cererii și din contul clientului.
 // Stă după submit din același motiv ca pozele: un câmp în plus în formular
 // pierde cereri, iar o cerere fără adresă e tot o cerere. Omul poate scrie
-// adresa sau poate lua locația telefonului, dacă e acasă.
+// adresa sau poate lua locația dispozitivului, dacă e acolo.
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
 import { LEAD_ADDRESS_MAX, formatCoords, satelliteMapUrl } from '@/lib/lead-location-shared';
+
+/** Peste atât (raza raportată de browser), locația nu arată acoperișul potrivit. */
+const MAX_ACCURACY_M = 100;
 
 export const LOCATION_CARD_CLASS = 'rounded-xl border border-border bg-white p-5 sm:p-6';
 
@@ -67,8 +70,16 @@ export default function LeadLocationField({
     setLocating(true);
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        setCoordonate(formatCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude }));
         setLocating(false);
+        // Pe laptop locația vine din wifi sau, mai rău, din IP: poate fi la
+        // kilometri. Peste ~100 m firma s-ar uita din satelit la altă casă.
+        if (pos.coords.accuracy > MAX_ACCURACY_M) {
+          setError(
+            `Locația primită e prea aproximativă (±${Math.round(pos.coords.accuracy)} m). Scrieți adresa mai sus.`,
+          );
+          return;
+        }
+        setCoordonate(formatCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude }));
       },
       () => {
         setLocating(false);
@@ -128,7 +139,7 @@ export default function LeadLocationField({
       <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
         {coordonate ? (
           <span className="text-emerald-700">
-            ✓ Locația de pe telefon e adăugată{' '}
+            ✓ Locația e adăugată{' '}
             <button
               type="button"
               onClick={() => setCoordonate('')}
@@ -144,7 +155,7 @@ export default function LeadLocationField({
             disabled={locating}
             className="text-primary-dark underline hover:no-underline disabled:opacity-60"
           >
-            {locating ? 'Se caută locația...' : 'Sunt acum acolo: folosește locația telefonului'}
+            {locating ? 'Se caută locația...' : 'Sunt acum acolo: folosește locația mea'}
           </button>
         )}
       </div>

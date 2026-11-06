@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     const raw = typeof body.coordonate === 'string' ? body.coordonate : '';
     const coords = raw ? parseCoords(raw) : null;
     if (raw && !coords) {
-      return NextResponse.json({ error: 'Locația de pe telefon nu e validă.' }, { status: 400 });
+      return NextResponse.json({ error: 'Locația nu e validă.' }, { status: 400 });
     }
 
     const coordonate = coords ? formatCoords(coords) : '';

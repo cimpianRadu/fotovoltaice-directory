@@ -31,7 +31,7 @@ export default function PoliticaConfidentialitate() {
             <strong>Formularul &quot;Cere Ofertă&quot;:</strong> nume, email, telefon, descrierea proiectului,
             locație (județ, oraș). Opțional, după trimitere sau din contul de client: poze cu
             acoperișul și tabloul electric și adresa montajului (scrisă de dumneavoastră sau luată
-            din locația telefonului, doar dacă apăsați butonul și o permiteți). Pozele și adresa le
+            din locația dispozitivului, doar dacă apăsați butonul și o permiteți). Pozele și adresa le
             vede doar firma care preia cererea, ca să vă facă oferta; nu apar pe site. Adresa o
             puteți modifica sau șterge oricând din contul de client
           </li>
