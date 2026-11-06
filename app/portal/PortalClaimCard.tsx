@@ -9,7 +9,12 @@ import PortalOfferBox from './PortalOfferBox';
 import Button from '@/components/ui/Button';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 import { trackEvent } from '@/lib/analytics';
-import { MIN_OTHER_REASON_LENGTH, RELEASE_REASONS } from '@/lib/portal-release-reasons';
+import {
+  MIN_OTHER_REASON_LENGTH,
+  RELEASE_REASONS,
+  type ClosedLeadNotice,
+  type ReleaseReasonId,
+} from '@/lib/portal-release-reasons';
 import {
   CLAIM_STATUSES,
   CLAIM_STATUS_HINTS,
@@ -55,6 +60,8 @@ export interface PortalClaim {
   pozeCount: number;
   /** Are poze, chiar dacă nu știm câte: moștenirea cu link sau cu poze pe email. */
   cuPoze: boolean;
+  /** Cererea s-a închis cât firma încă o avea în lucru. Null pe cele deschise. */
+  leadClosed: ClosedLeadNotice | null;
   /** Zile de la ultima mișcare a firmei. `null` = n-a mișcat nimic de la revendicare. */
   updatedDays: number | null;
   /** „Mai lucrezi la ea?”. Calculat pe server, o dată la încărcarea paginii. */
@@ -344,6 +351,12 @@ export default function PortalClaimCard({
       setReleaseError('Alege motivul.');
       return;
     }
+    await sendRelease(motivId as ReleaseReasonId, detalii);
+  }
+
+  // Din formular sau, pe cererile închise de client, direct din banner: motivul
+  // e deja știut, firma doar confirmă că o scoate din lucru.
+  async function sendRelease(id: ReleaseReasonId, details: string) {
     setReleaseBusy(true);
     setReleaseError(null);
     try {
@@ -353,8 +366,8 @@ export default function PortalClaimCard({
         body: JSON.stringify({
           claimTimestamp: claim.claimTimestamp,
           leadId: claim.leadId,
-          motivId,
-          detalii,
+          motivId: id,
+          detalii: details,
         }),
       });
       const json = await res.json().catch(() => ({}));
@@ -362,7 +375,7 @@ export default function PortalClaimCard({
         setReleaseError(json.error || 'A apărut o eroare. Încearcă din nou.');
         return;
       }
-      trackEvent('portal_claim_released', { sursa, motiv: motivId });
+      trackEvent('portal_claim_released', { sursa, motiv: id, inchisa: Boolean(claim.leadClosed) });
       onPatch({ releasedAt: new Date().toISOString(), firmStatus: 'pierdut', updatedDays: 0 });
       setJustReleased(true);
       setReleaseOpen(false);
@@ -533,6 +546,26 @@ export default function PortalClaimCard({
         </p>
       )}
       {statusError && <p className="mt-2 text-xs text-red-600">{statusError}</p>}
+
+      {/* Cererea s-a închis cât firma o avea în lucru: spus clar, pe rândul
+          închis, cu ieșirea dintr-un click. Firma a primit și email. */}
+      {claim.leadClosed && !released && (
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-lg border border-gray-300 bg-gray-50 px-3 py-2.5">
+          <p className="text-sm text-gray-800">
+            <span className="font-semibold">Cererea s-a închis.</span> {claim.leadClosed.text} Nu mai e nevoie
+            să suni.
+          </p>
+          <button
+            type="button"
+            disabled={releaseBusy}
+            onClick={() => claim.leadClosed && void sendRelease(claim.leadClosed.motivId, '')}
+            className="shrink-0 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-800 hover:border-gray-400 disabled:opacity-60"
+          >
+            {releaseBusy ? 'Se scoate...' : 'Scoate-o din lucru'}
+          </button>
+          {releaseError && !releaseOpen && <p className="w-full text-xs text-red-600">{releaseError}</p>}
+        </div>
+      )}
 
       {releaseOpen && !released && (
         <form onSubmit={release} className="mt-3 space-y-2 rounded-lg border border-border bg-surface p-3">

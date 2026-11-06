@@ -22,6 +22,34 @@ export type ReleaseReasonId = (typeof RELEASE_REASONS)[number]['id'];
 /** Sub atât, textul de la „Alt motiv" nu spune nimic. */
 export const MIN_OTHER_REASON_LENGTH = 10;
 
+export interface ClosedLeadNotice {
+  /** Ce s-a întâmplat, spus explicit, pe rândul din portal. */
+  text: string;
+  /** Motivul cu care „Scoate-o din lucru" eliberează locul, fără să mai întrebe. */
+  motivId: ReleaseReasonId;
+}
+
+/**
+ * Cererea s-a închis (de client sau de noi) cât firma o mai avea în lucru.
+ * Null pe cererile deschise și pe firma care a semnat chiar ea.
+ */
+export function closedLeadNotice(crmStatus: string, firmStatus: string): ClosedLeadNotice | null {
+  switch (crmStatus) {
+    case 'castigata':
+      return firmStatus === 'castigat'
+        ? null
+        : { text: 'Clientul a semnat cu altă firmă de pe platformă.', motivId: 'ales_alta' };
+    case 'altundeva':
+      return { text: 'Clientul a ales altă firmă.', motivId: 'ales_alta' };
+    case 'renuntat':
+      return { text: 'Clientul nu mai face lucrarea.', motivId: 'renunta' };
+    case 'inactiva':
+      return { text: 'Clientul nu a mai răspuns la emailurile noastre.', motivId: 'nu_raspunde' };
+    default:
+      return null;
+  }
+}
+
 /**
  * Motivul ca text, cum ajunge în Sheets și în emailul de renunțare:
  * eticheta, apoi detaliile firmei, dacă a scris. Null dacă nu e valid.

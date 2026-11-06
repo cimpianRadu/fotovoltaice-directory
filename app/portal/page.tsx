@@ -23,6 +23,7 @@ import {
 } from '@/lib/sheets';
 import { informezMotiv } from '@/lib/lead-alerts';
 import { satelliteMapUrl } from '@/lib/lead-location-shared';
+import { closedLeadNotice } from '@/lib/portal-release-reasons';
 import { getLeadLocations, type LeadLocation } from '@/lib/lead-location';
 import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
@@ -228,6 +229,9 @@ export default async function PortalPage() {
         return {
           pozeCount: photosByLead.get(c.leadId)?.length || 0,
           cuPoze: photosByLead.has(c.leadId) || Boolean(lead?.poze.trim()),
+          // Închisă de client (sau de noi) cât firma o mai avea: rândul o spune
+          // și o scoate din lucru dintr-un click, vezi closedLeadNotice.
+          leadClosed: lead && !c.releasedAt ? closedLeadNotice(lead.crmStatus, c.firmStatus) : null,
           updatedDays: moved ? calendarAgeDays(new Date(lastMoveAt).toISOString()) : null,
           // Fără `lead_history` nu știm dacă statusul s-a mutat: mai bine nu
           // întrebăm nimic decât să întrebăm o firmă care tocmai l-a schimbat.

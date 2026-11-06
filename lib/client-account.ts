@@ -47,6 +47,7 @@ import { bucharestStamp } from './portal-session';
 import { judetSiVecini } from './judete-vecine';
 import { countyAlertPayloadFromLead } from './lead-alerts';
 import { escapeHtml, sendEmail, sendCountyLeadAlert } from './email';
+import { notifyFirmsClientClosed } from './lead-closed-firms';
 import { getLeadClickStats } from './lead-clicks';
 import { logLeadSends } from './lead-sends';
 import { offersForLead, type OfferForClient } from './oferte';
@@ -602,6 +603,7 @@ export async function closeFromAccount(lead: NewLead, req: CloseRequest): Promis
       : `Din contul clientului: a ales ${name ? `firma „${name}”` : 'o firmă, fără să spună care'}. De verificat dacă e una de la noi.`;
     await updateLeadCrm(lead.timestamp, { status: ours ? 'castigata' : 'altundeva', note, by: 'client', ...bucharestStamp() });
     revalidatePath('/cereri');
+    await notifyFirmsClientClosed(lead, ours ? 'castigata' : 'altundeva', ours?.timestamp);
     await sendEmail({
       to: INTERNAL_TO,
       subject: ours ? `[Ales, din cont] ${lead.judet}: ${name}` : `[Altă firmă, din cont] ${lead.judet}`,
@@ -621,6 +623,7 @@ export async function closeFromAccount(lead: NewLead, req: CloseRequest): Promis
   await recordClientResponse(lead.timestamp, 'renunt', at);
   await updateLeadCrm(lead.timestamp, { status: 'renuntat', note, by: 'client', ...bucharestStamp() });
   revalidatePath('/cereri');
+  await notifyFirmsClientClosed(lead, 'renuntat');
   if (labels.length || altceva) {
     await sendEmail({
       to: INTERNAL_TO,

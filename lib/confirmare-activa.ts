@@ -37,6 +37,7 @@ import {
 } from './sheets';
 import { isValidEmail } from './portal-auth';
 import { escapeHtml, PORTAL_BASE_URL, sendEmail } from './email';
+import { notifyFirmsClientClosed } from './lead-closed-firms';
 import { sendActiveCheckEmail } from './email-client';
 import { CONTACTED_STATUSES, claimedFirmsFor, responseAfter } from './verificare-status';
 import { ACTIVA_TERMEN_OPTIONS, optionLabel, type ResponseDetails } from './client-response-details';
@@ -240,6 +241,7 @@ export async function closeLeadChosenFirm(lead: NewLead, firma: string, firmaCla
     ...nowBucharest(now),
   });
   revalidatePath('/cereri');
+  await notifyFirmsClientClosed(lead, ours ? 'castigata' : 'altundeva', ours?.claimTs);
   // Singura confirmare de concretizare care nu vine de la firmă: să nu se piardă în Sheet.
   // Rezumatul și linkul spre fișă: din timestamp + telefon nu-ți amintești despre ce cerere e.
   const crmHref = `${PORTAL_BASE_URL}/admin/crm?filtru=toate#${encodeURIComponent(lead.timestamp)}`;

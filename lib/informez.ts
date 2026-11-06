@@ -42,6 +42,7 @@ import {
 } from './sheets';
 import { isValidEmail } from './portal-auth';
 import { escapeHtml, sendCountyLeadAlert, sendEmail, sendWatchActivatedEmail } from './email';
+import { notifyFirmsClientClosed } from './lead-closed-firms';
 import { logLeadSends } from './lead-sends';
 import { RENUNT_REASON_OPTIONS, optionLabel, type ResponseDetails } from './client-response-details';
 import {
@@ -162,6 +163,7 @@ export async function closeLeadByClient(lead: NewLead, details: ResponseDetails 
   await recordClientResponse(lead.timestamp, 'renunt');
   await updateLeadCrm(lead.timestamp, { status: 'renuntat', note, by: 'client', ...nowBucharest(now) });
   revalidatePath('/cereri');
+  await notifyFirmsClientClosed(lead, 'renuntat');
   // Fără motiv nu e nimic de citit. Cu motiv, mai ales „nu m-a sunat nicio
   // firmă", e o problemă a platformei care altfel s-ar închide ca renunțare.
   if (!motive.length && !details.altceva) return;

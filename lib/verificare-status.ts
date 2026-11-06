@@ -37,6 +37,7 @@ import type { ClaimStatus, LeadStatus } from './sheets-shared';
 import { CLAIM_STATUS_LABELS } from './sheets-shared';
 import { isValidEmail } from './portal-auth';
 import { escapeHtml, sendEmail } from './email';
+import { notifyFirmsClientClosed } from './lead-closed-firms';
 import { sendStatusCheckEmail } from './email-client';
 import { getCompanies } from './utils';
 import { DECID_HELP_OPTIONS, describeFirmContacts, optionLabel, type ResponseDetails } from './client-response-details';
@@ -259,6 +260,9 @@ export async function recordStatusResponse(
 
   await updateLeadCrm(lead.timestamp, { ...(status ? { status } : {}), note, by: 'client', ...when });
   if (status) revalidatePath('/cereri');
+  if (status === 'castigata' || status === 'altundeva' || status === 'renuntat') {
+    await notifyFirmsClientClosed(lead, status, status === 'castigata' ? opts.claimTs : '');
+  }
 
   await sendEmail({
     to: INTERNAL_TO,
