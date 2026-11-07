@@ -779,8 +779,8 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 - **Status:** ✅ publicat **2026-11-05** (rutina de joi). Detalii în „✅ Publicate recent”.
 - **Cluster:** `kit panouri fotovoltaice 5 kw pret cu montaj` 720/lună (greenlead poz. 10), `panouri fotovoltaice 5 kw pret cu montaj` 140 (greenlead 7), `cat costa o instalatie de panouri fotovoltaice de 5 kw` 140 (greenlead 17), `sistem fotovoltaic 5 kw pret` 50.
 
-#### #81 — Panouri Fotovoltaice Second Hand 2026: Merită? Riscuri, Garanție, Ce Verifici
-- **Status:** 💡 idee
+#### ~~#81~~ — Panouri Fotovoltaice Second Hand 2026: Merită? Riscuri, Garanție, Ce Verifici ✅ PUBLICAT 2026-11-07 → [/ghid/panouri-fotovoltaice-second-hand-2026-merita-riscuri-garantie](/ghid/panouri-fotovoltaice-second-hand-2026-merita-riscuri-garantie)
+- **Status:** ✅ publicat **2026-11-07** (rutina de sâmbătă). Detalii în „✅ Publicate recent”. SERP live 7 nov: greenlead pe 4 (articol din 16 iun 2026), editorial și elco-giurgiu (6 oct 2026), sunprojekt, Newsweek (iun 2025); restul OLX, eSolar, Okazii, Facebook, YouTube.
 - **Cluster:** `panouri fotovoltaice second hand` 260/lună (greenlead poz. 3).
 - **Poartă SERP (2 nov):** pagina 1 e mai ales OLX, Facebook și magazine; editorial sunt doar Newsweek (iunie 2025) și un blog din 2018. Trece, cu ținta pe „merită?”, riscuri și ce verifici, nu pe cumpărare.
 - **Never-invent:** garanții și degradare doar din fișele producătorilor; regulile programelor despre echipamente noi doar din ghidurile oficiale.
@@ -1571,6 +1571,12 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Panouri Fotovoltaice Second Hand 2026: Merită? Ce Verifici
+- **Publicat:** 2026-11-07 (rutina de sâmbătă, #81 din batch-ul greenlead) → [/ghid/panouri-fotovoltaice-second-hand-2026-merita-riscuri-garantie](/ghid/panouri-fotovoltaice-second-hand-2026-merita-riscuri-garantie)
+- **Conținut:** 12 secțiuni + 9 FAQ, ~4.600 de cuvinte. Prețuri citite pe 7 nov: OLX 0,50-0,68 lei/W (module 220-245 W) față de Hornbach 1,01-1,07 lei/W (445-505 W); la 5 kW, ~2.310 lei economie la panouri, cu 22 de module în loc de 11. Garanții citite din documentele LONGi Hi-MO X6 (25.03.2024, art. 6) și Yingli (rev. 17.06.2024): transferul ține doar dacă modulele rămân pe amplasamentul inițial. Garanția legală din OUG 140/2021 art. 9 alin. 5 (minimum 1 an la produse de ocazie, doar de la vânzător profesionist). Degradare NREL 0,5% mediană / 0,8% medie.
+- **Diferențiator față de greenlead:** clauzele de transfer citate din documentele producătorilor, calculul pe watt și la 5 kW, OUG 140/2021 pentru OLX vs firmă.
+- **Cluster GSC de urmărit (DataForSEO):** `panouri fotovoltaice second hand` 260/lună (greenlead 3 în Labs, 4 live pe 7 nov); related din SERP: `... second hand pret`, `... olx`, `... forum`. Recheck CTR la 14/30 zile.
 
 ### Sistem Fotovoltaic 5 kW: Preț cu Montaj 2026, cu Baterie
 - **Publicat:** 2026-11-05 (rutina de joi, #80 din batch-ul greenlead) → [/ghid/sistem-fotovoltaic-5-kw-pret-cu-montaj-cu-fara-baterie-2026](/ghid/sistem-fotovoltaic-5-kw-pret-cu-montaj-cu-fara-baterie-2026)
