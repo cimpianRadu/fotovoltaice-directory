@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getPortalEmail } from '@/lib/portal-session';
-import { getClaimsForAccount, getFirmEmailGroup, getFullLeadById, releaseClaim } from '@/lib/sheets';
-import { sendClaimReleaseNotification } from '@/lib/email';
-import { getProjectTypeLabel } from '@/lib/utils-shared';
+import { getClaimsForAccount, getFirmEmailGroup, releaseClaim } from '@/lib/sheets';
 
 import { composeReleaseReason } from '@/lib/portal-release-reasons';
 
@@ -50,18 +48,9 @@ export async function POST(request: Request) {
     revalidatePath('/cereri');
     revalidatePath('/admin/crm');
 
-    // Fail-open: renunțarea e salvată chiar dacă emailul de notificare pică.
-    const lead = await getFullLeadById(leadId);
-    const leadSummary = lead
-      ? `${getProjectTypeLabel(lead.tipProiect)} · ${lead.judet}${lead.putere ? ` · ${lead.putere} kW` : ''}`
-      : leadId;
-    await sendClaimReleaseNotification({
-      numeFirma: claim.numeFirma,
-      email,
-      motiv,
-      leadSummary,
-      leadId,
-    });
+    // Fără email imediat către mine (9 nov 2026): renunțarea, cu motivul și cu
+    // „cererea a rămas fără firmă”, apare seara în rezumatul din
+    // cron/revendicari-zi. Pe 9 nov o singură firmă a făcut 6 într-o zi.
 
     return NextResponse.json({ ok: true, releasedAt: updated.releasedAt });
   } catch (err) {

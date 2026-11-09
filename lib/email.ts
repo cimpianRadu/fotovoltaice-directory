@@ -268,26 +268,19 @@ interface ClaimNotificationData {
   maxClaims: number;
   /** Are cont în portal, deci nu o mai sunăm: doar aprobăm (15 sept 2026). */
   firmHasPortalAccount?: boolean;
-  /**
-   * A mai trecut o dată prin apelul de confirmare, deci datele clientului i s-au
-   * deblocat automat la revendicare (18 sept 2026). Nu mai e nimic de apăsat.
-   */
-  firmConfirmed?: boolean;
 }
 
-// Notificare imediată (nu în digest) — o revendicare e time-sensitive: firma
-// așteaptă telefonul de confirmare cât interesul e cald.
+// Notificare imediată, doar când revendicarea cere un apel: prima revendicare a
+// unei firme încă neconfirmate, cât interesul e cald. Revendicările firmelor
+// deja confirmate (92 din 108 în oct–nov 2026) nu cer nimic și intră în
+// rezumatul de seară (`sendClaimsDailyDigest`), ca să nu ardă cota Resend.
 export async function sendClaimNotification(data: ClaimNotificationData): Promise<void> {
   const to = process.env.LISTING_NOTIFICATION_EMAIL || 'radu.cimpian94@gmail.com';
-  const { claim, lead, claimCount, maxClaims, firmHasPortalAccount, firmConfirmed } = data;
+  const { claim, lead, claimCount, maxClaims, firmHasPortalAccount } = data;
   const full = claimCount >= maxClaims;
 
-  // Prima linie din email e ce ai de făcut cu revendicarea asta. Trei cazuri:
-  // firmă deja confirmată (nimic de făcut, datele au plecat), firmă nouă cu
-  // cont, firmă nouă fără cont. Apelul rămâne doar la prima revendicare.
-  const actionLine = firmConfirmed
-    ? '<div style="margin:0 0 14px;padding:9px 12px;border-radius:8px;background:#ecfdf5;border:1px solid #a7f3d0;font-size:13px;color:#065f46"><strong>Firmă deja confirmată — nimic de făcut.</strong> Datele clientului i s-au deblocat automat în portal.</div>'
-    : firmHasPortalAccount
+  // Prima linie din email e apelul de făcut: firmă nouă cu cont sau fără cont.
+  const actionLine = firmHasPortalAccount
     ? '<div style="margin:0 0 14px;padding:9px 12px;border-radius:8px;background:#fffbeb;border:1px solid #fde68a;font-size:13px;color:#92400e"><strong>Prima revendicare a firmei (are cont) — sun-o o dată.</strong> După apel, aprobă din /admin/crm; de la a doua cerere se deblochează singură. Până suni, îți apare în emailul „de sunat azi".</div>'
     : '<div style="margin:0 0 14px;padding:9px 12px;border-radius:8px;background:#fffbeb;border:1px solid #fde68a;font-size:13px;color:#92400e"><strong>Prima revendicare a firmei — sun-o pentru confirmare.</strong> După apel, aprobă din /admin/crm; de la a doua cerere se deblochează singură. Până suni, îți apare în emailul „de sunat azi".</div>';
 
@@ -331,7 +324,7 @@ export async function sendClaimNotification(data: ClaimNotificationData): Promis
       </table>
     </div>
     <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280">
-      ${firmConfirmed ? 'Deblocată automat, fără apel.' : 'Sună firma pentru confirmare, apoi aprobă.'} Salvat în tabul „Revendicări".${full ? ' Cererea e acum marcată Complet pe /cereri.' : ''}
+      Sună firma pentru confirmare, apoi aprobă. Salvat în tabul „Revendicări".${full ? ' Cererea e acum marcată Complet pe /cereri.' : ''}
     </div>
   </div>
 </body>
@@ -470,47 +463,149 @@ export async function sendPortalLoginEmail(data: {
 }
 
 /**
- * Notificare către noi când o firmă renunță la o revendicare din portal —
- * clientul rămâne fără firmă pe locul eliberat, deci trebuie sunat.
+ * Rezumatul de seară către MINE (9 nov 2026): revendicările și renunțările din
+ * ultimele 24 de ore, într-un singur email. Înainte fiecare pleca separat, iar
+ * pe 9 nov ele singure au fost cam o șeptime din cota zilnică Resend (100/zi,
+ * comună cu clinici-estetice și dentist-online). Prima revendicare a unei firme
+ * neconfirmate pleacă în continuare și imediat (`sendClaimNotification`),
+ * pentru că cere un apel; aici apare doar ca să fie lista întreagă.
  */
-export async function sendClaimReleaseNotification(data: {
+export interface ClaimsDigestClaim {
+  at: string;
   numeFirma: string;
-  email: string;
-  motiv: string;
-  leadSummary: string;
   leadId: string;
-}): Promise<void> {
-  const to = process.env.LISTING_NOTIFICATION_EMAIL || 'radu.cimpian94@gmail.com';
+  leadSummary: string;
+  /** Datele clientului s-au deblocat (firmă confirmată sau aprobată după apel). */
+  approved: boolean;
+}
 
+export interface ClaimsDigestRelease {
+  at: string;
+  /** Când a revendicat, ca să se vadă cât a ținut-o. */
+  claimedAt: string;
+  numeFirma: string;
+  leadId: string;
+  leadSummary: string;
+  motiv: string;
+  /** Nicio altă firmă nu mai ține cererea: clientul a rămas fără firmă. */
+  leadWithoutFirm: boolean;
+}
+
+function fmtHour(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleTimeString('ro-RO', { timeZone: 'Europe/Bucharest', hour: '2-digit', minute: '2-digit' });
+}
+
+function fmtHeld(fromIso: string, toIso: string): string {
+  const min = Math.round((new Date(toIso).getTime() - new Date(fromIso).getTime()) / 60000);
+  if (!Number.isFinite(min) || min < 0) return '';
+  if (min < 60) return min <= 1 ? 'după un minut' : `după ${min} min`;
+  const h = Math.round(min / 60);
+  if (h < 48) return h === 1 ? 'după o oră' : `după ${h} ore`;
+  return `după ${Math.round(h / 24)} zile`;
+}
+
+function plural(n: number, one: string, many: string): string {
+  return n === 1 ? `o ${one}` : `${n} ${many}`;
+}
+
+function count(n: number, one: string, many: string): string {
+  return `${n} ${n === 1 ? one : many}`;
+}
+
+export function renderClaimsDailyDigest(data: {
+  claims: ClaimsDigestClaim[];
+  releases: ClaimsDigestRelease[];
+}): { subject: string; html: string } {
+  const { claims, releases } = data;
+  const adminLink = (leadId: string) => `${PORTAL_BASE_URL}/admin/cereri/${encodeURIComponent(leadId)}`;
+
+  // Pe firme, cu cele care renunță mult primele: tiparul „revendică și lasă
+  // după câteva minute” se vede de aici, nu din lista lungă.
+  const perFirm = new Map<string, { claims: number; releases: number }>();
+  for (const c of claims) {
+    const f = perFirm.get(c.numeFirma) ?? { claims: 0, releases: 0 };
+    f.claims++;
+    perFirm.set(c.numeFirma, f);
+  }
+  for (const r of releases) {
+    const f = perFirm.get(r.numeFirma) ?? { claims: 0, releases: 0 };
+    f.releases++;
+    perFirm.set(r.numeFirma, f);
+  }
+  const firmRows = [...perFirm.entries()]
+    .sort((a, b) => b[1].releases - a[1].releases || b[1].claims - a[1].claims)
+    .map(
+      ([firma, f]) => `<tr>
+        <td style="padding:4px 12px 4px 0;font-size:13px;color:#111827">${escapeHtml(firma)}</td>
+        <td style="padding:4px 12px 4px 0;font-size:13px;color:#374151;white-space:nowrap">${count(f.claims, 'revendicare', 'revendicări')}</td>
+        <td style="padding:4px 0;font-size:13px;white-space:nowrap;color:${f.releases >= 2 ? '#b91c1c' : '#374151'}">${count(f.releases, 'renunțare', 'renunțări')}</td>
+      </tr>`,
+    )
+    .join('');
+
+  const claimCards = claims
+    .map(
+      (c) => `<div style="padding:10px 0;border-bottom:1px solid #f1f5f9">
+        <div style="font-size:14px;color:#111827"><span style="color:#6b7280">${fmtHour(c.at)}</span> · <strong>${escapeHtml(c.numeFirma)}</strong></div>
+        <div style="font-size:13px;margin-top:2px"><a href="${adminLink(c.leadId)}" style="color:#2563eb">${escapeHtml(c.leadSummary)}</a></div>
+        <div style="font-size:12px;margin-top:2px;color:${c.approved ? '#065f46' : '#92400e'}">${c.approved ? 'date deblocate' : 'așteaptă apelul de confirmare (ți-a venit emailul separat)'}</div>
+      </div>`,
+    )
+    .join('');
+
+  const releaseCards = releases
+    .map(
+      (r) => `<div style="padding:10px 0;border-bottom:1px solid #f1f5f9">
+        <div style="font-size:14px;color:#111827"><span style="color:#6b7280">${fmtHour(r.at)}</span> · <strong>${escapeHtml(r.numeFirma)}</strong> <span style="color:#6b7280;font-size:12px">${fmtHeld(r.claimedAt, r.at)}</span></div>
+        <div style="font-size:13px;margin-top:2px"><a href="${adminLink(r.leadId)}" style="color:#2563eb">${escapeHtml(r.leadSummary)}</a></div>
+        <div style="font-size:13px;margin-top:4px;color:#374151;white-space:pre-wrap"><strong>Motiv:</strong> ${escapeHtml(r.motiv)}</div>
+        ${r.leadWithoutFirm ? '<div style="font-size:12px;margin-top:3px;color:#b91c1c;font-weight:600">cererea a rămas fără nicio firmă</div>' : ''}
+      </div>`,
+    )
+    .join('');
+
+  const section = (title: string, body: string) =>
+    body
+      ? `<div style="font-size:12px;color:#6b7280;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin:20px 0 4px">${title}</div>${body}`
+      : '';
+
+  const headline = `${plural(claims.length, 'revendicare', 'revendicări')}, ${plural(releases.length, 'renunțare', 'renunțări')}`;
   const html = `<!DOCTYPE html>
 <html>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f4f6;margin:0;padding:24px">
   <div style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden">
-    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#fef2f2">
-      <div style="font-size:12px;color:#b91c1c;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">Renunțare la revendicare</div>
-      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${escapeHtml(data.numeFirma)}</h1>
+    <div style="padding:20px 24px;border-bottom:1px solid #e5e7eb;background:#fffbeb">
+      <div style="font-size:12px;color:#92400e;font-weight:600;letter-spacing:0.05em;text-transform:uppercase">Rezumatul zilei · ultimele 24 de ore</div>
+      <h1 style="margin:6px 0 0;font-size:19px;color:#111827">${headline}</h1>
     </div>
-    <div style="padding:20px 24px">
-      <p style="font-size:14px;color:#374151;margin:0 0 12px">${escapeHtml(data.leadSummary)}</p>
-      <div style="padding:12px;background:#f9fafb;border-radius:8px;font-size:13px;color:#374151;white-space:pre-wrap"><strong>Motiv:</strong> ${escapeHtml(data.motiv)}</div>
-      <p style="font-size:12px;color:#6b7280;margin:12px 0 0">Firma: ${escapeHtml(data.email)} · Lead: ${escapeHtml(data.leadId)}</p>
+    <div style="padding:8px 24px 20px">
+      ${perFirm.size ? `<table style="border-collapse:collapse;margin-top:12px">${firmRows}</table>` : ''}
+      ${section('Renunțări', releaseCards)}
+      ${section('Revendicări', claimCards)}
     </div>
     <div style="padding:14px 24px;background:#f9fafb;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280">
-      Locul s-a eliberat pe /cereri. Verifică dacă clientul trebuie sunat sau realocat.
+      Revendicările care cer un apel îți vin și imediat, separat. Tot restul e aici, o dată pe zi.
     </div>
   </div>
 </body>
 </html>`;
 
-  const result = await sendEmail({
-    to,
-    subject: `Renunțare: ${data.numeFirma} · ${data.leadSummary}`,
-    html,
-  });
+  return { subject: `Rezumatul zilei: ${headline}`, html };
+}
 
+export async function sendClaimsDailyDigest(data: {
+  claims: ClaimsDigestClaim[];
+  releases: ClaimsDigestRelease[];
+}): Promise<{ ok: boolean; reason?: string }> {
+  const to = process.env.LISTING_NOTIFICATION_EMAIL || 'radu.cimpian94@gmail.com';
+  const { subject, html } = renderClaimsDailyDigest(data);
+  const result = await sendEmail({ to, subject, html });
   if (!result.ok) {
-    console.warn('[email] Release notification not sent:', result.reason);
+    console.warn('[email] Claims daily digest not sent:', result.reason);
   }
+  return result;
 }
 
 /**

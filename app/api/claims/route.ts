@@ -271,7 +271,9 @@ export async function POST(request: Request) {
     revalidatePath('/cereri');
 
     // Fail-open: revendicarea e salvată chiar dacă emailul pică (fără RESEND_API_KEY etc.)
-    await sendClaimNotification({
+    // Doar prima revendicare a unei firme neconfirmate îmi vine imediat, pentru
+    // că cere un apel. Restul le văd seara, în rezumatul din cron/revendicari-zi.
+    if (!firmConfirmed) await sendClaimNotification({
       claim,
       lead: {
         numeCompanie: lead.numeCompanie,
@@ -295,7 +297,6 @@ export async function POST(request: Request) {
       claimCount,
       maxClaims: maxClaimsForLead(leadId),
       firmHasPortalAccount,
-      firmConfirmed,
     });
 
     // Ecranul de confirmare spune trei lucruri diferite: datele sunt deja în
