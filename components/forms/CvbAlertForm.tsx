@@ -2,7 +2,7 @@
 
 // Formular „anunță-mă când se deschide Casa Verde Baterii". Trăiește în
 // ghidurile CVB, lângă secțiunea de calendar: exact locul în care cititorul
-// află că sesiunea nu are dată și rămâne cu întrebarea „și atunci când?".
+// citește datele sesiunii (20–25 noiembrie 2026) și vrea să nu le rateze.
 //
 // Emailul e singurul câmp obligatoriu. Capacitatea dorită și brandul de
 // invertor sunt opționale, dar valoroase de două ori: pre-califică tehnic
@@ -79,7 +79,7 @@ export default function CvbAlertForm({ sursa }: { sursa: string }) {
       <div className="bg-emerald-50 rounded-xl border border-emerald-200 p-6 my-10 text-center">
         <p className="font-bold text-emerald-900">V-ați înscris.</p>
         <p className="text-sm text-emerald-900 mt-2 leading-relaxed">
-          Vă scriem un singur email, în ziua în care se anunță deschiderea sesiunii. Până atunci,
+          Vă scriem un singur email, în ziua în care se deschide sesiunea. Până atunci,
           actualizăm ghidul de fiecare dată când apare ceva oficial.
         </p>
       </div>
@@ -92,8 +92,8 @@ export default function CvbAlertForm({ sursa }: { sursa: string }) {
         Vă anunțăm când se deschide sesiunea
       </h3>
       <p className="text-sm text-gray-600 mt-2 mb-5 leading-relaxed">
-        Data înscrierilor nu e anunțată, iar sesiunile de acest fel se mișcă repede. Lăsați un
-        email și vă scriem în ziua în care apare anunțul oficial. Dacă ne spuneți și ce
+        Persoanele fizice se înscriu între 20 noiembrie, ora 10:00, și 25 noiembrie 2026, ora
+        23:59. Lăsați un email și vă scriem în ziua în care se deschide sesiunea. Dacă ne spuneți și ce
         capacitate vă interesează și ce invertor aveți, vă putem trimite direct informația care
         contează pentru instalația dumneavoastră.
       </p>

@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'Când se deschide sesiunea de înscrieri la Casa Verde Baterii?',
     answer:
-      'Nu are dată. Ordinul ministrului mediului nr. 1.904 din 11 septembrie 2026 a fost publicat în Monitorul Oficial nr. 775 din 14 septembrie 2026 (în vigoare 14.09.2026), dar AFM nu a comunicat perioada de înscriere. Procesul din ghid, art. 8: întâi sesiunea de validare a instalatorilor (informații → înscriere → validare → contestații → contracte → lista instalatorilor validați), apoi sesiunea solicitanților (care poate rula în paralel cu pașii a-e). La conferința „Energia în priză" din 21 septembrie 2026, ministra Mediului a spus că „ce lansăm anul acesta va putea să fie instalat anul viitor", deci instalarea efectivă e realist în 2027, nu în toamnă. Calculatorul folosește cifrele finale din ordin.',
+      'Persoanele fizice se înscriu între 20 noiembrie 2026, ora 10:00, și 25 noiembrie 2026, ora 23:59, prin aplicația AFM. Datele sunt fixate prin Dispoziția președintelui AFM nr. 454 din 6 noiembrie 2026, care alocă sesiunii 400 milioane lei. Instalatorii se validează înainte, între 16 noiembrie, ora 10:00, și 20 noiembrie 2026, ora 23:59. Ghidul e aprobat prin Ordinul ministrului mediului nr. 1.904 din 11 septembrie 2026, publicat în Monitorul Oficial nr. 775 din 14 septembrie 2026. Selecția se face pe punctaj după închiderea sesiunii, deci prima zi nu dă avantaj. Calculatorul folosește cifrele din ordin.',
   },
 ];
 
@@ -152,13 +152,13 @@ export default function CalculatorCasaVerdeBateriiPage() {
         </p>
 
         {/* Statusul programului stă deasupra uneltei, nu sub ea: cine intră aici
-            caută și răspunsul la „când se deschide", iar răspunsul onest e că
-            ordinul e publicat, dar sesiunea nu are dată. */}
+            caută și răspunsul la „când se deschide": datele din dispoziția AFM. */}
         <div className="mb-8 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-gray-800">
           <strong>Unde e programul acum:</strong> {ORDER_LABEL} (semnat pe {SIGNED_LABEL}) a fost
-          publicat în {MO_LABEL}, în vigoare din 14 septembrie 2026. AFM nu a comunicat perioada
-          de înscriere: art. 8 prevede întâi sesiunea de validare a instalatorilor, apoi cea a
-          solicitanților. Calculatorul folosește cifrele din ordin (art. 5, 6, 16, 19). Sursa:{' '}
+          publicat în {MO_LABEL}, în vigoare din 14 septembrie 2026. Persoanele fizice se înscriu
+          între <strong>20 noiembrie, ora 10:00, și 25 noiembrie 2026, ora 23:59</strong>, după
+          validarea instalatorilor din 16–20 noiembrie (Dispoziția președintelui AFM nr. 454 din 6
+          noiembrie 2026). Calculatorul folosește cifrele din ordin (art. 5, 6, 16, 19). Sursa:{' '}
           <a
             href={AFM_HREF}
             target="_blank"
@@ -313,8 +313,8 @@ export default function CalculatorCasaVerdeBateriiPage() {
           <p>
             <strong>Regulile finale.</strong> Ordinul e publicat: {ORDER_LABEL} (semnat pe{' '}
             {SIGNED_LABEL}) a apărut în {MO_LABEL}, în vigoare din 14 septembrie 2026. Cifrele
-            din calculator sunt cele din ordin. Ce lipsește e data sesiunii de înscriere: AFM
-            validează întâi instalatorii (art. 8), apoi deschide sesiunea solicitanților.
+            din calculator sunt cele din ordin. Înscrierea persoanelor fizice e între 20 și 25
+            noiembrie 2026 (Dispoziția președintelui AFM nr. 454 din 6 noiembrie 2026).
             Explicația articol cu articol, cu eligibilitate, dosar și termene, e în{' '}
             <Link href={GUIDE_HREF} className="text-primary-dark underline hover:no-underline">
               ghidul Casa Verde Baterii 2026

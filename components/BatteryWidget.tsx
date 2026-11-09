@@ -769,7 +769,7 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
           <p className="mt-2.5 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-amber-900">
             <b>Cifrele sunt din ordinul aprobat.</b> Ordinul ministrului mediului nr. 1.904/2026,
             publicat în Monitorul Oficial nr. 775 din 14 septembrie 2026 (în vigoare 14.09.2026),
-            art. 5, 6, 16 și 19. Data sesiunii de înscriere nu a fost comunicată de AFM.
+            art. 5, 6, 16 și 19. Înscrierea persoanelor fizice: 20–25 noiembrie 2026 (Dispoziția AFM nr. 454/2026).
           </p>
 
           <div className="mt-2.5 overflow-x-auto">
