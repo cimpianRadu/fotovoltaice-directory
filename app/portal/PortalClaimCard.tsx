@@ -235,6 +235,39 @@ function EllipsisLine({
   );
 }
 
+/** Ce stă pe card fără click: ce te ajută să suni și să estimezi oferta. */
+const KEY_SPECS = new Set([
+  'Vrea',
+  'Suprafață',
+  'Acoperiș',
+  'Alimentare',
+  'Baterie',
+  'Buget',
+  'Termen',
+  'Se informează',
+  'Reactivată',
+]);
+/** Peste atât, ultima miniatură devine „+N” și deschide detaliile. */
+const MAX_THUMBS = 4;
+
+/** Specificațiile ca text pe un rând, nu etichete: pe 375px cardul rămâne scurt. */
+function SpecLine({ specs }: { specs: { label: string; value: string }[] }) {
+  return (
+    <p className="text-[13px] leading-relaxed text-gray-700">
+      {specs.map((s, i) => (
+        <span key={s.label}>
+          {i > 0 && (
+            <span className="mx-1.5 text-gray-300" aria-hidden="true">
+              ·
+            </span>
+          )}
+          <span className="text-gray-400">{s.label}:</span> {s.value}
+        </span>
+      ))}
+    </p>
+  );
+}
+
 /**
  * Rândul unei cereri (Radu, 3 nov 2026). Ce faci zilnic stă pe rând: suni, muți
  * statusul, lași o notă. Expand-ul arată doar mai multe detalii, nimic de făcut:
@@ -390,6 +423,27 @@ export default function PortalClaimCard({
     ? [claim.client.nume, claim.client.companie].filter(Boolean).join(' · ')
     : '';
   const putere = claim.specs.find((s) => s.label === 'Putere')?.value;
+  // Puterea e deja în titlu. Restul se împarte: ce te ajută să suni și să
+  // estimezi stă pe card, ce se consultă rar trece la „Toate detaliile”.
+  const keySpecs = claim.specs.filter((s) => KEY_SPECS.has(s.label));
+  const extraSpecs = claim.specs.filter((s) => s.label !== 'Putere' && !KEY_SPECS.has(s.label));
+  // Renunțate sau închise de client: nu mai e nimic de făcut, rămân pe un rând.
+  const quiet = released || Boolean(claim.leadClosed);
+  const showProject = !quiet || open;
+  const photos = claim.client?.pozeUrcate ?? [];
+  const thumbsShown = showProject && photos.length > 0;
+  const fitsAll = open || photos.length <= MAX_THUMBS;
+  const shownPhotos = fitsAll ? photos : photos.slice(0, MAX_THUMBS - 1);
+  const morePhotos = photos.length - shownPhotos.length;
+  const place = claim.client ? claim.client.adresa || claim.client.localitate : '';
+  const hasDetails =
+    extraSpecs.length > 0 ||
+    claim.client !== null ||
+    claim.approved ||
+    notes.length > 0 ||
+    Boolean(claim.mesaj) ||
+    (released && Boolean(claim.releaseReason)) ||
+    (quiet && keySpecs.length > 0);
   const photosLabel = `${
     claim.pozeCount === 1 ? 'O poză' : claim.pozeCount > 1 ? `${claim.pozeCount} poze` : 'Poze'
   } de la client${claim.client ? '' : ', le vezi după confirmare'}`;
@@ -398,36 +452,18 @@ export default function PortalClaimCard({
 
   return (
     <div className={`relative px-3 py-3 sm:px-4 ${released ? 'opacity-70' : ''}`}>
-      <button
-        type="button"
-        onClick={toggle}
-        aria-expanded={open}
-        aria-label={open ? 'Ascunde detaliile' : 'Arată detaliile'}
-        className="absolute right-1.5 top-2 rounded-lg p-2 text-gray-400 transition-colors hover:bg-surface hover:text-gray-700 sm:right-2"
-      >
-        <svg
-          className={`h-4 w-4 transition-transform ${open ? 'rotate-180' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-          aria-hidden="true"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-
       {/* Pe telefon titlul ia tot rândul, iar dedesubt stau „Sună” și statusul,
           acțiunile pentru care intră firma în portal. Pe laptop, coloane. */}
-      <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_11.5rem] sm:items-start sm:gap-3 sm:pr-8">
-        <div className="col-span-2 min-w-0 pr-8 sm:col-span-1 sm:pr-0">
+      <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_11.5rem] sm:items-start sm:gap-3">
+        <div className="col-span-2 min-w-0 sm:col-span-1">
           <h3 className="text-sm font-semibold leading-snug text-gray-900">
             <button type="button" onClick={toggle} className="text-left hover:underline">
               {claim.tipLabel}
               {claim.judet ? ` · ${claim.judet}` : ''}
               {putere ? ` · ${putere}` : ''}
-              {/* Pe rândul închis: pozele se văd la expand, cu tot cu numărul lor. */}
-              {claim.cuPoze && !open && (
+              {/* Doar când miniaturile nu stau pe card: înainte de confirmare,
+                  pe cererile închise sau cu pozele venite pe alt drum. */}
+              {claim.cuPoze && !thumbsShown && (
                 <span
                   title={photosLabel}
                   aria-label={photosLabel}
@@ -633,128 +669,136 @@ export default function PortalClaimCard({
         </p>
       )}
 
-      {/* Ce a scris clientul cu mâna lui: singurul lucru de pe rând care nu se
-          deduce din specificații, deci se vede și cu rândul închis. */}
-      {claim.mesaj && !open && (
-        <EllipsisLine accent label="Mesajul clientului" text={claim.mesaj} onClick={toggle} />
+      {/* Proiectul, direct pe card (Radu, 9 nov 2026): „deschide detaliile” era
+          cea mai folosită acțiune din portal, deci ce se căuta acolo (poze,
+          acoperiș, specificații, mesajul clientului) nu mai cere click. */}
+      {showProject && (keySpecs.length > 0 || claim.client || claim.mesaj) && (
+        <div className="mt-3 space-y-2.5">
+          {keySpecs.length > 0 && <SpecLine specs={keySpecs} />}
+          {claim.client && (place || claim.client.hartaUrl) && (
+            <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-gray-700">
+              {place && <span>{place}</span>}
+              {claim.client.hartaUrl && (
+                <a
+                  href={claim.client.hartaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent('portal_harta_deschisa', { sursa })}
+                  className="inline-flex items-center gap-1 font-medium text-primary-dark hover:underline"
+                >
+                  Vezi acoperișul din satelit ↗
+                </a>
+              )}
+            </p>
+          )}
+          {photos.length > 0 && claim.client && (
+            <ul className="flex flex-wrap gap-1.5" aria-label={`Poze de la client (${photos.length})`}>
+              {shownPhotos.map((poza) => {
+                const src = `/api/portal/poza?cerere=${encodeURIComponent(
+                  claim.leadId,
+                )}&poza=${encodeURIComponent(poza.pathname)}`;
+                return (
+                  <li key={poza.pathname}>
+                    <a href={src} target="_blank" rel="noopener noreferrer">
+                      <img
+                        src={src}
+                        alt={poza.fileName || 'Poză de la client'}
+                        loading="lazy"
+                        className="h-16 w-16 rounded-md border border-border object-cover transition-opacity hover:opacity-80"
+                      />
+                    </a>
+                  </li>
+                );
+              })}
+              {morePhotos > 0 && (
+                <li>
+                  <button
+                    type="button"
+                    onClick={toggle}
+                    aria-label={`Încă ${morePhotos} poze`}
+                    className="flex h-16 w-16 items-center justify-center rounded-md border border-border bg-surface text-sm font-semibold text-gray-600 transition-colors hover:bg-gray-100"
+                  >
+                    +{morePhotos}
+                  </button>
+                </li>
+              )}
+            </ul>
+          )}
+          {claim.client?.poze && (
+            <p className="text-[13px]">
+              <a
+                href={claim.client.poze}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary-dark underline hover:no-underline"
+              >
+                Pozele acoperișului / locației
+              </a>
+            </p>
+          )}
+          {claim.client?.pozePeEmail && (
+            <p className="text-[13px] text-gray-500">Clientul a trimis poze pe email, le adăugăm aici.</p>
+          )}
+          {/* Trei rânduri ajung de obicei; restul, la „Toate detaliile”. */}
+          {claim.mesaj && (
+            <p
+              className={`whitespace-pre-line break-words border-l-2 border-primary pl-2.5 text-[13px] leading-relaxed text-gray-800 ${
+                open ? '' : 'line-clamp-3'
+              }`}
+            >
+              <span className="font-medium text-amber-800">Mesajul clientului:</span> {claim.mesaj}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Text, nu o săgeată în colț: lângă săgeata statusului cele două se
+          confundau, iar una deschide o listă, cealaltă cardul. */}
+      {hasDetails && (
+        <button
+          type="button"
+          onClick={toggle}
+          aria-expanded={open}
+          className="mt-2 inline-flex items-center gap-1 rounded text-xs font-medium text-gray-500 transition-colors hover:text-gray-900"
+        >
+          {open ? 'Ascunde detaliile' : quiet ? 'Detalii' : 'Toate detaliile'}
+          <svg
+            className={`h-3 w-3 transition-transform ${open ? 'rotate-180' : ''}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            aria-hidden="true"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
       )}
 
       {open && (
-        <div className="mt-3 space-y-3 border-t border-border pt-3">
-          {claim.mesaj && (
-            <div className="rounded-lg border border-amber-200 border-l-4 border-l-primary bg-amber-50/60 px-3 py-2.5 sm:px-4 sm:py-3">
-              <div className="text-[11px] font-semibold uppercase tracking-wide text-amber-800">
-                Mesajul clientului
-              </div>
-              <p className="mt-1 whitespace-pre-line break-words text-sm leading-relaxed text-gray-900">
-                {claim.mesaj}
-              </p>
-            </div>
+        <div className="mt-2 space-y-3 border-t border-border pt-3">
+          {extraSpecs.length > 0 && <SpecLine specs={extraSpecs} />}
+          {claim.client?.email && (
+            <p className="text-sm">
+              <a href={`mailto:${claim.client.email}`} className="break-all text-primary-dark hover:underline">
+                {claim.client.email}
+              </a>
+            </p>
           )}
-
-          {claim.specs.length > 0 && (
-            <ul className="flex flex-wrap gap-1.5">
-              {claim.specs.map((s) => (
-                <li
-                  key={s.label}
-                  className="rounded-md border border-border bg-surface px-2 py-0.5 text-[11px] text-gray-600"
-                >
-                  <span className="text-gray-400">{s.label}:</span> {s.value}
-                </li>
-              ))}
-            </ul>
-          )}
-
-          {claim.client && (
-            <div className="space-y-1 text-sm text-gray-800">
-              {claim.client.adresa ? (
-                <p className="text-gray-700">{claim.client.adresa}</p>
-              ) : (
-                claim.client.localitate && <p className="text-gray-600">{claim.client.localitate}</p>
-              )}
-              {claim.client.hartaUrl && (
-                <p>
-                  <a
-                    href={claim.client.hartaUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent('portal_harta_deschisa', { sursa })}
-                    className="inline-flex items-center gap-1 font-medium text-primary-dark hover:underline"
-                  >
-                    Vezi acoperișul din satelit ↗
-                  </a>
-                </p>
-              )}
-              <p>
-                <a
-                  href={`mailto:${claim.client.email}`}
-                  className="break-all text-primary-dark hover:underline"
-                >
-                  {claim.client.email}
-                </a>
-              </p>
-              {claim.client.pozeUrcate.length > 0 && (
-                <div className="pt-1">
-                  <p className="text-xs font-medium text-gray-700">
-                    Poze de la client ({claim.client.pozeUrcate.length})
-                  </p>
-                  <ul className="mt-1.5 flex flex-wrap gap-1.5">
-                    {claim.client.pozeUrcate.map((poza) => {
-                      const src = `/api/portal/poza?cerere=${encodeURIComponent(
-                        claim.leadId,
-                      )}&poza=${encodeURIComponent(poza.pathname)}`;
-                      return (
-                        <li key={poza.pathname}>
-                          {/* Servite de funcția noastră, după verificarea sesiunii:
-                              n-au URL public, deci nici next/image n-are ce optimiza. */}
-                          <a href={src} target="_blank" rel="noopener noreferrer">
-                            <img src={src}
-                              alt={poza.fileName || 'Poză de la client'}
-                              loading="lazy"
-                              className="h-16 w-16 rounded-md border border-border object-cover transition-opacity hover:opacity-80"
-                            />
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              )}
-              {claim.client.poze && (
-                <p>
-                  <a
-                    href={claim.client.poze}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary-dark underline hover:no-underline"
-                  >
-                    Pozele acoperișului / locației
-                  </a>
-                </p>
-              )}
-              {claim.client.pozePeEmail && (
-                <p className="text-gray-500">Clientul a trimis poze pe email, le adăugăm aici.</p>
-              )}
-            </div>
-          )}
-
           {claim.approved && !released && (
             <p className="text-xs text-gray-400">
               {CLAIM_STATUS_LABELS[status]}: {CLAIM_STATUS_HINTS[status]}
               {status === 'ofertat' && claim.offeredAt ? ` · marcat pe ${fmtDate(claim.offeredAt)}` : ''}
             </p>
           )}
-
           {claim.approved && !released && (
             <PortalOfferBox leadId={claim.leadId} offers={claim.offers} canSend={claim.canSendOffer} />
           )}
-
           {released && claim.releaseReason && (
             <div className="rounded-lg border border-border bg-surface px-4 py-3 text-sm text-gray-500">
               <span className="text-gray-400">Motivul renunțării:</span> {claim.releaseReason}
             </div>
           )}
-
           {/* Jurnalul de note — vizibil și pentru noi în CRM, deci ce scrii aici chiar ajută la realocare. */}
           {notes.length > 0 && (
             <div>
@@ -776,16 +820,14 @@ export default function PortalClaimCard({
           )}
         </div>
       )}
-
       {/* Notele noi intră primele în listă, deci prima e ultima scrisă. */}
-      {notes.length > 0 && !open && (
+      {notes.length > 0 && !open && !released && (
         <EllipsisLine
           label={`Nota ta${notes[0].date ? `, ${notes[0].date}` : ''}`}
           text={notes[0].text}
           onClick={toggle}
         />
       )}
-
       {/* Mereu la vedere, jos pe rând (Radu, 2 și 3 nov 2026): un click în plus
           înseamnă note nescrise. Butonul apare doar când ai ce trimite: pe 375px
           lângă câmp lăsa ~198px de scris, iar pe zece rânduri devenea zgomot. */}

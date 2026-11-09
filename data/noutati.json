@@ -1,5 +1,12 @@
 [
   {
+    "data": "2026-11-09",
+    "titlu": "Pozele și detaliile cererii, direct pe card",
+    "text": "Pe cererile la care lucrezi vezi fără niciun click pozele clientului, localitatea, acoperișul din satelit, ce își dorește, bugetul și termenul. Fiecare cerere stă în cardul ei, iar restul (emailul, consumul, istoricul notelor) e la „Toate detaliile”.",
+    "link": "/portal",
+    "linkText": "Deschide portalul"
+  },
+  {
     "data": "2026-11-06",
     "titlu": "Afli pe loc când clientul își închide cererea",
     "text": "Când un client pe care îl ai în lucru spune că nu mai face lucrarea sau că a ales altă firmă, primești un email, iar rândul din portal îți arată ce s-a întâmplat. O scoți din lucru dintr-un click și ți se eliberează locul.",

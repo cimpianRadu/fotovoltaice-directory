@@ -177,6 +177,14 @@ export default function PortalClaimList({
     />
   );
 
+  // În „De actualizat” rândurile sunt înalte (notă, mesajul clientului, cererea
+  // închisă), așa că o linie subțire între ele nu ajunge: fiecare e card separat.
+  const renderAsk = (c: PortalClaim) => (
+    <div key={claimKey(c)} className="rounded-lg border border-amber-200 bg-white shadow-sm">
+      {renderRow(c, true)}
+    </div>
+  );
+
   return (
     <>
       {/* Cu toate cererile în aceeași stare, filtrul n-ar avea ce să filtreze. */}
@@ -211,9 +219,7 @@ export default function PortalClaimList({
           </div>
 
           {asks.length > 0 && (
-            <div className="divide-y divide-border rounded-lg border border-border bg-white">
-              {asks.map((c) => renderRow(c, true))}
-            </div>
+            <div className="space-y-3">{asks.map(renderAsk)}</div>
           )}
 
           {oldAsks.length > 0 && (
@@ -233,9 +239,7 @@ export default function PortalClaimList({
           )}
 
           {oldOpen && (
-            <div className="divide-y divide-border rounded-lg border border-border bg-white">
-              {oldAsks.map((c) => renderRow(c, true))}
-            </div>
+            <div className="space-y-3">{oldAsks.map(renderAsk)}</div>
           )}
         </section>
       )}
@@ -243,14 +247,22 @@ export default function PortalClaimList({
       {!filtering && recommended}
 
       {rows.length > 0 ? (
-        <div className="divide-y divide-border rounded-xl border border-border bg-white">
+        <div>
           {/* Aceleași coloane ca rândurile din PortalClaimCard. */}
-          <div className="hidden grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_11.5rem] gap-3 px-4 py-2 pr-12 text-[11px] font-semibold uppercase tracking-wide text-gray-400 sm:grid">
+          <div className="hidden grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_11.5rem] gap-3 px-4 pb-1.5 text-[11px] font-semibold uppercase tracking-wide text-gray-400 sm:grid">
             <span>Cerere</span>
             <span>Client</span>
             <span>Status</span>
           </div>
-          {rows.map((c) => renderRow(c, false))}
+          {/* Card separat pe cerere, ca în „De actualizat”: un rând deschis are
+              notă, mesajul clientului și cererea închisă, iar o linie nu le desparte. */}
+          <div className="space-y-3">
+            {rows.map((c) => (
+              <div key={claimKey(c)} className="rounded-xl border border-border bg-white shadow-sm">
+                {renderRow(c, false)}
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
         filtering && (
