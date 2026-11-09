@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import { trackEvent } from '@/lib/analytics';
-import { usePortalLoggedIn } from '@/lib/portal-hint';
+import { useClientLoggedIn, usePortalLoggedIn } from '@/lib/portal-hint';
 import { BellIcon, NoutatiCount, NoutatiModal, useNoutati } from '@/components/noutati/Noutati';
 
 // În bara principală stau destinațiile pentru clientul care caută, plus pagina
@@ -57,6 +57,14 @@ const firmMoreLinks = [
   ...moreLinks,
 ];
 
+function DocumentIcon({ className }: { className: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+  );
+}
+
 function PersonIcon({ className }: { className: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
@@ -82,6 +90,10 @@ export default function Header() {
   const portalLoggedIn = usePortalLoggedIn();
   const navLinks = portalLoggedIn ? firmPrimaryLinks : primaryLinks;
   const navMoreLinks = portalLoggedIn ? firmMoreLinks : moreLinks;
+  // Clientul care a trimis o cerere vine înapoi ca să vadă ce s-a întâmplat cu
+  // ea: butonul principal devine „Cererea mea", în locul lui „Cere oferte".
+  // Restul meniului rămâne cel public. Firma logată are prioritate.
+  const clientLoggedIn = useClientLoggedIn() && !portalLoggedIn;
   const isMoreActive = navMoreLinks.some((l) => isActive(l.href));
   // Portalul e al firmelor: eticheta spune asta înainte de click, ca un client
   // care caută instalator să nu intre acolo crezând că e contul lui.
@@ -261,7 +273,15 @@ export default function Header() {
           </Link>
 
           {/* Firma nu cere oferte: pentru ea butonul principal e contul. */}
-          {!portalLoggedIn && (
+          {clientLoggedIn ? (
+            <Link
+              href="/cont"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold whitespace-nowrap text-white transition-colors hover:bg-primary-dark"
+            >
+              <DocumentIcon className="h-4 w-4" />
+              Cererea mea
+            </Link>
+          ) : !portalLoggedIn && (
             <Link
               href="/cere-oferta?sursa=header"
               onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_desktop' })}
@@ -295,16 +315,24 @@ export default function Header() {
               >
                 <PersonIcon className="h-5 w-5" />
               </Link>
-              <Link
-                href="/cere-oferta?sursa=header"
-                onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_mobile' })}
-                className="inline-flex items-center gap-1.5 justify-center bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-3 min-h-[44px] rounded-lg transition-colors"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Cere oferte
-              </Link>
+              {clientLoggedIn ? (
+                <Link
+                  href="/cont"
+                  className="inline-flex items-center gap-1.5 justify-center bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-3 min-h-[44px] rounded-lg transition-colors"
+                >
+                  <DocumentIcon className="w-4 h-4" />
+                  Cererea mea
+                </Link>
+              ) : (
+                <Link
+                  href="/cere-oferta?sursa=header"
+                  onClick={() => trackEvent('cere_oferta_click', { segment, source: 'header_mobile' })}
+                  className="inline-flex items-center gap-1.5 justify-center bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-3 min-h-[44px] rounded-lg transition-colors"
+                >
+                  <DocumentIcon className="w-4 h-4" />
+                  Cere oferte
+                </Link>
+              )}
             </>
           )}
           <button
@@ -330,6 +358,19 @@ export default function Header() {
       {/* Mobile nav overlay — always in DOM for SEO, toggled with CSS */}
       <div className={`lg:hidden border-t border-border bg-white ${mobileOpen ? 'block' : 'hidden'}`}>
         <nav className="flex flex-col p-4 gap-1">
+          {clientLoggedIn && (
+            <Link
+              href="/cont"
+              onClick={() => setMobileOpen(false)}
+              className="mb-2 flex items-center gap-3 rounded-lg border border-primary bg-primary/5 px-3 py-2.5 text-gray-700 hover:bg-primary/10"
+            >
+              <DocumentIcon className="h-5 w-5 shrink-0 text-primary-dark" />
+              <span>
+                <span className="block text-base font-semibold text-gray-900">Cererea mea</span>
+                <span className="block text-xs text-gray-500">Firmele care au preluat-o, telefoanele și ofertele</span>
+              </span>
+            </Link>
+          )}
           <Link
             href="/portal"
             onClick={() => setMobileOpen(false)}

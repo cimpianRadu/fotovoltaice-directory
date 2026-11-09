@@ -14,6 +14,14 @@ export const PORTAL_PENDING_COOKIE = 'portal_pending';
  */
 export const PORTAL_HINT_COOKIE = 'portal_hint';
 export const PORTAL_SESSION_DAYS = 30;
+
+// Contul clientului (lib/client-auth). Numele stau aici pentru că și
+// middleware-ul (Edge) le citește, iar client-auth e doar pentru server.
+export const CLIENT_SESSION_COOKIE = 'cont_session';
+export const CLIENT_LEAD_COOKIE = 'cont_cereri';
+/** Semnul pentru header („Cererea mea"), la fel ca PORTAL_HINT_COOKIE: nu dă acces la nimic. */
+export const CLIENT_HINT_COOKIE = 'cont_hint';
+export const CLIENT_HINT_DAYS = 180;
 /** Linkul și codul din email expiră împreună — destul cât să deschizi inboxul. */
 export const PORTAL_LOGIN_TTL_MINUTES = 15;
 

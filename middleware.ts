@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ADMIN_COOKIE, safeEqual, sessionToken } from '@/lib/admin-auth';
-import { PORTAL_COOKIE, PORTAL_HINT_COOKIE, PORTAL_SESSION_DAYS, verifyToken } from '@/lib/portal-auth';
+import {
+  CLIENT_HINT_COOKIE,
+  CLIENT_HINT_DAYS,
+  CLIENT_LEAD_COOKIE,
+  CLIENT_SESSION_COOKIE,
+  PORTAL_COOKIE,
+  PORTAL_HINT_COOKIE,
+  PORTAL_SESSION_DAYS,
+  verifyToken,
+} from '@/lib/portal-auth';
 
 // Pagina de login și endpointul ei trebuie să treacă de gardă, altfel nu se
 // poate ajunge niciodată la formular.
@@ -29,19 +38,44 @@ const PORTAL_OPEN_PATHS = new Set([
  * scos când a expirat. Se face aici pentru că pe aici trec și sesiunile vechi
  * (/portal, /api/portal/me de pe /cereri), nu doar loginurile noi.
  */
-function syncHint(req: NextRequest, res: NextResponse, loggedIn: boolean): NextResponse {
-  const has = req.cookies.has(PORTAL_HINT_COOKIE);
+function syncHint(
+  req: NextRequest,
+  res: NextResponse,
+  loggedIn: boolean,
+  name = PORTAL_HINT_COOKIE,
+  days = PORTAL_SESSION_DAYS,
+): NextResponse {
+  const has = req.cookies.has(name);
   if (loggedIn && !has) {
-    res.cookies.set(PORTAL_HINT_COOKIE, '1', {
+    res.cookies.set(name, '1', {
       path: '/',
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
-      maxAge: PORTAL_SESSION_DAYS * 86_400,
+      maxAge: days * 86_400,
     });
   } else if (!loggedIn && has) {
-    res.cookies.delete(PORTAL_HINT_COOKIE);
+    res.cookies.delete(name);
   }
   return res;
+}
+
+/**
+ * Contul clientului nu are gardă aici (paginile verifică singure), doar semnul
+ * pentru „Cererea mea" din header. Pe /api/cont trece și evenimentul trimis de
+ * ecranul de după formular, deci semnul se pune chiar după cerere, nu doar la
+ * intrarea în cont.
+ */
+async function clientMiddleware(req: NextRequest): Promise<NextResponse> {
+  const { pathname } = req.nextUrl;
+  // Ieșirea și ștergerea își scot singure cookie-urile.
+  if (pathname === '/api/cont/iesire' || pathname === '/api/cont/sterge') return NextResponse.next();
+  const secret = process.env.PORTAL_SECRET;
+  const loggedIn = Boolean(
+    secret &&
+      ((await verifyToken(req.cookies.get(CLIENT_SESSION_COOKIE)?.value, 'client-session', secret)) ||
+        (await verifyToken(req.cookies.get(CLIENT_LEAD_COOKIE)?.value, 'client-lead', secret))),
+  );
+  return syncHint(req, NextResponse.next(), loggedIn, CLIENT_HINT_COOKIE, CLIENT_HINT_DAYS);
 }
 
 async function portalMiddleware(req: NextRequest): Promise<NextResponse> {
@@ -78,6 +112,9 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith('/portal') || pathname.startsWith('/api/portal')) {
     return portalMiddleware(req);
   }
+  if (pathname === '/cont' || pathname.startsWith('/cont/') || pathname.startsWith('/api/cont/')) {
+    return clientMiddleware(req);
+  }
 
   if (OPEN_PATHS.has(pathname)) return NextResponse.next();
 
@@ -103,5 +140,12 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*', '/portal/:path*', '/api/portal/:path*'],
+  matcher: [
+    '/admin/:path*',
+    '/api/admin/:path*',
+    '/portal/:path*',
+    '/api/portal/:path*',
+    '/cont/:path*',
+    '/api/cont/:path*',
+  ],
 };

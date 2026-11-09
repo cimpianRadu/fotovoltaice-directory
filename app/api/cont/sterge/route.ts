@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { CLIENT_LEAD_COOKIE, CLIENT_SESSION_COOKIE, getClientViewer } from '@/lib/client-auth';
+import { CLIENT_HINT_COOKIE, CLIENT_LEAD_COOKIE, CLIENT_SESSION_COOKIE, getClientViewer } from '@/lib/client-auth';
 import { getLeadsForEmail, requestAccountDeletion } from '@/lib/client-account';
 
 // „Ștergeți contul și datele mele”. Cere emailul dovedit (link sau cod), nu doar
@@ -18,6 +18,7 @@ export async function POST() {
     const res = NextResponse.json({ ok: true });
     res.cookies.delete(CLIENT_SESSION_COOKIE);
     res.cookies.delete(CLIENT_LEAD_COOKIE);
+    res.cookies.delete(CLIENT_HINT_COOKIE);
     return res;
   } catch (err) {
     console.error('[cont] ștergere:', err);

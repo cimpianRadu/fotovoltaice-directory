@@ -15,6 +15,8 @@
 import 'server-only';
 import { cookies } from 'next/headers';
 import {
+  CLIENT_LEAD_COOKIE,
+  CLIENT_SESSION_COOKIE,
   createToken,
   hashLoginCode,
   normalizeEmail,
@@ -24,8 +26,7 @@ import {
 } from './portal-auth';
 import { db } from './db';
 
-export const CLIENT_SESSION_COOKIE = 'cont_session';
-export const CLIENT_LEAD_COOKIE = 'cont_cereri';
+export { CLIENT_HINT_COOKIE, CLIENT_LEAD_COOKIE, CLIENT_SESSION_COOKIE } from './portal-auth';
 const SESSION_DAYS = 180;
 const LINK_DAYS = 3 * 365;
 const LEAD_GRANT_DAYS = 180;
