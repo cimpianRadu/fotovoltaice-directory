@@ -274,6 +274,14 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 
 > Recheck poziția în GSC peste 14/30 zile pentru fiecare. Fă Request Indexing manual după push.
 
+### Casa Verde Baterii: datele sesiunii din Dispoziția AFM 454/2026 pe tot clusterul (2026-11-09, rutina luni, #87, commit `8aa6aac`)
+- **Sursă recitită pe 9 nov:** [afm.ro/baterii_legislatie.php](https://www.afm.ro/baterii_legislatie.php) (Dispoziția nr. 454 din 06.11.2026) + [comunicatul AFM](https://www.afm.ro/media_comunicate_presa-2026_11_06.php): instalatori 16.11 10:00 – 20.11.2026 23:59, PF 20.11 10:00 – 25.11.2026 23:59, 400 mil. lei, actele ambelor categorii.
+- **Ghiduri atinse (`updatedAt` 2026-11-09):** `casa-verde-baterii-2026-inscriere-acte-punctaj-strategie` (title „Casa Verde Baterii 2026: Înscriere 20–25 Noiembrie, Acte”, meta, hero, răspunsul rapid, secțiunea de status rescrisă, tabelul etapelor, secțiune nouă `validare-instalatori-16-20-noiembrie` cu actele firmelor + atestat ANRE B ≥12 luni + link /verificare-anre, 2 FAQ noi), hub `casa-verde-baterii-2026-program-stocare-afm` (status + calendar rescris), `casa-verde-fotovoltaice-2026`, `casa-verde-baterii-2026-cine-nu-poate-aplica-intrebari`, `merita-bateria-...`, `kit-panouri-fotovoltaice-cu-baterii-...`, `baterie-3-5-10-kw-...`, `invertor-hibrid-...`, `ce-baterie-stocare-alegi-...`, `panouri-fotovoltaice-pompa-caldura-...`, `baterie-sungrow-...`, `sistem-fotovoltaic-5-kw-...`, `lista-firme-autorizate-afm-...` (secțiunea de status din iulie rescrisă, capcane, 2 FAQ) și `baterie-stocare-casa-...` (secțiunea CVB din iulie rescrisă, FAQ). Cod: `/calculator-casa-verde-baterii` (FAQ + două blocuri de status), `BatteryWidget.tsx`, `CvbAlertForm.tsx`.
+- **Corectat și un fapt greșit din #63:** spunea că sesiunea PF se deschide după publicarea listei instalatorilor validați; calendarul real le suprapune (PF încep pe 20 nov, ziua în care se închide validarea).
+- **Nu s-a scris:** regula „un cont = un CNP” și adresa `inscrierionline.afm.ro` stau pe `baterii.php` într-un comentariu HTML (nu se afișează), deci nu le-am citat. Data listei instalatorilor validați, ordinea de evaluare și termenele de după aprobare nu apar în dispoziție sau comunicat.
+- **Rămâne la Radu:** (a) anunțul către firmele din director despre validarea 16–20 nov (Noutăți/email); (b) abonații formularului „Anunțați-mă” (tab „AlerteCVB”) au primit promisiunea unui email „în ziua în care apare anunțul oficial”; formularul spune acum „în ziua în care se deschide sesiunea”, iar emailul nu e trimis.
+- **Recheck:** Request Indexing pe `casa-verde-baterii-2026-inscriere-acte-punctaj-strategie`, hub și `casa-verde-fotovoltaice-2026`; poziție GSC peste 14/30 zile.
+
 ### HG 938/2026 până la 30 noiembrie + Casa Verde Baterii fără sesiune în octombrie + apel BESS prelungit (2026-11-05, rutina joi, commit `8a7bcc2`)
 - **HG 938:** corectate `limitare-consum-energie-firme-hotarare-guvern-august-2026` (title „(30 Noiembrie)”, meta, hero, secțiune nouă `update-5-noiembrie-2026-hg-938`, cronologie, FAQ), `alerta-energetica-august-2026-panouri-fotovoltaice-baterie-backup-pana-curent`, `baterie-stocare-casa-backup-dimensionare-independenta-energetica-2026`, `pret-energie-electrica-2021-2026-cronologie-scumpiri`. Sursă citită: informarea gov.ro din 30 oct. Textele HG 938 și HG 945 NU au fost citite, iar numerele vin din lista lege5 din 2 nov; în ghid scrie explicit. Reparat și un link rupt `({GOV})` din secțiunea din 5 oct.
 - **De citit la următoarea trecere:** informarea spune că HG 945/2026 are în vedere și „măsuri de siguranță” aplicate de Transelectrica între 1 nov 2026 și 31 mar 2027. Dacă textul confirmă, următorul punct de verificare nu mai e doar 30 noiembrie.
@@ -778,7 +786,7 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 > | Parcat | #83 PZU | 11,1 | pagina 1 e numai OPCOM, deci poarta din intrare spune că se renunță |
 
 #### #87 — 🔝 TOP · Casa Verde Baterii: Înscrieri 20–25 Noiembrie 2026, Validarea Instalatorilor 16–20 Noiembrie (ACTUALIZARE pe clusterul existent, nu articol nou) · adăugat 2026-11-08 (news scan)
-- **Status:** 💡 idee · **🔝 TOP, înaintea #84 · luni 9 nov, PASUL 0.5.** Datele trebuie să fie live pe site înainte de 16 nov, altfel ghidurile care spun „data sesiunii nu a fost comunicată” rămân greșite fix în săptămâna cu cel mai mult trafic.
+- **Status:** ✅ executat **2026-11-09** (rutina de luni, commit `8aa6aac`), vezi „✅ Extinse recent”. Inițial: 💡 idee · **🔝 TOP, înaintea #84 · luni 9 nov, PASUL 0.5.** Datele trebuie să fie live pe site înainte de 16 nov, altfel ghidurile care spun „data sesiunii nu a fost comunicată” rămân greșite fix în săptămâna cu cel mai mult trafic.
 - **Trigger (sursă primară):** [Dispoziția președintelui AFM nr. 454 din 06.11.2026](https://www.afm.ro/baterii_legislatie.php) + [comunicatul AFM din 06.11.2026](https://www.afm.ro/media_comunicate_presa-2026_11_06.php). Cifrele și actele sunt în intrarea din „🔥 Hot topics watch”, la „AL TREILEA TRIGGER CONFIRMAT 2026-11-08”.
 - **Cluster GSC țintă:** `casa verde baterii 2026` (2.400 medie, 9.900 în aug, 6.600 în sept), `casa verde baterii` (1.300 medie, 5.400 în sept), `afm casa verde baterii` 170, `programul casa verde baterii 2026` 170 (Labs, RO/`ro`, 8 nov). Calendarul cere și `inscrieri online afm`, cu 880 medie și 2.400 în oct 2025 și iul 2026 (Google Ads, 8 nov): urcă la fiecare sesiune AFM. Trends RO: „casa verde baterii” la 24 pe 7 nov, de la 2–6 în octombrie.
 - **De ce HOT:** e performerul nr. 1 al site-ului (clusterul baterii / CVB), iar evenimentul e chiar momentul de conversie: persoanele fizice au nevoie de un instalator validat, iar instalatorii au 5 zile să se valideze.
@@ -814,8 +822,8 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 - **Poartă SERP (2 nov):** pagina 1 e mai ales OLX, Facebook și magazine; editorial sunt doar Newsweek (iunie 2025) și un blog din 2018. Trece, cu ținta pe „merită?”, riscuri și ce verifici, nu pe cumpărare.
 - **Never-invent:** garanții și degradare doar din fișele producătorilor; regulile programelor despre echipamente noi doar din ghidurile oficiale.
 
-#### #84 — Panouri Fotovoltaice la Bloc 2026: Asociația de Proprietari, Acte, Cine Plătește
-- **Status:** 💡 idee
+#### ~~#84~~ — Panouri Fotovoltaice la Bloc 2026: Asociația de Proprietari, Acte, Cine Plătește ✅ PUBLICAT 2026-11-09 → [/ghid/panouri-fotovoltaice-la-bloc-2026-asociatia-de-proprietari-acte](/ghid/panouri-fotovoltaice-la-bloc-2026-asociatia-de-proprietari-acte)
+- **Status:** ✅ publicat **2026-11-09** (rutina de luni). Detalii în „✅ Publicate recent”.
 - **Cluster:** `panouri fotovoltaice la bloc` 90/lună (greenlead 6), `proiect panouri fotovoltaice` 170 (greenlead 21, cu același articol).
 - **Legătură:** watch-ul „panouri pe bloc / balcon discutate în Parlament” (28 sept). Delimitare față de ghidul de balcon.
 - **Never-invent:** doar ce scrie în legea asociațiilor de proprietari și în normele ANRE; proiectele din Parlament se marchează ca proiecte.
@@ -1613,6 +1621,13 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Panouri Fotovoltaice la Bloc 2026: Vot, Acte, Cine Plătește
+- **Publicat:** 2026-11-09 (rutina de luni, #84 din batch-ul greenlead) → [/ghid/panouri-fotovoltaice-la-bloc-2026-asociatia-de-proprietari-acte](/ghid/panouri-fotovoltaice-la-bloc-2026-asociatia-de-proprietari-acte)
+- **Conținut:** 12 secțiuni + 10 FAQ, ~4.500 de cuvinte. Sursa principală: Legea 196/2018 în forma consolidată din 19.12.2025, citită pe legislatie.just.ro (art. 35 acoperișul = parte comună; art. 51 modernizare = 2/3 din TOTAL proprietari; art. 39 lucrări pe terasă = 2/3 + toți direct afectații + autorizație; art. 38(2) închiriere către terți; art. 43 folosință exclusivă = unanimitate, contract max 12 luni; art. 48-50 cvorum, reconvocare, declarații scrise; art. 53 lit. f credit = toți; art. 70 veniturile din proprietatea comună merg DOAR în fondul de reparații; art. 94 asociația e titulara contractului pe părțile comune). Plus ANRE Q&A martie 2026 (întrebarea 8), Legea 50/1991 art. 11(2)f.
+- **Statut verificat la 9 nov:** Urban Up (150 mil. lei) are pe energie.gov.ro doar lansarea în consultare din 29.11.2024, fără act adoptat găsit; „prosumatorul de condominiu” APCE = propunere trimisă ministerului pe 11.02.2025, fără număr de proiect în Parlament găsit. Fără cifre de cost (never-invent): trimite la ghidul de 5 kW și la /cere-oferta.
+- **Delimitare:** ghidul de balcon are o secțiune „Panouri fotovoltaice la bloc: acordul asociației și autorizația” (despre kit pe balcon). Noul ghid e despre acoperișul comun; link în ambele sensuri (în ghidul de balcon, o frază înaintea subsecțiunii despre primărie).
+- **Cluster GSC de urmărit (DataForSEO, 30 oct):** `panouri fotovoltaice la bloc` 90 (greenlead 6) · `proiect panouri fotovoltaice` 170 (greenlead 21) · `panouri fotovoltaice bloc` 40 (90 în aug 2026). Recheck CTR la 14/30 zile.
 
 ### Panouri Fotovoltaice Second Hand 2026: Merită? Ce Verifici
 - **Publicat:** 2026-11-07 (rutina de sâmbătă, #81 din batch-ul greenlead) → [/ghid/panouri-fotovoltaice-second-hand-2026-merita-riscuri-garantie](/ghid/panouri-fotovoltaice-second-hand-2026-merita-riscuri-garantie)
