@@ -165,6 +165,7 @@ export default function PartnerCarousel() {
     <div
       role="complementary"
       aria-label="Parteneri"
+      data-partner-carousel
       className="hidden md:block fixed bottom-4 right-4 z-40 w-[320px] rounded-xl border border-gray-200 bg-white shadow-lg animate-[fadeInUp_300ms_ease-out]"
     >
       <button

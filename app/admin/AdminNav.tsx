@@ -14,6 +14,7 @@ const GROUPS: { label: string; tabs: { href: string; label: string }[] }[] = [
       { href: '/admin/cereri', label: 'Toate cererile' },
       { href: '/admin/inchideri', label: 'De închis' },
       { href: '/admin/informez', label: 'Se informează' },
+      { href: '/admin/asistent', label: 'Watt AI' },
       { href: '/admin/emailuri', label: 'Emailuri către clienți' },
       { href: '/admin/cont-client', label: 'Experiment cont client' },
       { href: '/admin/crm', label: 'CRM vechi' },

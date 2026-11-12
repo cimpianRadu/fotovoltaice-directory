@@ -37,9 +37,9 @@ export default function RezumatAiToggle() {
     <section className="rounded-xl border border-border bg-white p-5">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="font-semibold text-gray-900">Rezumat AI pe cererile de baterii</h3>
+          <h3 className="font-semibold text-gray-900">Rezumatul Watt AI pe cererile de baterii</h3>
           <p className="mt-1 text-sm leading-relaxed text-gray-600">
-            La cererile de baterie și extindere, clientul poate discuta după trimitere cu asistentul nostru. Pe
+            La cererile de baterie și extindere, clientul poate discuta după trimitere cu Watt AI, asistentul nostru. Pe
             card vezi ce a confirmat (invertor, fazare, consum), ce nu se potrivește și ce vrea să afle de la tine.
           </p>
         </div>

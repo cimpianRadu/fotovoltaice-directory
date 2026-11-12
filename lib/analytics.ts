@@ -88,6 +88,7 @@ type EventName =
   // Deschis = cardul s-a arătat; început = primul mesaj; gata = „Am terminat”.
   // La firme: nota pe rezumat și oprirea/pornirea lui din portal.
   | 'asistent_deschis'
+  | 'asistent_bula'
   | 'asistent_inceput'
   | 'asistent_mesaj'
   | 'asistent_gata'

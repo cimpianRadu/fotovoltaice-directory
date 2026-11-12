@@ -143,7 +143,7 @@ export default function PoliticaConfidentialitate() {
           <li><strong>Neon:</strong> baza de date a contului de client și adresa montajului, găzduită în Frankfurt (UE)</li>
           <li><strong>Umami:</strong> analytics fără cookie-uri, pe date agregate</li>
           <li>
-            <strong>Anthropic:</strong> asistentul AI de după trimiterea cererii, opțional, la cererile de baterie și
+            <strong>Anthropic:</strong> Watt AI, asistentul de după trimiterea cererii, opțional, la cererile de baterie și
             de extindere. Primește detaliile tehnice ale cererii (fără nume, telefon sau email) și mesajele pe care
             i le scrieți, ca să vă răspundă. Ce confirmați în conversație intră în cerere și îl văd firmele de
             instalare.

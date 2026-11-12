@@ -85,7 +85,7 @@ export function instantaneuCerere(lead: NewLead): AsistentCerere {
 // ---------------------------------------------------------------------------
 // Prompt
 
-export const SYSTEM_PROMPT = `Ești asistentul cererii de pe instalatori-fotovoltaice.ro, platforma care trimite cererile de ofertă la firme de instalare din zona clientului.
+export const SYSTEM_PROMPT = `Ești Watt AI, asistentul cererii de pe instalatori-fotovoltaice.ro, platforma care trimite cererile de ofertă la firme de instalare din zona clientului. Dacă omul te întreabă cine ești, spui că ești un asistent AI al platformei, nu un om și nu un instalator.
 
 Omul cu care vorbești tocmai a trimis o cerere pentru o baterie de stocare (sau pentru extinderea unui sistem fotovoltaic pe care îl are deja). Cererea e salvată și a plecat deja la firme. Tu ai două treburi, în ordinea asta:
 
@@ -127,6 +127,12 @@ Dacă omul nu știe ceva, e în regulă: notezi „nu știe” și treci mai dep
 ## Cum salvezi
 
 De fiecare dată când omul confirmă ceva, apelezi \`salveaza_raspunsuri\` cu câmpurile noi, în aceeași replică. Când ai acoperit ce lipsea (sau omul vrea să încheie), salvezi și \`rezumat\`: 2-3 propoziții pentru firmă, la persoana a treia („Clientul are...”), doar cu fapte spuse de el, fără nume, adrese sau telefoane. Apoi îi spui omului că răspunsurile au intrat în cerere și că poate apăsa „Am terminat”.
+
+Replica pentru client o scrii întreagă în același mesaj cu apelurile \`salveaza_raspunsuri\` și \`propune_variante\`, înaintea lor; după rezultatul lor nu mai scrii nimic. Nu-i spui omului să aleagă dintre variante: butoanele apar singure sub replică.
+
+## Variante de răspuns
+
+Când întrebarea ta are câteva răspunsuri tipice, apelează \`propune_variante\` cu 2-4 variante scurte, exact cum le-ar scrie omul (de exemplu „Monofazat”, „Trifazat”, „Nu știu”). Pe telefon omul apasă pe ele în loc să scrie. Nu le folosi la întrebări deschise, ca modelul invertorului.
 
 ## Stil
 
@@ -171,6 +177,18 @@ export const TOOLS: Anthropic.Beta.BetaTool[] = [
         sectiune: { type: 'string', enum: [...SECTIUNI_CVB] },
       },
       required: ['sectiune'],
+    },
+  },
+  {
+    name: 'propune_variante',
+    description:
+      'Butoane cu 2-4 răspunsuri scurte sub replica ta, pe care clientul le apasă în loc să scrie. Doar la întrebări cu răspunsuri tipice.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        variante: { type: 'array', items: { type: 'string' }, description: '2-4 variante, câte cel mult 5 cuvinte.' },
+      },
+      required: ['variante'],
     },
   },
   {
@@ -339,6 +357,8 @@ export interface MesajAfisat {
   rol: 'client' | 'asistent';
   text: string;
   la: string;
+  /** Butoanele de răspuns propuse sub replica asistentului. */
+  variante?: string[];
 }
 
 interface Stocat {
@@ -398,7 +418,7 @@ export async function incheieConversatie(leadId: string): Promise<void> {
 export function mesajIntro(cerere: AsistentCerere): string {
   const cap = cerere.capacitateBaterie ? `bateria de ${cerere.capacitateBaterie} kWh` : 'baterie';
   const ce = cerere.tipLucrare === 'extindere' ? 'extinderea sistemului' : cap;
-  return `Bună ziua! Am primit cererea pentru ${ce} și a plecat deja la firmele din zonă. Dacă aveți 2-3 minute, vă pun câteva întrebări pe care firma le pune oricum la primul telefon, ca oferta să fie potrivită din prima. Ce îmi spuneți intră în cerere și îl văd firmele care o preiau. Putem începe?`;
+  return `Bună ziua! Sunt Watt AI, asistentul platformei. Am primit cererea pentru ${ce} și a plecat deja la firmele din zonă. Dacă aveți 2-3 minute, vă pun câteva întrebări pe care firma le pune oricum la primul telefon, ca oferta să fie potrivită din prima. Ce îmi spuneți intră în cerere și îl văd firmele care o preiau. Putem începe?`;
 }
 
 function contextCerere(c: Conversatie): string {
@@ -437,8 +457,21 @@ function logReplica(data: Record<string, unknown>) {
   console.log(JSON.stringify({ tag: 'asistent', at: new Date().toISOString(), ...data }));
 }
 
-function runTool(name: string, input: Record<string, unknown>, state: { date: AsistentDate }): string {
+const UNELTE_CARE_SCRIU = new Set(['salveaza_raspunsuri', 'propune_variante']);
+
+function runTool(
+  name: string,
+  input: Record<string, unknown>,
+  state: { date: AsistentDate; variante: string[] },
+): string {
   if (name === 'dimensionare_baterie') return dimensionare(input);
+  if (name === 'propune_variante') {
+    state.variante = (Array.isArray(input.variante) ? input.variante : [])
+      .filter((v): v is string => typeof v === 'string' && v.trim().length > 0)
+      .map((v) => v.trim().slice(0, 40))
+      .slice(0, 4);
+    return JSON.stringify({ afisat: true });
+  }
   if (name === 'ghid_casa_verde_baterii') return ghidCvb(String(input.sectiune || ''));
   if (name === 'salveaza_raspunsuri') {
     state.date = mergeDate(state.date, input);
@@ -485,7 +518,7 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
       ];
   api.push({ role: 'user', content: mesaj });
 
-  const state = { date: c.date };
+  const state = { date: c.date, variante: [] as string[] };
   const usage: Usage = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 };
   const unelte: string[] = [];
   const contextNote = contextCerere(c);
@@ -526,7 +559,11 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
         break;
       }
       const toolUses = res.content.filter((b): b is Anthropic.Beta.BetaToolUseBlock => b.type === 'tool_use');
-      raspuns = textDin(res.content);
+      // Replica vine de obicei în același mesaj cu apelurile de unelte, iar
+      // după rezultat modelul nu mai scrie nimic. Textele se adună pe tot
+      // parcursul replicii, altfel cel de lângă `salveaza_raspunsuri` se pierde.
+      const text = textDin(res.content);
+      if (text) raspuns = raspuns ? `${raspuns}\n\n${text}` : text;
       if (!toolUses.length) break;
 
       api.push({
@@ -540,6 +577,13 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
           };
         }),
       });
+
+      // Uneltele care doar scriu (salvarea, butoanele) nu aduc nimic de care
+      // modelul să aibă nevoie ca să răspundă. Dacă replica e deja scrisă, nu-l
+      // mai chemăm o dată: un apel în minus (jumătate din așteptare) și nicio
+      // propoziție în plus lipită după butoane. Rezultatele rămân în istoric,
+      // iar mesajul următor al clientului vine după ele.
+      if (raspuns && toolUses.every((t) => UNELTE_CARE_SCRIU.has(t.name))) break;
     }
 
     // O singură rescriere, ca la Smile AI: dacă și a doua încalcă regula,
@@ -570,7 +614,7 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
   const afisare: MesajAfisat[] = [
     ...(c.mesaje.afisare.length ? c.mesaje.afisare : [{ rol: 'asistent' as const, text: mesajIntro(c.cerere), la: acum }]),
     { rol: 'client', text: mesaj, la: acum },
-    { rol: 'asistent', text: raspuns, la: acum },
+    { rol: 'asistent', text: raspuns, la: acum, ...(state.variante.length ? { variante: state.variante } : {}) },
   ];
   const cost = costUsd(usage);
 
@@ -672,4 +716,149 @@ export async function noteazaRezumat(leadId: string, email: string, nota: 'util'
     INSERT INTO asistent_note (lead_id, firma_email, nota, motiv) VALUES (${leadId}, ${email}, ${nota}, ${motiv})
     ON CONFLICT (lead_id, firma_email) DO UPDATE SET nota = EXCLUDED.nota, motiv = EXCLUDED.motiv, created_at = now()
   `;
+}
+
+// ---------------------------------------------------------------------------
+// Vizualizările firmelor și raportul pilotului (raportul de luni + /admin/asistent)
+
+export async function logVizualizare(leadId: string, email: string, sursa: string): Promise<void> {
+  await db()`
+    INSERT INTO asistent_vizualizari (lead_id, firma_email, sursa) VALUES (${leadId}, ${email}, ${sursa})
+    ON CONFLICT (lead_id, firma_email) DO UPDATE SET
+      vizualizari = asistent_vizualizari.vizualizari + 1,
+      ultima_la = now(),
+      sursa = EXCLUDED.sursa
+  `;
+}
+
+export interface RaportConversatie {
+  leadId: string;
+  cerere: AsistentCerere;
+  date: AsistentDate;
+  afisare: MesajAfisat[];
+  replici: number;
+  costUsd: number;
+  rescrieri: number;
+  incheiata: boolean;
+  createdAt: string;
+  updatedAt: string;
+  vizualizari: { firma: string; sursa: string; de: number; primaLa: string }[];
+  note: { firma: string; nota: string; motiv: string; la: string }[];
+}
+
+export interface RaportAsistent {
+  de: string;
+  pana: string;
+  afisate: number;
+  incepute: number;
+  terminate: number;
+  mesajeClient: number;
+  costUsd: number;
+  rescrieri: number;
+  completate: Record<string, number>;
+  firmeCareAuVazut: number;
+  rezumateVazute: number;
+  noteUtil: number;
+  noteNuPrea: number;
+  conversatii: RaportConversatie[];
+}
+
+const CAMPURI_RAPORT: [keyof AsistentDate, string][] = [
+  ['invertor', 'invertor'],
+  ['fazare', 'fazare'],
+  ['consumLunarKwh', 'consum'],
+  ['capacitateDoritaKwh', 'capacitate'],
+  ['motivCapacitate', 'motivul capacității'],
+  ['deschisExtindere', 'extindere'],
+  ['intrebariPentruFirma', 'întrebări pentru firmă'],
+  ['rezumat', 'rezumat'],
+];
+
+/**
+ * Conversațiile pornite în fereastră, cu tot ce au făcut firmele pe rezumatele
+ * lor până acum. Totalurile de vizualizări și note numără ce s-a întâmplat în
+ * fereastră, inclusiv pe rezumatele din conversații mai vechi. Cererile de
+ * probă (`test-…`) nu intră.
+ */
+export async function raportAsistent(de: Date, pana: Date, cuTeste = false): Promise<RaportAsistent> {
+  // `cuTeste` aduce și cererile de probă, doar pentru verificarea locală.
+  const filtru = cuTeste ? 'zzz-nimic-%' : 'test-%';
+  const [convs, viz, note] = await Promise.all([
+    db()`
+      SELECT * FROM asistent_conversatii
+      WHERE created_at >= ${de.toISOString()} AND created_at < ${pana.toISOString()}
+        AND lead_id NOT LIKE ${filtru}
+      ORDER BY created_at DESC
+    `,
+    db()`SELECT * FROM asistent_vizualizari WHERE lead_id NOT LIKE ${filtru}`,
+    db()`SELECT * FROM asistent_note WHERE lead_id NOT LIKE ${filtru}`,
+  ]);
+
+  const inWindow = (iso: unknown) => {
+    const t = new Date(String(iso)).getTime();
+    return t >= de.getTime() && t < pana.getTime();
+  };
+
+  const conversatii: RaportConversatie[] = convs.map((r) => {
+    const c = rowToConv(r);
+    const rescrieri = c.mesaje.api.filter(
+      (m) => m.role === 'user' && typeof m.content === 'string' && m.content.startsWith('[Verificare automată'),
+    ).length;
+    return {
+      leadId: c.leadId,
+      cerere: c.cerere,
+      date: c.date,
+      afisare: c.mesaje.afisare,
+      replici: c.replici,
+      costUsd: c.costUsd,
+      rescrieri,
+      incheiata: Boolean(c.incheiataLa),
+      createdAt: new Date(String(r.created_at)).toISOString(),
+      updatedAt: c.updatedAt,
+      vizualizari: viz
+        .filter((v) => v.lead_id === c.leadId)
+        .map((v) => ({
+          firma: String(v.firma_email),
+          sursa: String(v.sursa),
+          de: Number(v.vizualizari) || 1,
+          primaLa: new Date(String(v.prima_la)).toISOString(),
+        })),
+      note: note
+        .filter((n) => n.lead_id === c.leadId)
+        .map((n) => ({
+          firma: String(n.firma_email),
+          nota: String(n.nota),
+          motiv: String(n.motiv || ''),
+          la: new Date(String(n.created_at)).toISOString(),
+        })),
+    };
+  });
+
+  const completate: Record<string, number> = {};
+  for (const [k, eticheta] of CAMPURI_RAPORT) {
+    completate[eticheta] = conversatii.filter((c) => {
+      const v = c.date[k];
+      return Array.isArray(v) ? v.length > 0 : v !== undefined && v !== '';
+    }).length;
+  }
+
+  const vizInWindow = viz.filter((v) => inWindow(v.ultima_la));
+  const noteInWindow = note.filter((n) => inWindow(n.created_at));
+
+  return {
+    de: de.toISOString(),
+    pana: pana.toISOString(),
+    afisate: conversatii.length,
+    incepute: conversatii.filter((c) => c.replici > 0).length,
+    terminate: conversatii.filter((c) => c.incheiata).length,
+    mesajeClient: conversatii.reduce((s, c) => s + c.replici, 0),
+    costUsd: conversatii.reduce((s, c) => s + c.costUsd, 0),
+    rescrieri: conversatii.reduce((s, c) => s + c.rescrieri, 0),
+    completate,
+    firmeCareAuVazut: new Set(vizInWindow.map((v) => v.firma_email)).size,
+    rezumateVazute: new Set(vizInWindow.map((v) => v.lead_id)).size,
+    noteUtil: noteInWindow.filter((n) => n.nota === 'util').length,
+    noteNuPrea: noteInWindow.filter((n) => n.nota === 'nu_prea').length,
+    conversatii,
+  };
 }
