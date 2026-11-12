@@ -37,6 +37,8 @@ import LeadPhotoPicker, { type PickedPhoto, releasePhotos } from './LeadPhotoPic
 import LeadLocationField, { LOCATION_CARD_CLASS, LocationPitch } from './LeadLocationField';
 import LocalitateInput from './LocalitateInput';
 import AdresaLucrareField from './AdresaLucrareField';
+import AsistentCerere from '@/components/asistent/AsistentCerere';
+import { ASISTENT_TIPURI } from '@/lib/asistent-shared';
 import { trackEvent } from '@/lib/analytics';
 import { getAttribution } from '@/lib/attribution';
 import {
@@ -1116,6 +1118,13 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
               />
             </div>
           </div>
+        )}
+
+        {/* Asistentul (pilot 12 nov 2026): doar la baterie și extindere. Cererea
+            e deja trimisă; conversația doar o completează, deci nu poate pierde
+            cereri. Ruta răspunde „neeligibil” dacă pilotul e oprit. */}
+        {leadRef && photoToken && (ASISTENT_TIPURI as readonly string[]).includes(details.tipLucrare) && (
+          <AsistentCerere leadId={leadRef} token={photoToken} sursa="confirmare" />
         )}
 
         {contUrl && <FollowRequestCTA contUrl={contUrl} contEmail={contEmail} leadId={leadRef} />}

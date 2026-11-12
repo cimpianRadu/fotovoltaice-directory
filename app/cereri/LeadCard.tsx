@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Input from '@/components/ui/Input';
 import PhoneInput, { phoneInputOk } from '@/components/ui/PhoneInput';
 import Button from '@/components/ui/Button';
+import RezumatFirma from '@/components/asistent/RezumatFirma';
 import { trackEvent } from '@/lib/analytics';
 import { PORTAL_EMAIL_KEY } from '@/lib/portal-email-handoff';
 import { MAX_ACTIVE_CLAIMS_PER_FIRM } from '@/lib/sheets-shared';
@@ -1021,6 +1022,8 @@ export default function LeadCard({
       {lead.mesaj && (
         <p className="mt-2 text-sm text-gray-500 italic leading-relaxed">„{lead.mesaj}”</p>
       )}
+      {/* Rezumatul asistentului (pilot 12 nov 2026): doar firmelor logate. */}
+      {me && <RezumatFirma leadId={lead.id} sursa="cereri" />}
       {lead.nrPoze > 0 && (
         <PhotoTeaser
           leadId={lead.id}

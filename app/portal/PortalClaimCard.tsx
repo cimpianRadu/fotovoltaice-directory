@@ -6,6 +6,7 @@
 
 import { useRef, useState } from 'react';
 import PortalOfferBox from './PortalOfferBox';
+import RezumatFirma from '@/components/asistent/RezumatFirma';
 import Button from '@/components/ui/Button';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 import { trackEvent } from '@/lib/analytics';
@@ -751,6 +752,9 @@ export default function PortalClaimCard({
           )}
         </div>
       )}
+
+      {/* Rezumatul asistentului (pilot 12 nov 2026), pe orice stare a cererii. */}
+      <RezumatFirma leadId={claim.leadId} sursa="portal" />
 
       {/* Text, nu o săgeată în colț: lângă săgeata statusului cele două se
           confundau, iar una deschide o listă, cealaltă cardul. */}

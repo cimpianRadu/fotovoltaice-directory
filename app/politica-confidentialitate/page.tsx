@@ -142,6 +142,12 @@ export default function PoliticaConfidentialitate() {
           <li><strong>Vercel:</strong> găzduirea site-ului și, prin Vercel Blob, pozele adăugate la cerere (accesibile doar firmei care o preia) și fișierele ofertelor trimise de firme (accesibile doar clientului cererii)</li>
           <li><strong>Neon:</strong> baza de date a contului de client și adresa montajului, găzduită în Frankfurt (UE)</li>
           <li><strong>Umami:</strong> analytics fără cookie-uri, pe date agregate</li>
+          <li>
+            <strong>Anthropic:</strong> asistentul AI de după trimiterea cererii, opțional, la cererile de baterie și
+            de extindere. Primește detaliile tehnice ale cererii (fără nume, telefon sau email) și mesajele pe care
+            i le scrieți, ca să vă răspundă. Ce confirmați în conversație intră în cerere și îl văd firmele de
+            instalare.
+          </li>
         </ul>
         <p>
           Unii dintre acești furnizori pot prelucra date în afara Uniunii Europene (în special în SUA).
@@ -153,6 +159,7 @@ export default function PoliticaConfidentialitate() {
         <ul>
           <li>Cererile de ofertă, împreună cu pozele adăugate: 12 luni de la trimitere</li>
           <li>Adresa montajului: cât e păstrată cererea, sau până o ștergeți din contul de client</li>
+          <li>Conversația cu asistentul AI și ce ați confirmat în ea: cât e păstrată cererea</li>
           <li>
             Contul de client, răspunsurile și notițele despre firme și ofertele: cât timp e păstrată
             cererea, sau până cereți ștergerea din cont
