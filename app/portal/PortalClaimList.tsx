@@ -89,27 +89,32 @@ type View = 'toate' | 'aprobare' | ClaimStatus | 'renuntate';
 
 /** Ieșite din lucru: renunțate din portal sau marcate „Neconcretizat". Coboară la finalul listei. */
 function isClosed(c: PortalClaim): boolean {
-  return Boolean(c.releasedAt) || c.firmStatus === 'pierdut';
+  return Boolean(c.releasedAt) || c.firmStatus === 'pierdut' || Boolean(c.leadClosed?.final);
+}
+
+/** Ieșite din lucru: renunțate de firmă sau închise de client (acestea ies singure). */
+function isOut(c: PortalClaim): boolean {
+  return Boolean(c.releasedAt) || Boolean(c.leadClosed?.final);
 }
 
 function inView(c: PortalClaim, view: View): boolean {
   switch (view) {
     case 'toate':
       return true;
-    // Aceeași regulă ca badge-ul de pe card: renunțarea are întâietate față de status.
+    // Aceeași regulă ca pe card: ieșirea din lucru are întâietate față de status.
     case 'renuntate':
-      return Boolean(c.releasedAt);
+      return isOut(c);
     case 'aprobare':
-      return !c.releasedAt && !c.approved;
+      return !isOut(c) && !c.approved;
     default:
-      return !c.releasedAt && c.approved && c.firmStatus === view;
+      return !isOut(c) && c.approved && c.firmStatus === view;
   }
 }
 
 const VIEWS: { id: View; label: string }[] = [
   { id: 'aprobare', label: 'Așteaptă apelul' },
   ...CLAIM_STATUSES.map((s) => ({ id: s as View, label: CLAIM_STATUS_LABELS[s] })),
-  { id: 'renuntate', label: 'Renunțate' },
+  { id: 'renuntate', label: 'Închise sau renunțate' },
 ];
 
 const claimKey = (c: PortalClaim) => `${c.leadId}-${c.claimTimestamp}`;
@@ -248,12 +253,6 @@ export default function PortalClaimList({
 
       {rows.length > 0 ? (
         <div>
-          {/* Aceleași coloane ca rândurile din PortalClaimCard. */}
-          <div className="hidden grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_11.5rem] gap-3 px-4 pb-1.5 text-[11px] font-semibold uppercase tracking-wide text-gray-400 sm:grid">
-            <span>Cerere</span>
-            <span>Client</span>
-            <span>Status</span>
-          </div>
           {/* Card separat pe cerere, ca în „De actualizat”: un rând deschis are
               notă, mesajul clientului și cererea închisă, iar o linie nu le desparte. */}
           <div className="space-y-3">

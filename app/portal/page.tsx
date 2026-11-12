@@ -226,16 +226,17 @@ export default async function PortalPage() {
           ...claimOffers.map((o) => Date.parse(o.createdAt) || 0),
         );
         const moved = lastMoveAt > Math.max(Date.parse(c.timestamp) || 0, Date.parse(c.approvedAt) || 0);
+        const leadClosed = lead ? closedLeadNotice(lead.crmStatus, c.firmStatus) : null;
         return {
           pozeCount: photosByLead.get(c.leadId)?.length || 0,
           cuPoze: photosByLead.has(c.leadId) || Boolean(lead?.poze.trim()),
-          // Închisă de client (sau de noi) cât firma o mai avea: rândul o spune
-          // și o scoate din lucru dintr-un click, vezi closedLeadNotice.
-          leadClosed: lead && !c.releasedAt ? closedLeadNotice(lead.crmStatus, c.firmStatus) : null,
+          // Închisă de client sau de noi: cardul spune doar asta, fără nimic de
+          // făcut (din 12 nov 2026 revendicarea iese singură din lucru).
+          leadClosed,
           updatedDays: moved ? calendarAgeDays(new Date(lastMoveAt).toISOString()) : null,
           // Fără `lead_history` nu știm dacă statusul s-a mutat: mai bine nu
           // întrebăm nimic decât să întrebăm o firmă care tocmai l-a schimbat.
-          update: statusMoves
+          update: statusMoves && !leadClosed?.final
             ? claimUpdateAsk(
                 {
                   timestamp: c.timestamp,

@@ -235,20 +235,8 @@ function EllipsisLine({
   );
 }
 
-/** Ce stă pe card fără click: ce te ajută să suni și să estimezi oferta. */
-const KEY_SPECS = new Set([
-  'Vrea',
-  'Suprafață',
-  'Acoperiș',
-  'Alimentare',
-  'Baterie',
-  'Buget',
-  'Termen',
-  'Se informează',
-  'Reactivată',
-]);
-/** Peste atât, ultima miniatură devine „+N” și deschide detaliile. */
-const MAX_THUMBS = 4;
+/** Pe card, în cele trei casete. Restul specificațiilor stau la „Toate detaliile”. */
+const FACT_LABELS = new Set(['Putere', 'Buget', 'Termen']);
 
 /** Specificațiile ca text pe un rând, nu etichete: pe 375px cardul rămâne scurt. */
 function SpecLine({ specs }: { specs: { label: string; value: string }[] }) {
@@ -422,118 +410,84 @@ export default function PortalClaimCard({
   const clientName = claim.client
     ? [claim.client.nume, claim.client.companie].filter(Boolean).join(' · ')
     : '';
-  const putere = claim.specs.find((s) => s.label === 'Putere')?.value;
-  // Puterea e deja în titlu. Restul se împarte: ce te ajută să suni și să
-  // estimezi stă pe card, ce se consultă rar trece la „Toate detaliile”.
-  const keySpecs = claim.specs.filter((s) => KEY_SPECS.has(s.label));
-  const extraSpecs = claim.specs.filter((s) => s.label !== 'Putere' && !KEY_SPECS.has(s.label));
-  // Renunțate sau închise de client: nu mai e nimic de făcut, rămân pe un rând.
-  const quiet = released || Boolean(claim.leadClosed);
-  const showProject = !quiet || open;
+  const spec = (label: string) => claim.specs.find((s) => s.label === label)?.value || '';
+  // Ce caută firma dintr-o privire (Radu, 12 nov 2026): cine, unde, telefonul,
+  // statusul, apoi puterea, bugetul și termenul. Restul e la „Toate detaliile”.
+  const facts = [
+    { label: 'Putere', value: spec('Putere') },
+    { label: 'Buget', value: spec('Buget') },
+    { label: 'Termen', value: spec('Termen') },
+  ];
+  const extraSpecs = claim.specs.filter((s) => !FACT_LABELS.has(s.label));
+  // Închisă de client: firma a primit email și revendicarea iese singură din
+  // lucru. Cardul o spune, fără butoane de apăsat.
+  const closedFinal = Boolean(claim.leadClosed?.final);
+  const done = released || closedFinal;
   const photos = claim.client?.pozeUrcate ?? [];
-  const thumbsShown = showProject && photos.length > 0;
-  const fitsAll = open || photos.length <= MAX_THUMBS;
-  const shownPhotos = fitsAll ? photos : photos.slice(0, MAX_THUMBS - 1);
-  const morePhotos = photos.length - shownPhotos.length;
-  const place = claim.client ? claim.client.adresa || claim.client.localitate : '';
+  const photoCount = photos.length || claim.pozeCount;
+  const place = claim.client ? claim.client.adresa || claim.client.localitate : claim.judet;
   const hasDetails =
     extraSpecs.length > 0 ||
     claim.client !== null ||
     claim.approved ||
     notes.length > 0 ||
     Boolean(claim.mesaj) ||
-    (released && Boolean(claim.releaseReason)) ||
-    (quiet && keySpecs.length > 0);
-  const photosLabel = `${
-    claim.pozeCount === 1 ? 'O poză' : claim.pozeCount > 1 ? `${claim.pozeCount} poze` : 'Poze'
-  } de la client${claim.client ? '' : ', le vezi după confirmare'}`;
-  // `whitespace-nowrap`: pe 375px eticheta se rupea în două rânduri.
-  const badge = 'inline-block whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-semibold';
+    (released && Boolean(claim.releaseReason));
+  const pill = 'flex w-full items-center justify-center rounded-lg border px-3 py-2 text-sm font-medium';
 
   return (
-    <div className={`relative px-3 py-3 sm:px-4 ${released ? 'opacity-70' : ''}`}>
-      {/* Pe telefon titlul ia tot rândul, iar dedesubt stau „Sună” și statusul,
-          acțiunile pentru care intră firma în portal. Pe laptop, coloane. */}
-      <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_11.5rem] sm:items-start sm:gap-3">
-        <div className="col-span-2 min-w-0 sm:col-span-1">
-          <h3 className="text-sm font-semibold leading-snug text-gray-900">
-            <button type="button" onClick={toggle} className="text-left hover:underline">
-              {claim.tipLabel}
-              {claim.judet ? ` · ${claim.judet}` : ''}
-              {putere ? ` · ${putere}` : ''}
-              {/* Doar când miniaturile nu stau pe card: înainte de confirmare,
-                  pe cererile închise sau cu pozele venite pe alt drum. */}
-              {claim.cuPoze && !thumbsShown && (
-                <span
-                  title={photosLabel}
-                  aria-label={photosLabel}
-                  className="ml-2 inline-flex items-center gap-1 align-[-1px] text-xs font-medium text-gray-500"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-3.5 w-3.5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M3 8.8A1.8 1.8 0 0 1 4.8 7h1.9l1.4-2h7.8l1.4 2h1.9A1.8 1.8 0 0 1 21 8.8v8.4A1.8 1.8 0 0 1 19.2 19H4.8A1.8 1.8 0 0 1 3 17.2z" />
-                    <circle cx="12" cy="13" r="3.2" />
-                  </svg>
-                  {claim.pozeCount > 0 && claim.pozeCount}
-                </span>
-              )}
-            </button>
+    <div className={`px-4 py-4 sm:px-5 ${done ? 'opacity-75' : ''}`}>
+      {/* Cine și unde sus. Statusul stă în dreapta sus pe laptop, iar pe telefon
+          coboară lângă butonul de apel, ca adresa să aibă tot rândul. */}
+      <div className="grid grid-cols-[minmax(0,1fr)_10rem] items-center gap-x-3 gap-y-3 sm:grid-cols-[minmax(0,1fr)_12rem] sm:items-start">
+        <div className="col-span-2 min-w-0 sm:col-span-1 sm:col-start-1 sm:row-start-1">
+          <h3 className="text-base font-semibold leading-snug text-gray-900">
+            {clientName || <span className="font-medium text-gray-500">Datele clientului, după confirmare</span>}
           </h3>
-          <p className="mt-0.5 text-xs text-gray-400">
-            {clientName && <span className="sm:hidden">{clientName} · </span>}
-            revendicat {fmtDate(claim.claimedAt)}
-            {/* Pe rândurile din „De actualizat” zilele le spune deja întrebarea. */}
-            {claim.updatedDays !== null && (!ask || acted) && ` · ${updatedLabel(claim.updatedDays)}`}
-          </p>
-        </div>
-
-        <div className="min-w-0">
-          {clientName && (
-            <p className="mb-1 hidden truncate text-sm text-gray-800 sm:block" title={clientName}>
-              {clientName}
-            </p>
-          )}
-          {claim.client && (
-            <a
-              href={`tel:${claim.client.telefon.replace(/\s/g, '')}`}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3.5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-700 sm:px-2.5 sm:py-1 sm:text-xs"
-            >
-              <svg
-                className="h-4 w-4 sm:h-3.5 sm:w-3.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-                aria-hidden="true"
-              >
-                <path
+          {place && (
+            <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm text-gray-600">
+              <span className="inline-flex min-w-0 items-start gap-1">
+                <svg
+                  viewBox="0 0 24 24"
+                  className="mt-0.5 h-4 w-4 shrink-0 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>
-              Sună<span className="hidden sm:inline"> {claim.client.telefon}</span>
-            </a>
+                  aria-hidden="true"
+                >
+                  <path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z" />
+                  <circle cx="12" cy="9.5" r="2.5" />
+                </svg>
+                <span>{place}</span>
+              </span>
+              {claim.client?.hartaUrl && (
+                <a
+                  href={claim.client.hartaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent('portal_harta_deschisa', { sursa })}
+                  className="font-medium text-primary-dark hover:underline"
+                >
+                  Satelit ↗
+                </a>
+              )}
+            </p>
           )}
         </div>
 
-        {/* Două stări diferite, nu una: până la aprobare arătăm unde suntem NOI
-            (apelul de confirmare), după aprobare unde e FIRMA cu clientul. */}
-        <div className="min-w-0">
-          {released ? (
-            <span className={`${badge} bg-gray-100 text-gray-500`}>
+        {/* Până la aprobare arătăm unde suntem NOI (apelul de confirmare), după
+            aprobare unde e FIRMA cu clientul. */}
+        <div className="col-start-2 row-start-2 sm:row-start-1">
+          {closedFinal ? (
+            <span className={`${pill} border-gray-200 bg-gray-50 text-gray-600`}>Închisă de client</span>
+          ) : released ? (
+            <span className={`${pill} border-gray-200 bg-gray-50 text-gray-500`}>
               Renunțat · {fmtDate(claim.releasedAt)}
             </span>
           ) : !claim.approved ? (
-            <span className={`${badge} bg-amber-50 text-amber-700`}>Așteaptă apelul</span>
+            <span className={`${pill} border-amber-200 bg-amber-50 text-amber-800`}>Așteaptă apelul</span>
           ) : (
             <div className={`relative ${statusBusy ? 'pointer-events-none opacity-60' : ''}`}>
               <span className="pointer-events-none absolute left-2.5 top-1/2 z-10 -translate-y-1/2">
@@ -551,25 +505,118 @@ export default function PortalClaimCard({
             </div>
           )}
         </div>
+
+        {claim.client && !done && (
+          <div className="col-start-1 row-start-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+            <a
+              href={`tel:${claim.client.telefon.replace(/\s/g, '')}`}
+              className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-3.5 py-2 text-sm font-semibold text-white transition-colors hover:bg-emerald-700"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d={PHONE_PATH} />
+              </svg>
+              {claim.client.telefon}
+            </a>
+            {claim.intervalApel && (
+              <span className="text-xs text-gray-500">Preferă să fie sunat: {claim.intervalApel}</span>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Sub buton, nu printre detalii: e ultima informație pe care o vrei citită
-          înainte de a apăsa. */}
-      {claim.client && claim.intervalApel && !released && (
-        <p className="mt-1.5 text-xs font-medium text-emerald-700">
-          Clientul a cerut să fie sunat: {claim.intervalApel}
+      {/* Puterea, bugetul și termenul: trei casete egale, citite dintr-o privire. */}
+      <dl className="mt-3 grid grid-cols-3 divide-x divide-border overflow-hidden rounded-lg border border-border bg-surface">
+        {facts.map((f) => (
+          <div key={f.label} className="min-w-0 px-3 py-2">
+            <dt className="text-[11px] font-medium uppercase tracking-wide text-gray-400">{f.label}</dt>
+            <dd className="mt-0.5 text-sm font-semibold leading-snug text-gray-900">{f.value || '–'}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <p className="mt-2.5 text-xs text-gray-500">
+        {claim.tipLabel}
+        {claim.client ? ` · ${claim.judet}` : ''} · revendicat {fmtDate(claim.claimedAt)}
+        {claim.updatedDays !== null && !done && (!ask || acted) && ` · ${updatedLabel(claim.updatedDays)}`}
+      </p>
+
+      {/* Pozele și mesajul stau la „Toate detaliile”; pe cardul strâns, doar
+          semnul că există, cu numărul de poze (Radu, 12 nov 2026). */}
+      {(claim.cuPoze || claim.mesaj) && (
+        <div className="mt-2 flex flex-wrap gap-2">
+          {claim.cuPoze && (
+            <button
+              type="button"
+              onClick={toggle}
+              title={claim.client ? 'Vezi pozele' : 'Pozele le vezi după confirmare'}
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-border bg-white px-2.5 py-1 text-xs font-medium text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-3.5 w-3.5 text-gray-500"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 8.8A1.8 1.8 0 0 1 4.8 7h1.9l1.4-2h7.8l1.4 2h1.9A1.8 1.8 0 0 1 21 8.8v8.4A1.8 1.8 0 0 1 19.2 19H4.8A1.8 1.8 0 0 1 3 17.2z" />
+                <circle cx="12" cy="13" r="3.2" />
+              </svg>
+              {photoCount > 0 ? (photoCount === 1 ? '1 poză' : `${photoCount} poze`) : 'Poze'}
+            </button>
+          )}
+          {claim.mesaj && (
+            <button
+              type="button"
+              onClick={toggle}
+              title="Vezi mesajul clientului"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-border bg-white px-2.5 py-1 text-xs font-medium text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-3.5 w-3.5 text-gray-500"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+              </svg>
+              Mesaj
+            </button>
+          )}
+        </div>
+      )}
+
+      {closedFinal && claim.leadClosed && (
+        <p className="mt-2 text-sm text-gray-600">
+          {claim.leadClosed.text} Am scos-o din lucru, nu mai e nevoie să suni.
+        </p>
+      )}
+      {claim.leadClosed && !claim.leadClosed.final && !released && (
+        <p className="mt-2 text-sm text-gray-600">{claim.leadClosed.text}</p>
+      )}
+
+      {ask && !done && !justReleased && (
+        <p className={`mt-2 text-[13px] font-medium ${acted ? 'text-emerald-700' : 'text-amber-800'}`}>
+          {acted ? 'Am notat, mulțumim.' : askText(ask)}
         </p>
       )}
 
-      {ask &&
-        !justReleased &&
-        (acted ? (
-          <p className="mt-2 text-[13px] font-medium text-emerald-700">Am notat, mulțumim.</p>
-        ) : (
-          <p className="mt-2 text-[13px] font-medium text-amber-800">{askText(ask)}</p>
-        ))}
-
-      {!claim.client && !released && (
+      {!claim.client && !done && (
         <p className="mt-2 text-xs leading-relaxed text-gray-500">
           E prima ta cerere de la noi: te sunăm o dată pentru confirmare și datele clientului apar
           aici. De la a doua cerere se deblochează pe loc, fără telefon.
@@ -582,26 +629,6 @@ export default function PortalClaimCard({
         </p>
       )}
       {statusError && <p className="mt-2 text-xs text-red-600">{statusError}</p>}
-
-      {/* Cererea s-a închis cât firma o avea în lucru: spus clar, pe rândul
-          închis, cu ieșirea dintr-un click. Firma a primit și email. */}
-      {claim.leadClosed && !released && (
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-lg border border-gray-300 bg-gray-50 px-3 py-2.5">
-          <p className="text-sm text-gray-800">
-            <span className="font-semibold">Cererea s-a închis.</span> {claim.leadClosed.text} Nu mai e nevoie
-            să suni.
-          </p>
-          <button
-            type="button"
-            disabled={releaseBusy}
-            onClick={() => claim.leadClosed && void sendRelease(claim.leadClosed.motivId, '')}
-            className="shrink-0 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-800 hover:border-gray-400 disabled:opacity-60"
-          >
-            {releaseBusy ? 'Se scoate...' : 'Scoate-o din lucru'}
-          </button>
-          {releaseError && !releaseOpen && <p className="w-full text-xs text-red-600">{releaseError}</p>}
-        </div>
-      )}
 
       {releaseOpen && !released && (
         <form onSubmit={release} className="mt-3 space-y-2 rounded-lg border border-border bg-surface p-3">
@@ -669,31 +696,62 @@ export default function PortalClaimCard({
         </p>
       )}
 
-      {/* Proiectul, direct pe card (Radu, 9 nov 2026): „deschide detaliile” era
-          cea mai folosită acțiune din portal, deci ce se căuta acolo (poze,
-          acoperiș, specificații, mesajul clientului) nu mai cere click. */}
-      {showProject && (keySpecs.length > 0 || claim.client || claim.mesaj) && (
-        <div className="mt-3 space-y-2.5">
-          {keySpecs.length > 0 && <SpecLine specs={keySpecs} />}
-          {claim.client && (place || claim.client.hartaUrl) && (
-            <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-gray-700">
-              {place && <span>{place}</span>}
-              {claim.client.hartaUrl && (
-                <a
-                  href={claim.client.hartaUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackEvent('portal_harta_deschisa', { sursa })}
-                  className="inline-flex items-center gap-1 font-medium text-primary-dark hover:underline"
-                >
-                  Vezi acoperișul din satelit ↗
-                </a>
-              )}
-            </p>
+      {/* Notele noi intră primele în listă, deci prima e ultima scrisă. */}
+      {notes.length > 0 && !open && !done && (
+        <EllipsisLine
+          label={`Nota ta${notes[0].date ? `, ${notes[0].date}` : ''}`}
+          text={notes[0].text}
+          onClick={toggle}
+        />
+      )}
+
+      {/* Mereu la vedere pe cererile în lucru (Radu, 2 și 3 nov 2026): un click
+          în plus înseamnă note nescrise. */}
+      {!done && (
+        <form onSubmit={addNote} className="mt-3 flex gap-2">
+          <input
+            type="text"
+            value={noteText}
+            onChange={(e) => setNoteText(e.target.value)}
+            placeholder="Notă: am sunat, nu răspunde, revin mâine"
+            aria-label="Notă nouă"
+            className="min-w-0 flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+          />
+          {noteText.trim() && (
+            <Button type="submit" variant="outline" disabled={noteBusy}>
+              {noteBusy ? '...' : 'Adaugă'}
+            </Button>
           )}
+        </form>
+      )}
+      {noteError && <p className="mt-1 text-xs text-red-600">{noteError}</p>}
+
+      {hasDetails && (
+        <button
+          type="button"
+          onClick={toggle}
+          aria-expanded={open}
+          className="mt-2.5 inline-flex cursor-pointer items-center gap-1 rounded text-xs font-medium text-gray-500 transition-colors hover:text-gray-900"
+        >
+          {open ? 'Ascunde detaliile' : 'Toate detaliile'}
+          <svg
+            className={`h-3 w-3 transition-transform ${open ? 'rotate-180' : ''}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            aria-hidden="true"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      )}
+
+      {open && (
+        <div className="mt-2 space-y-3 border-t border-border pt-3">
           {photos.length > 0 && claim.client && (
-            <ul className="flex flex-wrap gap-1.5" aria-label={`Poze de la client (${photos.length})`}>
-              {shownPhotos.map((poza) => {
+            <ul className="flex flex-wrap gap-2" aria-label={`Poze de la client (${photos.length})`}>
+              {photos.map((poza) => {
                 const src = `/api/portal/poza?cerere=${encodeURIComponent(
                   claim.leadId,
                 )}&poza=${encodeURIComponent(poza.pathname)}`;
@@ -704,24 +762,12 @@ export default function PortalClaimCard({
                         src={src}
                         alt={poza.fileName || 'Poză de la client'}
                         loading="lazy"
-                        className="h-16 w-16 rounded-md border border-border object-cover transition-opacity hover:opacity-80"
+                        className="h-24 w-24 rounded-lg border border-border object-cover transition-opacity hover:opacity-80"
                       />
                     </a>
                   </li>
                 );
               })}
-              {morePhotos > 0 && (
-                <li>
-                  <button
-                    type="button"
-                    onClick={toggle}
-                    aria-label={`Încă ${morePhotos} poze`}
-                    className="flex h-16 w-16 items-center justify-center rounded-md border border-border bg-surface text-sm font-semibold text-gray-600 transition-colors hover:bg-gray-100"
-                  >
-                    +{morePhotos}
-                  </button>
-                </li>
-              )}
             </ul>
           )}
           {claim.client?.poze && (
@@ -739,44 +785,14 @@ export default function PortalClaimCard({
           {claim.client?.pozePeEmail && (
             <p className="text-[13px] text-gray-500">Clientul a trimis poze pe email, le adăugăm aici.</p>
           )}
-          {/* Trei rânduri ajung de obicei; restul, la „Toate detaliile”. */}
+          {claim.cuPoze && !claim.client && (
+            <p className="text-[13px] text-gray-500">Pozele de la client le vezi după confirmare.</p>
+          )}
           {claim.mesaj && (
-            <p
-              className={`whitespace-pre-line break-words border-l-2 border-primary pl-2.5 text-[13px] leading-relaxed text-gray-800 ${
-                open ? '' : 'line-clamp-3'
-              }`}
-            >
-              <span className="font-medium text-amber-800">Mesajul clientului:</span> {claim.mesaj}
+            <p className="whitespace-pre-line break-words text-sm leading-relaxed text-gray-800">
+              <span className="text-gray-400">Mesajul clientului:</span> {claim.mesaj}
             </p>
           )}
-        </div>
-      )}
-
-      {/* Text, nu o săgeată în colț: lângă săgeata statusului cele două se
-          confundau, iar una deschide o listă, cealaltă cardul. */}
-      {hasDetails && (
-        <button
-          type="button"
-          onClick={toggle}
-          aria-expanded={open}
-          className="mt-2 inline-flex items-center gap-1 rounded text-xs font-medium text-gray-500 transition-colors hover:text-gray-900"
-        >
-          {open ? 'Ascunde detaliile' : quiet ? 'Detalii' : 'Toate detaliile'}
-          <svg
-            className={`h-3 w-3 transition-transform ${open ? 'rotate-180' : ''}`}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2.5}
-            aria-hidden="true"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-      )}
-
-      {open && (
-        <div className="mt-2 space-y-3 border-t border-border pt-3">
           {extraSpecs.length > 0 && <SpecLine specs={extraSpecs} />}
           {claim.client?.email && (
             <p className="text-sm">
@@ -785,21 +801,24 @@ export default function PortalClaimCard({
               </a>
             </p>
           )}
-          {claim.approved && !released && (
+          {done && claim.client && (
+            <p className="text-sm text-gray-600">Telefon: {claim.client.telefon}</p>
+          )}
+          {claim.approved && !done && (
             <p className="text-xs text-gray-400">
               {CLAIM_STATUS_LABELS[status]}: {CLAIM_STATUS_HINTS[status]}
               {status === 'ofertat' && claim.offeredAt ? ` · marcat pe ${fmtDate(claim.offeredAt)}` : ''}
             </p>
           )}
-          {claim.approved && !released && (
+          {claim.approved && !done && (
             <PortalOfferBox leadId={claim.leadId} offers={claim.offers} canSend={claim.canSendOffer} />
           )}
           {released && claim.releaseReason && (
             <div className="rounded-lg border border-border bg-surface px-4 py-3 text-sm text-gray-500">
-              <span className="text-gray-400">Motivul renunțării:</span> {claim.releaseReason}
+              <span className="text-gray-400">Motivul:</span> {claim.releaseReason}
             </div>
           )}
-          {/* Jurnalul de note — vizibil și pentru noi în CRM, deci ce scrii aici chiar ajută la realocare. */}
+          {/* Jurnalul de note, vizibil și pentru noi în CRM. */}
           {notes.length > 0 && (
             <div>
               <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
@@ -820,35 +839,6 @@ export default function PortalClaimCard({
           )}
         </div>
       )}
-      {/* Notele noi intră primele în listă, deci prima e ultima scrisă. */}
-      {notes.length > 0 && !open && !released && (
-        <EllipsisLine
-          label={`Nota ta${notes[0].date ? `, ${notes[0].date}` : ''}`}
-          text={notes[0].text}
-          onClick={toggle}
-        />
-      )}
-      {/* Mereu la vedere, jos pe rând (Radu, 2 și 3 nov 2026): un click în plus
-          înseamnă note nescrise. Butonul apare doar când ai ce trimite: pe 375px
-          lângă câmp lăsa ~198px de scris, iar pe zece rânduri devenea zgomot. */}
-      {!released && (
-        <form onSubmit={addNote} className="mt-2.5 flex gap-2">
-          <input
-            type="text"
-            value={noteText}
-            onChange={(e) => setNoteText(e.target.value)}
-            placeholder="Notă: am sunat, nu răspunde, revin mâine"
-            aria-label="Notă nouă"
-            className="min-w-0 flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
-          />
-          {noteText.trim() && (
-            <Button type="submit" variant="outline" disabled={noteBusy}>
-              {noteBusy ? '...' : 'Adaugă'}
-            </Button>
-          )}
-        </form>
-      )}
-      {noteError && <p className="mt-1 text-xs text-red-600">{noteError}</p>}
     </div>
   );
 }

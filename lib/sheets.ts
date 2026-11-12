@@ -1339,6 +1339,8 @@ export async function releaseClaim(
   leadId: string,
   reason: string,
   proba = false,
+  /** `client`: cererea închisă de client scoate revendicarea singură din lucru. */
+  by: 'firma' | 'client' = 'firma',
 ): Promise<LeadClaim> {
   const sheet = proba ? PROBA_CLAIMS_SHEET : CLAIMS_SHEET;
   const { row, sheetRow } = await findClaimRow(claimTimestamp, leadId, sheet);
@@ -1355,8 +1357,8 @@ export async function releaseClaim(
       field: 'stare_firma',
       from: before,
       to: 'pierdut',
-      by: 'firma',
-      detail: `a renunțat: ${reason}`,
+      by,
+      detail: by === 'client' ? reason : `a renunțat: ${reason}`,
     });
   }
   row[5] = 'pierdut';

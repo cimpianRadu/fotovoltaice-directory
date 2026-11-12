@@ -25,7 +25,13 @@ export const MIN_OTHER_REASON_LENGTH = 10;
 export interface ClosedLeadNotice {
   /** Ce s-a întâmplat, spus explicit, pe rândul din portal. */
   text: string;
-  /** Motivul cu care „Scoate-o din lucru" eliberează locul, fără să mai întrebe. */
+  /**
+   * Clientul a spus-o el (a ales altă firmă, a semnat cu alta, nu mai face
+   * lucrarea): revendicarea se scoate singură din lucru, firma doar află.
+   * `false` la „inactiva”: n-a răspuns nouă, dar poate răspunde firmei.
+   */
+  final: boolean;
+  /** Motivul de renunțare care se potrivește cu închiderea. */
   motivId: ReleaseReasonId;
 }
 
@@ -38,13 +44,13 @@ export function closedLeadNotice(crmStatus: string, firmStatus: string): ClosedL
     case 'castigata':
       return firmStatus === 'castigat'
         ? null
-        : { text: 'Clientul a semnat cu altă firmă de pe platformă.', motivId: 'ales_alta' };
+        : { text: 'Clientul a semnat cu altă firmă de pe platformă.', motivId: 'ales_alta', final: true };
     case 'altundeva':
-      return { text: 'Clientul a ales altă firmă.', motivId: 'ales_alta' };
+      return { text: 'Clientul a ales altă firmă.', motivId: 'ales_alta', final: true };
     case 'renuntat':
-      return { text: 'Clientul nu mai face lucrarea.', motivId: 'renunta' };
+      return { text: 'Clientul nu mai face lucrarea.', motivId: 'renunta', final: true };
     case 'inactiva':
-      return { text: 'Clientul nu a mai răspuns la emailurile noastre.', motivId: 'nu_raspunde' };
+      return { text: 'Clientul nu a mai răspuns la emailurile noastre.', motivId: 'nu_raspunde', final: false };
     default:
       return null;
   }

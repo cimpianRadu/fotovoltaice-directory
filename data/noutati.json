@@ -1,6 +1,13 @@
 [
   {
     "data": "2026-11-12",
+    "titlu": "Cererile tale, mai ușor de citit",
+    "text": "Fiecare cerere arată sus numele clientului, localitatea, telefonul și statusul, iar dedesubt puterea, bugetul și termenul. Pozele și mesajul clientului se deschid dintr-un click. Când un client își închide cererea, afli pe email, iar cererea iese singură din lucru și îți eliberează locul, fără să mai apeși nimic.",
+    "link": "/portal",
+    "linkText": "Deschide portalul"
+  },
+  {
+    "data": "2026-11-12",
     "titlu": "Aceeași cerere nu mai vine de două ori",
     "text": "Când un client trimite o cerere ca să se informeze și confirmă în aceeași zi că vrea oferte, nu mai primești al doilea email pentru ea. Termenul nou îl vezi direct pe cardul din /cereri și din portal.",
     "link": "/cereri",

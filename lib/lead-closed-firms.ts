@@ -8,7 +8,7 @@
 
 import 'server-only';
 import { PORTAL_BASE_URL, escapeHtml, sendEmail } from './email';
-import { getClaims, isLeadClosed, type NewLead } from './sheets';
+import { getClaims, isLeadClosed, releaseClaim, type NewLead } from './sheets';
 import { getProjectTypeLabel } from './utils-shared';
 
 export type ClientClosure = 'renuntat' | 'altundeva' | 'castigata';
@@ -19,8 +19,17 @@ const HEADLINE: Record<ClientClosure, string> = {
   castigata: 'Clientul a semnat cu altă firmă de pe platformă',
 };
 
+/** Motivul scris pe revendicarea scoasă singură din lucru, ca în portal și în rezumatul de seară. */
+const RELEASE_REASON: Record<ClientClosure, string> = {
+  renuntat: 'Închisă de client: nu mai face lucrarea.',
+  altundeva: 'Închisă de client: a ales altă firmă.',
+  castigata: 'Închisă de client: a semnat cu altă firmă de pe platformă.',
+};
+
 /**
- * Anunță firmele cu revendicare activă că cererea s-a închis. `lead` e cererea
+ * Anunță firmele cu revendicare activă că cererea s-a închis și le scoate
+ * revendicarea din lucru, cu locul eliberat (Radu, 12 nov 2026: „dacă s-a
+ * închis, firma trebuie notificată și gata”, fără buton de apăsat). `lead` e cererea
  * de DINAINTEA închiderii: dacă era deja închisă (al doilea click pe același
  * link), nu mai pleacă nimic. Firma aleasă (`winnerClaimTs`) nu primește email.
  * Nu aruncă: închiderea e deja salvată și nu trebuie să pice din cauza asta.
@@ -38,11 +47,18 @@ export async function notifyFirmsClientClosed(
         !c.releasedAt &&
         !c.proba &&
         c.timestamp !== winnerClaimTs &&
-        c.firmStatus !== 'castigat' &&
-        c.email,
+        c.firmStatus !== 'castigat',
     );
+    for (const claim of claims) {
+      try {
+        await releaseClaim(claim.timestamp, claim.leadId, RELEASE_REASON[outcome], false, 'client');
+      } catch (err) {
+        console.error('[cerere închisă] scoaterea din lucru:', claim.timestamp, err);
+      }
+    }
     // O firmă cu două revendicări pe aceeași cerere (doi colegi) primește un singur email.
-    const recipients = [...new Map(claims.map((c) => [c.email.toLowerCase(), c])).values()];
+    const withEmail = claims.filter((c) => c.email);
+    const recipients = [...new Map(withEmail.map((c) => [c.email.toLowerCase(), c])).values()];
     const summary = [
       getProjectTypeLabel(lead.tipProiect),
       [lead.localitate, lead.judet].filter(Boolean).join(', '),
@@ -81,7 +97,7 @@ function closedEmailHtml({ headline, summary, client }: { headline: string; summ
         la cererea clientului. Nu mai e nevoie să-l suni.
       </p>
       <p style="font-size:14px;color:#374151;margin:0 0 16px">
-        În portal o scoți din lucru dintr-un click și ți se eliberează locul pentru o cerere nouă.
+        Am scos-o din lucru în portal, iar locul ți s-a eliberat pentru o cerere nouă.
       </p>
       <div style="text-align:center">
         <a href="${PORTAL_BASE_URL}/portal" style="display:inline-block;padding:12px 24px;background:#f59e0b;color:#ffffff;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none">Deschide portalul</a>
