@@ -6,6 +6,7 @@
 
 import { useRef, useState } from 'react';
 import PortalOfferBox from './PortalOfferBox';
+import RezumatFirma from '@/components/asistent/RezumatFirma';
 import Button from '@/components/ui/Button';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 import { trackEvent } from '@/lib/analytics';
@@ -551,8 +552,10 @@ export default function PortalClaimCard({
 
       {/* Pozele și mesajul stau la „Toate detaliile”; pe cardul strâns, doar
           semnul că există, cu numărul de poze (Radu, 12 nov 2026). */}
-      {(claim.cuPoze || claim.mesaj) && (
-        <div className="mt-2 flex flex-wrap gap-2">
+      {/* Plus pastila „Precalificare” (Watt AI, pilot 12 nov 2026), în același
+          rând și cu aceeași formă. Rândul se ascunde singur când e gol: pastila
+          vine din client și lipsește pe cererile fără sesiune. */}
+      <div className="mt-2 flex flex-wrap gap-2 empty:hidden">
           {claim.cuPoze && (
             <button
               type="button"
@@ -598,8 +601,8 @@ export default function PortalClaimCard({
               Mesaj
             </button>
           )}
+          <RezumatFirma leadId={claim.leadId} sursa="portal" />
         </div>
-      )}
 
       {closedFinal && claim.leadClosed && (
         <p className="mt-2 text-sm text-gray-600">

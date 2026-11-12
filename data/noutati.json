@@ -1,6 +1,13 @@
 [
   {
     "data": "2026-11-12",
+    "titlu": "Cererile de baterie vin precalificate: invertorul și fazarea, confirmate",
+    "text": "La cererile de baterie și extindere, clientul confirmă după trimitere, cu Watt AI, asistentul nostru, ce întrebi oricum la primul telefon: modelul invertorului, fazarea, consumul, de ce vrea capacitatea respectivă. Cererile cu „Precalificare” pe card au aceste detalii; după ce preiei cererea, le deschizi de acolo, împreună cu ce nu se potrivește și ce vrea clientul să afle de la tine. Spune-ne din fereastră dacă te ajută; o poți opri din portal.",
+    "link": "/cereri",
+    "linkText": "Vezi cererile"
+  },
+  {
+    "data": "2026-11-12",
     "titlu": "Cererile tale, mai ușor de citit",
     "text": "Fiecare cerere arată sus numele clientului, localitatea, telefonul și statusul, iar dedesubt puterea, bugetul și termenul. Pozele și mesajul clientului se deschid dintr-un click. Când un client își închide cererea, afli pe email, iar cererea iese singură din lucru și îți eliberează locul, fără să mai apeși nimic.",
     "link": "/portal",

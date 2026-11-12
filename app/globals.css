@@ -42,6 +42,23 @@ html {
   display: none;
 }
 
+/* Watt AI (pilot 12 nov 2026): bula stă în colțul din dreapta-jos, unde pe
+   desktop e caruselul de parteneri. Cât Watt e pe pagină, caruselul se ascunde. */
+html[data-watt] [data-partner-carousel] {
+  display: none !important;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Bottom sheet (filtre pe mobil) */
 @keyframes sheetUp {
   from {

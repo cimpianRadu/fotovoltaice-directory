@@ -3,6 +3,8 @@ import Link from 'next/link';
 import AccountLeadView from '@/components/cont/AccountLeadView';
 import LeadDetailsChecklist from '@/components/cont/LeadDetailsChecklist';
 import LoginForm from '@/components/cont/LoginForm';
+import AsistentCerere from '@/components/asistent/AsistentCerere';
+import { ASISTENT_TIPURI } from '@/lib/asistent-shared';
 import { createLeadPhotoToken } from '@/lib/lead-photos';
 import { getLeadLocation } from '@/lib/lead-location';
 import { leadForViewer, loadAccountLead, recordLeadView } from '@/lib/client-account';
@@ -68,13 +70,20 @@ export default async function ContCererePage({ params }: Props) {
         readyUrl={data.informez ? clientLinkUrl(lead.timestamp, 'actualizare') : undefined}
         details={
           detailsToken ? (
-            <LeadDetailsChecklist
-              leadId={lead.timestamp}
-              token={detailsToken}
-              photoCount={Number(lead.poze.match(/\d+/)?.[0]) || 0}
-              adresa={location?.adresa ?? ''}
-              coordonate={location?.coordonate ?? ''}
-            />
+            <div className="space-y-6">
+              <LeadDetailsChecklist
+                leadId={lead.timestamp}
+                token={detailsToken}
+                photoCount={Number(lead.poze.match(/\d+/)?.[0]) || 0}
+                adresa={location?.adresa ?? ''}
+                coordonate={location?.coordonate ?? ''}
+              />
+              {/* Asistentul (pilot 12 nov 2026), cu aceeași conversație ca pe
+                  ecranul de confirmare: omul o poate relua de aici. */}
+              {(ASISTENT_TIPURI as readonly string[]).includes(lead.tipLucrare) && (
+                <AsistentCerere leadId={lead.timestamp} token={detailsToken} sursa="cont" />
+              )}
+            </div>
           ) : undefined
         }
       />

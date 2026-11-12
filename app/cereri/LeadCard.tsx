@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Input from '@/components/ui/Input';
 import PhoneInput, { phoneInputOk } from '@/components/ui/PhoneInput';
 import Button from '@/components/ui/Button';
+import RezumatFirma from '@/components/asistent/RezumatFirma';
 import { trackEvent } from '@/lib/analytics';
 import { PORTAL_EMAIL_KEY } from '@/lib/portal-email-handoff';
 import { MAX_ACTIVE_CLAIMS_PER_FIRM } from '@/lib/sheets-shared';
@@ -981,7 +982,13 @@ export default function LeadCard({
         <span className="shrink-0 text-xs text-gray-400">{lead.postedLabel}</span>
       </div>
 
-      <h3 className="mt-3 font-semibold text-gray-900">{lead.tipLabel}</h3>
+      {/* Precalificarea Watt AI (pilot 12 nov 2026), pe marginea din dreapta a cardului:
+          doar pentru firmele logate și doar pe cererile cu sesiune. Conținutul
+          îl vede doar firma care a preluat cererea. */}
+      <div className="mt-3 flex items-start justify-between gap-3">
+        <h3 className="min-w-0 font-semibold text-gray-900">{lead.tipLabel}</h3>
+        {me && <RezumatFirma leadId={lead.id} sursa="cereri" className="max-w-[65%]" />}
+      </div>
       <p className="mt-1 text-sm text-gray-600">{details.join(' · ')}</p>
       {estimates.length > 0 && (
         <p

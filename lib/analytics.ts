@@ -83,7 +83,19 @@ type EventName =
   | 'noutati_click'
   // Butonul flotant care duce la calculatorul de baterii. `source` separă
   // varianta de desktop de cea de mobil, ca să se vadă care dintre ele produce.
-  | 'battery_fab_click';
+  | 'battery_fab_click'
+  // Asistentul de după cerere (pilot 12 nov 2026). `sursa` = confirmare | cont.
+  // Deschis = cardul s-a arătat; început = primul mesaj; gata = „Am terminat”.
+  // La firme: nota pe rezumat și oprirea/pornirea lui din portal.
+  | 'asistent_deschis'
+  | 'asistent_bula'
+  | 'asistent_inceput'
+  | 'asistent_mesaj'
+  | 'asistent_gata'
+  | 'asistent_refuzat'
+  | 'rezumat_ai_deschis'
+  | 'rezumat_ai_nota'
+  | 'rezumat_ai_setare';
 
 type EventProps = Record<string, string | number | boolean>;
 

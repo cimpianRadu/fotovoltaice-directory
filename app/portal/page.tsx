@@ -58,6 +58,7 @@ import { clientOffersLive } from '@/lib/client-account';
 import PortalClaimList from './PortalClaimList';
 import PortalCountyAlerts from './PortalCountyAlerts';
 import PortalFirmEmails from './PortalFirmEmails';
+import RezumatAiToggle from '@/components/asistent/RezumatAiToggle';
 import { MAX_FIRM_EMAILS } from '@/lib/portal-firm-emails';
 import { getCompanies } from '@/lib/utils';
 import PortalLanding from './PortalLanding';
@@ -539,6 +540,7 @@ export default async function PortalPage() {
             <>
               <PortalCountyAlerts counties={getCounties()} initial={alertCounties} />
               <PortalFirmEmails current={email} addresses={emails} max={MAX_FIRM_EMAILS} />
+              <RezumatAiToggle />
             </>
           }
         />
