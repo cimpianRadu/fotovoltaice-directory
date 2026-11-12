@@ -1,16 +1,14 @@
 'use client';
 
-// Locul lucrării, opțional, după trimiterea cererii și din contul clientului.
-// Stă după submit din același motiv ca pozele: un câmp în plus în formular
-// pierde cereri, iar o cerere fără adresă e tot o cerere. Omul poate scrie
+// Locul lucrării din contul clientului (corectare sau completare). Din 11 nov
+// 2026 adresa se cere în formular, la pasul „Zonă" (AdresaLucrareField); aici
+// rămâne pentru cererile mai vechi și pentru corecturi. Omul poate scrie
 // adresa sau poate lua locația dispozitivului, dacă e acolo.
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import { LEAD_ADDRESS_MAX, formatCoords, satelliteMapUrl } from '@/lib/lead-location-shared';
-
-/** Peste atât (raza raportată de browser), locația nu arată acoperișul potrivit. */
-const MAX_ACCURACY_M = 100;
+import { getDeviceLocation } from '@/lib/device-location';
+import { LEAD_ADDRESS_MAX, satelliteMapUrl } from '@/lib/lead-location-shared';
 
 export const LOCATION_CARD_CLASS = 'rounded-xl border border-border bg-white p-5 sm:p-6';
 
@@ -39,6 +37,7 @@ export default function LeadLocationField({
   token,
   initialAdresa = '',
   initialCoordonate = '',
+  unsaved = false,
   sursa,
   onSaved,
 }: {
@@ -46,13 +45,17 @@ export default function LeadLocationField({
   token: string;
   initialAdresa?: string;
   initialCoordonate?: string;
+  /** Valorile inițiale sunt doar o ciornă (salvarea din formular a picat). */
+  unsaved?: boolean;
   /** Unde e afișat: `confirmare` (după trimitere) sau `cont`. Doar pentru analytics. */
   sursa: 'confirmare' | 'cont';
   onSaved?: (saved: { adresa: string; coordonate: string }) => void;
 }) {
   const [adresa, setAdresa] = useState(initialAdresa);
   const [coordonate, setCoordonate] = useState(initialCoordonate);
-  const [saved, setSaved] = useState({ adresa: initialAdresa, coordonate: initialCoordonate });
+  const [saved, setSaved] = useState(
+    unsaved ? { adresa: '', coordonate: '' } : { adresa: initialAdresa, coordonate: initialCoordonate },
+  );
   const [busy, setBusy] = useState(false);
   const [locating, setLocating] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -61,32 +64,13 @@ export default function LeadLocationField({
   const hasSaved = Boolean(saved.adresa || saved.coordonate);
   const mapUrl = satelliteMapUrl({ adresa: saved.adresa, coordonate: saved.coordonate });
 
-  function useMyLocation() {
-    if (!navigator.geolocation) {
-      setError('Browserul nu poate da locația. Scrieți adresa mai sus.');
-      return;
-    }
+  async function useMyLocation() {
     setError(null);
     setLocating(true);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setLocating(false);
-        // Pe laptop locația vine din wifi sau, mai rău, din IP: poate fi la
-        // kilometri. Peste ~100 m firma s-ar uita din satelit la altă casă.
-        if (pos.coords.accuracy > MAX_ACCURACY_M) {
-          setError(
-            `Locația primită e prea aproximativă (±${Math.round(pos.coords.accuracy)} m). Scrieți adresa mai sus.`,
-          );
-          return;
-        }
-        setCoordonate(formatCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude }));
-      },
-      () => {
-        setLocating(false);
-        setError('Nu am primit locația (poate e blocată din setări). Scrieți adresa mai sus.');
-      },
-      { enableHighAccuracy: true, timeout: 15000 },
-    );
+    const res = await getDeviceLocation();
+    setLocating(false);
+    if ('coords' in res) setCoordonate(res.coords);
+    else setError(res.error);
   }
 
   async function save(e: React.FormEvent) {

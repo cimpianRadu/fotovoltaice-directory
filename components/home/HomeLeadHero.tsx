@@ -106,32 +106,37 @@ export default function HomeLeadHero({
 
   return (
     <section className="bg-gradient-to-br from-secondary-dark via-secondary to-secondary-light text-white">
-      <div className="max-w-5xl mx-auto px-4 py-6 sm:py-10">
+      {/* Pe telefon heroul e strâns (11 nov 2026, cerut de Radu): titlu mai mic,
+          carduri pe un rând cu pictograma lângă text, chipsurile comerciale pe un
+          singur rând care se derulează, iar cererile recente urcă înaintea
+          testimonialelor. Înainte, cererile începeau abia la al doilea ecran și
+          instalatorul care intra de pe telefon nu le vedea. */}
+      <div className="max-w-5xl mx-auto px-4 py-5 sm:py-10">
         <div className="text-center">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-2 sm:mb-3 leading-tight">
+          <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold mb-1.5 sm:mb-3 leading-tight">
             Primiți oferte pentru sistemul dumneavoastră fotovoltaic
             <span className="text-primary-light"> de la instalatori verificați</span>
           </h1>
-          <p className="text-sm sm:text-lg text-gray-300 mb-5 max-w-4xl mx-auto">
+          <p className="text-[13px] sm:text-lg text-gray-300 mb-4 sm:mb-5 max-w-4xl mx-auto leading-snug">
             Lăsați o cerere și o trimitem instalatorilor autorizați din zona dumneavoastră.
             Gratuit și fără obligații.
           </p>
         </div>
 
         {/* Pasul 1 al formularului, mutat în hero. Cardurile duc direct în
-            /cere-oferta cu tipul deja ales. Pe toată lățimea heroului și cu
-            pictograma lângă text de la `sm` în sus: heroul se termină mai repede. */}
+            /cere-oferta cu tipul deja ales. Pictograma stă lângă text pe orice
+            ecran: pe telefon, cu ea deasupra, cele patru carduri luau 200 px. */}
         <div>
-          <p className="text-sm sm:text-base font-semibold text-white mb-3 text-center sm:text-left">
+          <p className="text-sm sm:text-base font-semibold text-white mb-2 sm:mb-3 text-center sm:text-left">
             Ce fel de sistem aveți nevoie?
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
             {HERO_RESIDENTIAL.map((t) => (
               <Link
                 key={t.value}
                 href={hrefFor(t.value, 'rezidential')}
                 onClick={() => pick(t.value, 'rezidential')}
-                className="group flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-2.5 rounded-xl bg-white/95 hover:bg-white px-3 py-3 border border-white/40 hover:border-primary hover:-translate-y-0.5 transition-all min-h-[76px] sm:min-h-[60px] text-center"
+                className="group flex flex-row items-center justify-center gap-2 sm:gap-2.5 rounded-xl bg-white/95 hover:bg-white px-2.5 py-2 sm:px-3 sm:py-3 border border-white/40 hover:border-primary hover:-translate-y-0.5 transition-all min-h-[48px] sm:min-h-[60px] text-center"
               >
                 <span className="text-secondary group-hover:text-primary-dark transition-colors">
                   {CARD_ICONS[t.value]}
@@ -144,16 +149,18 @@ export default function HomeLeadHero({
           </div>
 
           {/* Comercialul: 5 din 62 de cereri, deci un rând de chipsuri, nu carduri.
-              Un singur rând de la `lg` în sus; pe ecrane mai înguste încap pe mai
-              multe, ca niciun tip de clădire să nu rămână ascuns într-o derulare. */}
-          <div className="mt-3 flex flex-wrap lg:flex-nowrap items-center justify-center sm:justify-start gap-2">
+              Pe telefon un singur rând care se derulează orizontal (11 nov 2026):
+              pe trei rânduri, chipsurile împingeau cererile recente sub ecran.
+              Marginile negative lasă rândul să curgă până la marginea ecranului,
+              ca ultimul chip tăiat să arate că mai urmează ceva. */}
+          <div className="mt-2.5 sm:mt-3 -mx-4 px-4 sm:mx-0 sm:px-0 flex flex-nowrap sm:flex-wrap lg:flex-nowrap items-center sm:justify-start gap-2 overflow-x-auto sm:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <span className="text-xs text-gray-400 self-center whitespace-nowrap">Pentru firmă:</span>
             {HERO_COMMERCIAL.map((t) => (
               <Link
                 key={t.value}
                 href={hrefFor(t.value, 'comercial')}
                 onClick={() => pick(t.value, 'comercial')}
-                className="text-xs sm:text-sm whitespace-nowrap text-white/90 bg-white/10 hover:bg-white/20 border border-white/15 rounded-full px-3 py-1.5 transition-colors"
+                className="shrink-0 text-xs sm:text-sm whitespace-nowrap text-white/90 bg-white/10 hover:bg-white/20 border border-white/15 rounded-full px-3 py-1.5 transition-colors"
               >
                 {heroLabel(t)}
               </Link>
@@ -161,7 +168,7 @@ export default function HomeLeadHero({
             <Link
               href="/cere-oferta?sursa=home-hero-altele"
               onClick={() => trackEvent('home_hero_project_pick', { tip: 'altele', segment: 'nespecificat' })}
-              className="text-xs sm:text-sm whitespace-nowrap text-primary-light hover:text-primary font-medium px-1 py-1.5 transition-colors"
+              className="shrink-0 text-xs sm:text-sm whitespace-nowrap text-primary-light hover:text-primary font-medium px-1 py-1.5 transition-colors"
             >
               altceva &rarr;
             </Link>
@@ -193,16 +200,21 @@ export default function HomeLeadHero({
           </div>
         </div>
 
-        {/* Testimonialele, în locul căutării din 21 sept 2026: dovada că cererea
-            ajunge la un contract semnat stă lângă formular. Căutarea după firmă
-            sau județ e acum sub parteneri, în HomeFindInstaller. */}
-        <HeroTestimonials />
+        <div className="flex flex-col">
+          {/* Testimonialele, în locul căutării din 21 sept 2026: dovada că cererea
+              ajunge la un contract semnat stă lângă formular. Căutarea după firmă
+              sau județ e acum sub parteneri, în HomeFindInstaller. Pe telefon vin
+              după cererile recente (11 nov 2026), pe desktop rămân înaintea lor. */}
+          <div className="order-2 sm:order-1">
+            <HeroTestimonials />
+          </div>
 
-        {/* Ușa firmelor, la baza heroului, din 1 nov 2026 chiar cererile: Sus ar
-            concura cu cererea clientului, care e treaba paginii; jos de tot ar fi
-            la fel de invizibilă ca linkul din subsol. Aici o vede și cine intră pe
-            brand sau după un telefon, adică exact traficul direct al homepage-ului. */}
-        {requests}
+          {/* Ușa firmelor, la baza heroului, din 1 nov 2026 chiar cererile: Sus ar
+              concura cu cererea clientului, care e treaba paginii; jos de tot ar fi
+              la fel de invizibilă ca linkul din subsol. Aici o vede și cine intră pe
+              brand sau după un telefon, adică exact traficul direct al homepage-ului. */}
+          <div className="order-1 sm:order-2">{requests}</div>
+        </div>
       </div>
     </section>
   );

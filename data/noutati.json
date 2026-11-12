@@ -7,6 +7,13 @@
     "linkText": "Vezi cererile"
   },
   {
+    "data": "2026-11-12",
+    "titlu": "Adresa exactă pe fiecare cerere nouă",
+    "text": "Cererile noi vin cu adresa montajului: strada și numărul sau locația de pe telefonul clientului. Când preiei una, o vezi în portal cu linkul spre acoperiș din satelit. Pozele acoperișului le cerem clientului înainte să trimită cererea, nu după.",
+    "link": "/portal",
+    "linkText": "Deschide portalul"
+  },
+  {
     "data": "2026-11-09",
     "titlu": "Pozele și detaliile cererii, direct pe card",
     "text": "Pe cererile la care lucrezi vezi fără niciun click pozele clientului, localitatea, acoperișul din satelit, ce își dorește, bugetul și termenul. Fiecare cerere stă în cardul ei, iar restul (emailul, consumul, istoricul notelor) e la „Toate detaliile”.",

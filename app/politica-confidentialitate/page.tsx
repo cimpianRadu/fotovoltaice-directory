@@ -15,7 +15,7 @@ export default function PoliticaConfidentialitate() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Politica de Confidențialitate</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 6 noiembrie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 12 noiembrie 2026</p>
 
         <p>
           Instalatori Fotovoltaice România (&quot;noi&quot;, &quot;site-ul&quot;) operează site-ul{' '}
@@ -29,9 +29,9 @@ export default function PoliticaConfidentialitate() {
         <ul>
           <li>
             <strong>Formularul &quot;Cere Ofertă&quot;:</strong> nume, email, telefon, descrierea proiectului,
-            locație (județ, oraș). Opțional, după trimitere sau din contul de client: poze cu
-            acoperișul și tabloul electric și adresa montajului (scrisă de dumneavoastră sau luată
-            din locația dispozitivului, doar dacă apăsați butonul și o permiteți). Pozele și adresa le
+            locație (județ, localitate) și adresa montajului (scrisă de dumneavoastră sau luată din
+            locația dispozitivului, doar dacă apăsați butonul și o permiteți). Opțional, în formular
+            sau din contul de client: poze cu acoperișul și tabloul electric. Pozele și adresa le
             vede doar firma care preia cererea, ca să vă facă oferta; nu apar pe site. Adresa o
             puteți modifica sau șterge oricând din contul de client
           </li>

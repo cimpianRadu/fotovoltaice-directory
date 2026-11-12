@@ -130,8 +130,8 @@ const HOME_FINANCING_DOT: Record<FinancingTone, string> = {
  */
 function RecentRequests({ cereri, total }: { cereri: PublicLead[]; total: number }) {
   return (
-    <div className="mt-6 pt-5 border-t border-white/10">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:mb-3">
+    <div className="mt-5 pt-4 sm:mt-6 sm:pt-5 border-t border-white/10">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-3">
         <div>
           <p className="text-xs font-semibold text-primary-light uppercase tracking-wider mb-1">
             Cereri primite recent
@@ -148,7 +148,7 @@ function RecentRequests({ cereri, total }: { cereri: PublicLead[]; total: number
           href="/cereri"
           data-umami-event="home_cereri_click"
           data-umami-event-tinta="toate"
-          className="shrink-0 self-start sm:self-auto inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors"
+          className="hidden sm:inline-flex shrink-0 items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors"
         >
           Vezi toate cererile
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -157,20 +157,23 @@ function RecentRequests({ cereri, total }: { cereri: PublicLead[]; total: number
         </Link>
       </div>
 
-      {/* Cardurile doar de la `sm` în sus: pe telefon ar împinge și mai jos slotul de
-          partener de sub hero, iar titlul și butonul spun deja ce e de văzut. */}
-      <div className="hidden sm:grid gap-3 sm:grid-cols-3">
+      {/* Cardurile și pe telefon, din 11 nov 2026 (cerut de Radu): până atunci
+          apăreau doar de la `sm`, ca să nu coboare slotul de partener, iar
+          instalatorul de pe telefon vedea un titlu fără nicio cerere sub el. Pe
+          telefon fiecare card e strâns pe două rânduri, fără eticheta de segment
+          (tipul de proiect o spune deja), iar butonul vine după carduri. */}
+      <div className="grid gap-2 sm:gap-3 sm:grid-cols-3">
         {cereri.map((c) => (
           <Link
             key={c.id}
             href={`/cereri?cerere=${encodeURIComponent(c.id)}`}
             data-umami-event="home_cereri_click"
             data-umami-event-tinta="card"
-            className="rounded-xl bg-white/5 border border-white/10 hover:border-primary/50 hover:bg-white/10 transition-all p-3"
+            className="rounded-xl bg-white/5 border border-white/10 hover:border-primary/50 hover:bg-white/10 transition-all px-3 py-2.5 sm:p-3"
           >
-            <div className="flex items-center justify-between gap-2 mb-1.5">
+            <div className="flex items-center justify-between gap-2 sm:mb-1.5">
               <span
-                className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold ${
+                className={`hidden sm:inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold ${
                   c.segment === 'rezidential'
                     ? 'bg-emerald-400/15 text-emerald-300'
                     : 'bg-primary/20 text-primary'
@@ -178,10 +181,13 @@ function RecentRequests({ cereri, total }: { cereri: PublicLead[]; total: number
               >
                 {c.segment === 'rezidential' ? 'Rezidențial' : 'Comercial'}
               </span>
-              <span className="text-xs text-white/50">{cerereAgeLabel(calendarAgeDays(c.id))}</span>
+              <p className="sm:hidden min-w-0 truncate font-semibold text-white text-sm">
+                {getProjectTypeLabel(c.tipProiect)}
+              </p>
+              <span className="shrink-0 text-xs text-white/50">{cerereAgeLabel(calendarAgeDays(c.id))}</span>
             </div>
-            <p className="font-semibold text-white text-sm">{getProjectTypeLabel(c.tipProiect)}</p>
-            <p className="text-white/60 text-sm mt-0.5">
+            <p className="hidden sm:block font-semibold text-white text-sm">{getProjectTypeLabel(c.tipProiect)}</p>
+            <p className="text-white/60 text-[13px] sm:text-sm mt-0.5">
               {[c.judet, c.putere ? `${c.putere} kW` : null, c.suprafata ? `${c.suprafata} mp` : null]
                 .filter(Boolean)
                 .join(' · ')}
@@ -206,6 +212,18 @@ function RecentRequests({ cereri, total }: { cereri: PublicLead[]; total: number
           </Link>
         ))}
       </div>
+
+      <Link
+        href="/cereri"
+        data-umami-event="home_cereri_click"
+        data-umami-event-tinta="toate"
+        className="sm:hidden mt-3 flex w-full items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-colors"
+      >
+        Vezi toate cererile
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+        </svg>
+      </Link>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 'use client';
 
-// Încărcarea pozelor de pe ecranul de confirmare. Stă DUPĂ trimitere,
-// intenționat: pe telefon un câmp de fișier înainte de submit pierde cereri,
-// iar o cerere fără poze e tot o cerere. Aici omul a convertit deja, deci nimic
-// din ce se întâmplă mai jos nu-i mai poate pierde cererea.
+// Încărcarea pozelor din contul clientului și, ca a doua șansă, de pe ecranul
+// de confirmare când o poză aleasă în formular n-a urcat. Din 11 nov 2026
+// pozele se aleg în formular, pe pasul dinaintea trimiterii (LeadPhotoPicker),
+// și urcă imediat după ce cererea e salvată, cu `uploadLeadPhoto` de mai jos.
 //
 // Fișierele urcă direct din browser în Blob, cu un token cerut de la
 // /api/leads/poze; serverul nostru nu vede fișierul. După fiecare urcare,
@@ -16,6 +16,7 @@ import {
   LEAD_PHOTO_MAX,
   LEAD_PHOTO_MAX_BYTES,
   LEAD_PHOTO_TYPES,
+  PHOTO_LIFT_PCT,
   leadPhotoPrefix,
   safePhotoName,
 } from '@/lib/lead-photos-shared';
@@ -27,21 +28,40 @@ interface Uploaded {
   preview: string;
 }
 
-function mbLabel(bytes: number): string {
+export function mbLabel(bytes: number): string {
   return `${Math.round(bytes / (1024 * 1024))} MB`;
+}
+
+/**
+ * O poză: urcarea în Blob, apoi legarea de cerere. Aruncă eroare cu un mesaj
+ * pentru om. Întoarce calea din Blob.
+ */
+export async function uploadLeadPhoto(leadId: string, token: string, file: File): Promise<string> {
+  if (file.size > LEAD_PHOTO_MAX_BYTES) {
+    throw new Error(`„${file.name}" are peste ${mbLabel(LEAD_PHOTO_MAX_BYTES)}.`);
+  }
+  const blob = await upload(`${leadPhotoPrefix(leadId)}${safePhotoName(file.name)}`, file, {
+    access: 'private',
+    handleUploadUrl: '/api/leads/poze',
+    clientPayload: JSON.stringify({ leadId, token }),
+  });
+
+  // Fără confirmare, poza există în store dar n-o știe nimeni.
+  const res = await fetch('/api/leads/poze/salveaza', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ leadId, token, pathname: blob.pathname }),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error || 'Poza s-a încărcat, dar nu s-a putut lega de cerere.');
+  }
+  return blob.pathname;
 }
 
 export const PHOTO_CARD_CLASS = 'rounded-xl border-2 border-primary/40 bg-amber-50/60 p-5 sm:p-6';
 
-/**
- * De ce merită pozele, spus cu cifra noastră, nu cu una estimată. Cererile
- * primite între 9 sept și 21 oct 2026 (neascunse, nedublate, cel puțin 7 zile
- * vechime): cele 19 cu poze au fost preluate în medie de 1,16 firme, cele 123
- * fără poze de 0,65, deci +78%; pe site îi spunem „vă cresc șansele de oferte cu 78%" (Radu, 6 nov:
- * doar asta, scurt). Sunt firme care au cerut contactul, nu oferte,
- * iar consumul și bugetul n-au schimbat nimic în aceleași date. Dacă pică sub
- * ~60% la o recalculare, propoziția se rescrie.
- */
+/** De ce merită pozele, cu cifra noastră (vezi PHOTO_LIFT_PCT), scurt. */
 export function PhotoPitch() {
   return (
     <>
@@ -53,7 +73,7 @@ export function PhotoPitch() {
         Adăugați 2-3 poze cu acoperișul
       </p>
       <p className="mt-2 text-sm text-gray-800 leading-relaxed">
-        Din ce am văzut pe site, pozele vă cresc șansele de oferte <strong>cu 78%</strong>.
+        Din ce am văzut pe site, pozele vă cresc șansele de oferte <strong>cu {PHOTO_LIFT_PCT}%</strong>.
       </p>
       <p className="mt-2 text-sm text-gray-700 leading-relaxed">
         Una cu acoperișul văzut din exterior, una cu tabloul electric și contorul. Le vede doar
@@ -98,30 +118,8 @@ export default function LeadPhotoUpload({
     // paralel se încurcă între ele, iar dacă pică una vrem să știm care.
     for (const file of Array.from(files).slice(0, left)) {
       try {
-        if (file.size > LEAD_PHOTO_MAX_BYTES) {
-          throw new Error(`„${file.name}" are peste ${mbLabel(LEAD_PHOTO_MAX_BYTES)}.`);
-        }
-        const blob = await upload(`${leadPhotoPrefix(leadId)}${safePhotoName(file.name)}`, file, {
-          access: 'private',
-          handleUploadUrl: '/api/leads/poze',
-          clientPayload: JSON.stringify({ leadId, token }),
-        });
-
-        // Fără confirmare, poza există în store dar n-o știe nimeni.
-        const res = await fetch('/api/leads/poze/salveaza', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ leadId, token, pathname: blob.pathname }),
-        });
-        if (!res.ok) {
-          const body = await res.json().catch(() => ({}));
-          throw new Error(body.error || 'Poza s-a încărcat, dar nu s-a putut lega de cerere.');
-        }
-
-        setDone((prev) => [
-          ...prev,
-          { pathname: blob.pathname, name: file.name, preview: URL.createObjectURL(file) },
-        ]);
+        const pathname = await uploadLeadPhoto(leadId, token, file);
+        setDone((prev) => [...prev, { pathname, name: file.name, preview: URL.createObjectURL(file) }]);
         onUploaded?.();
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Nu s-a putut încărca poza.');

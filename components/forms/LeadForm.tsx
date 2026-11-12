@@ -32,8 +32,11 @@ import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 import { DEFAULT_TARIFF_RON_PER_KWH } from '@/lib/pv-constants';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
-import LeadPhotoUpload, { PHOTO_CARD_CLASS, PhotoPitch } from './LeadPhotoUpload';
+import LeadPhotoUpload, { uploadLeadPhoto } from './LeadPhotoUpload';
+import LeadPhotoPicker, { type PickedPhoto, releasePhotos } from './LeadPhotoPicker';
 import LeadLocationField, { LOCATION_CARD_CLASS, LocationPitch } from './LeadLocationField';
+import LocalitateInput from './LocalitateInput';
+import AdresaLucrareField from './AdresaLucrareField';
 import { trackEvent } from '@/lib/analytics';
 import { getAttribution } from '@/lib/attribution';
 import {
@@ -79,29 +82,39 @@ function resolveSource(fallback: string): string {
   return clean || fallback;
 }
 
-// Cinci pași, iar cererea pleacă la al patrulea. Ordinea nu e cea clasică
+// Șase pași, iar cererea pleacă la al cincilea. Ordinea nu e cea clasică
 // („contactul la final"): datele de contact stau al treilea, înaintea detaliilor
 // tehnice, ca omul să fi trecut deja de partea grea când ajunge la ele.
+//
+// Pasul 2 cere din 11 nov 2026 și adresa exactă (sau locația telefonului),
+// obligatoriu: cu ea firma se uită la acoperiș din satelit. Până atunci era
+// opțională, după trimitere.
 //
 // Pasul 4 conține exact ce cer instalatorii la primul telefon; fiecare întrebare
 // are ieșire onestă („nu știu"), deci nimic tehnic nu blochează trimiterea.
 //
-// Pasul 5 vine DUPĂ ce cererea a plecat: consum și mesaj, ambele opționale.
-// Din Umami (17-24 aug 2026): 27 de completări ale pasului de contact au dat 14
-// trimiteri, aproape jumătate abandonau cu telefonul deja scris, la fel pe mobil
-// și pe desktop. Ce era opțional pe ecranul de detalii s-a mutat după trimitere,
-// ca un abandon la pasul 5 să nu mai coste cererea.
+// Pasul 5 (poze + detaliile opționale) stă din 11 nov 2026 ÎNAINTEA trimiterii,
+// cu „Sari peste și trimite" la un tap (cerut de Radu): pozele cresc preluările,
+// vezi PHOTO_LIFT_PCT. Istoric: din Umami (17-24 aug 2026) 27 de completări ale
+// pasului de contact au dat 14 trimiteri, iar opționalele de atunci au fost
+// mutate după trimitere; de urmărit în Umami dacă pasul 5 pierde cereri
+// (`lead_step_completed` name=detalii față de `lead_form_submitted`).
+//
+// Pasul 6 vine DUPĂ ce cererea a plecat: ce vrea să rezolve, consum și mesaj.
 const STEPS = [
   { id: 'proiect', label: 'Proiect' },
   { id: 'zona', label: 'Zonă' },
   { id: 'contact', label: 'Contact' },
   { id: 'detalii', label: 'Detalii' },
+  { id: 'poze', label: 'Poze' },
   { id: 'extra', label: 'Obiectiv' },
 ] as const;
 
-// Cererea se trimite la „detalii"; „extra" e ecran post-trimitere, nu pas de
-// formular — navigarea (goNext) nu poate ajunge la el.
-const SUBMIT_STEP = STEPS.findIndex((s) => s.id === 'detalii');
+// Cererea se trimite la „poze"; „extra" e ecran post-trimitere, nu pas de
+// formular — navigarea (goNext) nu poate ajunge la el. Atenție la Umami: până
+// pe 11 nov 2026 `detalii` era pasul de trimitere; de atunci trimiterea e
+// `poze`, iar `lead_form_submitted` rămâne măsura comparabilă în timp.
+const SUBMIT_STEP = STEPS.findIndex((s) => s.id === 'poze');
 const EXTRA_STEP = STEPS.findIndex((s) => s.id === 'extra');
 
 // iOS Safari focusează primul câmp invalid la submit, dar nu scrollează fiabil
@@ -127,7 +140,7 @@ function focusField(el: unknown) {
 }
 
 // Detaliile din state-ul `details`, trimise în corpul cererii. `consumLunar` se
-// completează însă abia la pasul 5, după trimitere: la POST pleacă gol și
+// completează însă abia la pasul 6, după trimitere: la POST pleacă gol și
 // ajunge în Sheet prin /api/leads/enrich, ca restul detaliilor târzii.
 const STEP4_KEYS = [
   'tipLucrare',
@@ -141,8 +154,8 @@ const STEP4_KEYS = [
   'bransament',
 ] as const;
 
-// Detaliile secundare, strânse pe ecranul de confirmare lângă trimiterea pozelor.
-// Astea chiar merg prin /api/leads/enrich, pentru că vin după salvare.
+// Detaliile secundare, opționale, pe pasul pozelor. Din 11 nov 2026 pleacă în
+// corpul cererii (saveLeadToSheet are coloanele lor), nu prin /api/leads/enrich.
 const PANEL_KEYS = ['suprafata', 'fazare', 'stocare', 'wallbox'] as const;
 
 type Step4Key = (typeof STEP4_KEYS)[number];
@@ -189,37 +202,6 @@ function StepBar({ step, onBack }: { step: number; onBack?: () => void }) {
       </div>
     </div>
   );
-}
-
-function Meter({ answered, total }: { answered: number; total: number }) {
-  return (
-    <div className="mt-4 mb-6">
-      <div className="flex items-center justify-between text-xs text-gray-500 mb-1.5">
-        <span>Cerere completată</span>
-        <span className="font-semibold text-gray-700">
-          {answered} din {total}
-        </span>
-      </div>
-      <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
-        <div
-          className="h-full rounded-full bg-primary transition-all duration-300"
-          style={{ width: `${(answered / total) * 100}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
-/** Semnalul că răspunsurile pleacă singure. Fără el, lipsa unui buton derutează. */
-function SaveHint({ status }: { status: 'idle' | 'saving' | 'saved' | 'error' }) {
-  if (status === 'idle') return null;
-  const map = {
-    saving: { text: 'Se salvează...', cls: 'text-gray-500' },
-    saved: { text: 'Salvat ✓', cls: 'text-emerald-600' },
-    error: { text: 'Salvăm mai târziu', cls: 'text-gray-400' },
-  } as const;
-  const s = map[status];
-  return <span className={`shrink-0 text-xs font-medium ${s.cls}`}>{s.text}</span>;
 }
 
 function SelectField({
@@ -550,6 +532,15 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     preselectedSlug && firms.some((f) => f.slug === preselectedSlug) ? [preselectedSlug] : [],
   );
   const [gdpr, setGdpr] = useState(false);
+  // Locul lucrării (pasul 2). Stă în Neon (lead_locatii), nu în Sheet, deci se
+  // salvează după cerere, prin /api/leads/locatie, cu tokenul primit la trimitere.
+  const [adresa, setAdresa] = useState('');
+  const [coordonate, setCoordonate] = useState('');
+  const [locationSaved, setLocationSaved] = useState(false);
+  // Pozele alese la pasul 5; urcă după ce cererea e salvată.
+  const [photos, setPhotos] = useState<PickedPhoto[]>([]);
+  const [uploadNote, setUploadNote] = useState('');
+  const [photoFailures, setPhotoFailures] = useState(0);
   const [extra, setExtra] = useState<Record<PanelKey, string>>(EMPTY_PANEL);
   const [unknown, setUnknown] = useState<Record<UnknownKey, boolean>>({
     putere: false,
@@ -560,16 +551,15 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   // ea la salvare, ca în coloana U să intre „250 lei" sau „190 kWh", nu un număr
   // gol pe care nimeni nu-l poate interpreta.
   const [consumUnit, setConsumUnit] = useState<ConsumUnit>('kWh');
-  const [enrichStatus, setEnrichStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
-  // Pasul 5 e post-trimitere: cererea există deja în Sheet, ecranul doar mai
-  // strânge consumul și mesajul. `extraDone` desparte pasul 5 de confirmare.
+  // Pasul 6 e post-trimitere: cererea există deja în Sheet, ecranul doar mai
+  // strânge consumul și mesajul. `extraDone` desparte pasul 6 de confirmare.
   const [extraDone, setExtraDone] = useState(false);
   const [extraStatus, setExtraStatus] = useState<'idle' | 'saving'>('idle');
   // „Ce vă lipsește ca să mergeți mai departe?", doar la „mă informez" (14 sept
   // 2026). Decide emailul de întâmpinare al platformei și ce vede firma pe card.
   const [blocaj, setBlocaj] = useState('');
   const [blocajDetalii, setBlocajDetalii] = useState('');
-  // „Ce vreți să rezolvați?" (17 sept 2026), obligatoriu pe pasul 5: firma vede
+  // „Ce vreți să rezolvați?" (17 sept 2026), obligatoriu pe pasul 6: firma vede
   // din start ce așteaptă omul. `scopError` apare doar după un „Salvează" gol.
   const [scop, setScop] = useState<string[]>([]);
   const [scopDetalii, setScopDetalii] = useState('');
@@ -580,8 +570,6 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   // întrebarea se pune din nou.
   const [consumIntrebat, setConsumIntrebat] = useState('');
   const startedRef = useRef(false);
-  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const reportedFields = useRef(0);
 
   const counties = getCounties();
   const { segment, setSegment } = useSegment();
@@ -720,6 +708,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     }
 
     setStatus('submitting');
+    setUploadNote('');
 
     try {
       const res = await fetch('/api/leads', {
@@ -728,6 +717,9 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
         body: JSON.stringify({
           ...values,
           ...details,
+          // Detaliile opționale de la pasul 5 (suprafață, alimentare, baterie,
+          // stație); goale dacă omul a sărit peste.
+          ...extra,
           // Bifa nu ajunge în Sheet (acolo „nu știu" = celulă goală), dar
           // serverul are nevoie de ea ca să deosebească „n-a răspuns" de
           // „a răspuns că nu știe". Vezi validarea din /api/leads.
@@ -765,12 +757,48 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
         details_filled: STEP4_KEYS.filter((k) => details[k].trim()).length,
         firms_requested: firme.length,
       });
+      trackEvent('lead_poze_pas', {
+        actiune: photos.length ? 'cu_poze' : 'fara_poze',
+        poze: photos.length,
+        detalii: PANEL_KEYS.filter((k) => extra[k].trim()).length,
+        segment,
+      });
 
-      setLeadRef(typeof json.id === 'string' ? json.id : null);
-      setPhotoToken(typeof json.photoToken === 'string' ? json.photoToken : '');
+      const id = typeof json.id === 'string' ? json.id : null;
+      const token = typeof json.photoToken === 'string' ? json.photoToken : '';
+      setLeadRef(id);
+      setPhotoToken(token);
       setContUrl(typeof json.contUrl === 'string' ? json.contUrl : null);
       setContEmail(json.contEmail === true);
-      // Pasul 5 începe de sus, ca orice pas; scrollăm cât formularul mai există.
+
+      // De aici cererea e salvată: ce urmează (adresa, pozele) nu o mai poate
+      // pierde. Un eșec lasă doar un card de reîncercare pe ecranul următor.
+      if (id && token) {
+        setUploadNote('Cererea e înregistrată. Salvăm adresa...');
+        setLocationSaved(await saveLocation(id, token));
+
+        let failed = 0;
+        for (let i = 0; i < photos.length; i++) {
+          setUploadNote(
+            `Cererea e înregistrată. Se încarcă pozele (${i + 1} din ${photos.length}), nu închideți pagina...`,
+          );
+          try {
+            await uploadLeadPhoto(id, token, photos[i].file);
+          } catch (err) {
+            console.error('[lead] poza:', err);
+            failed++;
+          }
+        }
+        setPhotoFailures(failed);
+        releasePhotos(photos);
+      } else {
+        // Fără token (răspuns vechi din cache, PORTAL_SECRET lipsă) nu avem cu
+        // ce salva adresa și pozele; ecranul următor dă varianta pe email.
+        setPhotoFailures(photos.length);
+      }
+
+      setUploadNote('');
+      // Pasul 6 începe de sus, ca orice pas; scrollăm cât formularul mai există.
       scrollToForm();
       setStatus('success');
     } catch (err) {
@@ -785,51 +813,34 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     }
   }
 
-  const panelAnswered = PANEL_KEYS.filter((k) => extra[k].trim()).length;
-
-  /**
-   * Salvare automată pentru panoul de după trimitere, fără buton. Fiecare
-   * răspuns repornește un temporizator scurt și trimite starea curentă;
-   * serverul ignoră valorile goale, deci o cursă între două salvări nu poate
-   * șterge un câmp completat înainte.
-   */
-  function scheduleSave(next: Record<PanelKey, string>) {
-    if (!leadRef) return;
-    if (saveTimer.current) clearTimeout(saveTimer.current);
-    saveTimer.current = setTimeout(() => void pushEnrich(next), 800);
-  }
-
-  async function pushEnrich(next: Record<PanelKey, string>) {
-    const filled = PANEL_KEYS.filter((k) => next[k].trim()).length;
-    if (!leadRef || !filled) return;
-    setEnrichStatus('saving');
-    try {
-      const res = await fetch('/api/leads/enrich', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: leadRef, ...next }),
-      });
-      if (!res.ok) throw new Error('enrich failed');
-      // Un eveniment per câmp nou completat, nu per salvare: altfel tastatul
-      // într-un câmp liber ar umple Umami cu zgomot.
-      if (filled > reportedFields.current) {
-        reportedFields.current = filled;
-        trackEvent('lead_enrich_submitted', { fields: filled, segment, source_page: src() });
+  /** Adresa sau locația, pe cererea abia salvată. O reîncercare, apoi renunță. */
+  async function saveLocation(id: string, token: string): Promise<boolean> {
+    const body = JSON.stringify({ leadId: id, token, adresa: adresa.trim(), coordonate });
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const res = await fetch('/api/leads/locatie', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body,
+        });
+        if (res.ok) {
+          trackEvent('lead_locatie_salvata', {
+            sursa: 'formular',
+            adresa: Boolean(adresa.trim()),
+            gps: Boolean(coordonate),
+          });
+          return true;
+        }
+      } catch (err) {
+        console.error('[lead] adresa:', err);
       }
-      setEnrichStatus('saved');
-    } catch {
-      // Cererea e deja salvată, deci un eșec aici nu pierde nimic esențial.
-      // Fără toast: omul n-a apăsat nimic, un mesaj de eroare l-ar speria degeaba.
-      setEnrichStatus('error');
     }
+    return false;
   }
 
   function setExtraField(key: string, value: string) {
-    setExtra((x) => {
-      const next = { ...x, [key]: value } as Record<PanelKey, string>;
-      scheduleSave(next);
-      return next;
-    });
+    markStarted();
+    setExtra((x) => ({ ...x, [key]: value }) as Record<PanelKey, string>);
   }
 
   // Salvarea pasului 5, pe aceeași rută ca panoul de confirmare: cererea e deja
@@ -881,7 +892,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     setExtraDone(true);
   }
 
-  // Pasul 5, după trimitere: cererea a plecat la pasul 4, deci cine închide
+  // Pasul 6, după trimitere: cererea a plecat la pasul 5, deci cine închide
   // pagina aici nu mai pierde nimic. Din 17 sept 2026 „ce vreți să rezolvați"
   // e obligatoriu (fără „sar peste"); consumul și mesajul rămân opționale.
   if (status === 'success' && !extraDone) {
@@ -1039,8 +1050,8 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     );
   }
 
-  // Uploadul de poze vine DUPĂ trimitere, intenționat: pe mobil un câmp de fișier
-  // înainte de submit pierde cereri, iar o cerere fără poze e tot o cerere.
+  // Confirmarea. Pozele, adresa și detaliile opționale s-au strâns înainte de
+  // trimitere (11 nov 2026); aici apar doar dacă ceva n-a ajuns, ca reîncercare.
   if (status === 'success') {
     const subject = `Poze pentru cererea mea${leadRef ? ` (ref. ${leadRef})` : ''}`;
     const mailto = `mailto:${PHOTO_INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
@@ -1048,17 +1059,6 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     )}`;
 
     const chosenFirms = firms.filter((f) => firme.includes(f.slug)).map((f) => f.name);
-
-    const panelSelects: FieldSpec[] = [
-      {
-        name: 'fazare',
-        label: 'Alimentare electrică',
-        options: opts(PHASE_TYPES),
-        hint: 'Scrie pe contor sau pe siguranța generală.',
-      },
-      { name: 'stocare', label: 'Baterie de stocare', options: opts(STORAGE_OPTIONS) },
-      { name: 'wallbox', label: 'Stație de încărcare auto', options: opts(WALLBOX_OPTIONS) },
-    ];
 
     return (
       <div className="space-y-6">
@@ -1071,79 +1071,54 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
               </>
             )}
             Am trimis-o firmelor de instalare din zona dumneavoastră. Cele care o preiau vă
-            sună direct. Mai jos puteți completa câteva detalii, dar nu e obligatoriu.
+            sună direct.
           </p>
         </div>
 
-        {/* Pozele, primele după confirmare (28 oct 2026): sunt singurul detaliu
-            care schimbă câte firme preiau cererea, vezi PhotoPitch. Încărcarea
-            are nevoie de cererea salvată și de tokenul ei; fără ele (răspuns
-            vechi din cache, PORTAL_SECRET lipsă) rămâne varianta pe email. */}
-        {leadRef && photoToken ? (
-          <LeadPhotoUpload leadId={leadRef} token={photoToken} mailtoFallback={mailto} />
-        ) : (
-          <div className={PHOTO_CARD_CLASS}>
-            <PhotoPitch />
-            <a
-              href={mailto}
-              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
-            >
-              Trimite pozele pe email
-            </a>
-          </div>
-        )}
+        {/* Pozele care n-au urcat la trimitere (internet slab, fișier refuzat).
+            Fără token (răspuns vechi din cache) rămâne varianta pe email. */}
+        {photoFailures > 0 &&
+          (leadRef && photoToken ? (
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-amber-800">
+                {photoFailures === 1
+                  ? 'O poză n-a ajuns la noi. Încercați din nou:'
+                  : `${photoFailures} poze n-au ajuns la noi. Încercați din nou:`}
+              </p>
+              <LeadPhotoUpload leadId={leadRef} token={photoToken} mailtoFallback={mailto} />
+            </div>
+          ) : (
+            <p className="text-sm text-amber-800">
+              Pozele n-au putut fi încărcate.{' '}
+              <a href={mailto} className="underline">
+                Trimiteți-le pe email
+              </a>
+              , le legăm noi de cerere.
+            </p>
+          ))}
 
-        {/* Adresa, imediat după poze (6 nov 2026, cerută de un instalator): cu
-            ea firma se uită la acoperiș din satelit. Aceeași autorizare ca la
-            poze, deci fără token nu apare deloc; se poate adăuga și din cont. */}
-        {leadRef && photoToken && (
+        {/* Adresa care n-a putut fi salvată: aceleași valori, gata de retrimis. */}
+        {!locationSaved && leadRef && photoToken && (adresa.trim() || coordonate) && (
           <div className={LOCATION_CARD_CLASS}>
             <LocationPitch />
+            <p className="mt-2 text-sm font-medium text-amber-800">
+              Adresa n-a ajuns la noi. Apăsați „Salvează adresa”.
+            </p>
             <div className="mt-4">
-              <LeadLocationField leadId={leadRef} token={photoToken} sursa="confirmare" />
+              <LeadLocationField
+                leadId={leadRef}
+                token={photoToken}
+                initialAdresa={adresa.trim()}
+                initialCoordonate={coordonate}
+                unsaved
+                sursa="confirmare"
+                onSaved={() => setLocationSaved(true)}
+              />
             </div>
           </div>
         )}
 
         {contUrl && <FollowRequestCTA contUrl={contUrl} contEmail={contEmail} leadId={leadRef} />}
-
-        {/* Restul detaliilor. Fără buton de salvare: fiecare răspuns pleacă
-            singur spre cerere, vezi scheduleSave. */}
-        <div className="rounded-xl border border-border bg-white p-5 sm:p-6">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="font-semibold text-gray-900">Mai puteți adăuga</p>
-              <p className="mt-1 text-sm text-gray-600 leading-relaxed">
-                Firmele văd cererea într-o listă și aleg pe care o preiau. Fiecare detaliu în plus
-                scade numărul de întrebări la primul telefon.
-              </p>
-            </div>
-            <SaveHint status={enrichStatus} />
-          </div>
-
-          <Meter answered={panelAnswered} total={PANEL_KEYS.length} />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Input
-              label={isRezidential ? 'Suprafață acoperiș (mp)' : 'Suprafață estimată (mp)'}
-              name="suprafata"
-              type="number"
-              inputMode="numeric"
-              placeholder={isRezidential ? 'ex: 60' : 'ex: 2000'}
-              value={extra.suprafata}
-              onChange={(e) => setExtraField('suprafata', e.target.value)}
-            />
-            {panelSelects.map((f) => (
-              <SelectField
-                key={f.name}
-                field={f}
-                value={extra[f.name as PanelKey]}
-                onChange={setExtraField}
-              />
-            ))}
-          </div>
-
-        </div>
 
         {/* Nimic promoțional nu stă lângă formular: pagina are o singură treabă,
             să producă cererea, iar un click pe altceva e o cerere pierdută. După
@@ -1156,6 +1131,17 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
       </div>
     );
   }
+
+  const panelSelects: FieldSpec[] = [
+    {
+      name: 'fazare',
+      label: 'Alimentare electrică',
+      options: opts(PHASE_TYPES),
+      hint: 'Scrie pe contor sau pe siguranța generală.',
+    },
+    { name: 'stocare', label: 'Baterie de stocare', options: opts(STORAGE_OPTIONS) },
+    { name: 'wallbox', label: 'Stație de încărcare auto', options: opts(WALLBOX_OPTIONS) },
+  ];
 
   const step4Selects: FieldSpec[] = [
     // Prima întrebare a pasului: schimbă înțelesul câmpului de putere de sub ea
@@ -1268,19 +1254,21 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
               value={values.judet}
               onValueChange={(v) => set('judet', v)}
             />
-            <div>
-              <Input
-                label="Localitate"
-                name="localitate"
-                required
-                placeholder={isRezidential ? 'ex: Comuna Berceni' : 'ex: Ploiești'}
-                value={values.localitate}
-                onChange={(e) => set('localitate', e.target.value)}
-              />
-              <p className="mt-1 text-[11px] text-gray-400">
-                Orașul sau comuna. Firmele estimează deplasarea înainte să vă sune.
-              </p>
-            </div>
+            <LocalitateInput
+              judet={values.judet}
+              value={values.localitate}
+              onChange={(v) => set('localitate', v)}
+              placeholder={isRezidential ? 'ex: Berceni' : 'ex: Ploiești'}
+            />
+            <AdresaLucrareField
+              adresa={adresa}
+              coordonate={coordonate}
+              onAdresa={(v) => {
+                markStarted();
+                setAdresa(v);
+              }}
+              onCoordonate={setCoordonate}
+            />
             {/* Aici, nu pe pasul de contact: lista depinde de județ, iar omul
                 tocmai l-a ales. Lipsește cu totul când pagina nu dă lista
                 (formularul de pe /despre). */}
@@ -1464,6 +1452,43 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
           </div>
         )}
 
+        {/* Pasul 5: pozele și detaliile opționale, înaintea trimiterii (11 nov
+            2026). Ambele butoane trimit cererea; fără poze, butonul spune că
+            sare peste, ca nimeni să nu creadă că pozele sunt obligatorii. */}
+        {step === SUBMIT_STEP && (
+          <div className="space-y-4" data-pas="poze">
+            <LeadPhotoPicker photos={photos} onChange={setPhotos} />
+
+            <div className="rounded-xl border border-border bg-white p-5 sm:p-6">
+              <p className="font-semibold text-gray-900">
+                Alte detalii <span className="font-normal text-gray-400">(opțional)</span>
+              </p>
+              <p className="mt-1 mb-4 text-sm text-gray-600 leading-relaxed">
+                Fiecare detaliu în plus scade numărul de întrebări la primul telefon.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Input
+                  label={isRezidential ? 'Suprafață acoperiș (mp)' : 'Suprafață estimată (mp)'}
+                  name="suprafata"
+                  type="number"
+                  inputMode="numeric"
+                  placeholder={isRezidential ? 'ex: 60' : 'ex: 2000'}
+                  value={extra.suprafata}
+                  onChange={(e) => setExtraField('suprafata', e.target.value)}
+                />
+                {panelSelects.map((f) => (
+                  <SelectField
+                    key={f.name}
+                    field={f}
+                    value={extra[f.name as PanelKey]}
+                    onChange={setExtraField}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Pe telefon butonul rămâne lipit de baza ecranului cât timp formularul
             e în viewport; gradientul maschează câmpurile care trec pe sub el.
             Marginile negative îl întind până la rama cardului părinte (p-5 pe
@@ -1484,17 +1509,25 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
             ) : (
               <Button
                 type="submit"
-                variant="primary"
+                variant={photos.length ? 'primary' : 'outline'}
                 size="lg"
                 disabled={status === 'submitting'}
-                className="w-full max-md:shadow-lg max-md:shadow-gray-900/15"
+                className={`w-full max-md:shadow-lg max-md:shadow-gray-900/15 ${photos.length ? '' : 'bg-white'}`}
               >
-                {status === 'submitting' ? 'Se trimite...' : 'Trimite Cererea'}
+                {status === 'submitting'
+                  ? 'Se trimite...'
+                  : photos.length
+                    ? `Trimite cererea cu ${photos.length === 1 ? 'poza' : `cele ${photos.length} poze`}`
+                    : 'Sari peste și trimite cererea'}
               </Button>
             )}
-            <p className="mt-2 text-center text-[11px] text-gray-400">
-              Gratuit, fără obligații.
-            </p>
+            {uploadNote ? (
+              <p className="mt-2 text-center text-xs font-medium text-gray-700" role="status">
+                {uploadNote}
+              </p>
+            ) : (
+              <p className="mt-2 text-center text-[11px] text-gray-400">Gratuit, fără obligații.</p>
+            )}
           </div>
         )}
       </form>

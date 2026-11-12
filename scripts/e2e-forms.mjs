@@ -24,14 +24,16 @@ const FORMS = [
   {
     id: 'lead', label: 'Cere ofertă (/cere-oferta)', path: '/cere-oferta',
     api: '/api/leads', sheet: 'Leads', emailCol: 3,
-    // Wizard în 5 pași din 24 aug 2026 (vezi LeadForm STEPS): proiect → zonă →
-    // contact → detalii, cu trimiterea la „detalii"; pasul 5 (consum + mesaj) e
-    // ecran post-trimitere și nu intră în testul de submit. `formKey` n-ar avea
+    // Wizard în 6 pași din 11 nov 2026 (vezi LeadForm STEPS): proiect → zonă →
+    // contact → detalii → poze, cu trimiterea la „poze" (butonul „Sari peste și
+    // trimite cererea"); pasul 6 (ce vrea să rezolve, consum, mesaj) e ecran
+    // post-trimitere și nu intră în testul de submit. Adresa e obligatorie pe
+    // pasul de zonă din aceeași zi. `formKey` n-ar avea
     // ce aștepta la pasul 0 (tipul de proiect e card, nu input), deci ready-ul
     // se face pe cardurile din formular.
     wizard: true, ready: 'form button[type="button"]', formKey: null,
     // numeCompanie only exists in the "Firmă"/commercial segment (required there); harmless if absent in residential
-    text: { numeCompanie: `ROUTINE TEST ${TOKEN}`, numeContact: 'ROUTINE TEST', email: `${TEST_EMAIL_PREFIX}${TOKEN}-lead@example.com`, telefon: '0712345678', localitate: 'ROUTINE TEST' },
+    text: { numeCompanie: `ROUTINE TEST ${TOKEN}`, numeContact: 'ROUTINE TEST', email: `${TEST_EMAIL_PREFIX}${TOKEN}-lead@example.com`, telefon: '0712345678', localitate: 'ROUTINE TEST', adresa: 'ROUTINE TEST nr. 1' },
     // dropdown-urile pasului 4 sunt obligatorii (au „nu știu" în listă); le
     // completăm și ca să testăm componenta SearchableSelect
     // `tipLucrare` (din 25 aug 2026) e prima întrebare a pasului 4 și e
@@ -130,7 +132,7 @@ async function fillForm(spec) {
 
     // Pasul 2 — zonă.
     await pickStep(1);
-    fillTexts(['localitate']);
+    fillTexts(['localitate', 'adresa']);
     if (!(await next('input[name="telefon"]'))) return { error: 'pasul 2 (zonă) nu avansează', steps, missingText, selResults };
     steps.push('zona');
 
@@ -139,12 +141,17 @@ async function fillForm(spec) {
     if (!(await next('#gdpr'))) return { error: 'pasul 3 (contact) nu avansează', steps, missingText, selResults };
     steps.push('contact');
 
-    // Pasul 4 — detaliile obligatorii + GDPR; consum și mesaj sunt pe pasul 5,
+    // Pasul 4 — detaliile obligatorii + GDPR; consum și mesaj sunt pe pasul 6,
     // post-trimitere, deci nu se completează aici.
     await pickStep(3);
     await closeDropdowns();
     tickCheckboxes(form);
+    if (!(await next('[data-pas="poze"]'))) return { error: 'pasul 4 (detalii) nu avansează', steps, missingText, selResults };
     steps.push('detalii');
+
+    // Pasul 5 — poze, opțional: fără poze, butonul de submit e „Sari peste și
+    // trimite cererea", apăsat mai jos de runBrowser.
+    steps.push('poze');
     return { steps, missingText, selResults };
   }
 

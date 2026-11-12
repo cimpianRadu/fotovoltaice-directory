@@ -12,6 +12,9 @@ type EventName =
   | 'lead_step_completed'
   | 'lead_step_back'
   | 'lead_form_submitted'
+  // Pasul pozelor, înaintea trimiterii (11 nov 2026): `actiune` cu_poze /
+  // fara_poze, `poze` câte, `detalii` câte din cele 4 opționale.
+  | 'lead_poze_pas'
   // Îmbogățirea de după trimitere — cererea e deja salvată, evenimentul măsoară
   // doar cât din detaliile opționale acceptă omul să completeze (`fields`).
   | 'lead_enrich_submitted'

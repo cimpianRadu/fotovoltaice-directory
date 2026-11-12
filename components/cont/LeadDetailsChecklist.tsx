@@ -9,6 +9,7 @@
 import { useState } from 'react';
 import LeadPhotoUpload from '@/components/forms/LeadPhotoUpload';
 import LeadLocationField from '@/components/forms/LeadLocationField';
+import { PHOTO_LIFT_PCT } from '@/lib/lead-photos-shared';
 
 const PHOTO_INBOX = 'contact@instalatori-fotovoltaice.ro';
 
@@ -97,7 +98,7 @@ export default function LeadDetailsChecklist({
               </div>
               {initialPhotoCount === 0 && uploaded === 0 && (
                 <p className="mt-1 text-sm text-gray-700 leading-relaxed">
-                  Din ce am văzut pe site, pozele vă cresc șansele de oferte <strong>cu 78%</strong>.
+                  Din ce am văzut pe site, pozele vă cresc șansele de oferte <strong>cu {PHOTO_LIFT_PCT}%</strong>.
                   Una cu acoperișul din exterior, una cu tabloul și contorul.
                 </p>
               )}
