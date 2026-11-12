@@ -828,8 +828,8 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 - **Legătură:** watch-ul „panouri pe bloc / balcon discutate în Parlament” (28 sept). Delimitare față de ghidul de balcon.
 - **Never-invent:** doar ce scrie în legea asociațiilor de proprietari și în normele ANRE; proiectele din Parlament se marchează ca proiecte.
 
-#### #82 — Contor Inteligent la Prosumator 2026: Cum Citești Contorul
-- **Status:** 💡 idee
+#### ~~#82~~ — Contor Inteligent la Prosumator 2026: Cum Citești Contorul ✅ PUBLICAT 2026-11-12 → [/ghid/citire-contor-prosumator-2026-coduri-afisaj-contor-inteligent](/ghid/citire-contor-prosumator-2026-coduri-afisaj-contor-inteligent)
+- **Status:** ✅ publicat **2026-11-12** (rutina de joi). Detalii în „✅ Publicate recent”. **Cu #82, batch-ul greenlead nu mai are niciun `💡 idee`** (#83 PZU e parcat): rutina de sâmbătă trebuie dezactivată, iar coada pentru luni 16 nov e goală și trebuie realimentată la news scan-ul de duminică.
 - **Cluster:** `citire contor prosumator` 140/lună (greenlead 18), `smart meter` 720 (generic, greenlead 13), `factura prosumator` 70 (greenlead 30).
 - **Poartă SERP (2 nov):** `smart meter` e dominat de magazine cu contoare pentru invertor, nu de operatori, deci nu e țintă. Ținta rămâne `citire contor prosumator` + ce arată display-ul, doar din documentele operatorilor. Pe pagina 1 sunt surse vechi (Softpedia și Antena 3, 2022), iar răspunsul AI de sus dă codurile 1.8.0 și 2.8.0, deci articolul trebuie să meargă dincolo de ele.
 
@@ -1621,6 +1621,13 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Citire Contor Prosumator 2026: Coduri 1.8.0, 2.8.0
+- **Publicat:** 2026-11-12 (rutina de joi, #82 din batch-ul greenlead) → [/ghid/citire-contor-prosumator-2026-coduri-afisaj-contor-inteligent](/ghid/citire-contor-prosumator-2026-coduri-afisaj-contor-inteligent)
+- **Conținut:** 12 secțiuni + 10 FAQ, ~4.500 de cuvinte, 9 tabele. Surse primare citite pe 12 nov: manualul contorului PLC Hibrid Rețele Electrice (tabelul „Cod afișaj”: 1.0.0, 1.8.0 import +A, 2.8.0 export -A, 5.8.0, 8.8.0, 1.6.0; „Buton 1: derulare LCD”; cadranele 1-4), instrucțiunile NEXY-M, specificația Electrica ST 22-1 JT ed. U3 rev. 2 (2025: lista OBIS cu 1.8.1/1.8.2, 15.8.0 = |+A|+|-A|, 1.7.0/2.7.0, 3.8.0/4.8.0, 0.9.1/0.9.2; afișaj 1-15 s, mod automat), manualul Smart Meter RER (Istoric Index, curbă 15/60 min), comunicatul RER 17.03.2025 (fără transmitere index la contor integrat), pagina RER „Cum măsurăm” (citire la 3 luni sau lunar prin telecitire, BRML, Ord. ANRE 190/2020, schimbare la 15 ani), Ghidul prosumatorului Electrica 2023 (art. 27 Ord. 19/2022, „în limita stocurilor”), ghidul ENGIE al facturii de prosumator, Legea 123/2012 art. 66 (1.01.2024 sub 10 kW, 31.12.2028 restul), Ord. ANRE 90/2015 anexa 3 pct. 7.10-7.13 (verificare 10/5 zile lucrătoare, costul la operator).
+- **Neconfirmat, lăsat afară:** ghid de afișaj Delgaz Grid / DEO; F.F și C.1.0 într-un document din RO; procent național ANRE de contoare inteligente (folosit doar Digi24 27.03.2026, marcat presă); câmpul de injecție din aplicațiile PPC/E.ON/Electrica/Hidroelectrica. Exemplul producție/injecție/autoconsum e marcat „ilustrativ”.
+- **Diferențiator față de SERP (Softpedia, Antena 3 din 2022 + răspunsul AI cu 1.8.0/2.8.0):** 15.8.0 și capcana la autocitire, cadranele, „Faza L1 export și L2 L3 import”, 2.8.0 ≠ producție, verificarea facturii pe câmpuri, contestarea contorului.
+- **Cluster GSC de urmărit (DataForSEO, 30 oct):** `citire contor prosumator` 140/lună (greenlead 18) · `factura prosumator` 70 (greenlead 30) · `smart meter` 720 (generic, nu e țintă). Recheck CTR la 14/30 zile.
 
 ### Panouri Fotovoltaice la Bloc 2026: Vot, Acte, Cine Plătește
 - **Publicat:** 2026-11-09 (rutina de luni, #84 din batch-ul greenlead) → [/ghid/panouri-fotovoltaice-la-bloc-2026-asociatia-de-proprietari-acte](/ghid/panouri-fotovoltaice-la-bloc-2026-asociatia-de-proprietari-acte)
