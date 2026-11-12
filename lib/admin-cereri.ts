@@ -10,6 +10,7 @@ import 'server-only';
 import { db } from './db';
 import { getLeadClickStats, type LeadClickStats } from './lead-clicks';
 import { getLeadChanges, type LeadChange } from './lead-history';
+import { openClientLabel } from './lead-sends';
 import { normalizeEmail } from './portal-auth';
 
 /** De când se numără click-urile pe /cereri (lib/lead-clicks, deploy 23 oct seara). */
@@ -37,6 +38,12 @@ export interface LeadActivity {
   clicks: LeadClickStats;
   /** La câte firme a plecat cererea pe email (alertă, retrimitere, rezumat). */
   sentTo: number;
+  /** Din ele, câte au primit un email cu pixel de deschidere (din 27 oct). */
+  sentTracked: number;
+  /** Câte firme au deschis cel puțin un email cu cererea. */
+  openedBy: number;
+  /** Din ele, câte doar prin Apple Mail, care încarcă imaginile singur. */
+  openedMaybeAuto: number;
   /** Ultima schimbare de stare din jurnal, a cererii sau a unei firme. */
   lastChange: string | null;
   /** Ultima schimbare a stării cererii (coloana V). */
@@ -72,19 +79,31 @@ export async function getLeadsActivity(
   const ids = leads.map((l) => l.timestamp);
   const emails = [...new Set(leads.map((l) => normalizeEmail(l.email || '')).filter(Boolean))];
   const q = db();
-  const [accounts, views, follows, clicks, sends, changes] = await Promise.all([
+  const [accounts, views, follows, clicks, sends, changes, opens] = await Promise.all([
     accountsFor(emails),
     q`SELECT lead_id, sum(views)::int AS views, count(DISTINCT day)::int AS days, max(last_at) AS last_at
       FROM client_lead_views WHERE lead_id = ANY(${ids}) GROUP BY lead_id`,
     q`SELECT DISTINCT lead_id FROM client_events WHERE event = 'cta_click' AND lead_id = ANY(${ids})`,
     getLeadClickStats(ids),
-    q`SELECT lead_id, count(DISTINCT firm_email)::int AS n FROM lead_sends WHERE lead_id = ANY(${ids}) GROUP BY lead_id`,
+    q`SELECT lead_id, count(DISTINCT firm_email)::int AS n,
+             count(DISTINCT firm_email) FILTER (WHERE open_token IS NOT NULL)::int AS tracked
+      FROM lead_sends WHERE lead_id = ANY(${ids}) GROUP BY lead_id`,
     getLeadChanges(ids),
+    q`SELECT lead_id, firm_email, opened_ua FROM lead_sends WHERE lead_id = ANY(${ids}) AND opened_at IS NOT NULL`,
   ]);
 
   const viewsBy = new Map(views.map((r) => [String(r.lead_id), r]));
   const followed = new Set(follows.map((r) => String(r.lead_id)));
-  const sentBy = new Map(sends.map((r) => [String(r.lead_id), Number(r.n)]));
+  const sentBy = new Map(sends.map((r) => [String(r.lead_id), r]));
+  // Pe cerere: firma → a deschis-o cel puțin o dată altfel decât prin Apple Mail.
+  const openedBy = new Map<string, Map<string, boolean>>();
+  for (const r of opens) {
+    const byFirm = openedBy.get(String(r.lead_id)) ?? new Map<string, boolean>();
+    const firm = String(r.firm_email);
+    const real = !openClientLabel((r.opened_ua as string) ?? null).maybeAuto;
+    byFirm.set(firm, Boolean(byFirm.get(firm)) || real);
+    openedBy.set(String(r.lead_id), byFirm);
+  }
 
   const out = new Map<string, LeadActivity>();
   for (const l of leads) {
@@ -99,7 +118,10 @@ export async function getLeadsActivity(
       clientLastView: iso(v?.last_at),
       followClicked: followed.has(l.timestamp),
       clicks: clicks.get(l.timestamp) ?? { visitors: 0, vreau: 0, urmaresc: 0, link: 0, firms: 0 },
-      sentTo: sentBy.get(l.timestamp) ?? 0,
+      sentTo: Number(sentBy.get(l.timestamp)?.n ?? 0),
+      sentTracked: Number(sentBy.get(l.timestamp)?.tracked ?? 0),
+      openedBy: openedBy.get(l.timestamp)?.size ?? 0,
+      openedMaybeAuto: [...(openedBy.get(l.timestamp)?.values() ?? [])].filter((real) => !real).length,
       lastChange: mine.at(-1)?.at ?? null,
       lastStatusChange: mine.filter((c) => c.field === 'stare').at(-1)?.at ?? null,
       claimStatusChanges,
@@ -112,9 +134,27 @@ export interface LeadActivityDetail {
   account: ClientAccountInfo | null;
   views: { day: string; via: string; views: number; firstAt: string; lastAt: string }[];
   events: { event: string; props: Record<string, unknown> | null; at: string }[];
-  sends: { firmEmail: string; firmName: string | null; kind: string; at: string }[];
+  sends: {
+    firmEmail: string;
+    firmName: string | null;
+    kind: string;
+    at: string;
+    /** Emailul avea pixel de deschidere (din 27 oct 2026). */
+    tracked: boolean;
+    openedAt: string | null;
+    opens: number;
+    openedUa: string | null;
+  }[];
   bumps: { at: string; firms: number }[];
-  reports: { claimTs: string; firm: string; status: string; motiv: string | null; putere: string | null; at: string }[];
+  reports: {
+    claimTs: string;
+    firm: string;
+    status: string;
+    motiv: string | null;
+    putere: string | null;
+    comentariu: string | null;
+    at: string;
+  }[];
   emails: { kind: string; at: string }[];
   offers: {
     id: number;
@@ -144,9 +184,10 @@ export async function getLeadActivityDetail(lead: {
       accountsFor([normalizeEmail(lead.email || '')].filter(Boolean)),
       q`SELECT day::text AS day, via, views, first_at, last_at FROM client_lead_views WHERE lead_id = ${id} ORDER BY day`,
       q`SELECT event, props, at FROM client_events WHERE lead_id = ${id} ORDER BY at`,
-      q`SELECT firm_email, firm_name, kind, sent_at FROM lead_sends WHERE lead_id = ${id} ORDER BY sent_at`,
+      q`SELECT firm_email, firm_name, kind, sent_at, open_token IS NOT NULL AS tracked, opened_at, opens, opened_ua
+        FROM lead_sends WHERE lead_id = ${id} ORDER BY sent_at`,
       q`SELECT at, firms_notified FROM lead_bumps WHERE lead_id = ${id} ORDER BY at`,
-      q`SELECT claim_ts, firm_name, status, motiv, putere, created_at FROM client_firm_reports
+      q`SELECT claim_ts, firm_name, status, motiv, putere, comentariu, created_at FROM client_firm_reports
         WHERE lead_id = ${id} ORDER BY created_at`,
       q`SELECT kind, sent_at FROM client_emails WHERE lead_id = ${id} ORDER BY sent_at`,
       q`SELECT o.id, o.claim_ts, o.firm_name, o.valoare_fara_tva, o.putere_kw, o.files, o.created_at, o.withdrawn_at,
@@ -177,6 +218,10 @@ export async function getLeadActivityDetail(lead: {
       firmName: (r.firm_name as string) ?? null,
       kind: String(r.kind),
       at: iso(r.sent_at) as string,
+      tracked: Boolean(r.tracked),
+      openedAt: iso(r.opened_at),
+      opens: Number(r.opens ?? 0),
+      openedUa: (r.opened_ua as string) ?? null,
     })),
     bumps: bumps.map((r) => ({ at: iso(r.at) as string, firms: Number(r.firms_notified) })),
     reports: reports.map((r) => ({
@@ -185,6 +230,7 @@ export async function getLeadActivityDetail(lead: {
       status: String(r.status),
       motiv: (r.motiv as string) ?? null,
       putere: (r.putere as string) ?? null,
+      comentariu: (r.comentariu as string) ?? null,
       at: iso(r.created_at) as string,
     })),
     emails: emails.map((r) => ({ kind: String(r.kind), at: iso(r.sent_at) as string })),

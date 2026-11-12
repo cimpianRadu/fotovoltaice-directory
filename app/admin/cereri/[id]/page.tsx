@@ -41,6 +41,7 @@ import { matchFirmsForLead } from '@/lib/lead-match';
 import { matchNecesitFirms, necesitGeneratedAt } from '@/lib/necesit-match';
 import { fitRequestedFirms } from '@/lib/requested-firm-fit';
 import { firmDisplayName } from '@/lib/client-account';
+import { openClientLabel } from '@/lib/lead-sends';
 import {
   CLICKS_SINCE,
   CLIENT_VIEWS_SINCE,
@@ -101,6 +102,48 @@ function Field({ label, value }: { label: string; value: React.ReactNode }) {
       <dt className="text-slate-400">{label}</dt>
       <dd className="text-slate-800">{value}</dd>
     </div>
+  );
+}
+
+/**
+ * Firmele la care a plecat cererea și dacă au deschis emailul (pixelul din
+ * lib/email.ts, din 27 oct 2026). O firmă poate avea mai multe emailuri cu
+ * aceeași cerere (alertă, rezumat): contează prima deschidere a oricăruia.
+ */
+function SendOpens({ sends }: { sends: LeadActivityDetail['sends'] }) {
+  const firms = new Map<string, LeadActivityDetail['sends']>();
+  for (const s of sends) firms.set(s.firmEmail, [...(firms.get(s.firmEmail) ?? []), s]);
+  return (
+    <>
+      la {firms.size} {firms.size === 1 ? 'firmă' : 'firme'}
+      <ul className="mt-1 space-y-0.5">
+        {[...firms.entries()].map(([email, rows]) => {
+          const name = rows.find((r) => r.firmName)?.firmName;
+          const opened = rows.filter((r) => r.openedAt).sort((a, b) => (a.openedAt! < b.openedAt! ? -1 : 1));
+          const opens = rows.reduce((n, r) => n + r.opens, 0);
+          const first = opened[0];
+          const client = first ? openClientLabel(first.openedUa) : null;
+          return (
+            <li key={email} className="text-slate-600">
+              <span className="text-slate-800">{name ? firmDisplayName(name) : email}</span>
+              {' · '}
+              {first ? (
+                <span className={client?.maybeAuto ? 'text-slate-500' : 'text-emerald-700'}>
+                  deschis {fmtDateTime(first.openedAt!)} ({client?.label}
+                  {client?.maybeAuto ? ', poate automat' : ''}){opens > 1 ? `, de ${opens} ori` : ''}
+                </span>
+              ) : rows.some((r) => r.tracked) ? (
+                <span className="text-slate-400">nedeschis</span>
+              ) : (
+                <span className="text-slate-400" title="Trimis înainte să punem pixelul în emailuri (27 oct 2026)">
+                  fără pixel
+                </span>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 }
 
@@ -217,7 +260,7 @@ function ClientAccount({
         label="Trimisă pe email"
         value={
           sends.length
-            ? `la ${new Set(sends.map((s) => s.firmEmail)).size} firme`
+            ? <SendOpens sends={sends} />
             : lead.alerteTrimise
               ? `alertă plecată pe ${fmtDay(lead.alerteTrimise)}, fără listă de firme (înainte de 23 oct)`
               : ''

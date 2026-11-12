@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { logLeadSends } from '@/lib/lead-sends';
+import { logLeadSends, sentFrom } from '@/lib/lead-sends';
 import { sendPendingClientEmails } from '@/lib/client-notify';
 import {
   CLAIM_REMINDER_MAX,
@@ -274,14 +274,7 @@ async function announceUnlockedLeads(
         }),
       ),
     );
-    await logLeadSends(
-      lead.timestamp,
-      recipients.filter((_, i) => {
-        const r = results[i];
-        return r.status === 'fulfilled' && r.value.ok;
-      }),
-      'deblocare',
-    );
+    await logLeadSends(lead.timestamp, sentFrom(recipients, results), 'deblocare');
     await markLeadAlertsSent(lead.timestamp);
     announced.push(`${label} → ${recipients.length} firme`);
   }

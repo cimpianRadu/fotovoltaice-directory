@@ -1,13 +1,14 @@
-// Jurnalul de apeluri din /admin/azi (26 oct 2026): ce suni și ce se întâmplă,
-// scris pe loc, plus digestul de seară scris de rutina `jurnal-digest-instalatori`
-// prin scripts/jurnal.mjs. Stă în Neon, nu în Sheets: o zi de apeluri înseamnă
-// zeci de scrieri mici, care ar mânca din limita comună cu producția.
+// Jurnalul din /admin/azi (26 oct 2026): ce faci și ce ai de făcut, scris pe loc,
+// taskurile pe zile și digestul de seară scris de rutina `jurnal-digest-instalatori`
+// prin scripts/jurnal.mjs, care scoate și taskurile pe mâine, poimâine. Stă în
+// Neon, nu în Sheets: o zi de apeluri înseamnă zeci de scrieri mici, care ar
+// mânca din limita comună cu producția.
 
 import 'server-only';
 import { db } from './db';
-import type { JournalDigest, JournalEntry, JournalSubject } from './jurnal-shared';
+import type { JournalDigest, JournalEntry, JournalSubject, JournalTask } from './jurnal-shared';
 
-export type { JournalDigest, JournalEntry, JournalSubject } from './jurnal-shared';
+export type { JournalDigest, JournalEntry, JournalSubject, JournalTask } from './jurnal-shared';
 
 type Row = Record<string, unknown>;
 
@@ -95,4 +96,62 @@ export async function getLatestJournalDigest(onOrBefore: string): Promise<Journa
     if (missingTable(err)) return null;
     throw err;
   }
+}
+
+function toTask(r: Row): JournalTask {
+  return {
+    id: Number(r.id),
+    due: String(r.due),
+    text: String(r.text),
+    source: r.source === 'digest' ? 'digest' : 'manual',
+    sourceDay: r.source_day ? String(r.source_day) : null,
+    doneAt: r.done_at ? iso(r.done_at) : null,
+  };
+}
+
+/** Taskurile deschise, oricând ar fi scadente, plus cele bifate azi (rămân tăiate până mâine). */
+export async function getOpenTasks(today: string): Promise<JournalTask[]> {
+  try {
+    const rows = await db()`
+      SELECT id, due::text AS due, text, source, source_day::text AS source_day, done_at
+      FROM jurnal_task
+      WHERE done_at IS NULL OR (done_at AT TIME ZONE 'Europe/Bucharest')::date = ${today}
+      ORDER BY due, created_at
+    `;
+    return rows.map(toTask);
+  } catch (err) {
+    if (missingTable(err)) return [];
+    throw err;
+  }
+}
+
+export async function addTask(input: { due: string; text: string }): Promise<JournalTask> {
+  const rows = await db()`
+    INSERT INTO jurnal_task (due, text) VALUES (${input.due}, ${input.text})
+    RETURNING id, due::text AS due, text, source, source_day::text AS source_day, done_at
+  `;
+  return toTask(rows[0]);
+}
+
+export async function updateTask(
+  id: number,
+  changes: { done?: boolean; due?: string; text?: string },
+): Promise<JournalTask | null> {
+  const rows = await db()`
+    UPDATE jurnal_task SET
+      done_at = CASE WHEN ${changes.done ?? null}::boolean IS NULL THEN done_at
+                     WHEN ${changes.done ?? null}::boolean THEN coalesce(done_at, now()) ELSE NULL END,
+      due = coalesce(${changes.due ?? null}::date, due),
+      text = coalesce(${changes.text ?? null}::text, text),
+      edited_at = CASE WHEN ${changes.due ?? null}::date IS NULL AND ${changes.text ?? null}::text IS NULL
+                       THEN edited_at ELSE now() END
+    WHERE id = ${id}
+    RETURNING id, due::text AS due, text, source, source_day::text AS source_day, done_at
+  `;
+  return rows[0] ? toTask(rows[0]) : null;
+}
+
+export async function deleteTask(id: number): Promise<boolean> {
+  const rows = await db()`DELETE FROM jurnal_task WHERE id = ${id} RETURNING id`;
+  return rows.length > 0;
 }

@@ -10,6 +10,7 @@ import { FIRM_REPORT_OPTIONS, REFUZ_REASON_OPTIONS } from '@/lib/client-account-
 import type { LeadActivityDetail } from '@/lib/admin-cereri';
 import type { LeadChangeBy } from '@/lib/lead-history';
 import { firmDisplayName } from '@/lib/client-account';
+import { openClientLabel } from '@/lib/lead-sends';
 
 // Cronologia unei cereri, adunată din tot ce are o dată: coloanele din Leads,
 // revendicările, urmăririle și jurnalele din Neon. Nimic nu se scrie: se
@@ -78,6 +79,8 @@ const CLIENT_EVENT_LABEL: Record<string, string> = {
   cod_intrat: 'A intrat în cont cu codul din email',
   inchisa: 'A închis cererea din cont',
   stergere: 'A cerut ștergerea contului',
+  whatsapp_deschis: 'Radu a deschis mesajul WhatsApp „Ați găsit o ofertă bună?”',
+  verificare_deschisa: 'Clientul a deschis linkul „Ați găsit o ofertă bună?” din WhatsApp',
 };
 
 const CLICK_KIND_LABEL: Record<string, string> = {
@@ -220,6 +223,22 @@ export function buildTimeline(
       detail: `${SEND_KIND_LABEL[group[0].kind] ?? group[0].kind}: ${names.join(', ')}`,
     });
   }
+  // Prima deschidere a fiecărui email (pixelul din lib/email.ts, din 27 oct).
+  for (const s of activity.sends) {
+    if (!s.openedAt) continue;
+    const client = openClientLabel(s.openedUa);
+    push(s.openedAt, {
+      kind: 'email',
+      title: `${s.firmName ? firmDisplayName(s.firmName) : s.firmEmail} a deschis emailul cu cererea`,
+      detail: [
+        SEND_KIND_LABEL[s.kind] ?? s.kind,
+        client.maybeAuto ? `${client.label}, poate deschis automat` : client.label,
+        s.opens > 1 ? `deschis de ${s.opens} ori` : '',
+      ]
+        .filter(Boolean)
+        .join(' · '),
+    });
+  }
 
   if (activity.account?.verifiedAt) {
     push(activity.account.verifiedAt, { kind: 'client', title: 'Clientul a intrat prima dată în cont' });
@@ -248,7 +267,10 @@ export function buildTimeline(
     push(r.at, {
       kind: 'client',
       title: `Clientul despre ${firmDisplayName(r.firm)}: „${label}”`,
-      detail: [motiv, r.putere ? `${r.putere} kW după contract` : ''].filter(Boolean).join(' · ') || undefined,
+      detail:
+        [motiv, r.putere ? `${r.putere} kW după contract` : '', r.comentariu ? `„${r.comentariu}”` : '']
+          .filter(Boolean)
+          .join(' · ') || undefined,
     });
   }
   for (const e of activity.emails) {

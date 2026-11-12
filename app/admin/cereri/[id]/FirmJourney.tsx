@@ -122,7 +122,12 @@ function buildSteps(
   for (const r of reports) {
     const label = FIRM_REPORT_OPTIONS.find((o) => o.value === r.status)?.label ?? r.status;
     const motiv = r.motiv ? (REFUZ_REASON_OPTIONS.find((o) => o.value === r.motiv)?.label ?? r.motiv) : '';
-    steps.push({ at: r.at, kind: 'client', label: 'Clientul spune', text: [`„${label}”`, motiv].filter(Boolean).join(' · ') });
+    steps.push({
+      at: r.at,
+      kind: 'client',
+      label: 'Clientul spune',
+      text: [`„${label}”`, motiv, r.comentariu ? `„${r.comentariu}”` : ''].filter(Boolean).join(' · '),
+    });
   }
 
   steps.sort((a, b) => Date.parse(a.at as string) - Date.parse(b.at as string));

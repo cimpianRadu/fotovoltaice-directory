@@ -68,7 +68,7 @@ export interface NamedFirm {
  * (după email, apoi după nume sau telefon), altfel ce a scris firma, fără
  * „SC" în față. Revendicările au „SC.SOLANUM SRL", „sc Green Seiro Montage".
  */
-function firmDisplayName(claim: LeadClaim): string {
+export function firmDisplayName(claim: LeadClaim): string {
   const companies = getCompanies();
   const company =
     (claim.email && companies.find((c) => (c.contact.email || '').trim().toLowerCase() === claim.email)) ||
@@ -77,7 +77,7 @@ function firmDisplayName(claim: LeadClaim): string {
   return claim.numeFirma.trim().replace(/^s\.?\s*c\.?\s+/i, '').trim() || claim.numeFirma.trim();
 }
 
-function namedFirms(lead: Pick<NewLead, 'timestamp'>, claims: LeadClaim[], now: number): NamedFirm[] {
+export function namedFirms(lead: Pick<NewLead, 'timestamp'>, claims: LeadClaim[], now: number): NamedFirm[] {
   return claims
     .filter(
       (c) =>

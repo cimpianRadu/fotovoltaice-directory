@@ -49,7 +49,7 @@ import { countyAlertPayloadFromLead } from './lead-alerts';
 import { escapeHtml, sendEmail, sendCountyLeadAlert } from './email';
 import { notifyFirmsClientClosed } from './lead-closed-firms';
 import { getLeadClickStats } from './lead-clicks';
-import { logLeadSends } from './lead-sends';
+import { logLeadSends, sentFrom } from './lead-sends';
 import { offersForLead, type OfferForClient } from './oferte';
 import { recordClientEvent } from './client-events';
 import { RENUNT_REASON_OPTIONS, optionLabel } from './client-response-details';
@@ -547,10 +547,7 @@ export async function bumpLead(lead: NewLead, email: string, now = new Date()): 
   const results = await Promise.allSettled(
     recipients.map((to) => sendCountyLeadAlert({ to, ...payload, confirmedActive: true })),
   );
-  const sent = recipients.filter((_, i) => {
-    const r = results[i];
-    return r.status === 'fulfilled' && r.value.ok;
-  });
+  const sent = sentFrom(recipients, results);
   const firms = sent.length;
   await logLeadSends(lead.timestamp, sent, 'retrimitere');
   await recordClientEvent(lead.timestamp, 'retrimitere', { firms });

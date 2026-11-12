@@ -6,7 +6,7 @@
 //
 // Usage: echo "raport..." | node scripts/notify-email.mjs "Subiect email"
 
-import { readFileSync } from 'node:fs';
+import { appendFileSync, readFileSync } from 'node:fs';
 
 const env = readFileSync(new URL('../.env.local', import.meta.url), 'utf8');
 const get = (k) => env.match(new RegExp(`^${k}=(.*)$`, 'm'))?.[1]?.trim().replace(/^["']|["']$/g, '');
@@ -25,6 +25,22 @@ const html = `<div style="font-family:system-ui,sans-serif"><pre style="font-fam
 if (!key) {
   console.error('RESEND_API_KEY missing — email NOT sent. Add it to .env.local.');
   process.exit(2);
+}
+
+// Oprire temporară: cât timp azi (ora României) nu a trecut de data din
+// ~/.config/notify-email/oprit-pana-la, raportul rămâne local și nu consumă cota Resend.
+const opritDir = `${process.env.HOME}/.config/notify-email`;
+const opritPanaLa = (() => {
+  try {
+    return readFileSync(`${opritDir}/oprit-pana-la`, 'utf8').trim();
+  } catch {
+    return '';
+  }
+})();
+if (opritPanaLa && new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Bucharest' }) <= opritPanaLa) {
+  appendFileSync(`${opritDir}/rapoarte-netrimise.log`, `\n=== ${new Date().toISOString()} ${subject}\n${body}\n`);
+  console.log(`Email NETRIMIS, oprire temporară până la ${opritPanaLa}: "${subject}". Raportul e în ${opritDir}/rapoarte-netrimise.log`);
+  process.exit(0);
 }
 
 const res = await fetch('https://api.resend.com/emails', {

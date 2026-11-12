@@ -64,6 +64,55 @@
       "cta": "Vezi oferta →"
     },
     {
+      "slug": "prokonstrukt",
+      "name": "Prokonstrukt Solar",
+      "location": "Timișoara · montaj în Timiș și Arad",
+      "logo": "/logos/exclusive-prokonstrukt-invest.png",
+      "baseUrl": "https://www.prokonstrukt.ro",
+      "active": false,
+      "positions": [
+        "homepage",
+        "ghid-index",
+        "ghid-topic",
+        "calculator",
+        "clasament",
+        "firme",
+        "pret"
+      ],
+      "messages": {
+        "client": "Sisteme fotovoltaice la cheie pentru case din Timiș și Arad, fără avans: plătiți după recepția tehnică"
+      },
+      "phone": "0734 070 429",
+      "whatsapp": "40734070429",
+      "promo": {
+        "headline": "Sistem fotovoltaic la cheie, fără avans: plătiți după recepția tehnică",
+        "offers": [
+          {
+            "title": "Start Rezidențial",
+            "detail": "5–6 kW monofazat, 12 panouri, invertor hibrid pregătit pentru baterie",
+            "price": "de la 19.900 lei"
+          },
+          {
+            "title": "Familie & Confort",
+            "detail": "10 kW trifazat, 22 panouri, invertor hibrid și smart meter",
+            "price": "de la 27.200 lei"
+          },
+          {
+            "title": "Independență Totală",
+            "detail": "10–15 kW trifazat, baterie LiFePO4 de 5–10 kWh, curent și la pană de rețea",
+            "price": "de la 38.900 lei"
+          }
+        ],
+        "note": "Prețuri cu TVA 21% și montaj. Dosarul de prosumator inclus.",
+        "images": [
+          {
+            "src": "/promo/prokonstrukt/exemplu-acoperis.jpg",
+            "alt": "Imagine de exemplu: casă cu panouri fotovoltaice pe acoperiș"
+          }
+        ]
+      }
+    },
+    {
       "slug": "reviewqr",
       "name": "ReviewQR",
       "location": "",

@@ -1,12 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Markdown from '@/components/ui/Markdown';
 import {
   JOURNAL_NOTED_EVENT,
   JOURNAL_SUBJECT_EVENT,
   subjectKey,
-  type JournalDigest,
   type JournalEntry,
   type JournalSubject,
 } from '@/lib/jurnal-shared';
@@ -19,23 +17,12 @@ function fmtTime(at: string): string {
   });
 }
 
-function fmtDay(day: string): string {
-  const [y, m, d] = day.split('-').map(Number);
-  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('ro-RO', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'short',
-    timeZone: 'UTC',
-  });
-}
-
 interface NotedDetail {
   kind: string;
   id: string;
   label: string;
   at: string;
 }
-
 
 function announce(detail: NotedDetail) {
   window.dispatchEvent(new CustomEvent<NotedDetail>(JOURNAL_NOTED_EVENT, { detail }));
@@ -68,15 +55,11 @@ export function NoteButton({ subject, notedAt }: { subject: JournalSubject; note
   );
 }
 
-export default function JournalPanel({
-  today,
-  initial,
-  digest,
-}: {
-  today: string;
-  initial: JournalEntry[];
-  digest: JournalDigest | null;
-}) {
+/**
+ * Jurnalul zilei: caseta de scris și notele de azi. Pe /admin/azi e pagina
+ * însăși (`main`); pe /admin/azi/liste stă pe lângă liste, mai mic.
+ */
+export default function JournalPanel({ initial, main = false }: { initial: JournalEntry[]; main?: boolean }) {
   const [entries, setEntries] = useState(initial);
   const [text, setText] = useState('');
   const [subject, setSubject] = useState<JournalSubject | null>(null);
@@ -161,15 +144,15 @@ export default function JournalPanel({
     if (e.key === 'Escape' && subject) setSubject(null);
   }
 
-  const digestIsToday = digest?.day === today;
-
   return (
     <section className="rounded-2xl border border-slate-200 bg-white">
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-slate-100 px-5 py-3">
-        <h2 className="text-base font-semibold text-slate-900">
-          Jurnal azi <span className="tabular-nums text-slate-400">{entries.length}</span>
+        <h2 className={`font-semibold text-slate-900 ${main ? 'text-lg' : 'text-base'}`}>
+          Jurnal <span className="tabular-nums text-slate-400">{entries.length}</span>
         </h2>
-        <p className="text-xs text-slate-400">pe cine ai sunat și ce s-a întâmplat; seara se face digestul</p>
+        <p className="text-xs text-slate-400">
+          ce ai făcut, cu cine ai vorbit, ce ai de făcut; seara scot din el taskurile pe mâine și poimâine
+        </p>
       </div>
 
       <div className="space-y-3 px-5 py-3">
@@ -200,13 +183,16 @@ export default function JournalPanel({
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={onKey}
-            rows={3}
+            rows={main ? 5 : 3}
+            autoFocus={main}
             placeholder={
               subject
                 ? 'Ce s-a întâmplat? ex. nu răspunde, revin joi'
-                : 'ex. Sunat East Solar: interesați, trimit oferta de comision mâine'
+                : 'ex. Am sunat East Solar: interesați, le trimit joi oferta de comision. Mâine: sun clientul Teodoru.'
             }
-            className="w-full resize-y rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-amber-500 focus:outline-none"
+            className={`w-full resize-y rounded-lg border border-slate-300 bg-white px-3 py-2 focus:border-amber-500 focus:outline-none ${
+              main ? 'text-base' : 'text-sm'
+            }`}
           />
           <div className="flex items-center gap-3">
             <button
@@ -277,31 +263,15 @@ export default function JournalPanel({
                     </div>
                   </div>
                 ) : (
-                  <p className="whitespace-pre-wrap text-sm text-slate-700">{e.text}</p>
+                  <p className={`whitespace-pre-wrap text-slate-700 ${main ? 'text-[15px]' : 'text-sm'}`}>{e.text}</p>
                 )}
               </li>
             ))}
           </ul>
         )}
 
-        {digest ? (
-          <details open={initial.length === 0 || digestIsToday} className="rounded-xl bg-slate-50 px-4 py-2">
-            <summary className="cursor-pointer text-xs font-medium text-slate-600 hover:text-slate-900">
-              {digestIsToday ? 'Digestul de azi' : `Digestul de ${fmtDay(digest.day)}`}
-              <span className="font-normal text-slate-400">
-                {' '}
-                · {digest.notes} {digest.notes === 1 ? 'notă' : 'note'}, scris la {fmtTime(digest.createdAt)}
-              </span>
-            </summary>
-            <div className="pt-1 [&_h3:first-child]:mt-2">
-              <Markdown content={digest.body} />
-            </div>
-          </details>
-        ) : (
-          <p className="text-xs text-slate-400">
-            Digestul îl fac seara, la 20:30, din notele de aici: ce s-a întâmplat, ce ai promis, ce e de
-            schimbat în CRM, ce e de făcut mâine.
-          </p>
+        {entries.length === 0 && (
+          <p className="text-sm text-slate-400">Nimic scris azi.</p>
         )}
       </div>
     </section>

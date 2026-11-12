@@ -42,3 +42,15 @@ export const JOURNAL_NOTED_EVENT = 'jurnal:notat';
 export function subjectKey(s: { kind: string; id: string; label: string }): string {
   return `${s.kind}:${s.id}:${s.label}`;
 }
+
+/** Un task de lângă jurnal: scris de mână sau scos de digestul de seară. */
+export interface JournalTask {
+  id: number;
+  /** YYYY-MM-DD, ziua în care e de făcut. */
+  due: string;
+  text: string;
+  source: 'manual' | 'digest';
+  /** Ziua digestului care l-a scos. */
+  sourceDay: string | null;
+  doneAt: string | null;
+}

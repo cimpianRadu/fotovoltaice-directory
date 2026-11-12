@@ -12,6 +12,7 @@ import {
   type FinancingTone,
 } from './utils-shared';
 import { CLAIM_REMINDER_MAX } from './sheets-shared';
+import { randomBytes } from 'node:crypto';
 import { unsubscribeHeaders, unsubscribePageUrl } from './firm-unsubscribe-token';
 import { isUnsubscribed } from './firm-unsubscribe';
 import type { Noutate } from './noutati';
@@ -69,6 +70,20 @@ export async function sendEmail(opts: SendEmailOptions): Promise<{ ok: boolean; 
   } catch (err) {
     return { ok: false, reason: err instanceof Error ? err.message : 'unknown error' };
   }
+}
+
+/**
+ * Codul pixelului de deschidere (27 oct 2026), doar în emailurile cu cereri
+ * către firme: alerta pe județ și rezumatul de luni. Apelantul îl salvează în
+ * lead_sends (lib/lead-sends), iar app/api/e/[token] notează deschiderea.
+ * Emailurile către clienți nu-l au.
+ */
+export function newOpenToken(): string {
+  return randomBytes(16).toString('base64url');
+}
+
+function openPixel(token: string): string {
+  return `<img src="${PORTAL_BASE_URL}/api/e/${token}.gif" width="1" height="1" alt="" style="display:block;width:1px;height:1px;border:0">`;
 }
 
 export function escapeHtml(s: string): string {
@@ -854,8 +869,9 @@ export async function sendCountyLeadAlert(data: {
   reactivated?: boolean;
   /** Clientul a răspuns „Da, încă vreau oferte" la emailul „mai căutați oferte?" (7 oct 2026). */
   confirmedActive?: boolean;
-}): Promise<{ ok: boolean; reason?: string }> {
+}): Promise<{ ok: boolean; reason?: string; openToken?: string }> {
   if (await isUnsubscribed(data.to)) return { ok: false, reason: 'dezabonat' };
+  const openToken = newOpenToken();
   const rezidential = data.segment === 'rezidential';
   const reserved = Boolean(data.reservedUntil);
   const informez = Boolean(data.informez);
@@ -913,6 +929,7 @@ export async function sendCountyLeadAlert(data: {
       schimbi sau le oprești, ori direct: <a href="${unsubscribePageUrl(data.to)}" style="color:#6b7280">nu mai vreau emailuri cu cereri</a>.
     </div>
   </div>
+  ${openPixel(openToken)}
 </body>
 </html>`;
 
@@ -949,7 +966,7 @@ export async function sendCountyLeadAlert(data: {
   if (!result.ok) {
     console.warn('[email] County alert not sent:', result.reason);
   }
-  return result;
+  return { ...result, openToken };
 }
 
 /** Un rând din emailul cu cereri deschise. Fără date de contact, ca la alerta pe județ. */
@@ -986,14 +1003,17 @@ export async function sendOpenLeadsDigest(data: {
   maxFirms: number;
   /** Noutățile platformei din săptămâna dinainte; doar în rezumatul de luni. */
   noutati?: Noutate[];
-}): Promise<{ ok: boolean; reason?: string }> {
+  /** Codul pixelului de deschidere; previzualizarea din /admin nu-l are. */
+  openToken?: string;
+}): Promise<{ ok: boolean; reason?: string; openToken?: string }> {
   if (await isUnsubscribed(data.to)) return { ok: false, reason: 'dezabonat' };
-  const { subject, html } = renderOpenLeadsDigest(data);
+  const openToken = newOpenToken();
+  const { subject, html } = renderOpenLeadsDigest({ ...data, openToken });
   const result = await sendEmail({ to: data.to, subject, html, headers: unsubscribeHeaders(data.to) });
   if (!result.ok) {
     console.warn('[email] Digest cereri deschise not sent:', result.reason);
   }
-  return result;
+  return { ...result, openToken };
 }
 
 /** Câte cereri intră în email; restul le vede pe /cereri. 40 de rânduri nu le citește nimeni. */
@@ -1100,6 +1120,7 @@ export function renderOpenLeadsDigest(data: Parameters<typeof sendOpenLeadsDiges
       ${footer}
     </div>
   </div>
+  ${data.openToken ? openPixel(data.openToken) : ''}
 </body>
 </html>`;
 

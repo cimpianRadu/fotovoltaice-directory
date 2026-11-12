@@ -43,7 +43,7 @@ import {
 import { isValidEmail } from './portal-auth';
 import { escapeHtml, sendCountyLeadAlert, sendEmail, sendWatchActivatedEmail } from './email';
 import { notifyFirmsClientClosed } from './lead-closed-firms';
-import { logLeadSends } from './lead-sends';
+import { logLeadSends, sentFrom } from './lead-sends';
 import { recentLeadSendEmails } from './lead-recent-sends';
 import { RENUNT_REASON_OPTIONS, optionLabel, type ResponseDetails } from './client-response-details';
 import {
@@ -225,7 +225,9 @@ export async function reactivateLead(
       reservedUntil: until,
       reactivated: true,
     });
-    if (sent.ok) await logLeadSends(lead.timestamp, [sub.email], 'retrimitere', sub.firma);
+    if (sent.ok) {
+      await logLeadSends(lead.timestamp, [{ email: sub.email, openToken: sent.openToken }], 'retrimitere', sub.firma);
+    }
     reservedFor = sub.firma;
   } else {
     // Eșecul nu strică reactivarea: fără marcajul AU, cronul de dimineață reîncearcă.
@@ -361,10 +363,7 @@ async function sendReactivationAlerts(
     const results = await Promise.allSettled(
       recipients.map((to) => sendCountyLeadAlert({ to, ...payload, reactivated: true })),
     );
-    await logLeadSends(lead.timestamp, recipients.filter((_, i) => {
-      const r = results[i];
-      return r.status === 'fulfilled' && r.value.ok;
-    }), 'retrimitere');
+    await logLeadSends(lead.timestamp, sentFrom(recipients, results), 'retrimitere');
   }
   await markReactivationAlertsSent(lead.timestamp, at);
   return recipients.length;
@@ -389,10 +388,7 @@ export async function alertCountyLeadConfirmedActive(lead: NewLead): Promise<num
     const results = await Promise.allSettled(
       recipients.map((to) => sendCountyLeadAlert({ to, ...payload, confirmedActive: true })),
     );
-    await logLeadSends(lead.timestamp, recipients.filter((_, i) => {
-      const r = results[i];
-      return r.status === 'fulfilled' && r.value.ok;
-    }), 'retrimitere');
+    await logLeadSends(lead.timestamp, sentFrom(recipients, results), 'retrimitere');
   }
   console.log(`[informez] confirmată activă ${lead.judet} · ${lead.timestamp}: alertă la ${recipients.length} firme`);
   return recipients.length;

@@ -31,7 +31,7 @@ export default async function RaspunsPage({
   searchParams: Promise<{ id?: string; t?: string; f?: string }>;
 }) {
   const { action } = await params;
-  if (!isClientLinkAction(action) || action === 'actualizare') notFound();
+  if (!isClientLinkAction(action) || action === 'actualizare' || action === 'verificare') notFound();
   const { id = '', t = '', f = '' } = await searchParams;
   const signedExtra = action === 'semnat' ? f : '';
   let valid = Boolean(id && t && verifyClientToken(t, id, action, signedExtra));

@@ -14,7 +14,7 @@ import { createLeadPhotoToken } from '@/lib/lead-photos';
 import { CLIENT_LEAD_COOKIE, ensureAccount, leadGrantCookie } from '@/lib/client-auth';
 import { clientAccountLive, clientEmailsLive } from '@/lib/client-account';
 import { sendConfirmationEmail } from '@/lib/email-cont';
-import { logLeadSends } from '@/lib/lead-sends';
+import { logLeadSends, sentFrom } from '@/lib/lead-sends';
 import { getCompanies } from '@/lib/utils';
 import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 import { cleanPhone, PHONE_ERROR } from '@/lib/phone';
@@ -281,7 +281,7 @@ async function notifyCountyAlerts(body: Record<string, string>, leadId: string) 
     // apărea public în fereastra dintre salvare și regenerare.
     revalidatePath('/cereri');
     const sent = await sendCountyLeadAlert({ to: sub.email, ...payload, reservedUntil: until });
-    if (sent.ok) await logLeadSends(leadId, [sub.email], 'creare', sub.firma);
+    if (sent.ok) await logLeadSends(leadId, [{ email: sub.email, openToken: sent.openToken }], 'creare', sub.firma);
     console.log(
       `[leads] ${judet}: rezervată pentru ${sub.firma} până ${until} (email: ${sent.ok ? 'trimis' : 'eșuat'})`,
     );
@@ -300,14 +300,7 @@ async function notifyCountyAlerts(body: Record<string, string>, leadId: string) 
     recipients.map((to) => sendCountyLeadAlert({ to, ...payload })),
   );
   const failed = results.filter((r) => r.status === 'rejected' || !r.value.ok).length;
-  await logLeadSends(
-    leadId,
-    recipients.filter((_, i) => {
-      const r = results[i];
-      return r.status === 'fulfilled' && r.value.ok;
-    }),
-    'creare',
-  );
+  await logLeadSends(leadId, sentFrom(recipients, results), 'creare');
   console.log(
     `[leads] alerte județ ${judet}: ${recipients.length - failed}/${recipients.length} trimise`,
   );

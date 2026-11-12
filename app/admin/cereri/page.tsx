@@ -31,6 +31,8 @@ import { mountingForRoof, parseConsumLunar, sizeKwp } from '@/lib/pv-estimate';
 import { digestRow } from '@/lib/open-leads-digest';
 import ShareLeadButton from '../crm/ShareLeadButton';
 import CopyLinkButton from './CopyLinkButton';
+import WhatsAppButton from './WhatsAppButton';
+import { getWhatsappOpened, whatsappCheckFor } from '@/lib/whatsapp-verificare';
 import {
   ETAPE,
   EtapaBadge,
@@ -61,6 +63,10 @@ export const dynamic = 'force-dynamic';
 // sau reactivată („sunt gata”) se ordonează după data aceea, ca în /cereri, și
 // scrie lângă dată că e reconfirmată. Linkurile publice se copiază de aici,
 // pentru firmele care le cer pe WhatsApp (East Solar: „dă-mi link-urile”).
+//
+// 12 nov 2026: butonul „WhatsApp: ofertă bună?” pe cererile unde o firmă a
+// trimis ofertă (lib/whatsapp-verificare), plus filtrul
+// `wa=1` cu cele încă neîntrebate.
 
 type EtapaFilter = '' | 'deschise' | Etapa;
 type ContFilter = '' | 'da' | 'nu';
@@ -84,6 +90,7 @@ interface Props {
     termen?: string;
     hot?: string;
     kw?: string;
+    wa?: string;
   }>;
 }
 
@@ -241,6 +248,7 @@ export default async function CereriPage({ searchParams }: Props) {
   const termen = params.termen ?? '';
   const hot = params.hot === '1';
   const kwMin = Number(params.kw) > 0 ? Number(params.kw) : 0;
+  const wa = params.wa === '1';
 
   let leads: NewLead[];
   let claims: LeadClaim[];
@@ -263,6 +271,12 @@ export default async function CereriPage({ searchParams }: Props) {
     activityById = await getLeadsActivity(leads);
   } catch (err) {
     dbError = err instanceof Error ? err.message : String(err);
+  }
+  let waOpened = new Map<string, string>();
+  try {
+    waOpened = await getWhatsappOpened(leads.map((l) => l.timestamp));
+  } catch (err) {
+    dbError ||= err instanceof Error ? err.message : String(err);
   }
 
   const claimsByLead = new Map<string, LeadClaim[]>();
@@ -289,14 +303,16 @@ export default async function CereriPage({ searchParams }: Props) {
         last: lastActivity(lead, all, activity),
         fresh: leadFreshSince(lead),
         power: leadKw(lead),
+        whatsapp: whatsappCheckFor(lead, all),
         // Are rost de trimis doar ce o firmă poate revendica din link: vizibilă pe /cereri și cu loc liber.
         // Etapa deschisă pe deasupra: o firmă poate marca „Concretizat” fără ca cererea să fie
         // închisă în CRM, iar atunci ea stă încă pe /cereri (Constanța, 31 aug).
         shareable: isPubliclyClaimable(lead) && held < maxClaimsForLead(lead.timestamp) && isEtapaOpen(e),
       };
     })
-    .filter(({ lead, claims: cl, activity, etapa: e, power }) => {
+    .filter(({ lead, claims: cl, activity, etapa: e, power, whatsapp }) => {
       if (kwMin && power.kw < kwMin) return false;
+      if (wa && (!whatsapp || waOpened.has(lead.timestamp))) return false;
       if (etapa === 'deschise' && !isEtapaOpen(e)) return false;
       if (etapa && etapa !== 'deschise' && e !== etapa) return false;
       if (cont) {
@@ -341,6 +357,10 @@ export default async function CereriPage({ searchParams }: Props) {
   const shareRows = rows.filter((r) => r.shareable);
   const shareText = shareRows.map((r) => shareBlock(r.lead)).join('\n\n');
 
+  const waCount = leads.filter(
+    (l) => !waOpened.has(l.timestamp) && whatsappCheckFor(l, claimsByLead.get(l.timestamp) ?? []),
+  ).length;
+
   const hotCount = leads.filter(
     (l) => isHot(l) && isEtapaOpen(leadEtapa(l, claimsByLead.get(l.timestamp) ?? [])),
   ).length;
@@ -352,7 +372,7 @@ export default async function CereriPage({ searchParams }: Props) {
   ).length;
 
   const qs = (
-    next: Partial<Record<'etapa' | 'cont' | 'judet' | 'q' | 'sort' | 'bani' | 'termen' | 'hot' | 'kw', string>>,
+    next: Partial<Record<'etapa' | 'cont' | 'judet' | 'q' | 'sort' | 'bani' | 'termen' | 'hot' | 'kw' | 'wa', string>>,
   ) => {
     const merged = {
       etapa,
@@ -364,6 +384,7 @@ export default async function CereriPage({ searchParams }: Props) {
       termen,
       hot: hot ? '1' : '',
       kw: kwMin ? String(kwMin) : '',
+      wa: wa ? '1' : '',
       ...next,
     };
     const p = new URLSearchParams();
@@ -403,6 +424,7 @@ export default async function CereriPage({ searchParams }: Props) {
             termen,
             hot: hot ? '1' : '',
             kw: kwMin ? String(kwMin) : '',
+            wa: wa ? '1' : '',
           })
             .filter(([, v]) => v)
             .map(([k, v]) => (
@@ -446,6 +468,11 @@ export default async function CereriPage({ searchParams }: Props) {
         <FilterRow label="Ordine">
           <Pill href={qs({ hot: hot ? '' : '1' })} active={hot}>
             🔥 Hot · {hotCount}
+          </Pill>
+          <Pill href={qs({ wa: wa ? '' : '1' })} active={wa}>
+            <span title="Cereri deschise unde o firmă a trimis ofertă și încă nu i-ai scris pe WhatsApp">
+              💬 De întrebat pe WhatsApp · {waCount}
+            </span>
           </Pill>
           <span className="mx-1 h-4 w-px bg-slate-200" />
           <Pill href={qs({ sort: '' })} active={sort === 'intrare'}>
@@ -562,7 +589,7 @@ export default async function CereriPage({ searchParams }: Props) {
             </tr>
           </thead>
           <tbody>
-            {rows.map(({ lead, claims: cl, held, activity, last, etapa: e, fresh, power, shareable }) => {
+            {rows.map(({ lead, claims: cl, held, activity, last, etapa: e, fresh, power, shareable, whatsapp }) => {
               const closed = !isEtapaOpen(e);
               const freshAs = freshLabel(lead, fresh);
               const wonBy = cl.filter((c) => c.firmStatus === 'castigat' && !c.releasedAt);
@@ -668,6 +695,17 @@ export default async function CereriPage({ searchParams }: Props) {
                             trimisă la {activity.sentTo} pe email
                           </span>
                         )}
+                        {activity && activity.sentTracked > 0 && (
+                          <span
+                            className={`block font-normal ${activity.openedBy ? 'text-slate-600' : 'text-slate-400'}`}
+                            title={`Din emailurile cu pixel (de la 27 oct): ${activity.sentTracked} ${
+                              activity.sentTracked === 1 ? 'firmă' : 'firme'
+                            }. Apple Mail încarcă imaginea singur, Outlook o blochează de obicei: cifra e orientativă.`}
+                          >
+                            {activity.openedBy ? `deschisă de ${activity.openedBy}` : 'nedeschisă încă'}
+                            {activity.openedMaybeAuto > 0 && ` (${activity.openedMaybeAuto} Apple Mail, poate automat)`}
+                          </span>
+                        )}
                       </span>
                     ) : (
                       <ul className="space-y-1">
@@ -706,6 +744,16 @@ export default async function CereriPage({ searchParams }: Props) {
                         <li className="text-[11px] text-slate-400">
                           {held}/{maxClaimsForLead(lead.timestamp)} locuri ocupate
                         </li>
+                        {whatsapp && (
+                          <li>
+                            <WhatsAppButton
+                              leadId={lead.timestamp}
+                              href={whatsapp.href}
+                              text={whatsapp.text}
+                              openedAt={waOpened.get(lead.timestamp) ?? null}
+                            />
+                          </li>
+                        )}
                       </ul>
                     )}
                   </td>

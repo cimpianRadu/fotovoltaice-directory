@@ -63,6 +63,12 @@ export default function PoliticaConfidentialitate() {
             Apăsările firmelor pe cererile din pagina de cereri: le numărăm cu un cod calculat din
             adresa IP, browser și dată, care se schimbă zilnic și nu permite identificarea persoanei
           </li>
+          <li>
+            Deschiderea emailurilor cu cereri trimise firmelor: aceste emailuri conțin o imagine de
+            1×1 pixeli de pe site-ul nostru, iar când se încarcă notăm data și ora deschiderii și
+            aplicația de email care a cerut-o. Imaginea nu se încarcă dacă aplicația de email blochează
+            imaginile. Emailurile trimise clienților nu conțin această imagine
+          </li>
           <li>Nu folosim cookie-uri de tracking sau publicitate</li>
         </ul>
 

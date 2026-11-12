@@ -13,6 +13,11 @@
 // „semnat" (cu o firmă anume), „decid", „altafirma", „necontactat". La
 // „semnat", revendicarea aleasă (timestampul ei) intră în semnătură ca `extra`,
 // altfel linkul ar putea fi rescris pe altă firmă.
+//
+// Din 12 nov 2026, „verificare": un singur link care deschide pagina
+// /cerere/verificare cu aceleași butoane ca emailul „ofertă bună?". E pentru
+// mesajul de WhatsApp trimis de mână din /admin/cereri, unde patru linkuri
+// lungi ar arăta a spam.
 
 import { createHmac, timingSafeEqual } from 'node:crypto';
 
@@ -26,6 +31,7 @@ export const CLIENT_LINK_ACTIONS = [
   'decid',
   'altafirma',
   'necontactat',
+  'verificare',
 ] as const;
 export type ClientLinkAction = (typeof CLIENT_LINK_ACTIONS)[number];
 
@@ -83,6 +89,11 @@ export function clientLinkUrl(leadId: string, action: ClientLinkAction, extra = 
   const token = createClientToken(leadId, action, extra);
   const params = new URLSearchParams({ id: leadId, t: token });
   if (extra) params.set('f', extra);
-  const path = action === 'actualizare' ? '/cerere/actualizare' : `/cerere/raspuns/${action}`;
+  const path =
+    action === 'actualizare'
+      ? '/cerere/actualizare'
+      : action === 'verificare'
+        ? '/cerere/verificare'
+        : `/cerere/raspuns/${action}`;
   return `${BASE_URL}${path}?${params.toString()}`;
 }

@@ -5,6 +5,7 @@ import path from 'path';
 import bundledSponsors from '@/data/sponsors.json';
 import { SPONSOR_POSITIONS, type SponsorPosition } from './sponsor-positions';
 import { RUN_MAX_DAYS, isValidRunStart, type SponsorRun } from './sponsor-run';
+import type { SponsorPromo } from './sponsor-promo';
 
 /**
  * Sursa adevărului pentru parteneri e un singur fișier JSON din repo
@@ -53,6 +54,8 @@ export interface BannerSponsor {
   phone?: string;
   whatsapp?: string;
   facebook?: string;
+  /** Slide-ul de ofertă; se editează din cod (poze și PDF cer fișiere în repo). */
+  promo?: SponsorPromo;
 }
 
 export interface PopupConfig {
@@ -301,6 +304,8 @@ function validateAndNormalize(input: SponsorData, current: SponsorData): Sponsor
       ...(phone ? { phone } : {}),
       ...(whatsapp ? { whatsapp } : {}),
       ...(facebook ? { facebook } : {}),
+      // Ca logo-ul: panoul nu îl editează, dar îl păstrează la salvare.
+      ...(cur.promo ? { promo: cur.promo } : {}),
     };
   });
 
