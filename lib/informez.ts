@@ -44,6 +44,7 @@ import { isValidEmail } from './portal-auth';
 import { escapeHtml, sendCountyLeadAlert, sendEmail, sendWatchActivatedEmail } from './email';
 import { notifyFirmsClientClosed } from './lead-closed-firms';
 import { logLeadSends } from './lead-sends';
+import { recentLeadSendEmails } from './lead-recent-sends';
 import { RENUNT_REASON_OPTIONS, optionLabel, type ResponseDetails } from './client-response-details';
 import {
   sendInformezCheckinEmail,
@@ -335,6 +336,10 @@ function reactivationRecipients(
  * minus abonatul (a primit rezervarea). Marcajul AU se scrie și când nu e
  * nimeni de anunțat, ca rândul să nu fie reluat de cron. Întoarce numărul de
  * firme anunțate.
+ *
+ * Sare și firmele care au primit un email despre cererea asta în ultimele 24 de
+ * ore (alerta de creare sau o reactivare de acum un minut): termenul nou îl văd
+ * pe card, în /cereri și în portal. Vezi lib/lead-recent-sends.
  */
 async function sendReactivationAlerts(
   lead: NewLead,
@@ -344,7 +349,13 @@ async function sendReactivationAlerts(
   subs: Awaited<ReturnType<typeof getLeadSubscriptions>>,
   at: string,
 ): Promise<number> {
-  const recipients = reactivationRecipients(lead, watches, prefs, links, subs);
+  const alreadySent = await recentLeadSendEmails(lead.timestamp);
+  const recipients = reactivationRecipients(lead, watches, prefs, links, subs).filter(
+    (to) => !alreadySent.has(to.trim().toLowerCase()),
+  );
+  if (alreadySent.size) {
+    console.log(`[informez] reactivare ${lead.timestamp}: ${alreadySent.size} firme au primit-o în ultimele 24 h, sărite`);
+  }
   if (recipients.length) {
     const payload = countyAlertPayloadFromLead(lead);
     const results = await Promise.allSettled(

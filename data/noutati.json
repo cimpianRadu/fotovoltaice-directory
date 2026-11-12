@@ -1,5 +1,12 @@
 [
   {
+    "data": "2026-11-12",
+    "titlu": "Aceeași cerere nu mai vine de două ori",
+    "text": "Când un client trimite o cerere ca să se informeze și confirmă în aceeași zi că vrea oferte, nu mai primești al doilea email pentru ea. Termenul nou îl vezi direct pe cardul din /cereri și din portal.",
+    "link": "/cereri",
+    "linkText": "Vezi cererile"
+  },
+  {
     "data": "2026-11-09",
     "titlu": "Pozele și detaliile cererii, direct pe card",
     "text": "Pe cererile la care lucrezi vezi fără niciun click pozele clientului, localitatea, acoperișul din satelit, ce își dorește, bugetul și termenul. Fiecare cerere stă în cardul ei, iar restul (emailul, consumul, istoricul notelor) e la „Toate detaliile”.",
