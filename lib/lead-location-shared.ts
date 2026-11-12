@@ -30,9 +30,18 @@ export function parseCoords(value: string): LatLng | null {
 }
 
 /**
- * Linkul de Google Maps pe care îl deschide instalatorul. Cu coordonate, harta
- * pornește direct pe satelit, aproape de acoperiș; cu adresa doar, e o căutare
- * (Google nu lasă alegerea stratului pe căutare, se comută dintr-un click).
+ * Stratul de satelit în linkurile Google Maps (`data=!3m1!1e3`). Nu e în
+ * API-ul documentat (acolo `basemap=satellite` merge doar fără pin și fără
+ * căutare), dar e formatul pe care îl scrie Google Maps în bara de adrese.
+ * Verificat 12 nov 2026: desktop și browserul de pe telefon.
+ */
+const SATELLITE_LAYER = 'data=!3m1!1e3';
+
+/**
+ * Linkul de Google Maps pe care îl deschide instalatorul: mereu pe satelit și
+ * cu pin. Cu coordonate, pinul stă pe punctul din GPS, la ~80 m de cadru, ca
+ * să se vadă care casă e; cu adresa doar, e o căutare, iar pinul e unde
+ * găsește Google adresa.
  */
 export function satelliteMapUrl(lead: {
   adresa: string;
@@ -42,12 +51,13 @@ export function satelliteMapUrl(lead: {
 }): string | null {
   const coords = parseCoords(lead.coordonate);
   if (coords) {
-    return `https://www.google.com/maps/@?api=1&map_action=map&center=${coords.lat},${coords.lng}&zoom=20&basemap=satellite`;
+    const point = formatCoords(coords);
+    return `https://www.google.com/maps/place/${point}/@${point},80m/${SATELLITE_LAYER}`;
   }
   const adresa = lead.adresa.trim();
   if (!adresa) return null;
   const query = [adresa, lead.localitate, lead.judet].filter(Boolean).join(', ');
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+  return `https://www.google.com/maps/search/${encodeURIComponent(query)}/${SATELLITE_LAYER}`;
 }
 
 export function hasLeadLocation(lead: { adresa: string; coordonate: string }): boolean {
