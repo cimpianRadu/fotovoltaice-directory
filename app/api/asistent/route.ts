@@ -67,6 +67,12 @@ export async function GET(request: Request) {
   const leadId = url.searchParams.get('leadId') || '';
   const token = url.searchParams.get('token') || '';
   if (!asistentPornit()) return NextResponse.json({ eligibil: false });
+  // Fără cheie, bula nu apare deloc: altfel clientul ar vedea un chat care
+  // răspunde cu eroare la primul mesaj. Modul de probă local merge fără cheie.
+  if (!process.env.ANTHROPIC_API_KEY && process.env.ASISTENT_MOCK !== '1') {
+    console.warn('[asistent] ANTHROPIC_API_KEY lipsește: bula Watt AI nu se arată.');
+    return NextResponse.json({ eligibil: false });
+  }
   if (!autorizat(leadId, token)) return NextResponse.json({ error: 'acces' }, { status: 403 });
   try {
     const c = await conversatiePentru(leadId);
