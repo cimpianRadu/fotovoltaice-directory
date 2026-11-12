@@ -496,7 +496,7 @@ export default function PortalClaimCard({
           </p>
         </div>
 
-        <div className="min-w-0">
+        <div className="flex min-w-0 flex-col items-start">
           {clientName && (
             <p className="mb-1 hidden truncate text-sm text-gray-800 sm:block" title={clientName}>
               {clientName}
@@ -524,6 +524,10 @@ export default function PortalClaimCard({
               Sună<span className="hidden sm:inline"> {claim.client.telefon}</span>
             </a>
           )}
+          {/* Precalificarea Watt AI (pilot 12 nov 2026), sub „Sună”, pe orice stare a
+              cererii. Nu sub status: lista de statusuri se deschide în jos și ar
+              acoperi-o. */}
+          <RezumatFirma leadId={claim.leadId} sursa="portal" className="mt-2 max-w-full" />
         </div>
 
         {/* Două stări diferite, nu una: până la aprobare arătăm unde suntem NOI
@@ -752,9 +756,6 @@ export default function PortalClaimCard({
           )}
         </div>
       )}
-
-      {/* Rezumatul asistentului (pilot 12 nov 2026), pe orice stare a cererii. */}
-      <RezumatFirma leadId={claim.leadId} sursa="portal" />
 
       {/* Text, nu o săgeată în colț: lângă săgeata statusului cele două se
           confundau, iar una deschide o listă, cealaltă cardul. */}

@@ -982,7 +982,13 @@ export default function LeadCard({
         <span className="shrink-0 text-xs text-gray-400">{lead.postedLabel}</span>
       </div>
 
-      <h3 className="mt-3 font-semibold text-gray-900">{lead.tipLabel}</h3>
+      {/* Precalificarea Watt AI (pilot 12 nov 2026), pe marginea din dreapta a cardului:
+          doar pentru firmele logate și doar pe cererile cu sesiune. Conținutul
+          îl vede doar firma care a preluat cererea. */}
+      <div className="mt-3 flex items-start justify-between gap-3">
+        <h3 className="min-w-0 font-semibold text-gray-900">{lead.tipLabel}</h3>
+        {me && <RezumatFirma leadId={lead.id} sursa="cereri" className="max-w-[65%]" />}
+      </div>
       <p className="mt-1 text-sm text-gray-600">{details.join(' · ')}</p>
       {estimates.length > 0 && (
         <p
@@ -1022,8 +1028,6 @@ export default function LeadCard({
       {lead.mesaj && (
         <p className="mt-2 text-sm text-gray-500 italic leading-relaxed">„{lead.mesaj}”</p>
       )}
-      {/* Rezumatul asistentului (pilot 12 nov 2026): doar firmelor logate. */}
-      {me && <RezumatFirma leadId={lead.id} sursa="cereri" />}
       {lead.nrPoze > 0 && (
         <PhotoTeaser
           leadId={lead.id}

@@ -93,6 +93,7 @@ type EventName =
   | 'asistent_mesaj'
   | 'asistent_gata'
   | 'asistent_refuzat'
+  | 'rezumat_ai_deschis'
   | 'rezumat_ai_nota'
   | 'rezumat_ai_setare';
 
