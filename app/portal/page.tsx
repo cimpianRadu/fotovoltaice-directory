@@ -24,6 +24,8 @@ import {
 import { informezMotiv } from '@/lib/lead-alerts';
 import { satelliteMapUrl } from '@/lib/lead-location-shared';
 import { closedLeadNotice } from '@/lib/portal-release-reasons';
+import { clientSignalFor } from '@/lib/portal-client-signal';
+import { getWhatsappOpened } from '@/lib/whatsapp-verificare';
 import { getLeadLocations, type LeadLocation } from '@/lib/lead-location';
 import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
@@ -212,6 +214,20 @@ export default async function PortalPage() {
     const now = Date.now();
     const firmClaims = claims.filter((c) => mineEmails.has(c.email));
     const statusMoves = await getFirmStatusMoves(firmClaims.map((c) => c.timestamp));
+    // „Ați găsit o ofertă bună?” pe WhatsApp, doar pe cererile unde firma are
+    // ofertă trimisă. Fără bază, portalul merge mai departe, doar fără rândul
+    // cu semnalul clientului.
+    const offeredLeadIds = [
+      ...new Set(
+        firmClaims
+          .filter((c) => !c.releasedAt && (c.firmStatus === 'ofertat' || Boolean(c.offeredAt)))
+          .map((c) => c.leadId),
+      ),
+    ];
+    const waAsked = await getWhatsappOpened(offeredLeadIds).catch((err) => {
+      console.error('[portal] semnal client:', err);
+      return new Map<string, string>();
+    });
 
     mine = firmClaims
       .map((c) => {
@@ -228,7 +244,19 @@ export default async function PortalPage() {
         );
         const moved = lastMoveAt > Math.max(Date.parse(c.timestamp) || 0, Date.parse(c.approvedAt) || 0);
         const leadClosed = lead ? closedLeadNotice(lead.crmStatus, c.firmStatus) : null;
+        // Ce a răspuns clientul când l-am întrebat de oferte, sau că încă tace.
+        // Doar cu oferta trimisă și cu cererea încă deschisă: pe cele închise
+        // vorbește `leadClosed`.
+        const clientSignal =
+          lead && approved && !c.releasedAt && !leadClosed && (c.firmStatus === 'ofertat' || Boolean(c.offeredAt))
+            ? clientSignalFor({
+                since: c.offeredAt || c.timestamp,
+                askedAt: [lead.verificareStatusLa, lead.verificareRetrimisaLa, waAsked.get(c.leadId)],
+                raspunsClient: lead.raspunsClient,
+              })
+            : null;
         return {
+          clientSignal,
           pozeCount: photosByLead.get(c.leadId)?.length || 0,
           cuPoze: photosByLead.has(c.leadId) || Boolean(lead?.poze.trim()),
           // Închisă de client sau de noi: cardul spune doar asta, fără nimic de

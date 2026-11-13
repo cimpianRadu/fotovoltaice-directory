@@ -16,6 +16,7 @@ import {
   type ClosedLeadNotice,
   type ReleaseReasonId,
 } from '@/lib/portal-release-reasons';
+import type { ClientSignal } from '@/lib/portal-client-signal';
 import {
   CLAIM_STATUSES,
   CLAIM_STATUS_HINTS,
@@ -63,6 +64,8 @@ export interface PortalClaim {
   cuPoze: boolean;
   /** Cererea s-a închis cât firma încă o avea în lucru. Null pe cele deschise. */
   leadClosed: ClosedLeadNotice | null;
+  /** După ofertă: ce a răspuns clientul când l-am întrebat, sau că încă tace. */
+  clientSignal: ClientSignal | null;
   /** Zile de la ultima mișcare a firmei. `null` = n-a mișcat nimic de la revendicare. */
   updatedDays: number | null;
   /** „Mai lucrezi la ea?”. Calculat pe server, o dată la încărcarea paginii. */
@@ -611,6 +614,12 @@ export default function PortalClaimCard({
       )}
       {claim.leadClosed && !claim.leadClosed.final && !released && (
         <p className="mt-2 text-sm text-gray-600">{claim.leadClosed.text}</p>
+      )}
+
+      {/* Semnalul clientului după ofertă (13 nov 2026), la vedere pe card. Dispare
+          când firma mută statusul pe concretizat sau pierdut: nu mai are ce spune. */}
+      {claim.clientSignal && !done && status !== 'castigat' && status !== 'pierdut' && (
+        <p className="mt-2 text-sm text-gray-600">{claim.clientSignal.text}</p>
       )}
 
       {ask && !done && !justReleased && (

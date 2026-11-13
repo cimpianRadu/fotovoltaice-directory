@@ -1,5 +1,12 @@
 [
   {
+    "data": "2026-11-13",
+    "titlu": "După ofertă, vezi pe card ce a răspuns clientul",
+    "text": "După ce trimiți oferta, îl întrebăm noi pe client dacă a ales una. Ce aflăm apare pe cardul cererii, în portal: că încă se decide sau că nu a răspuns încă, cu ziua în care l-am întrebat. Dacă a ales altă firmă sau a renunțat, cererea iese singură din lucru, ca până acum.",
+    "link": "/portal",
+    "linkText": "Vezi cererile tale"
+  },
+  {
     "data": "2026-11-12",
     "titlu": "Cererile de baterie vin precalificate: invertorul și fazarea, confirmate",
     "text": "La cererile de baterie și extindere, clientul confirmă după trimitere, cu Watt AI, asistentul nostru, ce întrebi oricum la primul telefon: modelul invertorului, fazarea, consumul, de ce vrea capacitatea respectivă. Cererile cu „Precalificare” pe card au aceste detalii; după ce preiei cererea, le deschizi de acolo, împreună cu ce nu se potrivește și ce vrea clientul să afle de la tine. Spune-ne din fereastră dacă te ajută; o poți opri din portal.",
