@@ -646,6 +646,24 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
       api.push({ role: 'assistant', content: res.content });
       const nou = textDin(res.content);
       if (nou) raspuns = nou;
+      // Rescrierea pentru „compatibilitate” îi cere să salveze întrebarea pentru
+      // firmă, deci replica poate veni cu `salveaza_raspunsuri`. Fără rezultat,
+      // istoricul rămâne cu un tool_use orfan și următorul mesaj al clientului
+      // primește 400 de la API (prins pe conversația demo, 13 nov 2026).
+      const toolUses = res.content.filter((b): b is Anthropic.Beta.BetaToolUseBlock => b.type === 'tool_use');
+      if (toolUses.length) {
+        api.push({
+          role: 'user',
+          content: toolUses.map((t) => {
+            unelte.push(t.name);
+            return {
+              type: 'tool_result' as const,
+              tool_use_id: t.id,
+              content: runTool(t.name, (t.input || {}) as Record<string, unknown>, state),
+            };
+          }),
+        });
+      }
     }
   } catch (err) {
     logReplica({ level: 'error', leadId: c.leadId, err: err instanceof Error ? err.message : String(err) });
