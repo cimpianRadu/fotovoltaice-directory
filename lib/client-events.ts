@@ -28,6 +28,10 @@ export const CLIENT_EVENTS = [
   // /admin/cereri, apoi clientul a deschis linkul din el
   'whatsapp_deschis',
   'verificare_deschisa',
+  // WhatsApp „cu ce firmă ați lucrat?" (13 nov 2026), pe cererile închise pe
+  // „altundeva": Radu a deschis mesajul, apoi clientul a răspuns pe pagină
+  'whatsapp_firma_deschis',
+  'firma_aleasa_raspuns',
 ] as const;
 export type ClientEvent = (typeof CLIENT_EVENTS)[number];
 

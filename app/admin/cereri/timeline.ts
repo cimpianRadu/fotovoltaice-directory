@@ -81,6 +81,8 @@ const CLIENT_EVENT_LABEL: Record<string, string> = {
   stergere: 'A cerut ștergerea contului',
   whatsapp_deschis: 'Radu a deschis mesajul WhatsApp „Ați găsit o ofertă bună?”',
   verificare_deschisa: 'Clientul a deschis linkul „Ați găsit o ofertă bună?” din WhatsApp',
+  whatsapp_firma_deschis: 'Radu a deschis mesajul WhatsApp „Cu ce firmă ați lucrat?”',
+  firma_aleasa_raspuns: 'Clientul a spus cu ce firmă a lucrat (după închiderea pe „altundeva”)',
 };
 
 const CLICK_KIND_LABEL: Record<string, string> = {

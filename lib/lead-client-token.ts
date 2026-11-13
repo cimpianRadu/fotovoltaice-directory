@@ -18,6 +18,10 @@
 // /cerere/verificare cu aceleași butoane ca emailul „ofertă bună?". E pentru
 // mesajul de WhatsApp trimis de mână din /admin/cereri, unde patru linkuri
 // lungi ar arăta a spam.
+//
+// Din 13 nov 2026, „firmaaleasa": pentru cererile închise pe „altundeva”, tot
+// din WhatsApp. Clientul spune cu ce firmă a lucrat, ca să vedem dacă nu e
+// totuși una care a revendicat cererea la noi. Nu redeschide și nu închide nimic.
 
 import { createHmac, timingSafeEqual } from 'node:crypto';
 
@@ -32,6 +36,7 @@ export const CLIENT_LINK_ACTIONS = [
   'altafirma',
   'necontactat',
   'verificare',
+  'firmaaleasa',
 ] as const;
 export type ClientLinkAction = (typeof CLIENT_LINK_ACTIONS)[number];
 

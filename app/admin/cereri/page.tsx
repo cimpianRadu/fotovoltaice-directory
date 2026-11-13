@@ -32,7 +32,7 @@ import { digestRow } from '@/lib/open-leads-digest';
 import ShareLeadButton from '../crm/ShareLeadButton';
 import CopyLinkButton from './CopyLinkButton';
 import WhatsAppButton from './WhatsAppButton';
-import { getWhatsappOpened, whatsappCheckFor } from '@/lib/whatsapp-verificare';
+import { getWhatsappOpened, whatsappCheckFor, type WhatsappKind } from '@/lib/whatsapp-verificare';
 import {
   ETAPE,
   EtapaBadge,
@@ -67,6 +67,8 @@ export const dynamic = 'force-dynamic';
 // 12 nov 2026: butonul „WhatsApp: ofertă bună?” pe cererile unde o firmă a
 // trimis ofertă (lib/whatsapp-verificare), plus filtrul
 // `wa=1` cu cele încă neîntrebate.
+// 13 nov 2026: același buton, „WhatsApp: ce firmă?”, pe cererile închise pe
+// altundeva pe care le-a revendicat o firmă. Intră în același filtru.
 
 type EtapaFilter = '' | 'deschise' | Etapa;
 type ContFilter = '' | 'da' | 'nu';
@@ -273,11 +275,14 @@ export default async function CereriPage({ searchParams }: Props) {
     dbError = err instanceof Error ? err.message : String(err);
   }
   let waOpened = new Map<string, string>();
+  let waFirmaOpened = new Map<string, string>();
   try {
-    waOpened = await getWhatsappOpened(leads.map((l) => l.timestamp));
+    const ids = leads.map((l) => l.timestamp);
+    [waOpened, waFirmaOpened] = await Promise.all([getWhatsappOpened(ids), getWhatsappOpened(ids, 'firma')]);
   } catch (err) {
     dbError ||= err instanceof Error ? err.message : String(err);
   }
+  const waOpenedAt = (kind: WhatsappKind, id: string) => (kind === 'firma' ? waFirmaOpened : waOpened).get(id) ?? null;
 
   const claimsByLead = new Map<string, LeadClaim[]>();
   for (const c of claims) claimsByLead.set(c.leadId, [...(claimsByLead.get(c.leadId) ?? []), c]);
@@ -312,7 +317,7 @@ export default async function CereriPage({ searchParams }: Props) {
     })
     .filter(({ lead, claims: cl, activity, etapa: e, power, whatsapp }) => {
       if (kwMin && power.kw < kwMin) return false;
-      if (wa && (!whatsapp || waOpened.has(lead.timestamp))) return false;
+      if (wa && (!whatsapp || waOpenedAt(whatsapp.kind, lead.timestamp))) return false;
       if (etapa === 'deschise' && !isEtapaOpen(e)) return false;
       if (etapa && etapa !== 'deschise' && e !== etapa) return false;
       if (cont) {
@@ -357,9 +362,10 @@ export default async function CereriPage({ searchParams }: Props) {
   const shareRows = rows.filter((r) => r.shareable);
   const shareText = shareRows.map((r) => shareBlock(r.lead)).join('\n\n');
 
-  const waCount = leads.filter(
-    (l) => !waOpened.has(l.timestamp) && whatsappCheckFor(l, claimsByLead.get(l.timestamp) ?? []),
-  ).length;
+  const waCount = leads.filter((l) => {
+    const check = whatsappCheckFor(l, claimsByLead.get(l.timestamp) ?? []);
+    return check && !waOpenedAt(check.kind, l.timestamp);
+  }).length;
 
   const hotCount = leads.filter(
     (l) => isHot(l) && isEtapaOpen(leadEtapa(l, claimsByLead.get(l.timestamp) ?? [])),
@@ -470,7 +476,7 @@ export default async function CereriPage({ searchParams }: Props) {
             🔥 Hot · {hotCount}
           </Pill>
           <Pill href={qs({ wa: wa ? '' : '1' })} active={wa}>
-            <span title="Cereri deschise unde o firmă a trimis ofertă și încă nu i-ai scris pe WhatsApp">
+            <span title="Cereri deschise unde o firmă a trimis ofertă, plus cele închise pe altundeva pe care le-a revendicat o firmă, cărora încă nu le-ai scris pe WhatsApp">
               💬 De întrebat pe WhatsApp · {waCount}
             </span>
           </Pill>
@@ -748,9 +754,10 @@ export default async function CereriPage({ searchParams }: Props) {
                           <li>
                             <WhatsAppButton
                               leadId={lead.timestamp}
+                              kind={whatsapp.kind}
                               href={whatsapp.href}
                               text={whatsapp.text}
-                              openedAt={waOpened.get(lead.timestamp) ?? null}
+                              openedAt={waOpenedAt(whatsapp.kind, lead.timestamp)}
                             />
                           </li>
                         )}

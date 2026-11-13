@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getFullLeadById, isLeadClosed } from '@/lib/sheets';
 import { isClientLinkAction, verifyClientToken } from '@/lib/lead-client-token';
 import { closeLeadByClient, recordStillWaiting } from '@/lib/informez';
-import { closeLeadChosenFirm, confirmLeadActive } from '@/lib/confirmare-activa';
+import { closeLeadChosenFirm, confirmLeadActive, recordFirmAfterAltundeva } from '@/lib/confirmare-activa';
 import { recordStatusResponse, type AltaFirmaMotiv } from '@/lib/verificare-status';
 import { parseResponseDetails } from '@/lib/client-response-details';
 
@@ -17,6 +17,8 @@ import { parseResponseDetails } from '@/lib/client-response-details';
 // semnată în token), „decid", „altafirma" (cu `motiv`) și „necontactat".
 // Din 12 oct 2026, `detalii` (opțional, lib/client-response-details): ce l-ar
 // ajuta, ce a făcut fiecare firmă, de ce renunță, cu ce firmă a semnat etc.
+// Din 13 nov 2026, „firmaaleasa" (WhatsApp „Cu ce firmă ați lucrat?”): singura
+// acțiune pe o cerere deja închisă, și doar pe `altundeva`. Nu schimbă statusul.
 
 export async function POST(request: Request) {
   try {
@@ -41,6 +43,15 @@ export async function POST(request: Request) {
 
     const lead = await getFullLeadById(id);
     if (!lead) return NextResponse.json({ error: 'Cererea nu mai există.' }, { status: 404 });
+    if (action === 'firmaaleasa') {
+      // Altă stare = între timp s-a lămurit altfel (de ex. Radu a pus-o pe câștigată): nu mai scriem nimic.
+      if (lead.crmStatus !== 'altundeva') return NextResponse.json({ success: true, alreadyClosed: true });
+      if (!firma.trim() && !details.firmaClaim) {
+        return NextResponse.json({ error: 'Alegeți firma sau scrieți-i numele.' }, { status: 400 });
+      }
+      await recordFirmAfterAltundeva(lead, firma, details.firmaClaim);
+      return NextResponse.json({ success: true });
+    }
     if (isLeadClosed(lead.crmStatus)) return NextResponse.json({ success: true, alreadyClosed: true });
 
     if (action === 'semnat' || action === 'decid' || action === 'altafirma' || action === 'necontactat') {

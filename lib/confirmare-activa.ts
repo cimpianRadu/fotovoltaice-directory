@@ -44,6 +44,7 @@ import { ACTIVA_TERMEN_OPTIONS, optionLabel, type ResponseDetails } from './clie
 import { TIMELINE_OPTIONS } from './utils-shared';
 import { bucharestDay } from './client-email-schedule';
 import { alertCountyLeadConfirmedActive } from './informez';
+import { recordClientEvent } from './client-events';
 
 const DAY_MS = 86_400_000;
 const TEST_PREFIX = 'routine-test-';
@@ -263,6 +264,65 @@ export async function closeLeadChosenFirm(lead: NewLead, firma: string, firmaCla
       ? `<p>Cererea <strong>${escapeHtml(lead.timestamp)}</strong> (${escapeHtml(lead.judet)}, ${escapeHtml(lead.numeContact)}, ${escapeHtml(lead.telefon)}) a fost închisă ca <code>castigata</code> din emailul „mai căutați oferte?".</p><p>Clientul a ales <strong>${escapeHtml(clean)}</strong> din lista firmelor care au revendicat cererea. Dacă e un click greșit, schimbă statusul din /admin/crm.</p>${footer}`
       : `<p>Cererea <strong>${escapeHtml(lead.timestamp)}</strong> (${escapeHtml(lead.judet)}, ${escapeHtml(lead.numeContact)}, ${escapeHtml(lead.telefon)}) a fost închisă ca <code>altundeva</code> din emailul „mai căutați oferte?".</p><p>Firma aleasă: <strong>${clean ? escapeHtml(clean) : 'nespecificată'}</strong>.</p><p>Nu e câștigată. Doar dacă afli că e o firmă care a revendicat cererea la noi, schimbă statusul în <code>castigata</code>.</p>${footer}`,
   });
+}
+
+/**
+ * „Cu ce firmă ați lucrat?” (13 nov 2026, lib/whatsapp-verificare), pe o cerere
+ * deja închisă pe `altundeva`. Spre deosebire de „aleasa”, nu schimbă statusul
+ * și nu anunță firmele: cererea e închisă de mult, iar o firmă de la noi numită
+ * aici e o bănuială de verificat, nu o lucrare confirmată. Notează în CRM și
+ * trimite pe contact@; marcajul e `[De verificat]` când e o firmă de la noi.
+ */
+export async function recordFirmAfterAltundeva(lead: NewLead, firma: string, firmaClaim = '', now = new Date()) {
+  const firms = await claimedFirmsFor(lead.timestamp);
+  const ours = firmaClaim ? firms.find((f) => f.claimTs === firmaClaim) : undefined;
+  const typed = firma.trim().slice(0, 120);
+  // Numele scris de mână poate fi tot o firmă de la noi, doar că omul n-a recunoscut-o în listă.
+  const typedMatch = !ours && typed ? firms.find((f) => sameName(f.name, typed)) : undefined;
+  const clean = ours ? ours.name : typed;
+  const suspect = ours ?? typedMatch;
+  await recordClientEvent(lead.timestamp, 'firma_aleasa_raspuns', {
+    firma: clean,
+    ...(suspect ? { claimTs: suspect.claimTs } : {}),
+  });
+  await updateLeadCrm(lead.timestamp, {
+    note: suspect
+      ? `Clientul a răspuns pe WhatsApp: a lucrat cu „${clean}”, care a revendicat cererea la noi. Cererea era pe altundeva. De verificat cu firma; statusul nu l-am schimbat.`
+      : clean
+        ? `Clientul a răspuns pe WhatsApp: a lucrat cu „${clean}”, firmă din afara platformei.`
+        : 'Clientul a răspuns pe WhatsApp fără să spună cu ce firmă a lucrat.',
+    by: 'client',
+    ...nowBucharest(now),
+  });
+  const crmHref = `${PORTAL_BASE_URL}/admin/crm?filtru=toate#${encodeURIComponent(lead.timestamp)}`;
+  const claimed = firms.map((f) => escapeHtml(f.name)).join(', ') || 'niciuna';
+  const who = `Cererea <strong>${escapeHtml(lead.timestamp)}</strong> (${escapeHtml(lead.judet)}, ${escapeHtml(lead.numeContact)}, ${escapeHtml(lead.telefon)})`;
+  await sendEmail({
+    to: INTERNAL_TO,
+    subject: suspect
+      ? `[De verificat] ${lead.judet}: clientul a lucrat cu „${suspect.name}”, firmă de la noi`
+      : `[Firmă aleasă] ${lead.judet}: ${clean ? `„${clean}”` : 'nespecificată'}, din afara platformei`,
+    html: `<p>${who} era închisă pe <code>altundeva</code>. Clientul a răspuns la „Cu ce firmă ați lucrat?” din WhatsApp: <strong>${clean ? escapeHtml(clean) : 'nespecificat'}</strong>.</p>${
+      suspect
+        ? `<p>${ours ? 'A ales-o din lista firmelor care au revendicat cererea' : 'Numele scris se potrivește cu o firmă care a revendicat cererea'}. Statusul a rămas <code>altundeva</code>. Dacă se confirmă, schimbă-l în <code>castigata</code> din /admin/crm.</p>`
+        : ''
+    }<p>Au revendicat cererea: ${claimed}.</p><p><a href="${crmHref}">Deschide fișa în /admin/crm</a></p>`,
+  });
+}
+
+/** Aceeași firmă, după nume: fără diacritice, majuscule, „SRL” și semne. */
+function sameName(a: string, b: string): boolean {
+  const norm = (x: string) =>
+    x
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/\b(s\.?\s*c\.?|s\.?\s*r\.?\s*l\.?|s\.?\s*a\.?|pfa|ii)\b/g, ' ')
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+  const na = norm(a);
+  const nb = norm(b);
+  return Boolean(na && nb) && (na === nb || (nb.length >= 4 && na.includes(nb)) || (na.length >= 4 && nb.includes(na)));
 }
 
 /**

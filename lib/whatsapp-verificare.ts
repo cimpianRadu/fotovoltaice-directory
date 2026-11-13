@@ -21,6 +21,16 @@
 //
 // Marcajul: evenimentul `whatsapp_deschis` din client_events, scris la click.
 // Înseamnă că Radu a deschis mesajul, nu că l-a și trimis.
+//
+// 13 nov 2026 (Radu: „unii au închis cererile și au ales altundeva”), al doilea
+// mesaj, „Cu ce firmă ați lucrat?”, pe cererile închise pe `altundeva` pe care
+// le-a revendicat cel puțin o firmă, inclusiv una care a renunțat între timp:
+// o firmă care marchează „pierdut” și apoi semnează pe sub mână e tocmai cazul
+// căutat. Linkul duce la /cerere/raspuns/firmaaleasa, cu firmele care au
+// revendicat cererea ca butoane și un câmp pentru altă firmă. Răspunsul nu
+// schimbă statusul, doar notează și te anunță pe contact@ dacă e o firmă de la
+// noi. Marcajul lui e separat, `whatsapp_firma_deschis`, ca o cerere întrebată
+// cândva „ofertă bună?” să poată fi întrebată și asta.
 
 import 'server-only';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/min';
@@ -39,6 +49,16 @@ export function offerFirms(leadId: string, claims: LeadClaim[]): NamedFirm[] {
         !c.releasedAt &&
         (c.firmStatus === 'ofertat' || c.firmStatus === 'castigat' || Boolean(c.offeredAt)),
     )
+    .sort((a, b) => a.timestamp.localeCompare(b.timestamp))
+    .map((c) => ({ name: firmDisplayName(c), claimTs: c.timestamp, status: c.firmStatus }))
+    .filter((f) => !seen.has(f.name) && seen.add(f.name));
+}
+
+/** Toate firmele care au revendicat cererea, și cele care au renunțat, câte o dată pe firmă. */
+export function claimFirms(leadId: string, claims: LeadClaim[]): NamedFirm[] {
+  const seen = new Set<string>();
+  return claims
+    .filter((c) => c.leadId === leadId)
     .sort((a, b) => a.timestamp.localeCompare(b.timestamp))
     .map((c) => ({ name: firmDisplayName(c), claimTs: c.timestamp, status: c.firmStatus }))
     .filter((f) => !seen.has(f.name) && seen.add(f.name));
@@ -82,7 +102,22 @@ export function whatsappText(lead: NewLead, firms: NamedFirm[], link: string): s
   ].join('\n\n');
 }
 
+/** Textul „Cu ce firmă ați lucrat?”. Fără numele firmelor: sunt pe pagină, iar în mesaj ar suna a acuzație. */
+export function whatsappFirmaText(lead: NewLead, link: string): string {
+  const putere = lead.putere ? ` de ${lead.putere} kW` : '';
+  const unde = !lead.judet ? '' : lead.judet === 'București' ? ' în București' : ` în județul ${lead.judet}`;
+  return [
+    `Bună ziua! Sunt Radu, de la instalatori-fotovoltaice.ro. Pe ${fmtDay(lead.timestamp)} ați trimis la noi o cerere pentru un sistem fotovoltaic${putere}${unde}. Am înțeles că între timp ați ales o firmă, mulțumim că ne-ați anunțat!`,
+    `Ca să ne ținem evidența corectă: cu ce firmă ați lucrat până la urmă? Puteți răspunde dintr-un click aici:\n${link}`,
+    'Sau îmi scrieți direct numele firmei aici.',
+  ].join('\n\n');
+}
+
+export type WhatsappKind = 'oferta' | 'firma';
+
 export interface WhatsappCheck {
+  /** `oferta` = „Ați găsit o ofertă bună?” (deschise), `firma` = „Cu ce firmă ați lucrat?” (închise pe altundeva). */
+  kind: WhatsappKind;
   /** Linkul wa.me cu numărul clientului și textul completat. */
   href: string;
   text: string;
@@ -95,7 +130,9 @@ export interface WhatsappCheck {
  * cere PORTAL_SECRET; fără el întoarce null, nu un link care n-ar merge.
  */
 export function whatsappCheckFor(lead: NewLead, claims: LeadClaim[]): WhatsappCheck | null {
-  if (isLeadHidden(lead) || isLeadClosed(lead.crmStatus) || isLeadInformez(lead)) return null;
+  if (isLeadHidden(lead)) return null;
+  if (lead.crmStatus === 'altundeva') return whatsappFirmaFor(lead, claims);
+  if (isLeadClosed(lead.crmStatus) || isLeadInformez(lead)) return null;
   const firms = offerFirms(lead.timestamp, claims);
   if (firms.length === 0) return null;
   const number = whatsappNumber(lead.telefon);
@@ -107,15 +144,37 @@ export function whatsappCheckFor(lead: NewLead, claims: LeadClaim[]): WhatsappCh
     return null;
   }
   const text = whatsappText(lead, firms, link);
-  return { href: `https://wa.me/${number}?text=${encodeURIComponent(text)}`, text, firms };
+  return { kind: 'oferta', href: `https://wa.me/${number}?text=${encodeURIComponent(text)}`, text, firms };
 }
 
-/** Când a deschis Radu ultima dată mesajul, pe cerere. */
-export async function getWhatsappOpened(ids: string[]): Promise<Map<string, string>> {
+/** „Cu ce firmă ați lucrat?”, doar dacă cel puțin o firmă a revendicat cererea. */
+function whatsappFirmaFor(lead: NewLead, claims: LeadClaim[]): WhatsappCheck | null {
+  const firms = claimFirms(lead.timestamp, claims);
+  if (firms.length === 0) return null;
+  const number = whatsappNumber(lead.telefon);
+  if (!number) return null;
+  let link: string;
+  try {
+    link = `${clientLinkUrl(lead.timestamp, 'firmaaleasa')}&via=wa`;
+  } catch {
+    return null;
+  }
+  const text = whatsappFirmaText(lead, link);
+  return { kind: 'firma', href: `https://wa.me/${number}?text=${encodeURIComponent(text)}`, text, firms };
+}
+
+/** Evenimentul care marchează deschiderea, pe fiecare fel de mesaj. */
+export const WHATSAPP_OPENED_EVENT = {
+  oferta: 'whatsapp_deschis',
+  firma: 'whatsapp_firma_deschis',
+} as const satisfies Record<WhatsappKind, string>;
+
+/** Când a deschis Radu ultima dată mesajul de felul dat, pe cerere. */
+export async function getWhatsappOpened(ids: string[], kind: WhatsappKind = 'oferta'): Promise<Map<string, string>> {
   if (ids.length === 0) return new Map();
   const rows = await db()`
     SELECT lead_id, max(at) AS at FROM client_events
-    WHERE event = 'whatsapp_deschis' AND lead_id = ANY(${ids}) GROUP BY lead_id
+    WHERE event = ${WHATSAPP_OPENED_EVENT[kind]} AND lead_id = ANY(${ids}) GROUP BY lead_id
   `;
   return new Map(rows.map((r) => [String(r.lead_id), new Date(r.at as string).toISOString()]));
 }

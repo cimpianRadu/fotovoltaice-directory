@@ -53,7 +53,7 @@ export default async function RaspunsPage({
   let currentTermen = '';
   if (valid) {
     if (action === 'decid' || action === 'necontactat') firms = await declaredFirmsFor(id);
-    else if (action === 'aleasa') firms = await claimedFirmsFor(id);
+    else if (action === 'aleasa' || action === 'firmaaleasa') firms = await claimedFirmsFor(id);
     else if (action === 'renunt' || action === 'activa') {
       const lead = await getFullLeadById(id);
       // La „mă informez" firmele doar urmăresc, nu sună: „nu m-a sunat nicio firmă" ar fi o alarmă falsă.

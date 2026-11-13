@@ -16,7 +16,7 @@ import {
 type StatusCheckAction = 'semnat' | 'decid' | 'altafirma' | 'necontactat';
 
 interface ResponseConfirmProps {
-  action: 'astept' | 'renunt' | 'activa' | 'aleasa' | StatusCheckAction;
+  action: 'astept' | 'renunt' | 'activa' | 'aleasa' | 'firmaaleasa' | StatusCheckAction;
   id: string;
   token: string;
   /** La „semnat": revendicarea aleasă, semnată în token. */
@@ -26,7 +26,7 @@ interface ResponseConfirmProps {
   firmName?: string;
   /** Doar la „Ați găsit o ofertă bună?": chestionarul de după confirmare. */
   feedback?: { token: string; done: boolean };
-  /** „Încă mă decid"/„Nu m-a contactat": firmele numite în email. „Am ales": firmele care au revendicat cererea. */
+  /** „Încă mă decid"/„Nu m-a contactat": firmele numite în email. „Am ales" și „Cu ce firmă": firmele care au revendicat cererea. */
   firms?: { claimTs: string; name: string }[];
   /** „Nu mai vreau": fără „nu m-a sunat nicio firmă" la cererile „mă informez". */
   showNesunat?: boolean;
@@ -138,6 +138,13 @@ const COPY = {
     button: 'Confirm',
     done: 'Cererea a fost închisă. Vă mulțumim că ne-ați spus!',
   },
+  // WhatsApp „Cu ce firmă ați lucrat?” (13 nov 2026), pe cererile deja închise pe altundeva.
+  firmaaleasa: {
+    title: 'Cu ce firmă ați lucrat?',
+    body: 'Ne ajută să ținem evidența corectă și să știm care firme își fac treaba. Cererea rămâne închisă și nu vă mai sună nimeni.',
+    button: 'Trimite',
+    done: 'Mulțumim, am notat!',
+  },
   necontactat: {
     title: 'Nu v-a contactat nicio firmă',
     body: 'Confirmați și ne uităm noi ce s-a întâmplat.',
@@ -189,7 +196,7 @@ export default function ResponseConfirm({
       if (motive.length) d.motive = motive;
       if (altceva.trim()) d.altceva = altceva.trim();
     }
-    if (action === 'aleasa' && firmaClaim && firmaClaim !== 'alta') d.firmaClaim = firmaClaim;
+    if ((action === 'aleasa' || action === 'firmaaleasa') && firmaClaim && firmaClaim !== 'alta') d.firmaClaim = firmaClaim;
     if (action === 'semnat' && putere.trim()) d.putere = putere.trim();
     if (action === 'activa') {
       if (termen) d.termen = termen;
@@ -221,6 +228,14 @@ export default function ResponseConfirm({
       setError('Alegeți una dintre variante.');
       return;
     }
+    if (action === 'firmaaleasa' && (firmaClaim === 'alta' || firms.length === 0) && !firma.trim()) {
+      setError('Scrieți numele firmei.');
+      return;
+    }
+    if (action === 'firmaaleasa' && firms.length > 0 && !firmaClaim) {
+      setError('Alegeți firma.');
+      return;
+    }
     setStatus('submitting');
     setError(null);
     try {
@@ -231,7 +246,7 @@ export default function ResponseConfirm({
           id,
           token,
           action,
-          ...(action === 'aleasa' ? { firma } : {}),
+          ...(action === 'aleasa' || action === 'firmaaleasa' ? { firma: firmaClaim === 'alta' || firms.length === 0 ? firma : '' } : {}),
           ...(action === 'semnat' ? { f } : {}),
           ...(action === 'altafirma' ? { motiv } : {}),
           detalii: details(),
@@ -270,7 +285,7 @@ export default function ResponseConfirm({
       {status === 'done' ? (
         <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-5 text-sm text-emerald-800 leading-relaxed">
           {copy.done}
-          {(action === 'renunt' || action === 'aleasa' || statusCheck) && (
+          {(action === 'renunt' || action === 'aleasa' || action === 'firmaaleasa' || statusCheck) && (
             <p className="mt-3">
               <Link href="/" className="underline hover:no-underline">
                 Înapoi la prima pagină
@@ -281,8 +296,11 @@ export default function ResponseConfirm({
       ) : (
         <>
           <p className="mt-4 text-gray-700 leading-relaxed">{copy.body}</p>
-          {action === 'aleasa' && firms.length > 0 && (
-            <Question title="Cu ce firmă lucrați?">
+          {(action === 'aleasa' || action === 'firmaaleasa') && firms.length > 0 && (
+            <Question
+              title={action === 'firmaaleasa' ? 'Firmele care v-au contactat prin noi' : 'Cu ce firmă lucrați?'}
+              hint={action === 'firmaaleasa' ? '' : '(opțional)'}
+            >
               <div className="flex flex-wrap gap-2">
                 {[...firms.map((x) => ({ value: x.claimTs, label: x.name })), { value: 'alta', label: 'Altă firmă' }].map((o) => (
                   <button
@@ -302,17 +320,18 @@ export default function ResponseConfirm({
                   value={firma}
                   onChange={(e) => setFirma(e.target.value)}
                   maxLength={120}
-                  placeholder="Numele firmei (opțional)"
+                  placeholder={action === 'firmaaleasa' ? 'Numele firmei' : 'Numele firmei (opțional)'}
                   aria-label="Numele firmei"
                   className={`mt-3 ${inputClass}`}
                 />
               )}
             </Question>
           )}
-          {action === 'aleasa' && firms.length === 0 && (
+          {(action === 'aleasa' || action === 'firmaaleasa') && firms.length === 0 && (
             <label className="mt-5 block">
               <span className="text-sm font-medium text-gray-900">
-                Cu ce firmă lucrați? <span className="font-normal text-gray-500">(opțional)</span>
+                Cu ce firmă lucrați?{' '}
+                {action === 'aleasa' && <span className="font-normal text-gray-500">(opțional)</span>}
               </span>
               <input
                 type="text"

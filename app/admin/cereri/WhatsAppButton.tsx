@@ -6,13 +6,17 @@ import { useState } from 'react';
 // deschide WhatsApp cu numărul clientului și textul gata scris; trimiterea o
 // faci tu. Click-ul notează deschiderea, ca să știi pe cine ai întrebat.
 // E link în rând, deci nu deschide modalul (ActivityTable ignoră linkurile).
+// `kind: 'firma'` (13 nov 2026) = „Cu ce firmă ați lucrat?”, pe cererile închise
+// pe altundeva.
 export default function WhatsAppButton({
   leadId,
+  kind = 'oferta',
   href,
   text,
   openedAt,
 }: {
   leadId: string;
+  kind?: 'oferta' | 'firma';
   href: string;
   text: string;
   openedAt: string | null;
@@ -25,7 +29,7 @@ export default function WhatsAppButton({
     fetch('/api/admin/cereri/whatsapp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ leadId }),
+      body: JSON.stringify({ leadId, kind }),
       keepalive: true,
     }).catch(() => {});
   }
@@ -45,7 +49,7 @@ export default function WhatsAppButton({
         opened ? 'bg-slate-100 text-slate-500 hover:bg-slate-200' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
       }`}
     >
-      {opened ? `WhatsApp deschis ${day}` : 'WhatsApp: ofertă bună?'}
+      {opened ? `WhatsApp deschis ${day}` : kind === 'firma' ? 'WhatsApp: ce firmă?' : 'WhatsApp: ofertă bună?'}
     </a>
   );
 }
