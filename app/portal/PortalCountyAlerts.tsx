@@ -6,10 +6,15 @@ import { trackEvent } from '@/lib/analytics';
 /**
  * Județele în care firma vrea să fie anunțată prin email la fiecare cerere nouă.
  *
- * Un singur criteriu, județul, la cererea instalatorilor care ofertează: la
- * volumul actual (5-6 cereri pe săptămână în toată țara), un filtru pe urgență
- * sau pe putere ar stinge alertele cu totul. Detaliile care contează la ofertare
- * (finanțare, termen, putere) sunt în email, nu în filtru.
+ * Un singur criteriu ales de firmă, județul, la cererea instalatorilor care
+ * ofertează: la volumul din august (5-6 cereri pe săptămână în toată țara), un
+ * filtru pe urgență sau pe putere ar fi stins alertele cu totul. Detaliile care
+ * contează la ofertare (finanțare, termen, putere) sunt în email, nu în filtru.
+ *
+ * Din 13 nov 2026 alerta imediată pleacă doar pe cererile gata de ofertă
+ * (lib/lead-readiness): la ~2,5 cereri pe zi, firmele au cerut mai puține
+ * emailuri cu oameni care așteaptă un program sau doar se informează. Regula e
+ * a noastră, nu o setare; textul de mai jos spune doar ce primește firma.
  */
 export default function PortalCountyAlerts({
   counties,
@@ -64,8 +69,9 @@ export default function PortalCountyAlerts({
         <div>
           <h2 className="font-semibold text-gray-900">Alerte pe județ</h2>
           <p className="mt-1 text-sm text-gray-600 leading-relaxed">
-            Bifează județele în care lucrezi. Când intră o cerere nouă acolo, primești email cu
-            finanțarea, termenul și puterea, iar cererea o revendici din feed.
+            Bifează județele în care lucrezi. Primești email pe loc la cererile la care clientul
+            plătește din banii lui sau prin credit și vrea montajul în cel mult trei luni, și la
+            toate cererile comerciale. Pe celelalte le găsești în feed și în rezumatul de luni.
           </p>
         </div>
         <button
@@ -138,7 +144,7 @@ export default function PortalCountyAlerts({
 
           {error && <p className="mt-3 text-sm text-red-700">{error}</p>}
           {!error && !dirty && saved.length > 0 && (
-            <p className="mt-3 text-xs text-gray-400">Salvat. Alertele pleacă la fiecare cerere nouă.</p>
+            <p className="mt-3 text-xs text-gray-400">Salvat. Alertele pleacă la fiecare cerere gata de ofertă.</p>
           )}
         </>
       )}

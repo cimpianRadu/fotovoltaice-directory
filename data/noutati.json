@@ -1,6 +1,13 @@
 [
   {
     "data": "2026-11-13",
+    "titlu": "Email pe loc doar la cererile gata de ofertă",
+    "text": "Alerta pe email vine de acum doar la cererile la care clientul plătește din banii lui sau prin credit și vrea montajul în cel mult trei luni, plus la toate cererile comerciale. Cererile celor care așteaptă Casa Verde sau doar se informează le găsești în continuare în feed și în rezumatul de luni.",
+    "link": "/portal#alerte",
+    "linkText": "Alege județele"
+  },
+  {
+    "data": "2026-11-13",
     "titlu": "După ofertă, vezi pe card ce a răspuns clientul",
     "text": "După ce trimiți oferta, îl întrebăm noi pe client dacă a ales una. Ce aflăm apare pe cardul cererii, în portal: că încă se decide sau că nu a răspuns încă, cu ziua în care l-am întrebat. Dacă a ales altă firmă sau a renunțat, cererea iese singură din lucru, ca până acum.",
     "link": "/portal",

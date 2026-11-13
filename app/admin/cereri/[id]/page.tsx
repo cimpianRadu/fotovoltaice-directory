@@ -56,6 +56,7 @@ import MergeLeadsButton from '../../crm/MergeLeadsButton';
 import { MatchList, NecesitList } from '../../crm/MatchLists';
 import { formatLeadForShare } from '../../crm/formatLead';
 import { buildTimeline } from '../timeline';
+import { isReadyLead, READY_ALERTS_FROM } from '@/lib/lead-readiness';
 import TimelineList from '../TimelineList';
 import FirmJourney from './FirmJourney';
 import RequestedFirms from './RequestedFirms';
@@ -263,7 +264,9 @@ function ClientAccount({
             ? <SendOpens sends={sends} />
             : lead.alerteTrimise
               ? `alertă plecată pe ${fmtDay(lead.alerteTrimise)}, fără listă de firme (înainte de 23 oct)`
-              : ''
+              : lead.timestamp >= READY_ALERTS_FROM && !lead.prioritarPanaLa && !isReadyLead(lead)
+                ? 'fără alertă imediată: nu e gata de ofertă (finanțare sau termen); e pe /cereri și ca număr în rezumatul de luni'
+                : ''
         }
       />
       <Field label="„Încă vreau oferte”" value={bumps.length ? `de ${bumps.length} ori` : ''} />

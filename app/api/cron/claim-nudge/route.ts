@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { logLeadSends, sentFrom } from '@/lib/lead-sends';
+import { isReadyLead } from '@/lib/lead-readiness';
 import { sendPendingClientEmails } from '@/lib/client-notify';
 import {
   CLAIM_REMINDER_MAX,
@@ -229,6 +230,14 @@ async function announceUnlockedLeads(
     if (claimedLeads.has(lead.timestamp) || isLeadClosed(lead.crmStatus) || isLeadHidden(lead)) {
       if (!dry) await markLeadAlertsSent(lead.timestamp);
       skipped.push(`${label} (preluată sau închisă)`);
+      continue;
+    }
+
+    // Aceeași regulă ca la cererea nouă (13 nov 2026): alertă doar pe cererile
+    // gata de ofertă. Marcăm, ca să nu revenim pe ea mâine.
+    if (!isReadyLead(lead)) {
+      if (!dry) await markLeadAlertsSent(lead.timestamp);
+      skipped.push(`${label} (nu e gata de ofertă, rămâne pe site și în rezumatul de luni)`);
       continue;
     }
 

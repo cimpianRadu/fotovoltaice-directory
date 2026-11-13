@@ -10,6 +10,7 @@ import {
   saveLeadToSheet,
 } from '@/lib/sheets';
 import { sendCountyLeadAlert } from '@/lib/email';
+import { isReadyLead } from '@/lib/lead-readiness';
 import { createLeadPhotoToken } from '@/lib/lead-photos';
 import { CLIENT_LEAD_COOKIE, ensureAccount, leadGrantCookie } from '@/lib/client-auth';
 import { clientAccountLive, clientEmailsLive } from '@/lib/client-account';
@@ -285,6 +286,20 @@ async function notifyCountyAlerts(body: Record<string, string>, leadId: string) 
     console.log(
       `[leads] ${judet}: rezervată pentru ${sub.firma} până ${until} (email: ${sent.ok ? 'trimis' : 'eșuat'})`,
     );
+    return;
+  }
+
+  // Din 13 nov 2026, alerta imediată pleacă doar pe cererile gata de ofertă
+  // (lib/lead-readiness). Restul rămân pe /cereri și ca număr în rezumatul de
+  // luni; firmele au cerut mai puține emailuri cu cereri care nu se pot oferta
+  // încă. Fără marcajul AF: nu a plecat nimic, iar cronul se uită doar la
+  // cererile ținute pentru un abonat. Abonatul de mai sus primește tot, ca până
+  // acum.
+  // Segmentul gol se scrie în Sheet drept „comercial” (lib/sheets), deci la fel
+  // îl citim și aici: la îndoială, alerta pleacă.
+  const segment = (body.segment || '').trim() || 'comercial';
+  if (!isReadyLead({ finantare, termen: (body.termen || '').trim(), segment })) {
+    console.log(`[leads] ${judet}: fără alertă imediată, cererea nu e gata de ofertă`);
     return;
   }
 
