@@ -6,6 +6,7 @@
 //   GET  ?leadId&token          → starea: eligibilă, mesajele, ce s-a salvat
 //   POST {leadId, token, mesaj} → o replică
 //   POST {leadId, token, gata}  → clientul a apăsat „Am terminat”
+//   POST {leadId, token, nota, motiv} → clientul spune dacă i-a fost util
 
 import { NextResponse } from 'next/server';
 import { verifyLeadPhotoToken } from '@/lib/lead-photos';
@@ -18,6 +19,7 @@ import {
   incheieConversatie,
   instantaneuCerere,
   mesajIntro,
+  noteazaConversatia,
   raspunde,
   raspundeMock,
   startConversatie,
@@ -37,6 +39,7 @@ function stare(c: Conversatie) {
     // Ce vede firma, arătat și clientului: știe exact ce pleacă din conversație.
     previzualizare: rezumatCerere(c.cerere, c.date, c.updatedAt),
     incheiata: Boolean(c.incheiataLa),
+    notaClient: c.notaClient,
     ramase: Math.max(0, ASISTENT_MAX_MESAJE - c.replici),
   };
 }
@@ -109,6 +112,14 @@ export async function POST(request: Request) {
     if (body.gata === true) {
       await incheieConversatie(leadId);
       return NextResponse.json(stare({ ...c, incheiataLa: new Date().toISOString() }));
+    }
+
+    if (body.nota === 'util' || body.nota === 'nu_prea') {
+      const motiv = (typeof body.motiv === 'string' ? body.motiv : '').trim().slice(0, 500);
+      await noteazaConversatia(leadId, body.nota, motiv);
+      return NextResponse.json(
+        stare({ ...c, notaClient: body.nota, motivClient: motiv, incheiataLa: c.incheiataLa || new Date().toISOString() }),
+      );
     }
 
     const mesaj = (typeof body.mesaj === 'string' ? body.mesaj : '').trim();

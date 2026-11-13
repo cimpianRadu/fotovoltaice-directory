@@ -96,6 +96,8 @@ Ce afli trece în cerere și îl văd firmele care o preiau. Spune-i asta omului
 
 ## Ce încerci să afli (doar ce lipsește din cerere sau e neclar)
 
+Lista de mai jos e capătul conversației: când e acoperită, închei (vezi „Cum închei”). Nu lungești discuția cu „mai e ceva?” după fiecare răspuns.
+
 - fazarea: monofazat sau trifazat (scrie pe contor sau pe siguranța generală);
 - invertorul pe care îl are: marca și modelul, și dacă e hibrid (are intrare de baterie). Modelul exact contează pentru firmă;
 - puterea sistemului existent, în kWp, dacă lipsește sau pare greșită;
@@ -103,7 +105,7 @@ Ce afli trece în cerere și îl văd firmele care o preiau. Spune-i asta omului
 - consumul lunar, din factură (kWh pe lună);
 - ce capacitate de baterie vrea și de ce (punctajul programului, backup la pană de curent, consumul de seara);
 - dacă intră în Casa Verde Baterii;
-- ce vrea să afle de la firmă.
+- ce vrea să afle de la firmă (întrebi o singură dată, spre final).
 
 Întrebi un singur lucru pe replică, cel mult două dacă sunt legate. Nu reîntrebi ce scrie deja în cerere, decât dacă e neclar. Un exemplu des întâlnit: oamenii scriu „baterie de 15 kW” când vor să spună 15 kWh; confirmi unitatea.
 
@@ -126,13 +128,19 @@ Dacă omul nu știe ceva, e în regulă: notezi „nu știe” și treci mai dep
 
 ## Cum salvezi
 
-De fiecare dată când omul confirmă ceva, apelezi \`salveaza_raspunsuri\` cu câmpurile noi, în aceeași replică. Când ai acoperit ce lipsea (sau omul vrea să încheie), salvezi și \`rezumat\`: 2-3 propoziții pentru firmă, la persoana a treia („Clientul are...”), doar cu fapte spuse de el, fără nume, adrese sau telefoane. Apoi îi spui omului că răspunsurile au intrat în cerere și că poate apăsa „Am terminat”.
+De fiecare dată când omul confirmă ceva, apelezi \`salveaza_raspunsuri\` cu câmpurile noi, în aceeași replică.
 
-Replica pentru client o scrii întreagă în același mesaj cu apelurile \`salveaza_raspunsuri\` și \`propune_variante\`, înaintea lor; după rezultatul lor nu mai scrii nimic. Nu-i spui omului să aleagă dintre variante: butoanele apar singure sub replică.
+Replica pentru client o scrii întreagă în același mesaj cu apelurile \`salveaza_raspunsuri\`, \`propune_variante\` și \`incheie_conversatia\`, înaintea lor; după rezultatul lor nu mai scrii nimic. Nu-i spui omului să aleagă dintre variante: butoanele apar singure sub replică.
+
+## Cum închei
+
+Când ai acoperit lista (sau omul vrea să se oprească), în aceeași replică: salvezi \`rezumat\` (2-3 propoziții pentru firmă, la persoana a treia, „Clientul are...”, doar cu fapte spuse de el, fără nume, adrese sau telefoane), apelezi \`incheie_conversatia\` și îi scrii omului o replică scurtă de final, de exemplu: „Mulțumesc pentru detalii! Le-am trecut în cerere și le văd firmele care o preiau, înainte să vă sune. Dacă mai aveți întrebări, vă stau la dispoziție aici.” Replica de final nu are întrebare, nu are variante și nu-i cere omului să apese vreun buton.
+
+Dacă omul mai scrie după încheiere, îi răspunzi normal, salvezi ce e nou (și actualizezi \`rezumat\`) și închei la fel de scurt, fără să reiei întrebările.
 
 ## Variante de răspuns
 
-Când întrebarea ta are câteva răspunsuri tipice, apelează \`propune_variante\` cu 2-4 variante scurte, exact cum le-ar scrie omul (de exemplu „Monofazat”, „Trifazat”, „Nu știu”). Pe telefon omul apasă pe ele în loc să scrie. Nu le folosi la întrebări deschise, ca modelul invertorului.
+Când întrebarea ta are câteva răspunsuri tipice, apelează \`propune_variante\` cu 2-4 variante scurte, exact cum le-ar scrie omul (de exemplu „Monofazat”, „Trifazat”, „Nu știu”). Pe telefon omul apasă pe ele în loc să scrie. Variantele răspund la întrebarea din replica ta de acum, nu la alta: dacă întrebi de consum, variantele sunt despre consum. Nu le folosi la întrebări deschise, ca modelul invertorului.
 
 ## Stil
 
@@ -190,6 +198,12 @@ export const TOOLS: Anthropic.Beta.BetaTool[] = [
       },
       required: ['variante'],
     },
+  },
+  {
+    name: 'incheie_conversatia',
+    description:
+      'Marchează conversația ca încheiată, în replica de final (după ce ai salvat rezumatul). Sub replică clientul vede apoi întrebarea dacă i-a fost util.',
+    input_schema: { type: 'object', properties: {} },
   },
   {
     name: 'salveaza_raspunsuri',
@@ -374,6 +388,9 @@ export interface Conversatie {
   replici: number;
   costUsd: number;
   incheiataLa: string | null;
+  /** Nota clientului după încheiere (din 13 nov 2026). */
+  notaClient: 'util' | 'nu_prea' | null;
+  motivClient: string;
   updatedAt: string;
 }
 
@@ -387,6 +404,8 @@ function rowToConv(r: Record<string, unknown>): Conversatie {
     replici: Number(r.replici) || 0,
     costUsd: Number(r.cost_usd) || 0,
     incheiataLa: r.incheiata_la ? new Date(String(r.incheiata_la)).toISOString() : null,
+    notaClient: r.nota_client === 'util' || r.nota_client === 'nu_prea' ? r.nota_client : null,
+    motivClient: String(r.motiv_client || ''),
     updatedAt: new Date(String(r.updated_at)).toISOString(),
   };
 }
@@ -411,6 +430,17 @@ export async function incheieConversatie(leadId: string): Promise<void> {
   await db()`
     UPDATE asistent_conversatii SET incheiata_la = now(), updated_at = now()
     WHERE lead_id = ${leadId} AND incheiata_la IS NULL
+  `;
+}
+
+export async function noteazaConversatia(leadId: string, nota: 'util' | 'nu_prea', motiv: string): Promise<void> {
+  await db()`
+    UPDATE asistent_conversatii SET
+      nota_client = ${nota},
+      motiv_client = ${motiv},
+      nota_client_la = now(),
+      incheiata_la = coalesce(incheiata_la, now())
+    WHERE lead_id = ${leadId}
   `;
 }
 
@@ -457,14 +487,18 @@ function logReplica(data: Record<string, unknown>) {
   console.log(JSON.stringify({ tag: 'asistent', at: new Date().toISOString(), ...data }));
 }
 
-const UNELTE_CARE_SCRIU = new Set(['salveaza_raspunsuri', 'propune_variante']);
+const UNELTE_CARE_SCRIU = new Set(['salveaza_raspunsuri', 'propune_variante', 'incheie_conversatia']);
 
 function runTool(
   name: string,
   input: Record<string, unknown>,
-  state: { date: AsistentDate; variante: string[] },
+  state: { date: AsistentDate; variante: string[]; incheie: boolean },
 ): string {
   if (name === 'dimensionare_baterie') return dimensionare(input);
+  if (name === 'incheie_conversatia') {
+    state.incheie = true;
+    return JSON.stringify({ incheiata: true });
+  }
   if (name === 'propune_variante') {
     state.variante = (Array.isArray(input.variante) ? input.variante : [])
       .filter((v): v is string => typeof v === 'string' && v.trim().length > 0)
@@ -518,7 +552,7 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
       ];
   api.push({ role: 'user', content: mesaj });
 
-  const state = { date: c.date, variante: [] as string[] };
+  const state = { date: c.date, variante: [] as string[], incheie: false };
   const usage: Usage = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 };
   const unelte: string[] = [];
   const contextNote = contextCerere(c);
@@ -624,6 +658,7 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
       date = ${JSON.stringify(state.date)}::jsonb,
       replici = replici + 1,
       cost_usd = cost_usd + ${cost},
+      incheiata_la = CASE WHEN ${state.incheie} THEN coalesce(incheiata_la, now()) ELSE incheiata_la END,
       updated_at = now()
     WHERE lead_id = ${c.leadId}
   `;
@@ -647,6 +682,7 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
       date: state.date,
       replici: c.replici + 1,
       costUsd: c.costUsd + cost,
+      incheiataLa: c.incheiataLa || (state.incheie ? acum : null),
       updatedAt: acum,
     },
   };
@@ -659,7 +695,10 @@ export async function raspundeMock(c: Conversatie, mesaj: string): Promise<{ ras
     invertor: /huawei|deye|growatt|fronius|sungrow|solis/i.test(mesaj) ? mesaj.slice(0, 80) : undefined,
     rezumat: 'Clientul a confirmat câteva detalii în modul de probă.',
   });
-  const raspuns = '[Mod de probă] Am notat. Ce invertor aveți acum, marca și modelul?';
+  const incheie = c.replici + 1 >= 3;
+  const raspuns = incheie
+    ? '[Mod de probă] Mulțumesc pentru detalii! Le-am trecut în cerere și le văd firmele care o preiau, înainte să vă sune. Dacă mai aveți întrebări, vă stau la dispoziție aici.'
+    : '[Mod de probă] Am notat. Ce invertor aveți acum, marca și modelul?';
   const acum = new Date().toISOString();
   const afisare: MesajAfisat[] = [
     ...(c.mesaje.afisare.length ? c.mesaje.afisare : [{ rol: 'asistent' as const, text: mesajIntro(c.cerere), la: acum }]),
@@ -671,10 +710,21 @@ export async function raspundeMock(c: Conversatie, mesaj: string): Promise<{ ras
       mesaje = ${JSON.stringify({ api: c.mesaje.api, afisare })}::jsonb,
       date = ${JSON.stringify(date)}::jsonb,
       replici = replici + 1,
+      incheiata_la = CASE WHEN ${incheie} THEN coalesce(incheiata_la, now()) ELSE incheiata_la END,
       updated_at = now()
     WHERE lead_id = ${c.leadId}
   `;
-  return { raspuns, conv: { ...c, mesaje: { api: c.mesaje.api, afisare }, date, replici: c.replici + 1, updatedAt: acum } };
+  return {
+    raspuns,
+    conv: {
+      ...c,
+      mesaje: { api: c.mesaje.api, afisare },
+      date,
+      replici: c.replici + 1,
+      incheiataLa: c.incheiataLa || (incheie ? acum : null),
+      updatedAt: acum,
+    },
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -740,6 +790,8 @@ export interface RaportConversatie {
   costUsd: number;
   rescrieri: number;
   incheiata: boolean;
+  notaClient: 'util' | 'nu_prea' | null;
+  motivClient: string;
   createdAt: string;
   updatedAt: string;
   vizualizari: { firma: string; sursa: string; de: number; primaLa: string }[];
@@ -760,6 +812,9 @@ export interface RaportAsistent {
   rezumateVazute: number;
   noteUtil: number;
   noteNuPrea: number;
+  /** Notele clienților, pe conversațiile din fereastră. */
+  clientiUtil: number;
+  clientiNuPrea: number;
   conversatii: RaportConversatie[];
 }
 
@@ -813,6 +868,8 @@ export async function raportAsistent(de: Date, pana: Date, cuTeste = false): Pro
       costUsd: c.costUsd,
       rescrieri,
       incheiata: Boolean(c.incheiataLa),
+      notaClient: c.notaClient,
+      motivClient: c.motivClient,
       createdAt: new Date(String(r.created_at)).toISOString(),
       updatedAt: c.updatedAt,
       vizualizari: viz
@@ -859,6 +916,8 @@ export async function raportAsistent(de: Date, pana: Date, cuTeste = false): Pro
     rezumateVazute: new Set(vizInWindow.map((v) => v.lead_id)).size,
     noteUtil: noteInWindow.filter((n) => n.nota === 'util').length,
     noteNuPrea: noteInWindow.filter((n) => n.nota === 'nu_prea').length,
+    clientiUtil: conversatii.filter((c) => c.notaClient === 'util').length,
+    clientiNuPrea: conversatii.filter((c) => c.notaClient === 'nu_prea').length,
     conversatii,
   };
 }

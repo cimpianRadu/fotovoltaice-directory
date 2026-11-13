@@ -92,6 +92,8 @@ type EventName =
   | 'asistent_inceput'
   | 'asistent_mesaj'
   | 'asistent_gata'
+  // Clientul notează Watt AI după încheiere (din 13 nov 2026).
+  | 'asistent_nota_client'
   | 'asistent_refuzat'
   | 'rezumat_ai_deschis'
   | 'rezumat_ai_nota'

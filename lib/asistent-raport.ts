@@ -46,6 +46,9 @@ export function renderRaportAsistent(r: RaportAsistent): { subject: string; html
                 `<div style="margin-top:4px;font-size:13px;color:${n.nota === 'util' ? '#047857' : '#b45309'}">${n.nota === 'util' ? '👍' : '👎'} ${escapeHtml(n.firma)}${n.motiv ? `: „${escapeHtml(n.motiv)}”` : ''}</div>`,
             )
             .join('');
+          const notaClient = c.notaClient
+            ? `<div style="margin-top:4px;font-size:13px;color:${c.notaClient === 'util' ? '#047857' : '#b45309'}">${c.notaClient === 'util' ? '👍' : '👎'} clientul${c.motivClient ? `: „${escapeHtml(c.motivClient)}”` : ''}</div>`
+            : '';
           const intrebari = (c.date.intrebariPentruFirma || [])
             .map((q) => `<li>${escapeHtml(q)}</li>`)
             .join('');
@@ -54,7 +57,7 @@ export function renderRaportAsistent(r: RaportAsistent): { subject: string; html
   <div style="font-size:12px;color:#6b7280">${fmtData(c.createdAt)} · ${c.replici} mesaje · ${c.incheiata ? 'terminată' : 'neterminată'} · văzut de ${c.vizualizari.length} firme · ${usd(c.costUsd)}${c.rescrieri ? ` · ${c.rescrieri} rescrieri` : ''}</div>
   ${c.date.rezumat ? `<p style="margin:6px 0 0;font-size:14px;color:#1f2937">${escapeHtml(c.date.rezumat)}</p>` : '<p style="margin:6px 0 0;font-size:13px;color:#9ca3af">Fără rezumat salvat.</p>'}
   ${intrebari ? `<ul style="margin:6px 0 0;padding-left:18px;font-size:13px;color:#374151">${intrebari}</ul>` : ''}
-  ${note}
+  ${notaClient}${note}
   <a href="${PORTAL_BASE_URL}/admin/asistent?lead=${encodeURIComponent(c.leadId)}" style="font-size:12px;color:#2563eb">Citește conversația</a>
 </div>`;
         })
@@ -71,7 +74,7 @@ export function renderRaportAsistent(r: RaportAsistent): { subject: string; html
   <div style="padding:20px 24px">
     <p style="margin:0 0 8px;font-size:13px;font-weight:600;color:#374151">Clienții</p>
     <table style="border-collapse:collapse;width:100%"><tr>
-      ${cifra('au văzut bula', r.afisate)}${cifra('au început', r.incepute)}${cifra('au terminat', r.terminate)}${cifra('mesaje', r.mesajeClient)}
+      ${cifra('au văzut bula', r.afisate)}${cifra('au început', r.incepute)}${cifra('au terminat', r.terminate)}${cifra('mesaje', r.mesajeClient)}${cifra('👍 / 👎 clienți', `${r.clientiUtil} / ${r.clientiNuPrea}`)}
     </tr></table>
     <p style="margin:8px 0 0;font-size:13px;color:#4b5563">Lămurite în conversații: ${completate || 'nimic'}.</p>
 

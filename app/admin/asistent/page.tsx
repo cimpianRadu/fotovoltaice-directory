@@ -44,6 +44,11 @@ function Conversatie({ c, deschisa }: { c: RaportConversatie; deschisa: boolean 
           {fmt(c.createdAt)} · {c.replici} mesaje · {c.incheiata ? 'terminată' : c.replici ? 'neterminată' : 'neîncepută'} ·
           văzut de {c.vizualizari.length} firme · {c.costUsd.toFixed(3)} $
           {c.rescrieri > 0 && <span className="ml-1 font-semibold text-amber-700">· {c.rescrieri} rescrieri</span>}
+          {c.notaClient && (
+            <span className={`ml-1 font-semibold ${c.notaClient === 'util' ? 'text-emerald-700' : 'text-amber-700'}`}>
+              · clientul: {c.notaClient === 'util' ? '👍' : '👎'}
+            </span>
+          )}
           {c.note.map((n) => (
             <span key={n.firma} className="ml-1">
               {n.nota === 'util' ? '👍' : '👎'}
@@ -88,9 +93,20 @@ function Conversatie({ c, deschisa }: { c: RaportConversatie; deschisa: boolean 
               ))
             )}
           </div>
+          <div>
+            <p className="text-xs font-semibold uppercase text-slate-500">Nota clientului</p>
+            {c.notaClient ? (
+              <p className={c.notaClient === 'util' ? 'text-emerald-700' : 'text-amber-800'}>
+                {c.notaClient === 'util' ? '👍 util' : '👎 nu prea'}
+                {c.motivClient && <span className="block text-slate-700">„{c.motivClient}”</span>}
+              </p>
+            ) : (
+              <p className="text-slate-400">{c.incheiata ? 'N-a notat.' : 'Conversația nu s-a încheiat.'}</p>
+            )}
+          </div>
           {c.note.length > 0 && (
             <div>
-              <p className="text-xs font-semibold uppercase text-slate-500">Note</p>
+              <p className="text-xs font-semibold uppercase text-slate-500">Notele firmelor</p>
               {c.note.map((n) => (
                 <p key={n.firma} className={n.nota === 'util' ? 'text-emerald-700' : 'text-amber-800'}>
                   {n.nota === 'util' ? '👍' : '👎'} {n.firma}
@@ -131,14 +147,15 @@ export default async function AsistentAdminPage({
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-9">
         <Cifra eticheta="au văzut bula" valoare={r.afisate} />
         <Cifra eticheta="au început" valoare={r.incepute} />
         <Cifra eticheta="au terminat" valoare={r.terminate} />
         <Cifra eticheta="mesaje" valoare={r.mesajeClient} />
+        <Cifra eticheta="clienți 👍 / 👎" valoare={`${r.clientiUtil} / ${r.clientiNuPrea}`} />
         <Cifra eticheta="firme care au văzut" valoare={r.firmeCareAuVazut} />
-        <Cifra eticheta="👍 util" valoare={r.noteUtil} />
-        <Cifra eticheta="👎 nu prea" valoare={r.noteNuPrea} />
+        <Cifra eticheta="firme 👍 util" valoare={r.noteUtil} />
+        <Cifra eticheta="firme 👎 nu prea" valoare={r.noteNuPrea} />
         <Cifra eticheta="cost total" valoare={`${r.costUsd.toFixed(2)} $`} />
       </div>
       <p className="text-sm text-slate-600">

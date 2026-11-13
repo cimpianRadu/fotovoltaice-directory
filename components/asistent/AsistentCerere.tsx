@@ -22,6 +22,7 @@ interface Stare {
   mesaje?: Mesaj[];
   previzualizare?: RezumatCerere | null;
   incheiata?: boolean;
+  notaClient?: 'util' | 'nu_prea' | null;
   ramase?: number;
 }
 
@@ -60,6 +61,10 @@ export default function AsistentCerere({
   const [trimite, setTrimite] = useState(false);
   const [eroare, setEroare] = useState('');
   const [arataFirme, setArataFirme] = useState(false);
+  // Nota clientului după încheiere: „Nu prea” deschide un câmp opțional.
+  const [motivDeschis, setMotivDeschis] = useState(false);
+  const [motiv, setMotiv] = useState('');
+  const [noteaza, setNoteaza] = useState(false);
   const listaRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const bulaRef = useRef<HTMLDivElement>(null);
@@ -216,6 +221,20 @@ export default function AsistentCerere({
     }
   }
 
+  async function trimiteNota(nota: 'util' | 'nu_prea', cuMotiv = '') {
+    if (noteaza) return;
+    trackEvent('asistent_nota_client', { sursa, nota });
+    setNoteaza(true);
+    try {
+      await post({ nota, motiv: cuMotiv });
+      setMotivDeschis(false);
+    } catch (err) {
+      setEroare(err instanceof Error ? err.message : 'Nu am putut salva.');
+    } finally {
+      setNoteaza(false);
+    }
+  }
+
   return (
     <>
       {/* Bula și propoziția de lângă ea */}
@@ -348,10 +367,68 @@ export default function AsistentCerere({
                 </p>
               </div>
             )}
-            {stare.incheiata && (
-              <p className="rounded-lg bg-emerald-50 px-3 py-2 text-center text-xs font-medium text-emerald-800">
-                Mulțumim! Răspunsurile au intrat în cerere. ✓
-              </p>
+            {stare.incheiata && !trimite && (
+              <div className="rounded-xl border border-gray-200 bg-white px-3.5 py-3 text-sm">
+                {stare.notaClient ? (
+                  <p className="text-center text-gray-600">Mulțumim pentru părere! ✓</p>
+                ) : motivDeschis ? (
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      void trimiteNota('nu_prea', motiv);
+                    }}
+                  >
+                    <label htmlFor={`watt-motiv-${sursa}`} className="font-medium text-gray-900">
+                      Ce n-a mers? <span className="font-normal text-gray-500">(opțional)</span>
+                    </label>
+                    <textarea
+                      id={`watt-motiv-${sursa}`}
+                      value={motiv}
+                      onChange={(e) => setMotiv(e.target.value.slice(0, 500))}
+                      rows={2}
+                      className="mt-2 w-full resize-none rounded-lg border border-gray-300 px-3 py-2 text-[16px] sm:text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                    />
+                    <div className="mt-2 flex justify-end gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setMotivDeschis(false)}
+                        className="rounded-full px-3 py-1.5 text-gray-600 hover:bg-gray-100"
+                      >
+                        Înapoi
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={noteaza}
+                        className="rounded-full bg-primary px-4 py-1.5 font-semibold text-white hover:bg-primary-dark disabled:opacity-60"
+                      >
+                        Trimite
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <>
+                    <p className="text-center font-medium text-gray-900">V-a fost util Watt AI?</p>
+                    <div className="mt-2 flex justify-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => void trimiteNota('util')}
+                        disabled={noteaza}
+                        className="rounded-full bg-primary px-4 py-1.5 font-semibold text-white hover:bg-primary-dark disabled:opacity-60"
+                      >
+                        👍 Da, util
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setMotivDeschis(true)}
+                        disabled={noteaza}
+                        className="rounded-full border border-gray-300 px-4 py-1.5 text-gray-700 hover:bg-gray-50 disabled:opacity-60"
+                      >
+                        👎 Nu prea
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
             )}
           </div>
 
