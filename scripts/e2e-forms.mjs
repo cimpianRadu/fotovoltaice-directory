@@ -39,7 +39,8 @@ const FORMS = [
     // `tipLucrare` (din 25 aug 2026) e prima întrebare a pasului 4 și e
     // obligatorie; se alege prima opțiune, „sistem nou", deci nu apare câmpul de
     // capacitate baterie al retrofitului.
-    selects: [{ name: 'judet', step: 1 }, { name: 'tipLucrare', step: 3 }, { name: 'tipAcoperis', step: 3 }, { name: 'termen', step: 3 }, { name: 'finantare', step: 3 }, { name: 'buget', step: 3 }, { name: 'bransament', step: 3 }],
+    // `fazare` (alimentarea electrică) e obligatorie la pasul 4 din 13 nov 2026.
+    selects: [{ name: 'judet', step: 1 }, { name: 'tipLucrare', step: 3 }, { name: 'tipAcoperis', step: 3 }, { name: 'termen', step: 3 }, { name: 'finantare', step: 3 }, { name: 'buget', step: 3 }, { name: 'bransament', step: 3 }, { name: 'fazare', step: 3 }],
   },
   {
     id: 'listing', label: 'Listare firmă (/listeaza-firma)', path: '/listeaza-firma',

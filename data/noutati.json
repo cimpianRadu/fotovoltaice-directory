@@ -1,6 +1,13 @@
 [
   {
     "data": "2026-11-13",
+    "titlu": "Fiecare cerere nouă spune dacă e monofazat sau trifazat",
+    "text": "Alimentarea electrică e de acum întrebare obligatorie în formular, deci o găsești pe fiecare cerere nouă: monofazat, trifazat sau „nu știu”. Până acum o completa cam o cerere din trei.",
+    "link": "/cereri",
+    "linkText": "Vezi cererile"
+  },
+  {
+    "data": "2026-11-13",
     "titlu": "Email pe loc doar la cererile gata de ofertă",
     "text": "Alerta pe email vine de acum doar la cererile la care clientul plătește din banii lui sau prin credit și vrea montajul în cel mult trei luni, plus la toate cererile comerciale. Cererile celor care așteaptă Casa Verde sau doar se informează le găsești în continuare în feed și în rezumatul de luni.",
     "link": "/portal#alerte",

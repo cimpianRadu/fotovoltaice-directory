@@ -154,11 +154,13 @@ const STEP4_KEYS = [
   'finantare',
   'buget',
   'bransament',
+  'fazare',
 ] as const;
 
 // Detaliile secundare, opționale, pe pasul pozelor. Din 11 nov 2026 pleacă în
 // corpul cererii (saveLeadToSheet are coloanele lor), nu prin /api/leads/enrich.
-const PANEL_KEYS = ['suprafata', 'fazare', 'stocare', 'wallbox'] as const;
+// Alimentarea electrică a stat aici până pe 13 nov 2026, apoi a urcat la pasul 4.
+const PANEL_KEYS = ['suprafata', 'stocare', 'wallbox'] as const;
 
 type Step4Key = (typeof STEP4_KEYS)[number];
 type PanelKey = (typeof PANEL_KEYS)[number];
@@ -719,8 +721,8 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
         body: JSON.stringify({
           ...values,
           ...details,
-          // Detaliile opționale de la pasul 5 (suprafață, alimentare, baterie,
-          // stație); goale dacă omul a sărit peste.
+          // Detaliile opționale de la pasul 5 (suprafață, baterie, stație);
+          // goale dacă omul a sărit peste.
           ...extra,
           // Bifa nu ajunge în Sheet (acolo „nu știu" = celulă goală), dar
           // serverul are nevoie de ea ca să deosebească „n-a răspuns" de
@@ -1142,12 +1144,6 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   }
 
   const panelSelects: FieldSpec[] = [
-    {
-      name: 'fazare',
-      label: 'Alimentare electrică',
-      options: opts(PHASE_TYPES),
-      hint: 'Scrie pe contor sau pe siguranța generală.',
-    },
     { name: 'stocare', label: 'Baterie de stocare', options: opts(STORAGE_OPTIONS) },
     { name: 'wallbox', label: 'Stație de încărcare auto', options: opts(WALLBOX_OPTIONS) },
   ];
@@ -1187,6 +1183,17 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
       options: opts(CONNECTION_OPTIONS),
       required: true,
       hint: 'Adică există deja contor și contract de energie pe adresa aceea.',
+    },
+    // Obligatorie din 13 nov 2026, cu „Nu știu” în listă. Cât a fost opțională,
+    // pe pasul pozelor, o completau 37% (69 din 188 de cereri, 17 sept–13 nov),
+    // iar cererile care o aveau primeau 1,14 revendicări, față de 0,83 fără ea.
+    // Monofazat sau trifazat decide invertorul, deci e în prima ofertă.
+    {
+      name: 'fazare',
+      label: 'Alimentare electrică',
+      options: opts(PHASE_TYPES),
+      required: true,
+      hint: 'Monofazat sau trifazat: scrie pe contor sau pe siguranța generală.',
     },
   ];
 
