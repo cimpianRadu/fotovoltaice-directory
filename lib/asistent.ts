@@ -130,7 +130,7 @@ Dacă omul nu știe ceva, e în regulă: notezi „nu știe” și treci mai dep
 
 De fiecare dată când omul confirmă ceva, apelezi \`salveaza_raspunsuri\` cu câmpurile noi, în aceeași replică.
 
-Replica pentru client o scrii întreagă în același mesaj cu apelurile \`salveaza_raspunsuri\`, \`propune_variante\` și \`incheie_conversatia\`, înaintea lor; după rezultatul lor nu mai scrii nimic. Nu-i spui omului să aleagă dintre variante: butoanele apar singure sub replică.
+Replica pentru client o scrii întreagă în același mesaj cu apelurile \`salveaza_raspunsuri\`, \`propune_variante\` și \`incheie_conversatia\`, înaintea lor; după rezultatul lor nu mai scrii nimic. Clientul vede doar textul replicii, nu ce gândești și nu uneltele: fără text, butoanele apar sub o întrebare pe care n-a citit-o. Și după \`dimensionare_baterie\` sau \`ghid_casa_verde_baterii\` scrii replica, apoi butoanele. Nu-i spui omului să aleagă dintre variante: butoanele apar singure sub replică.
 
 ## Cum închei
 
@@ -352,6 +352,9 @@ export function verificaRaspuns(text: string): string[] {
   return probleme;
 }
 
+const CERERE_REPLICA_LIPSA =
+  '[Verificare automată, nu e de la client] N-ai scris replica pentru client: el vede doar butoanele, fără întrebare. Scrie acum replica (ce ai notat, dacă e cazul, și întrebarea la care răspund butoanele propuse), fără să pomenești verificarea.';
+
 function cerereRescriere(probleme: string[]): string {
   const motive: string[] = [];
   if (probleme.includes('compatibilitate')) {
@@ -559,8 +562,9 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
   let raspuns = '';
   let stop = '';
 
-  const call = (messages: Anthropic.Beta.BetaMessageParam[]) =>
+  const call = (messages: Anthropic.Beta.BetaMessageParam[], toolChoice?: Anthropic.Beta.BetaToolChoice) =>
     client.beta.messages.create({
+      ...(toolChoice ? { tool_choice: toolChoice } : {}),
       model: MODEL,
       max_tokens: 4000,
       betas: ['server-side-fallback-2026-07-01'],
@@ -620,6 +624,18 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
       if (raspuns && toolUses.every((t) => UNELTE_CARE_SCRIU.has(t.name))) break;
     }
 
+    // Modelul a pus butoanele dar a scris întrebarea doar în thinking (13 nov,
+    // de trei ori într-o conversație). Îi cerem o dată replica, fără unelte,
+    // ca butoanele să nu stea sub un text de rezervă.
+    if (!raspuns) {
+      api.push({ role: 'user', content: CERERE_REPLICA_LIPSA });
+      const res = await call(api, { type: 'none' });
+      addUsage(res);
+      api.push({ role: 'assistant', content: res.content });
+      raspuns = textDin(res.content);
+      logReplica({ level: 'warn', leadId: c.leadId, replicaLipsa: true, recuperata: Boolean(raspuns) });
+    }
+
     // O singură rescriere, ca la Smile AI: dacă și a doua încalcă regula,
     // pleacă oricum (logul o arată), nu blocăm omul într-o buclă.
     const probleme = raspuns ? verificaRaspuns(raspuns) : [];
@@ -642,7 +658,14 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
     throw err;
   }
 
-  if (!raspuns) raspuns = 'Am notat. Mai e ceva ce ați vrea să afle firma?';
+  // Rezerva de ultimă instanță, dacă și apelul de mai sus a ieșit gol. Nu
+  // pune o întrebare proprie: pe 13 nov „Mai e ceva ce ați vrea să afle
+  // firma?” a apărut de trei ori deasupra unor butoane despre altceva.
+  if (!raspuns) {
+    raspuns = state.variante.length
+      ? 'Am notat. Alegeți mai jos varianta potrivită sau scrieți-mi răspunsul.'
+      : 'Am notat. Mai aveți ceva de adăugat pentru firmă?';
+  }
 
   const acum = new Date().toISOString();
   const afisare: MesajAfisat[] = [
