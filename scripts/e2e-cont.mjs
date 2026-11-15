@@ -271,6 +271,7 @@ await check('notita-firma-nu-vede', 'Codul firmelor nu citește notițele client
     'app/admin/cont-client/ClientCards.tsx',
     'app/api/cont/notita/route.ts',
     'components/cont/AccountLeadView.tsx',
+    'lib/inchideri.ts', // doar /admin/inchideri (tabul „De închis”, 12 nov), după autentificarea de admin
   ]);
   const files = ['app', 'lib', 'components'].flatMap((dir) =>
     readdirSync(path.join(ROOT, dir), { recursive: true }).map((f) => path.join(dir, String(f))),
