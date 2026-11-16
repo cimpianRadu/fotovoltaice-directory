@@ -48,8 +48,21 @@ import ApproveClaims, { type ClaimLeadDetail, type PortalClaimRow } from './Appr
 import FirmEmails, { type FirmEmailRow } from './FirmEmails';
 import GiveLead, { type GiveLeadFirm, type LeadOption } from './GiveLead';
 import AccountStatus from './AccountStatus';
+import DayPicker from './DayPicker';
+import { buildMovements, bucharestDay, shiftDay, type Movement } from './movements';
+import { ago, cerereHref } from '../cereri/shared';
 
 export const dynamic = 'force-dynamic';
+
+function fmtDayLong(day: string): string {
+  return new Date(`${day}T12:00:00Z`).toLocaleDateString('ro-RO', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Europe/Bucharest',
+  });
+}
 
 function fmtDateTime(iso: string): string {
   const d = new Date(iso);
@@ -88,9 +101,11 @@ interface PortalAccount {
   firstLogin: string;
   /** Ultima dată când a fost efectiv în portal (autentificare sau vizită). */
   lastInPortal: string;
-  /** Ultima mișcare de orice fel, pentru ordonare. */
+  /** Ultima mișcare a FIRMEI (nu aprobările noastre), pentru ordonare. */
   lastSeen: string;
   events: PortalAccessEvent[];
+  /** Tot istoricul contului, cel mai nou primul (vezi movements.ts). */
+  movements: Movement[];
   claims: LeadClaim[];
   /** Revendicări active fără datele clientului deblocate — de aprobat. */
   pending: number;
@@ -282,6 +297,52 @@ function leadLabel(lead: NewLead | undefined, leadId: string): string {
     .join(' · ');
 }
 
+/**
+ * Numele firmei: din revendicări (identitatea ei reală în portal), apoi din
+ * profilul completat în portal, altfel din director dacă emailul e cel public
+ * al unei firme listate.
+ */
+function firmNameOf(account: PortalAccount): string {
+  return (
+    account.claims.find((c) => c.numeFirma)?.numeFirma ||
+    account.profile?.numeFirma ||
+    account.company?.name ||
+    ''
+  );
+}
+
+function fmtTime(m: Movement): string {
+  if (m.dayOnly) return 'fără oră';
+  return new Date(m.at).toLocaleTimeString('ro-RO', {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Europe/Bucharest',
+  });
+}
+
+/** Un rând de istoric: aceeași formă pe card și în ziua aleasă. */
+function MovementText({ m }: { m: Movement }) {
+  return (
+    <span className={m.by === 'noi' ? 'text-slate-400' : 'text-slate-700'}>
+      {m.by === 'noi' && (
+        <span className="mr-1 rounded bg-slate-100 px-1 py-px text-[10px] font-semibold text-slate-500">
+          noi
+        </span>
+      )}
+      {m.text}
+      {m.detail && <span className="text-slate-500">: {m.detail}</span>}
+      {m.leadId && (
+        <>
+          {' '}
+          <Link href={cerereHref(m.leadId)} className="whitespace-nowrap text-slate-400 hover:text-slate-900">
+            cererea →
+          </Link>
+        </>
+      )}
+    </span>
+  );
+}
+
 /** Linia de acces: ce știm sigur, spus fără să sune a mai mult decât e. */
 function accessLine(account: PortalAccount): React.ReactNode {
   if (account.logins > 0 || account.visits > 0) {
@@ -358,12 +419,9 @@ function AccountCard({
   leadById: Map<string, NewLead>;
 }) {
   const state = stateOf(account);
-  // Numele firmei: din revendicări (identitatea ei reală în portal), apoi din
-  // profilul completat în portal, altfel din director dacă emailul e cel public
-  // al unei firme listate.
   const identityClaim = account.claims.find((c) => c.numeFirma);
-  const firmName =
-    identityClaim?.numeFirma || account.profile?.numeFirma || account.company?.name || '';
+  const firmName = firmNameOf(account);
+  const lastMove = account.movements.find((m) => m.by === 'firma');
   const phone =
     account.claims.find((c) => c.telefon)?.telefon ||
     account.profile?.telefon ||
@@ -426,7 +484,10 @@ function AccountCard({
     .join(' · ');
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+    <article
+      id={`cont-${account.email}`}
+      className="flex scroll-mt-4 flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm"
+    >
       <header
         className={`flex items-start justify-between gap-3 border-b px-4 py-3 ${
           account.deactivated ? 'border-slate-300 bg-slate-200' : STATE_STYLES[state].header
@@ -477,6 +538,22 @@ function AccountCard({
           {account.deactivated.note && <> Motiv: {account.deactivated.note}</>}
         </div>
       )}
+
+      <div className="border-b border-slate-100 px-4 py-2 text-xs text-slate-600">
+        <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+          Ultima mișcare ·{' '}
+        </span>
+        {lastMove ? (
+          <>
+            <span className="font-medium text-slate-900">
+              {ago(lastMove.at)}, {lastMove.dayOnly ? fmtDateTime(lastMove.at).split(',')[0] : fmtDateTime(lastMove.at)}
+            </span>{' '}
+            · <MovementText m={lastMove} />
+          </>
+        ) : (
+          <span className="text-slate-400">nicio mișcare a firmei în date</span>
+        )}
+      </div>
 
       <div className="border-b border-slate-100 px-4 py-2 text-xs text-slate-600">
         {accessLine(account)}
@@ -541,23 +618,18 @@ function AccountCard({
         />
       </div>
 
-      {account.events.length > 0 && (
+      {account.movements.length > 0 && (
         <details className="border-t border-slate-100 bg-slate-50 px-4 py-2">
           <summary className="cursor-pointer text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
-            Istoric acces ({account.events.length})
+            Istoric complet ({account.movements.length})
           </summary>
-          <ul className="mt-1.5 max-h-40 space-y-1 overflow-y-auto">
-            {account.events.map((e, i) => (
-              <li key={`${e.timestamp}-${i}`} className="flex gap-2 text-xs">
+          <ul className="mt-1.5 max-h-60 space-y-1 overflow-y-auto">
+            {account.movements.map((m, i) => (
+              <li key={`${m.at}-${i}`} className="flex gap-2 text-xs">
                 <span className="w-24 shrink-0 text-[10px] tracking-wide text-slate-400 uppercase">
-                  {fmtDateTime(e.timestamp)}
+                  {m.dayOnly ? fmtDateTime(m.at).split(',')[0] : fmtDateTime(m.at)}
                 </span>
-                <span className="text-slate-600">
-                  {e.event === 'cerut' && 'a cerut acces (email trimis)'}
-                  {e.event === 'intrat' &&
-                    `s-a autentificat (${e.method === 'cod' ? 'cod' : 'link'})`}
-                  {e.event === 'vazut' && 'a deschis portalul'}
-                </span>
+                <MovementText m={m} />
               </li>
             ))}
           </ul>
@@ -567,12 +639,21 @@ function AccountCard({
   );
 }
 
+const SORTS: { key: string; label: string }[] = [
+  { key: 'miscare', label: 'Ultima mișcare' },
+  { key: 'cont-nou', label: 'Cont cel mai nou' },
+  { key: 'nume', label: 'Nume A–Z' },
+];
+
 interface Props {
-  searchParams: Promise<{ filtru?: string }>;
+  searchParams: Promise<{ filtru?: string; sortare?: string; zi?: string }>;
 }
 
 export default async function PortalAccessPage({ searchParams }: Props) {
-  const { filtru } = await searchParams;
+  const { filtru, sortare, zi } = await searchParams;
+  const today = bucharestDay(new Date().toISOString());
+  const day = zi && /^\d{4}-\d{2}-\d{2}$/.test(zi) && zi <= today ? zi : '';
+  const sort = SORTS.find((x) => x.key === sortare) ?? SORTS[0];
 
   let events: PortalAccessEvent[];
   let claims: LeadClaim[];
@@ -659,6 +740,15 @@ export default async function PortalAccessPage({ searchParams }: Props) {
     const visits = evs.filter((e) => e.event === 'vazut');
     const inPortal = [...logins, ...visits].sort((a, b) => b.timestamp.localeCompare(a.timestamp));
     const mine = claims.filter((c) => members.includes(c.email));
+    const profile = resolveGroupProfile(profiles, members);
+    const alerts = resolveGroupAlertPref(alertPrefs, members);
+    const movements = buildMovements({
+      events: evs,
+      claims: mine,
+      alerts,
+      profile,
+      leadLabel: (id) => leadLabel(leadById.get(id), id),
+    });
 
     const company =
       companies.find((c) => members.includes(c.contact.email?.trim().toLowerCase() || '')) ??
@@ -667,7 +757,6 @@ export default async function PortalAccessPage({ searchParams }: Props) {
             isSameFirm({ numeFirma: c.name, telefon: c.contact.phone }, mine[0]),
           )
         : undefined);
-    const profile = resolveGroupProfile(profiles, members);
     const identity = mine[0]
       ? { numeFirma: mine[0].numeFirma, telefon: mine[0].telefon }
       : profile
@@ -722,16 +811,11 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       firstRequest: requests.at(-1)?.timestamp ?? '',
       firstLogin: logins.at(-1)?.timestamp ?? '',
       lastInPortal: inPortal[0]?.timestamp ?? '',
-      // Ce a făcut FIRMA, nu noi: aprobarea și reminderele nu intră.
-      lastSeen:
-        [
-          evs[0]?.timestamp,
-          ...mine.flatMap((c) => [c.timestamp, c.offeredAt, c.releasedAt]),
-        ]
-          .filter((t): t is string => !!t)
-          .sort()
-          .at(-1) ?? '',
+      // Ce a făcut FIRMA, nu noi: aprobarea, cererile date de mână și
+      // reminderele nu intră. Movements e deja ordonat, cel mai nou primul.
+      lastSeen: movements.find((m) => m.by === 'firma')?.at ?? '',
       events: evs,
+      movements,
       claims: mine,
       pending: mine.filter((c) => !c.releasedAt && !c.approvedAt).length,
       untouched: mine.filter((c) =>
@@ -743,7 +827,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       identity,
       // Completat după ce toate conturile există (are nevoie de ele, două câte două).
       suggested: [],
-      alerts: resolveGroupAlertPref(alertPrefs, members),
+      alerts,
       addresses: members.map((m) => ({
         email: m,
         isPrimary: m === email,
@@ -796,9 +880,21 @@ export default async function PortalAccessPage({ searchParams }: Props) {
     });
   }
 
-  // Cronologic după ultima activitate a firmei: cine a fost azi în portal stă
-  // sus (25 sept 2026). Lista de lucru (de aprobat, neatinse 2z+) are filtrele ei.
-  accounts.sort((a, b) => b.lastSeen.localeCompare(a.lastSeen));
+  // Implicit cronologic după ultima mișcare a firmei: cine a fost azi în portal
+  // stă sus (25 sept 2026). Lista de lucru (de aprobat, neatinse 2z+) are
+  // filtrele ei. Conturile fără dată de intrare stau la coadă la „cont nou".
+  if (sort.key === 'nume') {
+    accounts.sort((a, b) =>
+      (firmNameOf(a) || a.email).localeCompare(firmNameOf(b) || b.email, 'ro'),
+    );
+  } else if (sort.key === 'cont-nou') {
+    accounts.sort(
+      (a, b) =>
+        b.firstLogin.localeCompare(a.firstLogin) || b.lastSeen.localeCompare(a.lastSeen),
+    );
+  } else {
+    accounts.sort((a, b) => b.lastSeen.localeCompare(a.lastSeen));
+  }
 
   // Dezactivatele stau doar pe filtrul lor: nu mai sunt de lucru, deci nici în
   // liste, nici în cifrele de sus.
@@ -806,8 +902,21 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   const allAccounts = accounts;
   accounts = accounts.filter((a) => !a.deactivated);
 
+  // Ziua aleasă: toate mișcările ei, pe toate conturile (și pe cele fără cont
+  // confirmat sau dezactivate), iar dedesubt doar cardurile care s-au mișcat.
+  // Filtrele de stare nu se aplică: ziua e un jurnal, nu o listă de lucru.
+  const dayMoves = day
+    ? allAccounts
+        .flatMap((a) =>
+          a.movements
+            .filter((m) => bucharestDay(m.at) === day)
+            .map((m) => ({ m, account: a })),
+        )
+        .sort((x, y) => y.m.at.localeCompare(x.m.at))
+    : [];
+
   const activeFilter = FILTERS.find((f) => f.key === filtru) ?? FILTERS[0];
-  const visible = activeFilter.key === 'dezactivate'
+  const byFilter = activeFilter.key === 'dezactivate'
     ? deactivatedAccounts
     : activeFilter.state
     ? accounts.filter((a) => stateOf(a) === activeFilter.state)
@@ -822,6 +931,22 @@ export default async function PortalAccessPage({ searchParams }: Props) {
             activeFilter.key === 'fara-judete'
             ? accounts.filter((a) => stateOf(a) === 'cont' && !hasCountyAlerts(a))
             : accounts;
+  const visible = day
+    ? allAccounts.filter((a) => dayMoves.some((d) => d.account === a))
+    : byFilter;
+
+  // Adresele păstrează filtrul, sortarea și ziua, fiecare schimbând doar ce-i al lui.
+  const href = (p: { filtru?: string; sortare?: string; zi?: string }) => {
+    const q = new URLSearchParams();
+    const f = p.filtru ?? activeFilter.key;
+    const so = p.sortare ?? sort.key;
+    const z = p.zi ?? day;
+    if (f !== 'cont') q.set('filtru', f);
+    if (so !== 'miscare') q.set('sortare', so);
+    if (z) q.set('zi', z);
+    const qs = q.toString();
+    return qs ? `/admin/portal?${qs}` : '/admin/portal';
+  };
 
   const pendingTotal = accounts.reduce((s, a) => s + a.pending, 0);
   const untouchedTotal = accounts.reduce((s, a) => s + a.untouched, 0);
@@ -852,11 +977,92 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         <Stat label="Cu județe bifate" value={withCountyAlerts} />
       </div>
 
-      <div className="mt-6 flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3">
+      <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border border-slate-200 bg-white px-4 py-3">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="mr-1 text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+            Ziua
+          </span>
+          <Pill href={href({ zi: '' })} active={!day}>
+            Toate zilele
+          </Pill>
+          <Pill href={href({ zi: today })} active={day === today}>
+            Azi
+          </Pill>
+          <Pill href={href({ zi: shiftDay(today, -1) })} active={day === shiftDay(today, -1)}>
+            Ieri
+          </Pill>
+          {day && (
+            <Link
+              href={href({ zi: shiftDay(day, -1) })}
+              className="rounded-md px-1.5 text-sm text-slate-500 hover:text-slate-900"
+              aria-label="Ziua dinainte"
+            >
+              ‹
+            </Link>
+          )}
+          <DayPicker value={day} max={today} base={href({ zi: '' })} />
+          {day && day < today && (
+            <Link
+              href={href({ zi: shiftDay(day, 1) })}
+              className="rounded-md px-1.5 text-sm text-slate-500 hover:text-slate-900"
+              aria-label="Ziua următoare"
+            >
+              ›
+            </Link>
+          )}
+        </div>
+        {!day && (
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="mr-1 text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+              Sortare
+            </span>
+            {SORTS.map((x) => (
+              <Pill key={x.key} href={href({ sortare: x.key })} active={sort.key === x.key}>
+                {x.label}
+              </Pill>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {day && (
+        <section className="mt-4 rounded-xl border border-slate-200 bg-white">
+          <h2 className="border-b border-slate-100 px-4 py-2.5 text-sm font-semibold text-slate-900">
+            {fmtDayLong(day)} ·{' '}
+            <span className="font-normal text-slate-500">
+              {dayMoves.length === 0
+                ? 'nicio mișcare'
+                : `${dayMoves.length} ${dayMoves.length === 1 ? 'mișcare' : 'mișcări'} la ${visible.length} ${visible.length === 1 ? 'firmă' : 'firme'}`}
+            </span>
+          </h2>
+          {dayMoves.length > 0 && (
+            <ul className="divide-y divide-slate-50">
+              {dayMoves.map(({ m, account }, i) => (
+                <li key={`${m.at}-${account.email}-${i}`} className="flex gap-3 px-4 py-1.5 text-xs">
+                  <span className="w-14 shrink-0 pt-px text-slate-400 tabular-nums">{fmtTime(m)}</span>
+                  <a
+                    href={`#cont-${account.email}`}
+                    className="w-48 shrink-0 truncate font-medium text-slate-900 hover:underline"
+                    title={account.email}
+                  >
+                    {firmNameOf(account) || account.email}
+                  </a>
+                  <span className="min-w-0 flex-1">
+                    <MovementText m={m} />
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      )}
+
+      {!day && (
+      <div className="mt-3 flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-3">
         {FILTERS.map((f) => (
           <Pill
             key={f.key}
-            href={f.key === 'cont' ? '/admin/portal' : `/admin/portal?filtru=${f.key}`}
+            href={href({ filtru: f.key })}
             active={activeFilter.key === f.key}
           >
             {f.label}
@@ -866,9 +1072,11 @@ export default async function PortalAccessPage({ searchParams }: Props) {
           </Pill>
         ))}
       </div>
+      )}
 
       <p className="mt-4 text-xs text-slate-500">
         {visible.length} {visible.length === 1 ? 'firmă afișată' : 'firme afișate'}
+        {day && ' · doar cele care s-au mișcat în ziua aleasă, din toate filtrele'}
       </p>
 
       <div className="mt-2 grid items-start gap-3 xl:grid-cols-2">
@@ -881,7 +1089,9 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         <p className="mt-2 rounded-xl border border-slate-200 bg-white px-4 py-8 text-center text-sm text-slate-500">
           {allAccounts.length === 0
             ? 'Nicio firmă cu portal încă. Apar aici la prima revendicare cu email sau la prima cerere de acces.'
-            : 'Nicio firmă pentru filtrul ales.'}
+            : day
+              ? 'Nicio mișcare în portal în ziua asta.'
+              : 'Nicio firmă pentru filtrul ales.'}
         </p>
       )}
     </div>

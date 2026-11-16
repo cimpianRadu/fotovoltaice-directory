@@ -22,8 +22,10 @@ const GROUPS: { label: string; tabs: { href: string; label: string }[] }[] = [
   },
   {
     label: 'Instalatori',
+    // „CRM firme" (/admin/firme) a ieșit din meniu pe 16 nov 2026: fișele nu
+    // mai erau folosite din aug, firmele se urmăresc din „Conturi portal".
+    // Pagina rămâne la adresa ei pentru linkurile din Azi, Necesit și Țintă.
     tabs: [
-      { href: '/admin/firme', label: 'CRM firme' },
       { href: '/admin/portal', label: 'Conturi portal' },
       { href: '/admin/necesit', label: 'De pe necesit' },
       { href: '/admin/tinta', label: 'Țintă' },
