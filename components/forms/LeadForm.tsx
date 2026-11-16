@@ -33,11 +33,14 @@ import { DEFAULT_TARIFF_RON_PER_KWH } from '@/lib/pv-constants';
 import { useSegment } from '@/components/segment/SegmentProvider';
 import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import LeadPhotoUpload, { uploadLeadPhoto } from './LeadPhotoUpload';
+import { cvbEstimate } from '@/lib/cvb-score';
+import { CvbScoreBox } from '@/components/cvb/CvbScore';
 import LeadPhotoPicker, { type PickedPhoto, releasePhotos } from './LeadPhotoPicker';
 import LeadLocationField, { LOCATION_CARD_CLASS, LocationPitch } from './LeadLocationField';
 import LocalitateInput from './LocalitateInput';
 import AdresaLucrareField from './AdresaLucrareField';
 import AsistentCerere from '@/components/asistent/AsistentCerere';
+import LeadDetailsChecklist from '@/components/cont/LeadDetailsChecklist';
 import { ASISTENT_TIPURI } from '@/lib/asistent-shared';
 import { trackEvent } from '@/lib/analytics';
 import { getAttribution } from '@/lib/attribution';
@@ -1063,6 +1066,19 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     )}`;
 
     const chosenFirms = firms.filter((f) => firme.includes(f.slug)).map((f) => f.name);
+    // Punctajul estimativ Casa Verde Baterii (16 nov 2026), doar la cererile pe
+    // AFM baterii cu capacitatea completată.
+    const cvb = cvbEstimate(details);
+    // Lista „Ca să primiți oferte potrivite”, din contul clientului, direct aici
+    // (16 nov 2026): pe formularul din 12 nov, 37 din 39 de cereri au plecat
+    // fără poze. Apare doar când lipsește ceva și nu e deja pe ecran un card de
+    // reîncercare (poze sau adresă care n-au urcat), ca să nu se dubleze.
+    const locationRetry = !locationSaved && Boolean(adresa.trim() || coordonate);
+    const showChecklist =
+      Boolean(leadRef && photoToken) &&
+      photoFailures === 0 &&
+      !locationRetry &&
+      (photos.length === 0 || !locationSaved);
 
     return (
       <div className="space-y-6">
@@ -1078,6 +1094,16 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
             sună direct.
           </p>
         </div>
+
+        {showChecklist && leadRef && (
+          <LeadDetailsChecklist
+            leadId={leadRef}
+            token={photoToken}
+            photoCount={photos.length}
+            adresa={locationSaved ? adresa.trim() : ''}
+            coordonate={locationSaved ? coordonate : ''}
+          />
+        )}
 
         {/* Pozele care n-au urcat la trimitere (internet slab, fișier refuzat).
             Fără token (răspuns vechi din cache) rămâne varianta pe email. */}
@@ -1130,6 +1156,10 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
         )}
 
         {contUrl && <FollowRequestCTA contUrl={contUrl} contEmail={contEmail} leadId={leadRef} />}
+
+        {/* Punctajul Casa Verde Baterii, compact și după ce mai are omul de
+            făcut (poze, adresă, asistentul, contul): e un bonus, nu tema paginii. */}
+        {cvb && <CvbScoreBox estimate={cvb} />}
 
         {/* Nimic promoțional nu stă lângă formular: pagina are o singură treabă,
             să producă cererea, iar un click pe altceva e o cerere pierdută. După

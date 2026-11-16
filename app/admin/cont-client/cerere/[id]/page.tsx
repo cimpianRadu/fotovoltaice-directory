@@ -4,6 +4,8 @@ import AccountLeadView from '@/components/cont/AccountLeadView';
 import LeadDetailsChecklist from '@/components/cont/LeadDetailsChecklist';
 import { getAccountLead, loadAccountLead } from '@/lib/client-account';
 import { getLeadLocation } from '@/lib/lead-location';
+import { cvbEstimate } from '@/lib/cvb-score';
+import { CvbScoreBox } from '@/components/cvb/CvbScore';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,6 +25,8 @@ export default async function AdminClientViewPage({ params }: Props) {
   if (!lead) notFound();
   const data = await loadAccountLead(lead);
   const location = await getLeadLocation(lead.timestamp).catch(() => null);
+  // Ca în contul clientului: punctajul estimativ Casa Verde Baterii, sub listă.
+  const cvb = cvbEstimate(lead);
 
   return (
     <div>
@@ -40,14 +44,17 @@ export default async function AdminClientViewPage({ params }: Props) {
           data={data}
           demo
           details={
-            <LeadDetailsChecklist
-              leadId={lead.timestamp}
-              token=""
-              photoCount={Number(lead.poze.match(/\d+/)?.[0]) || 0}
-              adresa={location?.adresa ?? ''}
-              coordonate={location?.coordonate ?? ''}
-              demo
-            />
+            <div className="space-y-6">
+              <LeadDetailsChecklist
+                leadId={lead.timestamp}
+                token=""
+                photoCount={Number(lead.poze.match(/\d+/)?.[0]) || 0}
+                adresa={location?.adresa ?? ''}
+                coordonate={location?.coordonate ?? ''}
+                demo
+              />
+              {cvb && <CvbScoreBox estimate={cvb} />}
+            </div>
           }
         />
       </div>

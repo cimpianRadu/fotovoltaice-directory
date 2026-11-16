@@ -12,6 +12,8 @@ import { getAttribution } from '@/lib/attribution';
 import { trackLeadClick } from '@/lib/lead-clicks-client';
 import { FIRM_SOURCE_OPTIONS, isDoarMontaj } from '@/lib/utils-shared';
 import type { FinancingTone } from '@/lib/utils-shared';
+import type { CvbEstimate } from '@/lib/cvb-score';
+import { CvbScoreLine } from '@/components/cvb/CvbScore';
 
 export interface LeadCardData {
   id: string;
@@ -35,6 +37,8 @@ export interface LeadCardData {
   bateriaLabel: string;
   /** Capacitatea bateriei vine din tabelul nostru, nu de la client. Ca `putereEstimata`. */
   bateriaEstimata: boolean;
+  /** Punctajul orientativ Casa Verde Baterii; null fără AFM sau fără capacitate declarată. */
+  cvb: CvbEstimate | null;
   tipLucrare: string;
   tipLucrareLabel: string;
   suprafata: string;
@@ -71,6 +75,11 @@ export interface LeadCardData {
    * noastre („așteaptă Casa Verde Baterii"), gol dacă n-a răspuns.
    */
   seInformeaza: boolean;
+  /**
+   * Bani proprii sau credit și montajul în cel mult 3 luni, după răspunsurile
+   * clientului (lib/lead-readiness, 16 nov 2026). Eticheta și filtrul rapid.
+   */
+  gataDeOferta: boolean;
   informezMotiv: string;
   /** Se informa și a apăsat „sunt gata": cererea e datată de la reactivare. */
   reactivata: boolean;
@@ -330,6 +339,12 @@ const ICON_CONFIRMATA = (
 const ICON_MONTAJ = (
   <BadgeIcon>
     <path d="M15.5 3.5a5 5 0 0 0-6.4 6.4L3.6 15.4a2 2 0 0 0 2.8 2.8l5.5-5.5a5 5 0 0 0 6.4-6.4l-3 3-2.8-2.8z" />
+  </BadgeIcon>
+);
+
+const ICON_GATA = (
+  <BadgeIcon>
+    <path d="M4.5 10.5l3.5 3.5 7.5-8" />
   </BadgeIcon>
 );
 
@@ -916,6 +931,18 @@ export default function LeadCard({
             coloană de grilă: se rup pe rânduri întregi, nu pe cuvinte. */}
         <div className="flex flex-wrap items-center gap-1.5">
           <SegmentBadge segment={lead.segment} />
+          {/* Plin, nu pastel: e eticheta după care firmele aleg ce sună întâi
+              (feedbackul din 13 nov: „oameni nehotărâți”). Doar ce a declarat
+              clientul, fără scor. */}
+          {lead.gataDeOferta && (
+            <Badge
+              icon={ICON_GATA}
+              tone="bg-emerald-600 text-white"
+              title="Clientul plătește din bani proprii sau cu credit și vrea montajul în cel mult 3 luni."
+            >
+              Gata de ofertă
+            </Badge>
+          )}
           {/* Pozele în sine nu sunt publice — badge-ul semnalează doar că firma
               care revendică le primește, ceea ce face cererea mai valoroasă. */}
           {lead.arePoze && (
@@ -1006,6 +1033,9 @@ export default function LeadCard({
       {lead.finantareLabel && (
         <FinancingLine label={lead.finantareLabel} tone={lead.finantareTone} />
       )}
+      {/* Punctajul estimativ la Casa Verde Baterii (16 nov 2026), sub finanțare:
+          eticheta AFM, cifra și steluța explicată în rând, nu în tooltip. */}
+      {lead.cvb && <CvbScoreLine estimate={lead.cvb} className="mt-1.5" />}
       {lead.termenLabel && <TimelineLine slug={lead.termen} label={lead.termenLabel} />}
       {/* Ce a răspuns clientul, nu ce deducem noi din asta: dacă vrea sau nu o
           ofertă acum n-a spus nimeni, firma decide singură dacă sună. Fără

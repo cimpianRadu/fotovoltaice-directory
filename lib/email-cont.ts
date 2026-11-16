@@ -21,6 +21,7 @@ import { accountLink } from './client-auth';
 import { clientEmailsLive, describeLead, firmDisplayName, inMessagingWindow } from './client-account';
 import type { NewLead } from './sheets';
 import { recordClientEvent } from './client-events';
+import { PHOTO_LIFT_PCT } from './lead-photos-shared';
 
 type LeadForEmail = Pick<NewLead, 'timestamp' | 'numeContact' | 'numeCompanie' | 'email' | 'judet' | 'localitate' | 'tipLucrare' | 'putere'>;
 
@@ -183,6 +184,52 @@ export function offerOpenedFirmEmail(o: {
 }
 
 // ---------------------------------------------------------------------------
+// 6. A doua zi după cerere: ce îi lipsește (16 nov 2026)
+//
+// Pe formularul din 12 nov, 37 din 39 de cereri au plecat fără poze. Lista din
+// cont („Ca să primiți oferte potrivite”) e deja acolo; emailul doar îl aduce
+// pe om la ea, o singură dată. Fără scor și fără „șanse mici” (Radu, 16 nov).
+
+export interface MissingDetails {
+  poze: boolean;
+  adresa: boolean;
+}
+
+export function detailsReminderEmail(
+  lead: LeadForEmail,
+  missing: MissingDetails,
+  link: string,
+): { subject: string; html: string } {
+  const items: string[] = [];
+  if (missing.poze) {
+    items.push(
+      `<strong>Poze cu acoperișul și tabloul electric</strong>: una cu acoperișul din exterior, una cu tabloul și contorul. Din ce am văzut pe site, pozele cresc șansele de oferte cu ${PHOTO_LIFT_PCT}%.`,
+    );
+  }
+  if (missing.adresa) {
+    items.push(
+      '<strong>Adresa unde se face montajul</strong>: instalatorul se uită la acoperiș din satelit (orientarea, umbrele, suprafața liberă). O vede doar firma care preia cererea, nu apare pe site.',
+    );
+  }
+  const list = `<ul style="margin:0 0 16px;padding-left:20px;color:#374151;font-size:15px;line-height:1.6">${items
+    .map((i) => `<li style="margin-bottom:8px">${i}</li>`)
+    .join('')}</ul>`;
+  const body =
+    greeting(lead) +
+    p(
+      `Cererea dumneavoastră pentru ${escapeHtml(describeLead(lead))} în ${where(lead)} a ajuns la firmele din zonă. Instalatorii vă pot face o ofertă mai exactă dacă văd și:`,
+    ) +
+    list +
+    button(link, missing.poze ? 'Adăugați pozele' : 'Adăugați adresa') +
+    p('Durează un minut, se poate și de pe telefon. Dacă nu le aveți acum la îndemână, le puteți adăuga oricând de pe pagina cererii.') +
+    NO_PASSWORD;
+  const subject = missing.poze
+    ? 'Adăugați câteva poze la cererea dumneavoastră'
+    : 'Adăugați adresa montajului la cererea dumneavoastră';
+  return { subject, html: emailFrame(body, leadFooter(lead)) };
+}
+
+// ---------------------------------------------------------------------------
 // Trimiterea
 
 /** Rezervă emailul: true dacă e primul de felul ăsta pe cerere și poate pleca. */
@@ -230,6 +277,11 @@ export function sendClaimEmail(lead: LeadForEmail, claimTs: string, firm: FirmFo
 
 export function sendOfferEmail(lead: LeadForEmail, offerId: number, firmName: string) {
   return sendOnce(lead, `oferta:${offerId}`, (link) => offerEmail(lead, firmDisplayName(firmName), link), 'anunt');
+}
+
+/** Din inițiativa noastră, deci doar în fereastra de lucru; o dată pe cerere. */
+export function sendDetailsReminderEmail(lead: LeadForEmail, missing: MissingDetails) {
+  return sendOnce(lead, 'detalii', (link) => detailsReminderEmail(lead, missing, link), 'anunt');
 }
 
 export async function sendLoginCodeEmail(email: string, code: string) {

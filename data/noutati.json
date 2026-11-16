@@ -1,5 +1,19 @@
 [
   {
+    "data": "2026-11-16",
+    "titlu": "Eticheta „Gata de ofertă” și filtrul rapid în cereri",
+    "text": "Pe cardurile din /cereri apare eticheta verde „Gata de ofertă” la clienții care plătesc din bani proprii sau cu credit și vor montajul în cel mult 3 luni. Deasupra listei ai două butoane, „Gata de ofertă” și „Cu poze”, ca să vezi doar aceste cereri dintr-un click. Filtrul rămâne în link, așa că îl poți salva sau trimite unui coleg.",
+    "link": "/cereri?gata=1",
+    "linkText": "Vezi cererile gata de ofertă"
+  },
+  {
+    "data": "2026-11-16",
+    "titlu": "Punctajul estimativ Casa Verde Baterii, pe cardul cererii",
+    "text": "La cererile de baterie prin AFM la care clientul a spus ce capacitate vrea, vezi pe card eticheta AFM cu punctajul estimativ al dosarului, calculat cu simulatorul platformei la costul standard și finanțarea maximă. E doar informativ, nu o garanție: punctajul oficial îl stabilește AFM, iar pragul de admitere se află după sesiune. Clientul vede același calcul după ce trimite cererea.",
+    "link": "/cereri",
+    "linkText": "Vezi cererile"
+  },
+  {
     "data": "2026-11-13",
     "titlu": "Fiecare cerere nouă spune dacă e monofazat sau trifazat",
     "text": "Alimentarea electrică e de acum întrebare obligatorie în formular, deci o găsești pe fiecare cerere nouă: monofazat, trifazat sau „nu știu”. Până acum o completa cam o cerere din trei.",

@@ -9,6 +9,8 @@ import { createLeadPhotoToken } from '@/lib/lead-photos';
 import { getLeadLocation } from '@/lib/lead-location';
 import { leadForViewer, loadAccountLead, recordLeadView } from '@/lib/client-account';
 import { clientLinkUrl } from '@/lib/lead-client-token';
+import { cvbEstimate } from '@/lib/cvb-score';
+import { CvbScoreBox } from '@/components/cvb/CvbScore';
 
 // Pagina unei cereri în contul clientului. Fără acces (alt browser, cookie șters)
 // arată intrarea cu cod, nu o eroare: omul a ajuns aici dintr-un link vechi.
@@ -63,13 +65,19 @@ export default async function ContCererePage({ params }: Props) {
     return null;
   });
 
+  // Punctajul estimativ Casa Verde Baterii (16 nov 2026), ca pe ecranul de
+  // confirmare. Nu depinde de tokenul de detalii: apare și fără PORTAL_SECRET.
+  const cvb = cvbEstimate(lead);
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:py-12">
       <AccountLeadView
         data={data}
         readyUrl={data.informez ? clientLinkUrl(lead.timestamp, 'actualizare') : undefined}
         details={
-          detailsToken ? (
+          !detailsToken ? (
+            cvb ? <CvbScoreBox estimate={cvb} /> : undefined
+          ) : (
             <div className="space-y-6">
               <LeadDetailsChecklist
                 leadId={lead.timestamp}
@@ -83,8 +91,11 @@ export default async function ContCererePage({ params }: Props) {
               {(ASISTENT_TIPURI as readonly string[]).includes(lead.tipLucrare) && (
                 <AsistentCerere leadId={lead.timestamp} token={detailsToken} sursa="cont" />
               )}
+              {/* Punctajul Casa Verde Baterii, compact și după poze și adresă:
+                  pagina împinge întâi spre detalii (Radu, 16 nov). */}
+              {cvb && <CvbScoreBox estimate={cvb} />}
             </div>
-          ) : undefined
+          )
         }
       />
       <p className="mt-10 text-center text-xs text-gray-400">

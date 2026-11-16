@@ -188,6 +188,24 @@ async function runBrowser() {
       r.apiStatus = resp.status();
       r.submitOk = resp.status() >= 200 && resp.status() < 300;
       if (!r.submitOk) { try { r.apiBody = await resp.text(); } catch { /* ignore */ } }
+      // Cererea fără poze: ecranul de confirmare arată lista „Ca să primiți
+      // oferte potrivite”, cu butonul de poze (16 nov 2026).
+      if (f.id === 'lead' && r.submitOk) {
+        // Pasul 6 (după trimitere): „Ce vreți să rezolvați?” e obligatoriu, apoi
+        // „Salvează și încheie” duce la confirmare. Scrie pe același rând de test.
+        await page.getByText('O factură mai mică la curent').first().click({ timeout: 20000 }).catch(() => {});
+        await page.getByRole('button', { name: 'Salvează și încheie' }).click({ timeout: 10000 }).catch(() => {});
+        r.checklist = await page
+          .getByText('Ca să primiți oferte potrivite')
+          .first()
+          .waitFor({ state: 'visible', timeout: 20000 })
+          .then(() => true)
+          .catch(() => false);
+        if (!r.checklist) {
+          r.error = 'confirmarea nu arată lista „Ca să primiți oferte potrivite”';
+          r.screen = (await page.locator('main').innerText().catch(() => '')).slice(0, 1200);
+        }
+      }
       await page.close();
     } catch (err) {
       r.error = err instanceof Error ? err.message : String(err);
@@ -249,8 +267,8 @@ async function verifyAndClean(browserResults) {
 
   const summary = FORMS.map((f) => {
     const r = browserResults[f.id];
-    const pass = r.submitOk === true && r.sheetFound === true;
-    return { id: f.id, form: f.label, pass, apiStatus: r.apiStatus, sheetFound: r.sheetFound ?? null, error: r.error, apiBody: r.apiBody, fill: r.fill, cleanedRows: r.cleanedRows };
+    const pass = r.submitOk === true && r.sheetFound === true && r.checklist !== false;
+    return { id: f.id, form: f.label, pass, apiStatus: r.apiStatus, sheetFound: r.sheetFound ?? null, error: r.error, apiBody: r.apiBody, fill: r.fill, cleanedRows: r.cleanedRows, checklist: r.checklist ?? null, screen: r.screen };
   });
   const allPass = summary.every((s) => s.pass) && !cleanupError;
 

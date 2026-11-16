@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { logLeadSends, sentFrom } from '@/lib/lead-sends';
 import { isReadyLead } from '@/lib/lead-readiness';
 import { sendPendingClientEmails } from '@/lib/client-notify';
+import { sendDetailsReminders } from '@/lib/detalii-reamintire';
 import {
   CLAIM_REMINDER_MAX,
   claimOccupiesLeadSlot,
@@ -120,6 +121,14 @@ export async function GET(request: Request) {
       });
       if (clientEmails) console.log('[cron/claim-nudge] emailuri cont client:', clientEmails);
     }
+
+    // A doua zi după cerere: „adăugați pozele / adresa”, o dată pe cerere
+    // (lib/detalii-reamintire, 16 nov 2026). Cu `?dry=1` doar listează.
+    const detailsReminders = await sendDetailsReminders({ dry }).catch((err) => {
+      console.error('[cron/claim-nudge] reamintire detalii:', err);
+      return null;
+    });
+    if (detailsReminders) console.log('[cron/claim-nudge] reamintire detalii:', detailsReminders);
 
     // Înaintea reminderelor: primele revendicări care încă așteaptă apelul meu
     // de confirmare. Emailul pleacă spre MINE, nu spre firmă.

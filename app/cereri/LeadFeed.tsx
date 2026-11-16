@@ -100,6 +100,13 @@ function putereBucket(c: LeadCardData): string {
 interface Filters {
   age: AgeFilter;
   segment: SegmentFilter;
+  /**
+   * Filtrele rapide (16 nov 2026): împărțirea feedului cerută de firme
+   * („oameni nehotărâți”), făcută ca la Bark, din etichete pe fapte, nu din
+   * două liste separate. În URL: `?gata=1`, `?poze=1`.
+   */
+  gata: boolean;
+  poze: boolean;
   counties: string[];
   termen: string[];
   finantare: string[];
@@ -137,6 +144,8 @@ const inSet = (value: string, set: string[]) => set.length === 0 || set.includes
 const INITIAL_FILTERS: Filters = {
   age: DEFAULT_AGE,
   segment: 'toate',
+  gata: false,
+  poze: false,
   counties: [],
   termen: [],
   finantare: [],
@@ -147,6 +156,8 @@ function matches(c: LeadCardData, f: Filters): boolean {
   return (
     matchesAge(c.ageDays, f.age) &&
     matchesSegment(c.segment, f.segment) &&
+    (!f.gata || c.gataDeOferta) &&
+    (!f.poze || c.arePoze) &&
     inSet(c.judet, f.counties) &&
     inSet(c.termen || NESPECIFICAT, f.termen) &&
     inSet(c.finantare || NESPECIFICAT, f.finantare) &&
@@ -199,6 +210,8 @@ export default function LeadFeed({ cards, claimCounts, watchCounts }: LeadFeedPr
     const judete = list('judet');
     const next: Filters = {
       ...INITIAL_FILTERS,
+      gata: params.get('gata') === '1',
+      poze: params.get('poze') === '1',
       counties: [...new Set(cards.map((c) => c.judet).filter(Boolean))].filter((j) =>
         judete.has(slugifyCity(j)),
       ),
@@ -234,6 +247,8 @@ export default function LeadFeed({ cards, claimCounts, watchCounts }: LeadFeedPr
     };
     put('judet', next.counties.map(slugifyCity));
     for (const key of MULTI_KEYS) put(key, next[key]);
+    put('gata', next.gata ? ['1'] : []);
+    put('poze', next.poze ? ['1'] : []);
     // Virgula rămâne virgulă (nu %2C): linkul se citește în email, unde e trimis
     // manual, iar parsarea e identică.
     const qs = params.toString().replace(/%2C/g, ',');
@@ -312,6 +327,8 @@ export default function LeadFeed({ cards, claimCounts, watchCounts }: LeadFeedPr
   const filtered =
     age !== DEFAULT_AGE ||
     segment !== 'toate' ||
+    filters.gata ||
+    filters.poze ||
     counties.length > 0 ||
     MULTI_KEYS.some((k) => filters[k].length > 0);
   const resetFilters = () => update(INITIAL_FILTERS);
@@ -385,6 +402,64 @@ export default function LeadFeed({ cards, claimCounts, watchCounts }: LeadFeedPr
               </button>
             ))}
           </div>
+        </div>
+
+        {/* Filtrele rapide: cele două lucruri după care firmele aleg ce sună
+            întâi. Comutatoare, nu dropdown: se apasă dintr-un deget pe telefon. */}
+        <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-border pt-3">
+          <span className="text-xs font-medium text-gray-500">Arată doar:</span>
+          {(
+            [
+              {
+                key: 'gata',
+                label: 'Gata de ofertă',
+                title: 'Bani proprii sau credit, montaj în cel mult 3 luni',
+                on: 'border-emerald-600 bg-emerald-600 text-white',
+                icon: <path d="M4.5 10.5l3.5 3.5 7.5-8" />,
+              },
+              {
+                key: 'poze',
+                label: 'Cu poze',
+                title: 'Clientul a urcat poze cu acoperișul sau tabloul',
+                on: 'border-sky-600 bg-sky-600 text-white',
+                icon: (
+                  <>
+                    <rect x="2.5" y="5" width="15" height="11" rx="2" />
+                    <circle cx="10" cy="10.5" r="2.8" />
+                  </>
+                ),
+              },
+            ] as const
+          ).map((q) => {
+            const active = filters[q.key];
+            return (
+              <button
+                key={q.key}
+                type="button"
+                title={q.title}
+                onClick={() => update({ [q.key]: !active })}
+                aria-pressed={active}
+                className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm font-medium transition-colors ${
+                  active ? q.on : 'border-border bg-white text-gray-700 hover:border-gray-400'
+                }`}
+              >
+                <svg
+                  viewBox="0 0 20 20"
+                  className="h-3.5 w-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  {q.icon}
+                </svg>
+                {q.label}
+                <span className={active ? 'opacity-80' : 'text-gray-400'}>{countWith({ [q.key]: true })}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Pe telefon grilă de două coloane: în rând liber, cinci pastile cu

@@ -43,6 +43,48 @@ function pageChecks(sample) {
       details: async (page) => ({ carduri: await page.locator('[data-cerere]').count() }),
     },
     {
+      // Filtrul rapid „Gata de ofertă” (16 nov 2026): din link se aprinde
+      // butonul și rămân doar cardurile cu eticheta. Zero carduri e un răspuns
+      // valid (nicio cerere gata în ultimele 14 zile), nu o eroare.
+      id: 'cereri-gata',
+      name: 'Cererile: filtrul „Gata de ofertă” (/cereri?gata=1)',
+      path: '/cereri?gata=1',
+      check: async (page) => {
+        const btn = page.getByRole('button', { name: /Gata de ofertă/ }).first();
+        if (!(await btn.count())) return 'lipsește butonul „Gata de ofertă”';
+        if ((await btn.getAttribute('aria-pressed')) !== 'true') return 'butonul nu e apăsat din link';
+        const fara = await page.locator('[data-cerere]').evaluateAll(
+          (cards) => cards.filter((c) => !c.textContent.includes('Gata de ofertă')).length,
+        );
+        return fara ? `${fara} carduri fără eticheta „Gata de ofertă”` : null;
+      },
+      details: async (page) => ({ carduri: await page.locator('[data-cerere]').count() }),
+    },
+    {
+      // Punctajul Casa Verde Baterii (16 nov 2026): oriunde apare cifra, scrie
+      // lângă ea, la vedere, că e doar informativ și nu e o garanție (Radu).
+      id: 'cereri-punctaj',
+      name: 'Cererile: punctajul AFM are avertismentul',
+      path: '/cereri?finantare=afm-baterii',
+      check: async (page) => {
+        const rezultat = await page.evaluate(() => {
+          const etichete = [...document.querySelectorAll('[data-cerere] span')].filter((el) =>
+            el.textContent.trim().startsWith('Punctaj estimativ:'),
+          );
+          const fara = etichete.filter((el) => {
+            const box = el.closest('div.rounded-lg');
+            const t = box?.textContent || '';
+            return !t.includes('*') || !t.includes('garanție');
+          }).length;
+          return { total: etichete.length, fara };
+        });
+        return rezultat.fara ? `${rezultat.fara} din ${rezultat.total} punctaje fără avertisment` : null;
+      },
+      details: async (page) => ({
+        punctaje: await page.getByText('Punctaj estimativ:').count(),
+      }),
+    },
+    {
       id: 'firme',
       name: 'Lista de firme (/firme)',
       path: '/firme',

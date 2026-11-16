@@ -32,6 +32,8 @@ import {
 } from '@/lib/utils-shared';
 import { mountingForRoof, parseConsumLunar, sizeKwp } from '@/lib/pv-estimate';
 import { PROGRAM, bracketFor } from '@/lib/battery-sizing';
+import { cvbEstimate } from '@/lib/cvb-score';
+import { hasReadyAnswers } from '@/lib/lead-readiness';
 import { type LeadCardData } from './LeadCard';
 import LeadFeed from './LeadFeed';
 import InstallerBanner from './InstallerBanner';
@@ -154,7 +156,11 @@ export default async function CereriPage() {
           ? `reactivată ${cerereAgeLabel(ageDays)}`
           : cerereAgeLabel(ageDays),
       ageDays,
+      // Punctajul estimativ Casa Verde Baterii, doar când clientul a spus ce
+      // capacitate vrea (lib/cvb-score).
+      cvb: cvbEstimate(l),
       seInformeaza: l.seInformeaza,
+      gataDeOferta: hasReadyAnswers(l) && !l.seInformeaza,
       informezMotiv: l.seInformeaza ? informezMotiv({ blocaj: l.blocaj, finantare: l.finantare }) : '',
       reactivata,
       confirmata,

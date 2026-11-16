@@ -27,6 +27,17 @@ const SOON = new Set(['cat-mai-repede', '1-3-luni']);
 
 export function isReadyLead(l: { finantare?: string; termen?: string; segment?: string }): boolean {
   if ((l.segment || '').trim().toLowerCase() === 'comercial') return true;
+  return hasReadyAnswers(l);
+}
+
+/**
+ * Doar răspunsurile clientului: bani proprii sau credit și montajul în cel mult
+ * 3 luni. E eticheta „Gata de ofertă” de pe cardul din /cereri și filtrul ei
+ * (16 nov 2026, ca etichetele Bark: un fapt declarat, nu un scor). Fără
+ * scurtătura pentru comerciale de la alerte: pe card, eticheta trebuie să spună
+ * exact ce a răspuns omul.
+ */
+export function hasReadyAnswers(l: { finantare?: string; termen?: string }): boolean {
   return OWN_MONEY.has((l.finantare || '').trim()) && SOON.has((l.termen || '').trim());
 }
 

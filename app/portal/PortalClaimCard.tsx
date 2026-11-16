@@ -17,6 +17,8 @@ import {
   type ReleaseReasonId,
 } from '@/lib/portal-release-reasons';
 import type { ClientSignal } from '@/lib/portal-client-signal';
+import type { CvbEstimate } from '@/lib/cvb-score';
+import { CvbScoreLine } from '@/components/cvb/CvbScore';
 import {
   CLAIM_STATUSES,
   CLAIM_STATUS_HINTS,
@@ -66,6 +68,8 @@ export interface PortalClaim {
   leadClosed: ClosedLeadNotice | null;
   /** După ofertă: ce a răspuns clientul când l-am întrebat, sau că încă tace. */
   clientSignal: ClientSignal | null;
+  /** Punctajul orientativ Casa Verde Baterii; null fără AFM sau fără capacitate declarată. */
+  cvb: CvbEstimate | null;
   /** Zile de la ultima mișcare a firmei. `null` = n-a mișcat nimic de la revendicare. */
   updatedDays: number | null;
   /** „Mai lucrezi la ea?”. Calculat pe server, o dată la încărcarea paginii. */
@@ -546,6 +550,10 @@ export default function PortalClaimCard({
           </div>
         ))}
       </dl>
+
+      {/* Punctajul orientativ la Casa Verde Baterii (16 nov 2026), la vedere sub
+          cele trei casete, cu avertismentul în rând. */}
+      {claim.cvb && <CvbScoreLine estimate={claim.cvb} className="mt-2" />}
 
       <p className="mt-2.5 text-xs text-gray-500">
         {claim.tipLabel}

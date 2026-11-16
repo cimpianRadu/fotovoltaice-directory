@@ -25,6 +25,7 @@ import { informezMotiv } from '@/lib/lead-alerts';
 import { satelliteMapUrl } from '@/lib/lead-location-shared';
 import { closedLeadNotice } from '@/lib/portal-release-reasons';
 import { clientSignalFor } from '@/lib/portal-client-signal';
+import { cvbEstimate } from '@/lib/cvb-score';
 import { getWhatsappOpened } from '@/lib/whatsapp-verificare';
 import { getLeadLocations, type LeadLocation } from '@/lib/lead-location';
 import {
@@ -257,6 +258,8 @@ export default async function PortalPage() {
             : null;
         return {
           clientSignal,
+          // Punctajul orientativ Casa Verde Baterii, ca pe cardul din /cereri.
+          cvb: lead ? cvbEstimate(lead) : null,
           pozeCount: photosByLead.get(c.leadId)?.length || 0,
           cuPoze: photosByLead.has(c.leadId) || Boolean(lead?.poze.trim()),
           // Închisă de client sau de noi: cardul spune doar asta, fără nimic de
