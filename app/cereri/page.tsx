@@ -20,6 +20,7 @@ import {
   getPhaseLabel,
   getConnectionShort,
   getFinancingShort,
+  getDependentaLabel,
   getFinancingTone,
   getYesNoLabel,
   getBudgetLabel,
@@ -177,7 +178,11 @@ export default async function CereriPage() {
           ? `${consum.label} (${consum.echivalent})`
           : consum.label,
       finantare: l.finantare || '',
-      finantareLabel: l.finantare ? getFinancingShort(l.finantare) : '',
+      // „Baterii prin AFM · Face și fără finanțare” (16 nov 2026): răspunsul la
+      // „Cât depinde proiectul de finanțare?”, lângă program.
+      finantareLabel: l.finantare
+        ? [getFinancingShort(l.finantare), getDependentaLabel(l.dependentaFinantare)].filter(Boolean).join(' · ')
+        : '',
       finantareTone: getFinancingTone(l.finantare),
       stocareLabel: l.stocare ? getYesNoLabel(l.stocare) : '',
       wallboxLabel: l.wallbox ? getYesNoLabel(l.wallbox) : '',

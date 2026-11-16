@@ -27,6 +27,9 @@ import {
   isSeInformeaza,
   SCOP_OPTIONS,
   SCOP_INDEPENDENTA_HINT,
+  DEPENDENTA_OPTIONS,
+  dependentaQuestion,
+  isProgramFinancing,
 } from '@/lib/utils-shared';
 import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 import { DEFAULT_TARIFF_RON_PER_KWH } from '@/lib/pv-constants';
@@ -155,6 +158,8 @@ const STEP4_KEYS = [
   'consumLunar',
   'termen',
   'finantare',
+  // Doar la finanțarea prin program (16 nov 2026), imediat sub ea.
+  'dependentaFinantare',
   'buget',
   'bransament',
   'fazare',
@@ -593,7 +598,13 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
 
   function setDetail(key: string, value: string) {
     markStarted();
-    setDetails((d) => ({ ...d, [key]: value }));
+    setDetails((d) => ({
+      ...d,
+      [key]: value,
+      // Răspunsul la „Cât depinde proiectul de finanțare?” ține de programul
+      // ales: dacă finanțarea se schimbă pe altceva, nu mai are sens.
+      ...(key === 'finantare' && !isProgramFinancing(value) ? { dependentaFinantare: '' } : {}),
+    }));
   }
 
   function toggleFirm(slug: string) {
@@ -1195,6 +1206,19 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
     // pe nimeni să inventeze un răspuns.
     { name: 'termen', label: 'Cât de repede vreți instalarea', options: opts(TIMELINE_OPTIONS), required: true },
     { name: 'finantare', label: 'Cum finanțați investiția', options: opts(financingTypes), required: true },
+    // „Cât depinde proiectul de finanțarea AFM?” (16 nov 2026, varianta A a lui
+    // Radu): firmele ocolesc cererile care așteaptă un program, dar o parte din
+    // oameni fac lucrarea oricum. Fără să vorbim de bani: „bonus” sună pozitiv.
+    ...(isProgramFinancing(details.finantare)
+      ? [
+          {
+            name: 'dependentaFinantare',
+            label: dependentaQuestion(details.finantare),
+            options: opts(DEPENDENTA_OPTIONS),
+            required: true,
+          },
+        ]
+      : []),
     // Bugetul orientativ (16 sept 2026): toți instalatorii îl cer la primul
     // telefon. Nu ca să ofereze la maximum, ci ca să aleagă componentele care
     // încap, de exemplu panouri și invertor acum, bateria într-o etapă viitoare.

@@ -1,8 +1,15 @@
 [
   {
+    "data": "2026-11-17",
+    "titlu": "Știi dacă un client cu finanțare AFM face lucrarea și fără ea",
+    "text": "Clienții care așteaptă un program (Baterii prin AFM, Electric Up și celelalte) răspund acum în formular cât depinde proiectul de finanțare. Pe card, lângă program, vezi „Face și fără finanțare” sau „Doar cu finanțare”. Cei care o fac oricum și vor montajul în cel mult 3 luni apar și la filtrul „Gata de ofertă”, iar alerta pe județ pleacă imediat pentru ei.",
+    "link": "/cereri",
+    "linkText": "Vezi cererile"
+  },
+  {
     "data": "2026-11-16",
-    "titlu": "Eticheta „Gata de ofertă” și filtrul rapid în cereri",
-    "text": "Pe cardurile din /cereri apare eticheta verde „Gata de ofertă” la clienții care plătesc din bani proprii sau cu credit și vor montajul în cel mult 3 luni. Deasupra listei ai două butoane, „Gata de ofertă” și „Cu poze”, ca să vezi doar aceste cereri dintr-un click. Filtrul rămâne în link, așa că îl poți salva sau trimite unui coleg.",
+    "titlu": "Filtrul rapid „Gata de ofertă” în cereri",
+    "text": "Deasupra listei din /cereri ai două butoane noi. „Gata de ofertă” arată doar clienții care plătesc din bani proprii sau cu credit și vor montajul în cel mult 3 luni, iar „Cu poze” doar cererile cu poze. Filtrul rămâne în link, așa că îl poți salva sau trimite unui coleg.",
     "link": "/cereri?gata=1",
     "linkText": "Vezi cererile gata de ofertă"
   },

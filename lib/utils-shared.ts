@@ -249,7 +249,10 @@ export function getPhaseLabel(slug: string): string {
 export const FINANCING_REZIDENTIAL = [
   { value: 'fonduri-proprii', label: 'Fonduri proprii' },
   { value: 'credit', label: 'Vreau finanțare sau credit' },
-  { value: 'casa-verde', label: 'Aștept Casa Verde (AFM)' },
+  // „Aștept Casa Verde (AFM)” (Casa Verde Fotovoltaice, panouri noi) scos pe
+  // 16 nov 2026, cerut de Radu: programul n-are sesiune anunțată, iar opțiunea
+  // doar trimitea oamenii să aștepte ceva ce nu vine. Cererile vechi își
+  // păstrează eticheta (LEGACY_FINANCING_LABELS mai jos).
   { value: 'afm-baterii', label: 'Baterii prin AFM (am deja panouri)' },
   { value: 'nu-stiu', label: 'Nu știu încă, vreau să aflu' },
 ] as const;
@@ -304,9 +307,15 @@ export function getBudgetLabel(slug: string): string {
 
 // Ca la ROOF_*: valorile comune celor două liste au aceeași etichetă, altfel
 // afișajul ar depinde de ordinea de construire a mapei.
-const FINANCING_LABELS: Record<string, string> = Object.fromEntries(
-  [...FINANCING_REZIDENTIAL, ...FINANCING_COMERCIAL].map((o) => [o.value, o.label]),
-);
+// Valori care nu mai sunt în formular, dar există pe cereri vechi.
+const LEGACY_FINANCING_LABELS: Record<string, string> = {
+  'casa-verde': 'Aștept Casa Verde (AFM)',
+};
+
+const FINANCING_LABELS: Record<string, string> = {
+  ...LEGACY_FINANCING_LABELS,
+  ...Object.fromEntries([...FINANCING_REZIDENTIAL, ...FINANCING_COMERCIAL].map((o) => [o.value, o.label])),
+};
 
 // Etichete scurte pentru chip-uri (card /cereri, card CRM).
 const FINANCING_SHORT: Record<string, string> = {
@@ -523,6 +532,49 @@ export function getProgramName(finantare: string): string {
     default:
       return '';
   }
+}
+
+// „Cât depinde proiectul de finanțare?” (16 nov 2026, varianta A aleasă de
+// Radu). Întrebată doar la finanțările prin program, unde firmele ocoleau
+// cererile: 0,26 preluări pe cerere față de 1,39 la banii proprii (13 nov).
+// „Îl fac oricum” înseamnă un client care cumpără și fără sesiune, deci o
+// cerere bună de sunat acum; pe card devine „Face și fără finanțare”.
+export const PROGRAM_FINANCING: readonly string[] = ['casa-verde', 'afm-baterii', 'electric-up', 'alt-program'];
+
+export function isProgramFinancing(finantare: string): boolean {
+  return PROGRAM_FINANCING.includes((finantare || '').trim());
+}
+
+export const DEPENDENTA_OPTIONS = [
+  { value: 'oricum', label: 'Îl fac oricum, finanțarea ar fi un bonus' },
+  { value: 'doar-cu', label: 'Îl fac doar dacă primesc finanțarea' },
+  { value: 'nehotarat', label: 'Încă nu m-am hotărât' },
+] as const;
+
+const DEPENDENTA_VALUES: readonly string[] = DEPENDENTA_OPTIONS.map((o) => o.value);
+
+/** Valoarea curată sau gol: doar cele trei sluguri, și doar la finanțare prin program. */
+export function cleanDependenta(value: string | undefined, finantare: string | undefined): string {
+  const v = (value || '').trim();
+  return isProgramFinancing(finantare || '') && DEPENDENTA_VALUES.includes(v) ? v : '';
+}
+
+/** Întrebarea din formular, cu numele programului ales. */
+export function dependentaQuestion(finantare: string): string {
+  const program =
+    finantare === 'afm-baterii' || finantare === 'casa-verde'
+      ? 'AFM'
+      : finantare === 'electric-up'
+        ? 'Electric Up'
+        : 'programului';
+  return `Cât depinde proiectul de finanțarea ${program}?`;
+}
+
+/** Pe cardul firmei: doar răspunsurile care spun ceva; „nehotărât” nu are etichetă. */
+export function getDependentaLabel(slug: string): string {
+  if (slug === 'oricum') return 'Face și fără finanțare';
+  if (slug === 'doar-cu') return 'Doar cu finanțare';
+  return '';
 }
 
 /** Răspunsurile posibile ale clientului la check-in-ul de 30 de zile. */

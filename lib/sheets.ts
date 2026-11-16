@@ -202,6 +202,7 @@ export async function saveLeadToSheet(lead: {
   tipLucrare?: string;
   capacitateBaterie?: string;
   buget?: string;
+  dependentaFinantare?: string;
 }): Promise<string> {
   const timestamp = new Date().toISOString();
   await appendRow('Leads', [
@@ -274,6 +275,13 @@ export async function saveLeadToSheet(lead: {
     // BUDGET_REZIDENTIAL / BUDGET_COMERCIAL. Grila trebuie să aibă 49 de
     // coloane (scripts/setup-buget.mjs), altfel append-ul pierde tot rândul.
     lead.buget || '',          // AW — Buget orientativ
+    // AX-BC — scrise după salvare (scop la pasul 6, apoi emailurile de
+    // verificare); goale aici ca rândul să ajungă la BD.
+    '', '', '', '', '', '',
+    // BD — „Cât depinde proiectul de finanțare?” (16 nov 2026): oricum /
+    // doar-cu / nehotarat, doar la finanțarea prin program. Grila are 56 de
+    // coloane (A:BD), deci încape fără lărgire.
+    lead.dependentaFinantare || '', // BD — Dependență de finanțare
   ]);
   return timestamp;
 }
@@ -606,6 +614,8 @@ export interface NewLead {
   capacitateBaterie: string;
   // AW — bugetul orientativ, slug din BUDGET_* (16 sept 2026). Gol înainte.
   buget: string;
+  /** BD — cât depinde proiectul de finanțarea prin program (16 nov 2026): oricum / doar-cu / nehotarat. */
+  dependentaFinantare: string;
   /** AX — ce vrea să rezolve, sluguri din SCOP_OPTIONS cu „; " (17 sept 2026). */
   scop: string;
   /** AY — textul de la „Altceva". Privat: nu intră în PublicLead. */
@@ -739,6 +749,7 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     confirmataLa: r[52] || '',
     verificareStatusLa: r[53] || '',
     verificareRetrimisaLa: r[54] || '',
+    dependentaFinantare: r[55] || '',
     ...readCrmFields(r),
   }));
 }
@@ -847,6 +858,8 @@ export interface PublicLead {
   // Public intenționat: banda de buget nu identifică pe nimeni, dar e primul
   // lucru pe care îl întreabă firma. Vezi BUDGET_* în lib/utils-shared.
   buget: string;
+  /** Public: „face și fără finanțare” e exact ce caută firma (16 nov 2026). */
+  dependentaFinantare: string;
   /** Ce vrea să rezolve (sluguri). Public: fără textul liber de la „Altceva". */
   scop: string;
   /**
@@ -1012,6 +1025,7 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       verificata: l.crmStatus === 'valida' || l.crmStatus === 'ofertare',
       intervalApel: l.intervalApel,
       buget: l.buget,
+      dependentaFinantare: l.dependentaFinantare,
       scop: l.scop,
       seInformeaza: isLeadInformez(l),
       blocaj: l.blocaj,

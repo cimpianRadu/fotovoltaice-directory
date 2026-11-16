@@ -13,6 +13,8 @@
 // termenul), nu un scor: cu 3 câștiguri nu avem cu ce valida un număr.
 //
 //  - bani proprii sau credit, cu montajul „cât mai repede” sau în 1-3 luni;
+//  - din 16 nov 2026, și finanțarea prin program cu răspunsul „îl fac oricum”
+//    la „Cât depinde proiectul de finanțare?”, cu același termen;
 //  - cererile comerciale, mereu: sunt puține (13 de la 1 septembrie), au fost
 //    revendicate toate și finanțarea lor nu se judecă la fel.
 //
@@ -25,7 +27,12 @@
 const OWN_MONEY = new Set(['fonduri-proprii', 'credit']);
 const SOON = new Set(['cat-mai-repede', '1-3-luni']);
 
-export function isReadyLead(l: { finantare?: string; termen?: string; segment?: string }): boolean {
+export function isReadyLead(l: {
+  finantare?: string;
+  termen?: string;
+  segment?: string;
+  dependentaFinantare?: string;
+}): boolean {
   if ((l.segment || '').trim().toLowerCase() === 'comercial') return true;
   return hasReadyAnswers(l);
 }
@@ -37,8 +44,12 @@ export function isReadyLead(l: { finantare?: string; termen?: string; segment?: 
  * scurtătura pentru comerciale de la alerte: pe card, eticheta trebuie să spună
  * exact ce a răspuns omul.
  */
-export function hasReadyAnswers(l: { finantare?: string; termen?: string }): boolean {
-  return OWN_MONEY.has((l.finantare || '').trim()) && SOON.has((l.termen || '').trim());
+export function hasReadyAnswers(l: { finantare?: string; termen?: string; dependentaFinantare?: string }): boolean {
+  // Din 16 nov 2026 și cine așteaptă un program, dar a spus „îl fac oricum,
+  // finanțarea ar fi un bonus”: cumpără și fără sesiune.
+  const pays =
+    OWN_MONEY.has((l.finantare || '').trim()) || (l.dependentaFinantare || '').trim() === 'oricum';
+  return pays && SOON.has((l.termen || '').trim());
 }
 
 /**

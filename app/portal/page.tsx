@@ -45,6 +45,7 @@ import {
   getRoofTypeLabel,
   getPhaseLabel,
   getFinancingLabel,
+  getDependentaLabel,
   getYesNoLabel,
   getBudgetLabel,
   getScopLabel,
@@ -100,7 +101,14 @@ function specsFor(lead: NewLead | undefined): { label: string; value: string }[]
     lead.fazare ? { label: 'Alimentare', value: getPhaseLabel(lead.fazare) } : null,
     lead.bransament ? { label: 'Branșament', value: getConnectionShort(lead.bransament) } : null,
     lead.consumLunar ? { label: 'Consum', value: lead.consumLunar } : null,
-    lead.finantare ? { label: 'Finanțare', value: getFinancingLabel(lead.finantare) } : null,
+    lead.finantare
+      ? {
+          label: 'Finanțare',
+          value: [getFinancingLabel(lead.finantare), getDependentaLabel(lead.dependentaFinantare)]
+            .filter(Boolean)
+            .join(' · '),
+        }
+      : null,
     getBudgetLabel(lead.buget) ? { label: 'Buget', value: getBudgetLabel(lead.buget) } : null,
     lead.stocare ? { label: 'Baterie', value: getYesNoLabel(lead.stocare) } : null,
     lead.wallbox ? { label: 'Stație auto', value: getYesNoLabel(lead.wallbox) } : null,

@@ -44,8 +44,9 @@ function pageChecks(sample) {
     },
     {
       // Filtrul rapid „Gata de ofertă” (16 nov 2026): din link se aprinde
-      // butonul și rămân doar cardurile cu eticheta. Zero carduri e un răspuns
-      // valid (nicio cerere gata în ultimele 14 zile), nu o eroare.
+      // butonul și lista se îngustează. Zero carduri e un răspuns valid (nicio
+      // cerere gata în ultimele 14 zile), nu o eroare. Eticheta de pe card nu
+      // mai există (scoasă pe 16 nov), deci verificăm butonul și numărul.
       id: 'cereri-gata',
       name: 'Cererile: filtrul „Gata de ofertă” (/cereri?gata=1)',
       path: '/cereri?gata=1',
@@ -53,10 +54,10 @@ function pageChecks(sample) {
         const btn = page.getByRole('button', { name: /Gata de ofertă/ }).first();
         if (!(await btn.count())) return 'lipsește butonul „Gata de ofertă”';
         if ((await btn.getAttribute('aria-pressed')) !== 'true') return 'butonul nu e apăsat din link';
-        const fara = await page.locator('[data-cerere]').evaluateAll(
-          (cards) => cards.filter((c) => !c.textContent.includes('Gata de ofertă')).length,
-        );
-        return fara ? `${fara} carduri fără eticheta „Gata de ofertă”` : null;
+        const toate = await page.getByRole('button', { name: /^Toate/ }).first().textContent();
+        const total = Number((toate || '').match(/\d+/)?.[0] || 0);
+        const vizibile = await page.locator('[data-cerere]').count();
+        return total && vizibile > total ? `filtrul arată ${vizibile} carduri din ${total}` : null;
       },
       details: async (page) => ({ carduri: await page.locator('[data-cerere]').count() }),
     },

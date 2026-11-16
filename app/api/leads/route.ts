@@ -30,6 +30,8 @@ import {
   getWorkTypeShort,
   isRetrofit,
   isSeInformeaza,
+  cleanDependenta,
+  getDependentaLabel,
 } from '@/lib/utils-shared';
 
 // v3 lărgea destinatarii la partenerii de finanțare, dar bifa spunea „finanțare
@@ -156,6 +158,11 @@ export async function POST(request: Request) {
     }
 
     // Versiunea textului de consimțământ acceptat — dovadă GDPR per lead.
+    // „Cât depinde proiectul de finanțare?” (16 nov 2026): doar cele trei
+    // valori și doar la finanțarea prin program. Nu e cerută și pe server: un
+    // formular vechi din cache, fără întrebare, ar rămâne blocat.
+    body.dependentaFinantare = cleanDependenta(body.dependentaFinantare, body.finantare);
+
     const id = await saveLeadToSheet({
       ...body,
       firmeSolicitate: resolveRequestedFirms(body),
@@ -262,7 +269,9 @@ async function notifyCountyAlerts(body: Record<string, string>, leadId: string) 
     acoperisLabel: body.tipAcoperis ? getRoofTypeLabel(body.tipAcoperis.trim()) : '',
     bransamentLabel: body.bransament ? getConnectionLabel(body.bransament.trim()) : '',
     finantareSlug: finantare,
-    finantareLabel: finantare ? getFinancingLabel(finantare) : '',
+    finantareLabel: finantare
+      ? [getFinancingLabel(finantare), getDependentaLabel(body.dependentaFinantare || '')].filter(Boolean).join(' · ')
+      : '',
     termenLabel: body.termen ? getTimelineLabel(body.termen.trim()) : '',
     intervalApelLabel: body.intervalApel ? getCallWindowLabel(body.intervalApel.trim()) : '',
     bugetLabel: getBudgetLabel((body.buget || '').trim()),
@@ -298,7 +307,14 @@ async function notifyCountyAlerts(body: Record<string, string>, leadId: string) 
   // Segmentul gol se scrie în Sheet drept „comercial” (lib/sheets), deci la fel
   // îl citim și aici: la îndoială, alerta pleacă.
   const segment = (body.segment || '').trim() || 'comercial';
-  if (!isReadyLead({ finantare, termen: (body.termen || '').trim(), segment })) {
+  if (
+    !isReadyLead({
+      finantare,
+      termen: (body.termen || '').trim(),
+      segment,
+      dependentaFinantare: body.dependentaFinantare,
+    })
+  ) {
     console.log(`[leads] ${judet}: fără alertă imediată, cererea nu e gata de ofertă`);
     return;
   }

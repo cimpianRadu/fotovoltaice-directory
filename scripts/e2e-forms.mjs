@@ -40,7 +40,7 @@ const FORMS = [
     // obligatorie; se alege prima opțiune, „sistem nou", deci nu apare câmpul de
     // capacitate baterie al retrofitului.
     // `fazare` (alimentarea electrică) e obligatorie la pasul 4 din 13 nov 2026.
-    selects: [{ name: 'judet', step: 1 }, { name: 'tipLucrare', step: 3 }, { name: 'tipAcoperis', step: 3 }, { name: 'termen', step: 3 }, { name: 'finantare', step: 3 }, { name: 'buget', step: 3 }, { name: 'bransament', step: 3 }, { name: 'fazare', step: 3 }],
+    selects: [{ name: 'judet', step: 1 }, { name: 'tipLucrare', step: 3 }, { name: 'tipAcoperis', step: 3 }, { name: 'termen', step: 3 }, { name: 'finantare', step: 3, prefer: 'Baterii prin AFM' }, { name: 'dependentaFinantare', step: 3 }, { name: 'buget', step: 3 }, { name: 'bransament', step: 3 }, { name: 'fazare', step: 3 }],
   },
   {
     id: 'listing', label: 'Listare firmă (/listeaza-firma)', path: '/listeaza-firma',
@@ -67,7 +67,11 @@ async function fillForm(spec) {
     el.dispatchEvent(new Event('input', { bubbles: true }));
     return true;
   };
-  const pick = async (name) => {
+  // `prefer`: textul variantei de ales (16 nov 2026: finanțarea prin program,
+  // ca să apară și „Cât depinde proiectul de finanțare?”). Fără ea, prima.
+  const pick = async (name, prefer) => {
+    // Câmpurile care apar după alegerea de dinainte au nevoie de o randare.
+    for (let i = 0; i < 10 && !document.querySelector(`input[name="${name}"]`); i++) await sleep(80);
     const hidden = document.querySelector(`input[name="${name}"]`);
     if (!hidden) return { ok: false, reason: 'select absent' };
     const c = hidden.closest('div.relative');
@@ -82,7 +86,8 @@ async function fillForm(spec) {
         if (opts.length > 1) break;
       }
       lastSample = opts.map((b) => b.textContent.trim());
-      const opt = opts.find((b) => { const t = b.textContent.trim(); return t && t !== 'Selectează...'; });
+      const ok = (b) => { const t = b.textContent.trim(); return t && t !== 'Selectează...'; };
+      const opt = (prefer && opts.find((b) => ok(b) && b.textContent.includes(prefer))) || opts.find(ok);
       if (opt) { opt.click(); await sleep(180); }
       else { trigger.click(); await sleep(150); } // close, then retry
     }
@@ -107,7 +112,7 @@ async function fillForm(spec) {
       for (const k of keys) if (k in spec.text && !setText(k, spec.text[k])) missingText.push(k);
     };
     const pickStep = async (n) => {
-      for (const s of spec.selects.filter((x) => x.step === n)) selResults[s.name] = await pick(s.name);
+      for (const s of spec.selects.filter((x) => x.step === n)) selResults[s.name] = await pick(s.name, s.prefer);
     };
     // „Continuă" avansează doar dacă pasul curent e valid; confirmăm cu un
     // selector de pe pasul următor, ca să nu raportăm un pas trecut degeaba.
@@ -157,7 +162,7 @@ async function fillForm(spec) {
   }
 
   for (const [k, v] of Object.entries(spec.text)) if (!setText(k, v)) missingText.push(k);
-  for (const s of spec.selects) selResults[s.name] = await pick(s.name);
+  for (const s of spec.selects) selResults[s.name] = await pick(s.name, s.prefer);
   await closeDropdowns();
   tickCheckboxes(document.querySelector(`[name="${spec.formKey}"]`).closest('form'));
   return { missingText, selResults };
@@ -237,9 +242,17 @@ async function verifyAndClean(browserResults) {
     const myEmail = f.text.email;
     const sheetId = sheetIdByTitle[f.sheet];
     if (sheetId === undefined) { res.sheetFound = false; res.cleanError = `tab "${f.sheet}" lipsește`; continue; }
-    const got = await sheets.spreadsheets.values.get({ spreadsheetId: id, range: `${f.sheet}!A:Z` });
+    // Leads până la BD: răspunsul la „Cât depinde proiectul de finanțare?”
+    // (16 nov 2026) stă în BD și trebuie să ajungă în Sheet.
+    const lastCol = f.sheet === 'Leads' ? 'BD' : 'Z';
+    const got = await sheets.spreadsheets.values.get({ spreadsheetId: id, range: `${f.sheet}!A:${lastCol}` });
     const rows = got.data.values ?? [];
-    res.sheetFound = rows.some((row) => (row[f.emailCol] || '') === myEmail);
+    const mine = rows.find((row) => (row[f.emailCol] || '') === myEmail);
+    res.sheetFound = Boolean(mine);
+    if (f.id === 'lead' && mine) {
+      res.dependenta = mine[55] || '';
+      if (!res.dependenta && !res.error) res.error = 'coloana BD (dependența de finanțare) a rămas goală';
+    }
     // delete this run's row + any stale routine-test leftovers from prior failed runs
     const del = [];
     rows.forEach((row, i) => { if ((row[f.emailCol] || '').startsWith(TEST_EMAIL_PREFIX)) del.push(i); });
@@ -267,8 +280,9 @@ async function verifyAndClean(browserResults) {
 
   const summary = FORMS.map((f) => {
     const r = browserResults[f.id];
-    const pass = r.submitOk === true && r.sheetFound === true && r.checklist !== false;
-    return { id: f.id, form: f.label, pass, apiStatus: r.apiStatus, sheetFound: r.sheetFound ?? null, error: r.error, apiBody: r.apiBody, fill: r.fill, cleanedRows: r.cleanedRows, checklist: r.checklist ?? null, screen: r.screen };
+    const pass =
+      r.submitOk === true && r.sheetFound === true && r.checklist !== false && (f.id !== 'lead' || Boolean(r.dependenta));
+    return { id: f.id, form: f.label, pass, apiStatus: r.apiStatus, sheetFound: r.sheetFound ?? null, error: r.error, apiBody: r.apiBody, fill: r.fill, cleanedRows: r.cleanedRows, checklist: r.checklist ?? null, dependenta: r.dependenta ?? null, screen: r.screen };
   });
   const allPass = summary.every((s) => s.pass) && !cleanupError;
 
