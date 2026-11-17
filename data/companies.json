@@ -15589,7 +15589,7 @@
       "name": "KarmEnergy",
       "cui": "RO17512803",
       "logo": "/logos/karmenergy.png",
-      "description": "KarmEnergy este brandul comercial al Cromo Semper Automatic SRL, firmă înregistrată în 2005, cu sediul social în Pitești (Argeș) și punct operațional în Constanța. Proiectează și instalează sisteme fotovoltaice on-grid, hibride și off-grid pentru locuințe și firme, acoperind analiza consumului, dimensionarea, montajul, punerea în funcțiune, monitorizarea și mentenanța. Deține atestat ANRE tip B nr. 18022 din 07.03.2022, pentru instalații de 0,4 kV, și a fost instalator validat în programul Casa Verde Fotovoltaice, sesiunea 2022 (contract 214/RF). Montajul la cheie se face în principal în Constanța și Tulcea, iar în Călărași, Ialomița și Brăila în funcție de proiect. Operează și un magazin online cu panouri, invertoare Victron, Fronius, Sungrow și Solis, baterii, structuri de prindere și kituri complete, inclusiv echipamente pentru rulote și ambarcațiuni, livrate în toată țara.",
+      "description": "KarmEnergy este brandul comercial al Cromo Semper Automatic SRL, firmă înregistrată în 2005, cu sediul social în Pitești (Argeș) și punct de lucru în Constanța. Proiectează și instalează sisteme fotovoltaice on-grid, hibride și off-grid pentru locuințe, firme și hale industriale, de la analiza consumului și dimensionare până la montaj, punere în funcțiune, monitorizare și mentenanță. Printre lucrările comerciale prezentate se numără un sistem on-grid de 22 kWp la Crama Gabai, unul de 20 kWp cu invertor Fronius pentru un complex de apartamente de vacanță din Eforie Nord și un sistem hibrid de 11 kWp pentru un magazin alimentar din Poarta Albă. Deține atestat ANRE tip B nr. 18022 din 07.03.2022, pentru instalații de 0,4 kV, și a fost instalator validat în programul Casa Verde Fotovoltaice, sesiunea 2022 (contract 214/RF). Montajul la cheie se face în principal în Constanța și Tulcea, iar în Călărași, Ialomița și Brăila în funcție de proiect. Operează și un magazin online cu panouri, invertoare Victron, Fronius, Sungrow și Solis, baterii, structuri de prindere și kituri complete, livrate în toată țara.",
       "founded": 2005,
       "employees": 3,
       "location": {
@@ -15610,12 +15610,15 @@
         "Brăila"
       ],
       "specializations": [
-        "rezidential"
+        "rezidential",
+        "hale-industriale",
+        "hoteluri",
+        "retail"
       ],
       "certifications": [],
       "capacity": {
         "minProjectKw": 0,
-        "maxProjectKw": 0,
+        "maxProjectKw": 22,
         "projectsCompleted": 0
       },
       "financials": {
@@ -15657,6 +15660,7 @@
       },
       "tags": [
         "pv-rezidential",
+        "pv-comercial",
         "on-grid",
         "hibrid",
         "off-grid",
@@ -15670,7 +15674,7 @@
       "featured": false,
       "verified": true,
       "createdAt": "2026-09-01",
-      "updatedAt": "2026-09-01",
+      "updatedAt": "2026-11-17",
       "segment": "ambele",
       "anreMatch": {
         "societate": "CROMO SEMPER AUTOMATIC",
@@ -16274,6 +16278,165 @@
       "updatedAt": "2026-10-30",
       "segment": "rezidential",
       "anreMatch": null
+    },
+    {
+      "id": "elon-system-solutions",
+      "slug": "elon-system-solutions",
+      "name": "Elon System Solutions",
+      "cui": "RO47259991",
+      "logo": "/logos/elon-system-solutions.png",
+      "description": "Elon System Solutions (ELON Solutions) este o firmă din Iași, înființată în 2022, care proiectează, montează și pune în funcțiune sisteme fotovoltaice, mai ales pentru case. Deține atestat ANRE tip B și a montat sisteme prin programul Casa Verde Fotovoltaice, sesiunea 2024. Kitul standard de pe site are 5,46 kW, cu invertor Huawei și panouri Jinko Solar pe structură K2 pentru acoperiș înclinat, iar cea mai recentă lucrare prezentată are 5,94 kWp, cu invertor Solis și panouri Longi, în Valea Ursului, județul Iași. Montează pe acoperiș și la sol și se ocupă de dosarul de prosumator. Pe lângă fotovoltaice, face instalații electrice pentru locuințe și spații industriale, verificări periodice și mentenanță. Cifra de afaceri a ajuns la 0,34 milioane de lei în 2025, de la 0,17 milioane în 2024.",
+      "founded": 2022,
+      "employees": 1,
+      "location": {
+        "city": "Iași",
+        "county": "Iași",
+        "address": "Str. Mitropolit Varlaam, Nr. 15"
+      },
+      "contact": {
+        "phone": "+40742279937",
+        "email": "contact@elonsolutions.ro",
+        "website": "https://elonsolutions.ro"
+      },
+      "coverage": [
+        "Iași"
+      ],
+      "specializations": [
+        "rezidential"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 6,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 340714,
+        "profit": 102814,
+        "history": [
+          {
+            "year": 2023,
+            "revenue": 111591,
+            "profit": -73456,
+            "employees": 1
+          },
+          {
+            "year": 2024,
+            "revenue": 169689,
+            "profit": -27373,
+            "employees": 1
+          },
+          {
+            "year": 2025,
+            "revenue": 340714,
+            "profit": 102814,
+            "employees": 1
+          }
+        ]
+      },
+      "tags": [
+        "pv-rezidential",
+        "on-grid",
+        "casa-verde",
+        "prosumator",
+        "instalatii-electrice",
+        "mentenanta-pv"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-11-17",
+      "updatedAt": "2026-11-17",
+      "segment": "rezidential",
+      "anreMatch": {
+        "societate": "ELON SYSTEM SOLUTIONS",
+        "judet": "Iasi"
+      }
+    },
+    {
+      "id": "panouri-cluj",
+      "slug": "panouri-cluj",
+      "name": "Panouri Cluj",
+      "cui": "RO47797680",
+      "logo": "/logos/panouri-cluj.png",
+      "description": "Panouri Cluj (PANOURICLUJ SRL) este o firmă înființată în 2023, cu sediul social în Florești și punct de lucru în Hala M7 de pe Calea Baciului din Cluj-Napoca, care proiectează și montează la cheie sisteme fotovoltaice on-grid, hibride și off-grid, cu echipe proprii. Lucrează atât pentru case, cât și pentru firme, ferme și fabrici. Printre lucrările comerciale prezentate se numără o seră de tomate bio din Căpușu Mare, cu cinci invertoare hibride Deye de 80 kW și stocare de înaltă tensiune, un sistem Huawei de 230 kWp la o fabrică de prelucrare a lemnului din Lunca Ilvei și un sistem Victron cu stocare la o fabrică de brânzeturi. La case montează pe acoperiș ceramic, metalic sau plat, la sol și pe carporturi, cu invertoare Deye, Huawei, Victron Energy și Fronius și baterii LiFePO4. Depune gratuit dosarul de prosumator, montează stații de încărcare pentru mașini electrice și oferă plata în rate. Lucrează în principal în județul Cluj și în Alba, Bistrița-Năsăud și Sălaj. Cifra de afaceri a ajuns la 7,8 milioane de lei în 2025, cu 12 angajați, de la 3,3 milioane în 2024.",
+      "founded": 2023,
+      "employees": 12,
+      "location": {
+        "city": "Cluj-Napoca",
+        "county": "Cluj",
+        "address": "Hala M7, Calea Baciului 2-4 (punct de lucru). Sediu social: Str. Cuza Vodă, Nr. 48, Florești, jud. Cluj"
+      },
+      "contact": {
+        "phone": "+40774334433",
+        "email": "contact@panouricluj.ro",
+        "website": "https://panouricluj.ro"
+      },
+      "coverage": [
+        "Cluj",
+        "Alba",
+        "Bistrița-Năsăud",
+        "Sălaj"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale",
+        "agricol"
+      ],
+      "certifications": [],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 400,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 7811552,
+        "profit": 836143,
+        "history": [
+          {
+            "year": 2023,
+            "revenue": 1294745,
+            "profit": -16139,
+            "employees": 3
+          },
+          {
+            "year": 2024,
+            "revenue": 3324685,
+            "profit": -769691,
+            "employees": 5
+          },
+          {
+            "year": 2025,
+            "revenue": 7811552,
+            "profit": 836143,
+            "employees": 12
+          }
+        ]
+      },
+      "tags": [
+        "pv-rezidential",
+        "pv-comercial",
+        "pv-industrial",
+        "on-grid",
+        "hibrid",
+        "off-grid",
+        "stocare-baterii",
+        "prosumator",
+        "statii-incarcare-ev",
+        "finantare-disponibila",
+        "magazin-online",
+        "proiecte-mari"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-11-17",
+      "updatedAt": "2026-11-17",
+      "segment": "ambele",
+      "anreMatch": {
+        "societate": "PANOURICLUJ",
+        "judet": "Cluj"
+      }
     }
   ]
 }
