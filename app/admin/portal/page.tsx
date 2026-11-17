@@ -49,6 +49,7 @@ import FirmEmails, { type FirmEmailRow } from './FirmEmails';
 import GiveLead, { type GiveLeadFirm, type LeadOption } from './GiveLead';
 import AccountStatus from './AccountStatus';
 import DayPicker from './DayPicker';
+import { precalificareActivitate, type PrecalificareActivitate } from '@/lib/asistent';
 import { buildMovements, bucharestDay, shiftDay, type Movement } from './movements';
 import { ago, cerereHref } from '../cereri/shared';
 
@@ -683,6 +684,16 @@ export default async function PortalAccessPage({ searchParams }: Props) {
     );
   }
 
+  // Precalificarea stă în Neon, nu în Sheets: dacă baza nu răspunde, pagina
+  // merge mai departe fără ea și spune asta sus.
+  let precalificare: PrecalificareActivitate | null = null;
+  let precalificareError = '';
+  try {
+    precalificare = await precalificareActivitate();
+  } catch (err) {
+    precalificareError = err instanceof Error ? err.message : String(err);
+  }
+
   const companies = getCompanies();
   const leadById = new Map(leads.map((l) => [l.timestamp, l]));
 
@@ -747,6 +758,10 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       claims: mine,
       alerts,
       profile,
+      precalificare: precalificare && {
+        vizualizari: precalificare.vizualizari.filter((v) => members.includes(v.email)),
+        note: precalificare.note.filter((n) => members.includes(n.email)),
+      },
       leadLabel: (id) => leadLabel(leadById.get(id), id),
     });
 
@@ -963,6 +978,13 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         prima pagină de portal pe care o mai deschide. Restul emailurilor (revendicări
         despre care jurnalul nu știe nimic, blocați la intrare) sunt pe filtrele de mai jos.
       </p>
+
+      {precalificareError && (
+        <p className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+          Baza Neon n-a răspuns, deci din istoric lipsesc deschiderile precalificării:{' '}
+          {precalificareError}
+        </p>
+      )}
 
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         <Stat label="Emailuri cu portal posibil" value={accounts.length} />

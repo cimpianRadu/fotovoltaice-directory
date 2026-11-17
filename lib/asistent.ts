@@ -822,6 +822,47 @@ export async function logVizualizare(leadId: string, email: string, sursa: strin
   `;
 }
 
+/**
+ * Ce au făcut firmele cu precalificarea, pe toate cererile (fără cele de
+ * probă): pentru istoricul firmei din /admin/portal. Tabelul ține prima și
+ * ultima deschidere plus numărul lor, nu fiecare deschidere în parte.
+ */
+export interface PrecalificareActivitate {
+  vizualizari: {
+    leadId: string;
+    email: string;
+    sursa: string;
+    de: number;
+    primaLa: string;
+    ultimaLa: string;
+  }[];
+  note: { leadId: string; email: string; nota: string; motiv: string; la: string }[];
+}
+
+export async function precalificareActivitate(): Promise<PrecalificareActivitate> {
+  const [viz, note] = await Promise.all([
+    db()`SELECT * FROM asistent_vizualizari WHERE lead_id NOT LIKE 'test-%'`,
+    db()`SELECT * FROM asistent_note WHERE lead_id NOT LIKE 'test-%'`,
+  ]);
+  return {
+    vizualizari: viz.map((v) => ({
+      leadId: String(v.lead_id),
+      email: String(v.firma_email).trim().toLowerCase(),
+      sursa: String(v.sursa || ''),
+      de: Number(v.vizualizari) || 1,
+      primaLa: new Date(String(v.prima_la)).toISOString(),
+      ultimaLa: new Date(String(v.ultima_la)).toISOString(),
+    })),
+    note: note.map((n) => ({
+      leadId: String(n.lead_id),
+      email: String(n.firma_email).trim().toLowerCase(),
+      nota: String(n.nota),
+      motiv: String(n.motiv || ''),
+      la: new Date(String(n.created_at)).toISOString(),
+    })),
+  };
+}
+
 export interface RaportConversatie {
   leadId: string;
   cerere: AsistentCerere;

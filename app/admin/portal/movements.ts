@@ -4,6 +4,7 @@ import type {
   LeadClaim,
   PortalAccessEvent,
 } from '@/lib/sheets';
+import type { PrecalificareActivitate } from '@/lib/asistent';
 import { bucharestIso } from '../cereri/timeline';
 
 // Tot ce s-a mișcat pe un cont de portal, adunat din coloanele care au o dată:
@@ -44,12 +45,15 @@ export function buildMovements({
   claims,
   alerts,
   profile,
+  precalificare,
   leadLabel,
 }: {
   events: PortalAccessEvent[];
   claims: LeadClaim[];
   alerts: CountyAlertPref | null;
   profile: FirmProfile | null;
+  /** Deja filtrată pe adresele contului; null = Neon n-a răspuns. */
+  precalificare: PrecalificareActivitate | null;
   leadLabel: (leadId: string) => string;
 }): Movement[] {
   const out: Movement[] = [];
@@ -125,6 +129,41 @@ export function buildMovements({
         leadId: c.leadId,
       });
     }
+  }
+
+  // Precalificarea Watt AI (din Neon). Tabelul ține doar prima și ultima
+  // deschidere, deci la mai multe apar două rânduri, cu totalul pe ultimul.
+  for (const v of precalificare?.vizualizari ?? []) {
+    const label = leadLabel(v.leadId);
+    const where = v.sursa === 'portal' ? 'din portal' : v.sursa === 'cereri' ? 'din /cereri' : '';
+    if (valid(v.primaLa)) {
+      out.push({
+        at: v.primaLa,
+        by: 'firma',
+        text: `a deschis precalificarea pe ${label}`,
+        detail: v.de === 1 ? where || undefined : undefined,
+        leadId: v.leadId,
+      });
+    }
+    if (v.de > 1 && valid(v.ultimaLa) && v.ultimaLa !== v.primaLa) {
+      out.push({
+        at: v.ultimaLa,
+        by: 'firma',
+        text: `a redeschis precalificarea pe ${label}`,
+        detail: `${v.de}× în total${where ? `, ultima dată ${where}` : ''}`,
+        leadId: v.leadId,
+      });
+    }
+  }
+  for (const n of precalificare?.note ?? []) {
+    if (!valid(n.la)) continue;
+    out.push({
+      at: n.la,
+      by: 'firma',
+      text: `a notat precalificarea pe ${leadLabel(n.leadId)}: ${n.nota === 'util' ? '👍 util' : '👎 nu prea'}`,
+      detail: n.motiv || undefined,
+      leadId: n.leadId,
+    });
   }
 
   if (alerts && valid(alerts.updatedAt)) {
