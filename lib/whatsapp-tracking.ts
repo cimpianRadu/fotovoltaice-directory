@@ -157,6 +157,17 @@ export interface RegisteredFirm {
   lastActivity: string;
 }
 
+/**
+ * Conturi din portal care nu montează și nu se dau cereri lor din pagină. EMAS
+ * Business Consulting face consultanță pe fonduri, fără atestat C2A/C1A; până
+ * avem ceva pentru finanțări (cerut de Radu pe 17 nov 2026) nu apare la
+ * „De dat mai departe”.
+ */
+const NOT_INSTALLER_DOMAINS = ['emasconsulting.com'];
+
+const isNotInstaller = (emails: string[]) =>
+  emails.some((e) => NOT_INSTALLER_DOMAINS.includes(e.split('@')[1] ?? ''));
+
 function countyKey(s: string): string {
   return s
     .toLowerCase()
@@ -190,6 +201,7 @@ export async function getRegisteredFirms(claims: LeadClaim[]): Promise<Registere
   const firms: RegisteredFirm[] = [];
   for (const [email, members] of groups) {
     if (deactivated.some((d) => members.includes(d.email))) continue;
+    if (isNotInstaller(members)) continue;
     const mine = claims.filter((c) => members.includes((c.email || '').trim().toLowerCase()));
     const profile = resolveGroupProfile(profiles, members);
     const company = companies.find((c) => members.includes(c.contact.email?.trim().toLowerCase() || ''));
