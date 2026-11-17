@@ -151,7 +151,7 @@ function ClientColumn({ row }: { row: Row }) {
             'nimic notat'
           )}
         </p>
-        <ReplyForm leadId={thread.leadId} text={thread.reply?.text ?? ''} />
+        <ReplyForm leadId={thread.leadId} text={thread.reply?.text ?? ''} la={thread.reply?.la ?? null} />
       </div>
     </div>
   );

@@ -5,7 +5,10 @@ import { useRouter } from 'next/navigation';
 
 // Răspunsul clientului de pe WhatsApp, notat de mână (sau corectat după ce l-a
 // notat rutina). Textul gol șterge răspunsul.
-export default function ReplyForm({ leadId, text }: { leadId: string; text: string }) {
+//
+// La o corectură trimite și ora răspunsului deja notat: fără ea, ruta ar lua
+// ora salvării, iar „a răspuns în X min” și mediana ar număra până la editare.
+export default function ReplyForm({ leadId, text, la }: { leadId: string; text: string; la: string | null }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(text);
@@ -19,7 +22,7 @@ export default function ReplyForm({ leadId, text }: { leadId: string; text: stri
       const res = await fetch('/api/admin/whatsapp/raspuns', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ leadId, text: value }),
+        body: JSON.stringify({ leadId, text: value, ...(la ? { la } : {}) }),
       });
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || `Eroare ${res.status}`);
       setOpen(false);
