@@ -36,6 +36,11 @@ export const CLIENT_EVENTS = [
   // /admin/whatsapp sau de rutina de dimineață: props { text, la }. Ultimul
   // rând pe cerere e răspunsul valabil; text gol = șters.
   'whatsapp_raspuns',
+  // A doua încercare pe WhatsApp (18 nov 2026, Radu: „nu agresiv, dar nu aș
+  // vrea să-i las așa de ușor”), o singură dată pe mesaj: props { kind, motiv }.
+  // kind = mesajul la care revine (oferta / firma); motiv = oferta sau firma
+  // (n-a răspuns deloc) ori nume_firma (a zis că a montat, fără firmă).
+  'whatsapp_revenire',
 ] as const;
 export type ClientEvent = (typeof CLIENT_EVENTS)[number];
 

@@ -8,10 +8,25 @@ import { useRouter } from 'next/navigation';
 //
 // La o corectură trimite și ora răspunsului deja notat: fără ea, ruta ar lua
 // ora salvării, iar „a răspuns în X min” și mediana ar număra până la editare.
-export default function ReplyForm({ leadId, text, la }: { leadId: string; text: string; la: string | null }) {
+//
+// Bifa „n-a spus firma” (18 nov 2026) pune cererea la „De revenit” cu
+// întrebarea de nume; se debifează când clientul dă numele. Pornește bifată și
+// când clientul a răspuns pe link „altă firmă”, fără nume.
+export default function ReplyForm({
+  leadId,
+  text,
+  la,
+  faraFirma = false,
+}: {
+  leadId: string;
+  text: string;
+  la: string | null;
+  faraFirma?: boolean;
+}) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(text);
+  const [noFirm, setNoFirm] = useState(faraFirma);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,7 +37,7 @@ export default function ReplyForm({ leadId, text, la }: { leadId: string; text: 
       const res = await fetch('/api/admin/whatsapp/raspuns', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ leadId, text: value, ...(la ? { la } : {}) }),
+        body: JSON.stringify({ leadId, text: value, faraFirma: noFirm, ...(la ? { la } : {}) }),
       });
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || `Eroare ${res.status}`);
       setOpen(false);
@@ -56,6 +71,10 @@ export default function ReplyForm({ leadId, text, la }: { leadId: string; text: 
         placeholder="Ce a scris clientul, pe scurt"
         className="w-full rounded border border-slate-300 px-2 py-1 text-xs text-slate-800 focus:border-slate-500 focus:outline-none"
       />
+      <label className="flex items-center gap-1.5 text-[11px] text-slate-600">
+        <input type="checkbox" checked={noFirm} onChange={(e) => setNoFirm(e.target.checked)} />
+        A montat sau a ales, dar n-a spus firma
+      </label>
       <div className="flex items-center gap-2">
         <button
           type="button"
@@ -70,6 +89,7 @@ export default function ReplyForm({ leadId, text, la }: { leadId: string; text: 
           onClick={() => {
             setOpen(false);
             setValue(text);
+            setNoFirm(faraFirma);
           }}
           className="text-[11px] text-slate-500 hover:text-slate-900"
         >

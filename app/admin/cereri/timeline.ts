@@ -84,6 +84,7 @@ const CLIENT_EVENT_LABEL: Record<string, string> = {
   whatsapp_firma_deschis: 'Radu a deschis mesajul WhatsApp „Cu ce firmă ați lucrat?”',
   firma_aleasa_raspuns: 'Clientul a spus cu ce firmă a lucrat (după închiderea pe „altundeva”)',
   whatsapp_raspuns: 'Clientul a răspuns pe WhatsApp',
+  whatsapp_revenire: 'Radu a revenit pe WhatsApp (a doua încercare)',
 };
 
 const CLICK_KIND_LABEL: Record<string, string> = {

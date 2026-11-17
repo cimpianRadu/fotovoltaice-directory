@@ -163,6 +163,87 @@ function whatsappFirmaFor(lead: NewLead, claims: LeadClaim[]): WhatsappCheck | n
   return { kind: 'firma', href: `https://wa.me/${number}?text=${encodeURIComponent(text)}`, text, firms };
 }
 
+// ── Revenirea (18 nov 2026) ─────────────────────────────────────────────────
+// Radu, 17 nov: „aș vrea să fac un follow-up la cei care nu au răspuns sau nu
+// mi-au dat firma. Nu agresiv, dar nu aș vrea să-i las așa de ușor.” O singură
+// revenire pe mesaj, cel mai devreme a doua zi (lib/whatsapp-tracking alege
+// cine intră). Trei feluri:
+//  - `oferta`: n-a răspuns deloc la „Ofertă bună?”; același link, cu `via=wa2`,
+//    ca deschiderea să se vadă venită din revenire;
+//  - `firma`: n-a răspuns la „Cu ce firmă ați lucrat?”; același link;
+//  - `nume_firma`: a spus că a ales o firmă (pe WhatsApp sau pe link, „din
+//    afara platformei”), fără s-o numească. Fără link: vrem doar numele, scris.
+
+export type RevenireMotiv = 'oferta' | 'firma' | 'nume_firma';
+
+function bucharestDay(ms: number): string {
+  return new Date(ms).toLocaleDateString('sv-SE', { timeZone: 'Europe/Bucharest' });
+}
+
+/** „de ieri” sau „de pe 12 noiembrie”, după ziua primului mesaj. */
+function sinceFirst(firstSentAt: string, now = Date.now()): string {
+  const days = Math.round((Date.parse(bucharestDay(now)) - Date.parse(bucharestDay(Date.parse(firstSentAt)))) / 86_400_000);
+  return days === 1 ? 'de ieri' : `de pe ${fmtDay(firstSentAt)}`;
+}
+
+/** Textul revenirii. Orice schimbare trece întâi pe la Radu. */
+export function whatsappRevenireText(
+  lead: NewLead,
+  motiv: RevenireMotiv,
+  firstSentAt: string,
+  link: string | null,
+): string {
+  const unde = !lead.judet ? '' : lead.judet === 'București' ? ' din București' : ` din județul ${lead.judet}`;
+  if (motiv === 'nume_firma') {
+    return [
+      'Bună ziua! Mulțumesc pentru răspuns. O singură întrebare: cu ce firmă ați ales să montați sistemul? E de ajuns numele.',
+      'Ne ajută să știm care firme își fac treaba bine.',
+    ].join('\n\n');
+  }
+  const intro = `Bună ziua! Revin la mesajul meu ${sinceFirst(firstSentAt)}, despre cererea pentru sistemul fotovoltaic${unde}.`;
+  if (motiv === 'firma') {
+    return [
+      `${intro} Cu ce firmă ați lucrat până la urmă?`,
+      `E de ajuns numele firmei, aici sau dintr-un click:\n${link}`,
+      'Vă întreb pentru că vrem să îmbunătățim platforma și să colaborăm cu firme serioase. Mulțumesc!',
+    ].join('\n\n');
+  }
+  return [
+    `${intro} Ați găsit o ofertă bună?`,
+    `Un răspuns scurt aici e de ajuns, sau un click:\n${link}`,
+    'Dacă încă n-ați găsit ce căutați, vă pot recomanda și alte firme din zonă.',
+  ].join('\n\n');
+}
+
+export interface WhatsappRevenire {
+  motiv: RevenireMotiv;
+  /** Mesajul la care revine. */
+  kind: WhatsappKind;
+  href: string;
+  text: string;
+}
+
+/** Revenirea gata de trimis, sau null dacă numărul nu e de WhatsApp ori linkul nu se poate semna. */
+export function whatsappRevenireFor(
+  lead: NewLead,
+  kind: WhatsappKind,
+  motiv: RevenireMotiv,
+  firstSentAt: string,
+): WhatsappRevenire | null {
+  const number = whatsappNumber(lead.telefon);
+  if (!number) return null;
+  let link: string | null = null;
+  if (motiv !== 'nume_firma') {
+    try {
+      link = `${clientLinkUrl(lead.timestamp, motiv === 'firma' ? 'firmaaleasa' : 'verificare')}&via=wa2`;
+    } catch {
+      return null;
+    }
+  }
+  const text = whatsappRevenireText(lead, motiv, firstSentAt, link);
+  return { motiv, kind, href: `https://wa.me/${number}?text=${encodeURIComponent(text)}`, text };
+}
+
 /** Evenimentul care marchează deschiderea, pe fiecare fel de mesaj. */
 export const WHATSAPP_OPENED_EVENT = {
   oferta: 'whatsapp_deschis',

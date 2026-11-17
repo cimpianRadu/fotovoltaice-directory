@@ -22,7 +22,7 @@ import {
 } from './sheets';
 import { MAX_ACTIVE_CLAIMS_PER_FIRM, countActiveClaimsForFirm, isSameFirm } from './sheets-shared';
 import { getCompanies } from './utils';
-import type { WhatsappKind } from './whatsapp-verificare';
+import type { RevenireMotiv, WhatsappKind } from './whatsapp-verificare';
 
 const SENT_EVENT: Record<string, WhatsappKind> = {
   whatsapp_deschis: 'oferta',
@@ -42,6 +42,19 @@ export interface WhatsappReply {
   /** Ora mesajului clientului, dacă se știe; altfel ora notării. */
   la: string;
   savedAt: string;
+  /**
+   * A scris că a montat sau a ales o firmă, fără s-o numească (bifa de la
+   * notare). null = nebifat și nedebifat (răspunsurile notate înainte de 18 nov).
+   */
+  faraFirma: boolean | null;
+}
+
+export interface WhatsappFollowUp {
+  /** Când a plecat revenirea (props.la la cele notate după, altfel ora marcajului). */
+  at: string;
+  motiv: RevenireMotiv;
+  /** Clientul a deschis linkul din revenire (`via=wa2`), fără preview-uri. */
+  linkOpenedAt: string | null;
 }
 
 export interface WhatsappThread {
@@ -62,6 +75,8 @@ export interface WhatsappThread {
   /** Clientul a ales firma pe pagina „Cu ce firmă ați lucrat?”. */
   firmAnswer: { at: string; firma: string } | null;
   reply: WhatsappReply | null;
+  /** A doua încercare, cel mult una pe mesaj. */
+  revenire: WhatsappFollowUp | null;
 }
 
 const iso = (v: unknown) => new Date(v as string).toISOString();
@@ -70,7 +85,7 @@ export async function getWhatsappThreads(): Promise<WhatsappThread[]> {
   const rows = await db()`
     SELECT lead_id, event, props, at FROM client_events
     WHERE event IN ('whatsapp_deschis', 'whatsapp_firma_deschis', 'verificare_deschisa',
-                    'firma_aleasa_raspuns', 'whatsapp_raspuns')
+                    'firma_aleasa_raspuns', 'whatsapp_raspuns', 'whatsapp_revenire')
       AND lead_id IS NOT NULL
     ORDER BY at
   `;
@@ -99,7 +114,12 @@ export async function getWhatsappThreads(): Promise<WhatsappThread[]> {
     const replyText = String(replyRow?.props?.text ?? '').trim();
     const reply: WhatsappReply | null =
       replyRow && replyText
-        ? { text: replyText, la: String(replyRow.props?.la || replyRow.at), savedAt: replyRow.at }
+        ? {
+            text: replyText,
+            la: String(replyRow.props?.la || replyRow.at),
+            savedAt: replyRow.at,
+            faraFirma: typeof replyRow.props?.faraFirma === 'boolean' ? replyRow.props.faraFirma : null,
+          }
         : null;
 
     for (const kind of ['oferta', 'firma'] as const) {
@@ -123,6 +143,24 @@ export async function getWhatsappThreads(): Promise<WhatsappThread[]> {
       const answer =
         kind === 'firma' ? events.find((e) => e.event === 'firma_aleasa_raspuns' && e.at >= sentAt) : undefined;
 
+      const revRow = events.find(
+        (e) => e.event === 'whatsapp_revenire' && (e.props?.kind === 'firma' ? 'firma' : 'oferta') === kind,
+      );
+      const revenire: WhatsappFollowUp | null = revRow
+        ? {
+            at: String(revRow.props?.la || revRow.at),
+            motiv: (['oferta', 'firma', 'nume_firma'] as const).find((m) => m === revRow.props?.motiv) ?? kind,
+            linkOpenedAt:
+              events.find(
+                (e) =>
+                  e.event === 'verificare_deschisa' &&
+                  e.props?.via === 'wa2' &&
+                  'ua' in (e.props ?? {}) &&
+                  e.at >= revRow.at,
+              )?.at ?? null,
+          }
+        : null;
+
       threads.push({
         leadId,
         kind,
@@ -133,10 +171,50 @@ export async function getWhatsappThreads(): Promise<WhatsappThread[]> {
         firmAnswer: answer ? { at: answer.at, firma: String(answer.props?.firma ?? '') } : null,
         // Un singur fir de WhatsApp pe client: răspunsul ține de ultimul mesaj trimis înaintea lui.
         reply: reply && (kind === 'oferta' || !sends.some((s) => SENT_EVENT[s.event] === 'oferta')) ? reply : null,
+        revenire,
       });
     }
   }
   return threads.sort((a, b) => b.sentAt.localeCompare(a.sentAt));
+}
+
+// ── Revenirea ───────────────────────────────────────────────────────────────
+
+/**
+ * Cel mai devreme a doua zi: mesajele de la 13:30 intră în lista de a doua zi
+ * dimineață (rutina rulează pe la 9), cele de dimineață la fel.
+ */
+export const REVENIRE_DUPA_MS = 18 * 60 * 60 * 1000;
+
+/**
+ * A ales o firmă fără s-o numească: bifa de pe răspunsul notat, iar fără ea,
+ * răspunsul pe link „am ales o firmă din afara platformei” (pagina nu cere
+ * numele). Bifa scoasă la notare câștigă: Radu a aflat firma altfel.
+ */
+export function choseWithoutFirm(thread: WhatsappThread, linkAnswerCode: string | null): boolean {
+  if (thread.firmAnswer) return false;
+  return thread.reply?.faraFirma ?? linkAnswerCode === 'altafirma-altundeva';
+}
+
+/**
+ * De ce trebuie revenit pe mesajul ăsta, sau null. O singură revenire pe mesaj.
+ * `firstResponseAt` = primul semn de la client pe orice canal (WhatsApp, link,
+ * pagina „Cu ce firmă”); `open` = cererea încă are rost (deschisă la „ofertă
+ * bună?”, încă pe „altundeva” la „ce firmă?”), hotărât de pagină.
+ */
+export function revenireMotiv(
+  thread: WhatsappThread,
+  firstResponseAt: string | null,
+  open: boolean,
+  noFirm: boolean,
+  now = Date.now(),
+): RevenireMotiv | null {
+  if (thread.revenire) return null;
+  // A zis că a ales, fără firmă: întrebarea de nume merge imediat, e continuarea discuției.
+  if (noFirm) return 'nume_firma';
+  if (firstResponseAt || !open) return null;
+  if (now - Date.parse(thread.sentAt) < REVENIRE_DUPA_MS) return null;
+  return thread.kind;
 }
 
 // ── Firmele cu cont, pe județ ───────────────────────────────────────────────

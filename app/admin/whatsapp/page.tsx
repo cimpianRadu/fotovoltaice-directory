@@ -2,6 +2,8 @@ import Link from 'next/link';
 import {
   getClaims,
   getLeadsSince,
+  isLeadClosed,
+  isLeadHidden,
   maxClaimsForLead,
   type LeadClaim,
   type NewLead,
@@ -13,9 +15,12 @@ import {
   getRegisteredFirms,
   getWhatsappThreads,
   registeredFirmsForLead,
+  choseWithoutFirm,
+  revenireMotiv,
   type RegisteredFirm,
   type WhatsappThread,
 } from '@/lib/whatsapp-tracking';
+import { whatsappRevenireFor, type WhatsappRevenire } from '@/lib/whatsapp-verificare';
 import {
   ago,
   cerereHref,
@@ -31,31 +36,52 @@ import {
 import { RESPONSE_LABEL } from '../cereri/timeline';
 import ReplyForm from './ReplyForm';
 import GiveToFirm from './GiveToFirm';
+import RevenireButton from './RevenireButton';
 
 // Mesajele WhatsApp către clienți și ce a urmat după ele (17 nov 2026, cerut de
 // Radu: „vreau să văd în admin”). Un rând pe mesaj: cererea, firmele care o
 // țin, ce a făcut clientul (link deschis, răspuns pe link, răspuns pe WhatsApp)
 // și firmele cu cont pe județ, ca cererea să poată fi dată mai departe de aici.
 // Datele: lib/whatsapp-tracking.
+//
+// 18 nov 2026: revenirea, a doua încercare la cine n-a răspuns sau n-a spus
+// firma, o dată pe mesaj (filtrul „De revenit”, lib/whatsapp-verificare).
 
 export const dynamic = 'force-dynamic';
 
 const KIND_LABEL = { oferta: '„Ofertă bună?”', firma: '„Ce firmă?”' } as const;
+const MOTIV_LABEL = {
+  oferta: 'n-a răspuns',
+  firma: 'n-a răspuns',
+  nume_firma: 'a întrebat numele firmei',
+} as const;
 const DAY = 24 * 60 * 60 * 1000;
 
-type Filter = 'toate' | 'raspuns' | 'fara';
+/** Codurile cu motiv de pe „Ați găsit o ofertă bună?” (lib/verificare-status), care nu sunt în RESPONSE_LABEL. */
+const LINK_CODE_LABEL: Record<string, string> = {
+  'altafirma-altundeva': 'a ales o firmă din afara platformei',
+  'altafirma-renuntat': 'nu mai face lucrarea',
+};
+
+type Filter = 'toate' | 'raspuns' | 'fara' | 'revenire';
 
 interface Row {
   thread: WhatsappThread;
   lead: NewLead | undefined;
   claims: LeadClaim[];
   /** Răspunsul dat pe linkul din mesaj (coloana AT), doar dacă a venit după mesaj. */
-  linkAnswer: { label: string; at: string } | null;
+  linkAnswer: { label: string; at: string; code: string } | null;
   /** Linkul deschis, socotind și deschiderile urmate de un răspuns pe link. */
   linkOpenedAt: string | null;
   /** Primul semn de la client după mesaj, oricare ar fi canalul. */
   firstResponseAt: string | null;
   candidates: RegisteredFirm[];
+  /** Revenirea de trimis acum, dacă e cazul. */
+  revenireDue: WhatsappRevenire | null;
+  /** Clientul a răspuns (pe orice canal) după revenire. */
+  answeredAfterRevenire: boolean;
+  /** A ales o firmă fără s-o numească (lib/whatsapp-tracking `choseWithoutFirm`). */
+  noFirm: boolean;
 }
 
 function linkAnswerOf(lead: NewLead | undefined, sentAt: string): Row['linkAnswer'] {
@@ -63,7 +89,8 @@ function linkAnswerOf(lead: NewLead | undefined, sentAt: string): Row['linkAnswe
   const [code = '', at = '', ...rest] = lead.raspunsClient.split(' ');
   if (!at || at < sentAt) return null;
   const firma = rest.join(' ');
-  return { label: `${RESPONSE_LABEL[code] ?? code}${firma ? ` cu ${firma}` : ''}`, at };
+  const label = LINK_CODE_LABEL[code] ?? RESPONSE_LABEL[code] ?? code;
+  return { label: `${label}${firma ? ` cu ${firma}` : ''}`, at, code };
 }
 
 /** Fără niciun răspuns de cel puțin `days` zile de la mesaj. */
@@ -143,6 +170,11 @@ function ClientColumn({ row }: { row: Row }) {
           {thread.reply ? (
             <>
               <span className="text-slate-500">{fmtDateTime(thread.reply.la)}</span>
+              {row.noFirm && (
+                <span className="ml-1.5 rounded bg-amber-50 px-1 py-px text-[10px] font-medium text-amber-700">
+                  n-a spus firma
+                </span>
+              )}
               <span className="mt-0.5 block whitespace-pre-line rounded bg-emerald-50 px-2 py-1 text-slate-800">
                 {thread.reply.text}
               </span>
@@ -151,8 +183,20 @@ function ClientColumn({ row }: { row: Row }) {
             'nimic notat'
           )}
         </p>
-        <ReplyForm leadId={thread.leadId} text={thread.reply?.text ?? ''} la={thread.reply?.la ?? null} />
+        <ReplyForm
+          leadId={thread.leadId}
+          text={thread.reply?.text ?? ''}
+          la={thread.reply?.la ?? null}
+          faraFirma={row.noFirm}
+        />
       </div>
+      {thread.revenire && (
+        <p className={row.answeredAfterRevenire ? 'font-medium text-emerald-800' : 'text-slate-600'}>
+          Revenire: {fmtDateTime(thread.revenire.at)} ({MOTIV_LABEL[thread.revenire.motiv]})
+          {row.answeredAfterRevenire ? ' · a răspuns după ea' : ' · nimic după ea'}
+          {thread.revenire.linkOpenedAt && ` · link deschis ${fmtDateTime(thread.revenire.linkOpenedAt)}`}
+        </p>
+      )}
     </div>
   );
 }
@@ -241,7 +285,7 @@ function CandidatesColumn({ row, canGive }: { row: Row; canGive: boolean }) {
 
 export default async function WhatsappPage({ searchParams }: { searchParams: Promise<{ f?: string }> }) {
   const f = (await searchParams).f;
-  const filter: Filter = f === 'raspuns' || f === 'fara' ? f : 'toate';
+  const filter: Filter = f === 'raspuns' || f === 'fara' || f === 'revenire' ? f : 'toate';
 
   let threads: WhatsappThread[];
   let leads: NewLead[];
@@ -269,6 +313,18 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
     // Un răspuns pe link înseamnă că linkul a fost deschis, chiar dacă deschiderea
     // a căzut în fereastra de preview (înainte de 17 nov n-avea user-agent).
     const linkOpenedAt = thread.linkOpenedAt ?? (linkAnswer ? (thread.anyOpenAt ?? linkAnswer.at) : null);
+    // Revenirea are rost doar cât cererea e unde era: deschisă la „ofertă bună?”, încă pe altundeva la „ce firmă?”.
+    const open =
+      !!lead &&
+      (thread.kind === 'firma'
+        ? lead.crmStatus === 'altundeva'
+        : !isLeadHidden(lead) && !isLeadClosed(lead.crmStatus));
+    const noFirm = choseWithoutFirm(thread, linkAnswer?.code ?? null);
+    const motiv = lead ? revenireMotiv(thread, firstResponseAt, open, noFirm) : null;
+    const revAt = thread.revenire?.at;
+    const answeredAfterRevenire =
+      !!revAt &&
+      [thread.reply?.la, linkAnswer?.at, thread.firmAnswer?.at].some((x) => !!x && x > revAt);
     return {
       thread,
       lead,
@@ -277,6 +333,9 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
       linkOpenedAt,
       firstResponseAt,
       candidates: lead ? registeredFirmsForLead(lead, firms, claims) : [],
+      revenireDue: lead && motiv ? whatsappRevenireFor(lead, thread.kind, motiv, thread.sentAt) : null,
+      answeredAfterRevenire,
+      noFirm,
     };
   });
 
@@ -289,10 +348,21 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
     .filter((ms) => ms >= 0);
   const med = median(waits);
   const silent3 = silentFor(rows, 3);
+  const due = rows.filter((r) => r.revenireDue);
+  const followed = rows.filter((r) => r.thread.revenire);
+  const followedAnswered = followed.filter((r) => r.answeredAfterRevenire);
 
   const shown = rows.filter((r) =>
-    filter === 'raspuns' ? r.firstResponseAt : filter === 'fara' ? !r.firstResponseAt : true,
+    filter === 'raspuns'
+      ? r.firstResponseAt
+      : filter === 'fara'
+        ? !r.firstResponseAt
+        : filter === 'revenire'
+          ? r.revenireDue
+          : true,
   );
+  // La „De revenit”, cele mai vechi mesaje întâi, ca în rutina de dimineață.
+  if (filter === 'revenire') shown.sort((a, b) => a.thread.sentAt.localeCompare(b.thread.sentAt));
   const pct = (n: number) => (rows.length ? `${Math.round((n / rows.length) * 100)}%` : '–');
 
   return (
@@ -305,7 +375,7 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
         </p>
       </header>
 
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
         <Stat label="Mesaje trimise" value={String(rows.length)} />
         <Stat
           label="Au răspuns"
@@ -319,6 +389,11 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
         />
         <Stat label="Timp median până la răspuns" value={med === null ? '–' : fmtDuration(med)} />
         <Stat label="Fără răspuns de 3+ zile" value={String(silent3.length)} />
+        <Stat
+          label="Reveniri"
+          value={`${followed.length} · ${followedAnswered.length} au răspuns`}
+          hint="A doua încercare, o dată pe mesaj; „au răspuns” = un semn de la client după revenire, pe orice canal"
+        />
       </div>
 
       <div className="flex flex-wrap gap-1.5">
@@ -330,6 +405,9 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
         </Pill>
         <Pill href="/admin/whatsapp?f=fara" active={filter === 'fara'}>
           Fără răspuns · {rows.length - answered.length}
+        </Pill>
+        <Pill href="/admin/whatsapp?f=revenire" active={filter === 'revenire'}>
+          De revenit · {due.length}
         </Pill>
       </div>
 
@@ -350,6 +428,11 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
                   {thread.sends > 1 && ` · ${thread.sends}×`}
                 </span>
                 <span className="text-xs font-medium text-slate-600">{KIND_LABEL[thread.kind]}</span>
+                {thread.revenire && (
+                  <span className="rounded bg-sky-50 px-1.5 py-px text-[10px] font-medium text-sky-700">
+                    + revenire {fmtDateTime(thread.revenire.at)}
+                  </span>
+                )}
                 {lead ? (
                   <Link href={cerereHref(thread.leadId)} className="text-sm font-semibold text-slate-900 hover:underline">
                     {isHot(lead) && '🔥 '}
@@ -376,6 +459,20 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
                     : `fără răspuns, ${ago(thread.sentAt)}`}
                 </span>
               </div>
+              {row.revenireDue && (
+                <div className="border-b border-slate-100 bg-emerald-50/40 px-4 py-2">
+                  <p className="mb-1 text-[10px] font-semibold tracking-wider text-emerald-700 uppercase">
+                    De revenit · {row.revenireDue.motiv === 'nume_firma' ? 'n-a spus firma' : 'n-a răspuns'}
+                  </p>
+                  <RevenireButton
+                    leadId={thread.leadId}
+                    kind={thread.kind}
+                    motiv={row.revenireDue.motiv}
+                    href={row.revenireDue.href}
+                    text={row.revenireDue.text}
+                  />
+                </div>
+              )}
               <div className="grid gap-4 px-4 py-3 md:grid-cols-3">
                 <div>
                   <p className="mb-1 text-[10px] font-semibold tracking-wider text-slate-400 uppercase">Clientul</p>

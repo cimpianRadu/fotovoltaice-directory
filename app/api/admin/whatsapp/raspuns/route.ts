@@ -5,6 +5,8 @@ import { recordClientEvent } from '@/lib/client-events';
 // de rutina de dimineață. Răspunsurile de pe WhatsApp nu intră singure în
 // sistem: le notează cine le citește. Ultimul rând pe cerere câștigă, iar textul
 // gol șterge răspunsul. Protejat de middleware, ca tot /api/admin.
+// Din 18 nov 2026, `faraFirma` (true/false, bifa din formular): clientul a ales,
+// fără să spună firma, iar cererea intră la „De revenit” cu întrebarea de nume.
 export async function POST(request: Request) {
   const body = await request.json().catch(() => ({}));
   const leadId = typeof body?.leadId === 'string' ? body.leadId.trim() : '';
@@ -12,6 +14,11 @@ export async function POST(request: Request) {
   const text = typeof body?.text === 'string' ? body.text.trim().slice(0, 2000) : '';
   const laRaw = typeof body?.la === 'string' ? body.la : '';
   const la = laRaw && !Number.isNaN(Date.parse(laRaw)) ? new Date(laRaw).toISOString() : '';
-  await recordClientEvent(leadId, 'whatsapp_raspuns', { text, ...(la ? { la } : {}) });
+  const faraFirma = typeof body?.faraFirma === 'boolean' ? body.faraFirma : undefined;
+  await recordClientEvent(leadId, 'whatsapp_raspuns', {
+    text,
+    ...(la ? { la } : {}),
+    ...(faraFirma === undefined ? {} : { faraFirma }),
+  });
   return NextResponse.json({ ok: true, at: new Date().toISOString() });
 }
