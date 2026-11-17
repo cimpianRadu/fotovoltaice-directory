@@ -51,6 +51,8 @@ interface Row {
   claims: LeadClaim[];
   /** Răspunsul dat pe linkul din mesaj (coloana AT), doar dacă a venit după mesaj. */
   linkAnswer: { label: string; at: string } | null;
+  /** Linkul deschis, socotind și deschiderile urmate de un răspuns pe link. */
+  linkOpenedAt: string | null;
   /** Primul semn de la client după mesaj, oricare ar fi canalul. */
   firstResponseAt: string | null;
   candidates: RegisteredFirm[];
@@ -117,12 +119,12 @@ function leadTitle(lead: NewLead): string {
 }
 
 function ClientColumn({ row }: { row: Row }) {
-  const { thread, linkAnswer } = row;
+  const { thread, linkAnswer, linkOpenedAt } = row;
   return (
     <div className="space-y-1.5 text-xs">
       {thread.kind === 'oferta' && (
-        <p className={thread.linkOpenedAt ? 'text-slate-800' : 'text-slate-400'}>
-          Link deschis: {thread.linkOpenedAt ? fmtDateTime(thread.linkOpenedAt) : 'nu'}
+        <p className={linkOpenedAt ? 'text-slate-800' : 'text-slate-400'}>
+          Link deschis: {linkOpenedAt ? fmtDateTime(linkOpenedAt) : 'nu'}
         </p>
       )}
       {thread.kind === 'oferta' && (
@@ -264,18 +266,24 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
     const firstResponseAt =
       [thread.reply?.la, linkAnswer?.at, thread.firmAnswer?.at].filter((x): x is string => Boolean(x)).sort()[0] ??
       null;
+    // Un răspuns pe link înseamnă că linkul a fost deschis, chiar dacă deschiderea
+    // a căzut în fereastra de preview (înainte de 17 nov n-avea user-agent).
+    const linkOpenedAt = thread.linkOpenedAt ?? (linkAnswer ? (thread.anyOpenAt ?? linkAnswer.at) : null);
     return {
       thread,
       lead,
       claims: leadClaims,
       linkAnswer,
+      linkOpenedAt,
       firstResponseAt,
       candidates: lead ? registeredFirmsForLead(lead, firms, claims) : [],
     };
   });
 
   const answered = rows.filter((r) => r.firstResponseAt);
-  const opened = rows.filter((r) => r.thread.linkOpenedAt || r.firstResponseAt);
+  // Doar mesajele cu link („ofertă bună?”); un răspuns pe WhatsApp nu înseamnă link deschis.
+  const withLink = rows.filter((r) => r.thread.kind === 'oferta');
+  const opened = withLink.filter((r) => r.linkOpenedAt);
   const waits = answered
     .map((r) => Date.parse(r.firstResponseAt!) - Date.parse(r.thread.sentAt))
     .filter((ms) => ms >= 0);
@@ -306,8 +314,8 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
         />
         <Stat
           label="Au deschis linkul"
-          value={`${opened.length} · ${pct(opened.length)}`}
-          hint="Fără preview-urile WhatsApp; cine a răspuns se numără și aici"
+          value={`${opened.length} · ${withLink.length ? `${Math.round((opened.length / withLink.length) * 100)}%` : '–'}`}
+          hint="Din mesajele cu link („Ofertă bună?”), fără preview-urile WhatsApp; cine a răspuns pe link se numără și aici"
         />
         <Stat label="Timp median până la răspuns" value={med === null ? '–' : fmtDuration(med)} />
         <Stat label="Fără răspuns de 3+ zile" value={String(silent3.length)} />

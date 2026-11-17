@@ -53,6 +53,12 @@ export interface WhatsappThread {
   sends: number;
   /** Clientul a deschis linkul din mesaj (doar „ofertă bună?”), fără preview-uri. */
   linkOpenedAt: string | null;
+  /**
+   * Prima deschidere după trimitere, inclusiv cele socotite preview. Folosită
+   * doar când clientul a răspuns pe link: atunci a deschis sigur linkul, chiar
+   * dacă a făcut-o în primele 3 minute (înainte de 17 nov arăta ca un preview).
+   */
+  anyOpenAt: string | null;
   /** Clientul a ales firma pe pagina „Cu ce firmă ați lucrat?”. */
   firmAnswer: { at: string; firma: string } | null;
   reply: WhatsappReply | null;
@@ -102,7 +108,9 @@ export async function getWhatsappThreads(): Promise<WhatsappThread[]> {
       const sentAt = mine[0].at;
 
       let linkOpenedAt: string | null = null;
+      let anyOpenAt: string | null = null;
       if (kind === 'oferta') {
+        anyOpenAt = events.find((e) => e.event === 'verificare_deschisa' && e.at >= sentAt)?.at ?? null;
         const open = events.find((e) => {
           if (e.event !== 'verificare_deschisa') return false;
           if (e.props && 'ua' in e.props) return true;
@@ -121,6 +129,7 @@ export async function getWhatsappThreads(): Promise<WhatsappThread[]> {
         sentAt,
         sends: mine.length,
         linkOpenedAt,
+        anyOpenAt,
         firmAnswer: answer ? { at: answer.at, firma: String(answer.props?.firma ?? '') } : null,
         // Un singur fir de WhatsApp pe client: răspunsul ține de ultimul mesaj trimis înaintea lui.
         reply: reply && (kind === 'oferta' || !sends.some((s) => SENT_EVENT[s.event] === 'oferta')) ? reply : null,
