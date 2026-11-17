@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { clientLinkUrl, verifyClientToken } from '@/lib/lead-client-token';
 import { getClaims, getFullLeadById, isLeadClosed } from '@/lib/sheets';
 import { offerFirms } from '@/lib/whatsapp-verificare';
+import { headers } from 'next/headers';
 import { recordClientEvent } from '@/lib/client-events';
 
 // „Ați găsit o ofertă bună?” pentru linkul din mesajul de WhatsApp (12 nov 2026,
@@ -10,6 +11,11 @@ import { recordClientEvent } from '@/lib/client-events';
 // ca în emailul din lib/email-client (statusCheckEmail). Fiecare duce la pagina
 // obișnuită de răspuns, /cerere/raspuns/[action], care confirmă la click și
 // scrie răspunsul. Pagina asta doar arată butoanele și notează deschiderea.
+//
+// 17 nov 2026: deschiderea o nota și WhatsApp, care încarcă linkul ca să facă
+// preview-ul cât mesajul e încă în caseta de scris, deci toți clienții păreau
+// să fi deschis linkul în 15 secunde. Roboții de preview nu se mai notează, iar
+// la ceilalți se păstrează și browserul (`ua`), ca să se vadă dacă scapă vreunul.
 
 export const metadata: Metadata = {
   title: 'Ați găsit o ofertă bună?',
@@ -17,6 +23,10 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = 'force-dynamic';
+
+/** Preview-uri de link (WhatsApp, Facebook, Telegram, Slack...) și crawlere: nu sunt clientul. */
+const PREVIEW_UA =
+  /whatsapp|facebookexternalhit|facebot|meta-externalagent|telegrambot|slackbot|twitterbot|discordbot|skypeuripreview|linkedinbot|viber|googlebot|bingbot|bot\b|crawler|spider|preview/i;
 
 function fmtDay(iso: string): string {
   const d = new Date(iso);
@@ -58,7 +68,10 @@ export default async function VerificarePage({
 
   const [lead, claims] = await Promise.all([getFullLeadById(id), getClaims()]);
   if (!lead) return <Invalid />;
-  await recordClientEvent(id, 'verificare_deschisa', via ? { via } : undefined);
+  const ua = (await headers()).get('user-agent') || '';
+  if (!PREVIEW_UA.test(ua)) {
+    await recordClientEvent(id, 'verificare_deschisa', { ...(via ? { via } : {}), ua: ua.slice(0, 160) });
+  }
 
   if (isLeadClosed(lead.crmStatus)) {
     return (

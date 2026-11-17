@@ -60,7 +60,7 @@ const SEND_KIND_LABEL: Record<string, string> = {
   deblocare: 'după rezervarea abonatului',
 };
 
-const RESPONSE_LABEL: Record<string, string> = {
+export const RESPONSE_LABEL: Record<string, string> = {
   gata: 'e gata de ofertă',
   astept: 'încă așteaptă',
   renunt: 'nu mai vrea',
@@ -83,6 +83,7 @@ const CLIENT_EVENT_LABEL: Record<string, string> = {
   verificare_deschisa: 'Clientul a deschis linkul „Ați găsit o ofertă bună?” din WhatsApp',
   whatsapp_firma_deschis: 'Radu a deschis mesajul WhatsApp „Cu ce firmă ați lucrat?”',
   firma_aleasa_raspuns: 'Clientul a spus cu ce firmă a lucrat (după închiderea pe „altundeva”)',
+  whatsapp_raspuns: 'Clientul a răspuns pe WhatsApp',
 };
 
 const CLICK_KIND_LABEL: Record<string, string> = {
@@ -247,6 +248,17 @@ export function buildTimeline(
   }
   for (const e of activity.events) {
     const label = CLIENT_EVENT_LABEL[e.event];
+    if (e.event === 'whatsapp_raspuns') {
+      // Textul gol = răspuns șters din /admin/whatsapp; nu e un moment al clientului.
+      const text = String(e.props?.text ?? '').trim();
+      if (text) push(String(e.props?.la || e.at), { kind: 'client', title: label, detail: text });
+      continue;
+    }
+    // Din 17 nov 2026 preview-urile WhatsApp nu se mai notează; cele de dinainte n-au `ua`.
+    if (e.event === 'verificare_deschisa' && !(e.props && 'ua' in e.props)) {
+      push(e.at, { kind: 'client', title: `${label} (sau preview-ul WhatsApp, înainte de 17 nov)` });
+      continue;
+    }
     if (label) push(e.at, { kind: 'client', title: label });
   }
   for (const v of activity.views) {
