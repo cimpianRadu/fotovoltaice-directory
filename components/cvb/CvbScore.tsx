@@ -4,7 +4,12 @@
 //
 // Regula lui Radu: peste tot unde apare cifra scrie, la vedere, că e estimativă,
 // doar informativă și că nu e o garanție. Nu într-un tooltip. Cifra apare ca
-// „Punctaj estimativ: 47,5 / 100*", cu steluța explicată imediat dedesubt.
+// „Punctaj estimativ: 81,3 / 100*", cu steluța explicată imediat dedesubt.
+//
+// Din 18 nov 2026 cifra urmează formula din Ordinul nr. 2.314/2026: capacitate
+// (max 40), contribuție (10-35) și 25 de puncte pentru cine n-a mai avut finanțare
+// publică pentru stocare. Din cerere nu știm dacă omul a avut, așa că cifra îl
+// socotește fără, iar asta scrie la vedere lângă ea.
 //
 // Fără 'use client' și fără stare: merge și în componentele de server, și în cele
 // de client.
@@ -73,20 +78,40 @@ function ArrowUpIcon({ className = 'h-4 w-4' }: { className?: string }) {
   );
 }
 
+function CheckIcon({ className = 'h-4 w-4' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden
+    >
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  );
+}
+
 /** Bara 0–100: verde pentru capacitate, albastru pentru contribuția proprie. */
 function ScoreBar({
   capacity,
   contribution,
+  noPriorFunding,
   className = '',
 }: {
   capacity: number;
   contribution: number;
+  noPriorFunding: number;
   className?: string;
 }) {
   return (
     <div className={`flex h-2 overflow-hidden rounded-full bg-gray-200 ${className}`} aria-hidden>
       <div className="bg-emerald-500" style={{ width: `${capacity}%` }} />
       <div className="bg-sky-500" style={{ width: `${contribution}%` }} />
+      <div className="bg-amber-400" style={{ width: `${noPriorFunding}%` }} />
     </div>
   );
 }
@@ -131,12 +156,14 @@ export function CvbScoreLine({ estimate, className = '' }: { estimate: CvbEstima
         <ScoreBar
           capacity={estimate.capacityPoints}
           contribution={estimate.contributionPoints}
+          noPriorFunding={estimate.noPriorFundingPoints}
           className="w-16"
         />
         <span className="text-xs text-emerald-900">baterie {fmtCvb(estimate.kwh)} kWh</span>
       </div>
       <p className="mt-1 text-[11px] leading-snug text-emerald-900">
-        *Conform calculatorului platformei. Doar informativ, nu reprezintă o garanție.
+        *Conform calculatorului platformei, pentru un client fără finanțare publică anterioară pentru stocare.
+        Doar informativ, nu reprezintă o garanție.
       </p>
     </div>
   );
@@ -161,9 +188,10 @@ export function CvbScoreBox({ estimate }: { estimate: CvbEstimate }) {
   );
   const longNote = (
     <p className="text-xs leading-relaxed text-gray-600">
-      *Calculat după formula din ghidul de finanțare, la costul standard de 1.500 lei/kWh și cu finanțarea cea
-      mai mare posibilă. Punctajul oficial îl stabilește AFM la analiza dosarului, iar pragul de admitere se
-      află abia după încheierea sesiunii.
+      *Calculat după formula din ghidul de finanțare (forma din Ordinul nr. 2.314/2026), la costul standard de
+      1.500 lei/kWh, cu finanțarea cea mai mare posibilă și pentru cineva care nu a mai primit finanțare din
+      fonduri publice pentru un sistem de stocare. Punctajul oficial îl stabilește AFM la analiza dosarului,
+      iar pragul de admitere se află abia după încheierea sesiunii.
     </p>
   );
 
@@ -192,9 +220,9 @@ export function CvbScoreBox({ estimate }: { estimate: CvbEstimate }) {
   }
 
   const ifBigger = cvbScenario(PROGRAM.capacityForMaxPoints);
-  // Următoarea treaptă de contribuție: jumătate din proiect, apoi 62,5%, unde
-  // criteriul ia maximul de 50 de puncte.
-  const nextShare = estimate.ownShare < 0.5 ? 0.5 : OWN_SHARE_FOR_MAX_POINTS;
+  // Treapta de contribuție care contează: jumătate din proiect, unde criteriul
+  // ia maximul de 35 de puncte (contribuția egală cu suma cerută de la AFM).
+  const nextShare = OWN_SHARE_FOR_MAX_POINTS;
   const ifMore = estimate.ownShare < OWN_SHARE_FOR_MAX_POINTS ? cvbScenario(estimate.kwh, nextShare) : null;
   const pct = (share: number) => `${fmtCvb(share * 100)}%`;
 
@@ -210,6 +238,7 @@ export function CvbScoreBox({ estimate }: { estimate: CvbEstimate }) {
         <ScoreBar
           capacity={estimate.capacityPoints}
           contribution={estimate.contributionPoints}
+          noPriorFunding={estimate.noPriorFundingPoints}
           className="w-20"
         />
       </div>
@@ -234,15 +263,29 @@ export function CvbScoreBox({ estimate }: { estimate: CvbEstimate }) {
             <li className="flex items-start gap-2">
               <BatteryIcon className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
               <span>
-                <strong>{fmtCvb(estimate.capacityPoints)} din 50</strong>{' '}
-                {`puncte din capacitate (${fmtCvb(estimate.kwh)}${NBSP}kWh × 2,5)`}
+                <strong>
+                  {fmtCvb(estimate.capacityPoints)} din {PROGRAM.maxPoints.capacity}
+                </strong>{' '}
+                {`puncte din capacitate (4 × ${fmtCvb(estimate.kwh)}${NBSP}kWh − 20, maximul de la ${PROGRAM.capacityForMaxPoints}${NBSP}kWh)`}
               </span>
             </li>
             <li className="flex items-start gap-2">
               <CoinsIcon className="mt-0.5 h-4 w-4 shrink-0 text-sky-600" />
               <span>
-                <strong>{fmtCvb(estimate.contributionPoints)} din 50</strong>{' '}
+                <strong>
+                  {fmtCvb(estimate.contributionPoints)} din {PROGRAM.maxPoints.contribution}
+                </strong>{' '}
                 {`puncte din contribuția proprie (plătiți ${pct(estimate.ownShare)} din proiect, minimul posibil)`}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+              <span>
+                <strong>
+                  {fmtCvb(estimate.noPriorFundingPoints)} din {PROGRAM.maxPoints.noPriorFunding}
+                </strong>{' '}
+                puncte dacă nu ați mai primit finanțare din fonduri publice pentru o baterie. Dacă ați primit,
+                punctajul e cu {PROGRAM.maxPoints.noPriorFunding} de puncte mai mic.
               </span>
             </li>
             {!estimate.capacityMaxed && (

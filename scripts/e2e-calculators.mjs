@@ -22,14 +22,15 @@ const TARGET = (process.env.TARGET_URL || 'https://instalatori-fotovoltaice.ro')
 // ---------- Oglinda formulelor din lib/battery-sizing.ts ----------
 // Ținute sincron manual, intenționat: dacă programul AFM se schimbă în cod dar nu
 // aici (sau invers), testul pică și forțează alinierea.
-// Forma consolidată a proiectului de ghid (MMAP, 09.09.2026).
+// Ordinul nr. 1.904/2026, cu punctajul din Ordinul nr. 2.314/2026 (art. 19 alin. 4).
 const PROGRAM = {
   minKwh: 10,
   costStandardPerKwh: 1500,
   maxShare: 0.75,
   maxGrant: 15000,
   minOwnShare: 0.25,
-  maxPoints: { contribution: 50, capacity: 50 },
+  maxPoints: { contribution: 35, capacity: 40, noPriorFunding: 25 },
+  minContributionPoints: 10,
 };
 const SIZING_TABLE = [
   { maxKwhPerMonth: 200, capacity: [5, 5] },
@@ -47,8 +48,13 @@ function grantFor(cap, cost) {
 }
 function scoreFor(cap, ownShare) {
   const ratio = ownShare >= 1 ? Infinity : ownShare / (1 - ownShare);
-  const contribution = Math.max(0, Math.min(PROGRAM.maxPoints.contribution, 30 * ratio));
-  return { total: contribution + Math.min(PROGRAM.maxPoints.capacity, cap * 2.5) };
+  const contribution = Math.max(
+    PROGRAM.minContributionPoints,
+    Math.min(PROGRAM.maxPoints.contribution, 37.5 * ratio - 2.5)
+  );
+  const capacity = Math.max(0, Math.min(PROGRAM.maxPoints.capacity, 4 * cap - 20));
+  // Bifa „am mai primit finanțare” pornește nebifată, deci cele 25 de puncte intră.
+  return { total: contribution + capacity + PROGRAM.maxPoints.noPriorFunding };
 }
 /** Ce afișează widgetul la pasul 3, pentru capacitate+cost auto (nemodificat de om). */
 function batteryExpectation(cap) {

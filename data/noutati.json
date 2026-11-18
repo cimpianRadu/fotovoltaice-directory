@@ -1,5 +1,12 @@
 [
   {
+    "data": "2026-11-18",
+    "titlu": "Punctajul Casa Verde Baterii de pe cereri, pe formula nouă a AFM",
+    "text": "AFM a schimbat punctajul programului de baterii cu patru zile înainte de sesiune (Ordinul nr. 2.314/2026). Punctajul estimativ de pe cererile cu finanțare AFM urmează acum formula nouă: capacitatea aduce cel mult 40 de puncte și își atinge maximul de la 15 kWh, nu de la 20, contribuția proprie cel mult 35, iar clientul care nu a mai primit bani publici pentru o baterie are 25 de puncte din start. O cerere de 10 kWh arată acum 55 de puncte în loc de 35, iar una de 15 kWh arată 81,3. Cifra presupune că clientul nu a mai avut finanțare pentru stocare, așa că merită întrebat la primul telefon.",
+    "link": "/calculator-casa-verde-baterii",
+    "linkText": "Vezi calculatorul pe formula nouă"
+  },
+  {
     "data": "2026-11-17",
     "titlu": "Știi dacă un client cu finanțare AFM face lucrarea și fără ea",
     "text": "Clienții care așteaptă un program (Baterii prin AFM, Electric Up și celelalte) răspund acum în formular cât depinde proiectul de finanțare. Pe card, lângă program, vezi „Face și fără finanțare” sau „Doar cu finanțare”. Cei care o fac oricum și vor montajul în cel mult 3 luni apar și la filtrul „Gata de ofertă”, iar alerta pe județ pleacă imediat pentru ei.",

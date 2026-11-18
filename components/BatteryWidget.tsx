@@ -86,6 +86,9 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
   const [cost, setCost] = useState('15000');
   const [costTouched, setCostTouched] = useState(false);
   const [ownSharePct, setOwnSharePct] = useState(25);
+  // Al treilea criteriu din Ordinul 2.314/2026: 25 de puncte pentru cine n-a mai
+  // avut finanțare publică pentru stocare. Pornim de la cazul obișnuit, fără.
+  const [priorFunding, setPriorFunding] = useState(false);
 
   // Pasul 4. Prețurile sunt singurele mărimi noi: restul se reia din pașii 1-2,
   // ca omul să nu reintroducă date pe care le-a dat deja.
@@ -148,11 +151,11 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
       pct,
       ownLei,
       granted: Math.max(0, Math.min(g.maxGrant, costValue - ownLei)),
-      score: scoreFor(cap, pct),
+      score: scoreFor(cap, pct, priorFunding),
       atMax: Math.min(g.maxGrant, costValue * (1 - OWN_SHARE_FOR_MAX_POINTS)),
-      scoreAtMax: scoreFor(cap, OWN_SHARE_FOR_MAX_POINTS),
+      scoreAtMax: scoreFor(cap, OWN_SHARE_FOR_MAX_POINTS, priorFunding),
     };
-  }, [cap, costValue, ownSharePct]);
+  }, [cap, costValue, ownSharePct, priorFunding]);
 
   // ---------- Pasul 4: economia ----------
   const s3 = useMemo(() => {
@@ -495,13 +498,38 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
                   limită jos; așa o vede în dreptul ei. */}
               <div className="mt-1 flex justify-between gap-3 text-[11px] text-gray-500">
                 <span>minim {num(s2.minPct, 1)}%</span>
-                <span>punctaj maxim de la {num(OWN_SHARE_FOR_MAX_POINTS * 100, 1)}%</span>
+                <span>punctaj maxim de la {pts(OWN_SHARE_FOR_MAX_POINTS * 100)}%</span>
               </div>
               <p className="mt-1 text-[11px] text-gray-500">
                 Minimul la {cap} kWh e {num(s2.minPct, 1)}%: plafonul de {formatNumber(PROGRAM.maxGrant)} lei îl urcă
                 peste 25% la baterii mari.
               </p>
             </div>
+
+            {/* Al treilea criteriu, din Ordinul 2.314/2026. Bifa stă la vedere,
+                lângă slider: schimbă punctajul cu 25 de puncte dintr-o apăsare. */}
+            <label
+              htmlFor="bw-prior"
+              className="mt-3 flex cursor-pointer items-start gap-2.5 rounded-xl border border-border bg-surface px-4 py-3"
+            >
+              <input
+                id="bw-prior"
+                type="checkbox"
+                checked={priorFunding}
+                onChange={(e) => {
+                  setPriorFunding(e.target.checked);
+                  trackUmami('baterie-finantare-anterioara', { bifat: e.target.checked ? 1 : 0 });
+                }}
+                className="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+              />
+              <span className="text-sm text-gray-700">
+                <span className="font-semibold">Am mai primit finanțare din fonduri publice pentru o baterie</span>
+                <span className="mt-0.5 block text-[11px] text-gray-500">
+                  Rămâi eligibil pentru o baterie nouă, dar fără cele {PROGRAM.maxPoints.noPriorFunding} de puncte ale
+                  criteriului.
+                </span>
+              </span>
+            </label>
 
             <div className="mt-3 flex items-stretch gap-3">
               <div className="flex shrink-0 flex-col justify-center rounded-xl bg-secondary px-4 py-2.5 text-center text-white">
@@ -512,9 +540,15 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
                 {[
                   { l: 'Contribuție', v: s2.score.contribution, m: PROGRAM.maxPoints.contribution, c: 'bg-primary' },
                   { l: 'Capacitate', v: s2.score.capacity, m: PROGRAM.maxPoints.capacity, c: 'bg-secondary-light' },
+                  {
+                    l: 'Prima finanțare',
+                    v: s2.score.noPriorFunding,
+                    m: PROGRAM.maxPoints.noPriorFunding,
+                    c: 'bg-emerald-500',
+                  },
                 ].map((b) => (
                   <div key={b.l} className="flex items-center gap-2">
-                    <span className="w-20 shrink-0 text-[11px] text-gray-500">{b.l}</span>
+                    <span className="w-24 shrink-0 text-[11px] text-gray-500">{b.l}</span>
                     <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-gray-100">
                       <span className={`block h-full rounded-full ${b.c}`} style={{ width: `${(b.v / b.m) * 100}%` }} />
                     </span>
@@ -540,12 +574,12 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
             <Note tone="info">
               {s2.pct >= OWN_SHARE_FOR_MAX_POINTS ? (
                 <>
-                  <b>Ai maximul pe contribuție.</b> Peste {num(OWN_SHARE_FOR_MAX_POINTS * 100, 1)}% nu mai câștigi
+                  <b>Ai maximul pe contribuție.</b> Peste {pts(OWN_SHARE_FOR_MAX_POINTS * 100)}% nu mai câștigi
                   puncte, doar plătești mai mult.
                 </>
               ) : (
                 <>
-                  <b>Compromisul programului:</b> la {num(OWN_SHARE_FOR_MAX_POINTS * 100, 1)}% contribuție ai{' '}
+                  <b>Compromisul programului:</b> la {pts(OWN_SHARE_FOR_MAX_POINTS * 100)}% contribuție ai{' '}
                   {pts(s2.scoreAtMax.total)} puncte, cu {formatCurrency(s2.granted - s2.atMax)} mai puțin de la AFM.
                 </>
               )}
@@ -819,12 +853,17 @@ export default function BatteryWidget({ sursa = 'widget-baterie', guideHref }: P
           </p>
 
           <p className="mt-2.5 leading-relaxed">
-            Pragul de admitere nu se știe, depinde de câți se înscriu. La punctaj egal contează, în ordine, valoarea
-            contribuției proprii, capacitatea, iar data înscrierii e ultimul criteriu. Puterea sistemului fotovoltaic nu
-            mai punctează deloc în forma consolidată. Punctajul acordat la înscriere nu se mai majorează și ordinea de
+            Punctajul e cel din Ordinul nr. 2.314 din 13 noiembrie 2026 (art. 19 alin. 4): contribuția proprie dă între{' '}
+            {PROGRAM.minContributionPoints} și {PROGRAM.maxPoints.contribution} de puncte, capacitatea cel mult{' '}
+            {PROGRAM.maxPoints.capacity} (de la {PROGRAM.capacityForMaxPoints} kWh), iar cine nu a mai avut finanțare
+            din fonduri publice pentru stocare primește {PROGRAM.maxPoints.noPriorFunding}. Profilurile de reper sunt
+            calculate pentru cineva fără finanțare anterioară. Pragul de admitere nu se știe, depinde de câți se
+            înscriu. La punctaj egal contează, în ordine, valoarea contribuției proprii, capacitatea, lipsa unei
+            finanțări anterioare, iar data înscrierii e ultimul criteriu. Puterea sistemului fotovoltaic nu punctează
+            deloc. Punctajul acordat la înscriere nu se mai majorează și ordinea de
             selecție nu se schimbă (art. 19 alin. 10); dacă documentele arată un punctaj mai mic decât cel declarat,
             dosarul se respinge (art. 20 alin. 5). Cota de {num(PROGRAM.maxShare * 100)}% e aplicată pe baza plafonată la
-            standardul de cost, lectura prudentă, fiindcă proiectul nu precizează explicit dacă se aplică pe factura
+            standardul de cost, lectura prudentă, fiindcă ghidul nu precizează explicit dacă se aplică pe factura
             totală.
           </p>
 

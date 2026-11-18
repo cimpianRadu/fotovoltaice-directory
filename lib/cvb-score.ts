@@ -7,7 +7,13 @@
 //  - finanțarea cea mai mare posibilă: 75%, dar cel mult 15.000 lei. Peste
 //    ~13,3 kWh plafonul urcă singur contribuția proprie (la 15 kWh, 33,4%), iar
 //    simulatorul o rotunjește în sus la o zecime de procent, ca aici;
-//  - criteriul „capacitate”: 2,5 puncte pe kWh, cel mult 50 (art. 19 alin. 4).
+//  - criteriul „capacitate”: 4 × kWh − 20, cel mult 40, de la 15 kWh;
+//  - criteriul „contribuție”: între 10 și 35 de puncte;
+//  - criteriul „finanțări anterioare”: socotim cele 25 de puncte ale celui care
+//    n-a mai avut finanțare publică pentru stocare. Din cerere nu știm dacă a
+//    avut, deci interfața o spune explicit lângă cifră.
+// Formula e cea din Ordinul nr. 2.314 din 13 noiembrie 2026 (art. 19 alin. 4),
+// care a înlocuit-o pe cea cu două criterii de câte 50 de puncte.
 // Contribuția reală și prețul real al bateriei nu le știm din cerere, de aici
 // „estimativ” și steluța din interfață.
 //
@@ -29,6 +35,8 @@ export interface CvbScenario {
   ownShare: number;
   capacityPoints: number;
   contributionPoints: number;
+  /** Cele 25 de puncte ale celui fără finanțare publică anterioară pentru stocare. */
+  noPriorFundingPoints: number;
   total: number;
 }
 
@@ -37,7 +45,7 @@ export interface CvbEstimate extends CvbScenario {
   kwh: number;
   /** Sub pragul programului (10 kWh): cererea nu intră la punctaj în forma asta. */
   eligible: boolean;
-  /** Capacitatea a atins deja maximul criteriului (20 kWh sau mai mult). */
+  /** Capacitatea a atins deja maximul criteriului (15 kWh sau mai mult). */
   capacityMaxed: boolean;
 }
 
@@ -60,7 +68,13 @@ function minOwnShareAtStandardCost(kwh: number): number {
 export function cvbScenario(kwh: number, ownShare?: number): CvbScenario {
   const share = Math.max(ownShare ?? 0, minOwnShareAtStandardCost(kwh));
   const s = scoreFor(kwh, share);
-  return { ownShare: share, capacityPoints: s.capacity, contributionPoints: s.contribution, total: s.total };
+  return {
+    ownShare: share,
+    capacityPoints: s.capacity,
+    contributionPoints: s.contribution,
+    noPriorFundingPoints: s.noPriorFunding,
+    total: s.total,
+  };
 }
 
 /**
@@ -79,7 +93,7 @@ export function cvbEstimate(l: { finantare?: string; capacitateBaterie?: string 
   };
 }
 
-/** Cifre cu virgulă românească și fără zecimale inutile: 47,5 · 60 · 13,8. */
+/** Cifre cu virgulă românească și fără zecimale inutile: 81,3 · 55 · 13,8. */
 export function fmtCvb(n: number): string {
   return (Math.round(n * 10) / 10).toString().replace('.', ',');
 }

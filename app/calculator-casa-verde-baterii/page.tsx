@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Cum se calculează punctajul la Casa Verde Baterii 2026?',
     answer:
-      'Forma consolidată a proiectului de ghid are două criterii, fiecare cu maximum 50 de puncte. Contribuția proprie: 30 × (contribuția proprie împărțită la finanțarea cerută de la AFM), plafonat la 50 de puncte, maximul fiind atins la o contribuție de 62,5% din valoarea proiectului. Capacitatea sistemului de stocare: 2,5 puncte pentru fiecare kWh, plafonat la 50 de puncte, deci maximul se atinge la 20 kWh. Puterea sistemului fotovoltaic existent, care aducea până la 20 de puncte în proiectul din august, nu mai punctează.',
+      'Pe trei criterii, maximum 100 de puncte, în forma din Ordinul nr. 2.314 din 13 noiembrie 2026 (Monitorul Oficial nr. 953 din 16 noiembrie 2026). Contribuția proprie: 37,5 × (contribuția proprie împărțită la suma cerută de la AFM) − 2,5, cu minimum 10 și maximum 35 de puncte; maximul se atinge când contribuția e cel puțin egală cu suma cerută. Capacitatea sistemului de stocare: 4 × kWh − 20, deci 20 de puncte la 10 kWh și maximul de 40 de la 15 kWh. Finanțări anterioare: 25 de puncte pentru cine nu a mai primit bani publici pentru un sistem de stocare, 0 pentru cine a primit. Formula veche, cu două criterii de câte 50 de puncte și maximul la 20 kWh, nu mai e în vigoare.',
   },
   {
     question: 'Cât primești, de fapt, pentru o baterie de 10 kWh?',
@@ -66,31 +66,36 @@ const faqs = [
   {
     question: 'De la ce capacitate primești toți cei 15.000 de lei?',
     answer:
-      'Plafonul absolut de 15.000 lei se atinge de la o bază eligibilă de 20.000 lei, adică de la aproximativ 13,4 kWh la standardul de cost de 1.500 lei/kWh. Peste această capacitate finanțarea nu mai crește, dar punctajul pe capacitate continuă să crească până la 20 kWh.',
+      'Plafonul absolut de 15.000 lei se atinge de la o bază eligibilă de 20.000 lei, adică de la aproximativ 13,4 kWh la standardul de cost de 1.500 lei/kWh. Peste această capacitate finanțarea nu mai crește, dar punctajul pe capacitate continuă să crească până la 15 kWh.',
   },
   {
     question: 'Cât trebuie să pui din buzunar pentru punctaj maxim pe contribuție?',
     answer:
-      'Cele 50 de puncte pe criteriul contribuției se ating la 62,5% din valoarea proiectului, adică atunci când ceri de la AFM doar 37,5%. Criteriul îl răsplătește pe cel care cere mai puțini bani publici, nu pe cel care are nevoie de mai mulți.',
+      'Cele 35 de puncte pe criteriul contribuției se ating când contribuția ta e cel puțin egală cu suma cerută de la AFM, adică de la 50% din valoarea totală a proiectului. La contribuția minimă de 25% criteriul dă 10 puncte. Exemplul din comunicatul AFM din 17 noiembrie 2026: 5.000 lei contribuție la 15.000 lei finanțare înseamnă 10 puncte, iar o contribuție de cel puțin 15.000 lei înseamnă 35. În valoarea totală a proiectului intră și cheltuielile neeligibile, de exemplu invertorul hibrid (art. 7 alin. 1 lit. cc).',
+  },
+  {
+    question: 'Pot aplica dacă am mai primit finanțare pentru o baterie?',
+    answer:
+      'Da, din 16 noiembrie 2026. Ordinul nr. 2.314/2026 a introdus la art. 15 alin. (1^1): cine a beneficiat anterior de finanțare din fonduri publice pentru un sistem de stocare este eligibil, dacă cere bani pentru un sistem nou, distinct de cel finanțat anterior. Nu se finanțează de două ori aceleași cheltuieli. Diferența se vede la punctaj: criteriul finanțărilor anterioare dă 0 puncte în loc de 25.',
   },
   {
     question: 'Când se deschide sesiunea de înscrieri la Casa Verde Baterii?',
     answer:
-      'Persoanele fizice se înscriu între 20 noiembrie 2026, ora 10:00, și 25 noiembrie 2026, ora 23:59, prin aplicația AFM. Datele sunt fixate prin Dispoziția președintelui AFM nr. 454 din 6 noiembrie 2026, care alocă sesiunii 400 milioane lei. Instalatorii se validează înainte, între 16 noiembrie, ora 10:00, și 20 noiembrie 2026, ora 23:59. Ghidul e aprobat prin Ordinul ministrului mediului nr. 1.904 din 11 septembrie 2026, publicat în Monitorul Oficial nr. 775 din 14 septembrie 2026. Selecția se face pe punctaj după închiderea sesiunii, deci prima zi nu dă avantaj. Calculatorul folosește cifrele din ordin.',
+      'Persoanele fizice se înscriu între 20 noiembrie 2026, ora 10:00, și 25 noiembrie 2026, ora 23:59, prin aplicația AFM. Datele sunt fixate prin Dispoziția președintelui AFM nr. 454 din 6 noiembrie 2026, care alocă sesiunii 400 milioane lei. Instalatorii se validează înainte, între 16 noiembrie, ora 10:00, și 20 noiembrie 2026, ora 23:59. Ghidul e aprobat prin Ordinul ministrului mediului nr. 1.904 din 11 septembrie 2026 (Monitorul Oficial nr. 775 din 14 septembrie 2026) și modificat prin Ordinul nr. 2.314 din 13 noiembrie 2026 (Monitorul Oficial nr. 953 din 16 noiembrie 2026), care a schimbat punctajul. Selecția se face pe punctaj după închiderea sesiunii, deci prima zi nu dă avantaj. Calculatorul folosește cifrele din cele două ordine.',
   },
 ];
 
 export const metadata: Metadata = {
   title: 'Calculator Casa Verde Baterii 2026: Punctaj și Finanțare AFM',
   description:
-    'Calculează punctajul Casa Verde Baterii 2026 și cât primești de la AFM: 50 de puncte pe contribuție, 50 pe capacitate, plafon 1.500 lei/kWh.',
+    'Calculează punctajul Casa Verde Baterii 2026 pe formula nouă: 40 de puncte capacitate, 35 contribuție, 25 fără finanțare anterioară. Plafon 1.500 lei/kWh.',
   alternates: { canonical: '/calculator-casa-verde-baterii' },
   openGraph: {
     type: 'website',
     url: '/calculator-casa-verde-baterii',
     title: 'Calculator Casa Verde Baterii 2026: Punctaj și Finanțare AFM',
     description:
-      'Ce punctaj ai, cât primești de la AFM și cât pui din buzunar, pe cifrele din forma consolidată a ghidului.',
+      'Ce punctaj ai, cât primești de la AFM și cât pui din buzunar, pe formula de punctaj din Ordinul nr. 2.314/2026.',
     images: [
       {
         url: '/og-image.png',
@@ -104,10 +109,9 @@ export const metadata: Metadata = {
 
 export default function CalculatorCasaVerdeBateriiPage() {
   // Profilurile sunt definite prin capacitate și contribuție, nu prin cost, așa
-  // că suma proiectului o alegem noi. Nu la standardul de cost peste tot: la 14
-  // kWh, un proiect de 21.000 lei ar cere de la AFM 15.750, peste plafonul de
-  // 15.000, deci contribuția de 25% e imposibilă acolo și punctajul ar ieși 47,
-  // nu 45 cât arată tabelul din widget și din ghid pentru același profil.
+  // că suma proiectului o alegem noi. Nu la standardul de cost peste tot: la o
+  // baterie de peste ~13,4 kWh, un proiect la standardul de cost ar cere de la
+  // AFM peste plafonul de 15.000 lei, deci contribuția de 25% e imposibilă acolo.
   //
   // Luăm deci costul cel mai mare la care contribuția declarată chiar e
   // posibilă: minimul dintre standardul de cost și suma la care finanțarea
@@ -148,7 +152,7 @@ export default function CalculatorCasaVerdeBateriiPage() {
         <p className="text-gray-600 mb-4 text-lg">
           Pune capacitatea bateriei și cât ești dispus să pui din buzunar, iar calculatorul îți dă
           punctajul din 100, finanțarea pe care o primești de la AFM și suma care rămâne la tine.
-          Pe cifrele din forma consolidată a ghidului, nu pe cele care circulă în presă.
+          Pe formula de punctaj în vigoare din 16 noiembrie 2026, cu trei criterii, nu pe cea veche.
         </p>
 
         {/* Statusul programului stă deasupra uneltei, nu sub ea: cine intră aici
@@ -158,7 +162,10 @@ export default function CalculatorCasaVerdeBateriiPage() {
           publicat în {MO_LABEL}, în vigoare din 14 septembrie 2026. Persoanele fizice se înscriu
           între <strong>20 noiembrie, ora 10:00, și 25 noiembrie 2026, ora 23:59</strong>, după
           validarea instalatorilor din 16–20 noiembrie (Dispoziția președintelui AFM nr. 454 din 6
-          noiembrie 2026). Calculatorul folosește cifrele din ordin (art. 5, 6, 16, 19). Sursa:{' '}
+          noiembrie 2026). <strong>Punctajul s-a schimbat</strong> prin Ordinul nr. 2.314 din 13
+          noiembrie 2026 (Monitorul Oficial nr. 953 din 16 noiembrie 2026): trei criterii în loc de
+          două, cu maximul pe capacitate de la {PROGRAM.capacityForMaxPoints} kWh. Calculatorul
+          folosește cifrele din cele două ordine (art. 5, 6, 16, 19). Sursa:{' '}
           <a
             href={AFM_HREF}
             target="_blank"
@@ -201,28 +208,40 @@ export default function CalculatorCasaVerdeBateriiPage() {
           </h2>
           <p>
             Selecția nu mai e „primul venit, primul servit”. Aplicația AFM calculează automat un
-            punctaj din maximum {formatNumber(PROGRAM.maxPoints.contribution + PROGRAM.maxPoints.capacity)}{' '}
-            de puncte, pe două criterii, iar dosarele se finanțează în ordinea descrescătoare a
-            punctajului, în limita bugetului:
+            punctaj din maximum{' '}
+            {formatNumber(
+              PROGRAM.maxPoints.contribution + PROGRAM.maxPoints.capacity + PROGRAM.maxPoints.noPriorFunding
+            )}{' '}
+            de puncte, pe trei criterii (art. 19 alin. 4, în forma din Ordinul nr. 2.314/2026), iar
+            dosarele se finanțează în ordinea descrescătoare a punctajului, în limita bugetului:
           </p>
           <ul className="list-disc pl-5 space-y-1.5">
             <li>
               <strong>Contribuția proprie, maximum {PROGRAM.maxPoints.contribution} de puncte:</strong>{' '}
-              30 × (contribuția proprie ÷ finanțarea cerută de la AFM). Maximul se atinge la o
-              contribuție de {dec(OWN_SHARE_FOR_MAX_POINTS * 100)}% din valoarea
-              proiectului, adică atunci când ceri de la AFM doar{' '}
-              {dec((1 - OWN_SHARE_FOR_MAX_POINTS) * 100)}%.
+              37,5 × (contribuția proprie ÷ suma cerută de la AFM) − 2,5, cu minimum{' '}
+              {PROGRAM.minContributionPoints} puncte. Maximul se atinge la o contribuție de{' '}
+              {dec(OWN_SHARE_FOR_MAX_POINTS * 100)}% din valoarea totală a proiectului, adică atunci
+              când pui cel puțin cât ceri de la AFM.
             </li>
             <li>
               <strong>Capacitatea de stocare, maximum {PROGRAM.maxPoints.capacity} de puncte:</strong>{' '}
-              2,5 puncte pentru fiecare kWh instalat, deci maximul se atinge la{' '}
-              {PROGRAM.capacityForMaxPoints} kWh.
+              4 × kWh − 20, deci {4 * PROGRAM.minKwh - 20} de puncte la {PROGRAM.minKwh} kWh, iar
+              maximul se atinge de la {PROGRAM.capacityForMaxPoints} kWh.
+            </li>
+            <li>
+              <strong>
+                Fără finanțare anterioară, {PROGRAM.maxPoints.noPriorFunding} de puncte:
+              </strong>{' '}
+              le primește cine nu a mai beneficiat de finanțare din fonduri publice, naționale sau
+              europene, pentru un sistem de stocare. Cine a beneficiat rămâne eligibil pentru un
+              sistem nou, dar ia 0 puncte la acest criteriu.
             </li>
           </ul>
           <p>
-            Puterea sistemului fotovoltaic existent, care aducea până la 20 de puncte în proiectul din
-            august, a fost eliminată. Rămân două criterii, iar ambele împing în aceeași direcție:
-            câștigă cine cere mai puțini bani publici pentru o baterie mai mare.
+            Față de forma din septembrie, maximul pe capacitate a coborât de la 20 la{' '}
+            {PROGRAM.capacityForMaxPoints} kWh, iar contribuția cântărește mai puțin: 35 de puncte
+            în loc de 50. Puterea sistemului fotovoltaic existent nu punctează. Cine nu a mai avut
+            finanțare pentru stocare pornește cu 25 de puncte înainte de orice altă alegere.
           </p>
 
           <h2 className="text-xl font-semibold text-secondary-dark">
@@ -259,7 +278,8 @@ export default function CalculatorCasaVerdeBateriiPage() {
           </h2>
           <p>
             Cifrele de mai jos ies din exact funcțiile pe care le folosește calculatorul, cu proiectul
-            luat la cel mult standardul de cost de {formatNumber(PROGRAM.costStandardPerKwh)} lei/kWh:
+            luat la cel mult standardul de cost de {formatNumber(PROGRAM.costStandardPerKwh)} lei/kWh
+            și pentru un solicitant care nu a mai avut finanțare publică pentru stocare:
           </p>
           <div className="overflow-x-auto">
             <table className="w-full text-sm border-collapse">

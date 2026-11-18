@@ -14,9 +14,19 @@
  *    (Casa Verde Baterii), publicat în Monitorul Oficial nr. 775 din 14 septembrie
  *    2026 (în vigoare 14.09.2026), art. 5, 6, 16 și 19. Față de proiectul din 18
  *    august: minimul 12 -> 10 kWh, standardul de cost 1.250 -> 1.500 lei/kWh, iar
- *    punctajul a trecut de la trei criterii la două (puterea PV nu mai punctează).
- *    Data sesiunii de înscriere nu e anunțată; AFM validează întâi instalatorii,
- *    apoi solicitanții (art. 8). Sursa: https://www.afm.ro/baterii_ghid.php
+ *    puterea PV nu mai punctează.
+ *
+ *    **Punctajul (art. 19) e cel din Ordinul nr. 2.314 din 13 noiembrie 2026**,
+ *    publicat în Monitorul Oficial nr. 953 din 16 noiembrie 2026, care a rescris
+ *    art. 19 alin. (1), (4) și (9): trei criterii în loc de două. Contribuția
+ *    proprie dă 10-35 de puncte, capacitatea maximum 40 (de la 15 kWh, nu 20), iar
+ *    cine n-a mai avut finanțare publică pentru stocare primește 25. Formula veche
+ *    (30 × contribuție/finanțare, max 50, plus 2,5 puncte/kWh, max 50) nu mai e în
+ *    vigoare. Același ordin face eligibili și pe cei care au mai avut finanțare
+ *    publică pentru un sistem de stocare, dacă cer bani pentru unul nou (art. 15).
+ *
+ *    Sesiunea: persoane fizice 20-25 noiembrie 2026 (Dispoziția AFM nr. 454 din
+ *    6 noiembrie 2026). Sursa: https://www.afm.ro/baterii_ghid.php
  */
 
 export interface SizingBracket {
@@ -75,7 +85,7 @@ export function supportThresholdKwp(capacityKwh: number): number {
   return Math.round(kwpNeeded(capacityKwh)[0] * 2) / 2;
 }
 
-/** Parametrii programului, din forma consolidată a proiectului de ghid (09.09.2026). */
+/** Parametrii programului: Ordinul nr. 1.904/2026, cu punctajul din Ordinul nr. 2.314/2026. */
 export const PROGRAM = {
   /** Capacitate minimă finanțabilă, în kWh (art. 16 alin. 2). */
   minKwh: 10,
@@ -87,10 +97,12 @@ export const PROGRAM = {
   maxGrant: 15000,
   /** Contribuția proprie minimă obligatorie (art. 5 alin. 2). */
   minOwnShare: 0.25,
-  /** Punctaj maxim pe fiecare criteriu (art. 19 alin. 4). */
-  maxPoints: { contribution: 50, capacity: 50 },
-  /** Capacitatea de la care criteriul dă punctaj maxim: 20 × 2,5 = 50. */
-  capacityForMaxPoints: 20,
+  /** Punctaj maxim pe fiecare criteriu (art. 19 alin. 4, forma din Ordinul 2.314/2026). */
+  maxPoints: { contribution: 35, capacity: 40, noPriorFunding: 25 },
+  /** Punctajul minim pe contribuție: formula are prag jos la 10 (art. 19 alin. 4 lit. a). */
+  minContributionPoints: 10,
+  /** Capacitatea de la care criteriul dă punctaj maxim: 4 × 15 − 20 = 40. */
+  capacityForMaxPoints: 15,
   /** Cicluri minime de încărcare-descărcare (art. 16 alin. 2). */
   minCycles: 5000,
   /** Data la care MMAP a publicat forma consolidată. */
@@ -100,22 +112,34 @@ export const PROGRAM = {
 export interface Score {
   contribution: number;
   capacity: number;
+  /** 25 dacă solicitantul n-a mai avut finanțare publică pentru stocare, altfel 0. */
+  noPriorFunding: number;
   total: number;
 }
 
 /**
- * Punctajul din art. 19 alin. (4). `ownShare` e fracție (0,25 = 25%), nu procent.
+ * Punctajul din art. 19 alin. (4), în forma din Ordinul nr. 2.314/2026.
+ * `ownShare` e fracție (0,25 = 25%), nu procent.
  *
- * Ghidul scrie criteriul în lei, `30 × contribuția proprie / finanțarea AFM`. Cum
- * art. 5 alin. (2) definește contribuția proprie ca diferența dintre valoarea
- * proiectului și finanțare, raportul e egal cu `ownShare / (1 − ownShare)`, deci
- * formula de mai jos e aceeași, exprimată în cota din proiect.
+ * a) Contribuția: `max(10; min(35; 37,5 × contribuția proprie / valoarea
+ *    solicitată de la AFM − 2,5))`. Ghidul scrie raportul în lei. Cum art. 5
+ *    alin. (2) definește contribuția proprie ca diferența dintre valoarea totală
+ *    a proiectului și finanțare, raportul e egal cu `ownShare / (1 − ownShare)`.
+ *    La contribuția minimă de 25% raportul e 1/3 și ies 10 puncte; cele 35 se
+ *    ating când contribuția e cel puțin egală cu suma cerută (50% din proiect).
+ * b) Capacitatea: `4 × kWh − 20`, maximum 40 de la 15 kWh. La 10 kWh, 20.
+ * c) Finanțări anterioare din fonduri publice pentru stocare: 25 de puncte
+ *    pentru cine n-a avut, 0 pentru cine a avut.
  */
-export function scoreFor(capacityKwh: number, ownShare: number): Score {
+export function scoreFor(capacityKwh: number, ownShare: number, priorFunding = false): Score {
   const ratio = ownShare >= 1 ? Infinity : ownShare / (1 - ownShare);
-  const contribution = Math.max(0, Math.min(PROGRAM.maxPoints.contribution, 30 * ratio));
-  const capacity = Math.min(PROGRAM.maxPoints.capacity, capacityKwh * 2.5);
-  return { contribution, capacity, total: contribution + capacity };
+  const contribution = Math.max(
+    PROGRAM.minContributionPoints,
+    Math.min(PROGRAM.maxPoints.contribution, 37.5 * ratio - 2.5)
+  );
+  const capacity = Math.max(0, Math.min(PROGRAM.maxPoints.capacity, 4 * capacityKwh - 20));
+  const noPriorFunding = priorFunding ? 0 : PROGRAM.maxPoints.noPriorFunding;
+  return { contribution, capacity, noPriorFunding, total: contribution + capacity + noPriorFunding };
 }
 
 export interface Grant {
@@ -144,13 +168,18 @@ export function grantFor(capacityKwh: number, projectCost: number): Grant {
   return { eligibleBase, maxGrant, minOwnShare };
 }
 
-/** Profilurile de comparație publicate în articol, ca reper relativ. */
+/**
+ * Profilurile de comparație publicate în articol, ca reper relativ. Toate pentru
+ * un solicitant fără finanțare publică anterioară pentru stocare (cele 25 de
+ * puncte incluse). Cifrele sunt alese rotunde: 12 kWh la 25% dă 63, 16 kWh cu
+ * toți cei 15.000 lei (contribuție 37,5% la costul standard) dă 85.
+ */
 export const REFERENCE_PROFILES = [
   { label: 'Minimul programului', capacity: 10, ownShare: 0.25 },
-  { label: 'Baterie medie, contribuție minimă', capacity: 14, ownShare: 0.25 },
-  { label: 'Baterie mare, plafonul de 15.000 lei', capacity: 20, ownShare: 0.5 },
-  { label: 'Maxim de punctaj', capacity: 20, ownShare: 0.625 },
+  { label: 'Baterie medie, contribuție minimă', capacity: 12, ownShare: 0.25 },
+  { label: 'Baterie de 16 kWh, toți cei 15.000 lei', capacity: 16, ownShare: 0.375 },
+  { label: 'Maxim de punctaj', capacity: 15, ownShare: 0.5 },
 ] as const;
 
-/** Contribuția de la care criteriul dă punctaj maxim: 30 × 0,625/0,375 = 50. */
-export const OWN_SHARE_FOR_MAX_POINTS = 0.625;
+/** Contribuția de la care criteriul dă punctaj maxim: 37,5 × 0,5/0,5 − 2,5 = 35. */
+export const OWN_SHARE_FOR_MAX_POINTS = 0.5;

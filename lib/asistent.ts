@@ -265,6 +265,7 @@ function dimensionare(input: Record<string, unknown>): string {
       capacitate_punctaj_maxim_kwh: PROGRAM.capacityForMaxPoints,
       puncte_capacitate: scoreFor(cap, PROGRAM.minOwnShare).capacity,
       puncte_capacitate_maxim: PROGRAM.maxPoints.capacity,
+      formula_capacitate: '4 × kWh − 20, maximum 40 de la 15 kWh (Ordinul nr. 2.314/2026)',
     };
     if (kwp > 0) {
       out.sistemul_umple_bateria = kwp >= min;
