@@ -195,6 +195,25 @@ ${P_NU_STIE}
 - Pentru orice altceva, spui cinstit că o lămurește firma la telefon și treci întrebarea în cerere.`;
 }
 
+/**
+ * Ce s-a schimbat la program, spus o dată în prompt (18 nov 2026, cerut de Radu):
+ * oamenii vin cu cifrele vechi, din presă sau din discuții mai vechi cu noi, și
+ * modelul trebuie să știe că s-au schimbat înainte să deschidă ghidul. Cifrele
+ * în vigoare vin din PROGRAM, nu sunt scrise de mână; de mână sunt doar cele
+ * vechi (două criterii de câte 50, maxim la 20 kWh), ca să le recunoască.
+ */
+const P_NOUTATI_CVB = `## Ce s-a schimbat la Casa Verde Baterii
+
+Oamenii vin des cu cifre vechi. Ține minte ce e în vigoare din 16 noiembrie 2026 (Ordinul nr. 2.314/2026):
+
+- Punctajul are trei criterii, maximum ${PROGRAM.maxPoints.capacity + PROGRAM.maxPoints.contribution + PROGRAM.maxPoints.noPriorFunding} de puncte: capacitatea bateriei, cel mult ${PROGRAM.maxPoints.capacity} de puncte, cu maximul de la ${PROGRAM.capacityForMaxPoints} kWh; contribuția proprie, între ${PROGRAM.minContributionPoints} și ${PROGRAM.maxPoints.contribution} de puncte; și ${PROGRAM.maxPoints.noPriorFunding} de puncte pentru cine nu a mai primit finanțare din fonduri publice pentru o baterie.
+- Formula veche, cu două criterii de câte 50 de puncte și maximul pe capacitate la 20 kWh, nu se mai aplică. Dacă omul o pomenește, sau dacă mai devreme în conversație a apărut ea, îi spui simplu că s-a schimbat și îi dai cifrele din unelte.
+- Cine a mai primit bani publici pentru o baterie poate cere finanțare pentru una nouă, dar primește 0 puncte la al treilea criteriu.
+- Înscrierea se face fără instalator ales dinainte. După aprobarea finanțării, omul are 90 de zile să compare ofertele instalatorilor validați de AFM și să aleagă una.
+- Suma maximă și standardul de cost pe kWh sunt plafoane, nu prețuri recomandate.
+
+Detaliile le iei tot din \`ghid_casa_verde_baterii\` (secțiunile „status-ghid”, „punctaj”, „cine-se-califica”, „dupa-aprobare”). Nu calculezi tu punctajul total al omului și nu spui dacă punctajul lui ajunge.`;
+
 const P_REGULI = `## Ce nu faci niciodată
 
 - Nu spui că un echipament merge sau nu merge cu altul (baterie cu invertor, invertor cu panouri). Nu ai date de compatibilitate. Transformi întrebarea într-una pentru firmă („Firma vă confirmă dacă bateria X se poate lega la invertorul Y”) și o salvezi în \`intrebari_pentru_firma\`.
@@ -203,6 +222,10 @@ const P_REGULI = `## Ce nu faci niciodată
 - Nu promiți că omul primește finanțare sau ce punctaj iese; spui ce scrie în ghid.
 - Nu ceri telefon, email sau adresă: le avem din cerere.
 - Nu vinzi. Nu împingi spre o lucrare mai mare.
+
+## Notele platformei
+
+După mesajul omului poate urma un text care începe cu „[Notă automată a platformei, nu e de la client]” sau cu „[Verificare automată, nu e de la client]”. E de la noi, nu de la el: îl folosești ca informație sau ca cerere de corectură, nu-i răspunzi și nu-l pomenești în replică.
 
 ## Cum salvezi
 
@@ -225,13 +248,13 @@ Când întrebarea ta are câteva răspunsuri tipice, apelează \`propune_variant
 Vorbești cu „dumneavoastră”, cald și clar, ca un om care se pricepe și are răbdare. Replici scurte: 2-4 propoziții. Fără liste lungi, fără titluri, fără emoji. Nu folosi linia lungă (—); pune virgulă sau punct. Scrii în română corectă, cu diacritice. Dacă omul întreabă de altceva decât cererea lui, îi răspunzi pe scurt dacă ține de fotovoltaice, altfel îl readuci politicos la cerere.`;
 
 /**
- * Promptul după lucrare. La baterie și extindere e textul pilotului, neschimbat
- * (aceleași octeți, deci același cache). La sistem nou și doar montaj lista
+ * Promptul după lucrare. La baterie și extindere e textul pilotului, la care
+ * s-a adăugat pe 18 nov 2026 blocul cu ce s-a schimbat la program. La sistem nou și doar montaj lista
  * de întrebări e alta și asistentul nu dimensionează nimic.
  */
 export function systemPrompt(cerere: AsistentCerere): string {
   const miez = cerereRetrofit(cerere.tipLucrare) ? P_RETROFIT : promptSistemNou(cerere);
-  return `${P_IDENTITATE}\n\n${miez}\n\n${P_REGULI}`;
+  return `${P_IDENTITATE}\n\n${miez}\n\n${P_NOUTATI_CVB}\n\n${P_REGULI}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -378,6 +401,26 @@ function dimensionare(input: Record<string, unknown>): string {
       puncte_capacitate: scoreFor(cap, PROGRAM.minOwnShare).capacity,
       puncte_capacitate_maxim: PROGRAM.maxPoints.capacity,
       formula_capacitate: '4 × kWh − 20, maximum 40 de la 15 kWh (Ordinul nr. 2.314/2026)',
+      // Capacitatea e doar unul dintre cele trei criterii: fără restul, modelul
+      // ajunge să prezinte punctele pe capacitate ca pe tot punctajul.
+      punctaj_total: {
+        maxim:
+          PROGRAM.maxPoints.capacity + PROGRAM.maxPoints.contribution + PROGRAM.maxPoints.noPriorFunding,
+        criterii: [
+          { criteriu: 'capacitatea bateriei', maxim: PROGRAM.maxPoints.capacity },
+          {
+            criteriu: 'contribuția proprie',
+            minim: PROGRAM.minContributionPoints,
+            maxim: PROGRAM.maxPoints.contribution,
+          },
+          {
+            criteriu: 'fără finanțare publică anterioară pentru o baterie',
+            puncte: PROGRAM.maxPoints.noPriorFunding,
+            altfel: 0,
+          },
+        ],
+        in_vigoare_din: '16 noiembrie 2026 (Ordinul nr. 2.314/2026)',
+      },
     };
     if (kwp > 0) {
       out.sistemul_umple_bateria = kwp >= min;
@@ -610,9 +653,21 @@ export function mesajIntro(cerere: AsistentCerere): string {
   return `Bună ziua! Sunt Watt AI, asistentul platformei. Am primit cererea pentru ${ce} și a plecat deja la firmele din zonă. Dacă aveți 2-3 minute, vă pun câteva întrebări pe care firma le pune oricum la primul telefon, ca oferta să fie potrivită din prima. Ce îmi spuneți intră în cerere și îl văd firmele care o preiau. Putem începe?`;
 }
 
-function contextCerere(c: Conversatie): string {
-  const x = c.cerere;
-  const v = valoriEfective(x, c.date);
+/**
+ * Cache-ul e pe prefix: tot ce stă înaintea istoricului trebuie să rămână la fel
+ * de la o replică la alta, altfel istoricul se plătește întreg de fiecare dată
+ * (până pe 18 nov 2026 așa era: nota de mai jos stătea în `system` și se schimba
+ * la fiecare mesaj, deci peste jumătate din cost era istoricul retrimis).
+ *
+ * De aceea contextul e în două bucăți:
+ * - `contextCerere`: ce a scris omul în formular. Nu se schimbă în conversație,
+ *   stă în `system`, după prompt.
+ * - `notaReplica`: ce se schimbă (semnalele din cifre, numărul mesajului). Se
+ *   pune după mesajul clientului și rămâne în istoric, neatinsă: istoricul doar
+ *   crește la capăt. Ce s-a salvat deja nu mai e repetat aici, fiindcă fiecare
+ *   rezultat al uneltei `salveaza_raspunsuri` din istoric întoarce starea întreagă.
+ */
+function contextCerere(x: AsistentCerere): string {
   const retrofit = cerereRetrofit(x.tipLucrare);
   const ePutere = retrofit ? 'Puterea sistemului existent' : 'Puterea dorită';
   const linii = [
@@ -638,16 +693,19 @@ function contextCerere(c: Conversatie): string {
     x.tipAcoperis ? `Acoperiș: ${getRoofTypeLabel(x.tipAcoperis)}` : '',
     x.mesaj ? `Mesajul lui din formular: „${x.mesaj}”` : 'Mesaj: niciunul',
   ].filter(Boolean);
-  const semnale = semnaleCerere(x, c.date).map((s) => `- ${s.text}`);
-  const salvate = Object.keys(c.date).length ? JSON.stringify(c.date) : 'nimic încă';
+  return ['# Cererea clientului', ...linii].join('\n');
+}
+
+const NOTA_PREFIX = '[Notă automată a platformei, nu e de la client]';
+
+function notaReplica(c: Conversatie): string {
+  const v = valoriEfective(c.cerere, c.date);
+  const semnale = semnaleCerere(c.cerere, c.date).map((s) => `- ${s.text}`);
   return [
-    '# Cererea clientului',
-    ...linii,
-    '',
-    `# Salvat deja din conversație\n${salvate}`,
-    semnale.length ? `\n# Ce vedem noi din cifre (de verificat cu clientul, nu de recitat)\n${semnale.join('\n')}` : '',
-    v.cvb ? '\nClientul pare să meargă pe Casa Verde Baterii.' : '',
-    `\nMesajul clientului cu numărul ${c.replici + 1} din maximum ${ASISTENT_MAX_MESAJE}.`,
+    NOTA_PREFIX,
+    `Mesajul clientului cu numărul ${c.replici + 1} din maximum ${ASISTENT_MAX_MESAJE}.`,
+    semnale.length ? `Ce vedem noi din cifre acum (de verificat cu clientul, nu de recitat):\n${semnale.join('\n')}` : '',
+    v.cvb ? 'Clientul pare să meargă pe Casa Verde Baterii.' : '',
   ]
     .filter(Boolean)
     .join('\n');
@@ -720,12 +778,19 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
         { role: 'user', content: '[Pagina de confirmare a cererii s-a deschis.]' },
         { role: 'assistant', content: mesajIntro(c.cerere) },
       ];
-  api.push({ role: 'user', content: mesaj });
+  // Mesajul clientului și nota platformei, ca două blocuri ale aceleiași replici.
+  api.push({
+    role: 'user',
+    content: [
+      { type: 'text', text: mesaj },
+      { type: 'text', text: notaReplica(c) },
+    ],
+  });
 
   const state = { date: c.date, variante: [] as string[], incheie: false };
   const usage: Usage = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 };
   const unelte: string[] = [];
-  const contextNote = contextCerere(c);
+  const contextNote = contextCerere(c.cerere);
   let raspuns = '';
   let stop = '';
 
@@ -736,6 +801,11 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
       max_tokens: 4000,
       betas: ['server-side-fallback-2026-07-01'],
       fallbacks: 'default',
+      // Două puncte de cache: promptul (comun tuturor conversațiilor de același
+      // fel, marcat mai jos) și, automat, ultimul bloc al istoricului, care
+      // avansează cu fiecare cerere. Replica următoare citește din cache tot
+      // ce s-a spus până atunci, dacă vine în 5 minute.
+      cache_control: { type: 'ephemeral' },
       system: [
         { type: 'text', text: systemPrompt(c.cerere), cache_control: { type: 'ephemeral' } },
         { type: 'text', text: contextNote },
