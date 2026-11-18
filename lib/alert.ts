@@ -12,9 +12,11 @@
  * - O linie JSON în log-uri (`"tag":"alert"`) la fiecare apel, oriunde.
  * - Email prin Resend doar în producție (`VERCEL_ENV=production`) sau cu
  *   `ALERT_FORCE=1` local, ca să-l poți testa.
- * - Cel mult un email pe oră pentru același `area` + `kind`, pe toate
- *   instanțele Vercel: cheia de idempotență Resend e site:area:kind:ora, iar
- *   Resend nu retrimite un email cu aceeași cheie în 24 de ore. Fără bază de
+ * - Cel mult un email la 6 ore pentru același `area` + `kind`, pe toate
+ *   instanțele Vercel: cheia de idempotență Resend e site:area:kind:fereastra
+ *   (00–06, 06–12, 12–18, 18–24 UTC), iar Resend nu retrimite un email cu
+ *   aceeași cheie în 24 de ore. La o pană lungă ies cel mult 4 emailuri pe zi
+ *   pe tip, nu 24: cota Resend e mică (18 nov. 2026). Fără bază de
  *   date și fără memorie în proces (care se pierde la fiecare cold start).
  *   De asta `kind` trebuie să fie stabil: tipul erorii, nu mesajul cu id-uri.
  * - Versiunea aplicației vine din variabilele de sistem Vercel: commit, mesajul
@@ -75,7 +77,9 @@ export async function alertError({ area, kind, message, details = {} }: AlertInp
     const enabled = process.env.VERCEL_ENV === 'production' || process.env.ALERT_FORCE === '1';
     if (!enabled) return;
 
-    const hour = at.toISOString().slice(0, 13); // 2026-11-18T09
+    // Fereastra de 6 ore: 2026-11-18T06 acoperă 06:00–11:59 UTC.
+    const iso = at.toISOString();
+    const slot = `${iso.slice(0, 11)}${String(Math.floor(at.getUTCHours() / 6) * 6).padStart(2, '0')}`;
     await deliver({
       subject: `⚠️ ${site} · ${area}: ${message}`,
       message,
@@ -90,8 +94,8 @@ export async function alertError({ area, kind, message, details = {} }: AlertInp
         ['Regiune', version.region],
         ...Object.entries(details),
       ],
-      footer: 'Alte erori de același tip din ora asta nu mai trimit email; le găsești în Vercel → Logs, căutând <code>"tag":"alert"</code>.',
-      idempotencyKey: `${site}:${area}:${kind}:${hour}`,
+      footer: 'Alte erori de același tip din următoarele ore (până la 6) nu mai trimit email; le găsești în Vercel → Logs, căutând <code>"tag":"alert"</code>.',
+      idempotencyKey: `${site}:${area}:${kind}:${slot}`,
     });
   } catch (err) {
     console.error('[alert] alerta n-a plecat:', err);
