@@ -1159,7 +1159,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
           </div>
         )}
 
-        {/* Asistentul (pilot 12 nov 2026): doar la baterie și extindere. Cererea
+        {/* Asistentul (pilot 12 nov 2026; din 18 nov pe toate lucrările). Cererea
             e deja trimisă; conversația doar o completează, deci nu poate pierde
             cereri. Ruta răspunde „neeligibil” dacă pilotul e oprit. */}
         {leadRef && photoToken && (ASISTENT_TIPURI as readonly string[]).includes(details.tipLucrare) && (

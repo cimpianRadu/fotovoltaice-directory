@@ -138,7 +138,7 @@ export default async function AsistentAdminPage({
       <div>
         <h1 className="text-2xl font-bold text-slate-900">Watt AI</h1>
         <p className="mt-1 text-sm text-slate-600">
-          Asistentul de după cerere, la baterie și extindere. Ultimele {zile} zile ·{' '}
+          Asistentul de după cerere, pe toate lucrările din 18 nov (înainte doar baterie și extindere). Ultimele {zile} zile ·{' '}
           {[7, 30, 90].map((z) => (
             <a key={z} href={`?zile=${z}`} className={`mr-2 underline ${z === zile ? 'font-semibold' : ''}`}>
               {z} zile

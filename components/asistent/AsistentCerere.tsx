@@ -1,7 +1,7 @@
 'use client';
 
-// Watt AI, asistentul de după cerere (pilot 12 nov 2026, cererile „doar
-// baterie” și „extindere”). O bulă în colțul din dreapta-jos, pe ecranul de
+// Watt AI, asistentul de după cerere (pilot 12 nov 2026 pe „doar baterie” și
+// „extindere”; din 18 nov 2026 pe toate lucrările). O bulă în colțul din dreapta-jos, pe ecranul de
 // confirmare și în contul clientului, cu o propoziție lângă ea; chatul se
 // deschide la click. Pe telefon ocupă tot ecranul, pe desktop e o fereastră.
 // Opțional: cererea e deja trimisă, Watt doar o completează. Omul vede tot
@@ -159,7 +159,14 @@ export default function AsistentCerere({
   const gataDeIncheiat = Boolean(prev?.rezumat);
   const ultim = mesaje[mesaje.length - 1];
   const variante = !trimite && ultim?.rol === 'asistent' ? ultim.variante || [] : [];
-  const despre = /extinder/i.test(mesaje[0]?.text || '') ? 'extindere' : 'baterie';
+  const intro = mesaje[0]?.text || '';
+  const despre = /extinder/i.test(intro)
+    ? 'extindere'
+    : /bateri/i.test(intro)
+      ? 'baterie'
+      : /montaj/i.test(intro)
+        ? 'montaj'
+        : 'sistemul dorit';
   const teaserText = !aInceput
     ? `Am câteva întrebări despre ${despre}, ca oferta firmei să fie potrivită din prima.`
     : 'Continuăm? Mai sunt câteva detalii pentru firmă.';

@@ -6,8 +6,21 @@
 
 import { PROGRAM, bracketFor, kwpNeeded } from './battery-sizing';
 
-/** Lucrările din pilot (12 nov 2026). Restul cererilor nu văd asistentul. */
-export const ASISTENT_TIPURI = ['doar-baterie', 'extindere'] as const;
+/**
+ * Lucrările la care clientul vede asistentul. Pilotul din 12 nov 2026 era doar
+ * pe baterie și extindere; din 18 nov 2026 intră toate, fiindcă firmele preiau
+ * mai ales cererile de sistem nou și acolo nu ajungea nicio precalificare.
+ */
+export const ASISTENT_TIPURI = ['sistem-nou', 'doar-baterie', 'extindere', 'doar-montaj'] as const;
+
+/**
+ * Lucrările pe un sistem care există deja (aceeași regulă ca `isRetrofit` din
+ * utils-shared, ținută aici ca fișierul să nu tragă nimic în bundle-ul client).
+ * La ele puterea din formular e a sistemului existent, nu a celui cerut.
+ */
+export function cerereRetrofit(tipLucrare: string): boolean {
+  return tipLucrare === 'doar-baterie' || tipLucrare === 'extindere';
+}
 
 /** Câte mesaje poate trimite clientul pe o cerere. Peste, asistentul se oprește. */
 export const ASISTENT_MAX_MESAJE = 16;
@@ -23,11 +36,32 @@ export interface AsistentDate {
   /** Bateria pe care o are deja, dacă are. */
   bateriePrezentaKwh?: number;
   consumLunarKwh?: number;
+  /** Factura lunară în lei, când omul n-a știut consumul în kWh. */
+  facturaLunaraLei?: number;
   capacitateDoritaKwh?: number;
   /** De ce vrea capacitatea asta: punctajul programului, backup, consum seara. */
   motivCapacitate?: string;
   deschisExtindere?: 'da' | 'nu' | 'poate';
   programCvb?: 'da' | 'nu' | 'nu-stie';
+  // Sistem nou și doar montaj (din 18 nov 2026).
+  /** Încotro e orientat acoperișul, cum a spus clientul: „sud”, „est-vest”. */
+  orientareAcoperis?: string;
+  /** Ce umbrește acoperișul (copaci, horn, clădirea vecină) sau „fără umbră”. */
+  umbrire?: string;
+  suprafataAcoperisMp?: number;
+  /** Când consumă mai mult curent. */
+  consumCand?: 'ziua' | 'seara' | 'egal' | 'nu-stie';
+  /** Consumatori mari, existenți sau planificați: pompă de căldură, mașină electrică, aer condiționat. */
+  consumatoriMari?: string;
+  vreaBaterie?: 'acum' | 'mai-tarziu' | 'nu' | 'nu-stie';
+  /** Vrea să dea surplusul în rețea, ca prosumator. */
+  prosumator?: 'da' | 'nu' | 'nu-stie';
+  /** Doar montaj: ce echipamente are deja cumpărate. */
+  echipamenteCumparate?: string;
+  /** Cereri de la firme: programul de lucru (un schimb, trei schimburi, și în weekend). */
+  programLucru?: string;
+  /** Cereri de la firme: puterea contractată sau aprobată, dacă o știe. */
+  putereContractataKw?: number;
   /** Ce vrea clientul să afle de la firmă, sau ce trebuie verificat la fața locului. */
   intrebariPentruFirma?: string[];
   /** 2-3 propoziții pentru firmă, scrise de asistent. */
@@ -48,6 +82,13 @@ export interface AsistentCerere {
   scop: string;
   tipAcoperis: string;
   mesaj: string;
+  // Din 18 nov 2026, ca asistentul să nu reîntrebe ce e deja în formular.
+  // Lipsesc pe conversațiile pornite înainte.
+  segment?: string;
+  suprafata?: string;
+  stocare?: string;
+  wallbox?: string;
+  bransament?: string;
 }
 
 export interface RezumatSemnal {
@@ -87,7 +128,9 @@ export function valoriEfective(cerere: AsistentCerere, date: AsistentDate) {
   return {
     putereKwp: date.putereSistemKwp ?? numar(cerere.putere),
     capacitateKwh: date.capacitateDoritaKwh ?? numar(cerere.capacitateBaterie),
-    consumKwh: date.consumLunarKwh ?? consumKwh(cerere.consumLunar),
+    // Leii la 1,30 lei/kWh, ca la consumul din formular (vezi `consumKwh`).
+    consumKwh:
+      date.consumLunarKwh ?? (date.facturaLunaraLei ? date.facturaLunaraLei / 1.3 : consumKwh(cerere.consumLunar)),
     fazare: date.fazare ?? (cerere.fazare as AsistentDate['fazare'] | ''),
     cvb: date.programCvb === 'da' || (date.programCvb === undefined && cerere.finantare === 'afm-baterii'),
   };
@@ -111,7 +154,7 @@ export function semnaleCerere(cerere: AsistentCerere, date: AsistentDate): Rezum
               : '';
       out.push({
         tip: 'atentie',
-        text: `Bateria de ${fmt(v.capacitateKwh)} kWh se umple din surplus de la aproximativ ${fmt(min)} kWp (tabelul din ghidul nostru), iar sistemul are ${fmt(v.putereKwp)} kWp.${extindere}`,
+        text: `Bateria de ${fmt(v.capacitateKwh)} kWh se umple din surplus de la aproximativ ${fmt(min)} kWp (tabelul din ghidul nostru), iar ${cerereRetrofit(cerere.tipLucrare) ? 'sistemul are' : 'sistemul cerut are'} ${fmt(v.putereKwp)} kWp.${extindere}`,
       });
     }
   }
@@ -150,6 +193,18 @@ export function semnaleCerere(cerere: AsistentCerere, date: AsistentDate): Rezum
 
 const FAZARE: Record<string, string> = { monofazat: 'monofazat', trifazat: 'trifazat', 'nu-stie': 'nu știe' };
 const DA_NU: Record<string, string> = { da: 'da', nu: 'nu', poate: 'poate', 'nu-stie': 'nu știe' };
+const CONSUM_CAND: Record<string, string> = {
+  ziua: 'mai mult ziua',
+  seara: 'mai mult seara și noaptea',
+  egal: 'cam la fel toată ziua',
+  'nu-stie': 'nu știe',
+};
+const VREA_BATERIE: Record<string, string> = {
+  acum: 'da, de la început',
+  'mai-tarziu': 'mai târziu, vrea sistemul pregătit',
+  nu: 'nu',
+  'nu-stie': 'nu s-a hotărât',
+};
 
 /** Rezumatul pe care îl vede firma. `null` dacă clientul n-a confirmat încă nimic. */
 export function rezumatCerere(
@@ -164,13 +219,27 @@ export function rezumatCerere(
   add('Invertor', date.invertor);
   add('Invertor hibrid', date.invertorHibrid && DA_NU[date.invertorHibrid]);
   add('Fazare', date.fazare && FAZARE[date.fazare]);
-  add('Sistem existent', date.putereSistemKwp ? `${fmt(date.putereSistemKwp)} kWp` : undefined);
+  add(
+    cerereRetrofit(cerere.tipLucrare) ? 'Sistem existent' : 'Putere dorită',
+    date.putereSistemKwp ? `${fmt(date.putereSistemKwp)} kWp` : undefined,
+  );
   add('Baterie existentă', date.bateriePrezentaKwh ? `${fmt(date.bateriePrezentaKwh)} kWh` : undefined);
   add('Consum lunar', date.consumLunarKwh ? `${Math.round(date.consumLunarKwh)} kWh` : undefined);
+  add('Factură lunară', date.facturaLunaraLei ? `${Math.round(date.facturaLunaraLei)} lei` : undefined);
   add('Capacitate dorită', date.capacitateDoritaKwh ? `${fmt(date.capacitateDoritaKwh)} kWh` : undefined);
   add('De ce capacitatea asta', date.motivCapacitate);
   add('Extindere sistem', date.deschisExtindere && DA_NU[date.deschisExtindere]);
   add('Casa Verde Baterii', date.programCvb && DA_NU[date.programCvb]);
+  add('Orientarea acoperișului', date.orientareAcoperis);
+  add('Umbrire', date.umbrire);
+  add('Suprafață liberă pe acoperiș', date.suprafataAcoperisMp ? `${Math.round(date.suprafataAcoperisMp)} mp` : undefined);
+  add('Când consumă', date.consumCand && CONSUM_CAND[date.consumCand]);
+  add('Consumatori mari', date.consumatoriMari);
+  add('Vrea baterie', date.vreaBaterie && VREA_BATERIE[date.vreaBaterie]);
+  add('Vrea să fie prosumator', date.prosumator && DA_NU[date.prosumator]);
+  add('Echipamente cumpărate', date.echipamenteCumparate);
+  add('Program de lucru', date.programLucru);
+  add('Putere contractată', date.putereContractataKw ? `${fmt(date.putereContractataKw)} kW` : undefined);
 
   const intrebari = (date.intrebariPentruFirma || []).filter(Boolean);
   if (!confirmate.length && !intrebari.length && !date.rezumat) return null;

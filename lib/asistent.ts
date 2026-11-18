@@ -1,12 +1,15 @@
-// Asistentul de după cerere (pilot 12 nov 2026): clientul care a cerut o baterie
-// sau o extindere discută cu asistentul, iar ce confirmă ajunge la firme ca
-// rezumat. Construit după Smile AI de pe gaseste-dentist.ro (unelte pe datele
+// Asistentul de după cerere (pilot 12 nov 2026): clientul discută cu asistentul
+// după ce a trimis cererea, iar ce confirmă ajunge la firme ca rezumat. Pilotul
+// a pornit doar pe baterie și extindere; din 18 nov 2026 merge pe toate
+// lucrările, cu altă listă de întrebări la sistem nou și la doar montaj. Construit după Smile AI de pe gaseste-dentist.ro (unelte pe datele
 // noastre, verificare de răspuns cu rescriere, cost pe replică), cu o diferență:
 // aici conversația vine DUPĂ cerere și scopul ei e cererea mai completă.
 //
-// Ce spune asistentul despre dimensionare și Casa Verde vine din unelte:
-// tabelul din ghid (`battery-sizing`) și secțiunile ghidului principal din
-// `guides.json`. Modelul nu răspunde din memorie la cifre.
+// Ce spune asistentul despre dimensionarea bateriei și Casa Verde Baterii vine
+// din unelte: tabelul din ghid (`battery-sizing`) și secțiunile ghidului
+// principal din `guides.json`. Modelul nu răspunde din memorie la cifre. La
+// sistem nou nu are o unealtă de dimensionare, deci doar întreabă și notează:
+// puterea și prețul le stabilește firma.
 
 import 'server-only';
 import Anthropic from '@anthropic-ai/sdk';
@@ -17,6 +20,7 @@ import { PROGRAM, bracketFor, kwpNeeded, scoreFor } from './battery-sizing';
 import {
   ASISTENT_MAX_MESAJE,
   ASISTENT_TIPURI,
+  cerereRetrofit,
   type AsistentCerere,
   type AsistentDate,
   semnaleCerere,
@@ -24,22 +28,27 @@ import {
 } from './asistent-shared';
 import {
   getBudgetLabel,
+  getConnectionLabel,
   getFinancingLabel,
   getRoofTypeLabel,
   getScopLabel,
   getTimelineLabel,
   getWorkTypeShort,
+  getYesNoLabel,
 } from './utils-shared';
 
-export const MODEL = process.env.ASISTENT_MODEL || 'claude-opus-5-5';
+// Sonnet 5.5 din 18 nov 2026 (până atunci Opus 5.5): la proba pe aceleași
+// conversații a salvat aceleași date pentru firmă la jumătate de preț pe token.
+// Înapoi pe Opus fără cod: ASISTENT_MODEL=claude-opus-5-5 pe Vercel.
+export const MODEL = process.env.ASISTENT_MODEL || 'claude-sonnet-5-5';
 /** Chat cu replici scurte și câteva unelte: `low` ajunge. */
 const EFFORT = (process.env.ASISTENT_EFFORT || 'low') as 'low' | 'medium' | 'high';
 
 /** USD pe milion de tokeni, din lista de prețuri Anthropic (noiembrie 2026). */
-const PRICING: Record<string, { in: number; out: number }> = {
-  'claude-opus-5-5': { in: 4, out: 20 },
-  'claude-sonnet-5-5': { in: 2, out: 10 },
-  'claude-haiku-5-5': { in: 0.1, out: 0.5 },
+const PRICING: Record<string, { in: number; out: number; cacheRead: number }> = {
+  'claude-opus-5-5': { in: 4, out: 20, cacheRead: 0.2 },
+  'claude-sonnet-5-5': { in: 2, out: 10, cacheRead: 0.1 },
+  'claude-haiku-5-5': { in: 0.1, out: 0.5, cacheRead: 0.01 },
 };
 
 interface Usage {
@@ -50,11 +59,15 @@ interface Usage {
 }
 
 function costUsd(u: Usage): number {
-  const p = PRICING[MODEL] || PRICING['claude-opus-5-5'];
-  return (u.input * p.in + u.cacheRead * p.in * 0.1 + u.cacheWrite * p.in * 1.25 + u.output * p.out) / 1e6;
+  const p = PRICING[MODEL] || PRICING['claude-sonnet-5-5'];
+  return (u.input * p.in + u.cacheRead * p.cacheRead + u.cacheWrite * p.in * 1.25 + u.output * p.out) / 1e6;
 }
 
-/** Pilotul e pornit pe producție doar cu ASISTENT_BATERII=on; local merge oricând. */
+/**
+ * Pornit pe producție doar cu ASISTENT_BATERII=on; local merge oricând. Numele
+ * variabilei a rămas de la pilotul pe baterii, deși acum pornește asistentul pe
+ * toate lucrările: redenumirea ar cere schimbarea ei și pe Vercel.
+ */
 export function asistentPornit(): boolean {
   return process.env.ASISTENT_BATERII === 'on' || process.env.NODE_ENV === 'development';
 }
@@ -79,20 +92,32 @@ export function instantaneuCerere(lead: NewLead): AsistentCerere {
     // Mesajul liber poate avea date personale; modelul îl citește ca să nu
     // întrebe din nou ce omul a scris deja, dar nu ajunge în rezumatul firmei.
     mesaj: (lead.mesaj || '').slice(0, 1500),
+    segment: lead.segment,
+    suprafata: lead.suprafata,
+    stocare: lead.stocare,
+    wallbox: lead.wallbox,
+    bransament: lead.bransament,
   };
 }
 
 // ---------------------------------------------------------------------------
 // Prompt
 
-export const SYSTEM_PROMPT = `Ești Watt AI, asistentul cererii de pe instalatori-fotovoltaice.ro, platforma care trimite cererile de ofertă la firme de instalare din zona clientului. Dacă omul te întreabă cine ești, spui că ești un asistent AI al platformei, nu un om și nu un instalator.
+const P_IDENTITATE = `Ești Watt AI, asistentul cererii de pe instalatori-fotovoltaice.ro, platforma care trimite cererile de ofertă la firme de instalare din zona clientului. Dacă omul te întreabă cine ești, spui că ești un asistent AI al platformei, nu un om și nu un instalator.`;
 
-Omul cu care vorbești tocmai a trimis o cerere pentru o baterie de stocare (sau pentru extinderea unui sistem fotovoltaic pe care îl are deja). Cererea e salvată și a plecat deja la firme. Tu ai două treburi, în ordinea asta:
+const P_TRECE_IN_CERERE = `Ce afli trece în cerere și îl văd firmele care o preiau. Spune-i asta omului o dată, la început, ca să știe de ce întrebi.`;
+
+const P_CUM_INTREBI = `Întrebi un singur lucru pe replică, cel mult două dacă sunt legate. Nu reîntrebi ce scrie deja în cerere, decât dacă e neclar.`;
+
+const P_NU_STIE = `Dacă omul nu știe ceva, e în regulă: notezi „nu știe” și treci mai departe. Nu insiști. Dacă vrea să se oprească, îi mulțumești și te oprești.`;
+
+/** Baterie pe un sistem existent și extindere: pilotul din 12 nov 2026. */
+const P_RETROFIT = `Omul cu care vorbești tocmai a trimis o cerere pentru o baterie de stocare (sau pentru extinderea unui sistem fotovoltaic pe care îl are deja). Cererea e salvată și a plecat deja la firme. Tu ai două treburi, în ordinea asta:
 
 1. Să clarifici câteva lucruri pe care firma le întreabă oricum la primul telefon, ca oferta să fie potrivită din prima.
 2. Să-l ajuți să înțeleagă două lucruri care contează la o baterie: cât de mare poate fi față de sistemul pe care îl are și ce cere programul Casa Verde Baterii.
 
-Ce afli trece în cerere și îl văd firmele care o preiau. Spune-i asta omului o dată, la început, ca să știe de ce întrebi.
+${P_TRECE_IN_CERERE}
 
 ## Ce încerci să afli (doar ce lipsește din cerere sau e neclar)
 
@@ -107,17 +132,70 @@ Lista de mai jos e capătul conversației: când e acoperită, închei (vezi „
 - dacă intră în Casa Verde Baterii;
 - ce vrea să afle de la firmă (întrebi o singură dată, spre final).
 
-Întrebi un singur lucru pe replică, cel mult două dacă sunt legate. Nu reîntrebi ce scrie deja în cerere, decât dacă e neclar. Un exemplu des întâlnit: oamenii scriu „baterie de 15 kW” când vor să spună 15 kWh; confirmi unitatea.
+${P_CUM_INTREBI} Un exemplu des întâlnit: oamenii scriu „baterie de 15 kW” când vor să spună 15 kWh; confirmi unitatea.
 
-Dacă omul nu știe ceva, e în regulă: notezi „nu știe” și treci mai departe. Nu insiști. Dacă vrea să se oprească, îi mulțumești și te oprești.
+${P_NU_STIE}
 
 ## Ce explici, și de unde
 
 - Raportul dintre baterie și sistem îl iei DOAR din unealta \`dimensionare_baterie\` (tabelul din ghidul nostru). Dacă bateria cerută e mai mare decât poate umple sistemul din surplus, spui asta o dată, simplu, cu cifrele din unealtă, și întrebi dacă s-a gândit la o extindere a panourilor. E o opțiune, nu o recomandare: decizia e a lui și a firmei. Dacă programul îl împinge spre o capacitate mare (punctajul maxim pe capacitate e la ${PROGRAM.capacityForMaxPoints} kWh, minimul finanțat e ${PROGRAM.minKwh} kWh), explică ambele părți fără să alegi tu.
 - Despre Casa Verde Baterii răspunzi DOAR din unealta \`ghid_casa_verde_baterii\`, din secțiunea potrivită. Dacă răspunsul nu e acolo, spui că nu ai informația și că o confirmă firma sau AFM.
-- Pentru ce nu acoperă uneltele, spui cinstit că o lămurește firma la telefon și treci întrebarea în cerere.
+- Pentru ce nu acoperă uneltele, spui cinstit că o lămurește firma la telefon și treci întrebarea în cerere.`;
 
-## Ce nu faci niciodată
+/** Sistem nou și doar montaj (din 18 nov 2026): doar întrebări, fără dimensionare. */
+function promptSistemNou(cerere: AsistentCerere): string {
+  const montaj = cerere.tipLucrare === 'doar-montaj';
+  const firma = cerere.segment === 'comercial';
+  const ceACerut = montaj
+    ? 'montajul unui sistem fotovoltaic pentru care are deja echipamentele cumpărate'
+    : firma
+      ? 'un sistem fotovoltaic nou pentru o firmă (hală, magazin, birouri, fermă)'
+      : 'un sistem fotovoltaic nou';
+  const lista = [
+    montaj
+      ? '- ce echipamente are deja: câte panouri și de ce putere, marca și modelul invertorului, dacă are și structura de prindere și cablurile. E primul lucru pe care îl întrebi;'
+      : '',
+    '- consumul lunar, din factură (kWh pe lună sau lei pe lună), dacă lipsește din cerere;',
+    firma
+      ? '- programul de lucru: un schimb sau mai multe, și dacă se lucrează în weekend. De el depinde cât din producție se consumă pe loc;'
+      : '- când consumă mai mult curent: ziua, seara și noaptea, sau cam la fel;',
+    firma
+      ? '- puterea contractată sau aprobată la locul de consum, dacă o știe (scrie în contractul de furnizare sau în avizul de racordare);'
+      : '',
+    '- consumatori mari pe care îi are sau îi plănuiește: pompă de căldură, mașină electrică, aer condiționat, boiler electric' +
+      (firma ? ', utilaje, camere frigorifice' : '') +
+      ';',
+    '- acoperișul: încotro e orientat (sud, est-vest, altfel) și dacă îl umbrește ceva (copaci, horn, clădirea vecină);',
+    '- cât loc liber e pe acoperiș, cu aproximație, dacă știe (metri pătrați sau lungime și lățime) și nu scrie deja în cerere;',
+    '- fazarea, doar dacă în cerere lipsește sau e „nu știu”: monofazat sau trifazat (scrie pe contor sau pe siguranța generală);',
+    montaj ? '' : '- dacă vrea baterie de la început, mai târziu sau deloc, doar dacă în cerere nu e clar;',
+    '- dacă vrea să dea surplusul în rețea, ca prosumator;',
+    '- ce vrea să afle de la firmă (întrebi o singură dată, spre final).',
+  ].filter(Boolean);
+
+  return `Omul cu care vorbești tocmai a trimis o cerere pentru ${ceACerut}. Cererea e salvată și a plecat deja la firme. Treaba ta e una singură: să clarifici câteva lucruri pe care firma le întreabă oricum la primul telefon, ca oferta să fie potrivită din prima.
+
+${P_TRECE_IN_CERERE}
+
+## Ce încerci să afli (doar ce lipsește din cerere sau e neclar)
+
+Lista de mai jos e capătul conversației: când e acoperită, închei (vezi „Cum închei”). Nu lungești discuția cu „mai e ceva?” după fiecare răspuns.
+
+${lista.join('\n')}
+
+${P_CUM_INTREBI}
+
+${P_NU_STIE}
+
+## Ce explici, și de unde
+
+- Nu spui ce putere îi trebuie, câte panouri încap, cât produce sistemul sau în cât timp se amortizează. Nu ai o unealtă pentru asta: le calculează firma, după consum și acoperiș. Dacă omul întreabă, îi spui asta simplu și treci întrebarea în \`intrebari_pentru_firma\`.
+- Dacă vrea și baterie și întreabă ce capacitate i se potrivește, folosești unealta \`dimensionare_baterie\` cu consumul lui. Altfel nu deschizi tu subiectul mărimii bateriei.
+- Despre Casa Verde Baterii răspunzi doar dacă întreabă el, și DOAR din unealta \`ghid_casa_verde_baterii\`. Despre alte programe (Casa Verde Fotovoltaice, Electric Up, fonduri europene) nu ai informații: spui că le confirmă firma sau instituția care dă finanțarea.
+- Pentru orice altceva, spui cinstit că o lămurește firma la telefon și treci întrebarea în cerere.`;
+}
+
+const P_REGULI = `## Ce nu faci niciodată
 
 - Nu spui că un echipament merge sau nu merge cu altul (baterie cu invertor, invertor cu panouri). Nu ai date de compatibilitate. Transformi întrebarea într-una pentru firmă („Firma vă confirmă dacă bateria X se poate lega la invertorul Y”) și o salvezi în \`intrebari_pentru_firma\`.
 - Nu dai prețuri de echipamente sau de montaj și nu estimezi cât costă lucrarea. Sumele programului (procent, plafon, standard de cost) le poți spune, din ghid.
@@ -145,6 +223,16 @@ Când întrebarea ta are câteva răspunsuri tipice, apelează \`propune_variant
 ## Stil
 
 Vorbești cu „dumneavoastră”, cald și clar, ca un om care se pricepe și are răbdare. Replici scurte: 2-4 propoziții. Fără liste lungi, fără titluri, fără emoji. Nu folosi linia lungă (—); pune virgulă sau punct. Scrii în română corectă, cu diacritice. Dacă omul întreabă de altceva decât cererea lui, îi răspunzi pe scurt dacă ține de fotovoltaice, altfel îl readuci politicos la cerere.`;
+
+/**
+ * Promptul după lucrare. La baterie și extindere e textul pilotului, neschimbat
+ * (aceleași octeți, deci același cache). La sistem nou și doar montaj lista
+ * de întrebări e alta și asistentul nu dimensionează nimic.
+ */
+export function systemPrompt(cerere: AsistentCerere): string {
+  const miez = cerereRetrofit(cerere.tipLucrare) ? P_RETROFIT : promptSistemNou(cerere);
+  return `${P_IDENTITATE}\n\n${miez}\n\n${P_REGULI}`;
+}
 
 // ---------------------------------------------------------------------------
 // Unelte
@@ -215,13 +303,34 @@ export const TOOLS: Anthropic.Beta.BetaTool[] = [
         fazare: { type: 'string', enum: ['monofazat', 'trifazat', 'nu-stie'] },
         invertor: { type: 'string', description: 'Marca și modelul invertorului, cum le-a dat clientul.' },
         invertor_hibrid: { type: 'string', enum: ['da', 'nu', 'nu-stie'] },
-        putere_sistem_kwp: { type: 'number' },
+        putere_sistem_kwp: {
+          type: 'number',
+          description:
+            'La baterie și extindere: puterea sistemului existent. La sistem nou: puterea dorită, doar dacă clientul o corectează.',
+        },
         baterie_prezenta_kwh: { type: 'number', description: 'Bateria pe care o are deja, dacă are.' },
-        consum_lunar_kwh: { type: 'number' },
+        consum_lunar_kwh: { type: 'number', description: 'Consumul lunar în kWh. Dacă omul l-a spus în lei, folosește factura_lunara_lei.' },
+        factura_lunara_lei: { type: 'number', description: 'Factura lunară de curent, în lei, când omul n-a spus consumul în kWh.' },
         capacitate_dorita_kwh: { type: 'number' },
         motiv_capacitate: { type: 'string', description: 'De ce vrea capacitatea asta, pe scurt.' },
         deschis_extindere: { type: 'string', enum: ['da', 'nu', 'poate'] },
         program_cvb: { type: 'string', enum: ['da', 'nu', 'nu-stie'] },
+        orientare_acoperis: { type: 'string', description: 'Încotro e orientat acoperișul, pe scurt: „sud”, „est-vest”.' },
+        umbrire: { type: 'string', description: 'Ce umbrește acoperișul, pe scurt, sau „fără umbră”.' },
+        suprafata_acoperis_mp: { type: 'number', description: 'Locul liber de pe acoperiș, în metri pătrați.' },
+        consum_cand: { type: 'string', enum: ['ziua', 'seara', 'egal', 'nu-stie'] },
+        consumatori_mari: {
+          type: 'string',
+          description: 'Consumatori mari existenți sau planificați, pe scurt. „Niciunul” dacă nu are.',
+        },
+        vrea_baterie: { type: 'string', enum: ['acum', 'mai-tarziu', 'nu', 'nu-stie'] },
+        prosumator: { type: 'string', enum: ['da', 'nu', 'nu-stie'], description: 'Vrea să dea surplusul în rețea.' },
+        echipamente_cumparate: {
+          type: 'string',
+          description: 'Doar montaj: ce echipamente are deja (panouri, invertor, structură, cabluri), cum le-a descris.',
+        },
+        program_lucru: { type: 'string', description: 'Cereri de la firme: programul de lucru, pe scurt.' },
+        putere_contractata_kw: { type: 'number', description: 'Cereri de la firme: puterea contractată sau aprobată, în kW.' },
         intrebari_pentru_firma: {
           type: 'array',
           items: { type: 'string' },
@@ -240,7 +349,10 @@ type GuideSection = { id: string; title: string; content: string };
 type Guide = { slug: string; updatedAt?: string; publishedAt?: string; sections: GuideSection[] };
 
 function ghidCvb(sectiune: string): string {
-  const list = (Array.isArray(guides) ? guides : []) as unknown as Guide[];
+  // `guides.json` e `{ guides: [...] }`, nu o listă. Până pe 18 nov 2026 codul
+  // de aici aștepta o listă, găsea zero ghiduri și unealta răspundea mereu
+  // „Secțiunea nu există”: Watt n-a putut cita ghidul deloc de la lansare.
+  const list = ((guides as unknown as { guides?: Guide[] }).guides ?? []) as Guide[];
   const g = list.find((x) => x.slug === 'casa-verde-baterii-2026-program-stocare-afm');
   const s = g?.sections.find((x) => x.id === sectiune);
   if (!g || !s) return JSON.stringify({ eroare: 'Secțiunea nu există.' });
@@ -291,6 +403,9 @@ const ENUMS: Record<string, readonly string[]> = {
   invertor_hibrid: ['da', 'nu', 'nu-stie'],
   deschis_extindere: ['da', 'nu', 'poate'],
   program_cvb: ['da', 'nu', 'nu-stie'],
+  consum_cand: ['ziua', 'seara', 'egal', 'nu-stie'],
+  vrea_baterie: ['acum', 'mai-tarziu', 'nu', 'nu-stie'],
+  prosumator: ['da', 'nu', 'nu-stie'],
 };
 
 /** Câmpurile din unealtă în forma salvată. Ce nu trece verificarea se ignoră. */
@@ -315,6 +430,8 @@ export function mergeDate(prev: AsistentDate, input: Record<string, unknown>): A
   if (bat) next.bateriePrezentaKwh = bat;
   const consum = num(input.consum_lunar_kwh);
   if (consum) next.consumLunarKwh = consum;
+  const factura = num(input.factura_lunara_lei);
+  if (factura) next.facturaLunaraLei = factura;
   const cap = num(input.capacitate_dorita_kwh);
   if (cap) next.capacitateDoritaKwh = cap;
   const motiv = str(input.motiv_capacitate, 200);
@@ -323,6 +440,26 @@ export function mergeDate(prev: AsistentDate, input: Record<string, unknown>): A
   if (ext) next.deschisExtindere = ext as AsistentDate['deschisExtindere'];
   const cvb = en('program_cvb');
   if (cvb) next.programCvb = cvb as AsistentDate['programCvb'];
+  const orientare = str(input.orientare_acoperis, 80);
+  if (orientare) next.orientareAcoperis = orientare;
+  const umbrire = str(input.umbrire, 160);
+  if (umbrire) next.umbrire = umbrire;
+  const suprafata = num(input.suprafata_acoperis_mp);
+  if (suprafata) next.suprafataAcoperisMp = suprafata;
+  const cand = en('consum_cand');
+  if (cand) next.consumCand = cand as AsistentDate['consumCand'];
+  const consumatori = str(input.consumatori_mari, 200);
+  if (consumatori) next.consumatoriMari = consumatori;
+  const vreaBaterie = en('vrea_baterie');
+  if (vreaBaterie) next.vreaBaterie = vreaBaterie as AsistentDate['vreaBaterie'];
+  const prosumator = en('prosumator');
+  if (prosumator) next.prosumator = prosumator as AsistentDate['prosumator'];
+  const echipamente = str(input.echipamente_cumparate, 300);
+  if (echipamente) next.echipamenteCumparate = echipamente;
+  const program = str(input.program_lucru, 160);
+  if (program) next.programLucru = program;
+  const contractata = num(input.putere_contractata_kw);
+  if (contractata) next.putereContractataKw = contractata;
   if (Array.isArray(input.intrebari_pentru_firma)) {
     next.intrebariPentruFirma = input.intrebari_pentru_firma
       .map((q) => str(q, 240))
@@ -342,8 +479,12 @@ const COMPATIBILITATE =
 const PROMISIUNI = /\b(sigur\s+(primiți|veți\s+primi|intrați)|aveți\s+garantat|garantat\s+(finanțarea|punctajul))\b/i;
 const LINIE_LUNGA = /—/;
 
-export function verificaRaspuns(text: string): string[] {
+export function verificaRaspuns(text: string, variante: string[] = []): string[] {
   const probleme: string[] = [];
+  // Butoane sub o replică fără întrebare: omul nu știe la ce răspunde. Prins la
+  // proba cu Sonnet 5.5 din 18 nov 2026 („Am notat și întrebările pentru firmă.”
+  // deasupra butoanelor „Sud / Est-vest / Altfel / Nu știu”).
+  if (variante.length && !text.includes('?')) probleme.push('fara-intrebare');
   // „Firma vă confirmă dacă ... se poate lega la ...” e forma corectă: întrebarea
   // pentru firmă, nu verdictul. Regula prinde doar afirmațiile.
   const faraIntrebari = text.replace(/firma\s+(vă\s+)?(confirmă|verifică|spune)[^.?!]*[.?!]/gi, '');
@@ -365,6 +506,11 @@ function cerereRescriere(probleme: string[]): string {
   }
   if (probleme.includes('promisiune')) motive.push('ai promis un rezultat al programului; spune doar ce scrie în ghid');
   if (probleme.includes('linie-lunga')) motive.push('ai folosit linia lungă (—); înlocuiește-o cu virgulă sau punct');
+  if (probleme.includes('fara-intrebare')) {
+    motive.push(
+      'ai pus butoane de răspuns, dar replica nu are nicio întrebare, deci omul nu știe la ce răspunde; scrie replica întreagă: ce ai notat, răspunsul la ce a întrebat el, apoi întrebarea la care răspund butoanele',
+    );
+  }
   return `[Verificare automată, nu e de la client] Rescrie ultima replică pentru client: ${motive.join('; ')}. Scrie doar replica nouă, fără să pomenești verificarea.`;
 }
 
@@ -451,18 +597,38 @@ export async function noteazaConversatia(leadId: string, nota: 'util' | 'nu_prea
 /** Prima replică, scrisă de noi, nu de model: nu costă nimic dacă omul nu răspunde. */
 export function mesajIntro(cerere: AsistentCerere): string {
   const cap = cerere.capacitateBaterie ? `bateria de ${cerere.capacitateBaterie} kWh` : 'baterie';
-  const ce = cerere.tipLucrare === 'extindere' ? 'extinderea sistemului' : cap;
+  const putere = parseFloat(String(cerere.putere || '').replace(',', '.'));
+  const sistem = putere > 0 ? `sistemul fotovoltaic de ${String(cerere.putere).trim()} kW` : 'sistemul fotovoltaic';
+  const ce =
+    cerere.tipLucrare === 'extindere'
+      ? 'extinderea sistemului'
+      : cerere.tipLucrare === 'doar-baterie'
+        ? cap
+        : cerere.tipLucrare === 'doar-montaj'
+          ? 'montajul sistemului fotovoltaic'
+          : sistem;
   return `Bună ziua! Sunt Watt AI, asistentul platformei. Am primit cererea pentru ${ce} și a plecat deja la firmele din zonă. Dacă aveți 2-3 minute, vă pun câteva întrebări pe care firma le pune oricum la primul telefon, ca oferta să fie potrivită din prima. Ce îmi spuneți intră în cerere și îl văd firmele care o preiau. Putem începe?`;
 }
 
 function contextCerere(c: Conversatie): string {
   const x = c.cerere;
   const v = valoriEfective(x, c.date);
+  const retrofit = cerereRetrofit(x.tipLucrare);
+  const ePutere = retrofit ? 'Puterea sistemului existent' : 'Puterea dorită';
   const linii = [
     `Lucrare: ${getWorkTypeShort(x.tipLucrare) || x.tipLucrare}`,
+    x.segment ? `Cererea e pentru: ${x.segment === 'comercial' ? 'o firmă' : 'o locuință'}` : '',
     `Județ: ${x.judet}`,
-    x.putere ? `Puterea sistemului existent (din formular): ${x.putere} kW` : 'Puterea sistemului existent: necompletată',
-    x.capacitateBaterie ? `Capacitate de baterie cerută (din formular): ${x.capacitateBaterie} kWh` : 'Capacitate de baterie: necompletată',
+    x.putere ? `${ePutere} (din formular): ${x.putere} kW` : `${ePutere}: necompletată`,
+    x.capacitateBaterie
+      ? `Capacitate de baterie cerută (din formular): ${x.capacitateBaterie} kWh`
+      : retrofit
+        ? 'Capacitate de baterie: necompletată'
+        : '',
+    !retrofit && x.stocare ? `Baterie (din formular): ${getYesNoLabel(x.stocare)}` : '',
+    !retrofit && x.wallbox ? `Stație de încărcare auto (din formular): ${getYesNoLabel(x.wallbox)}` : '',
+    x.suprafata ? `Suprafață disponibilă (din formular): ${x.suprafata}` : '',
+    x.bransament ? `Branșament electric: ${getConnectionLabel(x.bransament)}` : '',
     x.consumLunar ? `Consum lunar (din formular): ${x.consumLunar}` : 'Consum lunar: necompletat',
     x.fazare ? `Fazare (din formular): ${x.fazare}` : 'Fazare: necompletată',
     `Finanțare: ${getFinancingLabel(x.finantare) || x.finantare || 'necompletată'}`,
@@ -571,7 +737,7 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
       betas: ['server-side-fallback-2026-07-01'],
       fallbacks: 'default',
       system: [
-        { type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } },
+        { type: 'text', text: systemPrompt(c.cerere), cache_control: { type: 'ephemeral' } },
         { type: 'text', text: contextNote },
       ],
       output_config: { effort: EFFORT },
@@ -639,7 +805,7 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
 
     // O singură rescriere, ca la Smile AI: dacă și a doua încalcă regula,
     // pleacă oricum (logul o arată), nu blocăm omul într-o buclă.
-    const probleme = raspuns ? verificaRaspuns(raspuns) : [];
+    const probleme = raspuns ? verificaRaspuns(raspuns, state.variante) : [];
     if (probleme.length) {
       api.push({ role: 'user', content: cerereRescriere(probleme) });
       const res = await call(api);
@@ -735,12 +901,15 @@ export async function raspundeMock(c: Conversatie, mesaj: string): Promise<{ ras
   const date = mergeDate(c.date, {
     fazare: /tri/i.test(mesaj) ? 'trifazat' : /mono/i.test(mesaj) ? 'monofazat' : undefined,
     invertor: /huawei|deye|growatt|fronius|sungrow|solis/i.test(mesaj) ? mesaj.slice(0, 80) : undefined,
+    orientare_acoperis: /\b(sud|est|vest|nord)\b/i.test(mesaj) ? mesaj.slice(0, 80) : undefined,
     rezumat: 'Clientul a confirmat câteva detalii în modul de probă.',
   });
   const incheie = c.replici + 1 >= 3;
   const raspuns = incheie
     ? '[Mod de probă] Mulțumesc pentru detalii! Le-am trecut în cerere și le văd firmele care o preiau, înainte să vă sune. Dacă mai aveți întrebări, vă stau la dispoziție aici.'
-    : '[Mod de probă] Am notat. Ce invertor aveți acum, marca și modelul?';
+    : cerereRetrofit(c.cerere.tipLucrare)
+      ? '[Mod de probă] Am notat. Ce invertor aveți acum, marca și modelul?'
+      : '[Mod de probă] Am notat. Încotro e orientat acoperișul?';
   const acum = new Date().toISOString();
   const afisare: MesajAfisat[] = [
     ...(c.mesaje.afisare.length ? c.mesaje.afisare : [{ rol: 'asistent' as const, text: mesajIntro(c.cerere), la: acum }]),
@@ -905,9 +1074,17 @@ const CAMPURI_RAPORT: [keyof AsistentDate, string][] = [
   ['invertor', 'invertor'],
   ['fazare', 'fazare'],
   ['consumLunarKwh', 'consum'],
+  ['facturaLunaraLei', 'factura în lei'],
   ['capacitateDoritaKwh', 'capacitate'],
   ['motivCapacitate', 'motivul capacității'],
   ['deschisExtindere', 'extindere'],
+  ['orientareAcoperis', 'orientarea acoperișului'],
+  ['umbrire', 'umbrire'],
+  ['consumCand', 'când consumă'],
+  ['consumatoriMari', 'consumatori mari'],
+  ['vreaBaterie', 'baterie da sau nu'],
+  ['prosumator', 'prosumator'],
+  ['echipamenteCumparate', 'echipamente cumpărate'],
   ['intrebariPentruFirma', 'întrebări pentru firmă'],
   ['rezumat', 'rezumat'],
 ];
