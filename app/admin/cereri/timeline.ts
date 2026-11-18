@@ -83,6 +83,7 @@ const CLIENT_EVENT_LABEL: Record<string, string> = {
   verificare_deschisa: 'Clientul a deschis linkul „Ați găsit o ofertă bună?” din WhatsApp',
   whatsapp_firma_deschis: 'Radu a deschis mesajul WhatsApp „Cu ce firmă ați lucrat?”',
   firma_aleasa_raspuns: 'Clientul a spus cu ce firmă a lucrat (după închiderea pe „altundeva”)',
+  whatsapp_status_deschis: 'Radu a deschis mesajul WhatsApp „Mai căutați?”',
   whatsapp_raspuns: 'Clientul a răspuns pe WhatsApp',
   whatsapp_revenire: 'Radu a revenit pe WhatsApp (a doua încercare)',
 };

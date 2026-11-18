@@ -7,7 +7,8 @@ import { useState } from 'react';
 // faci tu. Click-ul notează deschiderea, ca să știi pe cine ai întrebat.
 // E link în rând, deci nu deschide modalul (ActivityTable ignoră linkurile).
 // `kind: 'firma'` (13 nov 2026) = „Cu ce firmă ați lucrat?”, pe cererile închise
-// pe altundeva.
+// pe altundeva. `kind: 'status'` (18 nov 2026) = „Mai căutați?”, pe cererile
+// ținute de o firmă fără nicio mișcare de 7+ zile.
 export default function WhatsAppButton({
   leadId,
   kind = 'oferta',
@@ -16,7 +17,7 @@ export default function WhatsAppButton({
   openedAt,
 }: {
   leadId: string;
-  kind?: 'oferta' | 'firma';
+  kind?: 'oferta' | 'firma' | 'status';
   href: string;
   text: string;
   openedAt: string | null;
@@ -49,7 +50,13 @@ export default function WhatsAppButton({
         opened ? 'bg-slate-100 text-slate-500 hover:bg-slate-200' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
       }`}
     >
-      {opened ? `WhatsApp deschis ${day}` : kind === 'firma' ? 'WhatsApp: ce firmă?' : 'WhatsApp: ofertă bună?'}
+      {opened
+        ? `WhatsApp deschis ${day}`
+        : kind === 'firma'
+          ? 'WhatsApp: ce firmă?'
+          : kind === 'status'
+            ? 'WhatsApp: mai căutați?'
+            : 'WhatsApp: ofertă bună?'}
     </a>
   );
 }

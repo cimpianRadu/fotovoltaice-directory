@@ -49,7 +49,7 @@ import RevenireButton from './RevenireButton';
 
 export const dynamic = 'force-dynamic';
 
-const KIND_LABEL = { oferta: '„Ofertă bună?”', firma: '„Ce firmă?”' } as const;
+const KIND_LABEL = { oferta: '„Ofertă bună?”', firma: '„Ce firmă?”', status: '„Mai căutați?”' } as const;
 const MOTIV_LABEL = {
   oferta: 'n-a răspuns',
   firma: 'n-a răspuns',
@@ -466,7 +466,7 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
                   </p>
                   <RevenireButton
                     leadId={thread.leadId}
-                    kind={thread.kind}
+                    kind={thread.kind === 'firma' ? 'firma' : 'oferta'}
                     motiv={row.revenireDue.motiv}
                     href={row.revenireDue.href}
                     text={row.revenireDue.text}

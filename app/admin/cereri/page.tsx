@@ -69,6 +69,8 @@ export const dynamic = 'force-dynamic';
 // `wa=1` cu cele încă neîntrebate.
 // 13 nov 2026: același buton, „WhatsApp: ce firmă?”, pe cererile închise pe
 // altundeva pe care le-a revendicat o firmă. Intră în același filtru.
+// 18 nov 2026: „WhatsApp: mai căutați?”, pe cererile deschise ținute de o firmă
+// fără ofertă (sau „mă informez”) și fără nicio mișcare de 7+ zile. Tot în filtru.
 
 type EtapaFilter = '' | 'deschise' | Etapa;
 type ContFilter = '' | 'da' | 'nu';
@@ -276,13 +278,22 @@ export default async function CereriPage({ searchParams }: Props) {
   }
   let waOpened = new Map<string, string>();
   let waFirmaOpened = new Map<string, string>();
+  let waStatusOpened = new Map<string, string>();
   try {
     const ids = leads.map((l) => l.timestamp);
-    [waOpened, waFirmaOpened] = await Promise.all([getWhatsappOpened(ids), getWhatsappOpened(ids, 'firma')]);
+    [waOpened, waFirmaOpened, waStatusOpened] = await Promise.all([
+      getWhatsappOpened(ids),
+      getWhatsappOpened(ids, 'firma'),
+      getWhatsappOpened(ids, 'status'),
+    ]);
   } catch (err) {
     dbError ||= err instanceof Error ? err.message : String(err);
   }
-  const waOpenedAt = (kind: WhatsappKind, id: string) => (kind === 'firma' ? waFirmaOpened : waOpened).get(id) ?? null;
+  const waOpenedAt = (kind: WhatsappKind, id: string) =>
+    (kind === 'firma' ? waFirmaOpened : kind === 'status' ? waStatusOpened : waOpened).get(id) ?? null;
+  // „Mai căutați?” cere ultima mișcare; fără activitatea din DB nu-l arătăm (ar ieși pe cereri mișcate de curând).
+  const waCheck = (lead: NewLead, cl: LeadClaim[]) =>
+    whatsappCheckFor(lead, cl, activityById ? lastActivity(lead, cl, activityById.get(lead.timestamp)) : null);
 
   const claimsByLead = new Map<string, LeadClaim[]>();
   for (const c of claims) claimsByLead.set(c.leadId, [...(claimsByLead.get(c.leadId) ?? []), c]);
@@ -308,7 +319,7 @@ export default async function CereriPage({ searchParams }: Props) {
         last: lastActivity(lead, all, activity),
         fresh: leadFreshSince(lead),
         power: leadKw(lead),
-        whatsapp: whatsappCheckFor(lead, all),
+        whatsapp: waCheck(lead, all),
         // Are rost de trimis doar ce o firmă poate revendica din link: vizibilă pe /cereri și cu loc liber.
         // Etapa deschisă pe deasupra: o firmă poate marca „Concretizat” fără ca cererea să fie
         // închisă în CRM, iar atunci ea stă încă pe /cereri (Constanța, 31 aug).
@@ -363,7 +374,7 @@ export default async function CereriPage({ searchParams }: Props) {
   const shareText = shareRows.map((r) => shareBlock(r.lead)).join('\n\n');
 
   const waCount = leads.filter((l) => {
-    const check = whatsappCheckFor(l, claimsByLead.get(l.timestamp) ?? []);
+    const check = waCheck(l, claimsByLead.get(l.timestamp) ?? []);
     return check && !waOpenedAt(check.kind, l.timestamp);
   }).length;
 
@@ -476,7 +487,7 @@ export default async function CereriPage({ searchParams }: Props) {
             🔥 Hot · {hotCount}
           </Pill>
           <Pill href={qs({ wa: wa ? '' : '1' })} active={wa}>
-            <span title="Cereri deschise unde o firmă a trimis ofertă, plus cele închise pe altundeva pe care le-a revendicat o firmă, cărora încă nu le-ai scris pe WhatsApp">
+            <span title="Cereri deschise unde o firmă a trimis ofertă, cele ținute de o firmă fără nicio mișcare de 7+ zile („mai căutați?”), plus cele închise pe altundeva pe care le-a revendicat o firmă, cărora încă nu le-ai scris pe WhatsApp">
               💬 De întrebat pe WhatsApp · {waCount}
             </span>
           </Pill>

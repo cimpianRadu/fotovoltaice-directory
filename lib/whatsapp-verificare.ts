@@ -31,6 +31,16 @@
 // schimbă statusul, doar notează și te anunță pe contact@ dacă e o firmă de la
 // noi. Marcajul lui e separat, `whatsapp_firma_deschis`, ca o cerere întrebată
 // cândva „ofertă bună?” să poată fi întrebată și asta.
+//
+// 18 nov 2026 (Radu, la comercialele revendicate de Axionet și rămase fără
+// veste: „să vedem ce zic ei”), al treilea mesaj, „Mai căutați?”, pe cererile
+// deschise unde „ofertă bună?” nu se potrivește (nicio ofertă trimisă, sau
+// „mă informez”), dar cel puțin o firmă ține cererea și nimic nu s-a mișcat de
+// STATUS_LINISTE_ZILE zile (nici firma, nici clientul, nici noi). Statusul pus
+// de firmă („În discuții”, „De sunat”) rămâne des neatins după ce clientul a
+// ales: pe 17 nov, mai mulți cu „Ofertă trimisă” alegeseră deja altundeva. Fără
+// link și fără numele firmelor: întrebăm doar unde e clientul. O singură dată pe
+// cerere, fără revenire. Marcajul: `whatsapp_status_deschis`.
 
 import 'server-only';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/min';
@@ -113,10 +123,27 @@ export function whatsappFirmaText(lead: NewLead, link: string): string {
   ].join('\n\n');
 }
 
-export type WhatsappKind = 'oferta' | 'firma';
+/** Textul „Mai căutați?”. Scris de Radu pe 18 nov 2026; orice schimbare trece întâi pe la el. */
+export function whatsappStatusText(lead: NewLead): string {
+  // Puterea doar dacă e un număr pozitiv (există cereri cu „-5” scris în formular).
+  const putere = Number.parseFloat(String(lead.putere).replace(',', '.')) > 0 ? ` de ${lead.putere} kW` : '';
+  const unde = !lead.judet ? '' : lead.judet === 'București' ? ' în București' : ` în județul ${lead.judet}`;
+  return [
+    `Bună ziua! Sunt Radu, de la instalatori-fotovoltaice.ro. Pe ${fmtDay(lead.timestamp)} ați trimis la noi o cerere pentru un sistem fotovoltaic${putere}${unde}.`,
+    'Voiam doar să văd dacă ați găsit o ofertă satisfăcătoare sau încă sunteți în căutare de oferte.',
+  ].join('\n\n');
+}
+
+/** După câte zile fără nicio mișcare pe cerere apare „Mai căutați?”. */
+export const STATUS_LINISTE_ZILE = 7;
+
+export type WhatsappKind = 'oferta' | 'firma' | 'status';
 
 export interface WhatsappCheck {
-  /** `oferta` = „Ați găsit o ofertă bună?” (deschise), `firma` = „Cu ce firmă ați lucrat?” (închise pe altundeva). */
+  /**
+   * `oferta` = „Ați găsit o ofertă bună?” (deschise, cu ofertă), `firma` = „Cu ce firmă ați lucrat?” (închise pe
+   * altundeva), `status` = „Mai căutați?” (deschise, fără ofertă sau „mă informez”, liniștite de 7+ zile).
+   */
   kind: WhatsappKind;
   /** Linkul wa.me cu numărul clientului și textul completat. */
   href: string;
@@ -126,15 +153,22 @@ export interface WhatsappCheck {
 
 /**
  * Mesajul pentru cererea dată, sau null dacă nu are rost (închisă, fără nicio
- * ofertă de la o firmă, fără mobil). Semnează linkul, deci
+ * firmă pe ea, fără mobil). Semnează linkul, deci
  * cere PORTAL_SECRET; fără el întoarce null, nu un link care n-ar merge.
+ * `lastMoveAt` = ultima mișcare pe cerere (firmă, client, noi), pentru „Mai
+ * căutați?”; fără ea mesajul ăsta nu apare.
  */
-export function whatsappCheckFor(lead: NewLead, claims: LeadClaim[]): WhatsappCheck | null {
+export function whatsappCheckFor(
+  lead: NewLead,
+  claims: LeadClaim[],
+  lastMoveAt?: string | null,
+  now = Date.now(),
+): WhatsappCheck | null {
   if (isLeadHidden(lead)) return null;
   if (lead.crmStatus === 'altundeva') return whatsappFirmaFor(lead, claims);
-  if (isLeadClosed(lead.crmStatus) || isLeadInformez(lead)) return null;
-  const firms = offerFirms(lead.timestamp, claims);
-  if (firms.length === 0) return null;
+  if (isLeadClosed(lead.crmStatus)) return null;
+  const firms = isLeadInformez(lead) ? [] : offerFirms(lead.timestamp, claims);
+  if (firms.length === 0) return whatsappStatusFor(lead, claims, lastMoveAt, now);
   const number = whatsappNumber(lead.telefon);
   if (!number) return null;
   let link: string;
@@ -145,6 +179,24 @@ export function whatsappCheckFor(lead: NewLead, claims: LeadClaim[]): WhatsappCh
   }
   const text = whatsappText(lead, firms, link);
   return { kind: 'oferta', href: `https://wa.me/${number}?text=${encodeURIComponent(text)}`, text, firms };
+}
+
+/** „Mai căutați?”, dacă o firmă încă ține cererea și nimic nu s-a mișcat de STATUS_LINISTE_ZILE zile. */
+function whatsappStatusFor(
+  lead: NewLead,
+  claims: LeadClaim[],
+  lastMoveAt: string | null | undefined,
+  now: number,
+): WhatsappCheck | null {
+  const held = claims.filter((c) => c.leadId === lead.timestamp && !c.releasedAt);
+  if (held.length === 0) return null;
+  const last = Date.parse(lastMoveAt || '');
+  if (!Number.isFinite(last) || now - last < STATUS_LINISTE_ZILE * 86_400_000) return null;
+  const number = whatsappNumber(lead.telefon);
+  if (!number) return null;
+  const firms = claimFirms(lead.timestamp, held);
+  const text = whatsappStatusText(lead);
+  return { kind: 'status', href: `https://wa.me/${number}?text=${encodeURIComponent(text)}`, text, firms };
 }
 
 /** „Cu ce firmă ați lucrat?”, doar dacă cel puțin o firmă a revendicat cererea. */
@@ -248,6 +300,7 @@ export function whatsappRevenireFor(
 export const WHATSAPP_OPENED_EVENT = {
   oferta: 'whatsapp_deschis',
   firma: 'whatsapp_firma_deschis',
+  status: 'whatsapp_status_deschis',
 } as const satisfies Record<WhatsappKind, string>;
 
 /** Când a deschis Radu ultima dată mesajul de felul dat, pe cerere. */

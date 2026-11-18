@@ -27,6 +27,7 @@ import type { RevenireMotiv, WhatsappKind } from './whatsapp-verificare';
 const SENT_EVENT: Record<string, WhatsappKind> = {
   whatsapp_deschis: 'oferta',
   whatsapp_firma_deschis: 'firma',
+  whatsapp_status_deschis: 'status',
 };
 
 /**
@@ -84,7 +85,7 @@ const iso = (v: unknown) => new Date(v as string).toISOString();
 export async function getWhatsappThreads(): Promise<WhatsappThread[]> {
   const rows = await db()`
     SELECT lead_id, event, props, at FROM client_events
-    WHERE event IN ('whatsapp_deschis', 'whatsapp_firma_deschis', 'verificare_deschisa',
+    WHERE event IN ('whatsapp_deschis', 'whatsapp_firma_deschis', 'whatsapp_status_deschis', 'verificare_deschisa',
                     'firma_aleasa_raspuns', 'whatsapp_raspuns', 'whatsapp_revenire')
       AND lead_id IS NOT NULL
     ORDER BY at
@@ -122,7 +123,7 @@ export async function getWhatsappThreads(): Promise<WhatsappThread[]> {
           }
         : null;
 
-    for (const kind of ['oferta', 'firma'] as const) {
+    for (const kind of ['oferta', 'firma', 'status'] as const) {
       const mine = sends.filter((e) => SENT_EVENT[e.event] === kind);
       if (mine.length === 0) continue;
       const sentAt = mine[0].at;
@@ -149,7 +150,9 @@ export async function getWhatsappThreads(): Promise<WhatsappThread[]> {
       const revenire: WhatsappFollowUp | null = revRow
         ? {
             at: String(revRow.props?.la || revRow.at),
-            motiv: (['oferta', 'firma', 'nume_firma'] as const).find((m) => m === revRow.props?.motiv) ?? kind,
+            motiv:
+              (['oferta', 'firma', 'nume_firma'] as const).find((m) => m === revRow.props?.motiv) ??
+              (kind === 'firma' ? 'firma' : 'oferta'),
             linkOpenedAt:
               events.find(
                 (e) =>
@@ -210,11 +213,13 @@ export function revenireMotiv(
   now = Date.now(),
 ): RevenireMotiv | null {
   if (thread.revenire) return null;
+  // „Mai căutați?” se trimite o singură dată, fără revenire (Radu, 18 nov 2026).
+  if (thread.kind === 'status') return null;
   // A zis că a ales, fără firmă: întrebarea de nume merge imediat, e continuarea discuției.
   if (noFirm) return 'nume_firma';
   if (firstResponseAt || !open) return null;
   if (now - Date.parse(thread.sentAt) < REVENIRE_DUPA_MS) return null;
-  return thread.kind;
+  return thread.kind === 'firma' ? 'firma' : 'oferta';
 }
 
 // ── Firmele cu cont, pe județ ───────────────────────────────────────────────
