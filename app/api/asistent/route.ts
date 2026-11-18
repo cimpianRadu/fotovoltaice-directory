@@ -9,6 +9,7 @@
 //   POST {leadId, token, nota, motiv} → clientul spune dacă i-a fost util
 
 import { NextResponse } from 'next/server';
+import { alertError } from '@/lib/alert';
 import { verifyLeadPhotoToken } from '@/lib/lead-photos';
 import { getFullLeadById } from '@/lib/sheets';
 import {
@@ -149,6 +150,12 @@ export async function POST(request: Request) {
   } catch (err) {
     if (err instanceof AsistentEroare) return NextResponse.json({ error: err.message }, { status: err.status });
     console.error('[asistent] replică:', err);
+    await alertError({
+      area: 'asistent',
+      kind: err instanceof Error ? `${err.constructor.name}-${(err as { status?: number }).status ?? 'fara-status'}` : 'exceptie',
+      message: `Asistentul de după cerere nu răspunde: ${err instanceof Error ? err.message : String(err)}`.slice(0, 200),
+      details: { stack: err instanceof Error ? err.stack?.split('\n').slice(0, 6).join('\n') : undefined },
+    });
     return NextResponse.json(
       { error: 'Asistentul nu răspunde acum. Cererea dumneavoastră e salvată oricum.' },
       { status: 500 },

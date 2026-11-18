@@ -11,6 +11,7 @@ import AttributionCapture from '@/components/AttributionCapture';
 import PublicChrome from '@/components/layout/PublicChrome';
 import { getCompanies, getCoveredCounties } from '@/lib/utils';
 import './globals.css';
+import ReportIssueDialog from '@/components/report/ReportIssueDialog';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -95,6 +96,7 @@ export default function RootLayout({
             <PartnerCarousel />
             <CtaPopup />
           </PublicChrome>
+          <ReportIssueDialog />
         </SegmentProvider>
       </body>
     </html>

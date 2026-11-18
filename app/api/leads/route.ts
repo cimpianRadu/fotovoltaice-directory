@@ -10,6 +10,7 @@ import {
   saveLeadToSheet,
 } from '@/lib/sheets';
 import { sendCountyLeadAlert } from '@/lib/email';
+import { alertError } from '@/lib/alert';
 import { isReadyLead } from '@/lib/lead-readiness';
 import { createLeadPhotoToken } from '@/lib/lead-photos';
 import { CLIENT_LEAD_COOKIE, ensureAccount, leadGrantCookie } from '@/lib/client-auth';
@@ -234,6 +235,12 @@ export async function POST(request: Request) {
     return res;
   } catch (err) {
     console.error('Lead API error:', err);
+    await alertError({
+      area: 'leads',
+      kind: err instanceof Error ? `exceptie-${err.name}` : 'exceptie',
+      message: 'Formularul de cerere a dat eroare 500: cererea s-a pierdut',
+      details: { eroare: err instanceof Error ? err.message.slice(0, 300) : String(err), stack: err instanceof Error ? err.stack?.split('\n').slice(0, 6).join('\n') : undefined },
+    });
     return NextResponse.json(
       { error: 'Eroare internă. Vă rugăm încercați din nou.' },
       { status: 500 }

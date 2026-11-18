@@ -25,6 +25,7 @@ import {
 import { generateLocalBusinessJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo';
 import { clampMeta } from '@/lib/utils-shared';
 import guidesData from '@/data/guides.json';
+import ReportIssueButton from '@/components/report/ReportIssueButton';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -229,6 +230,15 @@ export default async function CompanyDetailPage({ params }: Props) {
                 </a>{' '}
                 și le actualizăm imediat.
               </p>
+            </div>
+            <div className="-mt-5">
+              <ReportIssueButton
+                variant="link"
+                kind="date-gresite"
+                subject={company.name}
+                source="profil"
+                label="Ai văzut o informație greșită despre firmă? Spune-ne direct de aici"
+              />
             </div>
           </div>
 

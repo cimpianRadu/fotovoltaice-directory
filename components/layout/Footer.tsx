@@ -2,6 +2,7 @@ import Link from 'next/link';
 import guidesData from '@/data/guides.json';
 import { getCoveredCounties, slugifyCounty, getCompaniesByCounty, getCompanies } from '@/lib/utils';
 import FooterAccordion from './FooterAccordion';
+import ReportIssueButton from '@/components/report/ReportIssueButton';
 
 export default function Footer() {
   const latestGuides = guidesData.guides
@@ -110,6 +111,7 @@ export default function Footer() {
             <Link href="/termeni-conditii" className="hover:text-gray-200 transition-colors">Termeni</Link>
             <Link href="/politica-cookies" className="hover:text-gray-200 transition-colors">Cookies</Link>
             <Link href="/despre" className="hover:text-gray-200 transition-colors">Despre Noi</Link>
+            <ReportIssueButton source="footer" />
           </div>
           <div className="mt-3 sm:mt-0 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-400">
             <a href="mailto:contact@instalatori-fotovoltaice.ro" className="hover:text-gray-200 transition-colors">
