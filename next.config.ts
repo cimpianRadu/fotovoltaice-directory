@@ -44,6 +44,12 @@ const nextConfig: NextConfig = {
             key: "Strict-Transport-Security",
             value: "max-age=63072000; includeSubDomains; preload",
           },
+          // Scanarea din 18 nov. 2026: fără ghicirea tipului de fișier, fără
+          // încadrare în iframe-uri străine (clickjacking), fără URL-ul complet
+          // trimis altor site-uri. Iframe-ul din /admin/cont-client e srcDoc, nu e afectat.
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
         ],
       },
       {
