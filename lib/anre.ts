@@ -37,6 +37,45 @@ for (const f of anreFirms) {
   firmIndex.set(`${f.societate}|${f.judet}`, f);
 }
 
+/**
+ * Data extrasului din registrul ANRE din `data/anre-atestate.json`.
+ * Apare pe paginile publice („registrul ANRE, extras la …”): ACTUALIZEAZ-O
+ * de fiecare dată când reîmprospătezi registrul.
+ */
+export const ANRE_REGISTRY_SNAPSHOT_DATE = '2026-09-11';
+
+function parseAnreDate(s: string): Date | null {
+  const [d, m, y] = (s || '').split('/').map(Number);
+  if (!d || !m || !y) return null;
+  return new Date(y, m - 1, d);
+}
+
+/**
+ * Câte firme cu sediul în județ au în registru un atestat `code` (ex. C2A)
+ * în stare „Atestat” și neexpirat la `asOf`. Numără toate firmele din
+ * registru, nu doar pe cele din director.
+ */
+export function countRegistryFirmsWithActiveCode(
+  judet: string,
+  code: string,
+  asOf: Date = new Date(),
+): number {
+  const target = normalizeForMatch(judet);
+  const wanted = code.toUpperCase();
+  let n = 0;
+  for (const f of anreFirms) {
+    if (normalizeForMatch(f.judet) !== target) continue;
+    const ok = (f.certificates || []).some((c) => {
+      if (c.stare !== 'Atestat') return false;
+      if (parseTipTarif(c.tipTarif)?.code !== wanted) return false;
+      const exp = parseAnreDate(c.dataExpirare);
+      return !exp || exp > asOf;
+    });
+    if (ok) n++;
+  }
+  return n;
+}
+
 export function findAnreFirm(match: AnreMatch | null | undefined): AnreFirm | null {
   if (!match) return null;
   return firmIndex.get(`${match.societate}|${match.judet}`) || null;

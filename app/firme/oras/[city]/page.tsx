@@ -20,6 +20,7 @@ import {
 } from '@/lib/utils';
 import { clampMeta } from '@/lib/utils-shared';
 import { hasActiveAnreCert } from '@/lib/anre';
+import LocalFacts from '@/components/seo/LocalFacts';
 
 interface Props {
   params: Promise<{ city: string }>;
@@ -39,9 +40,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const companies = getCompaniesByCityArea(city);
 
   return {
-    title: `Firme Montaj Panouri Fotovoltaice ${city} 2026 | ${companies.length} Instalatori Autorizați`,
+    title: `Firme Montaj Panouri Fotovoltaice ${city} 2026 | ${companies.length} Instalatori Verificați`,
     description: clampMeta(
-      `${companies.length} firme verificate de instalare și montaj panouri fotovoltaice în ${city}. Instalatori autorizați ANRE cu date financiare reale. Compară și cere ofertă gratuită.`,
+      `${companies.length} firme verificate de instalare și montaj panouri fotovoltaice în ${city}. Atestate ANRE din registrul oficial și date financiare reale. Compară și cere ofertă gratuită.`,
     ),
     alternates: { canonical: `/firme/oras/${slug}` },
   };
@@ -101,7 +102,7 @@ export default async function CityPage({ params }: Props) {
             Firme Montaj Panouri Fotovoltaice {city}
           </h1>
           <p className="text-gray-500 mt-2">
-            {companiesArea.length} instalatori autorizați de panouri solare care acoperă zona {city}
+            {companiesArea.length} instalatori verificați de panouri solare care acoperă zona {city}
             {companiesHQ.length > 0 && companiesHQ.length < companiesArea.length && (
               <> ({companiesHQ.length} cu sediul în {city})</>
             )}
@@ -113,6 +114,12 @@ export default async function CityPage({ params }: Props) {
             <CompanyCard key={company.id} company={company} />
           ))}
         </div>
+
+        <LocalFacts
+          companies={companiesArea}
+          place={city}
+          counties={[...new Set(companiesHQ.map((c) => c.location.county))]}
+        />
 
         {/* SEO Content */}
         <div className="prose prose-gray max-w-none text-gray-600 mb-10">

@@ -20,7 +20,8 @@ import {
   MAJOR_CITIES,
 } from '@/lib/utils';
 import { clampMeta } from '@/lib/utils-shared';
-import { hasActiveAnreCert } from '@/lib/anre';
+import { hasActiveAnreCert, countRegistryFirmsWithActiveCode } from '@/lib/anre';
+import LocalFacts, { countyPlace, countNoun } from '@/components/seo/LocalFacts';
 import PromovateSection from '@/components/promo/PromovateSection';
 
 interface Props {
@@ -40,11 +41,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const companies = getCompaniesByCounty(county);
   const n = companies.length;
+  const withAnre = companies.filter((c) => hasActiveAnreCert(c.anreMatch)).length;
+  const registryC2A = countRegistryFirmsWithActiveCode(county, 'C2A');
 
   return {
-    title: `Instalatori Panouri Fotovoltaice ${county} 2026: ${n} ${n === 1 ? 'Firmă Autorizată' : 'Firme Autorizate'} ANRE`,
+    title: `Instalatori Panouri Fotovoltaice ${county} 2026: ${countNoun(n, 'Firmă Verificată', 'Firme Verificate')}, ${withAnre} cu Atestat ANRE`,
     description: clampMeta(
-      `${n === 1 ? '1 firmă verificată' : `${n} firme verificate`} de instalare panouri fotovoltaice în ${county}: atestat ANRE, date financiare reale. Compară și cere ofertă gratuită.`,
+      `${countNoun(n, 'firmă verificată', 'firme verificate')} de panouri fotovoltaice în ${county}, ${withAnre} cu atestat ANRE valabil. În registrul ANRE: ${countNoun(registryC2A, 'firmă', 'firme')} cu C2A în ${countyPlace(county)}. Cere oferte gratuit.`,
     ),
     alternates: { canonical: `/firme/judet/${slug}` },
   };
@@ -91,8 +94,8 @@ export default async function CountyPage({ params }: Props) {
             Instalatori Panouri Fotovoltaice în {county}
           </h1>
           <p className="text-gray-500 mt-2">
-            {companies.length} firme autorizate ANRE de instalare panouri fotovoltaice și panouri solare
-            care acoperă județul {county} — listă verificată din registrele publice
+            {countNoun(companies.length, 'firmă', 'firme')} de instalare panouri fotovoltaice și panouri solare
+            cu sediul în {countyPlace(county)}, verificate în registrele publice
           </p>
         </div>
 
@@ -107,6 +110,8 @@ export default async function CountyPage({ params }: Props) {
 
         <CountyCompanyList companies={companies} county={county} />
 
+        <LocalFacts companies={companies} place={countyPlace(county)} counties={[county]} />
+
         {/* SEO Content */}
         {(() => {
           const allSpecs = [...new Set(companies.flatMap((c) => c.specializations))];
@@ -117,11 +122,11 @@ export default async function CountyPage({ params }: Props) {
           return (
             <div className="prose prose-gray max-w-none text-gray-600 mb-10">
               <h2 className="text-xl font-bold text-gray-900">
-                Lista firmelor autorizate de panouri fotovoltaice din {county}
+                Lista firmelor verificate de panouri fotovoltaice din {county}
               </h2>
               <p>
                 Cauți <strong>firme de montaj panouri fotovoltaice</strong> sau{' '}
-                <strong>panouri solare în {county}</strong>? Pe platforma noastră găsești lista completă cu{' '}
+                <strong>panouri solare în {county}</strong>? Pe platforma noastră găsești lista cu{' '}
                 {companies.length} {companies.length === 1 ? 'firmă verificată' : 'firme verificate'} de
                 instalare panouri solare care acoperă județul {county}, cu date reale din registrele publice
                 (ANRE, ONRC, termene.ro).
@@ -129,8 +134,8 @@ export default async function CountyPage({ params }: Props) {
                   <> Dintre acestea, <strong>{hasAnre.length} {hasAnre.length === 1 ? 'are' : 'au'} atestat
                   ANRE C2A verificat</strong> în registrul oficial al Autorității Naționale de Reglementare în Energie.</>
                 )}{' '}
-                Toate firmele listate sunt <strong>instalatori autorizați</strong> — verifică badge-ul ANRE
-                pe fiecare profil sau folosește pagina <Link href="/verificare-anre" className="text-primary-dark underline">verificare ANRE</Link>.
+                Atestatele ANRE valabile apar pe profilul fiecărei firme; poți verifica orice firmă și pe
+                pagina <Link href="/verificare-anre" className="text-primary-dark underline">verificare ANRE</Link>.
               </p>
 
               <h3 className="text-lg font-semibold text-gray-900">
@@ -170,7 +175,7 @@ export default async function CountyPage({ params }: Props) {
           const countyFaqs = [
             {
               question: `Câte firme de instalare panouri fotovoltaice sunt în ${county}?`,
-              answer: `Pe platforma noastră sunt listate ${companies.length} firme verificate de instalare panouri fotovoltaice care acoperă județul ${county}. Toate firmele au date verificate din registrele publice, inclusiv certificări, date financiare și experiență.`,
+              answer: `Pe platforma noastră sunt listate ${countNoun(companies.length, 'firmă verificată', 'firme verificate')} de instalare panouri fotovoltaice cu sediul în ${countyPlace(county)}, cu date din registrele publice: atestate ANRE, date financiare și experiență. În registrul ANRE sunt ${countNoun(countRegistryFirmsWithActiveCode(county, 'C2A'), 'firmă', 'firme')} din ${countyPlace(county)} cu atestat C2A valabil, dar nu toate montează panouri fotovoltaice.`,
             },
             {
               question: `Cât costă montajul panourilor fotovoltaice în ${county}?`,
@@ -182,7 +187,7 @@ export default async function CountyPage({ params }: Props) {
             },
             {
               question: `Cum verific atestatul ANRE al unei firme de panouri solare din ${county}?`,
-              answer: `Toate firmele listate aici au atestat ANRE verificat live în registrul oficial — vezi badge-ul verde de pe fiecare profil. Poți verifica orice firmă pe pagina noastră /verificare-anre sau direct pe portal.anre.ro. Atestatele relevante pentru panouri solare sunt C1A și C2A (instalații electrice de utilizare).`,
+              answer: `Pe profilul fiecărei firme listate aici vezi atestatele ANRE valabile, luate din registrul oficial. Poți verifica orice firmă pe pagina noastră /verificare-anre sau direct pe portal.anre.ro. Atestatele relevante pentru panouri solare sunt C1A și C2A (instalații electrice de utilizare).`,
             },
             {
               question: `Care e diferența între "panouri solare" și "panouri fotovoltaice"?`,
