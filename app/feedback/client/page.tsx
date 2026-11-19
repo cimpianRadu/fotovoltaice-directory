@@ -37,8 +37,8 @@ export default async function ClientFeedbackPage({
       ) : (
         <>
           <p>
-            Ați cerut oferte pentru un sistem fotovoltaic în județul {lead.judet} și ați ajuns la o
-            semnătură. Ne-ar ajuta mult să aflăm cum a decurs. Durează cam două minute.
+            Ați cerut oferte pentru un sistem fotovoltaic. Părerea dumneavoastră ne-ar ajuta foarte
+            mult cu platforma. Durează cam două minute.
           </p>
           <div className="mt-6">
             <ClientFeedbackForm id={id} token={t} />
