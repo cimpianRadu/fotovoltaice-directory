@@ -538,7 +538,7 @@ export function verificaRaspuns(text: string, variante: string[] = []): string[]
 }
 
 const CERERE_REPLICA_LIPSA =
-  '[Verificare automată, nu e de la client] N-ai scris replica pentru client: el vede doar butoanele, fără întrebare. Scrie acum replica (ce ai notat, dacă e cazul, și întrebarea la care răspund butoanele propuse), fără să pomenești verificarea.';
+  '[Verificare automată, nu e de la client] N-ai scris replica pentru client: el vede doar butoanele, fără întrebare. Scrie acum replica (ce ai notat, dacă e cazul, și întrebarea la care răspund butoanele propuse), fără să pomenești verificarea și fără să te scuzi: pentru client conversația a mers normal.';
 
 function cerereRescriere(probleme: string[]): string {
   const motive: string[] = [];
@@ -859,13 +859,29 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
       // propoziție în plus lipită după butoane. Rezultatele rămân în istoric,
       // iar mesajul următor al clientului vine după ele.
       if (raspuns && toolUses.every((t) => UNELTE_CARE_SCRIU.has(t.name))) break;
+      // Doar butoane sau salvare, fără niciun cuvânt pentru client: nu-l mai
+      // lăsăm să încerce singur. Pe 19 nov 2026 (Timiș, mesajul 7) a pus de
+      // două ori aceleași butoane fără text, iar la al treilea apel a scris
+      // „Scuzați, am încurcat ceva pe parcurs”. Cererea de replică de mai jos
+      // vine o singură dată, fără unelte.
+      if (!raspuns && toolUses.every((t) => UNELTE_CARE_SCRIU.has(t.name))) break;
     }
 
     // Modelul a pus butoanele dar a scris întrebarea doar în thinking (13 nov,
     // de trei ori într-o conversație). Îi cerem o dată replica, fără unelte,
     // ca butoanele să nu stea sub un text de rezervă.
     if (!raspuns) {
-      api.push({ role: 'user', content: CERERE_REPLICA_LIPSA });
+      // Dacă ultimul mesaj e cu rezultatele uneltelor, cererea intră în el,
+      // ca bloc de text după ele: două mesaje `user` la rând nu trimitem.
+      const ultim = api[api.length - 1];
+      if (ultim?.role === 'user' && Array.isArray(ultim.content)) {
+        api[api.length - 1] = {
+          role: 'user',
+          content: [...ultim.content, { type: 'text', text: CERERE_REPLICA_LIPSA }],
+        };
+      } else {
+        api.push({ role: 'user', content: CERERE_REPLICA_LIPSA });
+      }
       const res = await call(api, { type: 'none' });
       addUsage(res);
       api.push({ role: 'assistant', content: res.content });
