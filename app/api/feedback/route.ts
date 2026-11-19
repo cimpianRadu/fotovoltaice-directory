@@ -16,6 +16,7 @@ import {
   FEEDBACK_TEXT_MAX,
   OFERTE_OPTIONS,
   PRIMUL_CONTACT_OPTIONS,
+  RECOMANDARE_MIN,
   SATISFACTIE_VALUES,
   SEMNATURA_OPTIONS,
   isOption,
@@ -116,12 +117,16 @@ ${recomandare ? `<p><strong>Recomandare pentru site:</strong><br>${escapeHtml(re
       if (body.oferte !== '0' && !primulContact) {
         return bad('Spuneți-ne în cât timp v-a contactat prima firmă.', 'primulContact');
       }
-      // Se publică doar recomandarea (29 oct 2026); fără ea, K = „nu".
+      // Se publică doar recomandarea (29 oct 2026), obligatorie din 19 nov 2026;
+      // K = alegerea clientului (cu nume / fără nume / nu).
       const recomandare = text(body.recomandare);
-      if (recomandare && !isOption(SEMNATURA_OPTIONS, body.testimonial)) {
+      if (recomandare.length < RECOMANDARE_MIN) {
+        return bad('Scrieți-ne două-trei propoziții pentru cei care caută o firmă.', 'recomandare');
+      }
+      if (!isOption(SEMNATURA_OPTIONS, body.testimonial)) {
         return bad('Alegeți cum semnăm recomandarea.', 'testimonial');
       }
-      const testimonial = recomandare ? String(body.testimonial) : 'nu';
+      const testimonial = String(body.testimonial);
       // Firma cu care a semnat nu se mai întreabă (16 sept 2026): linkul pleacă
       // abia după ce revendicarea ei e pe „câștigat", deci o citim de acolo.
       // Din 6 oct 2026 chestionarul vine și după „Am semnat cu X" din emailul
@@ -153,12 +158,12 @@ ${recomandare ? `<p><strong>Recomandare pentru site:</strong><br>${escapeHtml(re
       // să nu stea doar în Sheet.
       await sendEmail({
         to: 'contact@instalatori-fotovoltaice.ro',
-        subject: `[Feedback client] ${lead.judet}: ${satisfactie}/5${recomandare ? ', recomandare pentru site' : ''}`,
+        subject: `[Feedback client] ${lead.judet}: ${satisfactie}/5${testimonial !== 'nu' ? ', recomandare pentru site' : ''}`,
         html: `<p><strong>${escapeHtml((lead.numeContact || lead.numeCompanie).trim())}</strong>, ${escapeHtml(lead.judet)} (cererea ${escapeHtml(id)})</p>
 <p>Nota: <strong>${satisfactie}/5</strong> · oferte primite: ${escapeHtml(String(body.oferte))}${firmaSemnata ? ` · a semnat cu: ${escapeHtml(firmaSemnata)}` : ''}</p>
 <p><strong>Cum a fost:</strong><br>${escapeHtml(text(body.experienta))}</p>
 ${text(body.imbunatatiri) ? `<p><strong>Ce să îmbunătățim:</strong><br>${escapeHtml(text(body.imbunatatiri))}</p>` : ''}
-${recomandare ? `<p><strong>Recomandare pentru site</strong> (${testimonial === 'da' ? 'cu nume' : 'fără nume'}):<br>${escapeHtml(recomandare)}</p>` : '<p>Fără recomandare pentru site.</p>'}`,
+<p><strong>Recomandare</strong> (${testimonial === 'da' ? 'cu nume' : testimonial === 'da-fara-nume' ? 'fără nume' : 'NU se publică'}):<br>${escapeHtml(recomandare)}</p>`,
       });
     } else {
       if (!isOption(DATE_CORECTE_OPTIONS, body.dateCorecte)) {

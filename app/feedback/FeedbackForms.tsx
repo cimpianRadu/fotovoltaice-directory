@@ -155,10 +155,24 @@ function RecommendationField({ value, onChange }: { value: string; onChange: (v:
 // Același pas la client (29 oct 2026): până atunci un singur da/nu acoperea
 // tot ce scrisese, iar Tomuța (5/5) a ales „nu". Acum „Cum a fost?" rămâne
 // intern, iar recomandarea e scrisă anume pentru cei care caută o firmă.
-function ClientRecommendationField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+// Obligatorie din 19 nov 2026, cu întrebări care îl ghidează (vezi
+// SEMNATURA_OPTIONS pentru de ce publicarea rămâne la alegerea lui).
+function ClientRecommendationField({
+  value,
+  onChange,
+  error,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  error?: string;
+}) {
   return (
     <div className="border-t border-border pt-5">
-      <p className="font-semibold text-gray-900">Putem publica părerea dumneavoastră?</p>
+      <p className="font-semibold text-gray-900">Ce le-ați spune celor care caută acum o firmă?</p>
+      <p className="mt-1 text-sm text-gray-600 leading-relaxed">
+        Două-trei propoziții sunt de ajuns. V-a ajutat platforma să primiți mai multe oferte? A fost
+        mai ușor să o alegeți pe cea potrivită? Cât de repede v-au contactat firmele?
+      </p>
       <div className="mt-3">
         <Input
           label="Recomandarea dumneavoastră"
@@ -166,7 +180,9 @@ function ClientRecommendationField({ value, onChange }: { value: string; onChang
           type="textarea"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="Opțional. De exemplu: cum ați ales firma, ce v-a ajutat să vă decideți"
+          placeholder="Câte oferte ați primit, cât de repede, ce v-a ajutat să alegeți..."
+          required
+          error={error}
         />
       </div>
     </div>
@@ -252,7 +268,7 @@ export function ClientFeedbackForm({ id, token }: { id: string; token: string })
     experienta,
     imbunatatiri,
     recomandare,
-    testimonial: recomandare.trim() ? testimonial : '',
+    testimonial,
   }));
 
   if (status === 'done') return <FeedbackThanks />;
@@ -300,24 +316,29 @@ export function ClientFeedbackForm({ id, token }: { id: string; token: string })
         onChange={(e) => setImbunatatiri(e.target.value)}
         placeholder="Opțional"
       />
-      <ClientRecommendationField value={recomandare} onChange={setRecomandare} />
-      {recomandare.trim() && (
-        <Choice
-          label="Cum o semnăm?"
-          options={SEMNATURA_OPTIONS}
-          value={testimonial}
-          onChange={setTestimonial}
-          required
-          error={error?.field === 'testimonial'}
-          strong="da"
-        />
-      )}
+      <ClientRecommendationField
+        value={recomandare}
+        onChange={setRecomandare}
+        error={error?.field === 'recomandare' ? error.message : undefined}
+      />
+      <Choice
+        label="Cum o semnăm?"
+        options={SEMNATURA_OPTIONS}
+        value={testimonial}
+        onChange={setTestimonial}
+        required
+        error={error?.field === 'testimonial'}
+        strong="da"
+        subtle={['nu']}
+      />
       {/* La client, doar fraza asta (decizia userului, 29 oct 2026); restul
           regulilor de publicare stă în /termeni-conditii#testimoniale. */}
       <p className="-mt-3 text-xs font-semibold text-gray-700">
         Nu publicăm niciodată telefonul, emailul sau adresa exactă.
       </p>
-      {error && error.field !== 'experienta' && <p className="text-sm text-red-600">{error.message}</p>}
+      {error && error.field !== 'experienta' && error.field !== 'recomandare' && (
+        <p className="text-sm text-red-600">{error.message}</p>
+      )}
       <Button type="submit" variant="primary" size="lg" disabled={status === 'submitting'} className="w-full">
         {status === 'submitting' ? 'Se trimite...' : 'Trimite răspunsul'}
       </Button>

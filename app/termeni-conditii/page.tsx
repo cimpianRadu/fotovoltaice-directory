@@ -182,8 +182,8 @@ export default function TermeniConditii() {
         <ul>
           <li>
             <strong>De la client</strong> publicăm doar recomandarea scrisă de el în câmpul dedicat
-            din formular, dacă l-a completat, cu județul, tipul și puterea sistemului. Numele apare
-            doar dacă a ales varianta „cu numele meu”. Celelalte răspunsuri ale clientului rămân
+            din formular, dacă a ales să o publicăm, cu județul, tipul și puterea sistemului. Numele
+            apare doar dacă a ales varianta „cu numele meu”. Celelalte răspunsuri ale clientului rămân
             interne.
           </li>
           <li>

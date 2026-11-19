@@ -22,15 +22,22 @@ export const PRIMUL_CONTACT_OPTIONS: Option[] = [
   { value: 'peste-o-saptamana', label: 'După mai mult de o săptămână' },
 ];
 
-// Clienții nu mai aleg da/nu pentru tot formularul (29 oct 2026): scriu,
-// opțional, o recomandare pentru cei care caută o firmă (coloana L din
-// „Feedback clienți") și aleg doar cum o semnăm. Coloana K primește valoarea
-// de aici, sau „nu" când recomandarea lipsește. Ce apare public e scris sub
-// întrebare și în /termeni-conditii#testimoniale.
+// Clienții nu mai aleg da/nu pentru tot formularul (29 oct 2026): scriu o
+// recomandare pentru cei care caută o firmă (coloana L din „Feedback clienți")
+// și aleg cum o semnăm (coloana K). Ce apare public e scris în
+// /termeni-conditii#testimoniale.
+// Din 19 nov 2026 recomandarea e obligatorie: când era opțională, clienții de
+// 5/5 o lăsau goală sau scriau „da", deci n-aveam ce publica. Acordul de
+// publicare rămâne liber (un acord cerut ca să poți trimite formularul nu e
+// acord), de aici varianta „nu", lăsată discretă.
 export const SEMNATURA_OPTIONS: Option[] = [
   { value: 'da', label: 'Cu numele meu' },
   { value: 'da-fara-nume', label: 'Fără nume' },
+  { value: 'nu', label: 'Nu o publicați' },
 ];
+
+// Sub atâta nu e o recomandare („da", „Super", „Fb").
+export const RECOMANDARE_MIN = 20;
 
 // Firmele nu mai aleg da/nu la publicare (28 oct 2026): scriu, opțional, o
 // recomandare anume pentru site (coloana M din „Feedback firme"), iar coloana L
