@@ -34,8 +34,11 @@ import {
   getLeadsSince,
   getPublicLeads,
 } from './sheets';
-import { CLAIM_STATUS_LABELS } from './sheets-shared';
+import { CLAIM_STATUS_LABELS, claimOccupiesLeadSlot, maxClaimsForLead } from './sheets-shared';
+import { hasReadyAnswers } from './lead-readiness';
 import {
+  getBudgetLabel,
+  getDependentaLabel,
   getFinancingShort,
   getInvertorLabel,
   getTimelineLabel,
@@ -240,6 +243,18 @@ const TOOLS: Anthropic.Beta.BetaTool[] = [
       properties: { judet: { type: 'string', description: 'Un județ anume, ex. „Cluj”. Fără el: județele firmei.' } },
     },
   },
+  {
+    name: 'cereri_potrivite',
+    description:
+      'Cererile deschise de pe /cereri pe care firma le poate prelua acum (au locuri libere și nu le-a preluat deja), din județele în care primește alerte, ordonate după fapte: întâi cele gata de ofertă (clientul plătește din bani proprii sau credit și vrea montajul în cel mult 3 luni), apoi verificate telefonic, cu precalificare Watt, cu poze, apoi cele mai noi. Pentru fiecare: datele publice de pe card și motivele ordinii. Fără contact.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        judet: { type: 'string', description: 'Un județ anume, ex. „Cluj”. Fără el: județele firmei.' },
+        segment: { type: 'string', enum: ['rezidential', 'comercial'], description: 'Doar case sau doar firme, dacă firma cere asta.' },
+      },
+    },
+  },
   ...UNELTE_GHID,
 ];
 
@@ -329,8 +344,79 @@ async function cereriCuPrecalificare(email: string, judet: string): Promise<stri
   });
 }
 
+async function cereriPotrivite(email: string, judet: string, segment: string): Promise<string> {
+  const [pref, publice, conv, claims, emails] = await Promise.all([
+    getCountyAlertPref(email),
+    getPublicLeads(),
+    conversatiiPentruFirma(email),
+    getClaimsForAccount(email),
+    getFirmEmailGroup(email),
+  ]);
+  const ale = new Set(emails);
+  const preluate = new Set(claims.filter((c) => ale.has(c.email)).map((c) => c.leadId));
+  const ocupate = new Map<string, number>();
+  for (const c of claims) if (claimOccupiesLeadSlot(c)) ocupate.set(c.leadId, (ocupate.get(c.leadId) || 0) + 1);
+  const cuWatt = new Set(conv.map((c) => c.leadId));
+  const judete = judet ? [judet] : pref?.counties?.length ? pref.counties : [];
+  const norm = (x: string) => x.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  const inJudete = (j: string) => !judete.length || judete.some((x) => norm(x) === norm(j));
+  const zile = (id: string) => Math.max(0, Math.floor((Date.now() - new Date(id).getTime()) / 86400000));
+
+  const candidate = publice
+    .filter((l) => inJudete(l.judet) && !preluate.has(l.id) && (!segment || l.segment === segment))
+    .map((l) => {
+      const libere = maxClaimsForLead(l.id) - (ocupate.get(l.id) || 0);
+      const gata = hasReadyAnswers(l) && !l.seInformeaza;
+      const motive = [
+        gata ? 'gata de ofertă (bani proprii sau credit, montaj în cel mult 3 luni)' : '',
+        l.dependentaFinantare === 'oricum' ? 'face lucrarea și fără finanțare' : '',
+        l.verificata ? 'verificată telefonic de noi' : '',
+        cuWatt.has(l.id) ? 'are precalificare Watt (se vede după preluare)' : '',
+        l.arePoze ? `are ${l.nrPoze || ''} poze`.replace('  ', ' ') : '',
+        l.seInformeaza ? 'clientul doar se informează deocamdată' : '',
+        zile(l.id) > 30 ? `trimisă acum ${zile(l.id)} de zile` : '',
+      ].filter(Boolean);
+      // Ordinea: fapte declarate de client sau verificate de noi, nu un scor.
+      // Peste 30 de zile o cerere coboară: omul poate să fi ales între timp.
+      const rang =
+        (gata ? 8 : 0) + (l.verificata ? 4 : 0) + (cuWatt.has(l.id) ? 2 : 0) + (l.arePoze ? 1 : 0) -
+        (l.seInformeaza ? 16 : 0) -
+        (zile(l.id) > 30 ? 6 : 0);
+      return { l, libere, motive, rang };
+    })
+    .filter((x) => x.libere > 0)
+    .sort((a, b) => b.rang - a.rang || b.l.id.localeCompare(a.l.id));
+
+  const cereri = candidate.slice(0, 8).map(({ l, libere, motive }) => ({
+    link: `${SITE}/cereri?cerere=${encodeURIComponent(l.id)}`,
+    trimisa: zile(l.id) === 0 ? 'azi' : `acum ${zile(l.id)} zile`,
+    judet: l.judet,
+    segment: l.segment === 'comercial' ? 'firmă' : 'locuință',
+    lucrare: getWorkTypeShort(l.tipLucrare) || l.tipLucrare,
+    putere_kw: l.putere,
+    baterie_kwh: l.capacitateBaterie,
+    buget: getBudgetLabel(l.buget),
+    finantare: [getFinancingShort(l.finantare), getDependentaLabel(l.dependentaFinantare)].filter(Boolean).join(' · '),
+    termen: l.termen ? getTimelineLabel(l.termen) : '',
+    invertor: getInvertorLabel(l.invertorTip, l.invertorModel),
+    locuri_libere: libere,
+    motive,
+  }));
+  return JSON.stringify({
+    judete: judete.length ? judete : 'toate (firma nu are județe alese pentru alerte)',
+    deschise_cu_locuri: candidate.length,
+    gata_de_oferta: candidate.filter((x) => x.motive[0]?.startsWith('gata')).length,
+    cereri,
+    nota: 'Ordinea vine din ce a declarat clientul și din ce am verificat noi. Nu avem date despre cât de probabil e ca o cerere să se închidă.',
+  });
+}
+
 async function runTool(email: string, name: string, input: Record<string, unknown>): Promise<string> {
   try {
+    if (name === 'cereri_potrivite') {
+      const seg = input.segment === 'rezidential' || input.segment === 'comercial' ? String(input.segment) : '';
+      return await cereriPotrivite(email, String(input.judet || '').trim(), seg);
+    }
     if (name === 'cererile_mele') return await cererileMele(email);
     if (name === 'cereri_cu_precalificare') return await cereriCuPrecalificare(email, String(input.judet || '').trim());
     if (name === 'ghid_casa_verde_baterii') return ghidCvb(String(input.sectiune || ''));
@@ -351,6 +437,7 @@ const PROMPT = `Ești Watt AI, asistentul platformei instalatori-fotovoltaice.ro
 
 - Spui ce cereri a preluat firma și ce a confirmat clientul la fiecare (unealta \`cererile_mele\`): invertorul, fazarea, consumul, ce capacitate vrea, ce întrebări are pentru firmă.
 - Spui ce cereri deschise, încă nepreluate, au precalificare în județele firmei (unealta \`cereri_cu_precalificare\`), cu linkul spre card.
+- Când firma întreabă ce cereri i se potrivesc sau pe ce să se concentreze, folosești \`cereri_potrivite\` și dai cel mult 5, cu linkul și motivul pe scurt. Explici ordinea doar prin faptele din unealtă (gata de ofertă, verificată, precalificare, poze, cât de nouă e). Nu spui că o cerere se va închide sau cât de probabil e: nu avem date despre asta. Dacă firma are puține locuri libere în cont, nu o îndemni să preia tot.
 - Răspunzi despre Casa Verde Baterii doar din ghidul nostru (\`ghid_casa_verde_baterii\`) și despre mărimea bateriei doar din tabelul nostru (\`dimensionare_baterie\`).
 
 Cifrele și cererile le iei DOAR din unelte. Nu inventezi cereri, clienți, sume sau date. Dacă unealta nu are informația, spui asta simplu.

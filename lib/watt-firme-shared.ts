@@ -36,5 +36,5 @@ export function wattFirmeActiv(acum = new Date()): boolean {
 /** Primul mesaj, când firma n-a vorbit încă cu Watt. Același text și în istoricul modelului. */
 export function introWattFirme(numeFirma: string): string {
   const salut = numeFirma ? `Bună ziua, ${numeFirma}!` : 'Bună ziua!';
-  return `${salut} Sunt Watt AI, asistentul platformei. Vă pot spune ce au confirmat clienții la cererile preluate de dumneavoastră, ce cereri cu precalificare sunt în județele în care lucrați și ce scrie în ghidul nostru despre Casa Verde Baterii. Aveți ${WATT_FIRME_MESAJE_PE_ZI} mesaje pe zi, gratuit până pe 10 decembrie.`;
+  return `${salut} Sunt Watt AI, asistentul platformei. Vă pot spune care cereri deschise vi se potrivesc cel mai bine acum, ce au confirmat clienții la cererile preluate de dumneavoastră și ce scrie în ghidul nostru despre Casa Verde Baterii. Aveți ${WATT_FIRME_MESAJE_PE_ZI} mesaje pe zi, gratuit până pe 10 decembrie.`;
 }

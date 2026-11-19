@@ -13,6 +13,8 @@ import { PORTAL_HINT_COOKIE } from '@/lib/portal-auth';
 import { WATT_FIRME_MAX_CARACTERE, type WattFirmeStare } from '@/lib/watt-firme-shared';
 
 const INTREBARI = [
+  'Care sunt cele mai potrivite cereri pentru mine acum?',
+  'Ce întrebări au clienții mei pentru mine?',
   'Ce au confirmat clienții la cererile mele?',
   'Ce cereri noi au precalificare în județele mele?',
   'Cum se calculează punctajul Casa Verde Baterii?',
