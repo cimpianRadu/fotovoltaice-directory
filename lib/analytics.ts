@@ -95,6 +95,9 @@ type EventName =
   // Clientul notează Watt AI după încheiere (din 13 nov 2026).
   | 'asistent_nota_client'
   | 'asistent_refuzat'
+  // Watt AI pentru firmele logate (19 nov 2026): bula deschisă și mesajele trimise.
+  | 'watt_firme_deschis'
+  | 'watt_firme_mesaj'
   | 'rezumat_ai_deschis'
   | 'rezumat_ai_nota'
   | 'rezumat_ai_setare';

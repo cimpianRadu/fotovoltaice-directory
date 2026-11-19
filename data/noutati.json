@@ -1,6 +1,13 @@
 [
   {
     "data": "2026-11-19",
+    "titlu": "Watt AI pentru firme, gratuit până pe 10 decembrie",
+    "text": "Când sunteți logat pe site, jos în stânga apare Watt AI, asistentul platformei. Îl puteți întreba ce au confirmat clienții la cererile preluate de dumneavoastră (invertorul, consumul, ce vor să afle de la firmă), ce cereri noi cu precalificare sunt în județele în care lucrați și ce scrie în ghidul Casa Verde Baterii. Aveți 5 mesaje pe zi, gratuit până pe 10 decembrie.",
+    "link": "/cereri",
+    "linkText": "Vezi cererile"
+  },
+  {
+    "data": "2026-11-19",
     "titlu": "Invertorul clientului, direct pe cererile de baterie",
     "text": "La cererile pentru o baterie sau pentru extinderea unui sistem existent, clientul spune acum în formular ce invertor are: hibrid, care nu e hibrid, nu știe sau nu are. Poate scrie și marca și modelul. Dacă le confirmă după trimitere, în conversația cu Watt AI, apar pe card cu semnul Watt AI. Vezi invertorul pe card înainte să preiei cererea, fiindcă de el depinde cel mai mult prețul bateriei.",
     "link": "/cereri",

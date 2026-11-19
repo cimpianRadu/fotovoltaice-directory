@@ -12,6 +12,7 @@ import PublicChrome from '@/components/layout/PublicChrome';
 import { getCompanies, getCoveredCounties } from '@/lib/utils';
 import './globals.css';
 import ReportIssueDialog from '@/components/report/ReportIssueDialog';
+import WattFirmeBubble from '@/components/asistent/WattFirmeBubble';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -95,6 +96,7 @@ export default function RootLayout({
             <Footer />
             <PartnerCarousel />
             <CtaPopup />
+            <WattFirmeBubble />
           </PublicChrome>
           <ReportIssueDialog />
         </SegmentProvider>

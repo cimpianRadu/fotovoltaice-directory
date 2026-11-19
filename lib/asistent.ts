@@ -49,7 +49,7 @@ import {
 // Înapoi pe Opus fără cod: ASISTENT_MODEL=claude-opus-5-5 pe Vercel.
 export const MODEL = process.env.ASISTENT_MODEL || 'claude-sonnet-5-5';
 /** Chat cu replici scurte și câteva unelte: `low` ajunge. */
-const EFFORT = (process.env.ASISTENT_EFFORT || 'low') as 'low' | 'medium' | 'high';
+export const EFFORT = (process.env.ASISTENT_EFFORT || 'low') as 'low' | 'medium' | 'high';
 
 /** USD pe milion de tokeni, din lista de prețuri Anthropic (noiembrie 2026). */
 const PRICING: Record<string, { in: number; out: number; cacheRead: number }> = {
@@ -58,14 +58,14 @@ const PRICING: Record<string, { in: number; out: number; cacheRead: number }> = 
   'claude-haiku-5-5': { in: 0.1, out: 0.5, cacheRead: 0.01 },
 };
 
-interface Usage {
+export interface Usage {
   input: number;
   output: number;
   cacheRead: number;
   cacheWrite: number;
 }
 
-function costUsd(u: Usage): number {
+export function costUsd(u: Usage): number {
   const p = PRICING[MODEL] || PRICING['claude-sonnet-5-5'];
   return (u.input * p.in + u.cacheRead * p.cacheRead + u.cacheWrite * p.in * 1.25 + u.output * p.out) / 1e6;
 }
@@ -217,7 +217,7 @@ ${P_NU_STIE}
  * în vigoare vin din PROGRAM, nu sunt scrise de mână; de mână sunt doar cele
  * vechi (două criterii de câte 50, maxim la 20 kWh), ca să le recunoască.
  */
-const P_NOUTATI_CVB = `## Ce s-a schimbat la Casa Verde Baterii
+export const P_NOUTATI_CVB = `## Ce s-a schimbat la Casa Verde Baterii
 
 Oamenii vin des cu cifre vechi. Ține minte ce e în vigoare din 16 noiembrie 2026 (Ordinul nr. 2.314/2026):
 
@@ -386,7 +386,7 @@ export const TOOLS: Anthropic.Beta.BetaTool[] = [
 type GuideSection = { id: string; title: string; content: string };
 type Guide = { slug: string; updatedAt?: string; publishedAt?: string; sections: GuideSection[] };
 
-function ghidCvb(sectiune: string): string {
+export function ghidCvb(sectiune: string): string {
   // `guides.json` e `{ guides: [...] }`, nu o listă. Până pe 18 nov 2026 codul
   // de aici aștepta o listă, găsea zero ghiduri și unealta răspundea mereu
   // „Secțiunea nu există”: Watt n-a putut cita ghidul deloc de la lansare.
@@ -402,7 +402,7 @@ function ghidCvb(sectiune: string): string {
   });
 }
 
-function dimensionare(input: Record<string, unknown>): string {
+export function dimensionare(input: Record<string, unknown>): string {
   const cap = Number(input.capacitate_kwh) || 0;
   const kwp = Number(input.putere_sistem_kwp) || 0;
   const consum = Number(input.consum_lunar_kwh) || 0;
@@ -762,7 +762,7 @@ function runTool(
   return JSON.stringify({ eroare: 'Unealtă necunoscută.' });
 }
 
-function textDin(content: Anthropic.Beta.BetaContentBlock[]): string {
+export function textDin(content: Anthropic.Beta.BetaContentBlock[]): string {
   return content
     .filter((b): b is Anthropic.Beta.BetaTextBlock => b.type === 'text')
     .map((b) => b.text)

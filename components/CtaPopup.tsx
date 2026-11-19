@@ -41,6 +41,9 @@ export default function CtaPopup() {
   useEffect(() => {
     if (hiddenHere) return;
     if (localStorage.getItem(STORAGE_KEY)) return;
+    // Firmele logate nu caută un instalator, iar colțul ăsta e al bulei Watt
+    // pentru firme din 19 nov 2026 (components/asistent/WattFirmeBubble).
+    if (document.cookie.split('; ').some((c) => c.startsWith('portal_hint='))) return;
 
     let done = false;
     const show = () => {
