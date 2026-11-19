@@ -1612,8 +1612,9 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 - **Update 2026-11-02 (trend scan) — reconfirmat, încă neexecutat:** ghidul `panouri-fotovoltaice-pompa-caldura-2026-dimensionare-cost` nu conține expresia „cât consumă”. Labs, 2 nov: `cat consuma o pompa de caldura` 210 medie (480 în ian 2026, 320 în oct 2025), `pompa de caldura pret` 1.000 în sept 2026 (1.600 în oct și nov 2025), `pompa de caldura` 12.100 în sept (18.100 în oct și nov 2025). Fereastra e acum, până în ianuarie. De luat ca `💡` dacă Radu aprobă, după cele două corecții de la „🔧 De extins”.
 - **Never-invent:** consumul se derivă doar din SCOP din fișele producătorilor + necesar termic cu ipoteze afișate (metodologia deja folosită în #31); fără cifre „tipice” din bloguri de magazin.
 
-#### #85 — Centrală Electrică cu Panouri Fotovoltaice: Câte Panouri Îți Trebuie, Cât Consumă Iarna și Când Câștigă Pompa de Căldură
-- **Status:** 🟡 backlog · **candidat de promovat** · sursă: trend scan 2026-11-02
+#### ~~#85~~ — Centrală Electrică cu Panouri Fotovoltaice: Câte Panouri Îți Trebuie, Cât Consumă Iarna și Când Câștigă Pompa de Căldură ✅ PUBLICAT 2026-11-19 → [/ghid/centrala-electrica-panouri-fotovoltaice-2026-consum-cate-panouri](/ghid/centrala-electrica-panouri-fotovoltaice-2026-consum-cate-panouri)
+- **Status:** ✅ publicat **2026-11-19** (rutina de joi; coada activă nu mai avea niciun `💡 idee`, singura rămasă, #40, e blocată de Pas 5, deci promovat din backlog pe volum măsurat). Detalii în „✅ Publicate recent”.
+- **Status inițial:** 🟡 backlog · **candidat de promovat** · sursă: trend scan 2026-11-02
 - **Cluster (Labs, RO/`ro`, 2 nov):** `cat consuma o centrala electrica` **260 medie** (480 în oct 2025 și în ian 2026, 140 în sept 2026) · `centrala electrica` 1.600 medie (2.900 în oct 2025, 2.400 în ian 2026, intenție amestecată, include centrale de producere) · `incalzire electrica` 260 · `cat consuma un convector electric` 110 (480 în oct 2025) · `centrala electrica consum` 40.
 - **De ce:** pe SERP-ul live din 2 nov apare direct întrebarea „Câte panouri fotovoltaice sunt necesare pentru o centrală electrică?”, iar pagina 1 nu are niciun răspuns din unghiul PV: bloguri de magazin și furnizori (mam-bricolaj, MatHaus, Nova, Bismuth, Romstal), un video din 2019, economisi.ro. Cifrele se bat cap în cap: Romstal dă în snippet 1.800–2.000 kWh/lună la 12 kW, economisi.ro 130–280 kWh/lună la 12 kW pentru 100 m². Un calcul cu ipoteze afișate e chiar diferențiatorul.
 - **Ancoră:** `panouri-fotovoltaice-pompa-caldura-2026-dimensionare-cost` și `productie-panouri-fotovoltaice-iarna-2026-pvgis-zapada-orientare`, plus clusterul dovedit de dimensionare rezidențială. Niciun ghid nu tratează centrala electrică de încălzire (singura potrivire din `guides.json` e la parcuri, în sensul de centrală de producere). Performanța GSC a celor două ancore nu a fost măsurată la acest scan.
@@ -1670,6 +1671,13 @@ kit panouri fotovoltaice 5 kw cu acumulatori pret     590
 ---
 
 ## ✅ Publicate recent (pentru referință CTR)
+
+### Centrală Electrică cu Panouri Fotovoltaice 2026: Cât Consumă (#85)
+- **Publicat:** 2026-11-19 (rutina de joi, promovat din backlog) → [/ghid/centrala-electrica-panouri-fotovoltaice-2026-consum-cate-panouri](/ghid/centrala-electrica-panouri-fotovoltaice-2026-consum-cate-panouri)
+- **Conținut:** 11 secțiuni + 10 FAQ, ~4.100 de cuvinte. Consum = necesar termic ÷ 0,98 (randament și clasa D din fișa Protherm Ray 6/9 KE, Hornbach 19.11); prețuri din comparatorul ANRE posf.ro interogat pe 19.11.2026 pentru 800 kWh/lună (Muntenia Sud 1,19 / 1,77 / 2,57; Transilvania Nord 1,23 / 1,81 / 2,61; Moldova 1,27 / 1,85 / 2,65 lei/kWh; energie activă 0,519 la Hidroelectrica, 0,999 la mediană); kWp și număr de panouri pe necesar 8/12/16 MWh din PVGIS (București 1.275, Cluj 1.196, Suceava 1.140 kWh/kWp); ianuarie vs consum; compensarea lunară din Legea 160 + Ord. 67 (surplus valorificat la energia activă, deci ~2,3 kWh de vară pentru 1 kWh de iarnă la oferta cea mai ieftină); vs pompă (SCOP 3/4 ca ipoteze); convector; mono/trifazat. Necesarul termic și SCOP-ul sunt marcate ca ipoteze.
+- **Cluster GSC țintă:** `cat consuma o centrala electrica` (260, 480 în oct/ian), `centrala electrica` (1.600, intenție amestecată), `incalzire electrica` (260), `cat consuma un convector electric` (110), `centrala electrica consum` (40); PAA „Câte panouri fotovoltaice sunt necesare pentru o centrală electrică?”.
+- **Hero:** nano-banana, JPEG 1600 px (344 KB).
+- **Recheck:** Request Indexing în GSC; CTR și poziție la 14/30 zile. **Coada activă e goală după #85:** de realimentat la news scan-ul de duminică 22 nov (candidați din backlog: #75 ca extindere pe pompă, #86 ca extindere, #76 generator).
 
 ### Contract Prosumator 2026: Ce Semnezi după Ordinul ANRE 67 (#89)
 - **Publicat:** 2026-11-16 (rutina de luni) → [/ghid/contract-prosumator-2026-ordinul-anre-67-ce-semnezi-cand-primesti-banii](/ghid/contract-prosumator-2026-ordinul-anre-67-ce-semnezi-cand-primesti-banii)
