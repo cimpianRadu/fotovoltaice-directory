@@ -22,6 +22,9 @@
 // Din 13 nov 2026, „firmaaleasa": pentru cererile închise pe „altundeva”, tot
 // din WhatsApp. Clientul spune cu ce firmă a lucrat, ca să vedem dacă nu e
 // totuși una care a revendicat cererea la noi. Nu redeschide și nu închide nimic.
+//
+// Din 19 nov 2026, „watt”: deschide direct Watt AI pe cerere, fără logare în
+// cont (/cerere/watt), pentru mesajele de WhatsApp către cererile vechi.
 
 import { createHmac, timingSafeEqual } from 'node:crypto';
 
@@ -37,6 +40,7 @@ export const CLIENT_LINK_ACTIONS = [
   'necontactat',
   'verificare',
   'firmaaleasa',
+  'watt',
 ] as const;
 export type ClientLinkAction = (typeof CLIENT_LINK_ACTIONS)[number];
 
@@ -99,6 +103,8 @@ export function clientLinkUrl(leadId: string, action: ClientLinkAction, extra = 
       ? '/cerere/actualizare'
       : action === 'verificare'
         ? '/cerere/verificare'
+        : action === 'watt'
+          ? '/cerere/watt'
         : `/cerere/raspuns/${action}`;
   return `${BASE_URL}${path}?${params.toString()}`;
 }

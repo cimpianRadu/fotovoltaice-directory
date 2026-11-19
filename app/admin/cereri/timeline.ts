@@ -86,6 +86,9 @@ const CLIENT_EVENT_LABEL: Record<string, string> = {
   whatsapp_status_deschis: 'Radu a deschis mesajul WhatsApp „Mai căutați?”',
   whatsapp_raspuns: 'Clientul a răspuns pe WhatsApp',
   whatsapp_revenire: 'Radu a revenit pe WhatsApp (a doua încercare)',
+  whatsapp_ultimul: 'Radu a trimis ultimul mesaj pe WhatsApp (1 / 2 / 3)',
+  whatsapp_watt_trimis: 'Radu a trimis pe WhatsApp linkul spre Watt AI',
+  watt_link_deschis: 'Clientul a deschis linkul spre Watt AI din WhatsApp',
 };
 
 const CLICK_KIND_LABEL: Record<string, string> = {

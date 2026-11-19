@@ -225,8 +225,12 @@ function whatsappFirmaFor(lead: NewLead, claims: LeadClaim[]): WhatsappCheck | n
 //  - `firma`: n-a răspuns la „Cu ce firmă ați lucrat?”; același link;
 //  - `nume_firma`: a spus că a ales o firmă (pe WhatsApp sau pe link, „din
 //    afara platformei”), fără s-o numească. Fără link: vrem doar numele, scris.
+//
+// 19 nov 2026, a treia și ultima încercare, `ultimul`: doar pe „Ofertă bună?”,
+// la cine n-a răspuns nici la revenire, după 5+ zile. Spune că e ultimul mesaj
+// și cere o cifră (1 / 2 / 3). Fără link, ca să nu arate a mesaj automat.
 
-export type RevenireMotiv = 'oferta' | 'firma' | 'nume_firma';
+export type RevenireMotiv = 'oferta' | 'firma' | 'nume_firma' | 'ultimul';
 
 function bucharestDay(ms: number): string {
   return new Date(ms).toLocaleDateString('sv-SE', { timeZone: 'Europe/Bucharest' });
@@ -250,6 +254,13 @@ export function whatsappRevenireText(
     return [
       'Bună ziua! Mulțumesc pentru răspuns. O singură întrebare: cu ce firmă ați ales să montați sistemul? E de ajuns numele.',
       'Ne ajută să știm care firme își fac treaba bine.',
+    ].join('\n\n');
+  }
+  if (motiv === 'ultimul') {
+    return [
+      `Bună ziua! Ultimul mesaj de la mine despre cererea pentru sistemul fotovoltaic${unde}, nu vă mai deranjez după asta.`,
+      'Mi-ar fi de mare ajutor un singur răspuns, chiar și o cifră:\n1 = am ales o firmă\n2 = încă mă uit\n3 = am renunțat',
+      'Mulțumesc frumos!',
     ].join('\n\n');
   }
   const intro = `Bună ziua! Revin la mesajul meu ${sinceFirst(firstSentAt)}, despre cererea pentru sistemul fotovoltaic${unde}.`;
@@ -285,7 +296,7 @@ export function whatsappRevenireFor(
   const number = whatsappNumber(lead.telefon);
   if (!number) return null;
   let link: string | null = null;
-  if (motiv !== 'nume_firma') {
+  if (motiv !== 'nume_firma' && motiv !== 'ultimul') {
     try {
       link = `${clientLinkUrl(lead.timestamp, motiv === 'firma' ? 'firmaaleasa' : 'verificare')}&via=wa2`;
     } catch {

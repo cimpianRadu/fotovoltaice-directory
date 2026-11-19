@@ -78,6 +78,8 @@ export interface WhatsappThread {
   reply: WhatsappReply | null;
   /** A doua încercare, cel mult una pe mesaj. */
   revenire: WhatsappFollowUp | null;
+  /** Ultimul mesaj (a treia încercare, doar pe „ofertă bună?”): când a plecat. */
+  ultimulAt: string | null;
 }
 
 const iso = (v: unknown) => new Date(v as string).toISOString();
@@ -86,7 +88,7 @@ export async function getWhatsappThreads(): Promise<WhatsappThread[]> {
   const rows = await db()`
     SELECT lead_id, event, props, at FROM client_events
     WHERE event IN ('whatsapp_deschis', 'whatsapp_firma_deschis', 'whatsapp_status_deschis', 'verificare_deschisa',
-                    'firma_aleasa_raspuns', 'whatsapp_raspuns', 'whatsapp_revenire')
+                    'firma_aleasa_raspuns', 'whatsapp_raspuns', 'whatsapp_revenire', 'whatsapp_ultimul')
       AND lead_id IS NOT NULL
     ORDER BY at
   `;
@@ -163,6 +165,7 @@ export async function getWhatsappThreads(): Promise<WhatsappThread[]> {
               )?.at ?? null,
           }
         : null;
+      const ultimulRow = kind === 'oferta' ? events.find((e) => e.event === 'whatsapp_ultimul') : undefined;
 
       threads.push({
         leadId,
@@ -175,6 +178,7 @@ export async function getWhatsappThreads(): Promise<WhatsappThread[]> {
         // Un singur fir de WhatsApp pe client: răspunsul ține de ultimul mesaj trimis înaintea lui.
         reply: reply && (kind === 'oferta' || !sends.some((s) => SENT_EVENT[s.event] === 'oferta')) ? reply : null,
         revenire,
+        ultimulAt: ultimulRow ? String(ultimulRow.props?.la || ultimulRow.at) : null,
       });
     }
   }
@@ -188,6 +192,9 @@ export async function getWhatsappThreads(): Promise<WhatsappThread[]> {
  * dimineață (rutina rulează pe la 9), cele de dimineață la fel.
  */
 export const REVENIRE_DUPA_MS = 18 * 60 * 60 * 1000;
+
+/** Ultimul mesaj: la 5 zile după revenire, ca să nu arate a serie de mesaje. */
+export const ULTIMUL_DUPA_MS = 5 * 24 * 60 * 60 * 1000;
 
 /**
  * A ales o firmă fără s-o numească: bifa de pe răspunsul notat, iar fără ea,
@@ -212,7 +219,14 @@ export function revenireMotiv(
   noFirm: boolean,
   now = Date.now(),
 ): RevenireMotiv | null {
-  if (thread.revenire) return null;
+  if (thread.revenire) {
+    // A treia și ultima: doar pe „ofertă bună?”, după o revenire „n-a răspuns”
+    // la care tot n-a venit nimic, pe orice canal.
+    if (thread.ultimulAt || thread.kind !== 'oferta' || thread.revenire.motiv !== 'oferta') return null;
+    if (firstResponseAt || !open) return null;
+    if (now - Date.parse(thread.revenire.at) < ULTIMUL_DUPA_MS) return null;
+    return 'ultimul';
+  }
   // „Mai căutați?” se trimite o singură dată, fără revenire (Radu, 18 nov 2026).
   if (thread.kind === 'status') return null;
   // A zis că a ales, fără firmă: întrebarea de nume merge imediat, e continuarea discuției.

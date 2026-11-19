@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     const motiv = typeof body.motiv === 'string' ? (body.motiv as AltaFirmaMotiv) : undefined;
     const details = parseResponseDetails(body.detalii);
 
-    if (!isClientLinkAction(action) || action === 'actualizare' || action === 'verificare') {
+    if (!isClientLinkAction(action) || action === 'actualizare' || action === 'verificare' || action === 'watt') {
       return NextResponse.json({ error: 'Acțiune necunoscută.' }, { status: 400 });
     }
     if (!id || !token || !verifyClientToken(token, id, action, action === 'semnat' ? f : '')) {

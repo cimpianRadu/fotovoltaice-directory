@@ -14,7 +14,7 @@ export default function RevenireButton({
 }: {
   leadId: string;
   kind: 'oferta' | 'firma';
-  motiv: 'oferta' | 'firma' | 'nume_firma';
+  motiv: 'oferta' | 'firma' | 'nume_firma' | 'ultimul';
   href: string;
   text: string;
 }) {
@@ -30,7 +30,8 @@ export default function RevenireButton({
     }).catch(() => {});
   }
 
-  const label = motiv === 'nume_firma' ? 'Revino: ce firmă?' : 'Revino pe WhatsApp';
+  const label =
+    motiv === 'nume_firma' ? 'Revino: ce firmă?' : motiv === 'ultimul' ? 'Ultimul mesaj pe WhatsApp' : 'Revino pe WhatsApp';
   return (
     <div className="space-y-1">
       <a
@@ -43,7 +44,7 @@ export default function RevenireButton({
           sentAt ? 'bg-slate-100 text-slate-500' : 'bg-emerald-600 text-white hover:bg-emerald-700'
         }`}
       >
-        {sentAt ? 'Revenire marcată' : label}
+        {sentAt ? (motiv === 'ultimul' ? 'Ultimul mesaj marcat' : 'Revenire marcată') : label}
       </a>
       <p className="whitespace-pre-line rounded bg-slate-50 px-2 py-1 text-[11px] text-slate-600">{text}</p>
     </div>

@@ -48,11 +48,14 @@ export default function AsistentCerere({
   leadId,
   token,
   sursa,
+  deschideImediat = false,
 }: {
   leadId: string;
   /** Tokenul de detalii (lib/lead-photos), același ca la poze și adresă. */
   token: string;
-  sursa: 'confirmare' | 'cont';
+  sursa: 'confirmare' | 'cont' | 'whatsapp';
+  /** Chatul pornește deschis (pagina /cerere/watt, unde omul vine doar pentru el). */
+  deschideImediat?: boolean;
 }) {
   const [stare, setStare] = useState<Stare | null>(null);
   const [deschis, setDeschis] = useState(false);
@@ -82,6 +85,10 @@ export default function AsistentCerere({
         setStare(j);
         if (!j.eligibil) return;
         trackEvent('asistent_deschis', { sursa });
+        if (deschideImediat) {
+          setDeschis(true);
+          return;
+        }
         let ascuns = false;
         try {
           ascuns = localStorage.getItem(teaserKey) === '1';
@@ -94,7 +101,7 @@ export default function AsistentCerere({
     return () => {
       anulat = true;
     };
-  }, [leadId, token, sursa, teaserKey]);
+  }, [leadId, token, sursa, teaserKey, deschideImediat]);
 
   // Colțul din dreapta-jos e al caruselului de parteneri pe desktop; cât Watt
   // e pe pagină, caruselul stă ascuns (vezi globals.css).

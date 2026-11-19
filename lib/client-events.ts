@@ -44,6 +44,17 @@ export const CLIENT_EVENTS = [
   // kind = mesajul la care revine (oferta / firma); motiv = oferta sau firma
   // (n-a răspuns deloc) ori nume_firma (a zis că a montat, fără firmă).
   'whatsapp_revenire',
+  // Ultimul mesaj pe WhatsApp (19 nov 2026, Radu: „poate ultimul să fie puțin
+  // defensiv, zicem că e ultimul”), la cine n-a răspuns nici la „Ofertă bună?”,
+  // nici la revenire, după 5+ zile de la revenire. O singură dată pe cerere.
+  // props { kind: 'oferta' }. După el nu mai scriem nimic.
+  'whatsapp_ultimul',
+  // Clientul a deschis linkul direct spre Watt AI din WhatsApp (19 nov 2026,
+  // /cerere/watt), fără preview-urile WhatsApp: props { via, ua }.
+  'watt_link_deschis',
+  // Mesajul WhatsApp cu linkul spre Watt a plecat (19 nov 2026, lotul „fonduri
+  // proprii, mă informez”, nepreluate): props { la }.
+  'whatsapp_watt_trimis',
 ] as const;
 export type ClientEvent = (typeof CLIENT_EVENTS)[number];
 

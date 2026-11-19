@@ -46,6 +46,8 @@ import RevenireButton from './RevenireButton';
 //
 // 18 nov 2026: revenirea, a doua încercare la cine n-a răspuns sau n-a spus
 // firma, o dată pe mesaj (filtrul „De revenit”, lib/whatsapp-verificare).
+// 19 nov 2026: „ultimul mesaj”, a treia încercare pe „ofertă bună?”, la 5+ zile
+// după o revenire fără răspuns; apare tot la „De revenit”.
 
 export const dynamic = 'force-dynamic';
 
@@ -54,6 +56,7 @@ const MOTIV_LABEL = {
   oferta: 'n-a răspuns',
   firma: 'n-a răspuns',
   nume_firma: 'a întrebat numele firmei',
+  ultimul: 'ultimul mesaj',
 } as const;
 const DAY = 24 * 60 * 60 * 1000;
 
@@ -80,6 +83,8 @@ interface Row {
   revenireDue: WhatsappRevenire | null;
   /** Clientul a răspuns (pe orice canal) după revenire. */
   answeredAfterRevenire: boolean;
+  /** Clientul a răspuns (pe orice canal) după ultimul mesaj. */
+  answeredAfterUltimul: boolean;
   /** A ales o firmă fără s-o numească (lib/whatsapp-tracking `choseWithoutFirm`). */
   noFirm: boolean;
 }
@@ -195,6 +200,12 @@ function ClientColumn({ row }: { row: Row }) {
           Revenire: {fmtDateTime(thread.revenire.at)} ({MOTIV_LABEL[thread.revenire.motiv]})
           {row.answeredAfterRevenire ? ' · a răspuns după ea' : ' · nimic după ea'}
           {thread.revenire.linkOpenedAt && ` · link deschis ${fmtDateTime(thread.revenire.linkOpenedAt)}`}
+        </p>
+      )}
+      {thread.ultimulAt && (
+        <p className={row.answeredAfterUltimul ? 'font-medium text-emerald-800' : 'text-slate-600'}>
+          Ultimul mesaj: {fmtDateTime(thread.ultimulAt)}
+          {row.answeredAfterUltimul ? ' · a răspuns după el' : ' · nimic după el'}
         </p>
       )}
     </div>
@@ -325,6 +336,9 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
     const answeredAfterRevenire =
       !!revAt &&
       [thread.reply?.la, linkAnswer?.at, thread.firmAnswer?.at].some((x) => !!x && x > revAt);
+    const ultAt = thread.ultimulAt;
+    const answeredAfterUltimul =
+      !!ultAt && [thread.reply?.la, linkAnswer?.at, thread.firmAnswer?.at].some((x) => !!x && x > ultAt);
     return {
       thread,
       lead,
@@ -335,6 +349,7 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
       candidates: lead ? registeredFirmsForLead(lead, firms, claims) : [],
       revenireDue: lead && motiv ? whatsappRevenireFor(lead, thread.kind, motiv, thread.sentAt) : null,
       answeredAfterRevenire,
+      answeredAfterUltimul,
       noFirm,
     };
   });
@@ -392,7 +407,7 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
         <Stat
           label="Reveniri"
           value={`${followed.length} · ${followedAnswered.length} au răspuns`}
-          hint="A doua încercare, o dată pe mesaj; „au răspuns” = un semn de la client după revenire, pe orice canal"
+          hint="A doua încercare, o dată pe mesaj; „au răspuns” = un semn de la client după revenire, pe orice canal. Ultimul mesaj (a treia) pleacă la 5+ zile după o revenire fără răspuns"
         />
       </div>
 
@@ -433,6 +448,11 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
                     + revenire {fmtDateTime(thread.revenire.at)}
                   </span>
                 )}
+                {thread.ultimulAt && (
+                  <span className="rounded bg-slate-100 px-1.5 py-px text-[10px] font-medium text-slate-600">
+                    + ultimul {fmtDateTime(thread.ultimulAt)}
+                  </span>
+                )}
                 {lead ? (
                   <Link href={cerereHref(thread.leadId)} className="text-sm font-semibold text-slate-900 hover:underline">
                     {isHot(lead) && '🔥 '}
@@ -462,7 +482,12 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
               {row.revenireDue && (
                 <div className="border-b border-slate-100 bg-emerald-50/40 px-4 py-2">
                   <p className="mb-1 text-[10px] font-semibold tracking-wider text-emerald-700 uppercase">
-                    De revenit · {row.revenireDue.motiv === 'nume_firma' ? 'n-a spus firma' : 'n-a răspuns'}
+                    De revenit ·{' '}
+                    {row.revenireDue.motiv === 'nume_firma'
+                      ? 'n-a spus firma'
+                      : row.revenireDue.motiv === 'ultimul'
+                        ? 'ultimul mesaj, n-a răspuns nici la revenire'
+                        : 'n-a răspuns'}
                   </p>
                   <RevenireButton
                     leadId={thread.leadId}
