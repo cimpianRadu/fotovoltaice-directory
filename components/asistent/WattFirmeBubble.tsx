@@ -10,17 +10,31 @@
 import { useEffect, useRef, useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
 import { PORTAL_HINT_COOKIE } from '@/lib/portal-auth';
-import { WATT_FIRME_MAX_CARACTERE, type WattFirmeStare } from '@/lib/watt-firme-shared';
+import { SALUT_WATT_FIRME, WATT_FIRME_MAX_CARACTERE, type WattFirmeStare } from '@/lib/watt-firme-shared';
 
+// Trei, nu mai multe (Radu, 19 nov 2026): restul le poate scrie firma.
 const INTREBARI = [
   'Care sunt cele mai potrivite cereri pentru mine acum?',
-  'Ce întrebări au clienții mei pentru mine?',
   'Ce au confirmat clienții la cererile mele?',
-  'Ce cereri noi au precalificare în județele mele?',
-  'Cum se calculează punctajul Casa Verde Baterii?',
+  'Cum funcționează platforma pentru firme?',
 ];
 
 const cheieTeaser = (id: number) => `watt-firme-anunt-inchis-${id}`;
+/** Salutul apare până când firma deschide bula sau îl închide, o singură dată. */
+const CHEIE_SALUT = 'watt-firme-salut-inchis';
+
+const citeste = (k: string) => {
+  try {
+    return localStorage.getItem(k) === '1';
+  } catch {
+    return false;
+  }
+};
+const scrie = (k: string) => {
+  try {
+    localStorage.setItem(k, '1');
+  } catch {}
+};
 const CHEIE_NOTE = 'watt-firme-note';
 
 /** O măsurătoare pentru /admin/watt-firme. Pierderea uneia nu strică nimic. */
@@ -84,7 +98,8 @@ function TextCuLinkuri({ text }: { text: string }) {
 export default function WattFirmeBubble() {
   const [stare, setStare] = useState<WattFirmeStare | null>(null);
   const [deschis, setDeschis] = useState(false);
-  const [teaser, setTeaser] = useState(false);
+  // Balonul de deasupra bulei: anunțul lui Radu, iar fără anunț salutul lui Watt.
+  const [balon, setBalon] = useState<null | 'anunt' | 'salut'>(null);
   const [text, setText] = useState('');
   const [trimite, setTrimite] = useState(false);
   const [eroare, setEroare] = useState('');
@@ -109,15 +124,16 @@ export default function WattFirmeBubble() {
         if (anulat || !s?.pornit) return;
         setStare(s);
         eveniment('afisat');
-        if (s.anunt) {
-          let inchis = false;
-          try {
-            inchis = localStorage.getItem(cheieTeaser(s.anunt.id)) === '1';
-          } catch {}
-          if (!inchis) {
-            setTeaser(true);
-            eveniment('teaser_afisat', String(s.anunt.id));
-          }
+        if (s.anunt && !citeste(cheieTeaser(s.anunt.id))) {
+          setBalon('anunt');
+          eveniment('teaser_afisat', String(s.anunt.id));
+        } else if (!s.anunt && !citeste(CHEIE_SALUT)) {
+          // O clipă după încărcare, ca să nu sară în ochi odată cu pagina.
+          setTimeout(() => {
+            if (anulat) return;
+            setBalon('salut');
+            eveniment('teaser_afisat', 'salut');
+          }, 1500);
         }
       })
       .catch(() => {});
@@ -137,22 +153,25 @@ export default function WattFirmeBubble() {
   const ramase = stare.ramase ?? 0;
   const aScris = mesaje.some((m) => m.rol === 'firma');
 
-  function inchideTeaser() {
-    setTeaser(false);
-    if (anunt) {
+  function inchideBalon() {
+    if (balon === 'anunt' && anunt) {
       eveniment('teaser_inchis', String(anunt.id));
-      try {
-        localStorage.setItem(cheieTeaser(anunt.id), '1');
-      } catch {}
+      scrie(cheieTeaser(anunt.id));
+    } else if (balon === 'salut') {
+      eveniment('teaser_inchis', 'salut');
+      scrie(CHEIE_SALUT);
     }
+    setBalon(null);
   }
 
   async function deschide(din: 'bula' | 'balon' = 'bula') {
     setDeschis(true);
-    setTeaser(false);
+    if (din === 'balon') eveniment('teaser_deschis', balon === 'anunt' && anunt ? String(anunt.id) : 'salut');
+    setBalon(null);
+    // Odată deschisă bula, salutul și-a făcut treaba.
+    scrie(CHEIE_SALUT);
     trackEvent('watt_firme_deschis', { anunt: anunt ? 'da' : 'nu' });
     eveniment('deschis', `${din}${anunt ? ':anunt' : ''}`);
-    if (din === 'balon' && anunt) eveniment('teaser_deschis', String(anunt.id));
     if (!anunt) return;
     // Anunțul intră în conversație abia când firma deschide bula.
     const r = await fetch('/api/watt-firme', {
@@ -211,7 +230,7 @@ export default function WattFirmeBubble() {
         <div
           role="dialog"
           aria-label="Watt AI pentru firme"
-          className="fixed bottom-20 left-4 z-50 flex h-[min(520px,calc(100vh-7rem))] w-[min(380px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl animate-[fadeInUp_200ms_ease-out]"
+          className="fixed bottom-24 left-4 z-50 flex h-[min(540px,calc(100vh-8rem))] w-[min(380px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl animate-[fadeInUp_200ms_ease-out]"
         >
           <div className="flex items-center gap-2.5 border-b border-gray-100 px-4 py-3">
             <Avatar />
@@ -354,17 +373,25 @@ export default function WattFirmeBubble() {
         </div>
       )}
 
-      {/* Balonul cu începutul anunțului: se închide cu ×, iar bula rămâne. */}
-      {teaser && anunt && !deschis && (
-        <div className="fixed bottom-20 left-4 z-40 w-[min(300px,calc(100vw-2rem))] rounded-2xl rounded-bl-sm border border-amber-200 bg-white p-3 pr-8 text-sm text-gray-800 shadow-lg animate-[fadeInUp_300ms_ease-out]">
-          <button type="button" onClick={() => void deschide('balon')} className="text-left">
-            <span className="block text-[10px] font-semibold uppercase tracking-wide text-amber-700">Watt AI</span>
-            <span className="line-clamp-3">{anunt.text}</span>
+      {/* Balonul de deasupra bulei: anunțul (începutul lui) sau salutul. Se închide cu ×, bula rămâne. */}
+      {balon && !deschis && (balon === 'salut' || anunt) && (
+        <div className="fixed bottom-24 left-4 z-40 w-[min(310px,calc(100vw-2rem))] rounded-2xl rounded-bl-sm border border-amber-200 bg-white p-3.5 pr-9 text-sm text-gray-800 shadow-xl animate-[fadeInUp_300ms_ease-out]">
+          <button type="button" onClick={() => void deschide('balon')} className="flex items-start gap-2.5 text-left">
+            <Avatar />
+            <span>
+              <span className="block text-[10px] font-semibold uppercase tracking-wide text-amber-700">
+                {balon === 'anunt' ? 'Watt AI · anunț' : 'Watt AI'}
+              </span>
+              <span className={`leading-snug ${balon === 'anunt' ? 'line-clamp-4' : ''}`}>
+                {balon === 'anunt' && anunt ? anunt.text : SALUT_WATT_FIRME}
+              </span>
+              <span className="mt-1.5 block text-xs font-semibold text-primary-dark">Întrebați-mă →</span>
+            </span>
           </button>
           <button
             type="button"
-            onClick={inchideTeaser}
-            aria-label="Închide anunțul"
+            onClick={inchideBalon}
+            aria-label="Închide mesajul"
             className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full text-gray-400 hover:bg-gray-50 hover:text-gray-600"
           >
             <svg viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
@@ -379,11 +406,14 @@ export default function WattFirmeBubble() {
         onClick={() => (deschis ? setDeschis(false) : void deschide())}
         aria-label={deschis ? 'Închide Watt AI' : 'Deschide Watt AI pentru firme'}
         title="Watt AI pentru firme"
-        className="fixed bottom-4 left-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-lg ring-4 ring-white transition hover:bg-primary-dark"
+        className="fixed bottom-4 left-4 z-40 flex h-14 items-center gap-2 rounded-full bg-primary pl-4 pr-5 text-base font-semibold text-white shadow-xl ring-4 ring-white transition hover:bg-primary-dark"
       >
-        <Fulger className="h-6 w-6" />
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20" aria-hidden>
+          <Fulger className="h-5 w-5" />
+        </span>
+        Watt AI
         {anunt && !deschis && (
-          <span className="absolute right-0 top-0 h-3 w-3 rounded-full bg-red-500 ring-2 ring-white" aria-hidden />
+          <span className="absolute -right-0.5 -top-0.5 h-3.5 w-3.5 rounded-full bg-red-500 ring-2 ring-white" aria-hidden />
         )}
       </button>
     </>

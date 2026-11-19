@@ -17,6 +17,9 @@ const IMAGE_CACHE_SECONDS = 60 * 60 * 24 * 30;
 
 const nextConfig: NextConfig = {
   trailingSlash: false,
+  // Indicatorul Next (doar în `next dev`) stătea jos-stânga, peste bula Watt
+  // pentru firme (19 nov 2026). Pe producție nu există.
+  devIndicators: { position: 'bottom-right' },
   images: {
     // AVIF înaintea WebP: aceeași calitate la mai puțini bytes pe hero-urile de
     // ghid, care sunt cel mai greu element din pagină. Browserele fără suport

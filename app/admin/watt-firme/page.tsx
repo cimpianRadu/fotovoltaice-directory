@@ -78,6 +78,10 @@ export default async function WattFirmePage() {
             <Rand eticheta="Afișat (o dată pe firmă și anunț)" valoare={m.balon.afisat} />
             <Rand eticheta="Deschis din balon" valoare={m.balon.deschis} nota={pct(m.balon.deschis, m.balon.afisat)} />
             <Rand eticheta="Închis cu ×" valoare={m.balon.inchis} nota={pct(m.balon.inchis, m.balon.afisat)} />
+            <h3 className="mb-1 mt-4 text-xs font-semibold uppercase tracking-wide text-slate-500">Balonul de salut</h3>
+            <Rand eticheta="Afișat (o dată pe firmă)" valoare={m.salut.afisat} />
+            <Rand eticheta="Deschis din balon" valoare={m.salut.deschis} nota={pct(m.salut.deschis, m.salut.afisat)} />
+            <Rand eticheta="Închis cu ×" valoare={m.salut.inchis} nota={pct(m.salut.inchis, m.salut.afisat)} />
           </div>
           <div>
             <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Rezultat</h3>

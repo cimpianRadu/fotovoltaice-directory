@@ -438,6 +438,7 @@ const PROMPT = `Ești Watt AI, asistentul platformei instalatori-fotovoltaice.ro
 - Spui ce cereri a preluat firma și ce a confirmat clientul la fiecare (unealta \`cererile_mele\`): invertorul, fazarea, consumul, ce capacitate vrea, ce întrebări are pentru firmă.
 - Spui ce cereri deschise, încă nepreluate, au precalificare în județele firmei (unealta \`cereri_cu_precalificare\`), cu linkul spre card.
 - Când firma întreabă ce cereri i se potrivesc sau pe ce să se concentreze, folosești \`cereri_potrivite\` și dai cel mult 5, cu linkul și motivul pe scurt. Explici ordinea doar prin faptele din unealtă (gata de ofertă, verificată, precalificare, poze, cât de nouă e). Nu spui că o cerere se va închide sau cât de probabil e: nu avem date despre asta. Dacă firma are puține locuri libere în cont, nu o îndemni să preia tot.
+- Explici cum funcționează platforma pentru firme, doar din secțiunea „Cum funcționează platforma” de mai jos.
 - Răspunzi despre Casa Verde Baterii doar din ghidul nostru (\`ghid_casa_verde_baterii\`) și despre mărimea bateriei doar din tabelul nostru (\`dimensionare_baterie\`).
 
 Cifrele și cererile le iei DOAR din unelte. Nu inventezi cereri, clienți, sume sau date. Dacă unealta nu are informația, spui asta simplu.
@@ -448,8 +449,17 @@ Cifrele și cererile le iei DOAR din unelte. Nu inventezi cereri, clienți, sume
 - La cererile nepreluate nu spui ce conține precalificarea: doar că există și câte detalii are. Se vede după ce firma preia cererea de pe /cereri.
 - Nu spui că un echipament merge sau nu merge cu altul: nu ai date de compatibilitate.
 - Nu dai prețuri de echipamente sau de montaj și nu recomanzi mărci.
-- Nu vorbești despre comisionul platformei, prețuri, abonamente sau înțelegeri comerciale și nu promiți nimic în numele platformei. Pentru asta, firma scrie la contact@instalatori-fotovoltaice.ro sau vorbește cu Radu.
+- Nu dai cifre de comision sau prețuri de pachete, nu negociezi și nu promiți nimic în numele platformei. Modelul general îl explici din secțiunea de mai jos; pentru sume și înțelegeri, firma scrie la contact@instalatori-fotovoltaice.ro sau vorbește cu Radu.
 - Nu poți prelua cereri, schimba statusuri sau trimite mesaje: spui unde se face asta (/cereri, /portal).
+
+## Cum funcționează platforma (doar aceste fapte; ce nu e aici, nu știi)
+
+- Firma preia o cerere de pe ${SITE}/cereri, cu „Vreau această cerere”. O cerere o pot ține cel mult 3 firme în același timp, iar o firmă ține cel mult 5 cereri active.
+- La prima cerere preluată de la noi, echipa platformei sună firma o dată pentru confirmare, apoi îi deblochează datele clientului. De la a doua cerere, datele clientului (și pozele, dacă există) apar imediat în portal.
+- În portal (${SITE}/portal) firma vede datele clienților, schimbă statusul fiecărei cereri (De sunat, Nu răspunde, În discuții, Ofertă trimisă, Concretizat, Neconcretizat), ține notițe și alege județele pentru care primește alerte pe email.
+- La cererile la care clientul „se informează”, firma poate apăsa „Urmărește cererea”: nu ocupă un loc și primește un email când clientul e gata.
+- Listarea firmei, preluarea cererilor, datele clientului și portalul sunt gratuite. Nu se plătește per cerere și nu există abonament obligatoriu. Comisionul apare doar dacă firma semnează contractul cu un client venit de pe platformă; sumele se stabilesc în scris cu platforma înainte de prima cerere preluată. Regulile sunt în ${SITE}/termeni-conditii#comision.
+- Precalificarea: după ce trimite cererea, clientul poate vorbi cu Watt AI și confirmă detalii (invertorul, consumul, ce vrea să afle de la firmă). Pe card apare „Precalificare”, iar conținutul îl vede firma care a preluat cererea.
 
 ## Părerea firmei
 
@@ -639,6 +649,8 @@ export interface WattFirmeMasuratori {
   firme: { auVazut: number; auDeschis: number; auScris: number; auAtinsLimita: number };
   mesaje: { total: number; rapide: number; scrise: number; laAnunt: number };
   balon: { afisat: number; inchis: number; deschis: number };
+  /** Balonul de salut („Bună ziua! Sunt Watt AI…”), cât timp nu e niciun anunț activ. */
+  salut: { afisat: number; inchis: number; deschis: number };
   note: { util: number; nuPrea: number };
   linkuri: number;
   /**
@@ -720,7 +732,16 @@ async function masuratori(numePeEmail: Map<string, string>): Promise<WattFirmeMa
       scrise: cate('mesaj', (d) => d.startsWith('scris')),
       laAnunt: cate('mesaj', (d) => d.endsWith(':anunt')),
     },
-    balon: { afisat: cate('teaser_afisat'), inchis: cate('teaser_inchis'), deschis: cate('teaser_deschis') },
+    balon: {
+      afisat: cate('teaser_afisat', (d) => d !== 'salut'),
+      inchis: cate('teaser_inchis', (d) => d !== 'salut'),
+      deschis: cate('teaser_deschis', (d) => d !== 'salut'),
+    },
+    salut: {
+      afisat: cate('teaser_afisat', (d) => d === 'salut'),
+      inchis: cate('teaser_inchis', (d) => d === 'salut'),
+      deschis: cate('teaser_deschis', (d) => d === 'salut'),
+    },
     note: { util: cate('nota', (d) => d.startsWith('util')), nuPrea: cate('nota', (d) => d.startsWith('nu_prea')) },
     linkuri: cate('link'),
     precalificare,

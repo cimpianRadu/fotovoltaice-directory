@@ -29,6 +29,10 @@ export interface WattFirmeStare {
   anunt?: { id: number; text: string } | null;
 }
 
+/** Balonul de salut de deasupra bulei, până când firma o deschide sau îl închide. */
+export const SALUT_WATT_FIRME =
+  'Bună ziua! Sunt Watt AI. Vă spun ce cereri vi se potrivesc acum, ce au confirmat clienții și cum funcționează platforma.';
+
 export function wattFirmeActiv(acum = new Date()): boolean {
   return acum.getTime() < new Date(WATT_FIRME_PANA).getTime();
 }
@@ -36,5 +40,5 @@ export function wattFirmeActiv(acum = new Date()): boolean {
 /** Primul mesaj, când firma n-a vorbit încă cu Watt. Același text și în istoricul modelului. */
 export function introWattFirme(numeFirma: string): string {
   const salut = numeFirma ? `Bună ziua, ${numeFirma}!` : 'Bună ziua!';
-  return `${salut} Sunt Watt AI, asistentul platformei. Vă pot spune care cereri deschise vi se potrivesc cel mai bine acum, ce au confirmat clienții la cererile preluate de dumneavoastră și ce scrie în ghidul nostru despre Casa Verde Baterii. Aveți ${WATT_FIRME_MESAJE_PE_ZI} mesaje pe zi, gratuit până pe 10 decembrie.`;
+  return `${salut} Sunt Watt AI, asistentul platformei. Vă pot spune care cereri deschise vi se potrivesc cel mai bine acum, ce au confirmat clienții la cererile preluate de dumneavoastră, cum funcționează platforma și ce scrie în ghidul nostru despre Casa Verde Baterii. Aveți ${WATT_FIRME_MESAJE_PE_ZI} mesaje pe zi, gratuit până pe 10 decembrie.`;
 }
