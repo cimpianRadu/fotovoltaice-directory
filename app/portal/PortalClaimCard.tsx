@@ -68,6 +68,8 @@ export interface PortalClaim {
   leadClosed: ClosedLeadNotice | null;
   /** După ofertă: ce a răspuns clientul când l-am întrebat, sau că încă tace. */
   clientSignal: ClientSignal | null;
+  /** Ce am aflat noi de la client după ce cererea a plecat (19 nov 2026). Una pe cerere. */
+  notaPlatforma: { text: string; la: string } | null;
   /** Punctajul orientativ Casa Verde Baterii; null fără AFM sau fără capacitate declarată. */
   cvb: CvbEstimate | null;
   /** Zile de la ultima mișcare a firmei. `null` = n-a mișcat nimic de la revendicare. */
@@ -622,6 +624,17 @@ export default function PortalClaimCard({
       )}
       {claim.leadClosed && !claim.leadClosed.final && !released && (
         <p className="mt-2 text-sm text-gray-600">{claim.leadClosed.text}</p>
+      )}
+
+      {/* Nota platformei (19 nov 2026): ce ne-a spus clientul nouă, la vedere pe
+          card cât firma încă lucrează la cerere. */}
+      {claim.notaPlatforma && !done && (
+        <div className="mt-2.5 rounded-lg border border-slate-200 border-l-4 border-l-[#1e3a5f] bg-slate-50 px-3 py-2">
+          <p className="text-[11px] font-semibold uppercase tracking-wide text-[#1e3a5f]">
+            De la noi · {fmtDate(claim.notaPlatforma.la)}
+          </p>
+          <p className="mt-0.5 whitespace-pre-line text-sm leading-snug text-gray-800">{claim.notaPlatforma.text}</p>
+        </div>
       )}
 
       {/* Semnalul clientului după ofertă (13 nov 2026), la vedere pe card. Dispare

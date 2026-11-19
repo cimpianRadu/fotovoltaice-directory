@@ -36,6 +36,8 @@ import {
 import { RESPONSE_LABEL } from '../cereri/timeline';
 import ReplyForm from './ReplyForm';
 import GiveToFirm from './GiveToFirm';
+import NotaFirmeForm from './NotaFirmeForm';
+import { getNotePlatforma, type NotaPlatforma } from '@/lib/nota-platforma';
 import RevenireButton from './RevenireButton';
 
 // Mesajele WhatsApp către clienți și ce a urmat după ele (17 nov 2026, cerut de
@@ -313,6 +315,12 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
     );
   }
 
+  // Nota pentru firme (19 nov 2026). Fără bază, pagina merge mai departe fără ea.
+  const note = await getNotePlatforma(threads.map((t) => t.leadId)).catch((err) => {
+    console.error('[admin/whatsapp] note platformă:', err);
+    return new Map<string, NotaPlatforma>();
+  });
+
   const leadById = new Map(leads.map((l) => [l.timestamp, l]));
   const rows: Row[] = threads.map((thread) => {
     const lead = leadById.get(thread.leadId);
@@ -525,6 +533,18 @@ export default async function WhatsappPage({ searchParams }: { searchParams: Pro
                   )}
                 </div>
               </div>
+              {open && (
+                <div className="border-t border-slate-100 px-4 py-2">
+                  <p className="mb-1 text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+                    Notă pentru firme · o văd în portal
+                  </p>
+                  <NotaFirmeForm
+                    leadId={thread.leadId}
+                    text={note.get(thread.leadId)?.text ?? ''}
+                    la={note.get(thread.leadId)?.la ?? null}
+                  />
+                </div>
+              )}
             </li>
           );
         })}

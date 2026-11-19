@@ -72,6 +72,7 @@ import LogoutButton from './LogoutButton';
 import PortalTabs from './PortalTabs';
 import PortalFirmProfile from './PortalFirmProfile';
 import PortalNoutati from './PortalNoutati';
+import { getNotePlatforma, type NotaPlatforma } from '@/lib/nota-platforma';
 
 /** Fereastra „cereri noi" din cardul contului: cât de proaspătă e o cerere care merită sunată azi. */
 const NEW_LEADS_DAYS = 7;
@@ -238,6 +239,13 @@ export default async function PortalPage() {
       return new Map<string, string>();
     });
 
+    // Nota platformei (19 nov 2026): ce am aflat noi de la client după ce
+    // cererea a plecat. Fără bază, cardurile merg mai departe fără ea.
+    const notePlatforma = await getNotePlatforma(firmClaims.map((c) => c.leadId)).catch((err) => {
+      console.error('[portal] nota platformei:', err);
+      return new Map<string, NotaPlatforma>();
+    });
+
     mine = firmClaims
       .map((c) => {
         const lead = leadById.get(c.leadId);
@@ -266,6 +274,7 @@ export default async function PortalPage() {
             : null;
         return {
           clientSignal,
+          notaPlatforma: notePlatforma.get(c.leadId) ?? null,
           // Punctajul orientativ Casa Verde Baterii, ca pe cardul din /cereri.
           cvb: lead ? cvbEstimate(lead) : null,
           pozeCount: photosByLead.get(c.leadId)?.length || 0,

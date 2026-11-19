@@ -4,6 +4,7 @@
 // lib/utils re-exportă totul de aici, deci codul server poate importa oricare din ele.
 import specializationsData from '@/data/specializations.json';
 import countiesData from '@/data/counties.json';
+import firmePlatforma from '@/data/firme-platforma.json';
 import { hasActiveAnreCert } from '@/lib/anre-certs';
 
 // Model simplificat (iunie 2026): listare Free + Slot Popup (carousel, infra separată
@@ -816,6 +817,16 @@ export function filterCompanies(
   });
 }
 
+const PE_PLATFORMA = new Set<string>(firmePlatforma.slugs);
+
+/**
+ * Firma are cont activ în /portal și primește cereri prin platformă. Lista o
+ * scrie `scripts/generate-firme-platforma.mjs` (din Sheets), la cerere.
+ */
+export function isPePlatforma(slug: string): boolean {
+  return PE_PLATFORMA.has(slug);
+}
+
 export function sortCompanies(
   companies: Company[],
   sortBy: string
@@ -837,8 +848,12 @@ export function sortCompanies(
         (b.createdAt || '').localeCompare(a.createdAt || '')
       );
     default:
-      // Relevance: featured first, then by projects
+      // Relevanța: întâi firmele cu cont în portal, cu care lucrăm (19 nov 2026,
+      // cerut de Radu), apoi featured, verificate, după proiecte.
       return sorted.sort((a, b) => {
+        const pa = isPePlatforma(a.slug);
+        const pb = isPePlatforma(b.slug);
+        if (pa !== pb) return pa ? -1 : 1;
         if (a.featured !== b.featured) return a.featured ? -1 : 1;
         if (a.verified !== b.verified) return a.verified ? -1 : 1;
         return b.capacity.projectsCompleted - a.capacity.projectsCompleted;

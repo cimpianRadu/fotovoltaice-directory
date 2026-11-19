@@ -1,5 +1,19 @@
 [
   {
+    "data": "2026-11-19",
+    "titlu": "Firmele cu cont apar primele pe pagina județului",
+    "text": "Pe paginile cu instalatori pe județ și oraș, firmele care lucrează cu noi prin portal apar acum înaintea celorlalte. Clienții care caută o firmă în județul tău te văd primul. Dacă firma ta nu are încă fișă în director, scrie-ne și o adăugăm.",
+    "link": "/firme",
+    "linkText": "Vezi lista de firme"
+  },
+  {
+    "data": "2026-11-19",
+    "titlu": "Ce ne spune clientul, direct pe cardul cererii",
+    "text": "Când vorbim cu un client după ce cererea a plecat la firme (încă așteaptă oferte, vrea ca firma să vină pe teren, i s-a părut scumpă o ofertă), scriem asta pe cerere. Apare pe cardul din portal, la „De la noi”, cu data, la toate firmele care lucrează la ea.",
+    "link": "/portal",
+    "linkText": "Vezi cererile din portal"
+  },
+  {
     "data": "2026-11-18",
     "titlu": "Punctajul Casa Verde Baterii de pe cereri, pe formula nouă a AFM",
     "text": "AFM a schimbat punctajul programului de baterii cu patru zile înainte de sesiune (Ordinul nr. 2.314/2026). Punctajul estimativ de pe cererile cu finanțare AFM urmează acum formula nouă: capacitatea aduce cel mult 40 de puncte și își atinge maximul de la 15 kWh, nu de la 20, contribuția proprie cel mult 35, iar clientul care nu a mai primit bani publici pentru o baterie are 25 de puncte din start. O cerere de 10 kWh arată acum 55 de puncte în loc de 35, iar una de 15 kWh arată 81,3. Cifra presupune că clientul nu a mai avut finanțare pentru stocare, așa că merită întrebat la primul telefon.",
