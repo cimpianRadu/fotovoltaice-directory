@@ -31,6 +31,7 @@ import {
   dependentaQuestion,
   isProgramFinancing,
   INVERTOR_OPTIONS,
+  cereInvertor,
 } from '@/lib/utils-shared';
 import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 import { DEFAULT_TARIFF_RON_PER_KWH } from '@/lib/pv-constants';
@@ -592,6 +593,8 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
   const isRezidential = segment === 'rezidential';
   const roofTypes = isRezidential ? ROOF_TYPES_REZIDENTIAL : ROOF_TYPES_COMERCIAL;
   const retrofit = isRetrofit(details.tipLucrare);
+  // Invertorul existent: la retrofit și la „Baterii prin AFM” (cereInvertor).
+  const intrebInvertor = cereInvertor(details.tipLucrare, details.finantare);
   const financingTypes = isRezidential ? FINANCING_REZIDENTIAL : FINANCING_COMERCIAL;
   const budgetBands = isRezidential ? BUDGET_REZIDENTIAL : BUDGET_COMERCIAL;
 
@@ -608,8 +611,11 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
       // Răspunsul la „Cât depinde proiectul de finanțare?” ține de programul
       // ales: dacă finanțarea se schimbă pe altceva, nu mai are sens.
       ...(key === 'finantare' && !isProgramFinancing(value) ? { dependentaFinantare: '' } : {}),
-      // Invertorul existent are sens doar pe un sistem care există deja.
-      ...(key === 'tipLucrare' && !isRetrofit(value) ? { invertorTip: '', invertorModel: '' } : {}),
+      // Invertorul existent: doar la retrofit și la „Baterii prin AFM”.
+      ...((key === 'tipLucrare' && !cereInvertor(value, d.finantare)) ||
+      (key === 'finantare' && !cereInvertor(d.tipLucrare, value))
+        ? { invertorTip: '', invertorModel: '' }
+        : {}),
     }));
   }
 
@@ -1485,7 +1491,7 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
                   Greenseiro): pe unul care nu e hibrid bateria cere alt
                   invertor, deci schimbă mult prețul. Obligatoriu, cu „Nu știu”
                   în listă, ca alimentarea. Marca și modelul rămân opționale. */}
-              {retrofit && (
+              {intrebInvertor && (
                 <>
                   <SelectField
                     field={{

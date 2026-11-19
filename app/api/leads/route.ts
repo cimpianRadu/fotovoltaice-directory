@@ -165,10 +165,10 @@ export async function POST(request: Request) {
     // valori și doar la finanțarea prin program. Nu e cerută și pe server: un
     // formular vechi din cache, fără întrebare, ar rămâne blocat.
     body.dependentaFinantare = cleanDependenta(body.dependentaFinantare, body.finantare);
-    // Invertorul existent (19 nov 2026): doar la „doar baterie” și extindere.
+    // Invertorul existent (19 nov 2026): la „doar baterie”, extindere și „Baterii prin AFM”.
     // Obligatoriu doar în formular, din același motiv ca mai sus.
-    body.invertorTip = cleanInvertorTip(body.invertorTip, body.tipLucrare);
-    body.invertorModel = cleanInvertorModel(body.invertorModel, body.tipLucrare);
+    body.invertorTip = cleanInvertorTip(body.invertorTip, body.tipLucrare, body.finantare);
+    body.invertorModel = cleanInvertorModel(body.invertorModel, body.tipLucrare, body.finantare);
 
     const id = await saveLeadToSheet({
       ...body,

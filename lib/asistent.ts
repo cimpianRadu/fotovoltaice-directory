@@ -35,6 +35,7 @@ import {
   getBudgetLabel,
   getConnectionLabel,
   getInvertorLabel,
+  cereInvertor,
   getFinancingLabel,
   getRoofTypeLabel,
   getScopLabel,
@@ -159,7 +160,13 @@ function promptSistemNou(cerere: AsistentCerere): string {
     : firma
       ? 'un sistem fotovoltaic nou pentru o firmă (hală, magazin, birouri, fermă)'
       : 'un sistem fotovoltaic nou';
+  // „Baterii prin AFM” pe o cerere de sistem nou (19 nov 2026): Casa Verde
+  // Baterii e pentru prosumatori, deci omul are de regulă deja panouri.
+  const afm = !montaj && cerere.finantare === 'afm-baterii';
   const lista = [
+    afm
+      ? '- dacă are deja panouri și invertor (Casa Verde Baterii e pentru cine are deja un sistem fotovoltaic). Dacă are, invertorul e PRIMUL lucru pe care îl afli: dacă e hibrid (are intrare de baterie), apoi marca și modelul, fiindcă schimbă cel mai mult prețul ofertei. Dacă nu știe, îi spui o singură dată unde găsește modelul: pe eticheta de pe lateralul invertorului sau în aplicația de monitorizare de pe telefon (FusionSolar, SolarMan, Growatt ShinePhone și altele). Dacă nici așa nu știe, notezi „nu știe” și treci mai departe;'
+      : '',
     montaj
       ? '- ce echipamente are deja: câte panouri și de ce putere, marca și modelul invertorului, dacă are și structura de prindere și cablurile. E primul lucru pe care îl întrebi;'
       : '',
@@ -694,7 +701,7 @@ function contextCerere(x: AsistentCerere): string {
     x.bransament ? `Branșament electric: ${getConnectionLabel(x.bransament)}` : '',
     x.consumLunar ? `Consum lunar (din formular): ${x.consumLunar}` : 'Consum lunar: necompletat',
     x.fazare ? `Fazare (din formular): ${x.fazare}` : 'Fazare: necompletată',
-    retrofit
+    cereInvertor(x.tipLucrare, x.finantare)
       ? x.invertorTip || x.invertorModel
         ? `Invertorul existent (din formular): ${getInvertorLabel(x.invertorTip || '', x.invertorModel || '')}${x.invertorTip === 'nu-stiu' ? ' (tipul nu îl știe)' : ''}`
         : 'Invertorul existent: necompletat'
@@ -1000,11 +1007,11 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
 /**
  * Invertorul confirmat în conversație trece în cerere (coloanele BE-BG), ca să
  * apară pe card direct, ca cel din formular (19 nov 2026, Radu). Doar la
- * retrofit și doar când s-a schimbat față de replica de dinainte. După răspuns:
+ * retrofit și la „Baterii prin AFM”, și doar când s-a schimbat față de replica de dinainte. După răspuns:
  * clientul nu așteaptă după Sheets.
  */
 function sincronizeazaInvertor(c: Conversatie, date: AsistentDate) {
-  if (!cerereRetrofit(c.cerere.tipLucrare) || c.leadId.startsWith('test-')) return;
+  if (!cereInvertor(c.cerere.tipLucrare, c.cerere.finantare) || c.leadId.startsWith('test-')) return;
   // Fără notele lui Watt din paranteză („(model exact necunoscut)”): pe card intră doar modelul.
   const curat = (m?: string) => (m || '').replace(/\s*\([^)]*\)/g, '').trim();
   const tip = invertorTipDinWatt(date.invertorHibrid);

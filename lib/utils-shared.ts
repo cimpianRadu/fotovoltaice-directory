@@ -596,15 +596,25 @@ export const INVERTOR_OPTIONS = [
 
 const INVERTOR_VALUES: readonly string[] = INVERTOR_OPTIONS.map((o) => o.value);
 
-/** Tipul curat sau gol: doar cele trei sluguri, și doar la lucrările pe un sistem existent. */
-export function cleanInvertorTip(value: string | undefined, tipLucrare: string | undefined): string {
+/**
+ * Unde întrebăm de invertorul existent: la „doar baterie” și extindere, și la
+ * orice cerere cu finanțare „Baterii prin AFM” (Radu, 19 nov 2026): Casa Verde
+ * Baterii e pentru prosumatori, deci omul are de regulă deja un sistem, chiar
+ * dacă a ales „sistem nou” la lucrare.
+ */
+export function cereInvertor(tipLucrare: string | undefined, finantare: string | undefined): boolean {
+  return isRetrofit((tipLucrare || '').trim()) || (finantare || '').trim() === 'afm-baterii';
+}
+
+/** Tipul curat sau gol: doar slugurile din listă, și doar unde întrebăm (cereInvertor). */
+export function cleanInvertorTip(value: string | undefined, tipLucrare: string | undefined, finantare?: string): string {
   const v = (value || '').trim();
-  return isRetrofit((tipLucrare || '').trim()) && INVERTOR_VALUES.includes(v) ? v : '';
+  return cereInvertor(tipLucrare, finantare) && INVERTOR_VALUES.includes(v) ? v : '';
 }
 
 /** Marca și modelul, text liber scurt, pe un rând. */
-export function cleanInvertorModel(value: string | undefined, tipLucrare: string | undefined): string {
-  if (!isRetrofit((tipLucrare || '').trim())) return '';
+export function cleanInvertorModel(value: string | undefined, tipLucrare: string | undefined, finantare?: string): string {
+  if (!cereInvertor(tipLucrare, finantare)) return '';
   return (value || '').replace(/\s+/g, ' ').trim().slice(0, 80);
 }
 

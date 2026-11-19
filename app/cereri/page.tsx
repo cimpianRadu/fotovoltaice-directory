@@ -170,8 +170,9 @@ export default async function CereriPage() {
       mesaj: l.mesaj,
       acoperisLabel: l.tipAcoperis ? getRoofTypeLabel(l.tipAcoperis) : '',
       fazareLabel: l.fazare ? getPhaseLabel(l.fazare) : '',
-      // Invertorul existent, la retrofit (19 nov 2026): din formular sau confirmat cu Watt AI.
-      invertorLabel: isRetrofit(l.tipLucrare) ? getInvertorLabel(l.invertorTip, l.invertorModel) : '',
+      // Invertorul existent (19 nov 2026), la retrofit și la „Baterii prin AFM”:
+      // din formular sau confirmat cu Watt AI. Coloanele se scriu doar acolo.
+      invertorLabel: getInvertorLabel(l.invertorTip, l.invertorModel),
       invertorWatt: l.invertorSursa === 'watt',
       bransamentLabel: l.bransament ? getConnectionShort(l.bransament) : '',
       // Firma gândește în kWh, clientul în factură: pe rezidențial arătăm și

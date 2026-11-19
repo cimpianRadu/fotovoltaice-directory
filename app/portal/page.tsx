@@ -102,8 +102,8 @@ function specsFor(lead: NewLead | undefined): { label: string; value: string }[]
     lead.suprafata ? { label: 'Suprafață', value: `${lead.suprafata} mp` } : null,
     lead.tipAcoperis ? { label: 'Acoperiș', value: getRoofTypeLabel(lead.tipAcoperis) } : null,
     lead.fazare ? { label: 'Alimentare', value: getPhaseLabel(lead.fazare) } : null,
-    // Invertorul existent, la retrofit (19 nov 2026); „(Watt AI)” când l-a confirmat în conversație.
-    isRetrofit(lead.tipLucrare) && getInvertorLabel(lead.invertorTip, lead.invertorModel)
+    // Invertorul existent (19 nov 2026), la retrofit și la AFM baterii; „(Watt AI)” când l-a confirmat în conversație.
+    getInvertorLabel(lead.invertorTip, lead.invertorModel)
       ? {
           label: 'Invertor',
           value: `${getInvertorLabel(lead.invertorTip, lead.invertorModel)}${lead.invertorSursa === 'watt' ? ' (Watt AI)' : ''}`,
