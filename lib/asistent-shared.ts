@@ -89,6 +89,20 @@ export interface AsistentCerere {
   stocare?: string;
   wallbox?: string;
   bransament?: string;
+  // Din 19 nov 2026: invertorul existent, din formular, la retrofit.
+  invertorTip?: string;
+  invertorModel?: string;
+}
+
+/**
+ * Răspunsul lui Watt despre invertor, în slugurile coloanei BE din Sheet
+ * (hibrid / nu-hibrid / nu-stiu), ca să apară pe card ca cel din formular.
+ */
+export function invertorTipDinWatt(h: AsistentDate['invertorHibrid']): string {
+  if (h === 'da') return 'hibrid';
+  if (h === 'nu') return 'nu-hibrid';
+  if (h === 'nu-stie') return 'nu-stiu';
+  return '';
 }
 
 export interface RezumatSemnal {
@@ -133,6 +147,15 @@ export function valoriEfective(cerere: AsistentCerere, date: AsistentDate) {
       date.consumLunarKwh ?? (date.facturaLunaraLei ? date.facturaLunaraLei / 1.3 : consumKwh(cerere.consumLunar)),
     fazare: date.fazare ?? (cerere.fazare as AsistentDate['fazare'] | ''),
     cvb: date.programCvb === 'da' || (date.programCvb === undefined && cerere.finantare === 'afm-baterii'),
+    // Ce a spus în conversație bate formularul; un „nu știe” nu șterge răspunsul din formular.
+    invertorHibrid:
+      date.invertorHibrid && date.invertorHibrid !== 'nu-stie'
+        ? date.invertorHibrid
+        : cerere.invertorTip === 'hibrid'
+          ? 'da'
+          : cerere.invertorTip === 'nu-hibrid'
+            ? 'nu'
+            : date.invertorHibrid,
   };
 }
 
@@ -166,7 +189,7 @@ export function semnaleCerere(cerere: AsistentCerere, date: AsistentDate): Rezum
     });
   }
 
-  if (v.cvb && date.invertorHibrid === 'nu') {
+  if (v.cvb && v.invertorHibrid === 'nu') {
     out.push({
       tip: 'atentie',
       text: 'Invertorul actual nu e hibrid, iar în Casa Verde Baterii invertorul hibrid nu e cheltuială eligibilă: îl plătește clientul.',

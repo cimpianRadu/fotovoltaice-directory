@@ -1,6 +1,13 @@
 [
   {
     "data": "2026-11-19",
+    "titlu": "Invertorul clientului, direct pe cererile de baterie",
+    "text": "La cererile pentru o baterie sau pentru extinderea unui sistem existent, clientul spune acum în formular ce invertor are: hibrid, care nu e hibrid, nu știe sau nu are. Poate scrie și marca și modelul. Dacă le confirmă după trimitere, în conversația cu Watt AI, apar pe card cu semnul Watt AI. Vezi invertorul pe card înainte să preiei cererea, fiindcă de el depinde cel mai mult prețul bateriei.",
+    "link": "/cereri",
+    "linkText": "Vezi cererile"
+  },
+  {
+    "data": "2026-11-19",
     "titlu": "Firmele cu cont apar primele pe pagina județului",
     "text": "Pe paginile cu instalatori pe județ și oraș, firmele care lucrează cu noi prin portal apar acum înaintea celorlalte. Clienții care caută o firmă în județul tău te văd primul. Dacă firma ta nu are încă fișă în director, scrie-ne și o adăugăm.",
     "link": "/firme",

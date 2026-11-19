@@ -135,12 +135,12 @@ async function readRowsFresh(sheetName: string): Promise<string[][]> {
     () =>
       sheets.spreadsheets.values.get({
         spreadsheetId: SPREADSHEET_ID,
-        // Range lat deliberat, cu rezervă peste ultima coloană folosită (BA).
+        // Range lat deliberat, cu rezervă peste ultima coloană folosită (BG).
         // Când s-au adăugat AH-AJ (atribuirea) range-ul a rămas la A:AG, așa că
         // acele coloane se scriau dar se citeau mereu goale. Celelalte taburi au
         // mai puține coloane, un range mai lat nu le afectează: rândurile vin
         // pur și simplu mai scurte.
-        range: `${sheetName}!A:BD`,
+        range: `${sheetName}!A:BJ`,
       }),
     `read ${sheetName}`,
   );
@@ -203,6 +203,8 @@ export async function saveLeadToSheet(lead: {
   capacitateBaterie?: string;
   buget?: string;
   dependentaFinantare?: string;
+  invertorTip?: string;
+  invertorModel?: string;
 }): Promise<string> {
   const timestamp = new Date().toISOString();
   await appendRow('Leads', [
@@ -282,6 +284,13 @@ export async function saveLeadToSheet(lead: {
     // doar-cu / nehotarat, doar la finanțarea prin program. Grila are 56 de
     // coloane (A:BD), deci încape fără lărgire.
     lead.dependentaFinantare || '', // BD — Dependență de finanțare
+    // BE-BG — invertorul pe care îl are deja, doar la „doar baterie” și
+    // extindere (19 nov 2026): tipul (hibrid / nu-hibrid / nu-stiu / fara), marca și
+    // modelul, și sursa. Watt AI le poate completa după trimitere (setLeadInvertor).
+    // Grila trebuie să aibă 59 de coloane (scripts/setup-invertor.mjs).
+    lead.invertorTip || '',   // BE — Invertor (tip)
+    lead.invertorModel || '', // BF — Invertor (marcă și model)
+    lead.invertorTip || lead.invertorModel ? 'formular' : '', // BG — Invertor (sursa)
   ]);
   return timestamp;
 }
@@ -355,6 +364,28 @@ export async function enrichLeadInSheet(
   );
 
   return written;
+}
+
+/**
+ * Invertorul confirmat de client în conversația cu Watt AI (19 nov 2026), scris
+ * în BE-BG ca să apară pe card ca și cel din formular. Un „nu știe” din
+ * conversație nu șterge un tip dat în formular; marca și modelul se scriu doar
+ * când există. Întoarce true dacă s-a scris ceva.
+ */
+export async function setLeadInvertor(
+  timestamp: string,
+  inv: { tip?: string; model?: string },
+  existent: { tip: string; model: string },
+): Promise<boolean> {
+  const cells: Record<string, string> = {};
+  const tip = (inv.tip || '').trim();
+  const model = (inv.model || '').replace(/\s+/g, ' ').trim().slice(0, 80);
+  if (tip && tip !== existent.tip && (tip !== 'nu-stiu' || !existent.tip)) cells.BE = tip;
+  if (model && model !== existent.model) cells.BF = model;
+  if (!Object.keys(cells).length) return false;
+  cells.BG = 'watt';
+  await setLeadCells(timestamp, cells);
+  return true;
 }
 
 /** Coloanele scrise de fluxurile automate (alerte, „mă informez"), pe cerere deja salvată. */
@@ -616,6 +647,12 @@ export interface NewLead {
   buget: string;
   /** BD — cât depinde proiectul de finanțarea prin program (16 nov 2026): oricum / doar-cu / nehotarat. */
   dependentaFinantare: string;
+  /** BE — invertorul existent, la retrofit (19 nov 2026): hibrid / nu-hibrid / nu-stiu / fara. */
+  invertorTip: string;
+  /** BF — marca și modelul invertorului, cum le-a scris clientul. */
+  invertorModel: string;
+  /** BG — de unde vine invertorul: „formular” sau „watt” (confirmat în conversația cu Watt AI). */
+  invertorSursa: string;
   /** AX — ce vrea să rezolve, sluguri din SCOP_OPTIONS cu „; " (17 sept 2026). */
   scop: string;
   /** AY — textul de la „Altceva". Privat: nu intră în PublicLead. */
@@ -750,6 +787,9 @@ export async function getLeadsSince(cutoff: Date): Promise<NewLead[]> {
     verificareStatusLa: r[53] || '',
     verificareRetrimisaLa: r[54] || '',
     dependentaFinantare: r[55] || '',
+    invertorTip: r[56] || '',
+    invertorModel: r[57] || '',
+    invertorSursa: r[58] || '',
     ...readCrmFields(r),
   }));
 }
@@ -860,6 +900,10 @@ export interface PublicLead {
   buget: string;
   /** Public: „face și fără finanțare” e exact ce caută firma (16 nov 2026). */
   dependentaFinantare: string;
+  /** Public (19 nov 2026): invertorul existent schimbă prețul ofertei, nu identifică pe nimeni. */
+  invertorTip: string;
+  invertorModel: string;
+  invertorSursa: string;
   /** Ce vrea să rezolve (sluguri). Public: fără textul liber de la „Altceva". */
   scop: string;
   /**
@@ -1026,6 +1070,9 @@ export async function getPublicLeads(): Promise<PublicLead[]> {
       intervalApel: l.intervalApel,
       buget: l.buget,
       dependentaFinantare: l.dependentaFinantare,
+      invertorTip: l.invertorTip,
+      invertorModel: l.invertorModel,
+      invertorSursa: l.invertorSursa,
       scop: l.scop,
       seInformeaza: isLeadInformez(l),
       blocaj: l.blocaj,

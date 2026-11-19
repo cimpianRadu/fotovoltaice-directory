@@ -37,10 +37,10 @@ const FORMS = [
     // dropdown-urile pasului 4 sunt obligatorii (au „nu știu" în listă); le
     // completăm și ca să testăm componenta SearchableSelect
     // `tipLucrare` (din 25 aug 2026) e prima întrebare a pasului 4 și e
-    // obligatorie; se alege prima opțiune, „sistem nou", deci nu apare câmpul de
-    // capacitate baterie al retrofitului.
+    // obligatorie. Din 19 nov 2026 se alege „Doar baterie”, ca testul să treacă
+    // și prin întrebarea obligatorie despre invertorul existent (`invertorTip`).
     // `fazare` (alimentarea electrică) e obligatorie la pasul 4 din 13 nov 2026.
-    selects: [{ name: 'judet', step: 1 }, { name: 'tipLucrare', step: 3 }, { name: 'tipAcoperis', step: 3 }, { name: 'termen', step: 3 }, { name: 'finantare', step: 3, prefer: 'Baterii prin AFM' }, { name: 'dependentaFinantare', step: 3 }, { name: 'buget', step: 3 }, { name: 'bransament', step: 3 }, { name: 'fazare', step: 3 }],
+    selects: [{ name: 'judet', step: 1 }, { name: 'tipLucrare', step: 3, prefer: 'Doar baterie' }, { name: 'tipAcoperis', step: 3 }, { name: 'termen', step: 3 }, { name: 'finantare', step: 3, prefer: 'Baterii prin AFM' }, { name: 'dependentaFinantare', step: 3 }, { name: 'buget', step: 3 }, { name: 'bransament', step: 3 }, { name: 'fazare', step: 3 }, { name: 'invertorTip', step: 3, prefer: 'Hibrid' }],
   },
   {
     id: 'listing', label: 'Listare firmă (/listeaza-firma)', path: '/listeaza-firma',
@@ -244,7 +244,8 @@ async function verifyAndClean(browserResults) {
     if (sheetId === undefined) { res.sheetFound = false; res.cleanError = `tab "${f.sheet}" lipsește`; continue; }
     // Leads până la BD: răspunsul la „Cât depinde proiectul de finanțare?”
     // (16 nov 2026) stă în BD și trebuie să ajungă în Sheet.
-    const lastCol = f.sheet === 'Leads' ? 'BD' : 'Z';
+    // Din 19 nov 2026 și BE, invertorul existent ales la „Doar baterie”.
+    const lastCol = f.sheet === 'Leads' ? 'BG' : 'Z';
     const got = await sheets.spreadsheets.values.get({ spreadsheetId: id, range: `${f.sheet}!A:${lastCol}` });
     const rows = got.data.values ?? [];
     const mine = rows.find((row) => (row[f.emailCol] || '') === myEmail);
@@ -252,6 +253,8 @@ async function verifyAndClean(browserResults) {
     if (f.id === 'lead' && mine) {
       res.dependenta = mine[55] || '';
       if (!res.dependenta && !res.error) res.error = 'coloana BD (dependența de finanțare) a rămas goală';
+      res.invertor = mine[56] || '';
+      if (res.invertor !== 'hibrid' && !res.error) res.error = `coloana BE (invertorul) are „${res.invertor}”, nu „hibrid”`;
     }
     // delete this run's row + any stale routine-test leftovers from prior failed runs
     const del = [];
@@ -281,8 +284,8 @@ async function verifyAndClean(browserResults) {
   const summary = FORMS.map((f) => {
     const r = browserResults[f.id];
     const pass =
-      r.submitOk === true && r.sheetFound === true && r.checklist !== false && (f.id !== 'lead' || Boolean(r.dependenta));
-    return { id: f.id, form: f.label, pass, apiStatus: r.apiStatus, sheetFound: r.sheetFound ?? null, error: r.error, apiBody: r.apiBody, fill: r.fill, cleanedRows: r.cleanedRows, checklist: r.checklist ?? null, dependenta: r.dependenta ?? null, screen: r.screen };
+      r.submitOk === true && r.sheetFound === true && r.checklist !== false && (f.id !== 'lead' || (Boolean(r.dependenta) && r.invertor === 'hibrid'));
+    return { id: f.id, form: f.label, pass, apiStatus: r.apiStatus, sheetFound: r.sheetFound ?? null, error: r.error, apiBody: r.apiBody, fill: r.fill, cleanedRows: r.cleanedRows, checklist: r.checklist ?? null, dependenta: r.dependenta ?? null, invertor: r.invertor ?? null, screen: r.screen };
   });
   const allPass = summary.every((s) => s.pass) && !cleanupError;
 

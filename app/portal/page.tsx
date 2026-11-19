@@ -44,6 +44,8 @@ import {
   getProjectTypeLabel,
   getRoofTypeLabel,
   getPhaseLabel,
+  getInvertorLabel,
+  isRetrofit,
   getFinancingLabel,
   getDependentaLabel,
   getYesNoLabel,
@@ -100,6 +102,13 @@ function specsFor(lead: NewLead | undefined): { label: string; value: string }[]
     lead.suprafata ? { label: 'Suprafață', value: `${lead.suprafata} mp` } : null,
     lead.tipAcoperis ? { label: 'Acoperiș', value: getRoofTypeLabel(lead.tipAcoperis) } : null,
     lead.fazare ? { label: 'Alimentare', value: getPhaseLabel(lead.fazare) } : null,
+    // Invertorul existent, la retrofit (19 nov 2026); „(Watt AI)” când l-a confirmat în conversație.
+    isRetrofit(lead.tipLucrare) && getInvertorLabel(lead.invertorTip, lead.invertorModel)
+      ? {
+          label: 'Invertor',
+          value: `${getInvertorLabel(lead.invertorTip, lead.invertorModel)}${lead.invertorSursa === 'watt' ? ' (Watt AI)' : ''}`,
+        }
+      : null,
     lead.bransament ? { label: 'Branșament', value: getConnectionShort(lead.bransament) } : null,
     lead.consumLunar ? { label: 'Consum', value: lead.consumLunar } : null,
     lead.finantare

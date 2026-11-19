@@ -48,6 +48,13 @@ export interface LeadCardData {
   mesaj: string;
   acoperisLabel: string;
   fazareLabel: string;
+  /**
+   * Invertorul pe care îl are deja, la „doar baterie” și extindere (19 nov
+   * 2026): „Hibrid · Huawei SUN2000-6KTL”. Gol pe celelalte lucrări.
+   */
+  invertorLabel?: string;
+  /** Invertorul l-a confirmat clientul în conversația cu Watt AI, nu doar în formular. */
+  invertorWatt?: boolean;
   bransamentLabel: string;
   consumLunar: string;
   /** Slugul din FINANCING_*; filtrul „Finanțare" din feed. */
@@ -178,6 +185,44 @@ const TIMELINE_STYLE: Record<string, { text: string; icon: React.ReactNode }> = 
     ),
   },
 };
+
+// Invertorul existent (19 nov 2026, cerut de Greenseiro): pe un rând propriu,
+// lângă finanțare și termen, fiindcă schimbă cel mai mult prețul unei baterii.
+// Iconița e cutia invertorului cu sinusoida; venit din Watt AI, primește și
+// fulgerul asistentului, ca firma să știe că omul l-a confirmat în conversație.
+function InvertorLine({ label, watt }: { label: string; watt: boolean }) {
+  return (
+    <p className="mt-1.5 flex items-start gap-1.5 text-xs text-gray-700">
+      <svg
+        className="mt-px h-3.5 w-3.5 shrink-0 text-gray-500"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        <rect x="3.5" y="3.5" width="17" height="17" rx="2.5" />
+        <path d="M7 12c1.2-3 2.8-3 4 0s2.8 3 4 0 1.5-1.5 2-1" />
+      </svg>
+      <span className="min-w-0">
+        Invertor: <span className="font-semibold text-gray-900">{label}</span>
+        {watt && (
+          <span
+            className="ml-1.5 inline-flex translate-y-[-1px] items-center gap-1 whitespace-nowrap rounded-full border border-amber-200 bg-amber-50 px-1.5 py-px align-middle text-[10px] font-medium text-amber-900"
+            title="Clientul l-a confirmat în conversația cu Watt AI, asistentul nostru, după ce a trimis cererea."
+          >
+            <svg viewBox="0 0 24 24" className="h-2.5 w-2.5" aria-hidden fill="currentColor">
+              <path d="M13.5 2 4.8 13.4c-.3.4 0 .9.5.9H11l-1.3 7.2c-.1.6.6.9 1 .4l8.7-11.4c.3-.4 0-.9-.5-.9H13l1.4-7.2c.1-.6-.6-.9-.9-.4Z" />
+            </svg>
+            Watt AI
+          </span>
+        )}
+      </span>
+    </p>
+  );
+}
 
 function TimelineLine({ slug, label }: { slug: string; label: string }) {
   const style = TIMELINE_STYLE[slug] ?? TIMELINE_STYLE['peste-3-luni'];
@@ -1022,6 +1067,7 @@ export default function LeadCard({
           eticheta AFM, cifra și steluța explicată în rând, nu în tooltip. */}
       {lead.cvb && <CvbScoreLine estimate={lead.cvb} className="mt-1.5" />}
       {lead.termenLabel && <TimelineLine slug={lead.termen} label={lead.termenLabel} />}
+      {lead.invertorLabel && <InvertorLine label={lead.invertorLabel} watt={Boolean(lead.invertorWatt)} />}
       {/* Ce a răspuns clientul, nu ce deducem noi din asta: dacă vrea sau nu o
           ofertă acum n-a spus nimeni, firma decide singură dacă sună. Fără
           motiv nu scriem rândul: badge-ul și rândul de termen spun deja tot. */}

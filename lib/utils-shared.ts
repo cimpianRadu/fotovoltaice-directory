@@ -578,6 +578,53 @@ export function getDependentaLabel(slug: string): string {
   return '';
 }
 
+/**
+ * Invertorul pe care îl are deja clientul, la „doar baterie” și extindere
+ * (19 nov 2026, cerut de Greenseiro). Schimbă mult costul: pe un invertor care
+ * nu e hibrid bateria cere un invertor nou sau unul de baterie (AC-coupled), iar
+ * la Casa Verde Baterii invertorul hibrid nu e cheltuială eligibilă.
+ * Coloanele BE (tipul: hibrid / nu-hibrid / nu-stiu / fara), BF (marca și modelul) și BG (cine l-a spus: formular / watt).
+ */
+export const INVERTOR_OPTIONS = [
+  { value: 'hibrid', label: 'Hibrid (are intrare pentru baterie)' },
+  { value: 'nu-hibrid', label: 'Nu e hibrid (doar pentru panouri)' },
+  { value: 'nu-stiu', label: 'Nu știu' },
+  // Cine vrea o baterie fără panouri (backup la pană de curent) nu trebuie
+  // blocat de întrebare (Radu, 19 nov 2026).
+  { value: 'fara', label: 'Nu am invertor' },
+] as const;
+
+const INVERTOR_VALUES: readonly string[] = INVERTOR_OPTIONS.map((o) => o.value);
+
+/** Tipul curat sau gol: doar cele trei sluguri, și doar la lucrările pe un sistem existent. */
+export function cleanInvertorTip(value: string | undefined, tipLucrare: string | undefined): string {
+  const v = (value || '').trim();
+  return isRetrofit((tipLucrare || '').trim()) && INVERTOR_VALUES.includes(v) ? v : '';
+}
+
+/** Marca și modelul, text liber scurt, pe un rând. */
+export function cleanInvertorModel(value: string | undefined, tipLucrare: string | undefined): string {
+  if (!isRetrofit((tipLucrare || '').trim())) return '';
+  return (value || '').replace(/\s+/g, ' ').trim().slice(0, 80);
+}
+
+/** Pe cardul firmei: „Hibrid”, „Nu e hibrid”, „Tip necunoscut”. */
+export function getInvertorShort(slug: string): string {
+  if (slug === 'hibrid') return 'Hibrid';
+  if (slug === 'nu-hibrid') return 'Nu e hibrid';
+  if (slug === 'nu-stiu') return 'Tip necunoscut';
+  if (slug === 'fara') return 'Nu are';
+  return '';
+}
+
+/** „Hibrid · Huawei SUN2000-6KTL”, sau doar una din ele; gol când nu știm nimic. */
+export function getInvertorLabel(tip: string, model: string): string {
+  const t = getInvertorShort(tip);
+  const m = (model || '').trim();
+  if (m && tip === 'nu-stiu') return m;
+  return [t, m].filter(Boolean).join(' · ');
+}
+
 /** Răspunsurile posibile ale clientului la check-in-ul de 30 de zile. */
 export const CLIENT_RESPONSES = ['gata', 'astept', 'renunt'] as const;
 export type ClientResponse = (typeof CLIENT_RESPONSES)[number];

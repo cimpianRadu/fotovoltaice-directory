@@ -30,6 +30,7 @@ import {
   DEPENDENTA_OPTIONS,
   dependentaQuestion,
   isProgramFinancing,
+  INVERTOR_OPTIONS,
 } from '@/lib/utils-shared';
 import { MAX_REQUESTED_FIRMS } from '@/lib/sheets-shared';
 import { DEFAULT_TARIFF_RON_PER_KWH } from '@/lib/pv-constants';
@@ -163,6 +164,9 @@ const STEP4_KEYS = [
   'buget',
   'bransament',
   'fazare',
+  // Doar la „doar baterie” și extindere (19 nov 2026): invertorul existent.
+  'invertorTip',
+  'invertorModel',
 ] as const;
 
 // Detaliile secundare, opționale, pe pasul pozelor. Din 11 nov 2026 pleacă în
@@ -604,6 +608,8 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
       // Răspunsul la „Cât depinde proiectul de finanțare?” ține de programul
       // ales: dacă finanțarea se schimbă pe altceva, nu mai are sens.
       ...(key === 'finantare' && !isProgramFinancing(value) ? { dependentaFinantare: '' } : {}),
+      // Invertorul existent are sens doar pe un sistem care există deja.
+      ...(key === 'tipLucrare' && !isRetrofit(value) ? { invertorTip: '', invertorModel: '' } : {}),
     }));
   }
 
@@ -1474,6 +1480,34 @@ export default function LeadForm({ firms = [], preselectedSlug, sourcePage = 'ce
                 }
                 required
               />
+
+              {/* Invertorul pe care îl are deja (19 nov 2026, cerut de
+                  Greenseiro): pe unul care nu e hibrid bateria cere alt
+                  invertor, deci schimbă mult prețul. Obligatoriu, cu „Nu știu”
+                  în listă, ca alimentarea. Marca și modelul rămân opționale. */}
+              {retrofit && (
+                <>
+                  <SelectField
+                    field={{
+                      name: 'invertorTip',
+                      label: 'Invertorul pe care îl aveți',
+                      options: opts(INVERTOR_OPTIONS),
+                      required: true,
+                      hint: 'Hibrid înseamnă că are intrare pentru baterie. Schimbă mult prețul ofertei.',
+                    }}
+                    value={details.invertorTip}
+                    onChange={setDetail}
+                  />
+                  <Input
+                    label="Marca și modelul invertorului (opțional)"
+                    name="invertorModel"
+                    placeholder="ex: Huawei SUN2000-6KTL-L1"
+                    value={details.invertorModel}
+                    onChange={(e) => setDetail('invertorModel', e.target.value)}
+                    hint="Scrie pe eticheta de pe lateralul invertorului sau în aplicația de monitorizare."
+                  />
+                </>
+              )}
 
               {/* Numai la „doar baterie". Are propriul câmp fiindcă e al doilea
                   număr al cererii, iar până acum clientul îl scria în „Putere",

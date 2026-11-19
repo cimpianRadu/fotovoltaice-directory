@@ -23,12 +23,18 @@ import {
   cerereRetrofit,
   type AsistentCerere,
   type AsistentDate,
+  invertorTipDinWatt,
   semnaleCerere,
   valoriEfective,
 } from './asistent-shared';
+import { after } from 'next/server';
+import { revalidatePath } from 'next/cache';
+import { setLeadInvertor } from './sheets';
+import { alertError } from './alert';
 import {
   getBudgetLabel,
   getConnectionLabel,
+  getInvertorLabel,
   getFinancingLabel,
   getRoofTypeLabel,
   getScopLabel,
@@ -97,6 +103,8 @@ export function instantaneuCerere(lead: NewLead): AsistentCerere {
     stocare: lead.stocare,
     wallbox: lead.wallbox,
     bransament: lead.bransament,
+    invertorTip: lead.invertorTip,
+    invertorModel: lead.invertorModel,
   };
 }
 
@@ -123,8 +131,8 @@ ${P_TRECE_IN_CERERE}
 
 Lista de mai jos e capătul conversației: când e acoperită, închei (vezi „Cum închei”). Nu lungești discuția cu „mai e ceva?” după fiecare răspuns.
 
+- invertorul pe care îl are: dacă e hibrid (are intrare de baterie), apoi marca și modelul. E PRIMUL lucru pe care îl întrebi, înaintea oricărui altul: schimbă cel mai mult prețul ofertei (pe un invertor care nu e hibrid, bateria cere alt invertor). Dacă cererea are deja tipul și modelul din formular, nu le mai întrebi. Dacă omul nu știe, îi spui o singură dată unde găsește modelul: pe eticheta de pe lateralul invertorului sau în aplicația de monitorizare de pe telefon (FusionSolar, SolarMan, Growatt ShinePhone și altele), unde scrie la detaliile dispozitivului. Dacă nici așa nu știe, notezi „nu știe” și treci mai departe;
 - fazarea: monofazat sau trifazat (scrie pe contor sau pe siguranța generală);
-- invertorul pe care îl are: marca și modelul, și dacă e hibrid (are intrare de baterie). Modelul exact contează pentru firmă;
 - puterea sistemului existent, în kWp, dacă lipsește sau pare greșită;
 - dacă are deja o baterie, și de ce capacitate;
 - consumul lunar, din factură (kWh pe lună);
@@ -686,6 +694,11 @@ function contextCerere(x: AsistentCerere): string {
     x.bransament ? `Branșament electric: ${getConnectionLabel(x.bransament)}` : '',
     x.consumLunar ? `Consum lunar (din formular): ${x.consumLunar}` : 'Consum lunar: necompletat',
     x.fazare ? `Fazare (din formular): ${x.fazare}` : 'Fazare: necompletată',
+    retrofit
+      ? x.invertorTip || x.invertorModel
+        ? `Invertorul existent (din formular): ${getInvertorLabel(x.invertorTip || '', x.invertorModel || '')}${x.invertorTip === 'nu-stiu' ? ' (tipul nu îl știe)' : ''}`
+        : 'Invertorul existent: necompletat'
+      : '',
     `Finanțare: ${getFinancingLabel(x.finantare) || x.finantare || 'necompletată'}`,
     x.termen ? `Termen: ${getTimelineLabel(x.termen)}` : '',
     x.buget ? `Buget: ${getBudgetLabel(x.buget)}` : '',
@@ -957,6 +970,8 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
     WHERE lead_id = ${c.leadId}
   `;
 
+  sincronizeazaInvertor(c, state.date);
+
   logReplica({
     leadId: c.leadId,
     replica: c.replici + 1,
@@ -982,11 +997,44 @@ export async function raspunde(c: Conversatie, mesaj: string): Promise<{ raspuns
   };
 }
 
+/**
+ * Invertorul confirmat în conversație trece în cerere (coloanele BE-BG), ca să
+ * apară pe card direct, ca cel din formular (19 nov 2026, Radu). Doar la
+ * retrofit și doar când s-a schimbat față de replica de dinainte. După răspuns:
+ * clientul nu așteaptă după Sheets.
+ */
+function sincronizeazaInvertor(c: Conversatie, date: AsistentDate) {
+  if (!cerereRetrofit(c.cerere.tipLucrare) || c.leadId.startsWith('test-')) return;
+  // Fără notele lui Watt din paranteză („(model exact necunoscut)”): pe card intră doar modelul.
+  const curat = (m?: string) => (m || '').replace(/\s*\([^)]*\)/g, '').trim();
+  const tip = invertorTipDinWatt(date.invertorHibrid);
+  const model = curat(date.invertor);
+  if (tip === invertorTipDinWatt(c.date.invertorHibrid) && model === curat(c.date.invertor)) return;
+  after(async () => {
+    try {
+      const scris = await setLeadInvertor(
+        c.leadId,
+        { tip, model },
+        { tip: c.cerere.invertorTip || '', model: c.cerere.invertorModel || '' },
+      );
+      if (scris) revalidatePath('/cereri');
+    } catch (err) {
+      console.error('[asistent] invertor în cerere:', err);
+      await alertError({
+        area: 'asistent',
+        kind: 'invertor-sheet',
+        message: `Invertorul confirmat cu Watt AI nu a ajuns în cerere (${c.leadId}): ${err instanceof Error ? err.message : String(err)}`.slice(0, 200),
+      });
+    }
+  });
+}
+
 /** Mod de probă, doar local (ASISTENT_MOCK=1): fără apel la Anthropic, ca să se vadă UI-ul. */
 export async function raspundeMock(c: Conversatie, mesaj: string): Promise<{ raspuns: string; conv: Conversatie }> {
   const date = mergeDate(c.date, {
     fazare: /tri/i.test(mesaj) ? 'trifazat' : /mono/i.test(mesaj) ? 'monofazat' : undefined,
     invertor: /huawei|deye|growatt|fronius|sungrow|solis/i.test(mesaj) ? mesaj.slice(0, 80) : undefined,
+    invertor_hibrid: /\bhibrid/i.test(mesaj) ? 'da' : undefined,
     orientare_acoperis: /\b(sud|est|vest|nord)\b/i.test(mesaj) ? mesaj.slice(0, 80) : undefined,
     rezumat: 'Clientul a confirmat câteva detalii în modul de probă.',
   });
@@ -1011,6 +1059,7 @@ export async function raspundeMock(c: Conversatie, mesaj: string): Promise<{ ras
       updated_at = now()
     WHERE lead_id = ${c.leadId}
   `;
+  sincronizeazaInvertor(c, date);
   return {
     raspuns,
     conv: {
