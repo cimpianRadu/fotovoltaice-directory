@@ -5,7 +5,8 @@ import { H2, Pill, Sheet } from '../../DocumentSheet';
 
 // Documentul general trimis firmelor după apel (prima dată la GIS, 2 oct 2026):
 // grila, cum se aplică, regulile cererilor și colegii pe același cont. Stă în
-// admin fiindcă are cifrele, care nu sunt publice. Se scoate PDF din dialogul
+// admin fiindcă e unealta mea de trimis (grila e publică din 20 nov 2026, în
+// termeni §8). Se scoate PDF din dialogul
 // de print al browserului. Regulile din secțiunile 3 și 4 urmează codul:
 // MAX_CLAIMS_PER_LEAD, MAX_ACTIVE_CLAIMS_PER_FIRM + claimHoldsFirmSlot,
 // MAX_FIRM_EMAILS și alertele pe firmă din filterCountyAlertRecipients. Dacă se
@@ -151,7 +152,7 @@ export default function ComisionDocumentPage() {
               un cod.
             </li>
             <li>
-              Adresele se adaugă din portal, tabul <strong>Setări</strong>, secțiunea{' '}
+              Adresele se adaugă din portal, tabul <strong>Alerte și utilizatori</strong>, secțiunea{' '}
               <strong>Utilizatorii firmei</strong>. Se pot adăuga până la 5 adrese pe firmă, direct,
               fără cod de confirmare.
             </li>
