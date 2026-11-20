@@ -108,3 +108,6 @@ export interface AcordStare {
   /** Cine din firmă a acceptat versiunea curentă și când (ISO). */
   acceptari: { email: string; la: string; sursa: string }[];
 }
+
+/** Eveniment pe `window` după bifarea acordurilor fără reîncărcare (bula Watt reverifică). */
+export const ACORDURI_ACCEPTATE_EVENT = 'acorduri-acceptate';

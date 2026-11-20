@@ -8,8 +8,10 @@
 // ofertă” (pentru clienți) nu apare la firmele logate.
 
 import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
 import { PORTAL_HINT_COOKIE } from '@/lib/portal-auth';
+import { ACORDURI_ACCEPTATE_EVENT } from '@/lib/acorduri-shared';
 import { SALUT_WATT_FIRME, WATT_FIRME_MAX_CARACTERE, type WattFirmeStare } from '@/lib/watt-firme-shared';
 
 // Trei, nu mai multe (Radu, 19 nov 2026): restul le poate scrie firma.
@@ -98,6 +100,9 @@ function TextCuLinkuri({ text }: { text: string }) {
 export default function WattFirmeBubble() {
   const [stare, setStare] = useState<WattFirmeStare | null>(null);
   const [deschis, setDeschis] = useState(false);
+  const pathname = usePathname();
+  // Crește la bifarea acordurilor din /portal (pagina nu se reîncarcă acolo).
+  const [acorduriBifate, setAcorduriBifate] = useState(0);
   // Balonul de deasupra bulei: anunțul lui Radu, iar fără anunț salutul lui Watt.
   const [balon, setBalon] = useState<null | 'anunt' | 'salut'>(null);
   const [text, setText] = useState('');
@@ -115,6 +120,16 @@ export default function WattFirmeBubble() {
   const listaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const laBifa = () => setAcorduriBifate((n) => n + 1);
+    window.addEventListener(ACORDURI_ACCEPTATE_EVENT, laBifa);
+    return () => window.removeEventListener(ACORDURI_ACCEPTATE_EVENT, laBifa);
+  }, []);
+
+  // Bula stă în layout, deci nu se remontează la login (navigare fără reîncărcare):
+  // reverificăm la fiecare schimbare de pagină și după bifarea acordurilor, până apare.
+  const pornitRef = useRef(false);
+  useEffect(() => {
+    if (pornitRef.current) return;
     // Doar firmele logate: fără semnul din cookie nu cerem nimic de la server.
     if (!document.cookie.split('; ').some((c) => c.startsWith(`${PORTAL_HINT_COOKIE}=`))) return;
     let anulat = false;
@@ -122,6 +137,7 @@ export default function WattFirmeBubble() {
       .then((r) => (r.ok ? r.json() : null))
       .then((s: WattFirmeStare | null) => {
         if (anulat || !s?.pornit) return;
+        pornitRef.current = true;
         setStare(s);
         eveniment('afisat');
         if (s.anunt && !citeste(cheieTeaser(s.anunt.id))) {
@@ -140,7 +156,7 @@ export default function WattFirmeBubble() {
     return () => {
       anulat = true;
     };
-  }, []);
+  }, [pathname, acorduriBifate]);
 
   useEffect(() => {
     if (deschis) setTimeout(() => listaRef.current?.scrollTo({ top: listaRef.current.scrollHeight }), 0);

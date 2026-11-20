@@ -6,7 +6,7 @@
 
 import { useRouter } from 'next/navigation';
 import AcorduriModal from '@/components/acorduri/AcorduriModal';
-import type { AcordId } from '@/lib/acorduri-shared';
+import { ACORDURI_ACCEPTATE_EVENT, type AcordId } from '@/lib/acorduri-shared';
 
 export default function PortalAcorduriGate({
   lipsa,
@@ -16,5 +16,9 @@ export default function PortalAcorduriGate({
   actualizate: AcordId[];
 }) {
   const router = useRouter();
-  return <AcorduriModal lipsa={lipsa} actualizate={actualizate} onAccepted={() => router.refresh()} />;
+  return <AcorduriModal lipsa={lipsa} actualizate={actualizate} onAccepted={() => {
+        router.refresh();
+        // Bula Watt din layout nu se remontează la refresh: îi spunem să reverifice.
+        window.dispatchEvent(new Event(ACORDURI_ACCEPTATE_EVENT));
+      }} />;
 }
