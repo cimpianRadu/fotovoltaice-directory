@@ -1,6 +1,6 @@
 /**
- * Motivele de renunțare din portal, la un click. Firma alege unul și poate
- * adăuga detalii, opțional; doar „Alt motiv" cere text. Primele două țin de
+ * Motivele de renunțare din portal, la un click. Firma poate alege unul și
+ * poate adăuga detalii, ambele opționale (20 nov 2026). Primele două țin de
  * client și spun că cererea se poate închide (vezi LEAD_CLOSED_STATUSES):
  * „a ales altă firmă" = `altundeva` sau `castigata`, „nu mai face" = `renuntat`.
  * Restul țin de firmă și cererea rămâne deschisă pentru altele.
@@ -19,8 +19,8 @@ export const RELEASE_REASONS = [
 
 export type ReleaseReasonId = (typeof RELEASE_REASONS)[number]['id'];
 
-/** Sub atât, textul de la „Alt motiv" nu spune nimic. */
-export const MIN_OTHER_REASON_LENGTH = 10;
+/** Ce scriem în Sheets când firma confirmă fără să aleagă un motiv. */
+export const NO_RELEASE_REASON = 'Fără motiv';
 
 export interface ClosedLeadNotice {
   /** Ce s-a întâmplat, spus explicit, pe rândul din portal. */
@@ -57,13 +57,14 @@ export function closedLeadNotice(crmStatus: string, firmStatus: string): ClosedL
 }
 
 /**
- * Motivul ca text, cum ajunge în Sheets și în emailul de renunțare:
- * eticheta, apoi detaliile firmei, dacă a scris. Null dacă nu e valid.
+ * Motivul ca text, cum ajunge în Sheets și în rezumatul de seară: eticheta,
+ * apoi detaliile firmei, dacă a scris. Totul e opțional (20 nov 2026): firma
+ * care nu alege nimic eliberează locul la fel, cu „Fără motiv”.
  */
-export function composeReleaseReason(id: string, details: string): string | null {
+export function composeReleaseReason(id: string, details: string): string {
   const reason = RELEASE_REASONS.find((r) => r.id === id);
   const text = details.trim();
-  if (!reason) return null;
-  if (reason.id === 'altul') return text.length >= MIN_OTHER_REASON_LENGTH ? text : null;
+  if (!reason) return text || NO_RELEASE_REASON;
+  if (reason.id === 'altul') return text || reason.label;
   return text ? `${reason.label}: ${text}` : reason.label;
 }

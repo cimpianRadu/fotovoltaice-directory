@@ -1,6 +1,13 @@
 [
   {
     "data": "2026-11-20",
+    "titlu": "„Neconcretizat”, cu o singură confirmare",
+    "text": "Când alegeți „Neconcretizat” pe o cerere, se deschide o fereastră de confirmare. Motivul e opțional: apăsați „Confirm” și cererea iese din lucru, iar locul se eliberează pentru altă firmă. Dacă vă răzgândiți, „Anulează” lasă cererea cum era.",
+    "link": "/portal",
+    "linkText": "Vezi cererile tale"
+  },
+  {
+    "data": "2026-11-20",
     "titlu": "Termenii și grila de comision, acum în cont",
     "text": "Grila de comision pe care v-am trimis-o pe email o bifați acum o singură dată, din cont: 500 lei + TVA sub 10 kW sau doar baterie, 1.000 lei + TVA între 10 și 100 kW, 1–2% + TVA peste 100 kW, doar pentru lucrarea contractată, cu plata facturii în 30 de zile. În portal, în tabul nou „Condiții de colaborare”, vedeți oricând ce ați acceptat, cine din echipă și la ce versiune, plus termenii, condițiile de promovare și regulile pentru Watt AI. Dacă se schimbă ceva de fond, vă arătăm ce s-a schimbat și bifați din nou.",
     "link": "/portal",

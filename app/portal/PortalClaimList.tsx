@@ -70,7 +70,7 @@ function StatusLegend() {
           {/* Etichetele vin din constante, nu scrise de mână: dacă se redenumește
               un status, textul explicativ nu are voie să rămână în urmă. */}
           <p className="mt-3 border-t border-border pt-2.5 text-xs leading-relaxed text-gray-500">
-            „{CLAIM_STATUS_LABELS.pierdut}" eliberează locul pentru altă firmă și îți cere motivul.
+            „{CLAIM_STATUS_LABELS.pierdut}" eliberează locul pentru altă firmă, după o confirmare.
             „{CLAIM_STATUS_LABELS.castigat}" ne spune să închidem cererea, ca să nu mai fie sunat
             clientul de altcineva.
           </p>

@@ -17,18 +17,8 @@ export async function POST(request: Request) {
     if (!claimTimestamp || !leadId) {
       return NextResponse.json({ error: 'Revendicarea nu există.' }, { status: 400 });
     }
-    // Motivul e un click; detaliile sunt opționale, mai puțin la „Alt motiv".
+    // Motivul e opțional (20 nov 2026): fără el, locul se eliberează la fel.
     const motiv = composeReleaseReason(String(body?.motivId || ''), String(body?.detalii || ''));
-    if (!motiv) {
-      return NextResponse.json(
-        {
-          error: body?.motivId === 'altul'
-            ? 'Scrie pe scurt motivul (de ce nu a mers cererea asta).'
-            : 'Alege motivul renunțării.',
-        },
-        { status: 400 },
-      );
-    }
 
     const [claims, emails] = await Promise.all([getClaimsForAccount(email), getFirmEmailGroup(email)]);
     const claim = claims.find((c) => c.timestamp === claimTimestamp && c.leadId === leadId);

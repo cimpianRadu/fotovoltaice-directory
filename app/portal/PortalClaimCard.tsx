@@ -8,10 +8,10 @@ import { useRef, useState } from 'react';
 import PortalOfferBox from './PortalOfferBox';
 import RezumatFirma from '@/components/asistent/RezumatFirma';
 import Button from '@/components/ui/Button';
+import Modal from '@/components/ui/Modal';
 import SearchableSelect from '@/components/ui/SearchableSelect';
 import { trackEvent } from '@/lib/analytics';
 import {
-  MIN_OTHER_REASON_LENGTH,
   RELEASE_REASONS,
   type ClosedLeadNotice,
   type ReleaseReasonId,
@@ -344,9 +344,12 @@ export default function PortalClaimCard({
   async function pickStatus(value: string) {
     const next = value as ClaimStatus;
     if (!next || next === status) return;
-    // `pierdut` eliberează locul cererii pentru altă firmă, deci trece prin
-    // formularul de renunțare, cu motiv, nu printr-un click simplu.
+    // `pierdut` eliberează locul cererii pentru altă firmă, deci cere o
+    // confirmare, într-un modal: pe telefon, formularul pus în card ajungea cu
+    // butonul sub ecran și firma credea că nu s-a întâmplat nimic (Solar
+    // Station, 18 nov 2026: 9 cereri cu nota „neconcretizat” în loc de status).
     if (next === 'pierdut') {
+      setReleaseError(null);
       setReleaseOpen(true);
       return;
     }
@@ -376,18 +379,17 @@ export default function PortalClaimCard({
     }
   }
 
+  // Motivul și detaliile sunt opționale: confirmarea singură eliberează locul.
   async function release(e: React.FormEvent) {
     e.preventDefault();
-    if (!motivId) {
-      setReleaseError('Alege motivul.');
-      return;
-    }
-    await sendRelease(motivId as ReleaseReasonId, detalii);
+    await sendRelease(motivId as ReleaseReasonId | '', detalii);
   }
 
-  // Din formular sau, pe cererile închise de client, direct din banner: motivul
-  // e deja știut, firma doar confirmă că o scoate din lucru.
-  async function sendRelease(id: ReleaseReasonId, details: string) {
+  function closeRelease() {
+    if (!releaseBusy) setReleaseOpen(false);
+  }
+
+  async function sendRelease(id: ReleaseReasonId | '', details: string) {
     setReleaseBusy(true);
     setReleaseError(null);
     try {
@@ -406,7 +408,7 @@ export default function PortalClaimCard({
         setReleaseError(json.error || 'A apărut o eroare. Încearcă din nou.');
         return;
       }
-      trackEvent('portal_claim_released', { sursa, motiv: id, inchisa: Boolean(claim.leadClosed) });
+      trackEvent('portal_claim_released', { sursa, motiv: id || 'fara', inchisa: Boolean(claim.leadClosed) });
       onPatch({ releasedAt: new Date().toISOString(), firmStatus: 'pierdut', updatedDays: 0 });
       setJustReleased(true);
       setReleaseOpen(false);
@@ -494,7 +496,7 @@ export default function PortalClaimCard({
             <span className={`${pill} border-gray-200 bg-gray-50 text-gray-600`}>Închisă de client</span>
           ) : released ? (
             <span className={`${pill} border-gray-200 bg-gray-50 text-gray-500`}>
-              Renunțat · {fmtDate(claim.releasedAt)}
+              {CLAIM_STATUS_LABELS.pierdut} · {fmtDate(claim.releasedAt)}
             </span>
           ) : !claim.approved ? (
             <span className={`${pill} border-amber-200 bg-amber-50 text-amber-800`}>Așteaptă apelul</span>
@@ -663,10 +665,20 @@ export default function PortalClaimCard({
       )}
       {statusError && <p className="mt-2 text-xs text-red-600">{statusError}</p>}
 
-      {releaseOpen && !released && (
-        <form onSubmit={release} className="mt-3 space-y-2 rounded-lg border border-border bg-surface p-3">
+      <Modal
+        open={releaseOpen && !released}
+        onClose={closeRelease}
+        title="Marchezi cererea neconcretizată?"
+        width="max-w-md"
+      >
+        <form onSubmit={release} className="space-y-4">
+          <p className="text-sm leading-relaxed text-gray-700">
+            Cererea iese din lucru și locul tău se eliberează pentru altă firmă.
+          </p>
           <fieldset>
-            <legend className="text-sm font-medium text-gray-700">De ce nu a mers această cerere?</legend>
+            <legend className="text-sm font-medium text-gray-900">
+              De ce nu a mers? <span className="font-normal text-gray-500">(opțional)</span>
+            </legend>
             <div className="mt-2 flex flex-wrap gap-2">
               {RELEASE_REASONS.map((r) => {
                 const picked = motivId === r.id;
@@ -675,10 +687,7 @@ export default function PortalClaimCard({
                     key={r.id}
                     type="button"
                     aria-pressed={picked}
-                    onClick={() => {
-                      setMotivId(r.id);
-                      setReleaseError(null);
-                    }}
+                    onClick={() => setMotivId(picked ? '' : r.id)}
                     className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                       picked
                         ? 'border-primary bg-primary/10 font-medium text-gray-900'
@@ -691,41 +700,37 @@ export default function PortalClaimCard({
               })}
             </div>
           </fieldset>
-          {motivId && (
-            <div>
-              <label htmlFor={`motiv-${claim.claimTimestamp}`} className="block text-xs text-gray-600">
-                {motivId === 'altul' ? 'Scrie pe scurt motivul' : 'Detalii (opțional)'}
-              </label>
-              <textarea
-                id={`motiv-${claim.claimTimestamp}`}
-                value={detalii}
-                onChange={(e) => setDetalii(e.target.value)}
-                required={motivId === 'altul'}
-                minLength={motivId === 'altul' ? MIN_OTHER_REASON_LENGTH : undefined}
-                rows={2}
-                className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
-              />
-            </div>
-          )}
-          {releaseError && <p className="text-xs text-red-600">{releaseError}</p>}
-          <div className="flex gap-2">
+          <div>
+            <label htmlFor={`motiv-${claim.claimTimestamp}`} className="block text-sm font-medium text-gray-900">
+              Detalii <span className="font-normal text-gray-500">(opțional)</span>
+            </label>
+            <textarea
+              id={`motiv-${claim.claimTimestamp}`}
+              value={detalii}
+              onChange={(e) => setDetalii(e.target.value)}
+              rows={2}
+              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+            />
+          </div>
+          {releaseError && <p className="text-sm text-red-600">{releaseError}</p>}
+          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <Button type="button" variant="ghost" onClick={closeRelease} disabled={releaseBusy}>
+              Anulează
+            </Button>
             <button
               type="submit"
               disabled={releaseBusy}
-              className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-60"
+              className="rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-60"
             >
-              {releaseBusy ? 'Se trimite...' : 'Renunț și eliberez locul'}
+              {releaseBusy ? 'Se salvează...' : 'Confirm'}
             </button>
-            <Button type="button" variant="ghost" onClick={() => setReleaseOpen(false)}>
-              Anulează
-            </Button>
           </div>
         </form>
-      )}
+      </Modal>
 
       {justReleased && (
         <p className="mt-2 text-sm text-emerald-700">
-          Locul a fost eliberat. Mulțumim, motivul ne ajută să realocăm cererea.
+          Marcată „{CLAIM_STATUS_LABELS.pierdut}”. Locul s-a eliberat pentru altă firmă.
         </p>
       )}
 
