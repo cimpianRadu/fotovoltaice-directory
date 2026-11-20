@@ -71,11 +71,11 @@ export default function AcorduriModal({
     >
       <div className="max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-2xl bg-white p-5 shadow-xl sm:rounded-2xl sm:p-6">
         <h2 id="acorduri-titlu" className="text-lg font-bold text-gray-900">
-          {primaData ? 'Cum lucrăm împreună' : 'Am actualizat condițiile'}
+          {primaData ? 'Am publicat termenii de colaborare și aici, în cont' : 'Am actualizat condițiile'}
         </h2>
         <p className="mt-1.5 text-sm leading-relaxed text-gray-600">
           {primaData
-            ? `Ca să folosești portalul, revendicarea cererilor și Watt AI, bifează ${acorduri.length === 1 ? 'acordul de mai jos' : 'cele două acorduri'}. O singură dată; le găsești oricând în portal, la „Alerte și utilizatori”.`
+            ? `Termenii și grila de comision, până acum trimise pe email, sunt de azi și în cont. Bifează-le o singură dată ca să folosești portalul, revendicarea cererilor și Watt AI. Le găsești oricând în portal, la „Alerte și utilizatori”.`
             : 'Ca să continui în portal, citește ce s-a schimbat și bifează din nou.'}
         </p>
 
