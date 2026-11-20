@@ -11,14 +11,23 @@ import { ACORDURI_ACCEPTATE_EVENT, type AcordId } from '@/lib/acorduri-shared';
 export default function PortalAcorduriGate({
   lipsa,
   actualizate,
+  firma,
 }: {
   lipsa: AcordId[];
   actualizate: AcordId[];
+  firma: string;
 }) {
   const router = useRouter();
-  return <AcorduriModal lipsa={lipsa} actualizate={actualizate} onAccepted={() => {
+  return (
+    <AcorduriModal
+      lipsa={lipsa}
+      actualizate={actualizate}
+      firma={firma}
+      onAccepted={() => {
         router.refresh();
         // Bula Watt din layout nu se remontează la refresh: îi spunem să reverifice.
         window.dispatchEvent(new Event(ACORDURI_ACCEPTATE_EVENT));
-      }} />;
+      }}
+    />
+  );
 }

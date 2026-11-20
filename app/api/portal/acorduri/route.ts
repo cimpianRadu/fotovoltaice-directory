@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { peekPortalEmail } from '@/lib/portal-session';
-import { acceptaAcorduri, acorduriLipsa, dovadaCerere, verificaAcorduri } from '@/lib/acorduri';
+import { acceptaAcorduri, acorduriLipsa, dovadaCerere, numeFirmaPentru, verificaAcorduri } from '@/lib/acorduri';
 import { ACORDURI, type AcordId } from '@/lib/acorduri-shared';
 
 // Modalul de acorduri (20 nov 2026): ce mai are de bifat firma logată și
@@ -12,8 +12,12 @@ const headers = { 'Cache-Control': 'no-store' };
 
 export async function GET() {
   const email = await peekPortalEmail();
-  if (!email) return NextResponse.json({ lipsa: [], actualizate: [] }, { headers });
-  return NextResponse.json(await verificaAcorduri(email), { headers });
+  if (!email) return NextResponse.json({ lipsa: [], actualizate: [], firma: '' }, { headers });
+  const stare = await verificaAcorduri(email);
+  // Numele firmei (din Sheets) doar când e ceva de bifat: altfel fiecare pagină
+  // vizitată de o firmă logată ar costa o citire din cotă.
+  const firma = stare.lipsa.length > 0 ? await numeFirmaPentru(email) : '';
+  return NextResponse.json({ ...stare, firma }, { headers });
 }
 
 export async function POST(request: Request) {
@@ -21,7 +25,7 @@ export async function POST(request: Request) {
   if (!email) {
     return NextResponse.json({ error: 'Sesiune expirată. Intră din nou în portal.' }, { status: 401 });
   }
-  const body = (await request.json().catch(() => ({}))) as { ids?: unknown; versiuni?: unknown };
+  const body = (await request.json().catch(() => ({}))) as { ids?: unknown; versiuni?: unknown; firma?: unknown };
   const ids = (Array.isArray(body.ids) ? body.ids : []).filter((x): x is AcordId =>
     ACORDURI.some((a) => a.id === x),
   );
@@ -43,8 +47,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Bifează ambele acorduri ca să continui.' }, { status: 400 });
   }
 
+  // Numele firmei se ia de pe server, nu din ce trimite browserul. Dacă diferă de
+  // cel din modal (profil schimbat între timp), firma n-a văzut textul ăsta.
+  const firma = await numeFirmaPentru(email);
+  if (typeof body.firma === 'string' && body.firma.trim() !== firma) {
+    return NextResponse.json(
+      { error: 'Datele firmei s-au schimbat între timp. Reîncarcă pagina și bifează din nou.' },
+      { status: 409 },
+    );
+  }
+
   try {
-    await acceptaAcorduri({ email, ids, sursa: 'portal', ...dovadaCerere(request) });
+    await acceptaAcorduri({ email, ids, sursa: 'portal', firma, ...dovadaCerere(request) });
     return NextResponse.json({ ok: true }, { headers });
   } catch (err) {
     console.error('[acorduri] salvare:', err);

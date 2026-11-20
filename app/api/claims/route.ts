@@ -233,6 +233,7 @@ export async function POST(request: Request) {
           email: claim.email,
           ids: lipsaAcorduri,
           sursa: 'revendicare',
+          firma: claim.numeFirma,
           ...dovadaCerere(request),
         });
       } catch (err) {

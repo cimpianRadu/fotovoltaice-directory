@@ -44,45 +44,68 @@ export const GRILA_COMISION = [
   },
 ] as const;
 
+/**
+ * Locul numelui firmei în textul bifelor. Bifa o dă o persoană (des de pe o
+ * adresă personală), dar acordul e al firmei: textul spune în numele cui, iar
+ * rândul din bază păstrează numele (20 nov 2026, după evaluarea acordurilor).
+ */
+export const LOC_FIRMA = '{FIRMA}';
+
+/** „firmei „Electro Prahova””, sau formularea generală când nu știm încă numele. */
+export function inNumeleFirmei(firma: string): string {
+  const nume = firma.trim();
+  return nume ? `firmei „${nume}”` : 'firmei pe care o reprezint';
+}
+
 export const ACORDURI: readonly Acord[] = [
   {
     id: 'termeni',
-    versiune: '2026-11-20',
+    versiune: '2026-11-20.2',
     dataVersiunii: '20 noiembrie 2026',
     titlu: 'Termenii și condițiile',
     href: '/termeni-conditii',
-    bifa: 'Am citit și accept Termenii și condițiile platformei, inclusiv regulile cererilor și folosirea Watt AI.',
+    bifa: `Am citit și accept, în numele ${LOC_FIRMA}, Termenii și condițiile platformei, inclusiv regulile cererilor și folosirea Watt AI. Confirm că pot reprezenta firma.`,
     schimbari:
-      'Prima versiune pe care o accepți din cont. Am adăugat în termeni regulile cererilor (cel mult 3 firme pe o cerere, cel mult 5 cereri nesunate odată) și Watt AI pentru firme.',
+      'Bifa se dă acum în numele firmei, iar cine bifează confirmă că o poate reprezenta. Restul termenilor e neschimbat.',
   },
   {
     id: 'comision',
-    versiune: '2026-11-20',
+    versiune: '2026-11-20.2',
     dataVersiunii: '20 noiembrie 2026',
     titlu: 'Grila de comision',
     href: '/termeni-conditii#comision',
-    bifa: `Accept grila de comision de mai sus pentru lucrările pe care le contractez cu clienți primiți prin platformă. Comisionul apare doar la contractul semnat, iar factura se plătește în ${COMISION_TERMEN_PLATA_ZILE} de zile.`,
-    schimbari:
-      'Aceeași grilă din documentul de colaborare trimis firmelor pe email, acum bifată din cont, o singură dată. Termenul de plată a facturii e de 30 de zile.',
+    bifa: `Accept, în numele ${LOC_FIRMA}, grila de comision de mai sus pentru lucrările pe care firma le contractează cu clienți primiți prin platformă. Comisionul apare doar la contractul semnat, iar factura se plătește în ${COMISION_TERMEN_PLATA_ZILE} de zile.`,
+    schimbari: 'Bifa se dă acum în numele firmei. Grila, sumele și termenul de plată sunt aceleași.',
   },
 ];
+
+/** Textul bifei cu numele firmei pus la locul lui. */
+export function bifaPentru(acord: Acord, firma: string): string {
+  return acord.bifa.replace(LOC_FIRMA, inNumeleFirmei(firma));
+}
 
 /**
  * Bifa din formularul de revendicare fără cont (/cereri): ambele acorduri într-o
  * singură căsuță, ca formularul să rămână scurt. Pe rândurile cu sursa
- * „revendicare” se salvează textul ăsta, nu `bifa` fiecărui acord.
+ * „revendicare” se salvează textul ăsta (cu numele firmei scris în formular),
+ * nu `bifa` fiecărui acord.
  */
-export const BIFA_FORMULAR_REVENDICARE = `Accept termenii platformei și grila de comision: 500 lei + TVA sub 10 kW sau doar baterie, 1.000 lei + TVA între 10 și 100 kW, 1–2% + TVA peste 100 kW. Comisionul apare doar la contractul semnat cu clientul, iar factura se plătește în ${COMISION_TERMEN_PLATA_ZILE} de zile.`;
+export const BIFA_FORMULAR_REVENDICARE = `Accept, în numele ${LOC_FIRMA}, termenii platformei și grila de comision: 500 lei + TVA sub 10 kW sau doar baterie, 1.000 lei + TVA între 10 și 100 kW, 1–2% + TVA peste 100 kW. Comisionul apare doar la contractul semnat cu clientul, iar factura se plătește în ${COMISION_TERMEN_PLATA_ZILE} de zile. Confirm că pot reprezenta firma.`;
+
+export function bifaFormular(firma: string): string {
+  return BIFA_FORMULAR_REVENDICARE.replace(LOC_FIRMA, inNumeleFirmei(firma));
+}
 
 /**
- * Textul care se salvează în bază la o bifă din modal. Bifa grilei spune „de mai
- * sus”, pentru că tabelul e chiar deasupra ei; ca rândul să fie dovadă și singur,
- * se salvează împreună cu grila.
+ * Textul care se salvează în bază la o bifă din modal: bifa cu numele firmei și,
+ * la grilă, grila însăși. Bifa grilei spune „de mai sus”, pentru că tabelul e
+ * chiar deasupra ei; ca rândul să fie dovadă și singur, se salvează cu ea.
  */
-export function textDeSalvat(acord: Acord): string {
-  if (acord.id !== 'comision') return acord.bifa;
+export function textDeSalvat(acord: Acord, firma: string): string {
+  const bifa = bifaPentru(acord, firma);
+  if (acord.id !== 'comision') return bifa;
   const grila = GRILA_COMISION.map((r) => `${r.putere}: ${r.comision}`).join('; ');
-  return `${acord.bifa} Grila: ${grila}.`;
+  return `${bifa} Grila: ${grila}.`;
 }
 
 /** Promovarea nu se bifează ca să folosești portalul: se acceptă când comanzi un pachet. */

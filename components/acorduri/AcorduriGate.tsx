@@ -20,9 +20,10 @@ export default function AcorduriGate() {
     pathname.startsWith('/portal') ||
     pathname.startsWith('/admin') ||
     PAGINI_FARA_MODAL.some((p) => pathname === p || pathname.startsWith(`${p}/`));
-  const [stare, setStare] = useState<{ lipsa: AcordId[]; actualizate: AcordId[] }>({
+  const [stare, setStare] = useState<{ lipsa: AcordId[]; actualizate: AcordId[]; firma: string }>({
     lipsa: [],
     actualizate: [],
+    firma: '',
   });
 
   useEffect(() => {
@@ -30,11 +31,12 @@ export default function AcorduriGate() {
     let anulat = false;
     fetch('/api/portal/acorduri', { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : {}))
-      .then((j: { lipsa?: AcordId[]; actualizate?: AcordId[] }) => {
+      .then((j: { lipsa?: AcordId[]; actualizate?: AcordId[]; firma?: string }) => {
         if (anulat) return;
         setStare({
           lipsa: Array.isArray(j.lipsa) ? j.lipsa : [],
           actualizate: Array.isArray(j.actualizate) ? j.actualizate : [],
+          firma: typeof j.firma === 'string' ? j.firma : '',
         });
       })
       .catch(() => {});
@@ -50,6 +52,7 @@ export default function AcorduriGate() {
     <AcorduriModal
       lipsa={stare.lipsa}
       actualizate={stare.actualizate}
+      firma={stare.firma}
       onAccepted={() => window.location.reload()}
     />
   );

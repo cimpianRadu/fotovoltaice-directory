@@ -14,6 +14,7 @@ import {
   ACORDURI,
   DOCUMENT_PROMOVARE,
   GRILA_COMISION,
+  bifaPentru,
   type AcordId,
 } from '@/lib/acorduri-shared';
 
@@ -22,11 +23,14 @@ const FOCUSABILE = 'a[href], button:not([disabled]), input:not([disabled])';
 export default function AcorduriModal({
   lipsa,
   actualizate = [],
+  firma,
   onAccepted,
 }: {
   lipsa: AcordId[];
   /** Acordurile la care firma bifase o versiune mai veche. */
   actualizate?: AcordId[];
+  /** Numele firmei din cont; gol = „firmei pe care o reprezint”. */
+  firma: string;
   onAccepted: () => void;
 }) {
   const acorduri = ACORDURI.filter((a) => lipsa.includes(a.id));
@@ -76,6 +80,7 @@ export default function AcorduriModal({
         body: JSON.stringify({
           ids: acorduri.map((a) => a.id),
           versiuni: Object.fromEntries(acorduri.map((a) => [a.id, a.versiune])),
+          firma,
         }),
       });
       const json = await res.json().catch(() => ({}));
@@ -171,7 +176,7 @@ export default function AcorduriModal({
                       onChange={(e) => setBifate((b) => ({ ...b, [a.id]: e.target.checked }))}
                       className="mt-0.5 h-5 w-5 shrink-0 accent-amber-500"
                     />
-                    <span className="text-sm leading-relaxed text-gray-800">{a.bifa}</span>
+                    <span className="text-sm leading-relaxed text-gray-800">{bifaPentru(a, firma)}</span>
                   </label>
                   <p className="mt-2 pl-7.5 text-xs leading-relaxed text-gray-500">
                     <a

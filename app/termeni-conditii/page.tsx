@@ -172,7 +172,8 @@ export default function TermeniConditii() {
         <p>
           <strong>Acordul.</strong> Firma acceptă termenii și grila bifându-le în contul ei din
           portal sau în formularul de revendicare, înainte de prima cerere revendicată. Fără acord
-          nu se poate revendica o cerere. Salvăm, pentru fiecare adresă de email a firmei, versiunea
+          nu se poate revendica o cerere. Bifa se dă în numele firmei, iar persoana care bifează
+          confirmă că o poate reprezenta. Salvăm, pentru fiecare adresă de email a firmei, versiunea
           acceptată, data și ora, adresa IP și textul bifat. Firma își vede acordurile în portal, în tabul „Condiții de
           colaborare”.
         </p>

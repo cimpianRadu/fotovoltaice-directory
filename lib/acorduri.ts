@@ -13,8 +13,9 @@
 import 'server-only';
 import { db } from './db';
 import { alertError } from './alert';
-import { ACORDURI, BIFA_FORMULAR_REVENDICARE, textDeSalvat, type AcordId, type AcordStare } from './acorduri-shared';
+import { ACORDURI, bifaFormular, textDeSalvat, type AcordId, type AcordStare } from './acorduri-shared';
 import { normalizeEmail } from './portal-auth';
+import { getFirmIdentity } from './sheets';
 
 interface RandAcord {
   email: string;
@@ -67,6 +68,8 @@ export async function acceptaAcorduri(opts: {
   email: string;
   ids: AcordId[];
   sursa: 'portal' | 'revendicare';
+  /** Numele firmei în numele căreia se bifează; intră în textul salvat. */
+  firma: string;
   ip?: string;
   userAgent?: string;
 }): Promise<void> {
@@ -75,13 +78,27 @@ export async function acceptaAcorduri(opts: {
   const ua = (opts.userAgent || '').slice(0, 300);
   // Textul pe care l-a văzut firma: în formular, o singură căsuță pentru ambele.
   const text = (acord: (typeof ACORDURI)[number]) =>
-    opts.sursa === 'revendicare' ? BIFA_FORMULAR_REVENDICARE : textDeSalvat(acord);
+    opts.sursa === 'revendicare' ? bifaFormular(opts.firma) : textDeSalvat(acord, opts.firma);
   for (const acord of ACORDURI.filter((a) => opts.ids.includes(a.id))) {
     await db()`
       INSERT INTO acorduri_firme (email, acord, versiune, text_acceptat, sursa, ip, user_agent)
       VALUES (${email}, ${acord.id}, ${acord.versiune}, ${text(acord)}, ${opts.sursa}, ${ip}, ${ua})
       ON CONFLICT (email, acord, versiune) DO NOTHING
     `;
+  }
+}
+
+/**
+ * Numele firmei în numele căreia bifează adresa: profilul firmei, altfel ultima
+ * revendicare. Gol dacă nu-l știm (cont nou fără profil): bifa spune atunci
+ * „firmei pe care o reprezint”. Citește din Sheets, deci doar cât firma are de bifat.
+ */
+export async function numeFirmaPentru(email: string): Promise<string> {
+  try {
+    return (await getFirmIdentity(normalizeEmail(email)))?.numeFirma?.trim() ?? '';
+  } catch (err) {
+    console.error('[acorduri] numele firmei:', err);
+    return '';
   }
 }
 

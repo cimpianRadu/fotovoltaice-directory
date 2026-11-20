@@ -11,7 +11,7 @@ import { MAX_ACTIVE_CLAIMS_PER_FIRM } from '@/lib/sheets-shared';
 import { getAttribution } from '@/lib/attribution';
 import { trackLeadClick } from '@/lib/lead-clicks-client';
 import { FIRM_SOURCE_OPTIONS, isDoarMontaj } from '@/lib/utils-shared';
-import { BIFA_FORMULAR_REVENDICARE } from '@/lib/acorduri-shared';
+import { bifaFormular } from '@/lib/acorduri-shared';
 import type { FinancingTone } from '@/lib/utils-shared';
 import type { CvbEstimate } from '@/lib/cvb-score';
 import { CvbScoreLine } from '@/components/cvb/CvbScore';
@@ -682,6 +682,8 @@ export default function LeadCard({
   // 59% dintre firme între deschidere și trimitere (Umami, 30 zile la 7 sept),
   // un câmp în plus trebuie să coste un singur tap sau nimic.
   const [cumAflat, setCumAflat] = useState('');
+  // Numele scris în formular apare în bifa acordurilor („în numele firmei X”).
+  const [firmaScrisa, setFirmaScrisa] = useState('');
   // Emailul cu care a plecat revendicarea/urmărirea: cu el se precompletează
   // linkul spre /portal/login pe ecranul de confirmare, ca firma să nu-l mai
   // tasteze o dată (și să nu greșească alt email decât cel din revendicare).
@@ -1353,7 +1355,13 @@ export default function LeadCard({
                   <AccountBox me={me!} verb="Revendici" onManual={() => setManual(true)} />
                 ) : (
                   <>
-                    <Input label="Nume firmă" name="numeFirma" required placeholder="SC Firma SRL" />
+                    <Input
+                      label="Nume firmă"
+                      name="numeFirma"
+                      required
+                      placeholder="SC Firma SRL"
+                      onChange={(e) => setFirmaScrisa(e.target.value)}
+                    />
                     <Input label="Persoană contact" name="numeContact" required placeholder="Ion Popescu" />
                     <PhoneInput label="Telefon" name="telefon" required placeholder="0740 123 456" />
                     <Input
@@ -1410,7 +1418,7 @@ export default function LeadCard({
                       className="mt-0.5 h-4 w-4 shrink-0 accent-amber-500"
                     />
                     <span className="text-xs leading-relaxed text-gray-700">
-                      {BIFA_FORMULAR_REVENDICARE}{' '}
+                      {bifaFormular(firmaScrisa)}{' '}
                       <a href="/termeni-conditii#comision" target="_blank" rel="noopener" className="underline hover:no-underline">
                         Citește termenii
                       </a>

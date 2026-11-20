@@ -75,7 +75,7 @@ import PortalTabs from './PortalTabs';
 import PortalFirmProfile from './PortalFirmProfile';
 import PortalNoutati from './PortalNoutati';
 import { getNotePlatforma, type NotaPlatforma } from '@/lib/nota-platforma';
-import { stareAcorduriFirma, verificaAcorduri } from '@/lib/acorduri';
+import { numeFirmaPentru, stareAcorduriFirma, verificaAcorduri } from '@/lib/acorduri';
 import PortalAcorduriGate from './PortalAcorduriGate';
 import PortalAcorduri from './PortalAcorduri';
 
@@ -146,7 +146,11 @@ export default async function PortalPage() {
   if (acorduri.lipsa.length > 0) {
     return (
       <div className="max-w-3xl mx-auto min-h-[70vh] px-4 pt-6 pb-10 sm:pt-8">
-        <PortalAcorduriGate lipsa={acorduri.lipsa} actualizate={acorduri.actualizate} />
+        <PortalAcorduriGate
+          lipsa={acorduri.lipsa}
+          actualizate={acorduri.actualizate}
+          firma={await numeFirmaPentru(email)}
+        />
       </div>
     );
   }

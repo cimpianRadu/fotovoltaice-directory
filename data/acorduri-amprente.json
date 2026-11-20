@@ -1,20 +1,14 @@
 {
   "termeni": {
-    "versiune": "2026-11-20",
-    "amprenta": "5c9ad135d07db499",
+    "versiune": "2026-11-20.2",
+    "amprenta": "1c90ab90fb251727",
     "inregistrat": "2026-11-20",
     "corecturi": []
   },
   "comision": {
-    "versiune": "2026-11-20",
-    "amprenta": "10ea0ffcee8deac2",
+    "versiune": "2026-11-20.2",
+    "amprenta": "cc879be1580dd76b",
     "inregistrat": "2026-11-20",
-    "corecturi": [
-      {
-        "data": "2026-11-20",
-        "motiv": "Bifa grilei din modal spune «grila de mai sus» în loc să repete cifrele; tabelul e chiar deasupra, iar rândul din bază salvează bifa împreună cu grila. Aceleași sume, același termen de plată.",
-        "amprenta": "10ea0ffcee8deac2"
-      }
-    ]
+    "corecturi": []
   }
 }
