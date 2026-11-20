@@ -96,7 +96,7 @@ export default function ComisionDocumentPage() {
             <li>
               <strong>Acordul.</strong> Bifați grila și termenii o singură dată, în cont: la prima
               intrare în portal sau în formularul primei cereri revendicate. Fără bifă nu se poate
-              revendica. Ce ați acceptat vedeți oricând în portal, în tabul „Alerte și utilizatori”.
+              revendica. Ce ați acceptat vedeți oricând în portal, în tabul „Condiții de colaborare”.
             </li>
             <li>
               <strong>Momentul.</strong> Comisionul apare la semnarea contractului cu clientul. Nu la

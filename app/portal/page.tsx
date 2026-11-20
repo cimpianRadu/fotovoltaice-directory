@@ -614,9 +614,9 @@ export default async function PortalPage() {
               <PortalCountyAlerts counties={getCounties()} initial={alertCounties} />
               <PortalFirmEmails current={email} addresses={emails} max={MAX_FIRM_EMAILS} />
               <RezumatAiToggle />
-              <PortalAcorduri acorduri={acorduriFirma} />
             </>
           }
+          conditii={<PortalAcorduri acorduri={acorduriFirma} />}
         />
       </div>
 

@@ -75,7 +75,7 @@ export default function AcorduriModal({
         </h2>
         <p className="mt-1.5 text-sm leading-relaxed text-gray-600">
           {primaData
-            ? `Termenii și grila de comision, până acum trimise pe email, sunt de azi și în cont. Bifează-le o singură dată ca să folosești portalul, revendicarea cererilor și Watt AI. Le găsești oricând în portal, la „Alerte și utilizatori”.`
+            ? `Termenii și grila de comision, până acum trimise pe email, sunt de azi și în cont. Bifează-le o singură dată ca să folosești portalul, revendicarea cererilor și Watt AI. Le găsești oricând în portal, la „Condiții de colaborare”.`
             : 'Ca să continui în portal, citește ce s-a schimbat și bifează din nou.'}
         </p>
 

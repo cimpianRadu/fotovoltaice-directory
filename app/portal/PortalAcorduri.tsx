@@ -1,5 +1,5 @@
-// Tabul Setări: ce a acceptat firma, la ce versiune și cine din echipă. Tot aici
-// stau linkurile spre cele trei documente, ca firma să le găsească oricând.
+// Tabul „Condiții de colaborare”: ce a acceptat firma, la ce versiune și cine din
+// echipă, plus linkurile spre cele trei documente, ca firma să le găsească oricând.
 
 import { DOCUMENT_PROMOVARE, type AcordStare } from '@/lib/acorduri-shared';
 
@@ -18,10 +18,10 @@ function cand(iso: string): string {
 export default function PortalAcorduri({ acorduri }: { acorduri: AcordStare[] }) {
   return (
     <div id="acorduri" className="mb-8 scroll-mt-24 rounded-xl border border-border bg-surface p-5 sm:p-6">
-      <h2 className="font-semibold text-gray-900">Acordurile firmei</h2>
+      <h2 className="font-semibold text-gray-900">Condiții de colaborare</h2>
       <p className="mt-1 text-sm text-gray-600 leading-relaxed">
-        Ce ai acceptat cu platforma. Când se schimbă ceva de fond (prețul, Watt AI, regulile
-        cererilor), apare o versiune nouă și o bifezi din nou.
+        Ce ai acceptat cu platforma. Dacă se schimbă ceva de fond, îți arătăm ce și bifezi din
+        nou.
       </p>
       <ul className="mt-3 space-y-3">
         {acorduri.map((a) => (

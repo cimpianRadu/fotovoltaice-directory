@@ -173,8 +173,8 @@ export default function TermeniConditii() {
           <strong>Acordul.</strong> Firma acceptă termenii și grila bifându-le în contul ei din
           portal sau în formularul de revendicare, înainte de prima cerere revendicată. Fără acord
           nu se poate revendica o cerere. Salvăm, pentru fiecare adresă de email a firmei, versiunea
-          acceptată, data și ora, adresa IP și textul bifat. Firma își vede acordurile în portal, în tabul „Alerte și
-          utilizatori”.
+          acceptată, data și ora, adresa IP și textul bifat. Firma își vede acordurile în portal, în tabul „Condiții de
+          colaborare”.
         </p>
         <p>
           <strong>Cum se confirmă lucrarea.</strong> Firma ne anunță contractul semnat, din portal
