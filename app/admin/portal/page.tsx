@@ -208,6 +208,7 @@ const FILTERS: { key: string; label: string; state?: AccountState }[] = [
   { key: 'necunoscut', label: 'Jurnalul nu știe', state: 'necunoscut' },
   { key: 'goi', label: 'Portal gol' },
   { key: 'fara-judete', label: 'Fără județe bifate' },
+  { key: 'fara-acorduri', label: 'Fără acorduri' },
   { key: 'dezactivate', label: 'Dezactivate' },
 ];
 
@@ -416,6 +417,15 @@ function alertsLine(alerts: CountyAlertPref | null): React.ReactNode {
       </span>
     </>
   );
+}
+
+/** Contul are, pe oricare adresă, toate acordurile bifate la versiunea curentă. */
+function areAcorduri(
+  addresses: string[],
+  acceptari: Map<string, Partial<Record<AcordId, string>>> | null,
+): boolean {
+  if (!acceptari) return false;
+  return ACORDURI.every((a) => addresses.some((e) => acceptari.get(e)?.[a.id]));
 }
 
 /** Acordurile contului: pentru fiecare, prima adresă din grup care l-a bifat la versiunea curentă. */
@@ -1008,7 +1018,12 @@ export default async function PortalAccessPage({ searchParams }: Props) {
             // n-are sens să-l numeri drept „n-a bifat", n-a avut de unde.
             activeFilter.key === 'fara-judete'
             ? accounts.filter((a) => stateOf(a) === 'cont' && !hasCountyAlerts(a))
-            : accounts;
+            : // Tot doar cine a intrat în portal: ceilalți n-au văzut încă modalul.
+              activeFilter.key === 'fara-acorduri'
+              ? accounts.filter(
+                  (a) => stateOf(a) === 'cont' && !areAcorduri(a.addresses.map((x) => x.email), acceptari),
+                )
+              : accounts;
   const visible = day
     ? allAccounts.filter((a) => dayMoves.some((d) => d.account === a))
     : byFilter;
@@ -1030,6 +1045,9 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   const untouchedTotal = accounts.reduce((s, a) => s + a.untouched, 0);
   const withAccount = accounts.filter((a) => stateOf(a) === 'cont').length;
   const withCountyAlerts = accounts.filter(hasCountyAlerts).length;
+  const faraAcorduri = accounts.filter(
+    (a) => stateOf(a) === 'cont' && !areAcorduri(a.addresses.map((x) => x.email), acceptari),
+  ).length;
 
   return (
     <div>
@@ -1154,6 +1172,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
             {f.key === 'dezactivate' && deactivatedAccounts.length > 0 && (
               <> ({deactivatedAccounts.length})</>
             )}
+            {f.key === 'fara-acorduri' && acceptari && <> ({faraAcorduri})</>}
           </Pill>
         ))}
       </div>

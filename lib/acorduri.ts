@@ -13,7 +13,7 @@
 import 'server-only';
 import { db } from './db';
 import { alertError } from './alert';
-import { ACORDURI, BIFA_FORMULAR_REVENDICARE, type AcordId, type AcordStare } from './acorduri-shared';
+import { ACORDURI, BIFA_FORMULAR_REVENDICARE, textDeSalvat, type AcordId, type AcordStare } from './acorduri-shared';
 import { normalizeEmail } from './portal-auth';
 
 interface RandAcord {
@@ -74,11 +74,12 @@ export async function acceptaAcorduri(opts: {
   const ip = (opts.ip || '').slice(0, 100);
   const ua = (opts.userAgent || '').slice(0, 300);
   // Textul pe care l-a văzut firma: în formular, o singură căsuță pentru ambele.
-  const text = (bifa: string) => (opts.sursa === 'revendicare' ? BIFA_FORMULAR_REVENDICARE : bifa);
+  const text = (acord: (typeof ACORDURI)[number]) =>
+    opts.sursa === 'revendicare' ? BIFA_FORMULAR_REVENDICARE : textDeSalvat(acord);
   for (const acord of ACORDURI.filter((a) => opts.ids.includes(a.id))) {
     await db()`
       INSERT INTO acorduri_firme (email, acord, versiune, text_acceptat, sursa, ip, user_agent)
-      VALUES (${email}, ${acord.id}, ${acord.versiune}, ${text(acord.bifa)}, ${opts.sursa}, ${ip}, ${ua})
+      VALUES (${email}, ${acord.id}, ${acord.versiune}, ${text(acord)}, ${opts.sursa}, ${ip}, ${ua})
       ON CONFLICT (email, acord, versiune) DO NOTHING
     `;
   }

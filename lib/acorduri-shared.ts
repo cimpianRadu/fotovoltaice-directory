@@ -61,7 +61,7 @@ export const ACORDURI: readonly Acord[] = [
     dataVersiunii: '20 noiembrie 2026',
     titlu: 'Grila de comision',
     href: '/termeni-conditii#comision',
-    bifa: `Accept grila de comision pentru lucrările pe care le contractez cu clienți primiți prin platformă: 500 lei + TVA sub 10 kW sau doar baterie, 1.000 lei + TVA între 10 și 100 kW, 1–2% + TVA din valoarea contractului fără TVA peste 100 kW. Comisionul apare doar la contractul semnat, iar factura se plătește în ${COMISION_TERMEN_PLATA_ZILE} de zile.`,
+    bifa: `Accept grila de comision de mai sus pentru lucrările pe care le contractez cu clienți primiți prin platformă. Comisionul apare doar la contractul semnat, iar factura se plătește în ${COMISION_TERMEN_PLATA_ZILE} de zile.`,
     schimbari:
       'Aceeași grilă din documentul de colaborare trimis firmelor pe email, acum bifată din cont, o singură dată. Termenul de plată a facturii e de 30 de zile.',
   },
@@ -73,6 +73,17 @@ export const ACORDURI: readonly Acord[] = [
  * „revendicare” se salvează textul ăsta, nu `bifa` fiecărui acord.
  */
 export const BIFA_FORMULAR_REVENDICARE = `Accept termenii platformei și grila de comision: 500 lei + TVA sub 10 kW sau doar baterie, 1.000 lei + TVA între 10 și 100 kW, 1–2% + TVA peste 100 kW. Comisionul apare doar la contractul semnat cu clientul, iar factura se plătește în ${COMISION_TERMEN_PLATA_ZILE} de zile.`;
+
+/**
+ * Textul care se salvează în bază la o bifă din modal. Bifa grilei spune „de mai
+ * sus”, pentru că tabelul e chiar deasupra ei; ca rândul să fie dovadă și singur,
+ * se salvează împreună cu grila.
+ */
+export function textDeSalvat(acord: Acord): string {
+  if (acord.id !== 'comision') return acord.bifa;
+  const grila = GRILA_COMISION.map((r) => `${r.putere}: ${r.comision}`).join('; ');
+  return `${acord.bifa} Grila: ${grila}.`;
+}
 
 /** Promovarea nu se bifează ca să folosești portalul: se acceptă când comanzi un pachet. */
 export const DOCUMENT_PROMOVARE = {

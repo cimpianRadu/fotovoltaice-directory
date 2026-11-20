@@ -5,7 +5,7 @@
   "scripts": {
     "predev": "node scripts/generate-company-anre-certs.js",
     "dev": "next dev",
-    "prebuild": "node scripts/generate-company-anre-certs.js",
+    "prebuild": "node scripts/generate-company-anre-certs.js && node scripts/acorduri-amprenta.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
