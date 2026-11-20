@@ -288,7 +288,7 @@ export async function sendLoginCodeEmail(email: string, code: string) {
   // Pe local (aceeași bază ca producția) și înainte de pornire nu pleacă emailuri reale.
   if (!clientEmailsLive()) return { ok: false, reason: 'oprit' };
   const { subject, html } = loginCodeEmail(code, await accountLink(email));
-  return sendEmail({ to: email, subject, html, replyTo: REPLY_TO });
+  return sendEmail({ to: email, subject, html, replyTo: REPLY_TO, essential: true });
 }
 
 /** Către firmă, o singură dată pe ofertă, doar în fereastra de lucru (altfel îl trimite cronul). */

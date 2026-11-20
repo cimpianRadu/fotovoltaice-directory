@@ -35,12 +35,30 @@ export interface SendEmailOptions {
   replyTo?: string;
   /** Antete în plus, ex. List-Unsubscribe (lib/firm-unsubscribe-token). */
   headers?: Record<string, string>;
+  /** Codurile de acces: pleacă și în timpul pauzei de emailuri (vezi emailsPaused). */
+  essential?: boolean;
+}
+
+/**
+ * Pauză de emailuri (20 nov 2026, cota Resend gratuită de 100/zi depășită):
+ * cât timp acum < EMAIL_PAUSE_UNTIL (ISO, în Vercel), pleacă doar emailurile
+ * `essential` (codurile de acces în portal și în contul clientului). Restul
+ * întorc ok:false și NU se retrimit singure după. Fără variabilă = fără pauză.
+ */
+export function emailsPaused(now = Date.now()): boolean {
+  const until = Date.parse(process.env.EMAIL_PAUSE_UNTIL || '');
+  return Number.isFinite(until) && now < until;
 }
 
 export async function sendEmail(opts: SendEmailOptions): Promise<{ ok: boolean; reason?: string }> {
   const key = process.env.RESEND_API_KEY;
   if (!key) {
     return { ok: false, reason: 'RESEND_API_KEY not set' };
+  }
+
+  if (!opts.essential && emailsPaused()) {
+    console.warn('[email] pauză, netrimis:', opts.subject, '→', opts.to);
+    return { ok: false, reason: 'pauza-emailuri' };
   }
 
   const from = opts.from || process.env.RESEND_FROM || 'Instalatori Fotovoltaice <onboarding@resend.dev>';
@@ -474,6 +492,7 @@ export async function sendPortalLoginEmail(data: {
     to: data.to,
     subject: `Cod de acces Portal Instalatori: ${data.code}`,
     html,
+    essential: true,
   });
 }
 
