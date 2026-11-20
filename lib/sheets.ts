@@ -1758,7 +1758,13 @@ export async function getClientFeedbacks(): Promise<ClientFeedbackRow[]> {
   }));
 }
 
-/** Există deja un răspuns pentru cererea asta (și firma asta, pe tabul firmelor)? */
+/**
+ * Există deja un răspuns pentru cererea asta (și firma asta, pe tabul firmelor)?
+ *
+ * La client nu se numără răspunsurile cu „nu” la publicare (coloana K), din
+ * 20 nov 2026: omul care a răspuns „nu” înainte de montaj poate fi întrebat
+ * din nou după, iar linkul nou trebuie să-i deschidă formularul, nu „Mulțumim”.
+ */
 export async function hasFeedback(role: 'client' | 'firma', leadId: string, firma = ''): Promise<boolean> {
   let rows: string[][];
   try {
@@ -1767,7 +1773,10 @@ export async function hasFeedback(role: 'client' | 'firma', leadId: string, firm
     return false;
   }
   return rows.some(
-    (r, i) => i > 0 && r[1] === leadId && (role === 'client' || (r[2] || '').trim() === firma.trim()),
+    (r, i) =>
+      i > 0 &&
+      r[1] === leadId &&
+      (role === 'client' ? (r[10] || '').trim() !== 'nu' : (r[2] || '').trim() === firma.trim()),
   );
 }
 
