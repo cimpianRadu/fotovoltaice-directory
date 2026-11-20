@@ -9,6 +9,7 @@
 import { NextResponse } from 'next/server';
 import { alertError } from '@/lib/alert';
 import { peekPortalEmail } from '@/lib/portal-session';
+import { acorduriLipsa } from '@/lib/acorduri';
 import {
   EVENIMENTE_BULA,
   WattFirmeEroare,
@@ -30,6 +31,8 @@ export async function GET() {
   if (!wattFirmePornit()) return NextResponse.json({ pornit: false }, { headers });
   const email = await peekPortalEmail();
   if (!email) return NextResponse.json({ pornit: false }, { headers });
+  // Fără acordurile bifate (care includ Watt AI) bula nu apare: modalul vine întâi.
+  if ((await acorduriLipsa(email)).length > 0) return NextResponse.json({ pornit: false }, { headers });
   try {
     return NextResponse.json(await stareWattFirme(email), { headers });
   } catch (err) {
@@ -42,6 +45,12 @@ export async function POST(request: Request) {
   if (!wattFirmePornit()) return NextResponse.json({ error: 'Watt nu e pornit.' }, { status: 404 });
   const email = await peekPortalEmail();
   if (!email) return NextResponse.json({ error: 'Intrați în contul firmei.' }, { status: 401 });
+  if ((await acorduriLipsa(email)).length > 0) {
+    return NextResponse.json(
+      { error: 'Acceptă întâi termenii din cont. Reîncarcă pagina.', needsAcorduri: true },
+      { status: 403 },
+    );
+  }
 
   const body = (await request.json().catch(() => ({}))) as Record<string, unknown>;
 

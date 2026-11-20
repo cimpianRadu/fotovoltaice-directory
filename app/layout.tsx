@@ -13,6 +13,7 @@ import { getCompanies, getCoveredCounties } from '@/lib/utils';
 import './globals.css';
 import ReportIssueDialog from '@/components/report/ReportIssueDialog';
 import WattFirmeBubble from '@/components/asistent/WattFirmeBubble';
+import AcorduriGate from '@/components/acorduri/AcorduriGate';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -99,6 +100,7 @@ export default function RootLayout({
             <WattFirmeBubble />
           </PublicChrome>
           <ReportIssueDialog />
+          <AcorduriGate />
         </SegmentProvider>
       </body>
     </html>

@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { acceptariCurente } from '@/lib/acorduri';
+import { ACORDURI, type AcordId } from '@/lib/acorduri-shared';
 import {
   getPortalAccessEvents,
   getClaims,
@@ -416,12 +418,41 @@ function alertsLine(alerts: CountyAlertPref | null): React.ReactNode {
   );
 }
 
+/** Acordurile contului: pentru fiecare, prima adresă din grup care l-a bifat la versiunea curentă. */
+function acorduriLine(
+  addresses: string[],
+  acceptari: Map<string, Partial<Record<AcordId, string>>> | null,
+): React.ReactNode {
+  if (!acceptari) return <span className="text-slate-400">baza nu răspunde</span>;
+  return ACORDURI.map((a, i) => {
+    const cine = addresses
+      .map((e) => ({ e, la: acceptari.get(e)?.[a.id] }))
+      .filter((x) => x.la)
+      .sort((x, y) => x.la!.localeCompare(y.la!))[0];
+    return (
+      <span key={a.id}>
+        {i > 0 && ' · '}
+        {cine ? (
+          <span className="text-emerald-700">
+            {a.id} ✓ {fmtDateTime(cine.la!)}
+            {addresses.length > 1 ? ` (${cine.e})` : ''}
+          </span>
+        ) : (
+          <span className="font-medium text-amber-700">{a.id} nebifat</span>
+        )}
+      </span>
+    );
+  });
+}
+
 function AccountCard({
   account,
   leadById,
+  acceptari,
 }: {
   account: PortalAccount;
   leadById: Map<string, NewLead>;
+  acceptari: Map<string, Partial<Record<AcordId, string>>> | null;
 }) {
   const state = stateOf(account);
   const identityClaim = account.claims.find((c) => c.numeFirma);
@@ -588,6 +619,16 @@ function AccountCard({
         )}
       </div>
 
+      <div className="border-b border-slate-100 px-4 py-2 text-xs text-slate-600">
+        <span className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+          Acorduri ·{' '}
+        </span>
+        {acorduriLine(
+          account.addresses.map((a) => a.email),
+          acceptari,
+        )}
+      </div>
+
       <div className="px-4 py-3">
         <p className="mb-1.5 text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
           Revendicări · vizibilitatea datelor de client
@@ -703,6 +744,14 @@ export default async function PortalAccessPage({ searchParams }: Props) {
     precalificare = await precalificareActivitate();
   } catch (err) {
     precalificareError = err instanceof Error ? err.message : String(err);
+  }
+
+  // Acordurile stau tot în Neon: fără bază, linia lor spune asta și atât.
+  let acceptari: Map<string, Partial<Record<AcordId, string>>> | null = null;
+  try {
+    acceptari = await acceptariCurente();
+  } catch (err) {
+    console.error('[admin/portal] acorduri:', err);
   }
 
   const companies = getCompanies();
@@ -1117,7 +1166,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
 
       <div className="mt-2 grid items-start gap-3 xl:grid-cols-2">
         {visible.map((a) => (
-          <AccountCard key={a.email} account={a} leadById={leadById} />
+          <AccountCard key={a.email} account={a} leadById={leadById} acceptari={acceptari} />
         ))}
       </div>
 

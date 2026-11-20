@@ -23,6 +23,8 @@ import {
 } from '@/lib/sheets';
 import { isProbaAccount, isValidEmail, normalizeEmail } from '@/lib/portal-auth';
 import { peekPortalEmail } from '@/lib/portal-session';
+import { acceptaAcorduri, acorduriLipsa, dovadaCerere } from '@/lib/acorduri';
+import { alertError } from '@/lib/alert';
 import { sanitizeAttribution } from '@/lib/attribution';
 import { isFirmSource } from '@/lib/utils-shared';
 import { cleanPhone, PHONE_ERROR } from '@/lib/phone';
@@ -91,6 +93,26 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: 'Adresa de email nu este validă.' },
         { status: 400 }
+      );
+    }
+
+    // Acordurile (20 nov 2026): termenii și grila de comision, bifate la
+    // versiunea curentă, înainte de orice revendicare. Până acum grila se
+    // confirma pe email și nimic nu verifica asta. Din cont bifa se dă în
+    // modal; în formularul fără cont, în căsuța de lângă buton, iar bifa se
+    // salvează pe emailul scris în formular.
+    const lipsaAcorduri = await acorduriLipsa(email);
+    const bifatInFormular = body?.fromAccount !== true && body?.acorduri === 'da';
+    if (lipsaAcorduri.length > 0 && !bifatInFormular) {
+      return NextResponse.json(
+        {
+          error:
+            body?.fromAccount === true
+              ? 'Acceptă întâi termenii și grila de comision. Reîncarcă pagina.'
+              : 'Bifează acordul cu termenii și grila de comision.',
+          needsAcorduri: true,
+        },
+        { status: 400 },
       );
     }
 
@@ -205,6 +227,26 @@ export async function POST(request: Request) {
       approvedAt: firmConfirmed ? new Date().toISOString() : '',
       proba,
     };
+    if (lipsaAcorduri.length > 0 && bifatInFormular) {
+      try {
+        await acceptaAcorduri({
+          email: claim.email,
+          ids: lipsaAcorduri,
+          sursa: 'revendicare',
+          ...dovadaCerere(request),
+        });
+      } catch (err) {
+        // Bifa a fost dată, doar salvarea a picat: revendicarea merge mai departe.
+        console.error('[claims] acorduri:', err);
+        await alertError({
+          area: 'acorduri',
+          kind: 'salvare-revendicare',
+          message: `Bifa de acord de la ${claim.email} nu s-a salvat în Neon: ${
+            err instanceof Error ? err.message : String(err)
+          }`.slice(0, 200),
+        });
+      }
+    }
     const claimTs = await saveClaimToSheet(claim);
 
     // Firma logată care n-are încă profil completează formularul o singură

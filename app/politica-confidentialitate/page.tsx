@@ -15,7 +15,7 @@ export default function PoliticaConfidentialitate() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Politica de Confidențialitate</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 12 noiembrie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 20 noiembrie 2026</p>
 
         <p>
           Instalatori Fotovoltaice România (&quot;noi&quot;, &quot;site-ul&quot;) operează site-ul{' '}
@@ -38,6 +38,15 @@ export default function PoliticaConfidentialitate() {
           <li>
             <strong>Formularul &quot;Listează-ți Firma&quot;:</strong> numele firmei, CUI, date de contact,
             informații despre servicii
+          </li>
+          <li>
+            <strong>Acordurile firmelor de instalare</strong> (termenii și grila de comision, bifate
+            în portal sau la revendicarea unei cereri): adresa de email care a bifat, versiunea
+            acceptată, data și ora, adresa IP și browserul. Le păstrăm ca dovadă a acordului
+          </li>
+          <li>
+            <strong>Watt AI pentru firme:</strong> mesajele scrise de persoanele din firmele logate
+            și răspunsurile asistentului
           </li>
           <li>
             <strong>Newsletter / Waitlist:</strong> adresa de email
@@ -153,6 +162,10 @@ export default function PoliticaConfidentialitate() {
             i le scrieți, ca să vă răspundă. Ce confirmați în conversație intră în cerere și îl văd firmele de
             instalare.
           </li>
+          <li>
+            <strong>Anthropic, pentru Watt AI pentru firme:</strong> primește mesajele firmei logate și
+            datele cererilor ei de care are nevoie ca să răspundă, fără datele de contact ale clienților
+          </li>
         </ul>
         <p>
           Unii dintre acești furnizori pot prelucra date în afara Uniunii Europene (în special în SUA).
@@ -170,6 +183,11 @@ export default function PoliticaConfidentialitate() {
             cererea, sau până cereți ștergerea din cont
           </li>
           <li>Datele firmelor listate: pe durata listării + 6 luni</li>
+          <li>
+            Acordurile firmelor: cât timp firma lucrează cu platforma, plus termenul legal de
+            prescripție pentru facturile de comision (3 ani de la ultima lucrare confirmată)
+          </li>
+          <li>Conversațiile firmelor cu Watt AI: cât timp firma are cont, sau până cere ștergerea</li>
           <li>Email-uri newsletter: până la dezabonare</li>
         </ul>
 

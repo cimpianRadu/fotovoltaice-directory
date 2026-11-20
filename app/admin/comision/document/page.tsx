@@ -13,7 +13,7 @@ import { H2, Pill, Sheet } from '../../DocumentSheet';
 
 export const dynamic = 'force-dynamic';
 
-const MESAJ = `Bună ziua, cum am discutat, vă trimit pe scurt cum funcționează cererile și comisionul: grila, când se plătește, regulile de revendicare și cum adăugați colegii în portal. Pe scurt: nu plătiți pentru cereri, comisionul apare doar la contract semnat. Dacă sunteți de acord cu grila, un răspuns „de acord" pe email e suficient. Pentru orice întrebare, mă găsiți la 0751 547 174.`;
+const MESAJ = `Bună ziua, cum am discutat, vă trimit pe scurt cum funcționează cererile și comisionul: grila, când se plătește, regulile de revendicare și cum adăugați colegii în portal. Pe scurt: nu plătiți pentru cereri, comisionul apare doar la contract semnat. Grila o bifați o singură dată în cont, când intrați în portal sau la prima cerere revendicată. Pentru orice întrebare, mă găsiți la 0751 547 174.`;
 
 export default function ComisionDocumentPage() {
   return (
@@ -93,9 +93,9 @@ export default function ComisionDocumentPage() {
           <H2 n={2}>Cum se aplică</H2>
           <ol className="list-decimal space-y-1 pl-5">
             <li>
-              <strong>Acordul.</strong> Confirmați grila în scris, pe email, înainte de prima cerere
-              revendicată. Un răspuns „de acord” este suficient. Fără acord scris nu se datorează
-              nimic.
+              <strong>Acordul.</strong> Bifați grila și termenii o singură dată, în cont: la prima
+              intrare în portal sau în formularul primei cereri revendicate. Fără bifă nu se poate
+              revendica. Ce ați acceptat vedeți oricând în portal, în tabul „Alerte și utilizatori”.
             </li>
             <li>
               <strong>Momentul.</strong> Comisionul apare la semnarea contractului cu clientul. Nu la
@@ -109,7 +109,7 @@ export default function ComisionDocumentPage() {
             </li>
             <li>
               <strong>Factura.</strong> Se emite după confirmare de Cîmpian Radu Gheorghe PFA, CUI
-              45316713, plătitor de TVA. Termenul de plată îl stabilim în acordul scris.
+              45316713, plătitor de TVA, cu plata în 30 de zile de la emitere.
             </li>
             <li>
               <strong>Anularea.</strong> Dacă contractul se anulează înainte de începerea lucrării,

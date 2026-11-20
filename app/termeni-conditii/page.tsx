@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
+import { ACORDURI, COMISION_TERMEN_PLATA_ZILE, GRILA_COMISION } from '@/lib/acorduri-shared';
+import { MAX_ACTIVE_CLAIMS_PER_FIRM } from '@/lib/sheets-shared';
+import { WATT_FIRME_MESAJE_PE_ZI } from '@/lib/watt-firme-shared';
 
 export const metadata: Metadata = {
   title: 'Termeni și Condiții',
@@ -15,7 +18,7 @@ export default function TermeniConditii() {
 
       <article className="mt-6 prose prose-gray max-w-none">
         <h1>Termeni și Condiții</h1>
-        <p className="text-sm text-gray-500">Ultima actualizare: 6 noiembrie 2026</p>
+        <p className="text-sm text-gray-500">Ultima actualizare: 20 noiembrie 2026</p>
 
         <p>
           Prin accesarea și utilizarea site-ului <strong>instalatori-fotovoltaice.ro</strong> acceptați
@@ -137,13 +140,41 @@ export default function TermeniConditii() {
           contract, firma nu plătește nimic, oricâte cereri ar fi revendicat.
         </p>
         <p>
-          <strong>Cum se calculează.</strong> Pentru proiectele obișnuite, comisionul este o sumă
-          fixă, stabilită pe trepte, după puterea din contractul semnat cu clientul, nu după puterea
-          din cererea transmisă de acesta. Pentru proiectele mari, peste pragul convenit, comisionul este un
-          procent din valoarea contractului, calculat la valoarea fără TVA. Nivelurile concrete
-          (sumele fixe pe trepte, procentul și pragul de la care se aplică) se convin în scris cu
-          fiecare firmă, înainte de prima cerere revendicată. Ele nu sunt publicate pe site fiindcă
-          se stabilesc individual, iar fără un astfel de acord scris firma nu datorează nimic.
+          <strong>Grila de comision.</strong> Treapta se stabilește după puterea din contractul
+          semnat cu clientul, nu după puterea din cererea transmisă de acesta. Sumele sunt fără TVA;
+          la factură se adaugă TVA 21%.
+        </p>
+        <div className="not-prose my-4 overflow-x-auto">
+          <table className="w-full min-w-[420px] border-collapse text-left text-sm">
+            <thead>
+              <tr className="border-b border-gray-200 text-gray-500">
+                <th className="py-2 pr-4 font-medium">Puterea contractată</th>
+                <th className="py-2 pr-4 font-medium">Comision</th>
+                <th className="py-2 font-medium">Detalii</th>
+              </tr>
+            </thead>
+            <tbody>
+              {GRILA_COMISION.map((r) => (
+                <tr key={r.putere} className="border-b border-gray-100">
+                  <td className="py-2 pr-4 text-gray-700">{r.putere}</td>
+                  <td className="py-2 pr-4 font-semibold text-gray-900 whitespace-nowrap">{r.comision}</td>
+                  <td className="py-2 text-gray-600">{r.cuTva}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Grila se aplică tuturor firmelor, dacă nu am convenit altfel în scris cu o firmă anume.
+          Peste 100 kW, procentul exact îl stabilim în scris pentru fiecare proiect, înainte de
+          semnarea contractului cu clientul.
+        </p>
+        <p>
+          <strong>Acordul.</strong> Firma acceptă termenii și grila bifându-le în contul ei din
+          portal sau în formularul de revendicare, înainte de prima cerere revendicată. Fără acord
+          nu se poate revendica o cerere. Salvăm, pentru fiecare adresă de email a firmei, versiunea
+          acceptată, data și ora, adresa IP și textul bifat. Firma își vede acordurile în portal, în tabul „Alerte și
+          utilizatori”.
         </p>
         <p>
           <strong>Cum se confirmă lucrarea.</strong> Firma ne anunță contractul semnat, din portal
@@ -153,8 +184,8 @@ export default function TermeniConditii() {
         </p>
         <p>
           <strong>Facturare.</strong> Comisionul se facturează de CÎMPIAN RADU GHEORGHE PERSOANĂ
-          FIZICĂ AUTORIZATĂ, CIF RO45316713, plătitor de TVA, după confirmarea contractului. Termenul de plată este cel din
-          acordul scris cu firma.
+          FIZICĂ AUTORIZATĂ, CIF RO45316713, plătitor de TVA, după confirmarea contractului. Factura se
+          plătește în {COMISION_TERMEN_PLATA_ZILE} de zile de la emitere.
         </p>
         <p>
           <strong>Dacă se anulează contractul.</strong> Dacă un contract semnat se anulează înainte
@@ -162,12 +193,51 @@ export default function TermeniConditii() {
           stornează. Anularea se comunică în scris, de oricare dintre părți.
         </p>
         <p>
+          <strong>Regulile cererilor.</strong> O cerere poate fi revendicată de cel mult 3 firme, ca
+          clientul să nu fie sunat de zece firme. Pe fiecare cerere se vede câte locuri sunt
+          ocupate. O firmă poate ține cel mult {MAX_ACTIVE_CLAIMS_PER_FIRM} cereri care așteaptă
+          primul telefon în același timp: o cerere ocupă un loc cât stă pe „De sunat” sau pe „Nu
+          răspunde” fără nicio notă. Locul se eliberează când firma mută cererea pe alt status sau
+          renunță la ea din portal, cu un motiv scurt. Clientul vede cererea ca preluată, deci
+          firma care o revendică se angajează să-l sune.
+        </p>
+        <p>
           Pachetele de promovare (poziții sponsorizate, promovare pe județ) sunt un serviciu
           separat, opțional, care nu influențează cererile primite și nu se compensează cu
           comisionul.
         </p>
 
-        <h2 id="testimoniale">9. Testimoniale și studii de caz</h2>
+        <h2 id="watt-ai">9. Watt AI pentru firme</h2>
+        <p>
+          Firmele logate pot folosi Watt AI, asistentul platformei, din bula de pe site. Watt
+          răspunde din datele platformei: cererile preluate de firmă, cu ce a confirmat clientul,
+          cererile publice din județele firmei și ghidurile noastre. Datele de contact ale
+          clienților nu ajung la Watt.
+        </p>
+        <ul>
+          <li>
+            Răspunsurile lui Watt sunt generate automat și pot conține greșeli. Ele nu sunt
+            consultanță juridică, fiscală sau de finanțare. Firma verifică informațiile importante
+            (sumele, termenele, condițiile programelor) la sursă, înainte să le folosească în oferte
+            sau în discuția cu clientul.
+          </li>
+          <li>
+            Mesajele firmei și răspunsurile lui Watt se păstrează în contul firmei. Le putem citi ca
+            să îmbunătățim asistentul și platforma. Pentru răspunsuri, mesajele sunt trimise la
+            Anthropic, furnizorul modelului AI. La cerere, ștergem conversația.
+          </li>
+          <li>
+            Accesul e gratuit până pe 10 decembrie 2026, cu cel mult {WATT_FIRME_MESAJE_PE_ZI} mesaje pe
+            zi pentru o firmă. Condițiile de după vor fi publicate ca versiune nouă a acestor termeni,
+            pe care firma o acceptă separat. Fără acceptarea ei, accesul se oprește.
+          </li>
+          <li>
+            Nu folosiți Watt pentru a trimite date personale ale altor persoane decât cele pe care
+            platforma vi le-a dat deja pentru o cerere.
+          </li>
+        </ul>
+
+        <h2 id="testimoniale">10. Testimoniale și studii de caz</h2>
         <p>
           După ce o cerere de ofertă se încheie cu un contract semnat, putem cere clientului și
           firmei care a executat lucrarea un scurt feedback, printr-un formular deschis doar cu un
@@ -205,13 +275,21 @@ export default function TermeniConditii() {
           </li>
         </ul>
 
-        <h2>10. Modificări</h2>
+        <h2 id="modificari">11. Modificări</h2>
         <p>
-          Ne rezervăm dreptul de a modifica acești termeni oricând. Modificările intră în vigoare
-          la publicarea pe această pagină.
+          Putem modifica acești termeni. Modificările intră în vigoare la publicarea pe această
+          pagină. O schimbare de fond pentru firme (grila de comision, termenul de plată, regulile
+          cererilor, condițiile Watt AI) primește o versiune nouă: firma o vede în cont și o
+          bifează înainte să revendice din nou. Până la acceptarea ei, pentru cererile deja
+          revendicate se aplică versiunea acceptată anterior. Corecturile de formulare, fără efect
+          asupra drepturilor sau obligațiilor, nu primesc versiune nouă.
+        </p>
+        <p className="text-sm text-gray-500">
+          Versiunile în vigoare pentru firme:{' '}
+          {ACORDURI.map((a) => `${a.titlu.toLowerCase()}, din ${a.dataVersiunii}`).join('; ')}.
         </p>
 
-        <h2>11. Legislație aplicabilă</h2>
+        <h2>12. Legislație aplicabilă</h2>
         <p>
           Acești termeni sunt guvernați de legislația din România. Orice litigiu va fi soluționat
           de instanțele competente din România.

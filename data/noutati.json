@@ -1,6 +1,13 @@
 [
   {
     "data": "2026-11-20",
+    "titlu": "Termenii și grila de comision, acum în cont",
+    "text": "Grila de comision pe care v-am trimis-o pe email o bifați acum o singură dată, din cont: 500 lei + TVA sub 10 kW sau doar baterie, 1.000 lei + TVA între 10 și 100 kW, 1–2% + TVA peste 100 kW, doar pentru lucrarea contractată, cu plata facturii în 30 de zile. În portal, în tabul „Alerte și utilizatori”, vedeți oricând ce ați acceptat, cine din echipă și la ce versiune, plus termenii, condițiile de promovare și regulile pentru Watt AI. Dacă se schimbă ceva de fond, vă arătăm ce s-a schimbat și bifați din nou.",
+    "link": "/portal",
+    "linkText": "Vezi în portal"
+  },
+  {
+    "data": "2026-11-20",
     "titlu": "Alertele pe email, doar cât folosiți portalul",
     "text": "Dacă nu intrați în portal 14 zile, nu vă mai trimitem alerte pe email pentru cereri noi, ca să nu vă umplem inboxul. Pornesc din nou singure la prima intrare, fără nimic de setat. Rezumatul de luni cu cererile deschise din județele dumneavoastră îl primiți în continuare.",
     "link": "/portal",

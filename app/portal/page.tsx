@@ -75,6 +75,9 @@ import PortalTabs from './PortalTabs';
 import PortalFirmProfile from './PortalFirmProfile';
 import PortalNoutati from './PortalNoutati';
 import { getNotePlatforma, type NotaPlatforma } from '@/lib/nota-platforma';
+import { stareAcorduriFirma, verificaAcorduri } from '@/lib/acorduri';
+import PortalAcorduriGate from './PortalAcorduriGate';
+import PortalAcorduri from './PortalAcorduri';
 
 /** Fereastra „cereri noi" din cardul contului: cât de proaspătă e o cerere care merită sunată azi. */
 const NEW_LEADS_DAYS = 7;
@@ -136,6 +139,18 @@ export default async function PortalPage() {
   const email = await getPortalEmail();
   if (!email) return <PortalLanding />;
 
+  // Acordurile (20 nov 2026): fără termeni și grila de comision bifate la
+  // versiunea curentă, firma vede doar modalul. Înaintea oricărei citiri din
+  // Sheets, ca poarta să nu coste din cotă.
+  const acorduri = await verificaAcorduri(email);
+  if (acorduri.lipsa.length > 0) {
+    return (
+      <div className="max-w-3xl mx-auto min-h-[70vh] px-4 pt-6 pb-10 sm:pt-8">
+        <PortalAcorduriGate lipsa={acorduri.lipsa} actualizate={acorduri.actualizate} />
+      </div>
+    );
+  }
+
   // Adresele aceleiași firme: firmele revendică de pe adresa personală a
   // omului de vânzări și intră apoi cu cea de contact, iar cererea revendicată
   // trebuie să se vadă din oricare dintre ele. Fără legături, lista are un
@@ -143,6 +158,7 @@ export default async function PortalPage() {
   const emails = await getFirmEmailGroup(email);
   const mineEmails = new Set(emails);
   const linked = emails.filter((e) => e !== email);
+  const acorduriFirma = await stareAcorduriFirma(emails);
 
   let mine: PortalClaim[] = [];
   let loadError = false;
@@ -598,6 +614,7 @@ export default async function PortalPage() {
               <PortalCountyAlerts counties={getCounties()} initial={alertCounties} />
               <PortalFirmEmails current={email} addresses={emails} max={MAX_FIRM_EMAILS} />
               <RezumatAiToggle />
+              <PortalAcorduri acorduri={acorduriFirma} />
             </>
           }
         />

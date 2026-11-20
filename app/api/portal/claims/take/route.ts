@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getPortalEmail } from '@/lib/portal-session';
+import { acorduriLipsa } from '@/lib/acorduri';
 import {
   MAX_ACTIVE_CLAIMS_PER_FIRM,
   maxClaimsForLead,
@@ -35,6 +36,12 @@ export async function POST(request: Request) {
   const email = await getPortalEmail();
   if (!email) {
     return NextResponse.json({ error: 'Sesiune expirată. Intră din nou în portal.' }, { status: 401 });
+  }
+  if ((await acorduriLipsa(email)).length > 0) {
+    return NextResponse.json(
+      { error: 'Acceptă întâi termenii și grila de comision. Reîncarcă pagina.', needsAcorduri: true },
+      { status: 403 },
+    );
   }
 
   try {

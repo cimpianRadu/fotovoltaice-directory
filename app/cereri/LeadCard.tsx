@@ -11,6 +11,7 @@ import { MAX_ACTIVE_CLAIMS_PER_FIRM } from '@/lib/sheets-shared';
 import { getAttribution } from '@/lib/attribution';
 import { trackLeadClick } from '@/lib/lead-clicks-client';
 import { FIRM_SOURCE_OPTIONS, isDoarMontaj } from '@/lib/utils-shared';
+import { BIFA_FORMULAR_REVENDICARE } from '@/lib/acorduri-shared';
 import type { FinancingTone } from '@/lib/utils-shared';
 import type { CvbEstimate } from '@/lib/cvb-score';
 import { CvbScoreLine } from '@/components/cvb/CvbScore';
@@ -1396,6 +1397,25 @@ export default function LeadCard({
                     })}
                   </div>
                 </fieldset>
+                )}
+                {/* Acordurile (20 nov 2026): firma fără cont bifează aici ce
+                    bifează firma cu cont în modal. Serverul refuză fără ea. */}
+                {!fromAccount && (
+                  <label className="flex cursor-pointer items-start gap-2 rounded-lg border border-border bg-surface px-3 py-2.5">
+                    <input
+                      type="checkbox"
+                      name="acorduri"
+                      value="da"
+                      required
+                      className="mt-0.5 h-4 w-4 shrink-0 accent-amber-500"
+                    />
+                    <span className="text-xs leading-relaxed text-gray-700">
+                      {BIFA_FORMULAR_REVENDICARE}{' '}
+                      <a href="/termeni-conditii#comision" target="_blank" rel="noopener" className="underline hover:no-underline">
+                        Citește termenii
+                      </a>
+                    </span>
+                  </label>
                 )}
                 {error && <p className="text-xs text-red-600">{error}</p>}
                 <Button type="submit" variant="primary" disabled={status === 'submitting'} className="w-full">
