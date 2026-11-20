@@ -2797,6 +2797,79 @@ export function filterCountyAlertRecipients(
 }
 
 /**
+ * Pauza alertelor (20 nov 2026, Radu): firma care n-a mai intrat în portal de
+ * ALERT_PAUSE_DAYS zile nu mai primește alerte pe email (cerere nouă, încă vrea
+ * oferte, reactivată, deblocată de la abonat, retrimisă). Le-am anunțat pe
+ * WhatsApp; la prima intrare pornesc singure, fără nicio bifă. Rezumatul de
+ * luni rămâne, ca să aibă după ce reveni.
+ *
+ * Activitate = intrare sau vizită în portal („Portal Acces”, `intrat`/`vazut`),
+ * o revendicare făcută de ea (nu cele date de noi) sau salvarea listei de județe, pe oricare adresă a firmei.
+ * Primele 9 firme oprite așa primeau ~17 alerte pe zi fără să le deschidă.
+ */
+export const ALERT_PAUSE_DAYS = 14;
+
+/** Ultima mișcare a firmei (ISO) și dacă alertele ei sunt pe pauză. Pur, pentru teste și /admin/portal. */
+export function alertActivity(
+  group: string[],
+  data: { events: PortalAccessEvent[]; claims: LeadClaim[]; prefs: CountyAlertPref[] },
+  now = Date.now(),
+): { lastActive: string; paused: boolean } {
+  const members = new Set(group);
+  let lastActive = '';
+  const bump = (at: string) => {
+    if (at && Number.isFinite(Date.parse(at)) && at.localeCompare(lastActive) > 0) lastActive = at;
+  };
+  for (const e of data.events) {
+    if ((e.event === 'intrat' || e.event === 'vazut') && members.has(e.email)) bump(e.timestamp);
+  }
+  for (const c of data.claims) {
+    // Cererea dată de noi din /admin nu e o mișcare a firmei.
+    if (c.source !== 'manual' && members.has((c.email || '').trim().toLowerCase())) bump(c.timestamp);
+  }
+  for (const p of data.prefs) if (members.has(p.email)) bump(p.updatedAt);
+  // Fără nicio urmă nu oprim nimic: un rând scris de mână tot trebuie să meargă.
+  const paused = Boolean(lastActive) && now - Date.parse(lastActive) >= ALERT_PAUSE_DAYS * 864e5;
+  return { lastActive, paused };
+}
+
+/** Toate adresele firmelor cu alertele pe pauză, gata de pus la `exclude`. */
+export function pausedAlertEmails(
+  data: { events: PortalAccessEvent[]; claims: LeadClaim[]; prefs: CountyAlertPref[] },
+  links: FirmEmailLink[],
+  now = Date.now(),
+): string[] {
+  const out: string[] = [];
+  const seen = new Set<string>();
+  for (const p of data.prefs) {
+    const group = resolveEmailGroup(links, p.email);
+    if (!group.length || seen.has(group[0])) continue;
+    seen.add(group[0]);
+    if (alertActivity(group, data, now).paused) out.push(...group);
+  }
+  return out;
+}
+
+/**
+ * Pentru trimiterea alertelor. Fail-open ca restul: un tab picat trimite ca
+ * înainte, nu oprește alertele tuturor.
+ */
+export async function getPausedAlertEmails(links?: FirmEmailLink[]): Promise<string[]> {
+  try {
+    const [events, claims, prefs, resolvedLinks] = await Promise.all([
+      getPortalAccessEvents(),
+      getClaims(),
+      getCountyAlertPrefs(),
+      links ?? getFirmEmailLinksForAlerts(),
+    ]);
+    return pausedAlertEmails({ events, claims, prefs }, resolvedLinks);
+  } catch (err) {
+    console.error('[alerte] pauză firme inactive:', err);
+    return [];
+  }
+}
+
+/**
  * Legăturile dintre adrese pentru alerte. Fail-open ca `getFirmEmailGroup`: un
  * tab picat nu oprește alertele, doar le trimite ca înainte, pe adresa care a bifat.
  */
@@ -2817,7 +2890,8 @@ export async function getCountyAlertRecipients(judet: string): Promise<string[]>
     getFirmEmailLinksForAlerts(),
     getDeactivatedEmailsForAlerts(),
   ]);
-  return filterCountyAlertRecipients(prefs, judet, links, deactivated);
+  const paused = await getPausedAlertEmails(links);
+  return filterCountyAlertRecipients(prefs, judet, links, [...deactivated, ...paused]);
 }
 
 export async function saveWaitlistToSheet(email: string) {

@@ -26,6 +26,7 @@ import {
   markLeadConfirmedActive,
   recordClientResponse,
   resolveEmailGroup,
+  pausedAlertEmails,
   resolveGroupAlertPref,
   updateLeadCrm,
   type LeadClaim,
@@ -481,7 +482,9 @@ export async function bumpRecipients(lead: NewLead): Promise<string[]> {
     getClaims(),
   ]);
   const area = new Set(judetSiVecini(lead.judet).map(countyKey));
-  const off = new Set(deactivated.map((e) => e.toLowerCase()));
+  // Fără firmele inactive de 14 zile (pauza din lib/sheets), din aceleași date.
+  const paused = pausedAlertEmails({ events, claims, prefs }, links);
+  const off = new Set([...deactivated, ...paused].map((e) => e.toLowerCase()));
   const excluded = new Set(
     [
       ...watches.filter((w) => w.leadId === lead.timestamp).map((w) => w.email),

@@ -20,6 +20,7 @@ import {
   getCountyAlertPrefs,
   getFirmEmailLinksForAlerts,
   getDeactivatedEmailsForAlerts,
+  getPausedAlertEmails,
   getLeadSubscriptions,
   getLeadsSince,
   getWatches,
@@ -310,14 +311,17 @@ export async function runInformezDaily(
   return result;
 }
 
-/** Preferințele de alertă, fără conturile dezactivate din /admin/portal. */
+/** Preferințele de alertă, fără conturile dezactivate din /admin/portal și fără cele pe pauză. */
 async function loadAlertPrefs() {
   const [allPrefs, links, deactivated] = await Promise.all([
     getCountyAlertPrefs(),
     getFirmEmailLinksForAlerts(),
     getDeactivatedEmailsForAlerts(),
   ]);
-  return { prefs: allPrefs.filter((p) => !deactivated.includes(p.email)), links };
+  // Și firmele inactive de 14 zile (lib/sheets ALERT_PAUSE_DAYS): rândul lor e
+  // scos, deci grupul rămâne fără listă, ca la dezactivare.
+  const off = new Set([...deactivated, ...(await getPausedAlertEmails(links))]);
+  return { prefs: allPrefs.filter((p) => !off.has(p.email)), links };
 }
 
 function reactivationRecipients(

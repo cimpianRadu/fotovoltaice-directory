@@ -7,6 +7,7 @@ import {
   CLAIM_REMINDER_MAX,
   claimOccupiesLeadSlot,
   filterCountyAlertRecipients,
+  getPausedAlertEmails,
   findSubscriptionForCounty,
   getClaims,
   getCountyAlertPrefs,
@@ -226,7 +227,9 @@ async function announceUnlockedLeads(
   ]);
   // Conturile dezactivate din /admin/portal nu mai primesc alerte. Toate
   // adresele unui cont dezactivat sunt pe listă, deci grupul rămâne fără listă.
-  const prefs = allPrefs.filter((p) => !deactivated.includes(p.email));
+  // La fel firmele inactive de 14 zile (pauza din lib/sheets).
+  const off = new Set([...deactivated, ...(await getPausedAlertEmails(links))]);
+  const prefs = allPrefs.filter((p) => !off.has(p.email));
   const claimedLeads = new Set(
     claims.filter(claimOccupiesLeadSlot).map((c) => c.leadId),
   );

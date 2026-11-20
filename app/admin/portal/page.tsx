@@ -13,6 +13,8 @@ import {
   type FirmProfile,
   resolveEmailGroup,
   resolveGroupAlertPref,
+  alertActivity,
+  ALERT_PAUSE_DAYS,
   type CountyAlertPref,
   type FirmEmailLink,
   claimsHeldForLead,
@@ -125,6 +127,8 @@ interface PortalAccount {
    * grup n-a ajuns pe secțiunea aia.
    */
   alerts: CountyAlertPref | null;
+  /** Ultima mișcare a firmei (ISO) dacă alertele ei sunt pe pauză de inactivitate, altfel gol. */
+  alertsPausedSince: string;
   /**
    * Toate adresele contului („Emailuri Firmă"), contul principal primul:
    * revendicările, jurnalul și alertele lor sunt deja numărate împreună mai
@@ -567,6 +571,13 @@ function AccountCard({
           Alerte pe județ ·{' '}
         </span>
         {alertsLine(account.alerts)}
+        {account.alertsPausedSince && (
+          <span className="font-medium text-amber-700">
+            {' '}
+            · pe pauză: n-a mai intrat din {fmtDateTime(account.alertsPausedSince)} ({ALERT_PAUSE_DAYS}+ zile),
+            pornesc singure la prima intrare
+          </span>
+        )}
         {/* Cu mai multe adrese, toate primesc alertele; se scrie de pe care
             s-a salvat lista, ca să se știe cine a bifat. */}
         {account.alerts && account.addresses.length > 1 && (
@@ -753,6 +764,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
     const mine = claims.filter((c) => members.includes(c.email));
     const profile = resolveGroupProfile(profiles, members);
     const alerts = resolveGroupAlertPref(alertPrefs, members);
+    const activity = alertActivity(members, { events, claims, prefs: alertPrefs });
     const movements = buildMovements({
       events: evs,
       claims: mine,
@@ -843,6 +855,8 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       // Completat după ce toate conturile există (are nevoie de ele, două câte două).
       suggested: [],
       alerts,
+      alertsPausedSince:
+        alerts?.active && alerts.counties.length && activity.paused ? activity.lastActive : '',
       addresses: members.map((m) => ({
         email: m,
         isPrimary: m === email,
