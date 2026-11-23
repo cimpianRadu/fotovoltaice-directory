@@ -11,8 +11,8 @@
 // Ce NU arată:
 //  - „am semnat” și „am ales altă firmă”: cererea se închide, iar cardul are
 //    deja rândul lui pentru asta (closedLeadNotice);
-//  - „nu m-a contactat nicio firmă”: contrazice statusul firmei și se lămurește
-//    de noi, la telefon, nu printr-un rând pe card;
+//  - „nu m-a contactat nicio firmă”: din 23 nov 2026 apare în „Update de la
+//    client” (lib/portal-client-updates), cu ce e de făcut;
 //  - o întrebare pusă înainte ca firma să fi trimis oferta: nu era despre ea.
 //
 // Atenție la WhatsApp: marcajul se scrie când se deschide mesajul din

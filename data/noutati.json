@@ -1,6 +1,13 @@
 [
   {
     "data": "2026-11-23",
+    "titlu": "Ce spune clientul, direct pe cardul cererii",
+    "text": "Pe cererile preluate apare acum „Update de la client”: ce ne-a spus clientul despre dumneavoastră în răspunsurile la emailurile noastre, din contul lui sau pe WhatsApp. De exemplu, că l-ați sunat, că a primit oferta, că încă așteaptă un telefon sau că v-a ales pe dumneavoastră. Dacă revine de mai multe ori, le vedeți pe toate, în ordine, fiecare cu data lui.",
+    "link": "/portal",
+    "linkText": "Vezi cererile tale"
+  },
+  {
+    "data": "2026-11-23",
     "titlu": "Telefonul, cerut de la intrarea în cont",
     "text": "La intrarea în portal vă cerem acum, lângă email, și un număr de telefon. Îl ținem minte pe browserul dumneavoastră, deci îl scrieți o singură dată. La el vă găsim când e ceva de lămurit despre o cerere preluată.",
     "link": "/portal",

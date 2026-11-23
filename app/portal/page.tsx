@@ -30,6 +30,7 @@ import { cvbEstimate } from '@/lib/cvb-score';
 import { getWhatsappOpened } from '@/lib/whatsapp-verificare';
 import { getLeadLocations, type LeadLocation } from '@/lib/lead-location';
 import {
+  CLAIM_STATUS_LABELS,
   MAX_ACTIVE_CLAIMS_PER_FIRM,
   claimLastActivity,
   claimOccupiesLeadSlot,
@@ -76,6 +77,14 @@ import PortalTabs from './PortalTabs';
 import PortalFirmProfile from './PortalFirmProfile';
 import PortalNoutati from './PortalNoutati';
 import { getNotePlatforma, type NotaPlatforma } from '@/lib/nota-platforma';
+import { getClientUpdateSources } from '@/lib/client-updates';
+import {
+  clientUpdatesFor,
+  isChosenFirm,
+  type ClientEmailAnswer,
+  type ClientFirmReportRow,
+} from '@/lib/portal-client-updates';
+import { firmDisplayName } from '@/lib/verificare-status';
 import { numeFirmaPentru, stareAcorduriFirma, verificaAcorduri } from '@/lib/acorduri';
 import PortalAcorduriGate from './PortalAcorduriGate';
 import PortalAcorduri from './PortalAcorduri';
@@ -275,6 +284,16 @@ export default async function PortalPage() {
       console.error('[portal] nota platformei:', err);
       return new Map<string, NotaPlatforma>();
     });
+    // Ce a spus clientul despre firmă, din cont și din emailuri (23 nov 2026).
+    // Fără bază, cardul arată doar nota.
+    const clientSources = await getClientUpdateSources(firmClaims.map((c) => c.leadId)).catch((err) => {
+      console.error('[portal] update-uri client:', err);
+      return {
+        reports: new Map<string, ClientFirmReportRow[]>(),
+        emailAnswers: new Map<string, ClientEmailAnswer[]>(),
+        maybeChosen: new Map<string, Set<string>>(),
+      };
+    });
 
     mine = firmClaims
       .map((c) => {
@@ -290,7 +309,33 @@ export default async function PortalPage() {
           ...claimOffers.map((o) => Date.parse(o.createdAt) || 0),
         );
         const moved = lastMoveAt > Math.max(Date.parse(c.timestamp) || 0, Date.parse(c.approvedAt) || 0);
-        const leadClosed = lead ? closedLeadNotice(lead.crmStatus, c.firmStatus) : null;
+        // Când a închis clientul cererea: răspunsul lui din `Leads!AT` sau, fără
+        // el, scoaterea din lucru făcută de închidere.
+        const [raspCode = '', raspAt = ''] = (lead?.raspunsClient || '').split(' ');
+        const closedAt = ['semnat', 'aleasa', 'altafirma-altundeva'].includes(raspCode)
+          ? raspAt
+          : c.releasedAt && c.releaseReason.startsWith('Închisă de client')
+            ? c.releasedAt
+            : '';
+        const clientUpdates = clientUpdatesFor({
+          claimTs: c.timestamp,
+          since: c.approvedAt || c.timestamp,
+          firmStatus: c.firmStatus,
+          firmStatusLabel: CLAIM_STATUS_LABELS[c.firmStatus] || c.firmStatus,
+          firmName: firmDisplayName(c),
+          leadCrmStatus: lead?.crmStatus || '',
+          closedAt,
+          maybeChosen: clientSources.maybeChosen.get(c.leadId)?.has(c.timestamp) ?? false,
+          reports: clientSources.reports.get(c.leadId) ?? [],
+          emailAnswers: clientSources.emailAnswers.get(c.leadId) ?? [],
+          raspunsClient: lead?.raspunsClient || '',
+          nota: notePlatforma.get(c.leadId) ?? null,
+        });
+        // Firma aleasă de client nu primește „a semnat cu altă firmă” cât încă
+        // n-a mutat ea statusul pe Concretizat (23 nov 2026).
+        const leadClosed = lead
+          ? closedLeadNotice(lead.crmStatus, isChosenFirm(clientUpdates) ? 'castigat' : c.firmStatus)
+          : null;
         // Ce a răspuns clientul când l-am întrebat de oferte, sau că încă tace.
         // Doar cu oferta trimisă și cu cererea încă deschisă: pe cele închise
         // vorbește `leadClosed`.
@@ -304,7 +349,7 @@ export default async function PortalPage() {
             : null;
         return {
           clientSignal,
-          notaPlatforma: notePlatforma.get(c.leadId) ?? null,
+          clientUpdates,
           // Punctajul orientativ Casa Verde Baterii, ca pe cardul din /cereri.
           cvb: lead ? cvbEstimate(lead) : null,
           pozeCount: photosByLead.get(c.leadId)?.length || 0,

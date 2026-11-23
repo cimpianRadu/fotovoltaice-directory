@@ -55,6 +55,10 @@ export const CLIENT_EVENTS = [
   // Mesajul WhatsApp cu linkul spre Watt a plecat (19 nov 2026, lotul „fonduri
   // proprii, mă informez”, nepreluate): props { la }.
   'whatsapp_watt_trimis',
+  // Ce a spus clientul despre firme în emailurile „Ați găsit o ofertă bună?” și
+  // „Mai căutați oferte?” (23 nov 2026), pentru „Update de la client” din
+  // /portal: props { raspuns, firme?: { claimTs: nu|fara-oferta|oferta|refuzata|semnat|aleasa }, niciuna? }.
+  'raspuns_email_firme',
 ] as const;
 export type ClientEvent = (typeof CLIENT_EVENTS)[number];
 

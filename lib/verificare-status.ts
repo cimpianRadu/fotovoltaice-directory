@@ -38,6 +38,7 @@ import { CLAIM_STATUS_LABELS } from './sheets-shared';
 import { isValidEmail } from './portal-auth';
 import { escapeHtml, sendEmail } from './email';
 import { notifyFirmsClientClosed } from './lead-closed-firms';
+import { recordClientEvent } from './client-events';
 import { sendStatusCheckEmail } from './email-client';
 import { getCompanies } from './utils';
 import { DECID_HELP_OPTIONS, describeFirmContacts, optionLabel, type ResponseDetails } from './client-response-details';
@@ -260,6 +261,23 @@ export async function recordStatusResponse(
 
   await updateLeadCrm(lead.timestamp, { ...(status ? { status } : {}), note, by: 'client', ...when });
   if (status) revalidatePath('/cereri');
+  // Pentru „Update de la client” de pe cardul fiecărei firme din /portal (23 nov 2026).
+  if (response === 'semnat' && opts.claimTs) {
+    await recordClientEvent(lead.timestamp, 'raspuns_email_firme', {
+      raspuns: 'semnat',
+      firme: { [opts.claimTs]: 'semnat' },
+    });
+  }
+  if (response === 'decid' || response === 'necontactat') {
+    const firme = Object.fromEntries(Object.entries(details.firme ?? {}).filter(([ts]) => names[ts]));
+    if (response === 'necontactat' || Object.keys(firme).length) {
+      await recordClientEvent(lead.timestamp, 'raspuns_email_firme', {
+        raspuns: response,
+        ...(Object.keys(firme).length ? { firme } : {}),
+        ...(response === 'necontactat' ? { niciuna: true } : {}),
+      });
+    }
+  }
   if (status === 'castigata' || status === 'altundeva' || status === 'renuntat') {
     await notifyFirmsClientClosed(lead, status, status === 'castigata' ? opts.claimTs : '');
   }

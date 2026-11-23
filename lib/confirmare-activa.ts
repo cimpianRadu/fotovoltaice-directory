@@ -212,6 +212,10 @@ export async function confirmLeadActive(lead: NewLead, details: ResponseDetails 
     }
     await updateLeadCrm(lead.timestamp, { note: parts.join(' '), ...nowBucharest(now) });
   }
+  // „Nu m-a sunat nicio firmă”: ajunge și pe cardul firmelor din /portal (23 nov 2026).
+  if (details.contactat === 'nu') {
+    await recordClientEvent(lead.timestamp, 'raspuns_email_firme', { raspuns: 'activa', niciuna: true });
+  }
   revalidatePath('/cereri');
   if (lead.confirmataLa) return;
   // Eșecul alertei nu strică răspunsul clientului; se vede în loguri.
@@ -242,6 +246,10 @@ export async function closeLeadChosenFirm(lead: NewLead, firma: string, firmaCla
     ...nowBucharest(now),
   });
   revalidatePath('/cereri');
+  // Bifa verde pe cardul firmei alese, în /portal (23 nov 2026).
+  if (ours) {
+    await recordClientEvent(lead.timestamp, 'raspuns_email_firme', { raspuns: 'aleasa', firme: { [ours.claimTs]: 'aleasa' } });
+  }
   await notifyFirmsClientClosed(lead, ours ? 'castigata' : 'altundeva', ours?.claimTs);
   // Singura confirmare de concretizare care nu vine de la firmă: să nu se piardă în Sheet.
   // Rezumatul și linkul spre fișă: din timestamp + telefon nu-ți amintești despre ce cerere e.
