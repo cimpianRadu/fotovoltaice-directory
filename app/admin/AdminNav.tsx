@@ -44,6 +44,7 @@ const GROUPS: { label: string; tabs: { href: string; label: string }[] }[] = [
     label: 'Parteneri',
     tabs: [
       { href: '/admin/sponsori', label: 'Sponsori' },
+      { href: '/admin/campanie', label: 'Campanie furnizori' },
       { href: '/admin/analytics/sponsori', label: 'Rapoarte' },
     ],
   },
