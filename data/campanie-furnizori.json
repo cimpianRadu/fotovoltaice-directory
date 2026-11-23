@@ -1,10 +1,10 @@
 {
-  "_despre": "Campania de parteneri furnizori (23 nov 2026). Ținta, ritmul și textele follow-up-urilor; firmele și stările lor sunt în Neon, tabelul campanie_furnizori. {FIRMA} = numele firmei, {LOCURI} = ținta minus partenerii semnați. Textele le-a aprobat Radu pe 23 nov; o schimbare de text trece întâi pe la el.",
+  "_despre": "Campania de parteneri furnizori (23 nov 2026). Ținta, ritmul și textele follow-up-urilor; firmele și stările lor sunt în Neon, tabelul campanie_furnizori. {FIRMA} = numele firmei, {LOCURI} = ținta minus partenerii semnați. Textele le-a aprobat Radu pe 23 nov; o schimbare de text trece întâi pe la el. Rândul de refuz din fu1 și fu2 (adresa de unde o avem + „răspundeți cu nu”) l-a cerut Radu pe 23 nov, pentru GDPR; fu3 e deja ultimul mesaj.",
   "tinta": 5,
   "cadentaZile": [3, 7, 10],
   "texte": {
-    "fu1": "Bună ziua,\n\nRevin la propunerea de mai jos. Vă pot trimite o previzualizare a felului în care ar arăta {FIRMA} pe site, fără niciun angajament.\n\nCu stimă,\nRadu Cîmpian\ninstalatori-fotovoltaice.ro\n0751 547 174",
-    "fu2": "Bună ziua,\n\n**Mai avem doar {LOCURI} locuri de parteneri.** Dacă vă interesează, vă păstrez unul pentru {FIRMA}.\n\nCu stimă,\nRadu Cîmpian\ninstalatori-fotovoltaice.ro\n0751 547 174",
+    "fu1": "Bună ziua,\n\nRevin la propunerea de mai jos. Vă pot trimite o previzualizare a felului în care ar arăta {FIRMA} pe site, fără niciun angajament.\n\nV-am scris pe adresa de contact de pe site-ul dumneavoastră. Dacă nu vă interesează, răspundeți cu „nu” și nu vă mai scriu.\n\nCu stimă,\nRadu Cîmpian\ninstalatori-fotovoltaice.ro\n0751 547 174",
+    "fu2": "Bună ziua,\n\n**Mai avem doar {LOCURI} locuri de parteneri.** Dacă vă interesează, vă păstrez unul pentru {FIRMA}.\n\nV-am scris pe adresa de contact de pe site-ul dumneavoastră. Dacă nu vă interesează, răspundeți cu „nu” și nu vă mai scriu.\n\nCu stimă,\nRadu Cîmpian\ninstalatori-fotovoltaice.ro\n0751 547 174",
     "fu3": "Bună ziua,\n\nÎnchei aici, ca să nu vă mai deranjez. Dacă pe viitor vreți să ajungeți la cei care citesc ghidurile noastre despre baterii, mă găsiți la 0751 547 174.\n\nCu stimă,\nRadu Cîmpian\ninstalatori-fotovoltaice.ro\n0751 547 174"
   }
 }
