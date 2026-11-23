@@ -119,6 +119,34 @@ const VIEWS: { id: View; label: string }[] = [
 
 const claimKey = (c: PortalClaim) => `${c.leadId}-${c.claimTimestamp}`;
 
+/** Fără diacritice și mici, ca „Stefan” să găsească „Ștefan”. */
+const fold = (s: string) =>
+  s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+/** Doar cifrele, fără prefixul de țară sau 0-ul din față: „+40 722…” = „0722…”. */
+const phoneDigits = (s: string) => s.replace(/\D/g, '').replace(/^(40|0)/, '');
+
+/**
+ * Căutarea din portal (Radu, 23 nov 2026): firmele cu multe cereri caută clientul
+ * care le-a sunat, după nume sau telefon. Merge doar pe cererile cu datele
+ * clientului deblocate; pe celelalte nu avem ce căuta în browser.
+ */
+function matchesQuery(c: PortalClaim, query: string): boolean {
+  const client = c.client;
+  if (!client) return false;
+  const digits = phoneDigits(query);
+  if (digits.length >= 3 && /^[\d\s+().-]+$/.test(query.trim())) {
+    return phoneDigits(client.telefon).includes(digits);
+  }
+  const hay = fold(
+    [client.nume, client.companie, client.email, client.localitate, client.telefon].join(' '),
+  );
+  return fold(query).split(/\s+/).filter(Boolean).every((t) => hay.includes(t));
+}
+
+/** Sub atâtea cereri, lista se vede dintr-o privire și căutarea doar ar încurca. */
+const SEARCH_MIN_CLAIMS = 5;
+
 export default function PortalClaimList({
   claims,
   recommended,
@@ -133,6 +161,7 @@ export default function PortalClaimList({
   const [viewKeys, setViewKeys] = useState<Set<string> | null>(null);
   const [patches, setPatches] = useState<Record<string, ClaimPatch>>({});
   const [oldOpen, setOldOpen] = useState(false);
+  const [query, setQuery] = useState('');
 
   const live = (c: PortalClaim): PortalClaim => ({ ...c, ...patches[claimKey(c)] });
   const patch = (key: string, p: ClaimPatch) =>
@@ -140,6 +169,8 @@ export default function PortalClaimList({
 
   const count = (id: View) => claims.filter((c) => inView(live(c), id)).length;
   const filtering = view !== 'toate';
+  const searching = query.trim().length > 0;
+  const showSearch = claims.length >= SEARCH_MIN_CLAIMS;
 
   // Rândurile rămân în „De actualizat” până la următoarea încărcare, cu „Am notat”
   // pe ele: dacă ar sări din listă la primul click, firma ar pierde rândul din ochi.
@@ -148,8 +179,11 @@ export default function PortalClaimList({
   const pending = asks.filter((c) => !patches[claimKey(c)]).length;
 
   // În „Toate", cele la care s-a renunțat coboară la final: lista e de lucru.
+  // La căutare intră și cele din „De actualizat”: firma caută un client anume,
+  // nu contează în ce secțiune stă.
   const rows = claims
-    .filter((c) => (filtering ? viewKeys?.has(claimKey(c)) : !c.update))
+    .filter((c) => (filtering ? viewKeys?.has(claimKey(c)) : searching || !c.update))
+    .filter((c) => !searching || matchesQuery(live(c), query))
     .sort((a, b) => Number(isClosed(a)) - Number(isClosed(b)));
   const showLegend = claims.some((c) => c.approved && !c.releasedAt);
 
@@ -192,20 +226,71 @@ export default function PortalClaimList({
 
   return (
     <>
-      {/* Cu toate cererile în aceeași stare, filtrul n-ar avea ce să filtreze. */}
-      {options.length > 1 && (
-        <SearchableSelect
-          name="portal-status"
-          label="Filtrează cererile după status"
-          placeholder={`Toate cererile (${claims.length})`}
-          options={options}
-          value={view === 'toate' ? '' : view}
-          onValueChange={pick}
-          className="mb-4 sm:max-w-xs"
-        />
+      {(options.length > 1 || showSearch) && (
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end">
+          {/* Cu toate cererile în aceeași stare, filtrul n-ar avea ce să filtreze. */}
+          {options.length > 1 && (
+            <SearchableSelect
+              name="portal-status"
+              label="Filtrează cererile după status"
+              placeholder={`Toate cererile (${claims.length})`}
+              options={options}
+              value={view === 'toate' ? '' : view}
+              onValueChange={pick}
+              className="sm:w-80"
+            />
+          )}
+          {showSearch && (
+            <div className="sm:w-80">
+              <label htmlFor="portal-cauta" className="mb-1 block text-sm font-medium text-gray-700">
+                Caută după nume sau telefon
+              </label>
+              <div className="relative">
+                <svg
+                  className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  aria-hidden="true"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <path strokeLinecap="round" d="M20 20l-3.5-3.5" />
+                </svg>
+                <input
+                  id="portal-cauta"
+                  type="search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  // Doar faptul că s-a căutat, nu ce: în analytics nu ajung nume de clienți.
+                  onBlur={() => {
+                    if (searching) trackEvent('portal_filter_applied', { filtru: 'cautare' });
+                  }}
+                  placeholder="Ex: Popescu sau 0722"
+                  autoComplete="off"
+                  className="w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-9 pr-3 text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary"
+                />
+              </div>
+            </div>
+          )}
+        </div>
       )}
 
-      {!filtering && (asks.length > 0 || oldAsks.length > 0) && (
+      {searching && (
+        <p className="mb-3 text-[13px] text-gray-600">
+          {rows.length === 1 ? 'O cerere găsită' : `${rows.length} cereri găsite`}
+          {filtering ? ' în statusul ales' : ''}.{' '}
+          <button
+            type="button"
+            onClick={() => setQuery('')}
+            className="font-medium text-primary-dark hover:underline"
+          >
+            Șterge căutarea
+          </button>
+        </p>
+      )}
+
+      {!filtering && !searching && (asks.length > 0 || oldAsks.length > 0) && (
         <section className="mb-5 rounded-xl border border-amber-300 bg-amber-50/60 p-2 sm:p-3">
           <div className="px-1 pb-2">
             <h2 className="text-sm font-semibold text-gray-900">
@@ -249,7 +334,7 @@ export default function PortalClaimList({
         </section>
       )}
 
-      {!filtering && recommended}
+      {!filtering && !searching && recommended}
 
       {rows.length > 0 ? (
         <div>
@@ -264,9 +349,11 @@ export default function PortalClaimList({
           </div>
         </div>
       ) : (
-        filtering && (
+        (filtering || searching) && (
           <div className="bg-surface rounded-xl border border-border p-8 text-center text-sm text-gray-500">
-            Nicio cerere aici.
+            {searching
+              ? 'Niciun client cu numele sau telefonul ăsta. Căutarea vede doar cererile cu datele clientului deblocate.'
+              : 'Nicio cerere aici.'}
           </div>
         )
       )}

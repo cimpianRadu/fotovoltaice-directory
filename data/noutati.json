@@ -1,5 +1,12 @@
 [
   {
+    "data": "2026-11-23",
+    "titlu": "Căutare după nume sau telefon în cererile tale",
+    "text": "Dacă aveți mai multe cereri, deasupra listei din portal găsiți acum un câmp de căutare. Scrieți numele clientului, firma lui sau câteva cifre din telefon și vedeți pe loc cererea lui, oricare ar fi statusul. Căutarea merge pe cererile la care aveți deja datele clientului.",
+    "link": "/portal",
+    "linkText": "Vezi cererile tale"
+  },
+  {
     "data": "2026-11-20",
     "titlu": "„Neconcretizat”, cu o singură confirmare",
     "text": "Când alegeți „Neconcretizat” pe o cerere, se deschide o fereastră de confirmare. Motivul e opțional: apăsați „Confirm” și cererea iese din lucru, iar locul se eliberează pentru altă firmă. Dacă vă răzgândiți, „Anulează” lasă cererea cum era.",
