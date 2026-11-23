@@ -14,6 +14,11 @@
  *       Planul follow-up-urilor se calculează din cadența din
  *       data/campanie-furnizori.json. O firmă inbound intră ca „manual”.
  *   node scripts/campanie-furnizori.mjs lista
+ *   node scripts/campanie-furnizori.mjs verifica <email> [<email> ...]
+ *       ÎNAINTE de primul email dintr-un lot nou: caută adresa și domeniul ei
+ *       în toată baza, pe orice stare. Un refuz ține pentru toată firma, nu
+ *       doar pentru adresa la care a venit (office@ a refuzat → nici vanzari@).
+ *       Iese cu cod 1 dacă vreo adresă e deja în campanie.
  *
  * DATABASE_URL din mediu sau din .env.local (același endpoint ca producția).
  */
@@ -145,8 +150,39 @@ async function cmdLista() {
   }
 }
 
+// Domenii de email publice: acolo domeniul nu înseamnă firma, se compară doar adresa.
+const DOMENII_PUBLICE = new Set([
+  'gmail.com', 'googlemail.com', 'yahoo.com', 'yahoo.ro', 'hotmail.com', 'outlook.com',
+  'live.com', 'icloud.com', 'me.com', 'mail.com', 'proton.me', 'protonmail.com',
+]);
+
+async function cmdVerifica(...emails) {
+  if (!emails.length) throw new Error('Folosire: verifica <email> [<email> ...]');
+  const rows = await sql`SELECT firma, email, status, primul_email FROM campanie_furnizori`;
+  let blocate = 0;
+  for (const raw of emails) {
+    const email = raw.trim().toLowerCase();
+    const domeniu = email.split('@')[1] ?? '';
+    const public_ = DOMENII_PUBLICE.has(domeniu);
+    const gasite = rows.filter((r) => {
+      const e = r.email.toLowerCase();
+      return e === email || (!public_ && e.split('@')[1] === domeniu);
+    });
+    if (!gasite.length) {
+      console.log(`LIBER      ${email}`);
+      continue;
+    }
+    blocate++;
+    for (const r of gasite) {
+      const cum = r.email.toLowerCase() === email ? 'aceeași adresă' : `același domeniu (${r.email})`;
+      console.log(`NU TRIMITE ${email}: ${r.firma}, ${r.status}, primul email ${iso(r.primul_email)}, ${cum}`);
+    }
+  }
+  if (blocate) process.exitCode = 1;
+}
+
 const [cmd, ...args] = process.argv.slice(2);
-const cmds = { azi: cmdAzi, trimis: cmdTrimis, raspuns: cmdRaspuns, respins: cmdRespins, adauga: cmdAdauga, lista: cmdLista };
+const cmds = { azi: cmdAzi, trimis: cmdTrimis, raspuns: cmdRaspuns, respins: cmdRespins, adauga: cmdAdauga, lista: cmdLista, verifica: cmdVerifica };
 if (!cmds[cmd]) {
   console.error(`Comenzi: ${Object.keys(cmds).join(', ')}`);
   process.exit(1);
