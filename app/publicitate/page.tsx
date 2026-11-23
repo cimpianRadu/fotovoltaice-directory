@@ -330,7 +330,7 @@ export default function AdvertisePage() {
               </span>
               <div className="flex items-center gap-2 mb-1 mt-1 flex-wrap">
                 <h3 className="font-bold text-gray-900 text-lg">Premium</h3>
-                <span className="text-xs bg-secondary/10 text-secondary-dark px-2 py-0.5 rounded-full">Instalatori</span>
+                <span className="text-xs bg-secondary/10 text-secondary-dark px-2 py-0.5 rounded-full">Instalatori și furnizori</span>
               </div>
               <p className="text-sm text-gray-500 mb-4">Vizibilitate peste tot pe site + profil complet</p>
               <p className="text-3xl font-bold text-gray-900 mb-1">
@@ -351,6 +351,9 @@ export default function AdvertisePage() {
                 <Feature strong>Logo proeminent + descriere lungă + social media links</Feature>
                 <Feature>Raport lunar: impresii, click-uri profil, click-uri telefon/site</Feature>
               </ul>
+              <div className="mt-3 p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-xs text-blue-900 leading-relaxed">
+                <strong>Pentru furnizori și distribuitori</strong> (magazine de echipamente, panouri, invertoare, baterii, structuri): în lista de firme intră doar instalatorii verificați la ANRE, așa că pentru un furnizor Premium înseamnă bannerul de parteneri pe toate paginile și caseta promo din colț, cu logo, mesaj și link. Putem publica acolo și pachetele sau ofertele tale promoționale, cu prețuri, poze, catalog PDF și data până la care sunt valabile.
+              </div>
               <div className="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
                 <strong>Cap — first come, first served:</strong> pool de max {SOV.premium.cap} firme Premium. Dacă e plin, intri pe lista de așteptare.
               </div>
@@ -384,7 +387,7 @@ export default function AdvertisePage() {
               </p>
               <p className="text-sm text-gray-600 mb-5">+ TVA ({TVA_PCT}%) · Anual {PRICING.popup.annual}€ (2 luni gratis)</p>
               <div className="mb-4 p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-xs text-blue-900 leading-relaxed">
-                <strong>Pentru cine:</strong> instalatori care vor expunere ieftină de awareness, plus furnizori și distribuitori (panouri, invertoare, structuri, materiale electrice, echipamente, SaaS pentru industrie).
+                <strong>Pentru cine:</strong> instalatori care vor expunere ieftină de awareness. Furnizorii și distribuitorii de echipamente apar prin <a href="#premium" className="underline hover:no-underline">Premium</a>.
               </div>
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Ce primești</p>
               <ul className="space-y-2 text-sm text-gray-600">
@@ -623,11 +626,11 @@ export default function AdvertisePage() {
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">
               <summary className="font-semibold text-gray-900 text-sm cursor-pointer list-none flex justify-between items-start gap-3">
-                <span>Cine se poate înscrie la Slot Popup?</span>
+                <span>Pot apărea pe site și furnizorii de echipamente?</span>
                 <span className="text-primary flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                Oricine — instalatori care vor expunere ieftină de awareness, dar și <strong>furnizori și distribuitori</strong> care nu sunt firme de instalare (distribuitori panouri/invertoare/structuri, furnizori materiale electrice, echipamente, SaaS și tools pentru industrie, cursuri/certificări).
+                Da, prin <strong>Premium</strong> ({PRICING.premium.monthly}€/lună + TVA). În lista de firme intră doar instalatorii verificați la ANRE, așa că un magazin sau un distribuitor (panouri, invertoare, baterii, structuri, materiale electrice, software pentru industrie) apare ca partener promovat: în bannerul de parteneri de pe toate paginile și în caseta promo din colț, cu logo, mesaj și link. Putem publica și pachetele sau ofertele tale promoționale, cu prețuri, poze și catalog PDF.
               </p>
             </details>
             <details className="bg-white border border-border rounded-xl p-4 group">

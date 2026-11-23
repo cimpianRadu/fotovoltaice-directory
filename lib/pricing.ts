@@ -40,7 +40,7 @@ export const PRICING: Record<TierId, Tier> = {
     label: 'Slot Popup',
     monthly: 19,
     annual: 190,
-    audience: 'Instalatori, furnizori, distribuitori',
+    audience: 'Instalatori',
     tagline: 'Slot în bannerul promo (colț dreapta-jos) — vizibil pe toate paginile',
   },
   premium: {
@@ -48,7 +48,7 @@ export const PRICING: Record<TierId, Tier> = {
     label: 'Premium',
     monthly: 79,
     annual: 790,
-    audience: 'Instalatori',
+    audience: 'Instalatori și furnizori',
     tagline: 'Prezență premium — vizibilitate maximă — profil complet al firmei',
   },
   casestudy: {
