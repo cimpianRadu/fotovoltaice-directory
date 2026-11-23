@@ -179,8 +179,8 @@ export default function CalculatorCasaVerdeBateriiPage() {
 
         <BatteryWidget sursa="calculator-casa-verde-baterii" guideHref={GUIDE_HREF} />
 
-        {/* Programul n-are dată, deci cel mai util lucru pe care îl poate face
-            omul după ce vede punctajul e să ceară să fie anunțat. */}
+        {/* După punctaj, omul poate cere să fie anunțat când AFM publică lista
+            aprobaților (de atunci curg cele 90 de zile pentru instalator). */}
         <div className="mt-8">
           <CvbAlertForm sursa="calculator-casa-verde-baterii" />
         </div>

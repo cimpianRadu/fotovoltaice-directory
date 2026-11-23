@@ -29,10 +29,10 @@ const GUIDE_WIDGET: Record<string, string> = {
 };
 
 /**
- * Ghidurile care primesc formularul „anunță-mă când se deschide sesiunea CVB",
- * cu secțiunea după care apare. Formularul stă lângă calendarul programului:
- * exact locul în care cititorul află că data nu e anunțată și rămâne cu
- * întrebarea „și atunci când?". Rândurile ajung în tabul AlerteCVB din Sheet.
+ * Ghidurile care primesc formularul de alertă CVB, cu secțiunea după care apare.
+ * Formularul stă lângă calendarul programului. Până pe 20 nov 2026 anunța
+ * deschiderea sesiunii; din 23 nov anunță publicarea listei aprobaților (vezi
+ * CvbAlertForm). Rândurile ajung în tabul AlerteCVB din Sheet.
  */
 const GUIDE_ALERT_FORM: Record<string, string> = {
   'casa-verde-baterii-2026-program-stocare-afm': 'calendar-update',

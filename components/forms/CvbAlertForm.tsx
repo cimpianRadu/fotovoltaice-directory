@@ -1,8 +1,13 @@
 'use client';
 
-// Formular „anunță-mă când se deschide Casa Verde Baterii". Trăiește în
-// ghidurile CVB, lângă secțiunea de calendar: exact locul în care cititorul
-// citește datele sesiunii (20–25 noiembrie 2026) și vrea să nu le rateze.
+// Formular „anunță-mă" Casa Verde Baterii. Trăiește în ghidurile CVB, lângă
+// secțiunea de calendar, și sub calculatorul de punctaj.
+//
+// Până pe 20 nov 2026 anunța deschiderea sesiunii. Din 23 nov anunță ziua în care
+// AFM publică lista aprobaților: de atunci curg cele 90 de zile pentru alegerea
+// instalatorului validat (întrebările frecvente AFM, nr. 37), deci e momentul în
+// care omul are nevoie de oferte. Textul se schimbă singur după închiderea
+// înscrierii (25.11.2026, 23:59, Dispoziția AFM 454/2026).
 //
 // Emailul e singurul câmp obligatoriu. Capacitatea dorită și brandul de
 // invertor sunt opționale, dar valoroase de două ori: pre-califică tehnic
@@ -10,7 +15,7 @@
 // ne spun din timp cum arată cererea reală pe capacități, înainte de sesiune.
 // Rândurile ajung în tabul „AlerteCVB" din Sheet.
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@/components/ui/Button';
 import Toast from '@/components/ui/Toast';
 import SearchableSelect from '@/components/ui/SearchableSelect';
@@ -46,7 +51,16 @@ const INVERTOR_OPTIONS = [
   { value: 'nu-stiu', label: 'Nu știu / nu am încă' },
 ];
 
+// 25 noiembrie 2026, 23:59 la București (EET, UTC+2).
+const INSCRIERE_INCHISA_LA = Date.parse('2026-11-25T21:59:00Z');
+
 export default function CvbAlertForm({ sursa }: { sursa: string }) {
+  // Calculat după montare: paginile sunt generate static, iar ora build-ului nu e
+  // ora la care citește omul.
+  const [inchisa, setInchisa] = useState(false);
+  useEffect(() => {
+    setInchisa(Date.now() > INSCRIERE_INCHISA_LA);
+  }, []);
   const [email, setEmail] = useState('');
   const [capacitate, setCapacitate] = useState('');
   const [invertor, setInvertor] = useState('');
@@ -80,7 +94,7 @@ export default function CvbAlertForm({ sursa }: { sursa: string }) {
       <div className="bg-emerald-50 rounded-xl border border-emerald-200 p-6 my-10 text-center">
         <p className="font-bold text-emerald-900">V-ați înscris.</p>
         <p className="text-sm text-emerald-900 mt-2 leading-relaxed">
-          Vă scriem un singur email, în ziua în care se deschide sesiunea. Până atunci,
+          Vă scriem un singur email, în ziua în care AFM publică lista aprobaților. Până atunci,
           actualizăm ghidul de fiecare dată când apare ceva oficial.
         </p>
       </div>
@@ -90,13 +104,16 @@ export default function CvbAlertForm({ sursa }: { sursa: string }) {
   return (
     <div className="bg-primary/5 rounded-xl border border-primary/10 p-6 my-10">
       <h3 className="font-bold text-gray-900 text-lg">
-        Vă anunțăm când se deschide sesiunea
+        Vă anunțăm când AFM publică lista aprobaților
       </h3>
       <p className="text-sm text-gray-600 mt-2 mb-5 leading-relaxed">
-        Persoanele fizice se înscriu între 20 noiembrie, ora 10:00, și 25 noiembrie 2026, ora
-        23:59. Lăsați un email și vă scriem în ziua în care se deschide sesiunea. Dacă ne spuneți și ce
-        capacitate vă interesează și ce invertor aveți, vă putem trimite direct informația care
-        contează pentru instalația dumneavoastră.
+        {inchisa
+          ? 'Înscrierea persoanelor fizice s-a închis pe 25 noiembrie 2026, la ora 23:59.'
+          : 'Înscrierea persoanelor fizice e deschisă până pe 25 noiembrie 2026, la ora 23:59, direct în aplicația AFM, fără instalator ales dinainte.'}{' '}
+        Din ziua în care AFM publică lista celor aprobați aveți 90 de zile să alegeți un instalator
+        validat. Lăsați un email și vă scriem în ziua aceea. Dacă ne spuneți și ce capacitate vă
+        interesează și ce invertor aveți, vă putem trimite direct informația care contează pentru
+        instalația dumneavoastră.
       </p>
 
       <form onSubmit={handleSubmit} className="grid gap-3 sm:grid-cols-2">
@@ -127,13 +144,13 @@ export default function CvbAlertForm({ sursa }: { sursa: string }) {
         />
         <div className="sm:col-span-2">
           <Button type="submit" disabled={status === 'submitting'} className="w-full sm:w-auto">
-            {status === 'submitting' ? 'Se trimite...' : 'Anunțați-mă la deschidere'}
+            {status === 'submitting' ? 'Se trimite...' : 'Anunțați-mă când apare lista'}
           </Button>
         </div>
       </form>
 
       <p className="text-xs text-gray-500 mt-3 leading-relaxed">
-        Un singur email, la deschiderea sesiunii. Adresa nu se folosește pentru altceva și nu se
+        Un singur email, când apare lista. Adresa nu se folosește pentru altceva și nu se
         transmite nimănui.
       </p>
 
