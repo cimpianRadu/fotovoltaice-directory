@@ -15,7 +15,9 @@ export default function LogoutButton() {
     <button
       type="button"
       onClick={logout}
-      className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-border bg-white px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900"
+      aria-label="Ieși din cont"
+      title="Ieși din cont"
+      className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-border bg-white px-2.5 py-1.5 sm:px-3 text-sm font-medium text-gray-600 transition-colors hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900"
     >
       <svg
         className="h-4 w-4"
@@ -31,7 +33,8 @@ export default function LogoutButton() {
           d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
         />
       </svg>
-      Ieși din cont
+      {/* Pe telefon doar iconița: rândul cu numele firmei rămâne întreg. */}
+      <span className="hidden sm:inline">Ieși din cont</span>
     </button>
   );
 }

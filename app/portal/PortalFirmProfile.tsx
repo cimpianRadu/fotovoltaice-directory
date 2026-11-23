@@ -64,21 +64,19 @@ export default function PortalFirmProfile({
 
   if (!open) {
     return (
-      <div className="mt-3 flex items-center justify-between gap-3 rounded-xl bg-surface px-3 py-2.5 text-sm">
-        <p className="min-w-0 text-gray-600">
-          <span className="block truncate">
-            {profile.numeContact} · {profile.telefon}
-          </span>
-          <span className="block text-xs text-gray-400">Cu datele astea revendici dintr-un click</span>
-        </p>
+      <p className="mt-2 text-xs text-gray-500">
+        Revendici dintr-un click ca{' '}
+        <span className="font-medium text-gray-700">
+          {profile.numeContact} · {profile.telefon}
+        </span>{' '}
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="shrink-0 text-xs font-semibold text-primary-dark underline hover:no-underline"
+          className="font-semibold text-primary-dark underline hover:no-underline"
         >
           Modifică
         </button>
-      </div>
+      </p>
     );
   }
 

@@ -472,13 +472,12 @@ export default async function PortalPage() {
       />
     ) : null;
 
-  const accountHeader = (
+  // Cardul contului e mic intenționat (Radu, 23 nov 2026): firma intră pentru
+  // cereri, nu pentru cont. Numele, cine revendică și locurile, pe câte un rând.
+  const accountHeader = (withNoutati: boolean) => (
     <div className="flex items-start justify-between gap-3">
       <div className="min-w-0">
-        <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">
-          Contul firmei
-        </p>
-        <h1 className="mt-0.5 line-clamp-2 text-xl font-bold leading-tight text-gray-900 sm:text-2xl">
+        <h1 className="line-clamp-2 text-lg font-bold leading-tight text-gray-900 sm:text-xl">
           {firmName || 'Cererile firmei tale'}
         </h1>
         <p className="mt-0.5 truncate text-xs text-gray-500">
@@ -486,7 +485,10 @@ export default async function PortalPage() {
           {linked.length > 0 && ` + ${linked.length} ${linked.length === 1 ? 'coleg' : 'colegi'}`}
         </p>
       </div>
-      <LogoutButton />
+      <div className="flex shrink-0 items-center gap-2">
+        {withNoutati && <PortalNoutati />}
+        <LogoutButton />
+      </div>
     </div>
   );
 
@@ -496,7 +498,7 @@ export default async function PortalPage() {
     return (
       <div className="max-w-3xl mx-auto px-4 pt-6 pb-10 sm:pt-8">
         <section className="rounded-2xl border border-border bg-white p-4 sm:p-5">
-          {accountHeader}
+          {accountHeader(false)}
           <PortalFirmProfile initial={profile} saved={false} gate />
         </section>
       </div>
@@ -505,28 +507,31 @@ export default async function PortalPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 pt-6 pb-10 sm:pt-8">
-      {/* Contul: cine ești, ce ai în lucru, cât loc mai ai. Pe telefon e tot ce
-          încape în primul ecran, deci doar cifrele și acțiunea următoare. */}
-      <section className="rounded-2xl border border-border bg-white p-4 sm:p-5">
-        {accountHeader}
+      {/* Contul: cine ești, cu ce date revendici, cât loc mai ai. Cât mai scund,
+          ca pe telefon cererile să înceapă în primul ecran. */}
+      <section className="rounded-2xl border border-border bg-white p-4">
+        {accountHeader(true)}
 
         {!loadError && <PortalFirmProfile initial={profile} saved={profileSaved} />}
 
         {firmName && (
           <div className="mt-3">
-            <div className="flex items-center justify-between text-xs text-gray-500">
-              <span>Locuri ocupate pentru revendicări noi</span>
-              <span className="font-semibold text-gray-700 tabular-nums">
+            <div className="flex items-center gap-3 text-xs text-gray-500">
+              {/* Pe telefon eticheta scurtă, altfel bara se strânge la puncte. */}
+              <span className="shrink-0">
+                Locuri ocupate<span className="hidden sm:inline"> pentru revendicări</span>
+              </span>
+              <div className="flex flex-1 gap-1" aria-hidden>
+                {Array.from({ length: MAX_ACTIVE_CLAIMS_PER_FIRM }, (_, i) => (
+                  <span
+                    key={i}
+                    className={`h-1.5 flex-1 rounded-full ${i < slotsUsed ? 'bg-primary' : 'bg-gray-200'}`}
+                  />
+                ))}
+              </div>
+              <span className="shrink-0 font-semibold text-gray-700 tabular-nums">
                 {slotsUsed} din {MAX_ACTIVE_CLAIMS_PER_FIRM}
               </span>
-            </div>
-            <div className="mt-1.5 flex gap-1" aria-hidden>
-              {Array.from({ length: MAX_ACTIVE_CLAIMS_PER_FIRM }, (_, i) => (
-                <span
-                  key={i}
-                  className={`h-1.5 flex-1 rounded-full ${i < slotsUsed ? 'bg-primary' : 'bg-gray-200'}`}
-                />
-              ))}
             </div>
             {slotsUsed >= MAX_ACTIVE_CLAIMS_PER_FIRM && (
               <p className="mt-1.5 text-xs text-amber-700">
@@ -557,8 +562,6 @@ export default async function PortalPage() {
             <span aria-hidden className="text-lg">→</span>
           </Link>
         )}
-
-        <PortalNoutati />
       </section>
 
       {reserved.length > 0 && (

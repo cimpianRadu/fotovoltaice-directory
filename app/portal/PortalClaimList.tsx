@@ -226,54 +226,51 @@ export default function PortalClaimList({
 
   return (
     <>
-      {(options.length > 1 || showSearch) && (
-        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end">
-          {/* Cu toate cererile în aceeași stare, filtrul n-ar avea ce să filtreze. */}
-          {options.length > 1 && (
-            <SearchableSelect
-              name="portal-status"
-              label="Filtrează cererile după status"
-              placeholder={`Toate cererile (${claims.length})`}
-              options={options}
-              value={view === 'toate' ? '' : view}
-              onValueChange={pick}
-              className="sm:w-80"
-            />
-          )}
-          {showSearch && (
-            <div className="sm:w-80">
-              <label htmlFor="portal-cauta" className="mb-1 block text-sm font-medium text-gray-700">
-                Caută după nume sau telefon
-              </label>
-              <div className="relative">
-                <svg
-                  className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  aria-hidden="true"
-                >
-                  <circle cx="11" cy="11" r="7" />
-                  <path strokeLinecap="round" d="M20 20l-3.5-3.5" />
-                </svg>
-                <input
-                  id="portal-cauta"
-                  type="search"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  // Doar faptul că s-a căutat, nu ce: în analytics nu ajung nume de clienți.
-                  onBlur={() => {
-                    if (searching) trackEvent('portal_filter_applied', { filtru: 'cautare' });
-                  }}
-                  placeholder="Ex: Popescu sau 0722"
-                  autoComplete="off"
-                  className="w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-9 pr-3 text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-400 focus:border-primary focus:ring-1 focus:ring-primary"
-                />
-              </div>
-            </div>
-          )}
+      {/* Căutarea pe tot rândul, prima: o firmă cu multe cereri caută clientul
+          care tocmai a sunat (Radu, 23 nov 2026: „pe un rând, vizibil”). */}
+      {showSearch && (
+        <div className="relative mb-3">
+          <label htmlFor="portal-cauta" className="sr-only">
+            Caută clientul după nume sau telefon
+          </label>
+          <svg
+            className="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <path strokeLinecap="round" d="M20 20l-3.5-3.5" />
+          </svg>
+          <input
+            id="portal-cauta"
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            // Doar faptul că s-a căutat, nu ce: în analytics nu ajung nume de clienți.
+            onBlur={() => {
+              if (searching) trackEvent('portal_filter_applied', { filtru: 'cautare' });
+            }}
+            placeholder="Caută clientul după nume sau telefon"
+            autoComplete="off"
+            className="w-full rounded-xl border border-gray-300 bg-white py-3 pl-11 pr-3 text-base text-gray-900 shadow-sm outline-none transition-colors placeholder:text-gray-500 focus:border-primary focus:ring-1 focus:ring-primary"
+          />
         </div>
+      )}
+
+      {/* Cu toate cererile în aceeași stare, filtrul n-ar avea ce să filtreze. */}
+      {options.length > 1 && (
+        <SearchableSelect
+          name="portal-status"
+          label="Filtrează cererile după status"
+          placeholder={`Toate cererile (${claims.length})`}
+          options={options}
+          value={view === 'toate' ? '' : view}
+          onValueChange={pick}
+          className="mb-4 sm:max-w-xs"
+        />
       )}
 
       {searching && (
