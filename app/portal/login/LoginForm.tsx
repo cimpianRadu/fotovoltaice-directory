@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Input from '@/components/ui/Input';
+import PhoneInput, { phoneInputOk } from '@/components/ui/PhoneInput';
 import Button from '@/components/ui/Button';
 import { trackEvent } from '@/lib/analytics';
 import { getAttribution } from '@/lib/attribution';
@@ -10,11 +11,15 @@ import { PORTAL_EMAIL_KEY } from '@/lib/portal-email-handoff';
 
 type Step = 'email' | 'code';
 
+/** Telefonul de la ultima logare, ca firma să nu-l retasteze când îi expiră sesiunea. */
+const PHONE_KEY = 'portal-login-telefon';
+
 export default function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
   const [step, setStep] = useState<Step>('email');
   const [email, setEmail] = useState('');
+  const [telefon, setTelefon] = useState('');
   const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(
@@ -37,22 +42,34 @@ export default function LoginForm() {
     } catch {
       /* private mode: rămâne câmpul gol */
     }
+    try {
+      const phone = localStorage.getItem(PHONE_KEY);
+      if (phone) setTelefon(phone);
+    } catch {
+      /* fără stocare: firma îl scrie */
+    }
   }, []);
 
   async function requestCode(e: React.FormEvent) {
     e.preventDefault();
+    if (!(await phoneInputOk(e.currentTarget as HTMLFormElement))) return;
     setBusy(true);
     setError(null);
     try {
       const res = await fetch('/api/portal/auth/request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, ...getAttribution() }),
+        body: JSON.stringify({ email, telefon, ...getAttribution() }),
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) {
         setError(json.error || 'A apărut o eroare. Încearcă din nou.');
         return;
+      }
+      try {
+        localStorage.setItem(PHONE_KEY, telefon.trim());
+      } catch {
+        /* fără stocare */
       }
       trackEvent('portal_login_requested');
       setStep('code');
@@ -102,6 +119,17 @@ export default function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             hint="Orice email de firmă merge. Dacă ai revendicat deja cereri, folosește-l pe cel din revendicare."
+          />
+          {/* Obligatoriu de la logare (23 nov 2026): fără el, o firmă care intra și
+              pleca de la formularul cu datele firmei rămânea fără niciun număr. */}
+          <PhoneInput
+            label="Telefon"
+            name="telefon"
+            required
+            placeholder="0740 123 456"
+            value={telefon}
+            onChange={(e) => setTelefon(e.target.value)}
+            hint="La el te sunăm dacă e ceva de lămurit despre o cerere."
           />
           {error && <p className="text-xs text-red-600">{error}</p>}
           <Button type="submit" variant="primary" disabled={busy} className="w-full">

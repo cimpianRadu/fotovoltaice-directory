@@ -2512,6 +2512,41 @@ export async function saveFirmProfile(
 }
 
 /**
+ * Telefonul dat la logare (23 nov 2026), pus în „Profil Firmă” doar dacă adresa
+ * n-are încă unul. Un profil complet nu se atinge: rândul e unul pe adresă, iar
+ * `saveFirmProfile` l-ar suprascrie cu nume goale.
+ */
+export async function saveFirmLoginPhone(email: string, telefon: string): Promise<void> {
+  const key = email.trim().toLowerCase();
+  if (!key || !telefon) return;
+  let rows: string[][];
+  try {
+    rows = await readRowsFresh(FIRM_PROFILE_SHEET);
+  } catch {
+    await saveFirmProfile(key, { numeFirma: '', numeContact: '', telefon });
+    return;
+  }
+  const row = rows.find((r) => (r[1] || '').trim().toLowerCase() === key);
+  if (row && (row[4] || '').trim()) return;
+  await saveFirmProfile(key, {
+    numeFirma: row?.[2] || '',
+    numeContact: row?.[3] || '',
+    telefon,
+  });
+}
+
+/** Cel mai nou telefon de pe adresele grupului, și din profilurile încă necompletate. */
+export function groupPhone(profiles: FirmProfile[], group: string[]): string {
+  const members = new Set(group);
+  let latest: FirmProfile | null = null;
+  for (const p of profiles) {
+    if (!members.has(p.email) || !p.telefon) continue;
+    if (!latest || p.updatedAt.localeCompare(latest.updatedAt) > 0) latest = p;
+  }
+  return latest?.telefon || '';
+}
+
+/**
  * Cu ce date revendică firma logată: profilul salvat în portal, altfel ultima
  * revendicare a firmei (cum era înainte de profil). Null = n-avem nume și
  * telefon, deci revendicarea trece prin formular.

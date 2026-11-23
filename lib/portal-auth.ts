@@ -85,6 +85,12 @@ export interface PortalTokenPayload {
   codeHash?: string;
   /** Doar pe `client-lead`: cererile trimise din browserul ăsta, văzute fără email verificat. */
   leads?: string[];
+  /**
+   * Pe `login-link` și `pending`: telefonul dat la cererea codului (23 nov 2026).
+   * Se salvează abia după ce firma dovedește că are emailul, ca nimeni să nu
+   * poată lipi un număr pe adresa altcuiva.
+   */
+  telefon?: string;
 }
 
 export async function createToken(

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse, after } from 'next/server';
-import { savePortalAccessEvent } from '@/lib/sheets';
+import { saveFirmLoginPhone, savePortalAccessEvent } from '@/lib/sheets';
 import { notifyIfNewPortalAccount } from '@/lib/portal-account';
 import {
   PORTAL_COOKIE,
@@ -42,7 +42,12 @@ export async function GET(request: NextRequest) {
     await savePortalAccessEvent({ email: payload.email, event: 'intrat', method: 'link' }).catch(
       (err) => console.error('[portal] jurnal acces (intrat/link):', err),
     );
-    await notifyIfNewPortalAccount(payload.email, 'link');
+    if (payload.telefon) {
+      await saveFirmLoginPhone(payload.email, payload.telefon).catch((err) =>
+        console.error('[portal] telefon de la logare:', err),
+      );
+    }
+    await notifyIfNewPortalAccount(payload.email, 'link', payload.telefon);
   });
 
   const res = NextResponse.redirect(new URL('/portal', request.url));

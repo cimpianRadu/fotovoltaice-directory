@@ -1,6 +1,6 @@
 import { NextResponse, after } from 'next/server';
 import { cookies } from 'next/headers';
-import { savePortalAccessEvent } from '@/lib/sheets';
+import { saveFirmLoginPhone, savePortalAccessEvent } from '@/lib/sheets';
 import { notifyIfNewPortalAccount } from '@/lib/portal-account';
 import {
   PORTAL_COOKIE,
@@ -58,7 +58,12 @@ export async function POST(request: Request) {
       await savePortalAccessEvent({ email: pending.email, event: 'intrat', method: 'cod' }).catch(
         (err) => console.error('[portal] jurnal acces (intrat/cod):', err),
       );
-      await notifyIfNewPortalAccount(pending.email, 'cod');
+      if (pending.telefon) {
+        await saveFirmLoginPhone(pending.email, pending.telefon).catch((err) =>
+          console.error('[portal] telefon de la logare:', err),
+        );
+      }
+      await notifyIfNewPortalAccount(pending.email, 'cod', pending.telefon);
     });
 
     const res = NextResponse.json({ ok: true });

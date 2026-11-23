@@ -14,6 +14,7 @@ import {
   isPubliclyClaimable,
   getFirmProfiles,
   latestClaimIdentity,
+  groupPhone,
   resolveGroupProfile,
   maxClaimsForLead,
   isPriorityHeld,
@@ -417,7 +418,8 @@ export default async function PortalPage() {
     profile = {
       numeFirma: identity?.numeFirma || listed?.name || '',
       numeContact: identity?.numeContact || '',
-      telefon: identity?.telefon || listed?.contact.phone || '',
+      // Telefonul de la logare, dacă firma n-a completat încă restul.
+      telefon: identity?.telefon || groupPhone(profiles, emails) || listed?.contact.phone || '',
     };
     firmName = identity?.numeFirma || '';
     slotsUsed = identity ? countActiveClaimsForFirm(claims, identity) : 0;

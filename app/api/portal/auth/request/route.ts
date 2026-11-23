@@ -13,6 +13,7 @@ import {
 import { sendPortalLoginEmail } from '@/lib/email';
 import { isPortalEmailDeactivated, savePortalAccessEvent } from '@/lib/sheets';
 import { sanitizeAttribution } from '@/lib/attribution';
+import { cleanPhone, PHONE_ERROR } from '@/lib/phone';
 
 /**
  * Pasul 1 al loginului: firma își lasă emailul, primește link + cod de 6 cifre.
@@ -31,6 +32,14 @@ export async function POST(request: Request) {
     if (!isValidEmail(email)) {
       return NextResponse.json({ error: 'Adresa de email nu este validă.' }, { status: 400 });
     }
+    // Telefonul e obligatoriu de la logare (Radu, 23 nov 2026): o firmă care
+    // intră și pleacă de la formularul cu datele firmei rămânea doar cu emailul.
+    const telefonRaw = String(body?.telefon || '').trim();
+    if (!telefonRaw) {
+      return NextResponse.json({ error: 'Lasă un număr de telefon.' }, { status: 400 });
+    }
+    const telefon = cleanPhone(telefonRaw);
+    if (!telefon) return NextResponse.json({ error: PHONE_ERROR }, { status: 400 });
     // Canalul sesiunii (first-touch, trimis de LoginForm). Ajunge în jurnalul
     // de acces pe `cerut`, ca la o firmă nouă să se vadă de unde a venit.
     const attribution = sanitizeAttribution(body);
@@ -50,8 +59,8 @@ export async function POST(request: Request) {
     const exp = Date.now() + PORTAL_LOGIN_TTL_MINUTES * 60_000;
     const code = generateLoginCode();
     const codeHash = await hashLoginCode(email, code, secret);
-    const linkToken = await createToken({ kind: 'login-link', email, exp }, secret);
-    const pendingToken = await createToken({ kind: 'pending', email, exp, codeHash }, secret);
+    const linkToken = await createToken({ kind: 'login-link', email, exp, telefon }, secret);
+    const pendingToken = await createToken({ kind: 'pending', email, exp, codeHash, telefon }, secret);
 
     const verifyUrl = `${new URL(request.url).origin}/api/portal/auth/verify?token=${encodeURIComponent(linkToken)}`;
 

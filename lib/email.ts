@@ -1161,6 +1161,8 @@ export async function sendNewPortalAccountNotification(data: {
   email: string;
   /** Pe unde a intrat: linkul din email sau codul de 6 cifre. */
   method: 'link' | 'cod';
+  /** Telefonul dat la logare. */
+  telefon?: string;
   /** Numele firmei din director, dacă adresa se potrivește cu una listată. */
   firmName?: string;
   firmSlug?: string;
@@ -1198,6 +1200,7 @@ export async function sendNewPortalAccountNotification(data: {
     <div style="padding:20px 24px">
       <table style="border-collapse:collapse;width:100%">
         ${row('Email', `<a href="mailto:${escapeHtml(data.email)}" style="color:#2563eb">${escapeHtml(data.email)}</a>`)}
+        ${data.telefon ? row('Telefon', `<a href="tel:${escapeHtml(data.telefon)}" style="color:#2563eb">${escapeHtml(data.telefon)}</a>`) : ''}
         ${data.firmName ? row('Firmă', `${escapeHtml(data.firmName)}${data.judet ? ` · ${escapeHtml(data.judet)}` : ''}${data.firmSlug ? ` · <a href="${PORTAL_BASE_URL}/firme/${escapeHtml(data.firmSlug)}" style="color:#2563eb">profil</a>` : ''}`) : row('Firmă', '<span style="color:#6b7280">adresa nu se potrivește cu nicio firmă din director</span>')}
         ${row('A intrat cu', data.method === 'link' ? 'linkul din email' : 'codul de 6 cifre')}
         ${row('Coduri cerute', String(data.requests))}

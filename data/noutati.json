@@ -1,6 +1,13 @@
 [
   {
     "data": "2026-11-23",
+    "titlu": "Telefonul, cerut de la intrarea în cont",
+    "text": "La intrarea în portal vă cerem acum, lângă email, și un număr de telefon. Îl ținem minte pe browserul dumneavoastră, deci îl scrieți o singură dată. La el vă găsim când e ceva de lămurit despre o cerere preluată.",
+    "link": "/portal",
+    "linkText": "Intră în portal"
+  },
+  {
+    "data": "2026-11-23",
     "titlu": "Căutare după nume sau telefon în cererile tale",
     "text": "Dacă aveți mai multe cereri, deasupra listei din portal găsiți acum un câmp de căutare. Scrieți numele clientului, firma lui sau câteva cifre din telefon și vedeți pe loc cererea lui, oricare ar fi statusul. Căutarea merge pe cererile la care aveți deja datele clientului.",
     "link": "/portal",

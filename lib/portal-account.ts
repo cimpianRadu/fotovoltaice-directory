@@ -19,6 +19,8 @@ import { getCompanies } from './utils';
 export async function notifyIfNewPortalAccount(
   email: string,
   method: 'link' | 'cod',
+  /** Telefonul dat la logare, din 23 nov 2026. Lipsește pe linkurile cerute înainte. */
+  telefon?: string,
 ): Promise<void> {
   const key = email.trim().toLowerCase();
   try {
@@ -46,6 +48,7 @@ export async function notifyIfNewPortalAccount(
     await sendNewPortalAccountNotification({
       email: key,
       method,
+      telefon,
       firmName: company?.name || claimIdentity?.numeFirma,
       firmSlug: company?.slug,
       judet: company?.location.county,

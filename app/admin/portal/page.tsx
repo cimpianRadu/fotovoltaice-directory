@@ -10,6 +10,7 @@ import {
   getFirmEmailLinks,
   getDeactivatedAccounts,
   getFirmProfiles,
+  groupPhone,
   resolveGroupProfile,
   type DeactivatedAccount,
   type FirmProfile,
@@ -122,6 +123,8 @@ interface PortalAccount {
    * Singura identitate a unui cont care n-a revendicat nimic și nu e în director.
    */
   profile: FirmProfile | null;
+  /** Telefonul dat la logare (din 23 nov 2026), și cât profilul e necompletat. */
+  loginPhone: string;
   crmFirm: CrmFirm | undefined;
   /**
    * Județele pentru alerte, ale FIRMEI: lista salvată cel mai recent de pe
@@ -471,6 +474,7 @@ function AccountCard({
   const phone =
     account.claims.find((c) => c.telefon)?.telefon ||
     account.profile?.telefon ||
+    account.loginPhone ||
     account.company?.contact.phone ||
     '';
   // Omul din spatele contului: la telefon pe el îl cauți, nu firma. Îl iau de pe
@@ -909,6 +913,7 @@ export default async function PortalAccessPage({ searchParams }: Props) {
       ).length,
       company,
       profile,
+      loginPhone: groupPhone(profiles, members),
       crmFirm: identity ? firms.find((f) => isSameFirm(f, identity)) : undefined,
       identity,
       // Completat după ce toate conturile există (are nevoie de ele, două câte două).
