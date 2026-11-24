@@ -2970,5 +2970,17 @@
    "isActive": true,
    "tipTarifRaw": "Tarif C1A"
   }
+ ],
+ "NEXUM RENEWABLES|Giurgiu": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "23323",
+   "dataEmitere": "23/06/2025",
+   "dataExpirare": "23/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  }
  ]
 }

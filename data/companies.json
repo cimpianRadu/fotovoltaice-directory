@@ -16437,6 +16437,90 @@
         "societate": "PANOURICLUJ",
         "judet": "Cluj"
       }
+    },
+    {
+      "id": "nexum-energy",
+      "slug": "nexum-energy",
+      "name": "Nexum Energy",
+      "cui": "RO50002253",
+      "logo": "/logos/nexum-energy.png",
+      "description": "Nexum Energy (NEXUM RENEWABLES SRL) este o firmă înființată în 2024, cu sediul social în Bolintin-Vale, județul Giurgiu, și punct de lucru în City Business Center, Sector 3, București. Este partener oficial GoodWe, cu statutul GoodWe PLUS+ Silver Installer, și lucrează exclusiv cu echipamente GoodWe: invertoare hibride, baterii Lynx și ESA, stații de încărcare HCA și pompe de căldură GoodHeat R290, iar panourile sunt Trina sau Longi. Deține atestate ANRE de tip E1 și C2A, emise în iunie 2025, și execută lucrările cu echipe proprii. Pentru firme și hale proiectează și execută centrale fotovoltaice în regim EPC, cu stocare GoodWe BAT-C de 61 până la 261 kWh sau ESA de 125 kW / 261 kWh, și pregătește documentația: studii de fezabilitate și de soluție, proiecte tehnice și DTAC, certificate de urbanism, avize și autorizații. Pentru case montează sisteme on-grid, hibride și off-grid, baterii pentru prosumatori și sisteme de balcon, întocmește dosarul de prosumator și pregătește dosarele pentru programul AFM de stocare. Oferă mentenanță programată pentru invertoare GoodWe și Huawei și plata în rate prin tbi bank. Are certificări ISO 9001, 14001, 45001 și 27001, valabile până în mai 2027. Cifra de afaceri a ajuns la 0,79 milioane de lei în 2025, de la 0,20 milioane în 2024.",
+      "founded": 2024,
+      "employees": 1,
+      "location": {
+        "city": "Bolintin-Vale",
+        "county": "Giurgiu",
+        "address": "Str. Argeșului, Nr. 28B. Punct de lucru: Str. Nerva Traian nr. 3, City Business Center, Sector 3, București"
+      },
+      "contact": {
+        "phone": "+40771961791",
+        "email": "contact@nexumenergy.ro",
+        "website": "https://nexumenergy.ro"
+      },
+      "coverage": [
+        "București",
+        "Giurgiu"
+      ],
+      "specializations": [
+        "rezidential",
+        "hale-industriale"
+      ],
+      "certifications": [
+        "ISO-9001",
+        "ISO-14001",
+        "ISO-45001",
+        "ISO-27001"
+      ],
+      "capacity": {
+        "minProjectKw": 0,
+        "maxProjectKw": 0,
+        "projectsCompleted": 0
+      },
+      "financials": {
+        "year": 2025,
+        "revenue": 786533,
+        "profit": 489701,
+        "history": [
+          {
+            "year": 2024,
+            "revenue": 203903,
+            "profit": 101245,
+            "employees": 1
+          },
+          {
+            "year": 2025,
+            "revenue": 786533,
+            "profit": 489701,
+            "employees": 1
+          }
+        ]
+      },
+      "tags": [
+        "partener-goodwe",
+        "pv-rezidential",
+        "pv-comercial",
+        "on-grid",
+        "hibrid",
+        "off-grid",
+        "stocare-baterii",
+        "EPC",
+        "proiectare",
+        "statii-incarcare-ev",
+        "pompe-caldura",
+        "prosumator",
+        "mentenanta-pv",
+        "finantare-disponibila",
+        "magazin-online"
+      ],
+      "featured": false,
+      "verified": true,
+      "createdAt": "2026-11-24",
+      "updatedAt": "2026-11-24",
+      "segment": "ambele",
+      "anreMatch": {
+        "societate": "NEXUM RENEWABLES",
+        "judet": "Giurgiu"
+      }
     }
   ]
 }

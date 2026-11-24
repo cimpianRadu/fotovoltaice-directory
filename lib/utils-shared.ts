@@ -811,6 +811,7 @@ export function getTagLabel(tag: string): string {
     'casa-verde': 'Dosare Casa Verde',
     proiectare: 'Proiectare',
     'partener-huawei': 'Partener Huawei',
+    'partener-goodwe': 'Partener oficial GoodWe',
     'electric-up': 'Dosare Electric Up',
     'instalatii-electrice': 'Instalații electrice',
     'curenti-slabi': 'Curenți slabi',
