@@ -816,6 +816,62 @@ _(Adaugă intrări noi `💡 de extins` când apar pagini pe poz 8-20 cu impresi
 
 ## 🎯 Propuneri active
 
+### Batch 2026-11-24 — pagini de tip „tabel pe furnizori / pe mărci” (3 articole/săptămână până se golește) 🔝 TOP
+
+> **Decizia lui Radu, 24 nov 2026:** batch-ul ăsta are prioritate peste orice altă intrare din coadă (în afara corecțiilor 🔴 obligatorii). Se publică 3 articole pe săptămână: luni, joi și sâmbătă (`sambata-articol-instalatori` ia acum tot din „🎯 Propuneri active”, nu doar din batch-ul greenlead). Ordinea de mai jos e ordinea reală.
+>
+> **De ce (date, nu intuiție):** Umami, `/ghid/`, ultimele 30 de zile la 24 nov: `pret-kw-prosumator-2026-per-furnizor-...` **764** (571 și 831 în cele două perioade de 30 de zile dinainte, deci stabil), `baterie-huawei-luna2000-...` 397, `lista-firme-autorizate-afm-...` 340, `certificat-de-racordare-prosumator-2026` 226, `baterie-sungrow-...` 184 (publicat 2 nov, deci în primele 3 săptămâni). Ce au în comun: **un tabel cu nume concrete** (furnizori, modele, firme) pentru cineva care caută ceva precis despre ce are sau ce cumpără.
+>
+> **Poarta SERP la paginile de marcă NU mai blochează.** #53–#55 (Dyness, Pylontech, Deye) au fost absorbite în #56 pe 21 sept pentru că pagina 1 era numai magazine. Pagina Huawei avea același SERP (21 aug) și aduce 397 de vizite pe lună; Sungrow, 184 din prima lună. La intrările de marcă de mai jos, SERP-ul se verifică doar ca să vezi ce lipsește din paginile magazinelor (fișe tehnice, compatibilitate, eligibilitate CVB), nu ca să renunți.
+>
+> Volumele: Google Ads (DataForSEO `kw_data_google_ads_search_volume`), Romania/`ro`, măsurate 24 nov 2026, medie lunară pe 12 luni.
+
+#### #91 — Preț kWh Curent Electric pe Furnizor (Noiembrie 2026): Hidroelectrica, E.ON, Electrica, PPC, Premier
+- **Status:** 💡 idee · 🔝 TOP · adăugat 2026-11-24 (Radu)
+- **Cluster:** `pret energie electrica` 1.900 · `pret kwh` 1.000 · `pret curent electric` 720 · `pret kwh hidroelectrica` 590 · `pret kwh electrica` 390 · `pret kwh eon` 260 (`pret kwh ppc` fără volum măsurat). Vârfuri în ianuarie–februarie și noiembrie.
+- **De ce:** e formatul ghidului nr. 1 (o secțiune pe fiecare furnizor, tabel sus), dar pe consum, unde volumul e de câteva ori mai mare. Datele sunt ale noastre: API-ul comparatorului ANRE (posf.ro), vezi memoria `reference_posf_anre_comparator_api.md`. Din 13 nov (Ordinul ANRE 67/2026, art. 15) prosumatorii de până la 200 kW primesc pe surplus prețul energiei active din contract, deci tabelul ăsta e și răspunsul la „cât primesc pe surplus” pentru noile contracte: link reciproc cu ghidul nr. 1.
+- **Unghi:** tabel sus cu oferta cea mai ieftină a fiecărui furnizor mare, pe zona de distribuție (preț final cu TVA + preț energie activă), data citirii vizibilă. O secțiune pe furnizor, cu titlul pe query (`Preț kWh Hidroelectrica`, `Preț kWh E.ON` ...). Secțiune „cum s-a schimbat prețul”: din seria de snapshot-uri săptămânale (`data/istoric-preturi-furnizori/`, rutina `snapshot-preturi-furnizori`), cât există la data scrierii; fără serie, secțiunea lipsește, nu se estimează.
+- **Delimitare:** `1-an-liberalizare-energie-iulie-2026-oferte-pret-kwh-furnizori` rămâne „cum compari și cum schimbi furnizorul” (are deja un tabel din comparator, 12 nov). Dacă la structurare suprapunerea trece de ~30%, se face extindere pe el (titlu pe `pret kwh` + secțiuni pe furnizor), nu URL nou (regula de la #57/#44). `pret-energie-electrica-2021-2026-cronologie-scumpiri` rămâne istoricul.
+- **Linkuri interne:** ghidul nr. 1 `pret-kw-prosumator-2026-per-furnizor-...`, `compensare-prosumator-2026-...`, `1-an-liberalizare-...`, `pret-energie-electrica-2021-2026-cronologie-scumpiri`, /calculator, /cere-oferta.
+- **Never-invent:** doar ofertele-tip din comparator, cu data citirii; ofertele de recontractare trimise clienților existenți pot fi altele, și se spune asta.
+- **Refresh:** lunar, din snapshot-uri (intrare în „🔧 De extins” după publicare).
+
+#### #92 — Prosumator Hidroelectrica 2026: Contract, Preț pe Surplus după Ordinul ANRE 67, Când Primești Banii
+- **Status:** 💡 idee · adăugat 2026-11-24 (Radu)
+- **Cluster:** `prosumator hidroelectrica` **590** (1.300 în nov 2025, 720 în aug 2026) · `prosumator ppc` 140 · `prosumator eon` 110 · `prosumator electrica` 70 · `prosumator premier energy` 30.
+- **De ce:** cel mai mare query de prosumator pe un singur furnizor, iar Hidroelectrica e cel mai ieftin pe consum (comparator ANRE, 12 nov: 1,27 lei/kWh în Moldova). Azi îl prind doar secțiunile din ghidul nr. 1 și din `compensare-prosumator-...`.
+- **Unghi:** tot ce face Hidroelectrica cu un prosumator, din sursele lor: actul adițional pe Ordinul 67, prețul pe surplus (prețul energiei active din contract, art. 15), compensarea, gazul (`compensare-prosumator-...` spune că la Hidroelectrica nu există plata gazului din surplus; se reverifică pe site-ul lor), contul de client și unde vezi soldul, ce faci dacă nu plătesc la termen.
+- **Delimitare:** ghidul nr. 1 = comparația între furnizori; #92 = ce faci dacă ești la Hidroelectrica. Secțiunea Hidroelectrica din ghidul nr. 1 primește link către #92.
+- **Next:** dacă la 30 de zile #92 aduce trafic, aceeași pagină pentru PPC (140) și E.ON (110), ca intrări noi.
+- **Never-invent:** doar hidroelectrica.ro (pagina de prosumatori, contractul-cadru, comunicatele), Ordinul 67/2026 și comunicatul ANRE; ce nu publică furnizorul se scrie „nepublicat la <data>”.
+
+#### #93 — Invertor Deye 2026: Modele Monofazate și Trifazate, Preț, Baterii Compatibile, Casa Verde
+- **Status:** 💡 idee · adăugat 2026-11-24 (Radu)
+- **Cluster:** `invertor deye` **1.300** (1.900 în aug 2026, competiție HIGH = magazine).
+- **De ce:** cel mai mare volum de marcă măsurat. Formatul paginilor Huawei/Sungrow, pe invertor.
+- **Unghi:** tabelul modelelor vândute în RO (monofazat / trifazat, putere, baterie de joasă sau înaltă tensiune), din fișele tehnice Deye; compatibilitatea cu bateriile din lista oficială Deye; ce cere Casa Verde Baterii la invertor; prețuri doar din magazine citate cu dată, normalizate TVA (memoria `feedback_scraped_prices_vat_basis.md`).
+- **Linkuri interne:** `baterie-compatibila-invertor-huawei-sungrow-deye-2026-tabel`, `invertor-hibrid-2026-pret-cand-merita-casa-verde`, `microinvertor-vs-invertor-string-optimizatoare-2026-...`, #94.
+
+#### #94 — Baterie Deye 2026: Modele, Capacități, Cu Ce Invertoare Merge, Casa Verde
+- **Status:** 💡 idee · adăugat 2026-11-24 (Radu) · redeschide #55
+- **Cluster:** `baterie deye` **480** (880 în aug, 720 în sept 2026; în creștere față de 390 la 21 sept).
+- **Unghi și surse:** ca #79 Sungrow: modele, kWh, cicluri, garanție, din fișele tehnice Deye; pragul CVB; link reciproc cu #93.
+
+#### #95 — Baterie Dyness 2026: Modele, Capacități, Compatibilitate, Casa Verde
+- **Status:** 💡 idee · adăugat 2026-11-24 (Radu) · redeschide #53
+- **Cluster:** `baterie dyness` **480** (1.000 în aug 2026). Pe 21 sept era 320, iar „-57% pe trimestru” nu s-a confirmat.
+- **Unghi și surse:** ca #94, din fișele Dyness și lista lor de invertoare compatibile.
+
+#### #96 — Invertor Huawei 2026: Modele SUN2000, Preț, Baterie LUNA2000, Casa Verde
+- **Status:** 💡 idee · adăugat 2026-11-24 (Radu)
+- **Cluster:** `invertor huawei` **1.000**. Alte mărci de invertor, de luat după ce se vede cum merg #93 și #96: `invertor solis` 390, `invertor growatt` 320.
+- **Delimitare:** `baterie-huawei-luna2000-...` (397 vizite/30 z) rămâne pagina bateriei; #96 e pagina invertorului, cu link reciproc.
+
+#### #97 — Dosar Prosumator 2026: Toate Actele, pe Etape, de la ATR la Contract
+- **Status:** 💡 idee · adăugat 2026-11-24 (Radu)
+- **Cluster:** `dosar prosumator` **260** (CPC 1,39 lei, intent comercial).
+- **Delimitare (de verificat la structurare):** `certificat-de-racordare-prosumator-2026` (226 vizite/30 z, de la 31) are deja „Acte necesare”, iar `aviz-tehnic-racordare-atr-prosumator-2026` are ATR-ul. #97 e lista unică de acte pe tot drumul, cu linkuri spre cele două. Dacă suprapunerea trece de ~30%, extindere pe ghidul de certificat (secțiune „Dosarul complet”), nu URL nou.
+
 ### Batch 2026-11-15 — trigger legislativ confirmat (news scan)
 
 #### #89 — 🔝 TOP · Ordinul ANRE 67/2026 pentru Prosumatori: Ce Primești de la Furnizor, Ce Semnezi și Când Îți Plătește Banii Restanți · adăugat 2026-11-15 (news scan)
