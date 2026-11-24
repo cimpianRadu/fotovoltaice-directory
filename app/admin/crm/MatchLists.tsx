@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import type { NewLead } from '@/lib/sheets';
 import type { FirmMatch } from '@/lib/lead-match';
 import type { NecesitMatch } from '@/lib/necesit-match';
 
@@ -19,7 +18,13 @@ function Caption({ children }: { children: React.ReactNode }) {
  * vedere. Scorul decide ordinea, dar nu se afișează: motivele sunt
  * argumentul, cifra ar părea mai exactă decât e.
  */
-export function MatchList({ matches, lead }: { matches: FirmMatch[]; lead: NewLead }) {
+export function MatchList({
+  matches,
+  lead,
+}: {
+  matches: FirmMatch[];
+  lead: { judet: string; segment: string };
+}) {
   return (
     <div className="space-y-2 border-t border-slate-100 px-4 py-2">
       <Caption>De contactat, potriviri din director</Caption>

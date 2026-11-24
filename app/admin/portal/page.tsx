@@ -20,43 +20,29 @@ import {
   ALERT_PAUSE_DAYS,
   type CountyAlertPref,
   type FirmEmailLink,
-  claimsHeldForLead,
-  isLeadClosed,
-  isLeadHidden,
   isSameFirm,
-  maxClaimsForLead,
   type PortalAccessEvent,
   type LeadClaim,
   type CrmFirm,
   type NewLead,
 } from '@/lib/sheets';
 import { isClaimUntouched, normalizeFirmName } from '@/lib/sheets-shared';
-import { matchFirmsForLead } from '@/lib/lead-match';
 import { getCompanies } from '@/lib/utils';
 import {
-  getBudgetLabel,
-  getCallWindowLabel,
-  getConnectionLabel,
-  getFinancingLabel,
   getFirmSourceLabel,
-  getPhaseLabel,
-  getProjectTypeLabel,
-  getRoofTypeLabel,
-  getScopLabel,
-  getTimelineLabel,
-  getWorkTypeLabel,
-  getYesNoLabel,
   type Company,
 } from '@/lib/utils-shared';
-import { parseRequestedFirms } from '@/lib/sheets-shared';
-import ApproveClaims, { type ClaimLeadDetail, type PortalClaimRow } from './ApproveClaims';
+import ApproveClaims, { type PortalClaimRow } from './ApproveClaims';
 import FirmEmails, { type FirmEmailRow } from './FirmEmails';
-import GiveLead, { type GiveLeadFirm, type LeadOption } from './GiveLead';
+import GiveLead, { type GiveLeadFirm } from './GiveLead';
+import { eligibleLeads, leadLabel, openLeadsWithHolders } from './give-options';
 import AccountStatus from './AccountStatus';
 import DayPicker from './DayPicker';
 import { precalificareActivitate, type PrecalificareActivitate } from '@/lib/asistent';
 import { buildMovements, bucharestDay, shiftDay, type Movement } from './movements';
-import { ago, cerereHref } from '../cereri/shared';
+import { ago } from '../cereri/shared';
+import { fmtDateTime, MovementText } from './MovementText';
+import IstoricComplet from './IstoricComplet';
 
 export const dynamic = 'force-dynamic';
 
@@ -66,18 +52,6 @@ function fmtDayLong(day: string): string {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-    timeZone: 'Europe/Bucharest',
-  });
-}
-
-function fmtDateTime(iso: string): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleString('ro-RO', {
-    day: 'numeric',
-    month: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
     timeZone: 'Europe/Bucharest',
   });
 }
@@ -151,8 +125,10 @@ interface PortalAccount {
   suggested: { email: string; reason: string }[];
   /** Cui se scrie revendicarea când îi dau o cerere de aici. */
   giveFirm: GiveLeadFirm | null;
-  /** Cereri deschise pe care i le pot da, cele mai potrivite primele. */
-  giveOptions: LeadOption[];
+  /** Câte cereri deschise i-aș putea da; lista cu potrivirea vine la cerere. */
+  giveCount: number;
+  /** Adresele contului: o cerere pe care o are deja oricare dintre ele nu i se mai oferă. */
+  giveMembers: string[];
   /**
    * Dezactivat din admin (oricare adresă a contului e pe „Conturi
    * Dezactivate"). Cardul stă doar pe filtrul lui, nu intră în cifre.
@@ -260,55 +236,6 @@ function EmptyPortalBadge() {
 }
 
 /**
- * Cererea pentru modalul din card, cu etichetele rezolvate aici, pe server.
- * Aceleași câmpuri ca mesajul de partajare din /admin/crm (formatLead.ts),
- * fără notele interne: aici te uiți cine e clientul, nu ce am scris noi.
- */
-function leadDetail(lead: NewLead | undefined): ClaimLeadDetail | undefined {
-  if (!lead) return undefined;
-  const spec = (label: string, value: string) =>
-    value.trim() ? [{ label, value: value.trim() }] : [];
-  const requested = parseRequestedFirms(lead.preselectedCompany);
-  return {
-    when: fmtDateTime(lead.timestamp),
-    numeContact: lead.numeContact,
-    numeCompanie: lead.numeCompanie,
-    telefon: lead.telefon,
-    email: lead.email,
-    localitate: lead.localitate,
-    intervalApel: lead.intervalApel ? getCallWindowLabel(lead.intervalApel) : '',
-    specs: [
-      ...spec('Segment', lead.segment === 'rezidential' ? 'Rezidențial' : lead.segment ? 'Comercial' : ''),
-      ...spec('Tip lucrare', lead.tipLucrare ? getWorkTypeLabel(lead.tipLucrare) : ''),
-      ...spec('Putere', lead.putere ? `${lead.putere} kW` : ''),
-      ...spec('Suprafață', lead.suprafata ? `${lead.suprafata} mp` : ''),
-      ...spec('Consum lunar', lead.consumLunar ? `${lead.consumLunar} kWh` : ''),
-      ...spec('Acoperiș', lead.tipAcoperis ? getRoofTypeLabel(lead.tipAcoperis) : ''),
-      ...spec('Fazare', lead.fazare ? getPhaseLabel(lead.fazare) : ''),
-      ...spec('Branșament', lead.bransament ? getConnectionLabel(lead.bransament) : ''),
-      ...spec('Baterie', lead.stocare ? getYesNoLabel(lead.stocare) : ''),
-      ...spec('Capacitate baterie', lead.capacitateBaterie ? `${lead.capacitateBaterie} kWh` : ''),
-      ...spec('Wallbox', lead.wallbox ? getYesNoLabel(lead.wallbox) : ''),
-      ...spec('Termen', lead.termen ? getTimelineLabel(lead.termen) : ''),
-      ...spec('Finanțare', lead.finantare ? getFinancingLabel(lead.finantare) : ''),
-      ...spec('Buget', getBudgetLabel(lead.buget)),
-      ...spec('Vrea', getScopLabel(lead.scop, lead.scopDetalii)),
-      ...spec('Firme cerute', requested.join(', ')),
-      ...spec('Poze', lead.poze ? 'da' : ''),
-    ],
-    mesaj: lead.mesaj.trim(),
-    crmHref: `/admin/crm#${encodeURIComponent(lead.timestamp)}`,
-  };
-}
-
-function leadLabel(lead: NewLead | undefined, leadId: string): string {
-  if (!lead) return `cerere ${leadId.slice(0, 10)}`;
-  return [getProjectTypeLabel(lead.tipProiect), lead.judet, lead.putere ? `${lead.putere} kW` : '']
-    .filter(Boolean)
-    .join(' · ');
-}
-
-/**
  * Numele firmei: din revendicări (identitatea ei reală în portal), apoi din
  * profilul completat în portal, altfel din director dacă emailul e cel public
  * al unei firme listate.
@@ -329,29 +256,6 @@ function fmtTime(m: Movement): string {
     minute: '2-digit',
     timeZone: 'Europe/Bucharest',
   });
-}
-
-/** Un rând de istoric: aceeași formă pe card și în ziua aleasă. */
-function MovementText({ m }: { m: Movement }) {
-  return (
-    <span className={m.by === 'noi' ? 'text-slate-400' : 'text-slate-700'}>
-      {m.by === 'noi' && (
-        <span className="mr-1 rounded bg-slate-100 px-1 py-px text-[10px] font-semibold text-slate-500">
-          noi
-        </span>
-      )}
-      {m.text}
-      {m.detail && <span className="text-slate-500">: {m.detail}</span>}
-      {m.leadId && (
-        <>
-          {' '}
-          <Link href={cerereHref(m.leadId)} className="whitespace-nowrap text-slate-400 hover:text-slate-900">
-            cererea →
-          </Link>
-        </>
-      )}
-    </span>
-  );
 }
 
 /** Linia de acces: ce știm sigur, spus fără să sune a mai mult decât e. */
@@ -504,7 +408,6 @@ function AccountCard({
           : '',
       claimedAsPhone: c.telefon,
       label: leadLabel(leadById.get(c.leadId), c.leadId),
-      detail: leadDetail(leadById.get(c.leadId)),
       approvedAt: c.approvedAt,
       releasedAt: c.releasedAt,
       releaseReason: c.releaseReason,
@@ -650,7 +553,12 @@ function AccountCard({
         <ApproveClaims claims={rows} />
         {account.giveFirm && (
           <div className="mt-2">
-            <GiveLead firm={account.giveFirm} leads={account.giveOptions} />
+            <GiveLead
+              firm={account.giveFirm}
+              count={account.giveCount}
+              members={account.giveMembers}
+              companyId={account.company?.id ?? ''}
+            />
           </div>
         )}
         {account.claims.length === 0 && (
@@ -686,21 +594,10 @@ function AccountCard({
       </div>
 
       {account.movements.length > 0 && (
-        <details className="border-t border-slate-100 bg-slate-50 px-4 py-2">
-          <summary className="cursor-pointer text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
-            Istoric complet ({account.movements.length})
-          </summary>
-          <ul className="mt-1.5 max-h-60 space-y-1 overflow-y-auto">
-            {account.movements.map((m, i) => (
-              <li key={`${m.at}-${i}`} className="flex gap-2 text-xs">
-                <span className="w-24 shrink-0 text-[10px] tracking-wide text-slate-400 uppercase">
-                  {m.dayOnly ? fmtDateTime(m.at).split(',')[0] : fmtDateTime(m.at)}
-                </span>
-                <MovementText m={m} />
-              </li>
-            ))}
-          </ul>
-        </details>
+        <IstoricComplet
+          count={account.movements.length}
+          members={account.addresses.map((x) => x.email)}
+        />
       )}
     </article>
   );
@@ -790,19 +687,9 @@ export default async function PortalAccessPage({ searchParams }: Props) {
   for (const p of alertPrefs) emails.add(p.email);
 
   // Cererile pe care le pot da: deschise (nu ascunse, nu închise din CRM) și
-  // cu loc liber. Potrivirea firmă→cerere se calculează o dată per cerere, nu
-  // per firmă, și se citește apoi din map — altfel scorul s-ar recalcula peste
-  // tot directorul pentru fiecare card.
-  const openLeads = leads.filter((l) => !isLeadHidden(l) && !isLeadClosed(l.crmStatus));
-  const heldByLead = new Map(
-    openLeads.map((l) => [l.timestamp, claimsHeldForLead(claims, l.timestamp)]),
-  );
-  const matchesByLead = new Map(
-    openLeads.map((l) => [
-      l.timestamp,
-      matchFirmsForLead(l, l.timestamp, companies, claims, firms, 500),
-    ]),
-  );
+  // cu loc liber. Aici doar se numără; potrivirea cu firma se calculează când
+  // se deschide „Dă o cerere” (give-options.ts).
+  const { open: openLeads, held: heldByLead } = openLeadsWithHolders(leads, claims);
 
   // Un card per FIRMĂ, nu per adresă: adresele legate în „Emailuri Firmă" se
   // strâng pe cardul contului principal. Altfel revendicarea făcută de pe
@@ -869,29 +756,9 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         }
       : null;
 
-    const giveOptions: LeadOption[] = !identity
-      ? []
-      : openLeads
-          .filter((l) => {
-            const held = heldByLead.get(l.timestamp) ?? [];
-            if (held.length >= maxClaimsForLead(l.timestamp)) return false;
-            return !held.some((c) => isSameFirm(c, identity) || members.includes(c.email));
-          })
-          .map((l) => {
-            const m = company
-              ? matchesByLead.get(l.timestamp)?.find((x) => x.id === company.id)
-              : undefined;
-            return {
-              id: l.timestamp,
-              label: leadLabel(l, l.timestamp),
-              slots: maxClaimsForLead(l.timestamp) - (heldByLead.get(l.timestamp)?.length ?? 0),
-              score: m?.score ?? 0,
-              reasons: m?.reasons ?? [],
-              warnings: m?.warnings ?? [],
-            };
-          })
-          .sort((a, b) => b.score - a.score || b.id.localeCompare(a.id))
-          .slice(0, 10);
+    const giveCount = identity
+      ? eligibleLeads(openLeads, heldByLead, identity, members).length
+      : 0;
 
     return {
       email,
@@ -927,7 +794,8 @@ export default async function PortalAccessPage({ searchParams }: Props) {
         claims: mine.filter((c) => c.email === m).length,
       })),
       giveFirm,
-      giveOptions,
+      giveCount,
+      giveMembers: members,
       deactivated: deactivatedList.find((d) => members.includes(d.email)) ?? null,
     };
   });

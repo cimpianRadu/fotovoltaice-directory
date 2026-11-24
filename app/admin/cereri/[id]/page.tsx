@@ -37,8 +37,7 @@ import {
   getYesNoLabel,
 } from '@/lib/utils-shared';
 import { getCompanies } from '@/lib/utils';
-import { matchFirmsForLead } from '@/lib/lead-match';
-import { matchNecesitFirms, necesitGeneratedAt } from '@/lib/necesit-match';
+import { necesitGeneratedAt } from '@/lib/necesit-match';
 import { fitRequestedFirms } from '@/lib/requested-firm-fit';
 import { firmDisplayName } from '@/lib/client-account';
 import { openClientLabel } from '@/lib/lead-sends';
@@ -53,7 +52,7 @@ import LeadCrm from '../../crm/LeadCrm';
 import ManualClaimForm, { type FirmOption } from '../../crm/ManualClaimForm';
 import ShareLeadButton from '../../crm/ShareLeadButton';
 import MergeLeadsButton from '../../crm/MergeLeadsButton';
-import { MatchList, NecesitList } from '../../crm/MatchLists';
+import Potriviri from '../../crm/Potriviri';
 import { formatLeadForShare } from '../../crm/formatLead';
 import { buildTimeline } from '../timeline';
 import { isReadyLead, READY_ALERTS_FROM } from '@/lib/lead-readiness';
@@ -483,8 +482,7 @@ export default async function CererePage({ params }: Props) {
 
           {!closed && (
             <section className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-              <MatchList matches={matchFirmsForLead(lead, id, companies, claims, crmFirms)} lead={lead} />
-              <NecesitList matches={matchNecesitFirms(lead, listings)} />
+              <Potriviri leadId={id} judet={lead.judet} segment={lead.segment} />
             </section>
           )}
 

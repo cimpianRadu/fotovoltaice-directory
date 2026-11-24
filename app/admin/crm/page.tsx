@@ -4,7 +4,6 @@ import {
   getLeadsSince,
   getClaims,
   getListingsSince,
-  getCrmFirms,
   getPortalAccountEmails,
   countActiveClaimsForFirm,
   claimRemindersExhausted,
@@ -18,13 +17,11 @@ import {
   type NewListing,
   type LeadClaim,
   type LeadPhoto,
-  type CrmFirm,
 } from '@/lib/sheets';
 import { getCompanies } from '@/lib/utils';
 import { isSameClient, parseRequestedFirms } from '@/lib/sheets-shared';
-import { matchFirmsForLead, type FirmMatch } from '@/lib/lead-match';
-import { matchNecesitFirms, type NecesitMatch } from '@/lib/necesit-match';
-import { MatchList, NecesitList } from './MatchLists';
+import Potriviri from './Potriviri';
+import HashFallback from './HashFallback';
 import {
   getBudgetLabel,
   getScopLabel,
@@ -92,8 +89,13 @@ interface Props {
     status?: string;
     contact?: string;
     finantare?: string;
+    /** Câte cereri arăt: număr sau `toate`. Implicit PAGE_SIZE, cele mai noi. */
+    n?: string;
   }>;
 }
+
+// 24 nov 2026: toate cele ~420 de carduri făceau pagina de 12 MB și ~12 s.
+const PAGE_SIZE = 40;
 
 function fmtDateTime(iso: string): string {
   const d = new Date(iso);
@@ -135,8 +137,7 @@ function LeadCard({
   lead,
   claims,
   firms,
-  matches,
-  necesit,
+  open,
   merged,
   sameClient,
   photos,
@@ -144,8 +145,8 @@ function LeadCard({
   lead: NewLead;
   claims: ClaimRow[];
   firms: FirmOption[];
-  matches: FirmMatch[] | null;
-  necesit: NecesitMatch[];
+  /** Deschisă: are sens butonul „Pe cine sun?”. Închisă, nu mai sun pe nimeni. */
+  open: boolean;
   /** Pozele urcate de client pe cererea asta. Servite de /api/admin/poza. */
   photos: LeadPhoto[];
   /** Câte retrimiteri ale aceleiași cereri s-au comasat în asta (coloana Q). */
@@ -356,9 +357,7 @@ function LeadCard({
         </div>
       </div>
 
-      {/* null = cerere închisă, nu mai sun pe nimeni pentru ea. */}
-      {matches !== null && <MatchList matches={matches} lead={lead} />}
-      {matches !== null && <NecesitList matches={necesit} />}
+      {open && <Potriviri leadId={lead.timestamp} judet={lead.judet} segment={lead.segment} />}
 
       <div className="mt-auto border-t border-slate-100 bg-slate-50 px-4 py-3">
         <LeadCrm
@@ -456,7 +455,7 @@ function Pill({ href, active, children }: { href: string; active: boolean; child
 }
 
 export default async function CrmPage({ searchParams }: Props) {
-  const { filtru, judet, segment, status, contact, finantare } = await searchParams;
+  const { filtru, judet, segment, status, contact, finantare, n } = await searchParams;
   const activeFilter: Filter =
     FILTERS.find((f) => f.key === filtru)?.key ?? 'toate';
 
@@ -466,18 +465,16 @@ export default async function CrmPage({ searchParams }: Props) {
   // doar ultimele 30 de zile, dar o firmă care a cerut listare acum patru luni e
   // la fel de bună de sunat, iar potrivirile de pe necesit o marchează ca atare.
   let allListings: NewListing[];
-  let crmFirms: CrmFirm[];
   // Pozele urcate de clienți: căile din Blob, grupate pe cerere mai jos.
   let photos: LeadPhoto[];
   // Adresele cu cont în portal: decid dacă revendicarea cere un telefon de
   // confirmare sau doar aprobarea (regula din 15 sept 2026).
   let portalAccounts: Set<string>;
   try {
-    [leads, claims, allListings, crmFirms, photos, portalAccounts] = await Promise.all([
+    [leads, claims, allListings, photos, portalAccounts] = await Promise.all([
       getLeadsSince(new Date(0)),
       getClaims(),
       getListingsSince(new Date(0)),
-      getCrmFirms(),
       getLeadPhotos(),
       getPortalAccountEmails(),
     ]);
@@ -575,6 +572,10 @@ export default async function CrmPage({ searchParams }: Props) {
     return true;
   });
 
+  const showingAll = n === 'toate';
+  const limit = showingAll ? Infinity : Math.max(PAGE_SIZE, Number.parseInt(n || '', 10) || PAGE_SIZE);
+  const shown = visible.slice(0, limit);
+
   const unclaimed = leads.filter((l) => !claimsByLead.has(l.timestamp)).length;
   // Revendicări pe care nicio firmă nu le-a confirmat cu un apel. Astea sunt
   // sloturile ocupate degeaba, și tot ele sunt ce blochează firma să ia altele.
@@ -602,6 +603,7 @@ export default async function CrmPage({ searchParams }: Props) {
     status?: string;
     contact?: string;
     finantare?: string;
+    n?: string;
   }) => {
     const p = new URLSearchParams();
     const f = next.filtru ?? activeFilter;
@@ -616,6 +618,8 @@ export default async function CrmPage({ searchParams }: Props) {
     if (st) p.set('status', st);
     if (ct) p.set('contact', ct);
     if (fn) p.set('finantare', fn);
+    // Doar „Arată mai multe” păstrează numărul; un filtru nou pornește de la primele.
+    if (next.n) p.set('n', next.n);
     const s = p.toString();
     return s ? `/admin/crm?${s}` : '/admin/crm';
   };
@@ -713,7 +717,9 @@ export default async function CrmPage({ searchParams }: Props) {
       </div>
 
       <p className="mt-4 text-xs text-slate-500">
-        {visible.length} {visible.length === 1 ? 'cerere afișată' : 'cereri afișate'}
+        {shown.length < visible.length
+          ? `${shown.length} din ${visible.length} cereri, cele mai noi`
+          : `${visible.length} ${visible.length === 1 ? 'cerere afișată' : 'cereri afișate'}`}
         {sameClientOf.size > 0 && (
           <>
             {' · '}
@@ -726,7 +732,7 @@ export default async function CrmPage({ searchParams }: Props) {
       </p>
 
       <div className="mt-2 grid items-start gap-3 xl:grid-cols-2">
-        {visible.map((lead) => (
+        {shown.map((lead) => (
           <LeadCard
             key={lead.timestamp}
             lead={lead}
@@ -735,14 +741,8 @@ export default async function CrmPage({ searchParams }: Props) {
             merged={mergedInto.get(lead.timestamp) ?? 0}
             sameClient={sameClientOf.get(lead.timestamp) ?? []}
             photos={photosByLead.get(lead.timestamp) ?? []}
-            // Potrivirile se calculează doar pe cererile deschise: pentru una
-            // închisă nu mai sun pe nimeni, secțiunea ar fi zgomot.
-            matches={
-              isLeadClosed(lead.crmStatus)
-                ? null
-                : matchFirmsForLead(lead, lead.timestamp, companies, claims, crmFirms)
-            }
-            necesit={isLeadClosed(lead.crmStatus) ? [] : matchNecesitFirms(lead, allListings)}
+            // Potrivirile se calculează la apăsare, doar pe cererile deschise.
+            open={!isLeadClosed(lead.crmStatus)}
           />
         ))}
       </div>
@@ -751,6 +751,21 @@ export default async function CrmPage({ searchParams }: Props) {
           Nicio cerere pentru filtrele alese.
         </p>
       )}
+      {shown.length < visible.length && (
+        <div className="mt-3 flex items-center justify-center gap-4 text-sm">
+          <Link
+            href={qs({ n: String(shown.length + PAGE_SIZE) })}
+            scroll={false}
+            className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-medium text-slate-700 hover:border-slate-400 hover:text-slate-900"
+          >
+            Arată încă {Math.min(PAGE_SIZE, visible.length - shown.length)}
+          </Link>
+          <Link href={qs({ n: 'toate' })} scroll={false} className="text-slate-500 hover:text-slate-900">
+            toate ({visible.length})
+          </Link>
+        </div>
+      )}
+      <HashFallback showingAll={showingAll || shown.length === visible.length} />
 
       <ListingsSection listings={listings} />
     </div>

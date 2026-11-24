@@ -90,8 +90,28 @@ export default function ApproveClaims({ claims }: { claims: PortalClaimRow[] }) 
   const [error, setError] = useState<string | null>(null);
   /** Cererea deschisă în modal: cheia rândului, ca să nu ținem două copii. */
   const [openKey, setOpenKey] = useState<string | null>(null);
+  /**
+   * Detaliile cererilor deschise, pe id: vin de la /api/admin/portal/cerere la
+   * prima deschidere, nu cu pagina (24 nov 2026). null = cererea nu mai e în Leads.
+   */
+  const [details, setDetails] = useState<Record<string, ClaimLeadDetail | null>>({});
+  const [detailError, setDetailError] = useState<string | null>(null);
 
   const keyOf = (c: PortalClaimRow) => c.timestamp + c.leadId;
+
+  async function openClaim(c: PortalClaimRow) {
+    setOpenKey(keyOf(c));
+    setDetailError(null);
+    if (c.detail || c.leadId in details) return;
+    try {
+      const res = await fetch(`/api/admin/portal/cerere?lead=${encodeURIComponent(c.leadId)}`);
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body.error || `Eroare ${res.status}`);
+      setDetails((prev) => ({ ...prev, [c.leadId]: body.detail ?? null }));
+    } catch (e) {
+      setDetailError(e instanceof Error ? e.message : 'Eroare');
+    }
+  }
 
   async function toggle(c: PortalClaimRow, next: boolean) {
     setBusy(keyOf(c));
@@ -160,11 +180,11 @@ export default function ApproveClaims({ claims }: { claims: PortalClaimRow[] }) 
             key={keyOf(c)}
             role="button"
             tabIndex={0}
-            onClick={() => setOpenKey(keyOf(c))}
+            onClick={() => openClaim(c)}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                setOpenKey(keyOf(c));
+                openClaim(c);
               }
             }}
             title="Deschide cererea"
@@ -264,7 +284,15 @@ export default function ApproveClaims({ claims }: { claims: PortalClaimRow[] }) 
 
       {openRow && (
         <Modal open title={openRow.label} onClose={() => setOpenKey(null)}>
-          <ClaimLeadDetails row={openRow} />
+          {openRow.detail || openRow.leadId in details ? (
+            <ClaimLeadDetails
+              row={{ ...openRow, detail: openRow.detail ?? details[openRow.leadId] ?? undefined }}
+            />
+          ) : detailError ? (
+            <p className="text-sm text-red-600">Nu am putut încărca cererea: {detailError}</p>
+          ) : (
+            <p className="text-sm text-slate-500">Se încarcă cererea…</p>
+          )}
         </Modal>
       )}
     </div>

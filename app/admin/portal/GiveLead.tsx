@@ -7,7 +7,8 @@ import { useRouter } from 'next/navigation';
  * O cerere pe care o pot da firmei ăsteia: deschisă, cu loc liber și
  * nerevendicată deja de ea. Scorul și motivele vin din `lib/lead-match`,
  * aceeași potrivire ca sugestiile din /admin/crm — 0 pentru firmele din afara
- * directorului, unde n-avem pe ce potrivi.
+ * directorului, unde n-avem pe ce potrivi. Se calculează la deschidere, prin
+ * /api/admin/portal/dau-cerere, nu la încărcarea paginii.
  */
 export interface LeadOption {
   id: string;
@@ -28,13 +29,21 @@ export interface GiveLeadFirm {
 
 export default function GiveLead({
   firm,
-  leads,
+  count,
+  members,
+  companyId,
 }: {
   firm: GiveLeadFirm;
-  leads: LeadOption[];
+  /** Câte cereri i-aș putea da, numărate pe server fără potrivire. */
+  count: number;
+  members: string[];
+  companyId: string;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  /** null până la prima deschidere: lista vine abia atunci. */
+  const [leads, setLeads] = useState<LeadOption[] | null>(null);
+  const [loading, setLoading] = useState(false);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   /** Cererea la care plafonul a spus nu — se poate forța, ca bifa din CRM. */
@@ -92,22 +101,48 @@ export default function GiveLead({
     }
   }
 
-  const remaining = leads.filter((l) => !done.includes(l.id));
+  async function deschide() {
+    setOpen(true);
+    if (leads !== null || loading) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch('/api/admin/portal/dau-cerere', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          numeFirma: firm.numeFirma,
+          telefon: firm.telefon,
+          members,
+          companyId,
+        }),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body.error || `Eroare ${res.status}`);
+      setLeads(body.options ?? []);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Eroare');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const remaining = (leads ?? []).filter((l) => !done.includes(l.id));
 
   if (!open) {
     return (
       <button
         type="button"
-        onClick={() => setOpen(true)}
-        disabled={leads.length === 0}
+        onClick={deschide}
+        disabled={count === 0}
         title={
-          leads.length === 0
+          count === 0
             ? 'Nicio cerere deschisă cu loc liber pe care să n-o aibă deja'
             : 'Alege o cerere, se revendică pe firma asta și se aprobă pe loc'
         }
         className="w-full rounded border border-slate-300 bg-white px-2 py-1.5 text-[11px] font-medium text-slate-700 transition hover:border-slate-400 hover:text-slate-900 disabled:cursor-not-allowed disabled:text-slate-400"
       >
-        {leads.length === 0 ? 'Nicio cerere de dat' : `Dă o cerere (${leads.length} potrivite)`}
+        {count === 0 ? 'Nicio cerere de dat' : `Dă o cerere (${count} deschise)`}
       </button>
     );
   }
@@ -171,7 +206,10 @@ export default function GiveLead({
         ))}
       </ul>
 
-      {remaining.length === 0 && (
+      {loading && (
+        <p className="px-2 py-3 text-center text-xs text-slate-500">Se calculează potrivirile…</p>
+      )}
+      {leads !== null && remaining.length === 0 && (
         <p className="px-2 py-3 text-center text-xs text-slate-500">
           Gata, toate cererile din listă i-au fost date.
         </p>
