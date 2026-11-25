@@ -6,7 +6,8 @@ import { trackEvent } from '@/lib/analytics';
 
 /**
  * Adresele de email ale firmei: un coleg adăugat vede aceleași cereri și
- * primește aceleași alerte, iar o adresă scoasă își lasă cererile la firmă.
+ * primește alertele firmei doar dacă le ia la el (cel mult două adrese pe
+ * firmă, din 25 nov 2026), iar o adresă scoasă își lasă cererile la firmă.
  * Tot aici se schimbă emailul contului: adaugi adresa nouă, intri cu ea și o
  * scoți pe cea veche. Regulile sunt în lib/portal-firm-emails.ts.
  */
@@ -69,9 +70,9 @@ export default function PortalFirmEmails({
         <div>
           <h2 className="font-semibold text-gray-900">Utilizatorii firmei</h2>
           <p className="mt-1 text-sm text-gray-600 leading-relaxed">
-            Colegii adăugați aici intră cu emailul lor, văd aceleași cereri și primesc aceleași
-            alerte. Ca să schimbi emailul contului, adaugă adresa nouă, intră cu ea și scoate-o pe
-            cea veche.
+            Colegii adăugați aici intră cu emailul lor și văd aceleași cereri. Alertele pe email
+            ajung la cel mult două adrese ale firmei, alese la Alerte pe județ. Ca să schimbi emailul
+            contului, adaugă adresa nouă, intră cu ea și scoate-o pe cea veche.
           </p>
         </div>
         <button

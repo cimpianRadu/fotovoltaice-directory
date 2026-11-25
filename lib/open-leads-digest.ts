@@ -38,6 +38,7 @@ import {
   isLeadInformez,
   isPubliclyClaimable,
   leadFreshSince,
+  firmAlertAddresses,
   resolveEmailGroup,
   resolveGroupAlertPref,
   type LeadClaim,
@@ -199,7 +200,8 @@ export async function planOpenLeadsDigest(
       : [...new Set(own.map((c) => leadById.get(c.leadId)?.judet || '').filter(Boolean))];
     if (!counties.length) continue;
 
-    const to = group.filter((m) => !unsubscribed.has(m));
+    // Cel mult două adrese pe firmă (25 nov 2026): cele ale alertelor, nu toți colegii.
+    const to = firmAlertAddresses(group, prefs, events).filter((m) => !unsubscribed.has(m));
     if (!to.length) continue;
     const open = openLeadsForFirm(leads, claims, counties, group, now, maxAgeDays);
     const hot = open.filter(isHotLead);
@@ -282,15 +284,14 @@ export async function sendOpenLeadsForNewCounties(email: string, previous: strin
     if (!open.length) return;
     const hot = open.filter(isHotLead);
     const rest = open.filter((l) => !isHotLead(l));
-    for (const to of group.length ? group : [email]) {
-      await sendOpenLeadsDigest({
-        to,
-        leads: [...hot, ...rest].map((l) => digestRow(l)),
-        restCount: 0,
-        variant: 'judet-nou',
-        maxFirms: MAX_CLAIMS_PER_LEAD,
-      });
-    }
+    // Doar adresa care a salvat județele: ea e acum prima la alertele firmei.
+    await sendOpenLeadsDigest({
+      to: email,
+      leads: [...hot, ...rest].map((l) => digestRow(l)),
+      restCount: 0,
+      variant: 'judet-nou',
+      maxFirms: MAX_CLAIMS_PER_LEAD,
+    });
   } catch (err) {
     console.error('[alerte] cereri deschise pentru județe noi:', err);
   }

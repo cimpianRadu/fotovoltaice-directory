@@ -1,5 +1,12 @@
 [
   {
+    "data": "2026-11-25",
+    "titlu": "Alertele, la cel mult două adrese ale firmei",
+    "text": "Dacă aveți mai mulți colegi în portal, alertele cu cereri noi și rezumatul de luni ajung acum la cel mult două adrese, nu la fiecare coleg, ca să nu primiți același email de patru ori. Toți colegii văd în continuare aceleași cereri. Cine vrea să primească și el alertele apasă „Trimite-le și la mine” la Alerte pe județ.",
+    "link": "/portal#alerte",
+    "linkText": "Vezi alertele"
+  },
+  {
     "data": "2026-11-23",
     "titlu": "Ce spune clientul, direct pe cardul cererii",
     "text": "Pe cererile preluate apare acum „Update de la client”: ce ne-a spus clientul despre dumneavoastră în răspunsurile la emailurile noastre, din contul lui sau pe WhatsApp. De exemplu, că l-ați sunat, că a primit oferta, că încă așteaptă un telefon sau că v-a ales pe dumneavoastră. Dacă revine de mai multe ori, le vedeți pe toate, în ordine, fiecare cu data lui.",

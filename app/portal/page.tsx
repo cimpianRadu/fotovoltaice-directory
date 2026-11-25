@@ -4,7 +4,9 @@ import { getPortalEmail } from '@/lib/portal-session';
 import {
   findSubscriptionForCounty,
   getClaimsForAccount,
-  getCountyAlertPref,
+  getCountyAlertPrefs,
+  resolveGroupAlertPref,
+  firmAlertAddresses,
   getFirmEmailGroup,
   getLeadPhotos,
   getLeadSubscriptions,
@@ -179,9 +181,13 @@ export default async function PortalPage() {
   // Preferințele de alerte se citesc separat de revendicări: dacă tabul lor
   // lipsește sau pică, portalul trebuie să-și arate cererile mai departe.
   let alertCounties: string[] = [];
+  // Adresele firmei la care pleacă alertele (cel mult două din 25 nov 2026).
+  let alertTo: string[] = [email];
 
   try {
-    alertCounties = (await getCountyAlertPref(email))?.counties ?? [];
+    const prefs = await getCountyAlertPrefs();
+    alertCounties = resolveGroupAlertPref(prefs, emails)?.counties ?? [];
+    alertTo = firmAlertAddresses(emails, prefs);
   } catch (err) {
     console.error('[portal] failed to load county alerts:', err);
   }
@@ -665,7 +671,12 @@ export default async function PortalPage() {
           }
           settings={
             <>
-              <PortalCountyAlerts counties={getCounties()} initial={alertCounties} />
+              <PortalCountyAlerts
+                counties={getCounties()}
+                initial={alertCounties}
+                current={email}
+                alertTo={emails.length > 1 ? alertTo : [email]}
+              />
               <PortalFirmEmails current={email} addresses={emails} max={MAX_FIRM_EMAILS} />
               <RezumatAiToggle />
             </>

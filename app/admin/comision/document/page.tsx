@@ -159,8 +159,9 @@ export default function ComisionDocumentPage() {
             <li>Toți colegii văd aceleași cereri revendicate, cu datele clienților, notele și statusurile.</li>
             <li>
               <strong>Alertele pe județ sunt ale firmei, nu ale fiecărei adrese.</strong> Județele
-              bifate se aplică întregii firme, iar alerta pentru o cerere nouă ajunge la toate
-              adresele adăugate.
+              bifate se aplică întregii firme, iar alerta pentru o cerere nouă ajunge la cel mult două
+              adrese: ale ultimilor colegi care au salvat județele. Oricare coleg o poate lua și la
+              el, din aceeași secțiune.
             </li>
             <li>
               O adresă care are deja cont propriu sau cereri revendicate nu se poate adăuga din

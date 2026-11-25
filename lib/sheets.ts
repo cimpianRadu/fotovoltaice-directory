@@ -2748,6 +2748,46 @@ export function resolveGroupAlertPref(
   return latest;
 }
 
+/** Câte adrese ale unei firme primesc emailurile automate (25 nov 2026). */
+export const MAX_ALERT_ADDRESSES = 2;
+
+/**
+ * Adresele la care pleacă emailurile automate ale firmei: cel mult două, nu
+ * toate adresele legate (25 nov 2026, Radu: „putem lăsa 2”). Green Seiro primea
+ * aceeași alertă pe patru adrese: risipă din cota Resend și arată a spam.
+ *
+ * Primesc ultimele adrese ale firmei care au salvat județele (fiecare are rândul
+ * ei în „Alerte Județe”), cea mai recentă prima. Un coleg le ia din portal cu
+ * „Trimite-le și la mine” (salvează aceleași județe de pe adresa lui), iar cea
+ * mai veche iese. Fără niciun rând salvat: adresa cu ultima intrare în portal,
+ * apoi contul principal.
+ */
+export function firmAlertAddresses(
+  group: string[],
+  prefs: CountyAlertPref[],
+  events: PortalAccessEvent[] = [],
+): string[] {
+  const members = new Set(group);
+  const saved = prefs
+    .filter((p) => members.has(p.email))
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
+    .map((p) => p.email);
+  const unique = [...new Set(saved)].slice(0, MAX_ALERT_ADDRESSES);
+  if (unique.length) return unique;
+
+  let best = '';
+  let bestAt = '';
+  for (const e of events) {
+    if (e.event !== 'intrat' || !members.has(e.email)) continue;
+    if (e.timestamp.localeCompare(bestAt) > 0) {
+      best = e.email;
+      bestAt = e.timestamp;
+    }
+  }
+  const one = best || group[0];
+  return one ? [one] : [];
+}
+
 /** Alertele firmei din care face parte adresa, inclusiv cele bifate de pe altă adresă a ei. */
 export async function getCountyAlertPref(email: string): Promise<CountyAlertPref | null> {
   const [prefs, group] = await Promise.all([getCountyAlertPrefs(), getFirmEmailGroup(email)]);
@@ -2800,7 +2840,8 @@ export async function saveCountyAlertPrefs(email: string, counties: string[]): P
 /**
  * Adresele care primesc alerta pentru județ, dintr-o listă deja citită (pentru
  * cron). Decizia se ia pe firmă: lista ei valabilă (`resolveGroupAlertPref`)
- * trebuie să conțină județul, iar atunci primesc TOATE adresele legate.
+ * trebuie să conțină județul, iar atunci primesc cel mult două adrese ale firmei
+ * (`firmAlertAddresses`, din 25 nov 2026; înainte primeau toate adresele legate).
  *
  * `exclude` scoate firma întreagă, nu doar adresa: abonatul sau cine urmărea
  * cererea a primit deja emailul lui, iar colegul lui nu trebuie să mai
@@ -2826,7 +2867,7 @@ export function filterCountyAlertRecipients(
     const pref = resolveGroupAlertPref(prefs, group);
     if (!pref?.active || !pref.counties.some((c) => countyKey(c) === key)) continue;
     if (group.some((e) => excluded.has(e))) continue;
-    for (const e of group) recipients.add(e);
+    for (const e of firmAlertAddresses(group, prefs)) recipients.add(e);
   }
   return [...recipients];
 }

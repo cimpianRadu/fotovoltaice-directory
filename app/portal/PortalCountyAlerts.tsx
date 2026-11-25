@@ -15,14 +15,26 @@ import { trackEvent } from '@/lib/analytics';
  * (lib/lead-readiness): la ~2,5 cereri pe zi, firmele au cerut mai puține
  * emailuri cu oameni care așteaptă un program sau doar se informează. Regula e
  * a noastră, nu o setare; textul de mai jos spune doar ce primește firma.
+ *
+ * Din 25 nov 2026 alertele pleacă la cel mult două adrese ale firmei, ultimele
+ * care au salvat județele (lib/sheets → firmAlertAddresses). Colegul care vrea
+ * să le primească apasă „Trimite-le și la mine”: salvează aceleași județe de pe
+ * adresa lui, iar adresa cea mai veche din cele două iese.
  */
 export default function PortalCountyAlerts({
   counties,
   initial,
+  current,
+  alertTo: initialAlertTo,
 }: {
   counties: string[];
   initial: string[];
+  /** Adresa cu care e logat colegul. */
+  current: string;
+  /** Adresele firmei la care pleacă alertele, cea mai recentă prima. */
+  alertTo: string[];
 }) {
+  const [alertTo, setAlertTo] = useState(initialAlertTo);
   const [selected, setSelected] = useState<string[]>(initial);
   const [saved, setSaved] = useState<string[]>(initial);
   const [busy, setBusy] = useState(false);
@@ -41,20 +53,22 @@ export default function PortalCountyAlerts({
     );
   }
 
-  async function save() {
+  async function save(list: string[] = selected) {
     setBusy(true);
     setError(null);
     try {
       const res = await fetch('/api/portal/alerts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ counties: selected }),
+        body: JSON.stringify({ counties: list }),
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(typeof json.error === 'string' ? json.error : 'Eroare la salvare');
       const next: string[] = Array.isArray(json.counties) ? json.counties : selected;
       setSelected(next);
       setSaved(next);
+      // Cine salvează intră primul la alertele firmei; cea mai veche adresă iese.
+      setAlertTo((prev) => [current, ...prev.filter((e) => e !== current)].slice(0, 2));
       trackEvent('portal_alerts_saved', { counties: next.length });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Eroare la salvare');
@@ -83,10 +97,27 @@ export default function PortalCountyAlerts({
         </button>
       </div>
 
-      {saved.length > 0 && (
+      {saved.length > 0 && alertTo.includes(current) && (
         <p className="mt-3 text-sm text-gray-700">
           Primești alerte pentru: <strong>{saved.join(', ')}</strong>
         </p>
+      )}
+      {saved.length > 0 && !alertTo.includes(current) && (
+        <div className="mt-3 text-sm text-gray-700">
+          <p>
+            Firma primește alerte pentru: <strong>{saved.join(', ')}</strong>. Ajung pe email la{' '}
+            <strong>{alertTo.join(' și ')}</strong>, nu la fiecare coleg.
+          </p>
+          <button
+            type="button"
+            onClick={() => save(saved)}
+            disabled={busy}
+            className="mt-2 rounded-lg border border-border bg-white px-3 py-2 text-xs font-semibold text-gray-600 transition-colors hover:border-secondary/40 hover:text-secondary-dark disabled:opacity-50"
+          >
+            {busy ? 'Salvez…' : 'Trimite-le și la mine'}
+          </button>
+          {error && !open && <p className="mt-2 text-sm text-red-700">{error}</p>}
+        </div>
       )}
       {saved.length === 0 && !open && (
         <p className="mt-3 text-sm text-gray-500">
@@ -120,7 +151,7 @@ export default function PortalCountyAlerts({
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <button
               type="button"
-              onClick={save}
+              onClick={() => save()}
               disabled={busy || !dirty}
               className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50 sm:py-2"
             >

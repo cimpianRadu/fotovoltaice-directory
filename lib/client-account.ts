@@ -25,6 +25,7 @@ import {
   isLeadInformez,
   markLeadConfirmedActive,
   recordClientResponse,
+  firmAlertAddresses,
   resolveEmailGroup,
   pausedAlertEmails,
   resolveGroupAlertPref,
@@ -511,7 +512,8 @@ export async function bumpRecipients(lead: NewLead): Promise<string[]> {
     const byHq = Boolean(company && area.has(countyKey(company.location.county)));
     // O firmă care și-a oprit alertele din portal le-a oprit pentru tot.
     if (pref && !pref.active) continue;
-    if (byAlerts || byHq) for (const m of group) out.add(m);
+    // Cel mult două adrese pe firmă (25 nov 2026), ca la alerta de cerere nouă.
+    if (byAlerts || byHq) for (const m of firmAlertAddresses(group, prefs, events)) out.add(m);
   }
   return [...out];
 }
