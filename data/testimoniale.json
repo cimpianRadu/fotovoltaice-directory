@@ -31,5 +31,17 @@
     "nota": 4,
     "oferte": "2",
     "data": "2026-11-25"
+  },
+  {
+    "id": "2026-08-19T11:33:32.890Z",
+    "nume": "Darie Costin",
+    "judet": "Constanța",
+    "tip": "Parc fotovoltaic la sol",
+    "putere": 2000,
+    "text": "Am primit 4 oferte, și deși am avut niște specificații mai aparte, toți s-au conformat și au găsit abordarea potrivită nevoilor noastre.",
+    "nota": 5,
+    "oferte": "4+",
+    "data": "2026-11-25",
+    "semnat": false
   }
 ]

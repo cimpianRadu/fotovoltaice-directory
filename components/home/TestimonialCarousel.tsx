@@ -14,7 +14,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 export type TestimonialCard = {
   key: string;
   nota: number;
-  badge: string;
+  badge: string | null;
   text: string;
   nume: string;
   href: string | null;
@@ -128,12 +128,14 @@ export default function TestimonialCarousel({ cards, tone = 'dark' }: { cards: T
           >
             <div className="flex items-center justify-between gap-3 mb-2.5">
               <Stars nota={t.nota} />
-              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700">
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                </svg>
-                {t.badge}
-              </span>
+              {t.badge && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700">
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  {t.badge}
+                </span>
+              )}
             </div>
             <blockquote className="text-sm sm:text-base leading-relaxed text-gray-900">„{t.text}”</blockquote>
             <figcaption className="mt-auto pt-3 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs sm:text-sm">

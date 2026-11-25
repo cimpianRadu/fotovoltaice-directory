@@ -17,6 +17,9 @@ import type { TestimonialCard } from '@/components/home/TestimonialCarousel';
 //   separat (Balint, Cluj: „fără nume” în formular, „G.B.” acceptat când l-a
 //   întrebat Radu, 29 oct 2026). `putere` e null când n-o știm din cerere, din
 //   contract sau de la firmă: nu se ghicește din suprafață.
+//   `semnat: false` = clientul n-a semnat încă cu nicio firmă, dar a dat
+//   acordul pentru o recomandare bună: cardul iese fără insignă (Darie Costin,
+//   Constanța, 25 nov 2026). Lipsa câmpului înseamnă contract semnat.
 // - Firme: vin din tabul „Feedback firme” (formularul /feedback/firma) și intră
 //   în data/testimoniale-firme.json DOAR cu „da” în coloana L. Din 28 oct 2026
 //   textul publicat e recomandarea din coloana M, nu „Experiență” (J), care
@@ -40,7 +43,7 @@ export function getTestimonialCards(): TestimonialCard[] {
       key: `client-${t.id}`,
       data: t.data,
       nota: t.nota,
-      badge: 'Contract semnat',
+      badge: 'semnat' in t && t.semnat === false ? null : 'Contract semnat',
       text: t.text,
       nume: t.nume ?? 'Client',
       href: null,
