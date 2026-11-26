@@ -8,6 +8,40 @@ import SponsorBanner from '@/components/sponsor/SponsorBanner';
 import { generateBreadcrumbJsonLd } from '@/lib/seo';
 import { PRICING } from '@/lib/pricing';
 import { PROMO_CAPS } from '@/lib/utils-shared';
+import { getMetrics, getStats, resolveRange, type MetricRow } from '@/lib/umami';
+import type { ListingTraffic } from '@/components/forms/ListingForm';
+
+// Cifrele de trafic vin din Umami, cu cache 1h (la fel ca TrafficWidget de pe /publicitate).
+export const revalidate = 3600;
+
+// Traficul din ultimele 30 de zile: totalul pe site și vizualizările fiecărei
+// pagini de județ (/firme/judet/<slug>), fiindcă acolo apare firma Premium.
+// Dacă Umami pică, formularul merge mai departe fără cifre.
+async function getListingTraffic(): Promise<ListingTraffic | null> {
+  try {
+    const { startAt, endAt } = resolveRange('last-30d');
+    const [stats, paths] = await Promise.all([
+      getStats(startAt, endAt),
+      getMetrics(startAt, endAt, 'path', 500),
+    ]);
+    const countyViews: Record<string, number> = {};
+    for (const row of (Array.isArray(paths) ? paths : []) as MetricRow[]) {
+      const m = /^\/firme\/judet\/([a-z0-9-]+)\/?$/.exec(row.x);
+      if (m) countyViews[m[1]] = (countyViews[m[1]] ?? 0) + row.y;
+    }
+    return {
+      visitors: stats?.visitors ?? 0,
+      pageviews: stats?.pageviews ?? 0,
+      countyViews,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function fmtRo(n: number): string {
+  return n.toLocaleString('ro-RO');
+}
 
 export const metadata: Metadata = {
   title: 'Listează-ți Firma - Instalatori Fotovoltaice România',
@@ -16,7 +50,8 @@ export const metadata: Metadata = {
   alternates: { canonical: '/listeaza-firma' },
 };
 
-export default function ListeazaFirmaPage() {
+export default async function ListeazaFirmaPage() {
+  const traffic = await getListingTraffic();
   return (
     <>
       <JsonLd
@@ -54,6 +89,13 @@ export default function ListeazaFirmaPage() {
               complet cu logo și raport lunar cu vizualizări și click-uri. {PRICING.premium.monthly}€/lună,
               maximum {PROMO_CAPS.premiumPool} firme.
             </span>
+            {traffic && traffic.visitors > 0 && (
+              <span className="block text-sm text-gray-900 mt-1.5">
+                <strong>{fmtRo(traffic.visitors)} vizitatori</strong> și{' '}
+                <strong>{fmtRo(traffic.pageviews)} pagini vizualizate</strong> pe site în ultimele 30 de
+                zile.
+              </span>
+            )}
             <span className="inline-block text-sm font-semibold text-secondary-dark mt-1.5 group-hover:underline">
               Vezi ce înseamnă Premium →
             </span>
@@ -68,7 +110,7 @@ export default function ListeazaFirmaPage() {
         </div>
 
         <div className="bg-white rounded-xl border border-border p-6">
-          <ListingForm />
+          <ListingForm traffic={traffic} />
         </div>
 
         {/* Cele trei beneficii generice de aici nu convingeau pe nimeni. Argumentul

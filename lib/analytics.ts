@@ -29,6 +29,9 @@ type EventName =
   | 'lead_watch_opened'
   | 'lead_watch_submitted'
   | 'listing_form_submitted'
+  // Bifa „Vreau și oferta de Partener Premium" din /listeaza-firma, la fiecare
+  // apăsare (26 nov 2026): `bifat` da/nu, `judet`, `vizualizari_judet` afișate atunci.
+  | 'premium_bifa'
   | 'waitlist_signup'
   // Înscriere la alerta „se deschide Casa Verde Baterii" din ghidurile CVB;
   // props: sursa (ghidul), capacitate (dorită sau 'nespecificat')

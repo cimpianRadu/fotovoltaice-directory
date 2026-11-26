@@ -6,7 +6,7 @@ import PhoneInput, { checkPhoneInput } from '@/components/ui/PhoneInput';
 import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
 import Toast from '@/components/ui/Toast';
-import { getCounties, FIRM_SOURCE_OPTIONS } from '@/lib/utils-shared';
+import { getCounties, FIRM_SOURCE_OPTIONS, slugifyCounty } from '@/lib/utils-shared';
 import { getAttribution } from '@/lib/attribution';
 import { trackEvent } from '@/lib/analytics';
 import { getAnreCodeLabel, formatAnreDate, type ResolvedCert } from '@/lib/anre-shared';
@@ -74,6 +74,18 @@ type AnreCheckResponse = {
   certs?: ResolvedCert[];
 };
 
+// Trafic Umami din ultimele 30 de zile, calculat pe server în /listeaza-firma.
+// `countyViews` e pe slug de județ (/firme/judet/<slug>).
+export type ListingTraffic = {
+  visitors: number;
+  pageviews: number;
+  countyViews: Record<string, number>;
+};
+
+function fmtRo(n: number): string {
+  return n.toLocaleString('ro-RO');
+}
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const CUI_RE = /^(RO)?\d{2,10}$/i;
 const URL_RE = /^https?:\/\/[^\s.]+\.[^\s]{2,}$/i;
@@ -117,7 +129,7 @@ function validateField(name: keyof FormValues, value: string | boolean, all: For
   }
 }
 
-export default function ListingForm() {
+export default function ListingForm({ traffic = null }: { traffic?: ListingTraffic | null }) {
   const [values, setValues] = useState<FormValues>(INITIAL);
   const [errors, setErrors] = useState<Partial<Record<keyof FormValues, string>>>({});
   const [touched, setTouched] = useState<Partial<Record<keyof FormValues, boolean>>>({});
@@ -125,6 +137,8 @@ export default function ListingForm() {
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [anreCheck, setAnreCheck] = useState<AnreCheckState>({ status: 'idle' });
   const counties = getCounties();
+  const countyViews =
+    traffic && values.judet ? traffic.countyViews[slugifyCounty(values.judet)] ?? 0 : null;
 
   const countyOptions = useMemo(
     () => counties.map((c) => ({ value: c, label: c })),
@@ -429,7 +443,16 @@ export default function ListingForm() {
               id="interes-premium"
               name="interesPremium"
               checked={values.interesPremium}
-              onChange={(e) => setField('interesPremium', e.target.checked)}
+              onChange={(e) => {
+                setField('interesPremium', e.target.checked);
+                // Interesul se vede și la cine bifează fără să trimită formularul;
+                // la trimitere rămâne `interes_premium` pe listing_form_submitted.
+                trackEvent('premium_bifa', {
+                  bifat: e.target.checked ? 'da' : 'nu',
+                  judet: values.judet || 'nespecificat',
+                  vizualizari_judet: countyViews ?? 0,
+                });
+              }}
               className="mt-0.5 w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
             />
             <label htmlFor="interes-premium" className="text-sm text-gray-700 leading-relaxed">
@@ -446,6 +469,32 @@ export default function ListingForm() {
               </a>
             </label>
           </div>
+
+          {traffic && traffic.visitors > 0 && (
+            <p className="mt-3 ml-6 text-xs text-gray-700 leading-relaxed">
+              {values.judet && countyViews !== null ? (
+                <>
+                  Pagina județului <strong>{values.judet}</strong>:{' '}
+                  <strong>{fmtRo(countyViews)} vizualizări</strong> în ultimele 30 de zile. Pe tot site-ul:{' '}
+                  {fmtRo(traffic.visitors)} vizitatori.
+                </>
+              ) : (
+                <>
+                  Pe site: <strong>{fmtRo(traffic.visitors)} vizitatori</strong> în ultimele 30 de zile.
+                  Alege județul de mai sus ca să vezi traficul paginii unde ai apărea.
+                </>
+              )}
+            </p>
+          )}
+
+          {values.interesPremium && (
+            <PremiumPreview
+              numeFirma={values.numeFirma}
+              judet={values.judet}
+              website={values.website}
+              anreCerts={anreCheck.status === 'found-active' ? anreCheck.certs : []}
+            />
+          )}
         </div>
 
         <div>
@@ -488,6 +537,73 @@ export default function ListingForm() {
 
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </>
+  );
+}
+
+// Cum ar arăta firma în blocul „Promovate" de sus de pe pagina județului.
+// Copiază aspectul din PromovateSection + CompanyCard, cu datele din formular.
+function PremiumPreview({
+  numeFirma,
+  judet,
+  website,
+  anreCerts,
+}: {
+  numeFirma: string;
+  judet: string;
+  website: string;
+  anreCerts: ResolvedCert[];
+}) {
+  const name = numeFirma.trim() || 'Numele firmei tale';
+  const place = judet || 'județul tău';
+  const initial = name.charAt(0).toUpperCase();
+  const domain = website.trim().replace(/^https?:\/\//i, '').replace(/\/$/, '');
+
+  return (
+    <div className="mt-4">
+      <p className="text-xs font-semibold text-gray-900 mb-2">
+        Așa ai apărea sus pe pagina {judet ? `județului ${judet}` : 'județului tău'}, înaintea listei:
+      </p>
+      <div className="rounded-xl border border-primary/20 bg-primary/5 p-4" aria-label="Previzualizare Premium">
+        <p className="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">Publicitate</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-primary-dark">★ Promovate</p>
+        <p className="text-xs text-gray-500 mt-0.5 mb-3">Firme partenere din {place}</p>
+        <div className="flex flex-col p-4 rounded-xl border border-border bg-white shadow-sm max-w-sm">
+          <div className="flex items-center gap-3 mb-3">
+            <span className="w-10 h-10 shrink-0 rounded-lg bg-secondary/10 text-secondary-dark font-bold flex items-center justify-center">
+              {initial}
+            </span>
+            <div className="min-w-0">
+              <p className="font-semibold text-gray-900 break-words">{name}</p>
+              <p className="text-sm text-gray-500 flex items-center gap-2 flex-wrap">
+                {place}
+                <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-secondary/10 text-secondary-dark">
+                  ★ Premium
+                </span>
+              </p>
+            </div>
+          </div>
+          <p className="text-sm text-gray-600 mb-3">
+            Descrierea lungă a firmei, cu logo și linkuri social, apare pe profilul complet.
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {/* Atestatele apar doar dacă verificarea ANRE de mai sus le-a găsit. */}
+            {anreCerts.map((c) => (
+              <span
+                key={c.code}
+                className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-green-50 border border-green-200 text-green-800"
+              >
+                {getAnreCodeLabel(c.code)}
+              </span>
+            ))}
+            {domain && (
+              <span className="inline-flex px-2 py-0.5 rounded-full text-xs text-gray-600 border border-gray-200 truncate max-w-[12rem]">
+                {domain}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
