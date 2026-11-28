@@ -17,11 +17,14 @@
  *   age ≥ 3 years              +1
  *   hasBoth C1A+C2A            +1
  *
- * Env:
- *   TARGETARE_API_KEY — required
+ * Surse:
+ *   targetare.ro (TARGETARE_API_KEY) — implicit când are credite.
+ *   ANAF (gratuit, fără cheie) — când lipsește cheia, când targetare răspunde
+ *   401/402/403/429 (fără credite), sau cu --source=anaf. ANAF nu dă site-ul firmei:
+ *   îl ia din data/anre-with-cui.json (`web`) când există, altfel firma pierde +2.
  *
  * Usage:
- *   node scripts/anre-prefilter-api.js
+ *   node scripts/anre-prefilter-api.js [--source=auto|targetare|anaf]
  */
 
 const fs = require('fs');
@@ -39,11 +42,17 @@ if (fs.existsSync(envPath)) {
   });
 }
 
+const { anafGeneral, anafLatestBilant } = require('./lib/anaf');
+
 const API_KEY = process.env.TARGETARE_API_KEY;
-if (!API_KEY) {
-  console.error('[prefilter-api] Missing TARGETARE_API_KEY in .env.local');
-  process.exit(1);
+const sourceArg = (process.argv.find((a) => a.startsWith('--source=')) || '--source=auto').split('=')[1];
+let SOURCE = sourceArg === 'anaf' || !API_KEY ? 'anaf' : sourceArg === 'targetare' ? 'targetare' : 'auto';
+if (!API_KEY && sourceArg !== 'anaf') {
+  console.warn('[prefilter-api] Lipsește TARGETARE_API_KEY → folosesc ANAF');
 }
+
+// targetare fără credite / cheie invalidă → trecem pe ANAF pentru tot lotul
+const OUT_OF_CREDITS = /\b(401|402|403|429)\b|credit|quota|limit/i;
 
 const BASE = 'https://api.targetare.ro/v1';
 const HEADERS = { Authorization: `Bearer ${API_KEY}` };
@@ -51,12 +60,16 @@ const HEADERS = { Authorization: `Bearer ${API_KEY}` };
 const TARGET_CAEN = new Set(['4321', '7112', '3511']);
 const SOLAR_KEYWORDS = /fotovoltaic|solar(?!ium)|PV\b|panouri|energie regenerabil/i;
 
+class TargetareUnavailable extends Error {}
+
 async function apiGet(endpoint) {
   const url = `${BASE}${endpoint}`;
   const res = await fetch(url, { headers: HEADERS });
   if (!res.ok) {
     const body = await res.text().catch(() => '');
-    throw new Error(`${res.status} ${res.statusText} — ${endpoint} — ${body.slice(0, 200)}`);
+    const msg = `${res.status} ${res.statusText} — ${endpoint} — ${body.slice(0, 200)}`;
+    if ([401, 402, 403, 429].includes(res.status) || OUT_OF_CREDITS.test(body)) throw new TargetareUnavailable(msg);
+    throw new Error(msg);
   }
   return res.json();
 }
@@ -133,6 +146,7 @@ async function enrichOne(input) {
     year_founded: 0,
     status: '',
     address: '',
+    telefon_anre: input.telefon || '',
     error: null,
   };
 
@@ -167,10 +181,60 @@ async function enrichOne(input) {
     out.score = scored.score;
     out.reasons = scored.reasons;
   } catch (err) {
+    if (err instanceof TargetareUnavailable && SOURCE === 'auto') throw err;
     out.error = err.message;
     console.error(`[prefilter-api] ${input.societate} (${input.cui}): ${err.message}`);
   }
 
+  out.source = 'targetare';
+  return out;
+}
+
+// Site-ul din registrul ANRE+CUI (ANAF nu îl dă)
+const anreWithCui = (() => {
+  try {
+    const rows = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'anre-with-cui.json'), 'utf8'));
+    const m = new Map();
+    for (const r of rows) if (r.cui && r.web) m.set(String(r.cui).replace(/\D/g, ''), r.web);
+    return m;
+  } catch (_) {
+    return new Map();
+  }
+})();
+
+async function enrichOneAnaf(input, generalMap) {
+  const out = {
+    cui: input.cui, name: input.societate, judet: input.judet, localitate: input.localitate || '',
+    codes: input.codes, hasBoth: input.hasBoth, score: 0, reasons: [], caen_code: '', caen_label: '',
+    website: '', revenue_2024: 0, profit_2024: 0, employees: 0, year_founded: 0, status: '', address: '',
+    phone_registry: '', telefon_anre: input.telefon || '', fin_year: 0, error: null, source: 'anaf',
+  };
+  try {
+    const cui = String(input.cui).replace(/\D/g, '');
+    const g = generalMap.get(cui) || {};
+    const b = await anafLatestBilant(cui);
+    out.status = g.status || '';
+    out.address = g.address || input.sediu || '';
+    out.phone_registry = g.phone || '';
+    out.year_founded = g.year_founded || 0;
+    out.caen_code = (b && b.caen_code) || g.caen_code || '';
+    out.caen_label = (b && b.caen_label) || '';
+    // câmpurile se numesc _2024 din istoric; anul real e în fin_year
+    out.revenue_2024 = (b && b.turnover) || 0;
+    out.profit_2024 = (b && b.netProfit) || 0;
+    out.employees = (b && b.employees) || 0;
+    out.fin_year = (b && b.year) || 0;
+    out.website = anreWithCui.get(cui) || '';
+    if (g.active === false) out.error = `inactiv în ANAF: ${g.status || 'inactiv'}`;
+
+    const general = { caen: out.caen_code ? [`${out.caen_code} - ${out.caen_label}`] : [], foundingYear: out.year_founded };
+    const scored = scoreFirm(input, general, { turnover: out.revenue_2024 }, out.website ? [out.website] : []);
+    out.score = g.active === false ? 0 : scored.score;
+    out.reasons = scored.reasons;
+  } catch (err) {
+    out.error = err.message;
+    console.error(`[prefilter-api] ANAF ${input.societate} (${input.cui}): ${err.message}`);
+  }
   return out;
 }
 
@@ -185,16 +249,36 @@ async function main() {
 
   const results = [];
   let remainingRequests = null;
+  let generalMap = null;
+  const ensureGeneral = async () => {
+    if (generalMap) return generalMap;
+    try {
+      generalMap = await anafGeneral(input.map((f) => f.cui));
+    } catch (err) {
+      console.warn(`[prefilter-api] ANAF date generale indisponibile (${err.message}); continui doar cu bilanțul`);
+      generalMap = new Map();
+    }
+    return generalMap;
+  };
   for (let i = 0; i < input.length; i++) {
     const firm = input[i];
     process.stdout.write(`  [${i + 1}/${input.length}] ${firm.societate}... `);
-    const result = await enrichOne(firm);
+    let result;
+    if (SOURCE !== 'anaf') {
+      try {
+        result = await enrichOne(firm);
+      } catch (err) {
+        console.warn(`\n[prefilter-api] targetare indisponibil (${err.message.slice(0, 120)}) → trec pe ANAF pentru restul lotului`);
+        SOURCE = 'anaf';
+      }
+    }
+    if (!result) result = await enrichOneAnaf(firm, await ensureGeneral());
     results.push(result);
-    console.log(result.error ? `ERR` : `score ${result.score}`);
+    console.log(result.error ? `ERR` : `score ${result.score} (${result.source})`);
   }
 
   // Fetch final remaining count for reporting
-  try {
+  if (SOURCE !== 'anaf') try {
     const ping = await fetch(`${BASE}/companies/${input[0].cui}`, { headers: HEADERS });
     if (ping.ok) {
       const json = await ping.json();
@@ -212,7 +296,7 @@ async function main() {
   const mdLines = [
     `# ANRE Prefilter — ${input[0]?.judet || 'mixed'}`,
     '',
-    `Generated: ${new Date().toISOString().slice(0, 10)} via targetare.ro API`,
+    `Generated: ${new Date().toISOString().slice(0, 10)} via ${[...new Set(results.map((r) => r.source))].join(' + ')}`,
     `Total: ${results.length} firms • Ready for research (≥6): ${results.filter((r) => r.score >= 6).length}`,
     remainingRequests != null ? `Remaining API credits: ${remainingRequests}` : '',
     '',

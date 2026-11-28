@@ -15,6 +15,18 @@ Calls the sub-skills in order. One entry point for "adaugă N firme" requests.
 ## Prereq
 
 - `TARGETARE_API_KEY` in `.env.local` (paid API, 179 RON + TVA / 5000 req / 12 months). Scripts auto-load it.
+- **Fără credite pe targetare (din 28 nov 2026):** pipeline-ul merge pe ANAF, gratuit. Vezi „Mod ANAF” mai jos.
+
+## Mod ANAF (targetare fără credite)
+
+`anre-prefilter-api.js` și `targetare-contacts.js` trec singure pe ANAF când lipsește cheia sau targetare răspunde 401/402/403/429. Forțat: `--source=anaf` (prefilter) și `--source=site` (contacte). Codul ANAF e în `scripts/lib/anaf.js`.
+
+- **Din ANAF:** cifra de afaceri, profit, salariați, CAEN (bilanț, cel mai recent an depus, în `fin_year`), denumire, adresă, telefon, data înregistrării, stare activ/inactiv (registrul TVA v9). Firmele inactive/radiate primesc scor 0.
+- **Telefon:** ANAF, apoi telefonul din registrul ANRE. **Email:** din site (mailto + adrese de pe homepage și /contact), `email_source: 'site'`.
+- **Ce lipsește:** site-ul. ANAF nu îl dă, iar `anre-with-cui.json` are `web` doar la ~2% din firme. Consecințe:
+  - scorul pierde +2 la aproape toate firmele → în mod ANAF folosește pragul **≥ 4** în loc de 6 (Nexum Energy, firmă PV reală, iese 4 fără site);
+  - `anre-prefilter-content.js` marchează firmele fără site `no-site`; cele cu scor ≥ 4 merg totuși la research, iar agentul găsește site-ul cu `firecrawl_search` (nume + localitate) și face el verificarea PV.
+- **Dintr-o sesiune cloud** shell-ul nu ajunge la anaf.ro; scripturile se rulează de pe laptop. Din sesiune, bilanțul se citește cu `firecrawl_scrape` pe `https://webservicesp.anaf.ro/bilant?an=<an>&cui=<cui>` (`formats: ["rawHtml"]`, `maxAge: 0`; I13 = CA, I18 = profit, I20 = salariați).
 
 ## Pipeline
 
@@ -53,6 +65,7 @@ Validated on Ilfov batch 2026-04-22: 2 PASS = 2 accepted, 3 FAIL + 1 DEAD-SITE =
 ### 3. Fetch contacts for PV-pass firms only
 ```bash
 node scripts/targetare-contacts.js --min-score=6 --limit=<N*2> --pv-gate=pass,weak
+# mod ANAF: --min-score=4 --pv-gate=pass,weak,no-site
 ```
 Hits `/phones` + `/emails` endpoints **only for firms that passed the PV content gate**. Writes `data/anre-contacts.json` with full dataset.
 
