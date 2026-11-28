@@ -70,13 +70,6 @@
     "rejectedAt": "2026-04-22"
   },
   {
-    "societate": "AMUR SOLAR ENERGY",
-    "judet": "Timis",
-    "cui": "33108859",
-    "reason": "Retailer de kit-uri fotovoltaice rezidențiale (500W–250kW), panouri termice și turbine eoliene mici; fără portofoliu C&I documentat — distribuitor, nu integrator EPC.",
-    "rejectedAt": "2026-04-22"
-  },
-  {
     "societate": "ELTREX",
     "judet": "Timis",
     "cui": "11738772",
@@ -556,5 +549,12 @@
     "cui": "42988183",
     "reason": "Nu mai execută instalări fotovoltaice (confirmat direct, 2026-08-21). Fusese listată din mai 2026.",
     "rejectedAt": "2026-08-21"
+  },
+  {
+    "societate": "SOLAR SOLUTION",
+    "judet": "Arges",
+    "cui": "45829298",
+    "reason": "eSol (esol.ro, Pitești): magazin online de componente PV (CAEN 4791), fără atestat ANRE și fără lucrări documentate; distribuitor, nu instalator. Cheia societate/judet e din ONRC, firma nu e în registrul ANRE.",
+    "rejectedAt": "2026-11-28"
   }
 ]

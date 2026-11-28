@@ -2982,5 +2982,283 @@
    "isActive": true,
    "tipTarifRaw": "Tarif C2A"
   }
+ ],
+ "AMUR SOLAR ENERGY|Timis": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "17055",
+   "dataEmitere": "15/03/2021",
+   "dataExpirare": "13/03/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "17054",
+   "dataEmitere": "15/03/2021",
+   "dataExpirare": "13/03/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "PIA ENERGY|Iasi": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "19377",
+   "dataEmitere": "03/05/2023",
+   "dataExpirare": "03/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "EARTHLINK|Ilfov": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18301",
+   "dataEmitere": "10/06/2022",
+   "dataExpirare": "10/06/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "TRITECH GROUP|Constanta": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "13963",
+   "dataEmitere": "17/12/2018",
+   "dataExpirare": "13/12/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "ROBERT-SIM|Iasi": [
+  {
+   "code": "BP",
+   "variant": null,
+   "nrAtestat": "19548",
+   "dataEmitere": "11/05/2023",
+   "dataExpirare": "11/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif Bp"
+  },
+  {
+   "code": "BE",
+   "variant": null,
+   "nrAtestat": "18536",
+   "dataEmitere": "17/08/2022",
+   "dataExpirare": "17/08/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif Be"
+  }
+ ],
+ "PAVILION INTERMED|Bucuresti": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "22102",
+   "dataEmitere": "23/07/2024",
+   "dataExpirare": "23/07/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "TREVORA ELECTRIC|Arges": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "24551",
+   "dataEmitere": "22/05/2026",
+   "dataExpirare": "22/05/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "24550",
+   "dataEmitere": "22/05/2026",
+   "dataExpirare": "22/05/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ERA ENERGY|Bucuresti": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "22252",
+   "dataEmitere": "22/08/2024",
+   "dataExpirare": "22/08/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "SEMGRUP|Bihor": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "23467",
+   "dataEmitere": "18/07/2025",
+   "dataExpirare": "18/07/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "VALORIS|Valcea": [
+  {
+   "code": "C2A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12637",
+   "dataEmitere": "12/06/2017",
+   "dataExpirare": "12/04/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A*-vizare periodica"
+  },
+  {
+   "code": "C1A",
+   "variant": "vizare periodica",
+   "nrAtestat": "12636",
+   "dataEmitere": "12/06/2017",
+   "dataExpirare": "12/04/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A*-vizare periodica"
+  }
+ ],
+ "PANOSOL ENERGY|Ilfov": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "24795",
+   "dataEmitere": "22/07/2026",
+   "dataExpirare": "22/07/2031",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "SOLARWEST|Timis": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "23241",
+   "dataEmitere": "03/06/2025",
+   "dataExpirare": "03/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "GIS ENERGY|Bihor": [
+  {
+   "code": "C2A",
+   "variant": null,
+   "nrAtestat": "23393",
+   "dataEmitere": "30/06/2025",
+   "dataExpirare": "30/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C2A"
+  },
+  {
+   "code": "C1A",
+   "variant": null,
+   "nrAtestat": "23392",
+   "dataEmitere": "30/06/2025",
+   "dataExpirare": "30/06/2030",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif C1A"
+  }
+ ],
+ "ELEKTROSMART ELECTRIC|Galati": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18112",
+   "dataEmitere": "05/04/2022",
+   "dataExpirare": "05/04/2027",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "AA TEHNIC|Dolj": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "19211",
+   "dataEmitere": "24/03/2023",
+   "dataExpirare": "24/03/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "EURO HOUSE|Brasov": [
+  {
+   "code": "B",
+   "variant": "vizare periodica",
+   "nrAtestat": "14405",
+   "dataEmitere": "04/04/2019",
+   "dataExpirare": "04/04/2029",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B*-vizare periodica"
+  }
+ ],
+ "CUSTOM TECHNOLOGIES|Iasi": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "19397",
+   "dataEmitere": "04/05/2023",
+   "dataExpirare": "04/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "FERMA DE ENERGIE |Timis": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "18977",
+   "dataEmitere": "19/01/2023",
+   "dataExpirare": "19/01/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
+ ],
+ "REGENERGY|Bacau": [
+  {
+   "code": "B",
+   "variant": null,
+   "nrAtestat": "19342",
+   "dataEmitere": "02/05/2023",
+   "dataExpirare": "02/05/2028",
+   "stare": "Atestat",
+   "isActive": true,
+   "tipTarifRaw": "Tarif B"
+  }
  ]
 }

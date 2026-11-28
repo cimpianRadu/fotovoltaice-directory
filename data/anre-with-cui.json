@@ -13042,7 +13042,7 @@
     ]
   },
   {
-    "cui": "151208",
+    "cui": "8859138",
     "name": "VALORIS SRL",
     "anreName": "VALORIS",
     "codInmatriculare": "J03/1110/1992",
@@ -13160,7 +13160,8 @@
         "dataExpirare": "12/04/2027",
         "stare": "Atestat"
       }
-    ]
+    ],
+    "cuiFix": "2026-11-28: CUI corectat (potrivire greșită pe nume); verificat în ANAF"
   },
   {
     "cui": "39889376",
@@ -37435,7 +37436,7 @@
     ]
   },
   {
-    "cui": "16364237",
+    "cui": "15240931",
     "name": "EURO HOUSE SRL",
     "anreName": "EURO HOUSE",
     "codInmatriculare": "J04/764/2004",
@@ -37462,7 +37463,8 @@
         "dataExpirare": "04/04/2029",
         "stare": "Atestat"
       }
-    ]
+    ],
+    "cuiFix": "2026-11-28: CUI corectat (potrivire greșită pe nume); verificat în ANAF"
   },
   {
     "cui": "49143500",
@@ -223243,7 +223245,7 @@
     ]
   },
   {
-    "cui": "27459944",
+    "cui": "43079092",
     "name": "REGENERGY SRL",
     "anreName": "REGENERGY",
     "codInmatriculare": "J04/810/2010",
@@ -223263,7 +223265,8 @@
         "dataExpirare": "02/05/2028",
         "stare": "Atestat"
       }
-    ]
+    ],
+    "cuiFix": "2026-11-28: CUI corectat (potrivire greșită pe nume); verificat în ANAF"
   },
   {
     "cui": "7782958",
